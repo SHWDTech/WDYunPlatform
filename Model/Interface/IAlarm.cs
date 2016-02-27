@@ -1,0 +1,38 @@
+﻿using System;
+using SHWDTech.Platform.Model.Model;
+
+namespace SHWDTech.Platform.Model.Interface
+{
+    internal interface IAlarm
+    {
+        /// <summary>
+        /// 报警信息ID
+        /// </summary>
+        long AlarmId { get; set; }
+
+        /// <summary>
+        /// 报警信息所属域
+        /// </summary>
+        SysDomain AlarmDomain { get; set; }
+
+        /// <summary>
+        /// 报警信息所属设备
+        /// </summary>
+        Device Device { get; set; }
+
+        /// <summary>
+        /// 报警信息值
+        /// </summary>
+        double AlarmValue { get; set; }
+
+        /// <summary>
+        /// 报警类别
+        /// </summary>
+        int AlarmType { get; set; }
+
+        /// <summary>
+        /// 数据更新时间
+        /// </summary>
+        DateTime UpdateTime { get; set; }
+    }
+}

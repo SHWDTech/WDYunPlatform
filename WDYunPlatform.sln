@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model_Interface", "Model_Interface", "{54B65C67-3AF2-46B7-B61F-D78E9EE40652}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{E4E9C8A0-E605-484C-B14E-5F9302A71386}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Model", "Model\Platform.Model.csproj", "{E4E9C8A0-E605-484C-B14E-5F9302A71386}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlatformCommon", "PlatformCommon", "{DEF75C74-1BFB-4914-86F7-34A93468F73F}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{FA2AA155-037E-4C5F-BFBE-61EB6112FB9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Utility", "Platform.Utility\Platform.Utility.csproj", "{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Process", "Process", "{02A70BE2-1106-4495-BCFE-64E88E55C06E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Process", "Platform.Process\Platform.Process.csproj", "{3CAF3855-4870-4065-8755-5AF2897BD10A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,10 @@ Global
 		{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +49,6 @@ Global
 		{E4E9C8A0-E605-484C-B14E-5F9302A71386} = {54B65C67-3AF2-46B7-B61F-D78E9EE40652}
 		{1328EE07-F6C6-4762-8D87-45D026F60DD8} = {DEF75C74-1BFB-4914-86F7-34A93468F73F}
 		{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C} = {FA2AA155-037E-4C5F-BFBE-61EB6112FB9B}
+		{3CAF3855-4870-4065-8755-5AF2897BD10A} = {02A70BE2-1106-4495-BCFE-64E88E55C06E}
 	EndGlobalSection
 EndGlobal

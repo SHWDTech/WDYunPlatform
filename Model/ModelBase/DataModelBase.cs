@@ -4,8 +4,7 @@ using SHWDTech.Platform.Model.Interface;
 namespace SHWDTech.Platform.Model.ModelBase
 {
     [Serializable]
-    public class ModelBase : IModel
+    public class DataModelBase : ModelBase, IDataModel
     {
-
     }
 }
