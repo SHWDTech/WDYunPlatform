@@ -54,10 +54,8 @@
   <ItemGroup>
     <Compile Include="Entities\ProcessContext.cs" />
     <Compile Include="Entities\ProcessDataBaseInitializer.cs" />
-    <Compile Include="IProcess\IProcess.cs" />
     <Compile Include="IProcess\IProcessBase.cs" />
     <Compile Include="IProcess\IUserProcess.cs" />
-    <Compile Include="Process\Process.cs" />
     <Compile Include="Process\ProcessBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
