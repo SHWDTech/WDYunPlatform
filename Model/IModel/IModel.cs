@@ -1,4 +1,4 @@
-﻿namespace SHWDTech.Platform.Model.Interface
+﻿namespace SHWDTech.Platform.Model.IModel
 {
     interface IModel
     {

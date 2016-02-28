@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
-using SHWDTech.Platform.Model.Interface;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.ModelBase

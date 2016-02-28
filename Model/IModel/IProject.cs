@@ -1,7 +1,7 @@
 ﻿using System;
 using SHWDTech.Platform.Model.Model;
 
-namespace SHWDTech.Platform.Model.Interface
+namespace SHWDTech.Platform.Model.IModel
 {
     internal interface IProject
     {

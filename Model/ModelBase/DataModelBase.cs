@@ -1,5 +1,5 @@
 ﻿using System;
-using SHWDTech.Platform.Model.Interface;
+using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
