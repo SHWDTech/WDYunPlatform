@@ -1,6 +1,6 @@
 ﻿namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface ISysConfig
+    public interface ISysConfig
     {
         /// <summary>
         /// 系统设置ID

@@ -1,6 +1,6 @@
 ﻿namespace SHWDTech.Platform.Model.IModel
 {
-    interface IModel
+    public interface IModel
     {
          
     }

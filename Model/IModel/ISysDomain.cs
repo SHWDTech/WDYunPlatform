@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface ISysDomain
+    public interface ISysDomain
     {
         /// <summary>
         /// 域ID

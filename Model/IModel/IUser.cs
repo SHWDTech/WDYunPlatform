@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IUser
+    public interface IUser
     {
         /// <summary>
         /// 用户唯一标识

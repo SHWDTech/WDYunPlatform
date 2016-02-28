@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface ITask
+    public interface ITask
     {
         /// <summary>
         /// 任务ID

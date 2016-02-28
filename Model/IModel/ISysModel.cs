@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface ISysModel
+    public interface ISysModel
     {
         /// <summary>
         /// 字段创建时间

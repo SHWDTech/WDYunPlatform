@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IProject
+    public interface IProject
     {
         /// <summary>
         /// 项目ID

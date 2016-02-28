@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IAlarm
+    public interface IAlarm
     {
         /// <summary>
         /// 报警信息ID

@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IMonitorData
+    public interface IMonitorData
     {
         long MonitorDataId { get; set; }
 

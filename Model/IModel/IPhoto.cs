@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IPhoto
+    public interface IPhoto
     {
         /// <summary>
         /// 照片ID

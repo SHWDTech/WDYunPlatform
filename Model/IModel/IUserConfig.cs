@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IUserConfig
+    public interface IUserConfig
     {
         /// <summary>
         /// 用户配置ID

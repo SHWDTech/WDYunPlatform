@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IProtocol
+    public interface IProtocol
     {
         /// <summary>
         /// 协议ID

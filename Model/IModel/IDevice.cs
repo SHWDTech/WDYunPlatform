@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IDevice
+    public interface IDevice
     {
         /// <summary>
         /// 设备ID

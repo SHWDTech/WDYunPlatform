@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IDistrict
+    public interface IDistrict
     {
         /// <summary>
         /// 区域ID

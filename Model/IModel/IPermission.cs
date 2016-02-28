@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IPermission
+    public interface IPermission
     {
         /// <summary>
         /// 权限ID

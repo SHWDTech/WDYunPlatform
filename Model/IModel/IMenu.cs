@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    internal interface IMenu
+    public interface IMenu
     {
         /// <summary>
         /// 菜单ID
