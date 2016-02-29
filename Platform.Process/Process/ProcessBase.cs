@@ -1,45 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWD.Platform.Process.Entities;
 using SHWD.Platform.Process.IProcess;
+using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Process.Process
 {
     public class ProcessBase<T> : IProcessBase<T> where T : class
     {
-        public IEnumerable<T> GetModels()
+        public IProcessContext Context { get; set; }
+
+        public virtual IEnumerable<T> GetModels()
         {
-            using (var context = new ProcessContext())
+            using (var context = new Entities.ProcessContext())
             {
                 return context.Set<T>().ToList();
             }
         }
 
-        public IEnumerable<T> GetModels(Func<T, bool> exp)
+        public virtual IEnumerable<T> GetModels(Func<T, bool> exp)
         {
-            using (var context = new ProcessContext())
+            using (var context = new Entities.ProcessContext())
             {
                 return context.Set<T>().Where(exp).ToList();
             }
         }
 
-        public bool AddOrUpdate(T model)
+        public virtual int GetCount(Func<T, bool> exp)
         {
-            using (var context = new ProcessContext())
+            using (var context = new Entities.ProcessContext())
             {
-                if (context.Set<T>().Find(model) == null)
-                {
-                    context.Set<T>().Add(model);
-                }
-
-                return context.SaveChanges() == 1;
+                return context.Set<T>().Where(exp).Count();
             }
         }
 
-        public int AddOrUpdate(IEnumerable<T> models)
+        public virtual T CreateDefaultModel()
         {
-            using (var context = new ProcessContext())
+            using (var context = new Entities.ProcessContext())
+            {
+                var model = context.Set<T>().Create() as IModel;
+                if (model == null) throw new InvalidCastException();
+                model.Guid = Guid.Empty;
+
+                return (T) model;
+            }
+        }
+
+        public virtual Guid AddOrUpdate(T model)
+        {
+
+            using (var context = new Entities.ProcessContext())
+            {
+                var iModel = model as IModel;
+
+                if (iModel == null)
+                    return Guid.Empty;
+
+                if (context.Set<T>().Find(model) == null)
+                    context.Set<T>().Add(model);
+
+                return context.SaveChanges() != 1 ? Guid.Empty : iModel.Guid;
+            }
+
+        }
+
+        public virtual int AddOrUpdate(IEnumerable<T> models)
+        {
+            using (var context = new Entities.ProcessContext())
             {
                 foreach (var model in models)
                 {
@@ -47,12 +74,12 @@ namespace SHWD.Platform.Process.Process
                 }
 
                 return context.SaveChanges();
-            }  
+            }
         }
 
-        public bool Delete(T model)
+        public virtual bool Delete(T model)
         {
-            using (var context = new ProcessContext())
+            using (var context = new Entities.ProcessContext())
             {
                 context.Set<T>().Remove(model);
 
@@ -60,9 +87,9 @@ namespace SHWD.Platform.Process.Process
             }
         }
 
-        public int Delete(IEnumerable<T> models)
+        public virtual int Delete(IEnumerable<T> models)
         {
-            using (var context = new ProcessContext())
+            using (var context = new Entities.ProcessContext())
             {
                 foreach (var model in models)
                 {
@@ -70,6 +97,22 @@ namespace SHWD.Platform.Process.Process
                 }
 
                 return context.SaveChanges();
+            }
+        }
+
+        public virtual bool IsExists(T model)
+        {
+            using (var context = new Entities.ProcessContext())
+            {
+                return context.Set<T>().Find(model) != null;
+            }
+        }
+
+        public virtual bool IsExists(Func<T, bool> exp)
+        {
+            using (var context = new Entities.ProcessContext())
+            {
+                return context.Set<T>().Find(exp) != null;
             }
         }
     }
