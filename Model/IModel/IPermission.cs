@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IPermission
+    public interface IPermission : ISysModel
     {
         /// <summary>
         /// 权限所属域

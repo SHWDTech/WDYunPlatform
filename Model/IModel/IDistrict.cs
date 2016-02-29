@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IDistrict
+    public interface IDistrict : ISysModel
     {
         /// <summary>
         /// 父级区域

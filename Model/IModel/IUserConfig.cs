@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IUserConfig
+    public interface IUserConfig : ISysModel
     {
         /// <summary>
         /// 用户配置所属域

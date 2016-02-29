@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ITask
+    public interface ITask : ISysModel
     {
         /// <summary>
         /// 任务所属域

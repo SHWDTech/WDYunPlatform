@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IRole
+    public interface IRole : ISysModel
     {
         /// <summary>
         /// 角色所属域ID

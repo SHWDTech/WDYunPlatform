@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IMenu
+    public interface IMenu : ISysModel
     {
         /// <summary>
         /// 菜单所属域

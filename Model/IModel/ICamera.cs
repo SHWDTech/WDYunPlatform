@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ICamera
+    public interface ICamera : ISysModel
     {
         /// <summary>
         /// 摄像头外部ID

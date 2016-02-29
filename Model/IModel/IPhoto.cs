@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IPhoto
+    public interface IPhoto : ISysModel
     {
         /// <summary>
         /// 照片所属域

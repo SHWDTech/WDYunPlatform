@@ -1,6 +1,6 @@
 ﻿namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ISysDomain
+    public interface ISysDomain : ISysModel
     {
         /// <summary>
         /// 域名称

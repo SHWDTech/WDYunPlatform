@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IDevice
+    public interface IDevice : ISysModel
     {
         /// <summary>
         /// 设备所属域
