@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class SysConfig: SysModelBase, ISysConfig
     {
-        [Key]
-        public int SysConfigId { get; set; }
-        
         [Required]
         [Display(Name = "系统配置名称")]
         [MaxLength(25)]

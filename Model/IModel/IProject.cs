@@ -6,11 +6,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IProject
     {
         /// <summary>
-        /// 项目ID
-        /// </summary>
-        int ProjectId { get; set; }
-
-        /// <summary>
         /// 项目所属域
         /// </summary>
         SysDomain ProjectDomain { get; set; }

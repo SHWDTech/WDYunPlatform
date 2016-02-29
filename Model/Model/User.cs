@@ -9,9 +9,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class User : SysModelBase , IUser
     {
-        [Key]
-        public Guid UserId { get; set; }
-
         [Required]
         public SysDomain UserDomain { get; set; }
 

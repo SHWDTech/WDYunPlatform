@@ -5,11 +5,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IMenu
     {
         /// <summary>
-        /// 菜单ID
-        /// </summary>
-        int MenuId { get; set; }
-
-        /// <summary>
         /// 菜单所属域
         /// </summary>
         SysDomain MenuDomain { get; set; }

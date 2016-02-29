@@ -9,9 +9,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Role : SysModelBase, IRole
     {
-        [Key]
-        public int RoleId { get; set; }
-
         [Required]
         public SysDomain RoleDomain { get; set; }
 

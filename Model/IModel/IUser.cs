@@ -7,11 +7,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IUser
     {
         /// <summary>
-        /// 用户唯一标识
-        /// </summary>
-        Guid UserId { get; set; }
-
-        /// <summary>
         /// 用户所属域
         /// </summary>
         SysDomain UserDomain { get; set; }

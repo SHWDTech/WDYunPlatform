@@ -5,11 +5,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IDistrict
     {
         /// <summary>
-        /// 区域ID
-        /// </summary>
-        int DistrictId { get; set; }
-
-        /// <summary>
         /// 父级区域
         /// </summary>
         District ParentDistrict { get; set; }

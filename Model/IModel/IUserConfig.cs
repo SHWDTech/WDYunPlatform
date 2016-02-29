@@ -5,11 +5,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IUserConfig
     {
         /// <summary>
-        /// 用户配置ID
-        /// </summary>
-        int UserConfigId { get; set; }
-
-        /// <summary>
         /// 用户配置所属域
         /// </summary>
         SysDomain UserConfigDomain { get; set; }

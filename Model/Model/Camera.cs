@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Camera: SysModelBase, ICamera
     {
-        [Key]
-        public int CameraId { get; set; }
-
         [Display(Name = "摄像头外部ID")]
         [MaxLength(50)]
         public string CameraOutId { get; set; }

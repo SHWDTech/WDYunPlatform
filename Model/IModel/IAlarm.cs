@@ -6,11 +6,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IAlarm
     {
         /// <summary>
-        /// 报警信息ID
-        /// </summary>
-        long AlarmId { get; set; }
-
-        /// <summary>
         /// 报警信息所属域
         /// </summary>
         SysDomain AlarmDomain { get; set; }

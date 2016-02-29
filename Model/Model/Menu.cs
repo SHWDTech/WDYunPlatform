@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Menu : SysModelBase, IMenu
     {
-        [Key]
-        public int MenuId { get; set; }
-
         [Required]
         [Display(Name = "菜单所属域")]
         public SysDomain MenuDomain { get; set; }

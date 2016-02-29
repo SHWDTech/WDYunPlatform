@@ -1,14 +1,7 @@
-﻿using System;
-
-namespace SHWDTech.Platform.Model.IModel
+﻿namespace SHWDTech.Platform.Model.IModel
 {
     public interface ISysDomain
     {
-        /// <summary>
-        /// 域ID
-        /// </summary>
-        Guid DomainId { get; set; }
-
         /// <summary>
         /// 域名称
         /// </summary>

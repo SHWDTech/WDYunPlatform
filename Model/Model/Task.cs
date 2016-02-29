@@ -9,10 +9,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Task :SysModelBase, ITask
     {
-        [Key]
-        [Display(Name = "任务ID")]
-        public Guid TaskId { get; set; }
-
         [Required]
         [Display(Name = "任务所属域")]
         public SysDomain TaskDomain { get; set; }

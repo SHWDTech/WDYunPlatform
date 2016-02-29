@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Alarm: DataModelBase, IAlarm
     {
-        [Key]
-        public long AlarmId { get; set; }
-
         [Required]
         [Display(Name = "报警信息所属域")]
         public SysDomain AlarmDomain { get; set; }

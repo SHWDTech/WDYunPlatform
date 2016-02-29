@@ -6,11 +6,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IDevice
     {
         /// <summary>
-        /// 设备ID
-        /// </summary>
-        int DeviceId { get; set; }
-
-        /// <summary>
         /// 设备所属域
         /// </summary>
         SysDomain DeviceDomain { get; set; }

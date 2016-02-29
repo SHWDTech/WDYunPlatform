@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Permission : SysModelBase, IPermission
     {
-        [Key]
-        public int PermissionId { get; set; }
-
         [Required]
         public SysDomain PermissionDomain { get; set; }
 

@@ -8,10 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Protocol : DataModelBase, IProtocol
     {
-        [Key]
-        [Display(Name = "协议ID")]
-        public Guid ProtocolId { get; set; }
-
         [Required]
         [Display(Name = "协议所属域")]
         public SysDomain ProtocolDomain { get; set; }

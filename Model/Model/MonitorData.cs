@@ -17,9 +17,6 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "数据所属域")]
         public SysDomain MonitorDataDomain { get; set; }
 
-        [Display(Name = "数据来源设备")]
-        public Device Device { get; set; }
-
         [Display(Name = "数据类型")]
         public int MonitorDataType { get; set; }
 

@@ -3,11 +3,6 @@
     public interface ISysConfig
     {
         /// <summary>
-        /// 系统设置ID
-        /// </summary>
-        int SysConfigId { get; set; }
-
-        /// <summary>
         /// 系统设置名称
         /// </summary>
         string SysConfigName { get; set; }

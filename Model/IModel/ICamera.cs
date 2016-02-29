@@ -5,11 +5,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface ICamera
     {
         /// <summary>
-        /// 摄像头ID
-        /// </summary>
-        int CameraId { get; set; }
-
-        /// <summary>
         /// 摄像头外部ID
         /// </summary>
         string CameraOutId { get; set; }

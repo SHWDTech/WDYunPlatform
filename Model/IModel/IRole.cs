@@ -6,11 +6,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IRole
     {
         /// <summary>
-        /// 角色ID
-        /// </summary>
-        int RoleId { get; set; }
-
-        /// <summary>
         /// 角色所属域ID
         /// </summary>
         SysDomain RoleDomain { get; set; }

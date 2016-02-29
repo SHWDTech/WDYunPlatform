@@ -8,10 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Photo : SysModelBase, IPhoto
     {
-        [Key]
-        [Display(Name = "照片ID")]
-        public Guid PhotoId { get; set; }
-
         [Required]
         [Display(Name = "照片所属域")]
         public SysDomain PhotoDomain { get; set; }

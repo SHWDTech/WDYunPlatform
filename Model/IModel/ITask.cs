@@ -7,11 +7,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface ITask
     {
         /// <summary>
-        /// 任务ID
-        /// </summary>
-        Guid TaskId { get; set; }
-
-        /// <summary>
         /// 任务所属域
         /// </summary>
         SysDomain TaskDomain { get; set; }

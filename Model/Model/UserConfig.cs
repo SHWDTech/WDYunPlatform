@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class UserConfig: SysModelBase, IUserConfig
     {
-        [Key]
-        public int UserConfigId { get; set; }
-
         [Required]
         [Display(Name = "用户配置所属域")]
         public SysDomain UserConfigDomain { get; set; }

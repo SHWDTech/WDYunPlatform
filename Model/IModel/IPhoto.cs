@@ -1,15 +1,9 @@
-﻿using System;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
     public interface IPhoto
     {
-        /// <summary>
-        /// 照片ID
-        /// </summary>
-        Guid PhotoId { get; set; }
-
         /// <summary>
         /// 照片所属域
         /// </summary>

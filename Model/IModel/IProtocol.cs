@@ -6,11 +6,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IProtocol
     {
         /// <summary>
-        /// 协议ID
-        /// </summary>
-        Guid ProtocolId { get; set; }
-
-        /// <summary>
         /// 协议所属域
         /// </summary>
         SysDomain ProtocolDomain { get; set; }

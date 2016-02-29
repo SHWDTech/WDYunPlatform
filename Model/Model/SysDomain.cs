@@ -8,10 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class SysDomain :SysModelBase, ISysDomain
     {
-        [Key]
-        [Display(Name = "域ID")]
-        public Guid DomainId { get; set; }
-
         [Required]
         [Display(Name = "域名称")]
         [MaxLength(50)]

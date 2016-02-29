@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Project : SysModelBase, IProject
     {
-        [Key]
-        public int ProjectId { get; set; }
-
         [Required]
         [Display(Name = "项目所属域")]
         public SysDomain ProjectDomain { get; set; }

@@ -8,9 +8,6 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class District :SysModelBase, IDistrict
     {
-        [Key]
-        public int DistrictId { get; set; }
-
         public District ParentDistrict { get; set; }
 
         [Required]
