@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
@@ -15,14 +14,14 @@ namespace SHWDTech.Platform.Model.ModelBase
         public DateTime CreateDateTime { get; set; }
 
         [JsonIgnore]
-        public User CreateUser { get; set; }
+        public IUser CreateUser { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
         public DateTime LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public User LastUpdateUser { get; set; }
+        public IUser LastUpdateUser { get; set; }
 
         [JsonIgnore]
         public bool IsDeleted { get; set; }

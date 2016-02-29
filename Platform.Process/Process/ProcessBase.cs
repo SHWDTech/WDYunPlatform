@@ -8,7 +8,7 @@ namespace SHWD.Platform.Process.Process
 {
     public class ProcessBase<T> : IProcessBase<T> where T : class
     {
-        public IProcessContext Context { get; set; }
+        public virtual IProcessContext Context { get; set; }
 
         public virtual IEnumerable<T> GetModels()
         {
@@ -53,11 +53,12 @@ namespace SHWD.Platform.Process.Process
             {
                 var iModel = model as IModel;
 
-                if (iModel == null)
-                    return Guid.Empty;
-
+                if (iModel == null) throw new InvalidCastException();
+                
                 if (context.Set<T>().Find(model) == null)
+                {
                     context.Set<T>().Add(model);
+                }
 
                 return context.SaveChanges() != 1 ? Guid.Empty : iModel.Guid;
             }

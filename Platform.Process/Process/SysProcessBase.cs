@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SHWD.Platform.Process.IProcess;
 using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Process.Process
 {
@@ -14,9 +14,34 @@ namespace SHWD.Platform.Process.Process
             if (model == null) throw new InvalidCastException();
 
             model.CreateDateTime = DateTime.Now;
-            model.CreateUser = new User();
+            model.CreateUser = Context.CurrentUser;
 
             return (T) model;
+        }
+
+        public override Guid AddOrUpdate(T model)
+        {
+            var iModel = model as ISysModel;
+            if(iModel == null) throw new InvalidCastException();
+
+            iModel.LastUpdateDateTime = DateTime.Now;
+            iModel.LastUpdateUser = Context.CurrentUser;
+
+            return base.AddOrUpdate((T) iModel);
+        }
+
+        public override int AddOrUpdate(IEnumerable<T> models)
+        {
+            var enumerable = models as T[] ?? models.ToArray();
+            foreach (var model in enumerable)
+            {
+                var iModel = model as ISysModel;
+                if(iModel == null) throw new InvalidCastException();
+                iModel.LastUpdateDateTime = DateTime.Now;
+                iModel.LastUpdateUser = Context.CurrentUser;
+            }
+
+            return base.AddOrUpdate(enumerable);
         }
 
         public virtual bool MarkDelete(T model)
