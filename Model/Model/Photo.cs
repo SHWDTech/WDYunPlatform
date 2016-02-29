@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Photo : SysModelBase, IPhoto
+    public class Photo : SysDomainModelBase, IPhoto
     {
         [Required]
         [Display(Name = "照片所属域")]

@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Permission : SysModelBase, IPermission
+    public class Permission : SysDomainModelBase, IPermission
     {
         [Required]
         public SysDomain PermissionDomain { get; set; }

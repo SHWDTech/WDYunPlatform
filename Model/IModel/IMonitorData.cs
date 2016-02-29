@@ -3,17 +3,12 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IMonitorData : IDataModel
+    public interface IMonitorData : IDataModel, IDomainModel
     {
         /// <summary>
         /// 数据所属协议包
         /// </summary>
         Protocol Protocol { get; set; }
-
-        /// <summary>
-        /// 数据所属域
-        /// </summary>
-        SysDomain MonitorDataDomain { get; set; }
 
         /// <summary>
         /// 数据类型

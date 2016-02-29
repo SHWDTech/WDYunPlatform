@@ -7,7 +7,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Role : SysModelBase, IRole
+    public class Role : SysDomainModelBase, IRole
     {
         [Required]
         public SysDomain RoleDomain { get; set; }

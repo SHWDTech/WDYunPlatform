@@ -57,6 +57,7 @@
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDevice.cs" />
     <Compile Include="IModel\IDistrict.cs" />
+    <Compile Include="IModel\IDomainModel.cs" />
     <Compile Include="IModel\IMenu.cs" />
     <Compile Include="IModel\IModel.cs" />
     <Compile Include="IModel\IMonitorData.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="IModel\ITask.cs" />
     <Compile Include="ModelBase\DataModelBase.cs" />
     <Compile Include="ModelBase\ModelBase.cs" />
+    <Compile Include="ModelBase\SysDomainModelBase.cs" />
     <Compile Include="ModelBase\SysModelBase.cs" />
     <Compile Include="Model\Alarm.cs" />
     <Compile Include="Model\Camera.cs" />

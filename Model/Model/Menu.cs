@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Menu : SysModelBase, IMenu
+    public class Menu : SysDomainModelBase, IMenu
     {
         [Required]
         [Display(Name = "菜单所属域")]

@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Device :SysModelBase, IDevice
+    public class Device : SysDomainModelBase, IDevice
     {
         [Display(Name = "设备所属域")]
         public SysDomain DeviceDomain { get; set; }

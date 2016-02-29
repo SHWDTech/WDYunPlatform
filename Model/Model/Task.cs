@@ -7,7 +7,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Task :SysModelBase, ITask
+    public class Task : SysDomainModelBase, ITask
     {
         [Required]
         [Display(Name = "任务所属域")]

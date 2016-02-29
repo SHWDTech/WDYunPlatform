@@ -2,17 +2,12 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ICamera : ISysModel
+    public interface ICamera : ISysModel, IDomainModel
     {
         /// <summary>
         /// 摄像头外部ID
         /// </summary>
         string CameraOutId { get; set; }
-
-        /// <summary>
-        /// 摄像头所属域
-        /// </summary>
-        SysDomain CameraDomain { get; set; }
 
         /// <summary>
         /// 摄像头登录名

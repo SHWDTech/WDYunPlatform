@@ -1,14 +1,7 @@
-﻿using SHWDTech.Platform.Model.Model;
-
-namespace SHWDTech.Platform.Model.IModel
+﻿namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IPermission : ISysModel
+    public interface IPermission : ISysModel, IDomainModel
     {
-        /// <summary>
-        /// 权限所属域
-        /// </summary>
-        SysDomain PermissionDomain { get; set; }
-
         /// <summary>
         /// 权限名称
         /// </summary>

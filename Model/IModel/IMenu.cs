@@ -2,13 +2,8 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IMenu : ISysModel
+    public interface IMenu : ISysModel, IDomainModel
     {
-        /// <summary>
-        /// 菜单所属域
-        /// </summary>
-        SysDomain MenuDomain { get; set; }
-
         /// <summary>
         /// 父菜单
         /// </summary>

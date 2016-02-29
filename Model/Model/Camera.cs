@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Camera: SysModelBase, ICamera
+    public class Camera: SysDomainModelBase, ICamera
     {
         [Display(Name = "摄像头外部ID")]
         [MaxLength(50)]

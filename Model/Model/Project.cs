@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class Project : SysModelBase, IProject
+    public class Project : SysDomainModelBase, IProject
     {
         [Required]
         [Display(Name = "项目所属域")]

@@ -1,14 +1,7 @@
-﻿using SHWDTech.Platform.Model.Model;
-
-namespace SHWDTech.Platform.Model.IModel
+﻿namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IUserConfig : ISysModel
+    public interface IUserConfig : ISysModel, IDomainModel
     {
-        /// <summary>
-        /// 用户配置所属域
-        /// </summary>
-        SysDomain UserConfigDomain { get; set; }
-
         /// <summary>
         /// 用户配置名称
         /// </summary>

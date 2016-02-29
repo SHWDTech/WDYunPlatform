@@ -2,13 +2,8 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IPhoto : ISysModel
+    public interface IPhoto : ISysModel, IDomainModel
     {
-        /// <summary>
-        /// 照片所属域
-        /// </summary>
-        SysDomain PhotoDomain { get; set; }
-
         /// <summary>
         /// 照片所属设备
         /// </summary>

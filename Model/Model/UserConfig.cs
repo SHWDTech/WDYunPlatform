@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class UserConfig: SysModelBase, IUserConfig
+    public class UserConfig: SysDomainModelBase, IUserConfig
     {
         [Required]
         [Display(Name = "用户配置所属域")]

@@ -3,13 +3,8 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IProtocol : IDataModel
+    public interface IProtocol : IDataModel, IDomainModel
     {
-        /// <summary>
-        /// 协议所属域
-        /// </summary>
-        SysDomain ProtocolDomain { get; set; }
-
         /// <summary>
         /// 协议所属设备
         /// </summary>

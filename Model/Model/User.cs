@@ -7,7 +7,7 @@ using SHWDTech.Platform.Model.ModelBase;
 namespace SHWDTech.Platform.Model.Model
 {
     [Serializable]
-    public class User : SysModelBase , IUser
+    public class User : SysDomainModelBase, IUser
     {
         [Required]
         public SysDomain UserDomain { get; set; }

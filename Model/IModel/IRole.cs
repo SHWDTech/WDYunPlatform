@@ -3,13 +3,8 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IRole : ISysModel
+    public interface IRole : ISysModel, IDomainModel
     {
-        /// <summary>
-        /// 角色所属域ID
-        /// </summary>
-        SysDomain RoleDomain { get; set; }
-
         /// <summary>
         /// 角色所属父角色
         /// </summary>

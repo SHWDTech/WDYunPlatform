@@ -4,13 +4,8 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ITask : ISysModel
+    public interface ITask : ISysModel, IDomainModel
     {
-        /// <summary>
-        /// 任务所属域
-        /// </summary>
-        SysDomain TaskDomain { get; set; }
-
         /// <summary>
         /// 任务所属设备
         /// </summary>
