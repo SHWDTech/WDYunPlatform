@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
+using SHWDTech.Platform.Model.Enum;
 using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
@@ -14,7 +16,7 @@ namespace SHWD.Platform.Repository.Repository
             
         } 
 
-        public virtual IEnumerable<T> GetModels()
+        public virtual IEnumerable<T> GetAllModels()
         {
             using (var context = new RepositoryDbContext())
             {
@@ -43,16 +45,18 @@ namespace SHWD.Platform.Repository.Repository
             using (var context = new RepositoryDbContext())
             {
                 var model = context.Set<T>().Create();
-                model.Guid = Guid.Empty;
-                if (model is ISysDomainModel)
-                {
-                    var dModel = model as ISysDomainModel;
-                    dModel.Domain = RepositoryContext.CurrentDomain;
-                    model = (T) dModel;
-                }
+                model.ModelState = ModelState.Added;
 
                 return model;
             }
+        }
+
+        public virtual T ParseModel(string jsonString)
+        {
+            var model = JsonConvert.DeserializeObject<T>(jsonString);
+            model.ModelState = ModelState.Added;
+
+            return model;
         }
 
         public virtual Guid AddOrUpdate(T model)
@@ -60,12 +64,6 @@ namespace SHWD.Platform.Repository.Repository
 
             using (var context = new RepositoryDbContext())
             {
-                var domainModel = model as ISysDomainModel;
-                if (domainModel != null && domainModel.Domain == null)
-                {
-                    domainModel.Domain = RepositoryContext.CurrentDomain;
-                }
-
                 if (!IsExists(model))
                 {
                     context.Set<T>().Add(model);

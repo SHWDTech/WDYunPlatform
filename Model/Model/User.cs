@@ -40,8 +40,6 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(15)]
         public string Telephone { get; set; }
 
-        public bool IsEnabled { get; set; }
-
         [DataType(DataType.DateTime)]
         public DateTime LastLoginDateTime { get; set; }
 

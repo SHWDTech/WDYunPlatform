@@ -13,9 +13,6 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(50)]
         public string DomainName { get; set; }
 
-        [Display(Name = "是否启用")]
-        public bool IsEnabled { get; set; }
-
         [Display(Name = "域类型")]
         [MaxLength(25)]
         public string DomianType { get; set; }

@@ -25,5 +25,7 @@ namespace SHWDTech.Platform.Model.ModelBase
 
         [JsonIgnore]
         public bool IsDeleted { get; set; }
+
+        public bool IsEnabled { get; set; }
     }
 }

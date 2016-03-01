@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 
@@ -11,18 +10,28 @@ namespace SHWD.Platform.Repository.Repository
     {
         protected SysRepository()
         {
-            
-        } 
+
+        }
 
         public override T CreateDefaultModel()
         {
-            var model = base.CreateDefaultModel() as ISysModel;
-            if (model == null) throw new InvalidCastException();
+            var model = base.CreateDefaultModel();
 
+            model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
             model.CreateUser = RepositoryContext.CurrentUser;
 
-            return (T) model;
+            return model;
+        }
+
+        public override T ParseModel(string jsonString)
+        {
+            var model =  base.ParseModel(jsonString);
+            model.IsEnabled = true;
+            model.CreateDateTime = DateTime.Now;
+            model.CreateUser = RepositoryContext.CurrentUser;
+
+            return model;
         }
 
         public override Guid AddOrUpdate(T model)
@@ -35,7 +44,7 @@ namespace SHWD.Platform.Repository.Repository
 
         public override int AddOrUpdate(IEnumerable<T> models)
         {
-            var enumerable = models as T[] ?? models.ToArray();
+            var enumerable = models.ToList();
             foreach (var model in enumerable)
             {
                 model.LastUpdateDateTime = DateTime.Now;
@@ -45,28 +54,29 @@ namespace SHWD.Platform.Repository.Repository
             return base.AddOrUpdate(enumerable);
         }
 
-        public virtual bool MarkDelete(T model)
+        public virtual void MarkDelete(T model)
         {
-            using (var context = new RepositoryDbContext())
-            {
-                var iModel = model as ISysModel;
-                if (iModel == null) throw new InvalidCastException();
-                iModel.IsDeleted = true;
+            model.IsDeleted = true;
+        }
 
-                return context.SaveChanges() == 1;
+        public virtual void MarkDelete(IEnumerable<T> models)
+        {
+            foreach (var model in models)
+            {
+                MarkDelete(model);
             }
         }
 
-        public virtual int MarkDelete(IEnumerable<T> models)
+        public void SetEnableStatus(T model, bool enableStatus)
         {
-            using (var context = new RepositoryDbContext())
-            {
-                foreach (var model in models)
-                {
-                    MarkDelete(model);
-                }
+            model.IsDeleted = enableStatus;
+        }
 
-                return context.SaveChanges();
+        public void SetEnableStatus(IEnumerable<T> models, bool enableStatus)
+        {
+            foreach (var model in models)
+            {
+                SetEnableStatus(model, enableStatus);
             }
         }
     }

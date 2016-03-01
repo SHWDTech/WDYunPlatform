@@ -20,9 +20,6 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(25)]
         public string RoleName { get; set; }
 
-        [Display(Name = "是否启用")]
-        public bool IsEnabled { get; set; }
-
         [Display(Name = "包含用户")]
         public List<User> Users { get; set; }
 

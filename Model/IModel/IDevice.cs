@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IDevice : ISysModel, ISysDomainModel
+    public interface IDevice : ISysDomainModel
     {
         /// <summary>
         /// 设备编码
@@ -39,11 +39,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// 设备结束时间
         /// </summary>
         DateTime EndTime { get; set; }
-
-        /// <summary>
-        /// 设备是否启用
-        /// </summary>
-        bool IsEnabled { get; set; }
 
         /// <summary>
         /// 设备状态

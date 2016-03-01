@@ -30,11 +30,6 @@ namespace SHWDTech.Platform.Model.IModel
         string Action { get; set; }
 
         /// <summary>
-        /// 菜单是否启用
-        /// </summary>
-        bool IsEnabled { get; set; }
-
-        /// <summary>
         /// 菜单关联的权限
         /// </summary>
         Permission Permission { get; set; }

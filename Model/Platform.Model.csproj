@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\ModelState.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
     <Compile Include="IModel\IDataModel.cs" />

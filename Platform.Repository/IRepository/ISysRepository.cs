@@ -8,15 +8,29 @@ namespace SHWD.Platform.Repository.IRepository
         /// <summary>
         /// 标记为删除
         /// </summary>
-        /// <param name="model">标记为删除的模型</param>
+        /// <param name="model">标记为删除的对象</param>
         /// <returns>操作成功返回True，失败返回False</returns>
-        bool MarkDelete(T model);
+        void MarkDelete(T model);
 
         /// <summary>
         /// 批量标记为删除
         /// </summary>
-        /// <param name="models">标记为删除的模型列表</param>
+        /// <param name="models">标记为删除的的一项列表</param>
         /// <returns>成功标记为删除的对象数量</returns>
-        int MarkDelete(IEnumerable<T> models);
+        void MarkDelete(IEnumerable<T> models);
+
+        /// <summary>
+        /// 设置对象启用状态
+        /// </summary>
+        /// <param name="model">设置启用状态的对象</param>
+        /// <param name="enableStatus">Ture设置对象状态为启用，False设置对象状态为未启用</param>
+        void SetEnableStatus(T model, bool enableStatus);
+
+        /// <summary>
+        /// 批量设置对象启用状态
+        /// </summary>
+        /// <param name="models">设置启用状态的对象列表</param>
+        /// <param name="enableStatus">Ture设置对象状态为启用，False设置对象状态为未启用</param>
+        void SetEnableStatus(IEnumerable<T> models, bool enableStatus);
     }
 }

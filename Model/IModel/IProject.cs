@@ -84,10 +84,5 @@ namespace SHWDTech.Platform.Model.IModel
         /// 项目报警类型
         /// </summary>
         int AlarmType { get; set; }
-
-        /// <summary>
-        /// 项目是否启用
-        /// </summary>
-        bool IsEnabled { get; set; }
     }
 }

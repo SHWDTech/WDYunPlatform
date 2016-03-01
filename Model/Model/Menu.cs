@@ -31,10 +31,11 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "菜单所属操作")]
         [MaxLength(25)]
+        [Required]
         public string Action { get; set; }
 
-        public bool IsEnabled { get; set; }
-
+        [Required]
+        [Display(Name = "菜单所属权限")]
         public Permission Permission { get; set; }
     }
 }

@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Component\ExceptionExtendMethod.cs" />
     <Compile Include="Component\WdtException.cs" />
-    <Compile Include="Enum\ModelState.cs" />
     <Compile Include="Enum\PlatformExceptionType.cs" />
     <Compile Include="Enum\WdtMessageType.cs" />
     <Compile Include="Interface\IErrorHandle.cs.cs" />

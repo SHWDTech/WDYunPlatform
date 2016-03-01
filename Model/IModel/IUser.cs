@@ -32,11 +32,6 @@ namespace SHWDTech.Platform.Model.IModel
         string Telephone { get; set; }
 
         /// <summary>
-        /// 是否启用状态
-        /// </summary>
-        bool IsEnabled { get; set; }
-
-        /// <summary>
         /// 用户最后登录时间
         /// </summary>
         DateTime LastLoginDateTime { get; set; }

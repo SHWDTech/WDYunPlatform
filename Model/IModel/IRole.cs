@@ -16,11 +16,6 @@ namespace SHWDTech.Platform.Model.IModel
         string RoleName { get; set; }
 
         /// <summary>
-        /// 角色是否启用
-        /// </summary>
-        bool IsEnabled { get; set; }
-
-        /// <summary>
         /// 属于该用户的角色
         /// </summary>
         List<User> Users { get; set; } 

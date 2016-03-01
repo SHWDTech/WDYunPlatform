@@ -35,9 +35,6 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "设备结束时间")]
         public DateTime EndTime { get; set; }
 
-        [Display(Name = "设备是否启用")]
-        public bool IsEnabled { get; set; }
-
         [Display(Name = "设备状态")]
         public int Status { get; set; }
 

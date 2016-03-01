@@ -9,7 +9,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// 获取所有模型对象
         /// </summary>
         /// <returns>所有模型对象</returns>
-        IEnumerable<T> GetModels();
+        IEnumerable<T> GetAllModels();
 
         /// <summary>
         /// 获取指定模型对象
@@ -30,6 +30,13 @@ namespace SHWD.Platform.Repository.IRepository
         /// </summary>
         /// <returns>默认数据模型对象</returns>
         T CreateDefaultModel();
+
+        /// <summary>
+        /// 从JSON字符串解析对象
+        /// </summary>
+        /// <param name="jsonString">包含对象信息的JSON字符串</param>
+        /// <returns>解析后的对象</returns>
+        T ParseModel(string jsonString);
 
         /// <summary>
         /// 添加或修改对象

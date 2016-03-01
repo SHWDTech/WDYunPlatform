@@ -28,5 +28,10 @@ namespace SHWDTech.Platform.Model.IModel
         /// 字段是否删除
         /// </summary>
         bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// 字段是否启用
+        /// </summary>
+        bool IsEnabled { get; set; }
     }
 }

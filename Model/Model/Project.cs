@@ -72,8 +72,5 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "项目报警类型")]
         public int AlarmType { get; set; }
-
-        [Display(Name = "项目是否启用")]
-        public bool IsEnabled { get; set; }
     }
 }
