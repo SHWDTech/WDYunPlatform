@@ -58,7 +58,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 项目所属区域
         /// </summary>
-        District District { get; set; }
+        SysDictionary District { get; set; }
 
         /// <summary>
         /// 项目占地面积

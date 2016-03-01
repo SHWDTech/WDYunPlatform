@@ -2,7 +2,7 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ISysDictionary : ISysModel
+    public interface IUserDictionary : ISysDomainModel
     {
         /// <summary>
         /// 字典名称

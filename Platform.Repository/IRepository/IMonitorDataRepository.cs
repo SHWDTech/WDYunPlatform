@@ -2,7 +2,7 @@
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IDistrictRepository : ISysRepository<IDistrict>
+    public interface IMonitorDataRepository : IDataRepository<IMonitorData>
     {
     }
 }

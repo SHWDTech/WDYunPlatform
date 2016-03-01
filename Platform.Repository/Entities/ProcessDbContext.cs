@@ -16,8 +16,6 @@ namespace SHWD.Platform.Repository.Entities
 
         public virtual DbSet<Device> Devices { get; set; }
 
-        public virtual DbSet<District> Districts { get; set; }
-
         public virtual DbSet<Menu> Menus { get; set; }
 
         public virtual DbSet<MonitorData> MonitorDatas { get; set; }

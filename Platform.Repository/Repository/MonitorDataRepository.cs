@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    internal class DistrictRepository : SysRepository<IDistrict>, IDistrictRepository
+    internal class MonitorDataRepository : DataRepository<IMonitorData>, IMonitorDataRepository
     {
     }
 }

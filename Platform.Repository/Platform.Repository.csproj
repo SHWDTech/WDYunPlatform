@@ -59,11 +59,12 @@
     <Compile Include="Entities\ProcessDbContext.cs" />
     <Compile Include="Entities\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Exception\ModelVerificationException.cs" />
+    <Compile Include="IRepository\IMenuRepository.cs" />
     <Compile Include="IRepository\IAlarmRepository.cs" />
     <Compile Include="IRepository\ICameraRepository.cs" />
     <Compile Include="IRepository\IDataRepository.cs" />
     <Compile Include="IRepository\IDeviceRepository.cs" />
-    <Compile Include="IRepository\IDistrictRepository.cs" />
+    <Compile Include="IRepository\IMonitorDataRepository.cs" />
     <Compile Include="IRepository\IRepository.cs" />
     <Compile Include="IRepository\IRepositoryContext.cs" />
     <Compile Include="IRepository\ISysDomainRepository.cs" />
@@ -74,7 +75,8 @@
     <Compile Include="Repository\CameraRepository.cs" />
     <Compile Include="Repository\DataRepository.cs" />
     <Compile Include="Repository\DeviceRepository.cs" />
-    <Compile Include="Repository\DistrictRepository.cs" />
+    <Compile Include="Repository\MenuRepository.cs" />
+    <Compile Include="Repository\MonitorDataRepository.cs" />
     <Compile Include="Repository\RepositoryContext.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\SysDomainRepository.cs" />
