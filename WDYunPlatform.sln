@@ -17,9 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Utility", "Platfor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{02A70BE2-1106-4495-BCFE-64E88E55C06E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Repository", "Platform.Process\Platform.Repository.csproj", "{3CAF3855-4870-4065-8755-5AF2897BD10A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Repository", "Platform.Repository\Platform.Repository.csproj", "{3CAF3855-4870-4065-8755-5AF2897BD10A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Process", "Process", "{B80FCB9F-CB46-4E9A-961F-564D755C7115}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Process", "Process", "{8417CC2C-4AC0-489A-B7E3-814B2CC96644}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Process", "Platform.Process\Platform.Process.csproj", "{9BB3C321-2F61-4EFE-9315-B1A035470A57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CAF3855-4870-4065-8755-5AF2897BD10A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BB3C321-2F61-4EFE-9315-B1A035470A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB3C321-2F61-4EFE-9315-B1A035470A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB3C321-2F61-4EFE-9315-B1A035470A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB3C321-2F61-4EFE-9315-B1A035470A57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{1328EE07-F6C6-4762-8D87-45D026F60DD8} = {DEF75C74-1BFB-4914-86F7-34A93468F73F}
 		{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C} = {FA2AA155-037E-4C5F-BFBE-61EB6112FB9B}
 		{3CAF3855-4870-4065-8755-5AF2897BD10A} = {02A70BE2-1106-4495-BCFE-64E88E55C06E}
+		{9BB3C321-2F61-4EFE-9315-B1A035470A57} = {8417CC2C-4AC0-489A-B7E3-814B2CC96644}
 	EndGlobalSection
 EndGlobal

@@ -2,8 +2,7 @@
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IUserRepository : ISysRepository<IUser>
+    public interface IAlarmRepository : ISysRepository<IAlarm>
     {
-
     }
 }

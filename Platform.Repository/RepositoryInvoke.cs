@@ -6,16 +6,16 @@ namespace SHWD.Platform.Repository
     /// <summary>
     /// Process调用类
     /// </summary>
-    public class ProcessInvoke
+    public class RepositoryInvoke
     {
         public IRepositoryContext InvokeContext { get; }
 
-        private ProcessInvoke()
+        private RepositoryInvoke()
         {
             
         }
 
-        public ProcessInvoke(IRepositoryContext context) : this()
+        public RepositoryInvoke(IRepositoryContext context) : this()
         {
             InvokeContext = context;
         }

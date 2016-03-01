@@ -131,7 +131,7 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// Process所属Invoker
         /// </summary>
-        public ProcessInvoke Invoker { get; internal set; }
+        public RepositoryInvoke Invoker { get; internal set; }
 
         /// <summary>
         /// Process操作必须的上下文信息
