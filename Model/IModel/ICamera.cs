@@ -1,8 +1,6 @@
-﻿using SHWDTech.Platform.Model.Model;
-
-namespace SHWDTech.Platform.Model.IModel
+﻿namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ICamera : ISysModel, IDomainModel
+    public interface ICamera : ISysDomainModel
     {
         /// <summary>
         /// 摄像头外部ID

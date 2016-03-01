@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface ITask : ISysModel, IDomainModel
+    public interface ITask : ISysDomainModel
     {
         /// <summary>
         /// 任务所属设备

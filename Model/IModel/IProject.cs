@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IProject : ISysModel, IDomainModel
+    public interface IProject : ISysDomainModel
     {
         /// <summary>
         /// 项目编码

@@ -7,9 +7,9 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    public class RepositoryBase<T> : RepositoryBase, IRepositoryBase<T> where T : class, IModel
+    public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
     {
-        protected RepositoryBase()
+        protected Repository()
         {
             
         } 
@@ -43,8 +43,13 @@ namespace SHWD.Platform.Repository.Repository
             using (var context = new RepositoryDbContext())
             {
                 var model = context.Set<T>().Create();
-                if (model == null) throw new InvalidCastException();
                 model.Guid = Guid.Empty;
+                if (model is ISysDomainModel)
+                {
+                    var dModel = model as ISysDomainModel;
+                    dModel.Domain = RepositoryContext.CurrentDomain;
+                    model = (T) dModel;
+                }
 
                 return model;
             }
@@ -55,6 +60,12 @@ namespace SHWD.Platform.Repository.Repository
 
             using (var context = new RepositoryDbContext())
             {
+                var domainModel = model as ISysDomainModel;
+                if (domainModel != null && domainModel.Domain == null)
+                {
+                    domainModel.Domain = RepositoryContext.CurrentDomain;
+                }
+
                 if (!IsExists(model))
                 {
                     context.Set<T>().Add(model);
@@ -136,6 +147,6 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// Process操作必须的上下文信息
         /// </summary>
-        public IRepositoryContext Context => Invoker.InvokeContext;
+        public IRepositoryContext RepositoryContext => Invoker.InvokeContext;
     }
 }

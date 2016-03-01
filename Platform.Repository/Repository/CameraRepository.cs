@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    internal class AlarmRepository : DataRepository<IAlarm>, IAlarmRepository
+    internal class CameraRepository : SysDomainRepository<ICamera>, ICameraRepository
     {
     }
 }

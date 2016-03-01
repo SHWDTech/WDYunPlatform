@@ -1,6 +1,6 @@
 ﻿namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IDomainModel
+    public interface ISysDomainModel : ISysModel
     {
         /// <summary>
         /// 所属域

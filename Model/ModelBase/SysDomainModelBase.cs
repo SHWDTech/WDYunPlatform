@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
-    public class SysDomainModelBase : SysModelBase, IDomainModel
+    public class SysDomainModelBase : SysModelBase, ISysDomainModel
     {
         [Required]
         [Display(Name = "所属域")]

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface ISysRepository<T> : IRepositoryBase<T> where T: class 
+    public interface ISysRepository<T> : IRepository<T> where T: class, ISysModel
     {
         /// <summary>
         /// 标记为删除

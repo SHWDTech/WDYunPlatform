@@ -65,7 +65,6 @@
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDevice.cs" />
     <Compile Include="IModel\IDistrict.cs" />
-    <Compile Include="IModel\IDomainModel.cs" />
     <Compile Include="IModel\IMenu.cs" />
     <Compile Include="IModel\IModel.cs" />
     <Compile Include="IModel\IMonitorData.cs" />
@@ -74,7 +73,9 @@
     <Compile Include="IModel\IProtocol.cs" />
     <Compile Include="IModel\IRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
+    <Compile Include="IModel\ISysDictionary.cs" />
     <Compile Include="IModel\ISysDomain.cs" />
+    <Compile Include="IModel\ISysDomainModel.cs" />
     <Compile Include="IModel\ISysModel.cs" />
     <Compile Include="IModel\IProject.cs" />
     <Compile Include="IModel\IUser.cs" />

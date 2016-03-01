@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    internal class UserRepository : SysRepositoryBase<IUser>, IUserRepository
+    internal class UserRepository : SysRepository<IUser>, IUserRepository
     {
     }
 }

@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IRole : ISysModel, IDomainModel
+    public interface IRole : ISysDomainModel
     {
         /// <summary>
         /// 角色所属父角色

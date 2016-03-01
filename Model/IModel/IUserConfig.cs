@@ -1,6 +1,6 @@
 ﻿namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IUserConfig : ISysModel, IDomainModel
+    public interface IUserConfig : ISysDomainModel
     {
         /// <summary>
         /// 用户配置名称

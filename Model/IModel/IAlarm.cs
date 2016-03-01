@@ -3,7 +3,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IAlarm : IDataModel, IDomainModel
+    public interface IAlarm : IDataModel
     {
         /// <summary>
         /// 报警信息所属设备

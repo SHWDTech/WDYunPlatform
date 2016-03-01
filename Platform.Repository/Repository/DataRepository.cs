@@ -3,7 +3,8 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    internal class AlarmRepository : DataRepository<IAlarm>, IAlarmRepository
+    public class DataRepository<T> : Repository<T>, IDataRepository<T> where T : class, IDataModel
     {
+
     }
 }

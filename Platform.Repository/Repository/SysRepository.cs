@@ -7,9 +7,9 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    public class SysRepositoryBase<T> : RepositoryBase<T>, ISysRepository<T> where T : class, IModel
+    public class SysRepository<T> : Repository<T>, ISysRepository<T> where T : class, ISysModel
     {
-        protected SysRepositoryBase()
+        protected SysRepository()
         {
             
         } 
@@ -20,20 +20,17 @@ namespace SHWD.Platform.Repository.Repository
             if (model == null) throw new InvalidCastException();
 
             model.CreateDateTime = DateTime.Now;
-            model.CreateUser = Context.CurrentUser;
+            model.CreateUser = RepositoryContext.CurrentUser;
 
             return (T) model;
         }
 
         public override Guid AddOrUpdate(T model)
         {
-            var iModel = model as ISysModel;
-            if(iModel == null) throw new InvalidCastException();
+            model.LastUpdateDateTime = DateTime.Now;
+            model.LastUpdateUser = RepositoryContext.CurrentUser;
 
-            iModel.LastUpdateDateTime = DateTime.Now;
-            iModel.LastUpdateUser = Context.CurrentUser;
-
-            return base.AddOrUpdate((T) iModel);
+            return base.AddOrUpdate(model);
         }
 
         public override int AddOrUpdate(IEnumerable<T> models)
@@ -41,10 +38,8 @@ namespace SHWD.Platform.Repository.Repository
             var enumerable = models as T[] ?? models.ToArray();
             foreach (var model in enumerable)
             {
-                var iModel = model as ISysModel;
-                if(iModel == null) throw new InvalidCastException();
-                iModel.LastUpdateDateTime = DateTime.Now;
-                iModel.LastUpdateUser = Context.CurrentUser;
+                model.LastUpdateDateTime = DateTime.Now;
+                model.LastUpdateUser = RepositoryContext.CurrentUser;
             }
 
             return base.AddOrUpdate(enumerable);

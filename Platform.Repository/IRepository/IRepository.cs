@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IRepositoryBase<T> where T: class 
+    public interface IRepository<T> where T: class 
     {
         /// <summary>
         /// 获取所有模型对象

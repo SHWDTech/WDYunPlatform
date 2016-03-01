@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IUser : ISysModel, IDomainModel
+    public interface IUser : ISysDomainModel
     {
         /// <summary>
         /// 用户名
