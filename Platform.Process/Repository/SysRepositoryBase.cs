@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWD.Platform.Process.IProcess;
+using SHWD.Platform.Repository.Entities;
+using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 
-namespace SHWD.Platform.Process.Process
+namespace SHWD.Platform.Repository.Repository
 {
-    public class SysProcessBase<T> : ProcessBase<T>, ISysProcessBase<T> where T : class
+    public class SysRepositoryBase<T> : RepositoryBase<T>, ISysRepository<T> where T : class, IModel
     {
+        protected SysRepositoryBase()
+        {
+            
+        } 
+
         public override T CreateDefaultModel()
         {
             var model = base.CreateDefaultModel() as ISysModel;
@@ -46,7 +52,7 @@ namespace SHWD.Platform.Process.Process
 
         public virtual bool MarkDelete(T model)
         {
-            using (var context = new Entities.ProcessContext())
+            using (var context = new RepositoryDbContext())
             {
                 var iModel = model as ISysModel;
                 if (iModel == null) throw new InvalidCastException();
@@ -58,7 +64,7 @@ namespace SHWD.Platform.Process.Process
 
         public virtual int MarkDelete(IEnumerable<T> models)
         {
-            using (var context = new Entities.ProcessContext())
+            using (var context = new RepositoryDbContext())
             {
                 foreach (var model in models)
                 {

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SHWD.Platform.Process.IProcess
+namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IProcessBase<T> where T: class 
+    public interface IRepositoryBase<T> where T: class 
     {
-        IProcessContext Context { get; set; }
-
         /// <summary>
         /// 获取所有模型对象
         /// </summary>

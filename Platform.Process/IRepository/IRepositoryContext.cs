@@ -1,8 +1,8 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 
-namespace SHWD.Platform.Process.IProcess
+namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IProcessContext
+    public interface IRepositoryContext
     {
         /// <summary>
         /// 当前操作用户

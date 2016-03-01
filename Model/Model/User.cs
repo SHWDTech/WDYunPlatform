@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 
@@ -16,6 +17,12 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(25)]
         [Required]
         public string UserName { get; set; }
+
+        [Required]
+        [Index(IsUnique = true)]
+        [MaxLength(25)]
+        [Display(Name = "用户登录名")]
+        public string LoginName { get; set; }
 
         [Display(Name = "密码")]
         [MaxLength(50)]

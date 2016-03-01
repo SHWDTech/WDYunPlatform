@@ -12,6 +12,11 @@ namespace SHWDTech.Platform.Model.IModel
         string UserName { get; set; }
 
         /// <summary>
+        /// 用户登录名
+        /// </summary>
+        string LoginName { get; set; }
+
+        /// <summary>
         /// 用户密码
         /// </summary>
         string Password { get; set; }

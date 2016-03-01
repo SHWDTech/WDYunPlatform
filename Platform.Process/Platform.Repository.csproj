@@ -7,8 +7,8 @@
     <ProjectGuid>{3CAF3855-4870-4065-8755-5AF2897BD10A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SHWD.Platform.Process</RootNamespace>
-    <AssemblyName>Platform.Process</AssemblyName>
+    <RootNamespace>SHWD.Platform.Repository</RootNamespace>
+    <AssemblyName>Platform.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -52,16 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ProcessContext.cs" />
-    <Compile Include="Entities\ProcessDataBaseInitializer.cs" />
-    <Compile Include="IProcess\IProcessBase.cs" />
-    <Compile Include="IProcess\IProcessContext.cs" />
-    <Compile Include="IProcess\ISysProcessBase.cs" />
-    <Compile Include="IProcess\IUserProcess.cs" />
-    <Compile Include="Process\ProcessContext.cs" />
-    <Compile Include="Process\ProcessBase.cs" />
-    <Compile Include="Process\SysProcessBase.cs" />
-    <Compile Include="Process\UserProcess.cs" />
+    <Compile Include="Entities\ProcessDbContext.cs" />
+    <Compile Include="Entities\RepositoryDataBaseInitializer.cs" />
+    <Compile Include="Exception\ModelVerificationException.cs" />
+    <Compile Include="IRepository\IRepositoryBase.cs" />
+    <Compile Include="IRepository\IRepositoryContext.cs" />
+    <Compile Include="IRepository\ISysRepositoryBase.cs" />
+    <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="ProcessInvoke.cs" />
+    <Compile Include="Repository\RepositoryContext.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Repository\SysRepositoryBase.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

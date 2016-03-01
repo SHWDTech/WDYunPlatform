@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace SHWD.Platform.Process.IProcess
+namespace SHWD.Platform.Repository.IRepository
 {
-    public interface ISysProcessBase<T> : IProcessBase<T> where T: class 
+    public interface ISysRepository<T> : IRepositoryBase<T> where T: class 
     {
         /// <summary>
         /// 标记为删除

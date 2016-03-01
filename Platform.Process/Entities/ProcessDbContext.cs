@@ -1,11 +1,11 @@
 ﻿using System.Data.Entity;
 using SHWDTech.Platform.Model.Model;
 
-namespace SHWD.Platform.Process.Entities
+namespace SHWD.Platform.Repository.Entities
 {
-    public class ProcessContext :DbContext
+    public class RepositoryDbContext : DbContext
     {
-        public ProcessContext() : base("DefaultConnection")
+        public RepositoryDbContext() : base("DefaultConnection")
         {
             
         }

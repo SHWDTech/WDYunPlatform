@@ -1,9 +1,9 @@
-﻿using SHWD.Platform.Process.IProcess;
+﻿using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 
-namespace SHWD.Platform.Process.Process
+namespace SHWD.Platform.Repository.Repository
 {
-    public class ProcessContext : IProcessContext
+    public class RepositoryContext : IRepositoryContext
     {
         public IUser CurrentUser { get; set; }
 

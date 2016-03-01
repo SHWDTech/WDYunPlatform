@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{FA2A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Utility", "Platform.Utility\Platform.Utility.csproj", "{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Process", "Process", "{02A70BE2-1106-4495-BCFE-64E88E55C06E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{02A70BE2-1106-4495-BCFE-64E88E55C06E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Process", "Platform.Process\Platform.Process.csproj", "{3CAF3855-4870-4065-8755-5AF2897BD10A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Repository", "Platform.Process\Platform.Repository.csproj", "{3CAF3855-4870-4065-8755-5AF2897BD10A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
