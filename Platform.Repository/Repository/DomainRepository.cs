@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 系统域数据仓库
     /// </summary>
-    internal class DomainRepository : SysRepository<IDomain>, IDomainRepository
+    public class DomainRepository : SysRepository<IDomain>, IDomainRepository
     {
     }
 }

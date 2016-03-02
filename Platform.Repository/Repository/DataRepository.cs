@@ -13,7 +13,7 @@ namespace SHWD.Platform.Repository.Repository
         {
             var model = base.CreateDefaultModel();
 
-            model.Domain = RepositoryContext.CurrentDomain;
+            model.Domain = ContextLocal.Value.CurrentDomain;
 
             return model;
         }
@@ -21,7 +21,7 @@ namespace SHWD.Platform.Repository.Repository
         public override T ParseModel(string jsonString)
         {
             var model = base.ParseModel(jsonString);
-            model.Domain = RepositoryContext.CurrentDomain;
+            model.Domain = ContextLocal.Value.CurrentDomain;
 
             return model;
         }

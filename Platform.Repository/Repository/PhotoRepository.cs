@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 图片数据仓库
     /// </summary>
-    internal class PhotoRepository : SysDomainRepository<IPhoto>, IPhotoRepository
+    public class PhotoRepository : SysDomainRepository<IPhoto>, IPhotoRepository
     {
     }
 }

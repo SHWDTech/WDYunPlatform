@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 报警信息数据仓库
     /// </summary>
-    internal class AlarmRepository : DataRepository<IAlarm>, IAlarmRepository
+    public class AlarmRepository : DataRepository<IAlarm>, IAlarmRepository
     {
     }
 }

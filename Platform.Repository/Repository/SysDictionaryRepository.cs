@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 系统自定义词典数据仓库
     /// </summary>
-    internal class SysDictionaryRepository : SysRepository<ISysDictionary>, ISysDictionaryRepository
+    public class SysDictionaryRepository : SysRepository<ISysDictionary>, ISysDictionaryRepository
     {
     }
 }

@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 系统配置数据仓库
     /// </summary>
-    internal class SysConfigRepository : SysRepository<ISysConfig>, ISysConfigRepository
+    public class SysConfigRepository : SysRepository<ISysConfig>, ISysConfigRepository
     {
     }
 }

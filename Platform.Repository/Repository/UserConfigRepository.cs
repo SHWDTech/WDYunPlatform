@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 用户配置数据仓库
     /// </summary>
-    internal class UserConfigRepository : SysDomainRepository<IUserConfig>, IUserConfigRepository
+    public class UserConfigRepository : SysDomainRepository<IUserConfig>, IUserConfigRepository
     {
     }
 }

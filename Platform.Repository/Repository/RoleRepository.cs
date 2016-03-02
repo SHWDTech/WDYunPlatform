@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 系统角色数据仓库
     /// </summary>
-    internal class RoleRepository : SysDomainRepository<IRole>, IRoleRepository
+    public class RoleRepository : SysDomainRepository<IRole>, IRoleRepository
     {
     }
 }

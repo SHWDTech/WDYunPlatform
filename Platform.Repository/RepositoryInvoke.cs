@@ -27,16 +27,16 @@ namespace SHWD.Platform.Repository
             InvokeContext = context;
         }
 
-        /// <summary>
-        /// 获得一个数据仓库
-        /// </summary>
-        /// <typeparam name="T">T为数据仓库的类型</typeparam>
-        /// <returns>类型为T的数据仓库实例</returns>
-        public T GetRepository<T>() where T: RepositoryBase, new()
-        {
-            var process = new T {Invoker =  this};
+        ///// <summary>
+        ///// 获得一个数据仓库
+        ///// </summary>
+        ///// <typeparam name="T">T为数据仓库的类型</typeparam>
+        ///// <returns>类型为T的数据仓库实例</returns>
+        //public T GetRepository<T>() where T: RepositoryBase, new()
+        //{
+        //    var process = new T {Invoker =  this};
 
-            return process;
-        }
+        //    return process;
+        //}
     }
 }

@@ -8,7 +8,7 @@ namespace SHWDTech.Platform.Common.Model
     /// <summary>
     /// 记录异常信息的简单类，便于在后台任务处理时传递运行过程中出现的异常
     /// 当异常信息中存在子异常时，同样在本类中的ChildMessage中体现
-    /// 只反映TSException的信息，常规的Exception不会提取到本实例中
+    /// 只反映WdtException的信息，常规的Exception不会提取到本实例中
     /// 在调试模式下，所有Exception的信息都会提取出来
     /// </summary>
     [Serializable]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Newtonsoft.Json;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
@@ -150,14 +151,6 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
-        /// <summary>
-        /// 数据仓库所属调用类
-        /// </summary>
-        public RepositoryInvoke Invoker { get; internal set; }
-
-        /// <summary>
-        /// 数据仓库操作必须的上下文信息
-        /// </summary>
-        public IRepositoryContext RepositoryContext => Invoker.InvokeContext;
+        public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; } 
     }
 }

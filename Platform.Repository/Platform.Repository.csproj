@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\ProcessDbContext.cs" />
+    <Compile Include="Entities\RepositoryDbContext.cs" />
     <Compile Include="Entities\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Exception\ModelVerificationException.cs" />
     <Compile Include="IRepository\IDomainRepository.cs" />

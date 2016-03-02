@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 用户数据仓库
     /// </summary>
-    internal class UserRepository : SysRepository<IUser>, IUserRepository
+    public class UserRepository : SysRepository<IUser>, IUserRepository
     {
     }
 }

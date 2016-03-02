@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 摄像头数据仓库
     /// </summary>
-    internal class CameraRepository : SysDomainRepository<ICamera>, ICameraRepository
+    public class CameraRepository : SysDomainRepository<ICamera>, ICameraRepository
     {
     }
 }

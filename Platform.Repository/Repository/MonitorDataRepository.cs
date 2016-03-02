@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 监测数据仓库
     /// </summary>
-    internal class MonitorDataRepository : DataRepository<IMonitorData>, IMonitorDataRepository
+    public class MonitorDataRepository : DataRepository<IMonitorData>, IMonitorDataRepository
     {
     }
 }

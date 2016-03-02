@@ -6,16 +6,8 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 数据仓库上下文信息
     /// </summary>
-    internal class RepositoryContext : IRepositoryContext
+    public class RepositoryContext : IRepositoryContext
     {
-        /// <summary>
-        /// 创建数据库上下文信息实例
-        /// </summary>
-        private RepositoryContext()
-        {
-            
-        }
-
         public IUser CurrentUser { get; set; }
 
         public IDomain CurrentDomain { get; set; }

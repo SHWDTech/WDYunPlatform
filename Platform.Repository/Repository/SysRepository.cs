@@ -26,7 +26,7 @@ namespace SHWD.Platform.Repository.Repository
 
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
-            model.CreateUser = RepositoryContext.CurrentUser;
+            model.CreateUser = ContextLocal.Value.CurrentUser;
 
             return model;
         }
@@ -36,7 +36,7 @@ namespace SHWD.Platform.Repository.Repository
             var model =  base.ParseModel(jsonString);
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
-            model.CreateUser = RepositoryContext.CurrentUser;
+            model.CreateUser = ContextLocal.Value.CurrentUser;
 
             return model;
         }
@@ -44,7 +44,7 @@ namespace SHWD.Platform.Repository.Repository
         public override Guid AddOrUpdate(T model)
         {
             model.LastUpdateDateTime = DateTime.Now;
-            model.LastUpdateUser = RepositoryContext.CurrentUser;
+            model.LastUpdateUser = ContextLocal.Value.CurrentUser;
 
             return base.AddOrUpdate(model);
         }
@@ -55,7 +55,7 @@ namespace SHWD.Platform.Repository.Repository
             foreach (var model in enumerable)
             {
                 model.LastUpdateDateTime = DateTime.Now;
-                model.LastUpdateUser = RepositoryContext.CurrentUser;
+                model.LastUpdateUser = ContextLocal.Value.CurrentUser;
             }
 
             return base.AddOrUpdate(enumerable);

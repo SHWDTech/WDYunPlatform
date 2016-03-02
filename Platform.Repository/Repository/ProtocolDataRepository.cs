@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 协议数据包数据仓库
     /// </summary>
-    internal class ProtocolDataRepository : DataRepository<IProtocolData>, IProtocolDataRepository
+    public class ProtocolDataRepository : DataRepository<IProtocolData>, IProtocolDataRepository
     {
     }
 }

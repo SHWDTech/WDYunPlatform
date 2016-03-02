@@ -6,7 +6,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 任务数据仓库
     /// </summary>
-    internal class TaskRepository : SysDomainRepository<ITask>, ITaskRepository
+    public class TaskRepository : SysDomainRepository<ITask>, ITaskRepository
     {
     }
 }

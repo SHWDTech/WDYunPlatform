@@ -23,7 +23,7 @@ namespace SHWD.Platform.Repository.Repository
         public override T CreateDefaultModel()
         {
             var model = base.CreateDefaultModel();
-            model.Domain = RepositoryContext.CurrentDomain;
+            model.Domain = ContextLocal.Value.CurrentDomain;
 
             return model;
         }
@@ -31,14 +31,14 @@ namespace SHWD.Platform.Repository.Repository
         public override T ParseModel(string jsonString)
         {
             var model = base.ParseModel(jsonString);
-            model.Domain = RepositoryContext.CurrentDomain;
+            model.Domain = ContextLocal.Value.CurrentDomain;
 
             return model;
         }
 
         public override Guid AddOrUpdate(T model)
         {
-            if (model.Domain == null) model.Domain = RepositoryContext.CurrentDomain;
+            if (model.Domain == null) model.Domain = ContextLocal.Value.CurrentDomain;
 
             return base.AddOrUpdate(model);
         }
@@ -48,7 +48,7 @@ namespace SHWD.Platform.Repository.Repository
             var enumerable = models.ToList();
             foreach (var model in enumerable.Where(model => model.Domain == null))
             {
-                model.Domain = RepositoryContext.CurrentDomain;
+                model.Domain = ContextLocal.Value.CurrentDomain;
             }
 
             return base.AddOrUpdate(enumerable);
