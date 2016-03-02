@@ -4,9 +4,9 @@ using SHWDTech.Platform.Model.IModel;
 namespace SHWD.Platform.Repository.Repository
 {
     /// <summary>
-    /// 报警信息数据仓库
+    /// 图片数据仓库
     /// </summary>
-    internal class AlarmRepository : DataRepository<IAlarm>, IAlarmRepository
+    internal class PhotoRepository : SysDomainRepository<IPhoto>, IPhotoRepository
     {
     }
 }

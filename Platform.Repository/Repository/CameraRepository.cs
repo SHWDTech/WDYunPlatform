@@ -8,12 +8,5 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     internal class CameraRepository : SysDomainRepository<ICamera>, ICameraRepository
     {
-        /// <summary>
-        /// 创建新的摄像头数据仓库实例
-        /// </summary>
-        protected CameraRepository()
-        {
-            
-        }
     }
 }

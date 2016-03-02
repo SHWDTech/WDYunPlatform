@@ -74,7 +74,7 @@
     <Compile Include="IModel\IRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
     <Compile Include="IModel\ISysDictionary.cs" />
-    <Compile Include="IModel\ISysDomain.cs" />
+    <Compile Include="IModel\IDomain.cs" />
     <Compile Include="IModel\ISysDomainModel.cs" />
     <Compile Include="IModel\ISysModel.cs" />
     <Compile Include="IModel\IProject.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\SysConfig.cs" />
     <Compile Include="Model\SysDictionary.cs" />
-    <Compile Include="Model\SysDomain.cs" />
+    <Compile Include="Model\Domain.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserConfig.cs" />

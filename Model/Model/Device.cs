@@ -12,7 +12,7 @@ namespace SHWDTech.Platform.Model.Model
     public class Device : SysDomainModelBase, IDevice
     {
         [Display(Name = "设备所属域")]
-        public SysDomain DeviceDomain { get; set; }
+        public Domain DeviceDomain { get; set; }
 
         [Display(Name = "设备编码")]
         [MaxLength(25)]

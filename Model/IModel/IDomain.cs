@@ -3,7 +3,7 @@
     /// <summary>
     /// 带有域的模型接口
     /// </summary>
-    public interface ISysDomain : IModel
+    public interface IDomain : ISysModel
     {
         /// <summary>
         /// 域名称

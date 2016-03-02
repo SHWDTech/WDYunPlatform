@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 域
     /// </summary>
     [Serializable]
-    public class SysDomain :SysModelBase, ISysDomain
+    public class Domain :SysModelBase, IDomain
     {
         [Required]
         [Display(Name = "域名称")]

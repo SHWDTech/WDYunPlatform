@@ -11,13 +11,13 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// 创建数据库上下文信息实例
         /// </summary>
-        protected RepositoryContext()
+        private RepositoryContext()
         {
             
         }
 
         public IUser CurrentUser { get; set; }
 
-        public ISysDomain CurrentDomain { get; set; }
+        public IDomain CurrentDomain { get; set; }
     }
 }

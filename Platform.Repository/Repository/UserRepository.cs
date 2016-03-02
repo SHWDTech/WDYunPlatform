@@ -8,12 +8,5 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     internal class UserRepository : SysRepository<IUser>, IUserRepository
     {
-        /// <summary>
-        /// 创建用户数据数据仓库实例
-        /// </summary>
-        protected UserRepository()
-        {
-            
-        }
     }
 }

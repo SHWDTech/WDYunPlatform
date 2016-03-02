@@ -8,6 +8,6 @@
         /// <summary>
         /// 所属域
         /// </summary>
-        ISysDomain Domain { get; set; }
+        IDomain Domain { get; set; }
     }
 }

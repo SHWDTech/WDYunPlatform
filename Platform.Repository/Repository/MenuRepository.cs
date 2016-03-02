@@ -8,12 +8,5 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     internal class MenuRepository : SysDomainRepository<IMenu>, IMenuRepository
     {
-        /// <summary>
-        /// 创建新的菜单数据仓库实例
-        /// </summary>
-        protected MenuRepository()
-        {
-            
-        }
     }
 }

@@ -10,6 +10,6 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [Required]
         [Display(Name = "所属域")]
-        public ISysDomain Domain { get; set; }
+        public IDomain Domain { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 系统域
         /// </summary>
-        public virtual DbSet<SysDomain> SysDomains { get; set; }
+        public virtual DbSet<Domain> SysDomains { get; set; }
 
         /// <summary>
         /// 任务

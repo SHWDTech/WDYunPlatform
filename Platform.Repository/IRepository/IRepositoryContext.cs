@@ -15,6 +15,6 @@ namespace SHWD.Platform.Repository.IRepository
         /// <summary>
         /// 当前操作域
         /// </summary>
-        ISysDomain CurrentDomain { get; set; }
+        IDomain CurrentDomain { get; set; }
     }
 }
