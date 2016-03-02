@@ -5,13 +5,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 用户配置
+    /// </summary>
     [Serializable]
     public class UserConfig: SysDomainModelBase, IUserConfig
     {
-        [Required]
-        [Display(Name = "用户配置所属域")]
-        public SysDomain UserConfigDomain { get; set; }
-
         [Display(Name = "用户配置名称")]
         [Required]
         [MaxLength(25)]

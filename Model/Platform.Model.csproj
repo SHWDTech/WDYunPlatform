@@ -70,7 +70,7 @@
     <Compile Include="IModel\IMonitorData.cs" />
     <Compile Include="IModel\IPermission.cs" />
     <Compile Include="IModel\IPhoto.cs" />
-    <Compile Include="IModel\IProtocol.cs" />
+    <Compile Include="IModel\IProtocolData.cs" />
     <Compile Include="IModel\IRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
     <Compile Include="IModel\ISysDictionary.cs" />
@@ -94,7 +94,7 @@
     <Compile Include="Model\Permission.cs" />
     <Compile Include="Model\Photo.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\Protocol.cs" />
+    <Compile Include="Model\ProtocolData.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\SysConfig.cs" />
     <Compile Include="Model\SysDictionary.cs" />

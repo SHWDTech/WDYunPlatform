@@ -5,13 +5,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 项目
+    /// </summary>
     [Serializable]
     public class Project : SysDomainModelBase, IProject
     {
-        [Required]
-        [Display(Name = "项目所属域")]
-        public SysDomain ProjectDomain { get; set; }
-
         [Required]
         [Display(Name = "项目编码")]
         [MaxLength(25)]

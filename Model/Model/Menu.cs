@@ -5,13 +5,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 菜单
+    /// </summary>
     [Serializable]
     public class Menu : SysDomainModelBase, IMenu
     {
-        [Required]
-        [Display(Name = "菜单所属域")]
-        public SysDomain MenuDomain { get; set; }
-
         [Display(Name = "所属父菜单")]
         public Menu ParentMenu { get; set; }
 

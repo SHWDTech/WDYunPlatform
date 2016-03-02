@@ -3,6 +3,9 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 角色模型接口
+    /// </summary>
     public interface IRole : ISysDomainModel
     {
         /// <summary>

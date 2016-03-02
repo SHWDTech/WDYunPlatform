@@ -6,12 +6,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 角色
+    /// </summary>
     [Serializable]
     public class Role : SysDomainModelBase, IRole
     {
-        [Required]
-        public SysDomain RoleDomain { get; set; }
-
         [Display(Name = "父级角色")]
         public Role ParentRole { get; set; }
 

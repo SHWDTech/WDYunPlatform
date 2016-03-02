@@ -2,6 +2,9 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 系统模型接口
+    /// </summary>
     public interface ISysModel : IModel
     {
         /// <summary>

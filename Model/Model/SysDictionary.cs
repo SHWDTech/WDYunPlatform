@@ -5,6 +5,9 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 系统自定义字典
+    /// </summary>
     [Serializable]
     public class SysDictionary : SysModelBase, ISysDictionary
     {

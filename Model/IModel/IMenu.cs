@@ -2,6 +2,9 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 菜单模型接口
+    /// </summary>
     public interface IMenu : ISysDomainModel
     {
         /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 摄像头模型接口
+    /// </summary>
     public interface ICamera : ISysDomainModel
     {
         /// <summary>
@@ -21,6 +24,11 @@
         /// 摄像头登录地址
         /// </summary>
         string AccessUrl { get; set; }
+
+        /// <summary>
+        /// 摄像头登陆端口
+        /// </summary>
+        int AccessPort { get; set; }
 
         /// <summary>
         /// 摄像头登录类型

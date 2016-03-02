@@ -6,13 +6,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 任务
+    /// </summary>
     [Serializable]
     public class Task : SysDomainModelBase, ITask
     {
-        [Required]
-        [Display(Name = "任务所属域")]
-        public SysDomain TaskDomain { get; set; }
-
         [Required]
         [Display(Name = "设备所属设备")]
         public Device TaskDevice { get; set; }
@@ -35,7 +34,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "任务包含协议")]
-        public List<Protocol> TaskProtocols { get; set; }
+        public List<ProtocolData> TaskProtocols { get; set; }
 
         [Required]
         [Display(Name = "任务生成时间")]

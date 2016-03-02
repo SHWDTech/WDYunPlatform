@@ -3,12 +3,15 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 监测数据模型接口
+    /// </summary>
     public interface IMonitorData : IDataModel
     {
         /// <summary>
         /// 数据所属协议包
         /// </summary>
-        Protocol Protocol { get; set; }
+        ProtocolData ProtocolData { get; set; }
 
         /// <summary>
         /// 数据类型

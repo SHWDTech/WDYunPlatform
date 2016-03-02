@@ -3,6 +3,9 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 设备信息模型接口
+    /// </summary>
     public interface IDevice : ISysDomainModel
     {
         /// <summary>

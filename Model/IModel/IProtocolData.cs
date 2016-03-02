@@ -3,7 +3,10 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
-    public interface IProtocol : IDataModel
+    /// <summary>
+    /// 协议包模型接口
+    /// </summary>
+    public interface IProtocolData : IDataModel
     {
         /// <summary>
         /// 协议所属设备

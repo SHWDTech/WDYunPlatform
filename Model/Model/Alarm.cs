@@ -5,13 +5,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 报警信息
+    /// </summary>
     [Serializable]
     public class Alarm: DataModelBase, IAlarm
     {
-        [Required]
-        [Display(Name = "报警信息所属域")]
-        public SysDomain AlarmDomain { get; set; }
-
         [Required]
         [Display(Name = "报警信息来源设备")]
         public Device Device { get; set; }

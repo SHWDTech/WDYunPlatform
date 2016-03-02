@@ -2,6 +2,9 @@
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 用户自定义字典模型接口
+    /// </summary>
     public interface IUserDictionary : ISysDomainModel
     {
         /// <summary>

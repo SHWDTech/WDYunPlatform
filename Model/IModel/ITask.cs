@@ -4,6 +4,9 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 任务模型接口
+    /// </summary>
     public interface ITask : ISysDomainModel
     {
         /// <summary>
@@ -34,7 +37,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 任务包含协议
         /// </summary>
-        List<Protocol> TaskProtocols { get; set; } 
+        List<ProtocolData> TaskProtocols { get; set; } 
 
         /// <summary>
         /// 任务生成时间

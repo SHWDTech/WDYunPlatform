@@ -26,7 +26,7 @@ namespace SHWD.Platform.Repository.Entities
 
         public virtual DbSet<Project> Projects { get; set; }
 
-        public virtual DbSet<Protocol> Protocols { get; set; }
+        public virtual DbSet<ProtocolData> Protocols { get; set; }
 
         public virtual DbSet<Role> Roles { get; set; }
 

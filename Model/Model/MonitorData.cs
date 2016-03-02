@@ -5,17 +5,14 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 监测数据
+    /// </summary>
     [Serializable]
     public class MonitorData :DataModelBase, IMonitorData
     {
-        [Key]
-        public long MonitorDataId { get; set; }
-
         [Display(Name = "数据来源协议包")]
-        public Protocol Protocol { get; set; }
-
-        [Display(Name = "数据所属域")]
-        public SysDomain MonitorDataDomain { get; set; }
+        public ProtocolData ProtocolData { get; set; }
 
         [Display(Name = "数据类型")]
         public int MonitorDataType { get; set; }

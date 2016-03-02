@@ -5,13 +5,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 图片
+    /// </summary>
     [Serializable]
     public class Photo : SysDomainModelBase, IPhoto
     {
-        [Required]
-        [Display(Name = "照片所属域")]
-        public SysDomain PhotoDomain { get; set; }
-
         [Required]
         [Display(Name = "照片所属设备")]
         public Device PhtotDevice { get; set; }

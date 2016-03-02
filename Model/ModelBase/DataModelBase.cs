@@ -4,6 +4,9 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
+    /// <summary>
+    /// 数据模型基类
+    /// </summary>
     [Serializable]
     public class DataModelBase : ModelBase, IDataModel
     {

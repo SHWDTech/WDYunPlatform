@@ -7,12 +7,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     [Serializable]
     public class User : SysDomainModelBase, IUser
     {
-        [Required]
-        public SysDomain UserDomain { get; set; }
-
         [Display(Name = "用户名")]
         [MaxLength(25)]
         [Required]
@@ -40,6 +40,7 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(15)]
         public string Telephone { get; set; }
 
+        [Display(Name = "最后登录时间")]
         [DataType(DataType.DateTime)]
         public DateTime LastLoginDateTime { get; set; }
 

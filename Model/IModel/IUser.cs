@@ -4,6 +4,9 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 用户模型接口
+    /// </summary>
     public interface IUser : ISysDomainModel
     {
         /// <summary>

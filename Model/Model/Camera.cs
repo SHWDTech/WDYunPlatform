@@ -5,15 +5,15 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 摄像头
+    /// </summary>
     [Serializable]
     public class Camera: SysDomainModelBase, ICamera
     {
         [Display(Name = "摄像头外部ID")]
         [MaxLength(50)]
         public string CameraOutId { get; set; }
-
-        [Display(Name = "摄像头所属域")]
-        public SysDomain CameraDomain { get; set; }
 
         [Display(Name = "摄像头登录名")]
         [MaxLength(25)]
@@ -26,6 +26,9 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "摄像头登录地址")]
         [MaxLength(200)]
         public string AccessUrl { get; set; }
+
+        [Display(Name = "摄像头登陆地址端口号")]
+        public int AccessPort { get; set; }
 
         [Display(Name = "摄像头登录类型")]
         public int AccessType { get; set; }

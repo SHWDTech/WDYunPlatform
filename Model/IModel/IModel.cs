@@ -3,6 +3,9 @@ using SHWDTech.Platform.Model.Enum;
 
 namespace SHWDTech.Platform.Model.IModel
 {
+    /// <summary>
+    /// 模型基础接口
+    /// </summary>
     public interface IModel
     {
         /// <summary>

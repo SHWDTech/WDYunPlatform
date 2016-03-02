@@ -5,6 +5,9 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 设备模型
+    /// </summary>
     [Serializable]
     public class Device : SysDomainModelBase, IDevice
     {

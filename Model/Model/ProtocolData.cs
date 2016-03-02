@@ -5,13 +5,12 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 协议数据
+    /// </summary>
     [Serializable]
-    public class Protocol : DataModelBase, IProtocol
+    public class ProtocolData : DataModelBase, IProtocolData
     {
-        [Required]
-        [Display(Name = "协议所属域")]
-        public SysDomain ProtocolDomain { get; set; }
-
         [Required]
         [Display(Name = "协议所属设备")]
         public Device Device { get; set; }

@@ -5,6 +5,9 @@ using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
+    /// <summary>
+    /// 域
+    /// </summary>
     [Serializable]
     public class SysDomain :SysModelBase, ISysDomain
     {

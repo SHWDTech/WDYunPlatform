@@ -5,6 +5,9 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
+    /// <summary>
+    /// 系统模型基类
+    /// </summary>
     [Serializable]
     public class SysModelBase : ModelBase, ISysModel
     {
