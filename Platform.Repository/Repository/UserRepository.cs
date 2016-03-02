@@ -3,7 +3,17 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
+    /// <summary>
+    /// 用户数据仓库
+    /// </summary>
     internal class UserRepository : SysRepository<IUser>, IUserRepository
     {
+        /// <summary>
+        /// 创建用户数据数据仓库实例
+        /// </summary>
+        protected UserRepository()
+        {
+            
+        }
     }
 }

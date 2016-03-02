@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IRepository<T> where T: class 
+    /// <summary>
+    /// 数据仓库基接口
+    /// </summary>
+    /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
+    public interface IRepository<T> where T: class, IModel 
     {
         /// <summary>
         /// 获取所有模型对象

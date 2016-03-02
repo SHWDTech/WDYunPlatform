@@ -3,8 +3,15 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
+    /// <summary>
+    /// 数据类型仓库基类
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DataRepository<T> : Repository<T>, IDataRepository<T> where T : class, IDataModel
     {
+        /// <summary>
+        /// 创建新的数据类型数据仓库实例
+        /// </summary>
         protected DataRepository()
         {
 

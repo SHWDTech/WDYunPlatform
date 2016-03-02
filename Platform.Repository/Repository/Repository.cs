@@ -9,8 +9,15 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
+    /// <summary>
+    /// 数据仓库泛型基类
+    /// </summary>
+    /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
     {
+        /// <summary>
+        /// 初始化数据仓库泛型基类
+        /// </summary>
         protected Repository()
         {
             
@@ -130,20 +137,26 @@ namespace SHWD.Platform.Repository.Repository
         }
     }
 
+    /// <summary>
+    /// 数据仓库基类
+    /// </summary>
     public class RepositoryBase
     {
+        /// <summary>
+        /// 初始化数据仓库基类
+        /// </summary>
         protected RepositoryBase()
         {
             
         }
 
         /// <summary>
-        /// Process所属Invoker
+        /// 数据仓库所属调用类
         /// </summary>
         public RepositoryInvoke Invoker { get; internal set; }
 
         /// <summary>
-        /// Process操作必须的上下文信息
+        /// 数据仓库操作必须的上下文信息
         /// </summary>
         public IRepositoryContext RepositoryContext => Invoker.InvokeContext;
     }

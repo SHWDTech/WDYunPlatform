@@ -3,6 +3,10 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.IRepository
 {
+    /// <summary>
+    /// 系统数据仓库基接口
+    /// </summary>
+    /// <typeparam name="T">数据仓库对应的模型类型，必须继承自ISysModel</typeparam>
     public interface ISysRepository<T> : IRepository<T> where T: class, ISysModel
     {
         /// <summary>

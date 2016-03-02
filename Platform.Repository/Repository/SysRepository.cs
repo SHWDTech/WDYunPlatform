@@ -6,8 +6,15 @@ using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
+    /// <summary>
+    /// 系统数据仓库
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class SysRepository<T> : Repository<T>, ISysRepository<T> where T : class, ISysModel
     {
+        /// <summary>
+        /// 初始化带有域的系统数据仓库基类
+        /// </summary>
         protected SysRepository()
         {
 

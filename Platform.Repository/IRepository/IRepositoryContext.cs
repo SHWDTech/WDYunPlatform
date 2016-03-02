@@ -2,6 +2,9 @@
 
 namespace SHWD.Platform.Repository.IRepository
 {
+    /// <summary>
+    /// 数据仓库上下文信息接口
+    /// </summary>
     public interface IRepositoryContext
     {
         /// <summary>
