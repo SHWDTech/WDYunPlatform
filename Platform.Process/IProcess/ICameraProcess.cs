@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
+    /// <summary>
+    /// 摄像头处理接口
+    /// </summary>
     public interface ICameraProcess
     {
         /// <summary>

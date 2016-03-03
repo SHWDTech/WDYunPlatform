@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
+    /// <summary>
+    /// 系统任务处理接口
+    /// </summary>
     public interface ITaskProcess
     {
         /// <summary>

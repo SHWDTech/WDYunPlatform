@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
+    /// <summary>
+    /// 报警信息处理接口
+    /// </summary>
     public interface IAlarmProcess
     {
         /// <summary>

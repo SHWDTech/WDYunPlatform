@@ -69,6 +69,9 @@
     <Compile Include="IProcess\IUserProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
     <Compile Include="Process\AlarmProcess.cs" />
+    <Compile Include="Process\AlarmProcessBase.cs">
+      <DependentUpon>AlarmProcess.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CameraProcess.cs" />
     <Compile Include="Process\DeviceProcess.cs" />
     <Compile Include="Process\DeviceTypeProcess.cs" />

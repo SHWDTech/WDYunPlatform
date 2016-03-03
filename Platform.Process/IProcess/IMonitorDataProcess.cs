@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
+    /// <summary>
+    /// 监测数据处理接口
+    /// </summary>
     public interface IMonitorDataProcess
     {
         /// <summary>

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
+    /// <summary>
+    /// 系统自定义字典处理接口
+    /// </summary>
     public interface ISysDictionaryProcess
     {
         /// <summary>

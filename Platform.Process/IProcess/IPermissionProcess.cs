@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
+    /// <summary>
+    /// 权限处理接口
+    /// </summary>
     public interface IPermissionProcess
     {
         /// <summary>
