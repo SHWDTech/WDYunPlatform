@@ -33,7 +33,7 @@ namespace SHWDTech.Platform.Utility
         /// </summary>
         /// <param name="obj">待检测的Object值</param>
         /// <returns>返回布尔类型，若参数是null、全部是空格，活着不存在的值（DBNull）中的一项，则返回True，否则返回False</returns>
-        public static bool IsNullOrEmpty(object obj) => 
+        public static bool IsNullOrEmpty(object obj) =>
             obj == null || (obj is string && string.IsNullOrWhiteSpace(obj.ToString())) || obj is DBNull || (obj is Guid && (Guid)obj == Guid.Empty);
 
         /// <summary>

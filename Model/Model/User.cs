@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.ModelBase;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {

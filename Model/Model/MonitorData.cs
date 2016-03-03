@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 监测数据
     /// </summary>
     [Serializable]
-    public class MonitorData :DataModelBase, IMonitorData
+    public class MonitorData : DataModelBase, IMonitorData
     {
         [Display(Name = "数据来源协议包")]
         public ProtocolData ProtocolData { get; set; }

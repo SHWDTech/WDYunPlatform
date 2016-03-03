@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.Model
 {

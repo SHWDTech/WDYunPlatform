@@ -2,7 +2,7 @@
 
 namespace SHWD.Platform.Repository.Entities
 {
-    public class DevelopInitializer: DropCreateDatabaseIfModelChanges<RepositoryDbContext>
+    public class DevelopInitializer : DropCreateDatabaseIfModelChanges<RepositoryDbContext>
     {
         protected override void Seed(RepositoryDbContext dbContext)
         {

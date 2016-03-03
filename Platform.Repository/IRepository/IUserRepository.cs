@@ -7,6 +7,5 @@ namespace SHWD.Platform.Repository.IRepository
     /// </summary>
     public interface IUserRepository : ISysRepository<IUser>
     {
-
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
+using System;
 
 namespace SHWDTech.Platform.Model.IModel
 {

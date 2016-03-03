@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
+using System.Collections.Generic;
 
 namespace SHWDTech.Platform.Model.IModel
 {

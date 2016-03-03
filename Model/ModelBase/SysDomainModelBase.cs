@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {

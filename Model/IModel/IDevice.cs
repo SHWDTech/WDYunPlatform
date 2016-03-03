@@ -1,5 +1,5 @@
-﻿using System;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
+using System;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -67,6 +67,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// 设备状态
         /// </summary>
         int Status { get; set; }
+
         /// <summary>
         /// 设备关联摄像头
         /// </summary>

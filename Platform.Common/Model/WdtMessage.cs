@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using SHWDTech.Platform.Common.Enum;
+﻿using SHWDTech.Platform.Common.Enum;
 using SHWDTech.Platform.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace SHWDTech.Platform.Common.Model
 {
@@ -49,7 +49,7 @@ namespace SHWDTech.Platform.Common.Model
             Tag = tag
         };
 
-        public static WdtMessage Error(string code, string message) 
+        public static WdtMessage Error(string code, string message)
             => NewMessage(WdtMessageType.Error, code, message, null);
 
         public static WdtMessage Error(string code, string message, object tag)

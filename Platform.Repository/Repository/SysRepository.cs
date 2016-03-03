@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SHWD.Platform.Repository.IRepository;
+using SHWDTech.Platform.Model.IModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWD.Platform.Repository.IRepository;
-using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -17,7 +17,6 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected SysRepository()
         {
-
         }
 
         public override T CreateDefaultModel()
@@ -33,7 +32,7 @@ namespace SHWD.Platform.Repository.Repository
 
         public override T ParseModel(string jsonString)
         {
-            var model =  base.ParseModel(jsonString);
+            var model = base.ParseModel(jsonString);
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
             model.CreateUser = ContextLocal.Value.CurrentUser;

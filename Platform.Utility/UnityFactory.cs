@@ -1,6 +1,6 @@
-﻿using System.Configuration;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using System.Configuration;
 
 namespace SHWDTech.Platform.Utility
 {
@@ -21,14 +21,14 @@ namespace SHWDTech.Platform.Utility
                 string appPath = Globals.ApplicationPath;
 
                 var fileMap = new ExeConfigurationFileMap
-                                    {
-                                        ExeConfigFilename = appPath + "\\" + "Unity.Config"
-                                    };
+                {
+                    ExeConfigFilename = appPath + "\\" + "Unity.Config"
+                };
 
                 Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap,
                     ConfigurationUserLevel.None);
 
-                var unitySection = (UnityConfigurationSection) configuration.GetSection("unity");
+                var unitySection = (UnityConfigurationSection)configuration.GetSection("unity");
 
                 if (unitySection != null)
                 {

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
+using System.Collections.Generic;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -21,11 +21,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 属于该用户的角色
         /// </summary>
-        List<User> Users { get; set; } 
+        List<User> Users { get; set; }
 
         /// <summary>
         /// 角色拥有的权限
         /// </summary>
-        List<Permission> Permissions { get; set; } 
+        List<Permission> Permissions { get; set; }
     }
 }

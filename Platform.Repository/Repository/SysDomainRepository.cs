@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SHWD.Platform.Repository.IRepository;
+using SHWDTech.Platform.Model.IModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWD.Platform.Repository.IRepository;
-using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -10,15 +10,14 @@ namespace SHWD.Platform.Repository.Repository
     /// 带有域的系统数据仓库
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SysDomainRepository <T> : SysRepository<T>, ISysDomainRepository<T> where T: class, ISysDomainModel
+    public class SysDomainRepository<T> : SysRepository<T>, ISysDomainRepository<T> where T : class, ISysDomainModel
     {
         /// <summary>
         /// 初始化带有域的系统数据仓库基类
         /// </summary>
         protected SysDomainRepository()
         {
-            
-        } 
+        }
 
         public override T CreateDefaultModel()
         {

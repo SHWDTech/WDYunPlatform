@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Enum;
 using SHWDTech.Platform.Model.IModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -21,8 +21,7 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected Repository()
         {
-            
-        } 
+        }
 
         public virtual IEnumerable<T> GetAllModels()
         {
@@ -69,7 +68,6 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual Guid AddOrUpdate(T model)
         {
-
             using (var context = new RepositoryDbContext())
             {
                 if (!IsExists(model))
@@ -79,7 +77,6 @@ namespace SHWD.Platform.Repository.Repository
 
                 return context.SaveChanges() != 1 ? Guid.Empty : model.Guid;
             }
-
         }
 
         public virtual int AddOrUpdate(IEnumerable<T> models)
@@ -136,6 +133,16 @@ namespace SHWD.Platform.Repository.Repository
                 return context.Set<T>().Find(exp) != null;
             }
         }
+
+        void IRepository<T>.Delete(T model)
+        {
+            using (var context = new RepositoryDbContext())
+            {
+                context.Set<T>().Remove(model);
+
+                context.SaveChanges();
+            }
+        }
     }
 
     /// <summary>
@@ -148,9 +155,8 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected RepositoryBase()
         {
-            
         }
 
-        public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; } 
+        public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; }
     }
 }

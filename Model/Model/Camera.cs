@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 摄像头
     /// </summary>
     [Serializable]
-    public class Camera: SysDomainModelBase, ICamera
+    public class Camera : SysDomainModelBase, ICamera
     {
         [Display(Name = "摄像头外部ID")]
         [MaxLength(50)]

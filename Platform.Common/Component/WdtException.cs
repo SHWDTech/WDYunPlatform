@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SHWDTech.Platform.Common.Enum;
 using SHWDTech.Platform.Utility;
+using System;
+using System.Runtime.Serialization;
 
 namespace SHWDTech.Platform.Common.Component
 {
@@ -11,7 +11,6 @@ namespace SHWDTech.Platform.Common.Component
     {
         public WdtException()
         {
-
         }
 
         public WdtException(Exception sex)
@@ -34,25 +33,21 @@ namespace SHWDTech.Platform.Common.Component
         public WdtException(string errorCode, string exceptionMessage)
             : this(PlatformExceptionType.CustomError, errorCode, exceptionMessage, null)
         {
-
         }
 
         public WdtException(string errorCode, string exceptionMessage, bool isSeriousLevel, params object[] processParam)
             : this(PlatformExceptionType.CustomError, errorCode, exceptionMessage, null, isSeriousLevel, processParam)
         {
-
         }
 
         public WdtException(PlatformExceptionType exceptionType, string errorCode, string exceptionMessage)
             : this(exceptionType, errorCode, exceptionMessage, null)
         {
-
         }
 
         public WdtException(PlatformExceptionType exceptionType, string errorCode, string exceptionMessage, object tag)
             : this(exceptionType, errorCode, exceptionMessage, tag, false, null)
         {
-
         }
 
         public WdtException(PlatformExceptionType exceptionType, string errorCode, string exceptionMessage, object tag,
@@ -90,7 +85,6 @@ namespace SHWDTech.Platform.Common.Component
         private string _message;
 
         private string _exceptionId;
-
 
         public object Tag { get; set; }
 
@@ -155,7 +149,6 @@ namespace SHWDTech.Platform.Common.Component
             }
         }
 
-
         public static WdtException Instance(Exception ex, bool isSeriousLevel, string errorCode, string msg,
             params object[] processData)
         {
@@ -175,6 +168,7 @@ namespace SHWDTech.Platform.Common.Component
         }
 
         #region 友好提示异常
+
         public static WdtException Info(Exception ex)
             => Instance(ex, false, null, null);
 
@@ -196,7 +190,7 @@ namespace SHWDTech.Platform.Common.Component
         public static WdtException Info(string errorCode, string msg, params object[] processData)
             => Instance(null, false, errorCode, msg, processData);
 
-        #endregion
+        #endregion 友好提示异常
 
         #region 严重错误提示异常
 
@@ -221,6 +215,6 @@ namespace SHWDTech.Platform.Common.Component
         public static WdtException Error(string errorCode, string msg, params object[] processData)
             => Instance(null, true, errorCode, msg, processData);
 
-        #endregion
+        #endregion 严重错误提示异常
     }
 }

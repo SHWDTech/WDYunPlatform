@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SHWDTech.Platform.Common.Interface;
 using SHWDTech.Platform.Common.Model;
 using SHWDTech.Platform.Utility;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace SHWDTech.Platform.Common.Component
 {
@@ -12,13 +12,13 @@ namespace SHWDTech.Platform.Common.Component
     {
         #region 扩展Exception / void
 
-        public static WdtException Info(this Exception ex, string msg) 
+        public static WdtException Info(this Exception ex, string msg)
             => WdtException.Info(ex, null, msg);
 
-        public static WdtException Info(this Exception ex, string errorCode, string msg) 
+        public static WdtException Info(this Exception ex, string errorCode, string msg)
             => WdtException.Info(ex, errorCode, msg);
 
-        public static WdtException Info(this Exception ex, string errorCode, string msg, params object[] processData) 
+        public static WdtException Info(this Exception ex, string errorCode, string msg, params object[] processData)
             => WdtException.Info(ex, errorCode, msg, processData);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace SHWDTech.Platform.Common.Component
         public static WdtException Error(this Exception ex, string errorCode, string msg, params object[] processData)
             => WdtException.Error(ex, errorCode, msg, processData);
 
-        public static string GetMessage(this Exception ex, bool writeLog = true, bool includeDebugMessage = false) 
+        public static string GetMessage(this Exception ex, bool writeLog = true, bool includeDebugMessage = false)
             => UnityFactory.Resolve<IErrorHandle>().GetMessage(ex, writeLog, includeDebugMessage);
 
         public static WdtMessage GetMessage(this Exception ex)
@@ -57,7 +57,6 @@ namespace SHWDTech.Platform.Common.Component
 
         public static IEnumerable<Exception> GetExceptionList(this Exception ex)
             => UnityFactory.Resolve<IErrorHandle>().GetExceptionList(ex);
-
 
         /// <summary>
         /// 输出到日志中的消息
@@ -129,6 +128,7 @@ namespace SHWDTech.Platform.Common.Component
                 return msg.ToString();
             }
         }
-        #endregion
+
+        #endregion 扩展Exception / void
     }
 }

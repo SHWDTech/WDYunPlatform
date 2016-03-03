@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SHWDTech.Platform.Model.Model;
+using System;
 using System.Collections.Generic;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -37,7 +37,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 任务包含协议
         /// </summary>
-        List<ProtocolData> TaskProtocols { get; set; } 
+        List<ProtocolData> TaskProtocols { get; set; }
 
         /// <summary>
         /// 任务生成时间

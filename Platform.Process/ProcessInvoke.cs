@@ -1,6 +1,6 @@
-﻿using System.Threading;
-using SHWD.Platform.Repository.IRepository;
+﻿using SHWD.Platform.Repository.IRepository;
 using SHWD.Platform.Repository.Repository;
+using System.Threading;
 
 namespace Platform.Process
 {

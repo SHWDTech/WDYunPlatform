@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 系统配置
     /// </summary>
     [Serializable]
-    public class SysConfig: SysModelBase, ISysConfig
+    public class SysConfig : SysModelBase, ISysConfig
     {
         [Required]
         [Display(Name = "系统配置名称")]

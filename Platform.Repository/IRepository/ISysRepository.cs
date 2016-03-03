@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
+using System.Collections.Generic;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -7,7 +7,7 @@ namespace SHWD.Platform.Repository.IRepository
     /// 系统数据仓库基接口
     /// </summary>
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自ISysModel</typeparam>
-    public interface ISysRepository<T> : IRepository<T> where T: class, ISysModel
+    public interface ISysRepository<T> : IRepository<T> where T : class, ISysModel
     {
         /// <summary>
         /// 标记为删除

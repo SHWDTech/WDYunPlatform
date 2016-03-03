@@ -1,5 +1,5 @@
-﻿using System.Data.Entity;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
+using System.Data.Entity;
 
 namespace SHWD.Platform.Repository.Entities
 {
@@ -13,7 +13,6 @@ namespace SHWD.Platform.Repository.Entities
         /// </summary>
         public RepositoryDbContext() : base("DefaultConnection")
         {
-            
         }
 
         /// <summary>

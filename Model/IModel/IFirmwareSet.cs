@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.Model;
+using System.Collections.Generic;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -16,6 +16,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 固件集包含固件列表
         /// </summary>
-        List<Firmware> Firmwares { get; set; } 
+        List<Firmware> Firmwares { get; set; }
     }
 }

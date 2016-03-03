@@ -1,7 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 报警信息
     /// </summary>
     [Serializable]
-    public class Alarm: DataModelBase, IAlarm
+    public class Alarm : DataModelBase, IAlarm
     {
         [Required]
         [Display(Name = "报警信息来源设备")]

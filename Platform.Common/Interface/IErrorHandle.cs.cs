@@ -1,9 +1,6 @@
-﻿using System;
+﻿using SHWDTech.Platform.Common.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SHWDTech.Platform.Common.Model;
 
 namespace SHWDTech.Platform.Common.Interface
 {

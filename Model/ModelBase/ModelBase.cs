@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SHWDTech.Platform.Model.Enum;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SHWDTech.Platform.Model.Enum;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {

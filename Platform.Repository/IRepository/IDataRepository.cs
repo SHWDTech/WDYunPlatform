@@ -8,6 +8,5 @@ namespace SHWD.Platform.Repository.IRepository
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IDataModel</typeparam>
     public interface IDataRepository<T> : IRepository<T> where T : class, IDataModel
     {
-        
     }
 }

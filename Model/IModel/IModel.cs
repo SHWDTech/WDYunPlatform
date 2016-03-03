@@ -1,5 +1,5 @@
-﻿using System;
-using SHWDTech.Platform.Model.Enum;
+﻿using SHWDTech.Platform.Model.Enum;
+using System;
 
 namespace SHWDTech.Platform.Model.IModel
 {

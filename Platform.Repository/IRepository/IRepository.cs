@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SHWDTech.Platform.Model.IModel;
+using System;
 using System.Collections.Generic;
-using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -8,7 +8,7 @@ namespace SHWD.Platform.Repository.IRepository
     /// 数据仓库基接口
     /// </summary>
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
-    public interface IRepository<T> where T: class, IModel 
+    public interface IRepository<T> where T : class, IModel
     {
         /// <summary>
         /// 获取所有模型对象
@@ -56,6 +56,12 @@ namespace SHWD.Platform.Repository.IRepository
         /// <param name="models">被添加或修改的对象列表</param>
         /// <returns>成功添加或修改的对象数量</returns>
         int AddOrUpdate(IEnumerable<T> models);
+
+        /// <summary>
+        /// 删除对象
+        /// </summary>
+        /// <param name="model">被删除的对象</param>
+        void Delete(T model);
 
         /// <summary>
         /// 批量删除对象
