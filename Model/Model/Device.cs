@@ -11,20 +11,34 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Device : SysDomainModelBase, IDevice
     {
-        [Display(Name = "设备所属域")]
-        public Domain DeviceDomain { get; set; }
+        [Required]
+        [Display(Name = "设备类型")]
+        [MaxLength(50)]
+        public DeviceType DeviceType { get; set; }
 
-        [Display(Name = "设备编码")]
-        [MaxLength(25)]
-        public string DeviceCode { get; set; }
+        [Display(Name = "设备对应的原设备")]
+        public Device OriginalDevice { get; set; }
 
+        [Required]
         [Display(Name = "设备名称")]
         [MaxLength(25)]
         public string DeviceName { get; set; }
 
+        [MaxLength(25)]
+        [Display(Name = "设备访问密码")]
+        public string DevicePassword { get; set; }
+
+        [Required]
+        [Display(Name = "设备唯一标识符")]
+        public Guid DeviceGuid { get; set; }
+
         [Display(Name = "设备NODE编码")]
-        [MaxLength(256)]
+        [MaxLength(16)]
         public byte[] DeviceNodeId { get; set; }
+
+        [Required]
+        [Display(Name = "设备关联固件集")]
+        public FirmwareSet FirmwareSet { get; set; }
 
         [Display(Name = "设备所属项目")]
         public Project Project { get; set; }

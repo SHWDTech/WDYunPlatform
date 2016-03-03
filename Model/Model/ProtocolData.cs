@@ -25,11 +25,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "协议类型")]
-        public int ProtocolType { get; set; }
-
-        [Required]
-        [Display(Name = "协议版本")]
-        public int ProtocolVersion { get; set; }
+        public Protocol Protocol { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime UpdateTime { get; set; }

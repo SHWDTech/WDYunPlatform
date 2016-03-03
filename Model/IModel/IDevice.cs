@@ -9,9 +9,14 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IDevice : ISysDomainModel
     {
         /// <summary>
-        /// 设备编码
+        /// 设备类型
         /// </summary>
-        string DeviceCode { get; set; }
+        DeviceType DeviceType { get; set; }
+
+        /// <summary>
+        /// 设备对应的原设备
+        /// </summary>
+        Device OriginalDevice { get; set; }
 
         /// <summary>
         /// 设备名称
@@ -19,9 +24,24 @@ namespace SHWDTech.Platform.Model.IModel
         string DeviceName { get; set; }
 
         /// <summary>
+        /// 设备访问密码
+        /// </summary>
+        string DevicePassword { get; set; }
+
+        /// <summary>
+        /// 设备唯一标识符
+        /// </summary>
+        Guid DeviceGuid { get; set; }
+
+        /// <summary>
         /// 设备NODE编码
         /// </summary>
         byte[] DeviceNodeId { get; set; }
+
+        /// <summary>
+        /// 设备关联固件集
+        /// </summary>
+        FirmwareSet FirmwareSet { get; set; }
 
         /// <summary>
         /// 设备所属项目

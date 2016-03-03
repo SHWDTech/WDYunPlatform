@@ -26,12 +26,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 协议类型
         /// </summary>
-        int ProtocolType { get; set; }
-
-        /// <summary>
-        /// 协议版本
-        /// </summary>
-        int ProtocolVersion { get; set; }
+        Protocol Protocol { get; set; }
 
         /// <summary>
         /// 协议更新时间
