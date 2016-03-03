@@ -1,7 +1,6 @@
-﻿using SHWD.Platform.Repository.IRepository;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 
-namespace SHWD.Platform.Repository
+namespace SHWD.Platform.Repository.IRepository
 {
     /// <summary>
     /// 协议信息数据仓库接口

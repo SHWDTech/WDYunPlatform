@@ -59,7 +59,7 @@
     <Compile Include="Entities\RepositoryDbContext.cs" />
     <Compile Include="Entities\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Exception\ModelVerificationException.cs" />
-    <Compile Include="IProtocolRepository.cs" />
+    <Compile Include="IRepository\IProtocolRepository.cs" />
     <Compile Include="IRepository\IDeviceTypeRepository.cs" />
     <Compile Include="IRepository\IDomainRepository.cs" />
     <Compile Include="IRepository\IFirmwareRepository.cs" />
@@ -85,7 +85,6 @@
     <Compile Include="IRepository\IUserConfigRepository.cs" />
     <Compile Include="IRepository\IUserDictionaryRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
-    <Compile Include="RepositoryInvoke.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
     <Compile Include="Repository\DataRepository.cs" />

@@ -17,7 +17,7 @@ namespace SHWD.Platform.Repository.Repository
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
     {
         /// <summary>
-        /// 初始化数据仓库泛型基类
+        /// 创建一个新的数据仓库泛型基类对象
         /// </summary>
         protected Repository()
         {
