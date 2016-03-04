@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [Key]
         [Display(Name = "唯一标识符")]
-        public virtual Guid Guid { get; set; }
+        public virtual Guid Id { get; set; }
 
         [NotMapped]
         [Display(Name = "模型状态")]

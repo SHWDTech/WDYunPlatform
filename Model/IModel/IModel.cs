@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 数据唯一标识ID
         /// </summary>
-        Guid Guid { get; set; }
+        Guid Id { get; set; }
 
         /// <summary>
         /// 对象状态

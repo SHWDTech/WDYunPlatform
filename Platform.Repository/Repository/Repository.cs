@@ -75,7 +75,7 @@ namespace SHWD.Platform.Repository.Repository
                     context.Set<T>().Add(model);
                 }
 
-                return context.SaveChanges() != 1 ? Guid.Empty : model.Guid;
+                return context.SaveChanges() != 1 ? Guid.Empty : model.Id;
             }
         }
 
