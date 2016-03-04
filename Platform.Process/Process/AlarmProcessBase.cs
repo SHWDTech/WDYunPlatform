@@ -2,14 +2,13 @@
 using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
-using Platform.Process.IProcess;
 
 namespace Platform.Process.Process
 {
     /// <summary>
     /// 报警信息处理基类
     /// </summary>
-    public class AlarmProcessBase : IAlarmProcess
+    public class AlarmProcessBase
     {
         /// <summary>
         /// 默认数据仓库

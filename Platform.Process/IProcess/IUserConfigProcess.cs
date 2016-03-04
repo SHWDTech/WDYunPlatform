@@ -7,7 +7,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 用具配置处理接口
     /// </summary>
-    public interface IUserConfigConfigProcess
+    public interface IUserConfigProcess
     {
         /// <summary>
         /// 获取所有用户配置

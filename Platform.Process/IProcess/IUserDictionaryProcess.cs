@@ -7,7 +7,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 用户自定义字典处理接口
     /// </summary>
-    public interface IUserDictionaryDictionaryProcess
+    public interface IUserDictionaryProcess
     {
         /// <summary>
         /// 获取所有用户自定义词典
