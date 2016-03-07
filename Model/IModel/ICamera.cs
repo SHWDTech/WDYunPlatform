@@ -1,4 +1,6 @@
-﻿namespace SHWDTech.Platform.Model.IModel
+﻿using SHWDTech.Platform.Model.Enums;
+
+namespace SHWDTech.Platform.Model.IModel
 {
     /// <summary>
     /// 摄像头模型接口
@@ -44,5 +46,10 @@
         /// 摄像头附加信息
         /// </summary>
         string ExtraInformation { get; set; }
+
+        /// <summary>
+        /// 摄像头状态
+        /// </summary>
+        CameraStatus CameraStatus { get; set; }
     }
 }

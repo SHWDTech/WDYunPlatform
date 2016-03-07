@@ -65,7 +65,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enum\ModelState.cs" />
+    <Compile Include="Enums\CameraStatus.cs" />
+    <Compile Include="Enums\DeviceStatus.cs" />
+    <Compile Include="Enums\ModelState.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
     <Compile Include="IModel\IDataModel.cs" />

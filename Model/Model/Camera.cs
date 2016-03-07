@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -38,5 +39,9 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "摄像头附加信息")]
         public string ExtraInformation { get; set; }
+
+        [Required]
+        [Display(Name = "摄像头状态")]
+        public CameraStatus CameraStatus { get; set; }
     }
 }
