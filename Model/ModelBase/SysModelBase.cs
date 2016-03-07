@@ -16,14 +16,14 @@ namespace SHWDTech.Platform.Model.ModelBase
         public DateTime CreateDateTime { get; set; }
 
         [JsonIgnore]
-        public IUser CreateUser { get; set; }
+        public IWdUser CreateUser { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
         public DateTime LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public IUser LastUpdateUser { get; set; }
+        public IWdUser LastUpdateUser { get; set; }
 
         [JsonIgnore]
         public bool IsDeleted { get; set; }

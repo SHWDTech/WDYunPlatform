@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Security.Principal;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -11,7 +13,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 用户
     /// </summary>
     [Serializable]
-    public class User : SysDomainModelBase, IUser
+    public class WdUser : SysDomainModelBase, IWdUser
     {
         [Display(Name = "用户名")]
         [MaxLength(25)]
@@ -45,6 +47,11 @@ namespace SHWDTech.Platform.Model.Model
         public DateTime LastLoginDateTime { get; set; }
 
         [Display(Name = "所属用户组")]
-        public List<Role> Roles { get; set; }
+        public List<WdRole> Roles { get; set; }
+
+        public bool IsInRole(string role) => Roles.Any(item => item.RoleName == role);
+
+        [NotMapped]
+        public IIdentity Identity { get; set; }
     }
 }

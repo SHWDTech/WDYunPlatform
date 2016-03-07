@@ -15,36 +15,36 @@ namespace Platform.Process.Process
         /// </summary>
         private RoleRepository DefaultRepository { get; } = new RoleRepository();
 
-        public IEnumerable<IRole> GetAllModels() => DefaultRepository.GetAllModels();
+        public IEnumerable<IWdRole> GetAllModels() => DefaultRepository.GetAllModels();
 
-        public IEnumerable<IRole> GetModels(Func<IRole, bool> exp) => DefaultRepository.GetModels(exp);
+        public IEnumerable<IWdRole> GetModels(Func<IWdRole, bool> exp) => DefaultRepository.GetModels(exp);
 
-        public int GetCount(Func<IRole, bool> exp) => DefaultRepository.GetCount(exp);
+        public int GetCount(Func<IWdRole, bool> exp) => DefaultRepository.GetCount(exp);
 
-        public IRole CreateDefaultModel() => DefaultRepository.CreateDefaultModel();
+        public IWdRole CreateDefaultModel() => DefaultRepository.CreateDefaultModel();
 
-        public IRole ParseModel(string jsonString) => DefaultRepository.ParseModel(jsonString);
+        public IWdRole ParseModel(string jsonString) => DefaultRepository.ParseModel(jsonString);
 
-        public Guid AddOrUpdate(IRole model) => DefaultRepository.AddOrUpdate(model);
+        public Guid AddOrUpdate(IWdRole model) => DefaultRepository.AddOrUpdate(model);
 
-        public int AddOrUpdate(IEnumerable<IRole> models) => DefaultRepository.AddOrUpdate(models);
+        public int AddOrUpdate(IEnumerable<IWdRole> models) => DefaultRepository.AddOrUpdate(models);
 
-        public int Delete(IEnumerable<IRole> models) => DefaultRepository.Delete(models);
+        public int Delete(IEnumerable<IWdRole> models) => DefaultRepository.Delete(models);
 
-        public void Delete(IRole model) => DefaultRepository.Delete(model);
+        public void Delete(IWdRole model) => DefaultRepository.Delete(model);
 
-        public bool IsExists(IRole model) => DefaultRepository.IsExists(model);
+        public bool IsExists(IWdRole model) => DefaultRepository.IsExists(model);
 
-        public bool IsExists(Func<IRole, bool> exp) => DefaultRepository.IsExists(exp);
+        public bool IsExists(Func<IWdRole, bool> exp) => DefaultRepository.IsExists(exp);
 
-        public void MarkDelete(IRole model) => DefaultRepository.MarkDelete(model);
+        public void MarkDelete(IWdRole model) => DefaultRepository.MarkDelete(model);
 
-        public void MarkDelete(IEnumerable<IRole> models) => DefaultRepository.MarkDelete(models);
+        public void MarkDelete(IEnumerable<IWdRole> models) => DefaultRepository.MarkDelete(models);
 
-        public void SetEnableStatus(IRole model, bool enableStatus)
+        public void SetEnableStatus(IWdRole model, bool enableStatus)
             => DefaultRepository.SetEnableStatus(model, enableStatus);
 
-        public void SetEnableStatus(IEnumerable<IRole> models, bool enableStatus)
+        public void SetEnableStatus(IEnumerable<IWdRole> models, bool enableStatus)
             => DefaultRepository.SetEnableStatus(models, enableStatus);
     }
 }

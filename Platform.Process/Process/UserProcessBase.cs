@@ -15,36 +15,36 @@ namespace Platform.Process.Process
         /// </summary>
         private UserRepository DefaultRepository { get; } = new UserRepository();
 
-        public IEnumerable<IUser> GetAllModels() => DefaultRepository.GetAllModels();
+        public IEnumerable<IWdUser> GetAllModels() => DefaultRepository.GetAllModels();
 
-        public IEnumerable<IUser> GetModels(Func<IUser, bool> exp) => DefaultRepository.GetModels(exp);
+        public IEnumerable<IWdUser> GetModels(Func<IWdUser, bool> exp) => DefaultRepository.GetModels(exp);
 
-        public int GetCount(Func<IUser, bool> exp) => DefaultRepository.GetCount(exp);
+        public int GetCount(Func<IWdUser, bool> exp) => DefaultRepository.GetCount(exp);
 
-        public IUser CreateDefaultModel() => DefaultRepository.CreateDefaultModel();
+        public IWdUser CreateDefaultModel() => DefaultRepository.CreateDefaultModel();
 
-        public IUser ParseModel(string jsonString) => DefaultRepository.ParseModel(jsonString);
+        public IWdUser ParseModel(string jsonString) => DefaultRepository.ParseModel(jsonString);
 
-        public Guid AddOrUpdate(IUser model) => DefaultRepository.AddOrUpdate(model);
+        public Guid AddOrUpdate(IWdUser model) => DefaultRepository.AddOrUpdate(model);
 
-        public int AddOrUpdate(IEnumerable<IUser> models) => DefaultRepository.AddOrUpdate(models);
+        public int AddOrUpdate(IEnumerable<IWdUser> models) => DefaultRepository.AddOrUpdate(models);
 
-        public int Delete(IEnumerable<IUser> models) => DefaultRepository.Delete(models);
+        public int Delete(IEnumerable<IWdUser> models) => DefaultRepository.Delete(models);
 
-        public void Delete(IUser model) => DefaultRepository.Delete(model);
+        public void Delete(IWdUser model) => DefaultRepository.Delete(model);
 
-        public bool IsExists(IUser model) => DefaultRepository.IsExists(model);
+        public bool IsExists(IWdUser model) => DefaultRepository.IsExists(model);
 
-        public bool IsExists(Func<IUser, bool> exp) => DefaultRepository.IsExists(exp);
+        public bool IsExists(Func<IWdUser, bool> exp) => DefaultRepository.IsExists(exp);
 
-        public void MarkDelete(IUser model) => DefaultRepository.MarkDelete(model);
+        public void MarkDelete(IWdUser model) => DefaultRepository.MarkDelete(model);
 
-        public void MarkDelete(IEnumerable<IUser> models) => DefaultRepository.MarkDelete(models);
+        public void MarkDelete(IEnumerable<IWdUser> models) => DefaultRepository.MarkDelete(models);
 
-        public void SetEnableStatus(IUser model, bool enableStatus)
+        public void SetEnableStatus(IWdUser model, bool enableStatus)
             => DefaultRepository.SetEnableStatus(model, enableStatus);
 
-        public void SetEnableStatus(IEnumerable<IUser> models, bool enableStatus)
+        public void SetEnableStatus(IEnumerable<IWdUser> models, bool enableStatus)
             => DefaultRepository.SetEnableStatus(models, enableStatus);
     }
 }

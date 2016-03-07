@@ -1,13 +1,14 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace SHWDTech.Platform.Model.IModel
 {
     /// <summary>
     /// 用户模型接口
     /// </summary>
-    public interface IUser : ISysDomainModel
+    public interface IWdUser : ISysDomainModel, IPrincipal
     {
         /// <summary>
         /// 用户名
@@ -42,6 +43,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户所属角色
         /// </summary>
-        List<Role> Roles { get; set; }
+        List<WdRole> Roles { get; set; }
     }
 }

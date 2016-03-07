@@ -10,7 +10,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// <summary>
         /// 当前操作用户
         /// </summary>
-        IUser CurrentUser { get; set; }
+        IWdUser CurrentUser { get; set; }
 
         /// <summary>
         /// 当前操作域

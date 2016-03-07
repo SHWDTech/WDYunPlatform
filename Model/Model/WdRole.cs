@@ -10,10 +10,10 @@ namespace SHWDTech.Platform.Model.Model
     /// 角色
     /// </summary>
     [Serializable]
-    public class Role : SysDomainModelBase, IRole
+    public class WdRole : SysDomainModelBase, IWdRole
     {
         [Display(Name = "父级角色")]
-        public Role ParentRole { get; set; }
+        public WdRole ParentRole { get; set; }
 
         [Required]
         [Display(Name = "用户组名")]
@@ -21,7 +21,7 @@ namespace SHWDTech.Platform.Model.Model
         public string RoleName { get; set; }
 
         [Display(Name = "包含用户")]
-        public List<User> Users { get; set; }
+        public List<WdUser> Users { get; set; }
 
         [Display(Name = "包含权限")]
         public List<Permission> Permissions { get; set; }

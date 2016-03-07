@@ -15,7 +15,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字段创建人
         /// </summary>
-        IUser CreateUser { get; set; }
+        IWdUser CreateUser { get; set; }
 
         /// <summary>
         /// 字段最后一次修改时间
@@ -25,7 +25,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字段最后一次修改人
         /// </summary>
-        IUser LastUpdateUser { get; set; }
+        IWdUser LastUpdateUser { get; set; }
 
         /// <summary>
         /// 字段是否删除

@@ -63,7 +63,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 系统角色
         /// </summary>
-        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<WdRole> Roles { get; set; }
 
         /// <summary>
         /// 系统配置
@@ -83,7 +83,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 用户
         /// </summary>
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WdUser> Users { get; set; }
 
         /// <summary>
         /// 用户配置

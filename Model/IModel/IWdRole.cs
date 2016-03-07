@@ -6,12 +6,12 @@ namespace SHWDTech.Platform.Model.IModel
     /// <summary>
     /// 角色模型接口
     /// </summary>
-    public interface IRole : ISysDomainModel
+    public interface IWdRole : ISysDomainModel
     {
         /// <summary>
         /// 角色所属父角色
         /// </summary>
-        Role ParentRole { get; set; }
+        WdRole ParentRole { get; set; }
 
         /// <summary>
         /// 角色名称
@@ -21,7 +21,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 属于该用户的角色
         /// </summary>
-        List<User> Users { get; set; }
+        List<WdUser> Users { get; set; }
 
         /// <summary>
         /// 角色拥有的权限

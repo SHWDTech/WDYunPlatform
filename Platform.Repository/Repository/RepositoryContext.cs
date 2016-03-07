@@ -8,7 +8,7 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class RepositoryContext : IRepositoryContext
     {
-        public IUser CurrentUser { get; set; }
+        public IWdUser CurrentUser { get; set; }
 
         public IDomain CurrentDomain { get; set; }
     }
