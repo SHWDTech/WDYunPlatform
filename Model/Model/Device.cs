@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -53,7 +54,7 @@ namespace SHWDTech.Platform.Model.Model
         public DateTime EndTime { get; set; }
 
         [Display(Name = "设备状态")]
-        public int Status { get; set; }
+        public DeviceStatus Status { get; set; }
 
         [Display(Name = "设备关联摄像头")]
         public Camera Camera { get; set; }

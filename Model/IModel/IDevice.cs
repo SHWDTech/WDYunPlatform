@@ -1,5 +1,6 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -66,7 +67,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备状态
         /// </summary>
-        int Status { get; set; }
+        DeviceStatus Status { get; set; }
 
         /// <summary>
         /// 设备关联摄像头

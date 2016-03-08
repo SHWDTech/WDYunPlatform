@@ -21,7 +21,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 报警类别
         /// </summary>
-        int AlarmType { get; set; }
+        SysDictionary AlarmType { get; set; }
 
         /// <summary>
         /// 数据更新时间
