@@ -148,7 +148,6 @@
     <Content Include="Fonts\metro.ttf" />
     <Content Include="Fonts\metro.woff" />
     <Content Include="Fonts\selection.json" />
-    <None Include="Scripts\Utility\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Utility\jquery-2.2.1.js" />
     <Content Include="Scripts\Utility\jquery-2.2.1.min.js" />
     <None Include="Scripts\Utility\jquery.validate-vsdoc.js" />
