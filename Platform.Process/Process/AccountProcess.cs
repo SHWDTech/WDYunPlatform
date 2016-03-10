@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.IModel;
 using System.Web;
+using System.Web.Security;
 using Platform.Process.Enums;
 
 namespace Platform.Process.Process
@@ -22,10 +22,18 @@ namespace Platform.Process.Process
 
         public IWdUser GetCurrentUser(HttpContextBase context)
         {
-            var user = _userRepository.GetUserByName(context.User.Identity.Name);
+            if((context.User as IWdUser) == null) throw new ArgumentException();
+
+            var user = _userRepository.GetUserById(((IWdUser)context.User).Id);
+
             if (user == null) throw new InvalidOperationException("未找到用户");
 
             return user;
+        }
+
+        public void SignOut()
+        {
+            
         }
 
         public SignInStatus PasswordSignIn(string loginName, string password, bool rememberMe,
@@ -33,29 +41,48 @@ namespace Platform.Process.Process
         {
             SignInStatus signInStatus;
 
-            if (_userRepository.GetUserByName(loginName) == null || !CheckPassword(loginName, password))
+            var user = _userRepository.GetUserByName(loginName);
+
+            if (user == null || !CheckPassword(user, password))
             {
                 signInStatus = SignInStatus.Failure;
             }
             else
             {
+                SetAuthCookie(user);
                 signInStatus = SignInStatus.Success;
             }
 
             return signInStatus;
         }
 
-        public bool CheckPassword(string loginName, string password) => _userRepository.GetModels(obj => obj.UserName == loginName && obj.Password == password).Count() == 1;
+        /// <summary>
+        /// 检查用户输入的密码
+        /// </summary>
+        /// <param name="user">当前登录的用户</param>
+        /// <param name="password">用户输入的密码</param>
+        /// <returns></returns>
+        private bool CheckPassword(IWdUser user, string password) => user.Password == password;
 
-        public void UpdateLoginDate(IWdUser user)
+        /// <summary>
+        /// 更新登陆时间
+        /// </summary>
+        /// <param name="user"></param>
+        private void UpdateLoginDate(IWdUser user)
         {
             user.LastLoginDateTime = DateTime.Now;
             _userRepository.AddOrUpdate(user);
         }
 
-        public void SetAuthCookie(IWdUser user)
+        /// <summary>
+        /// 设置登录用户Cookie缓存
+        /// </summary>
+        /// <param name="user"></param>
+        private void SetAuthCookie(IWdUser user)
         {
-
+            FormsAuthentication.SetAuthCookie(user.LoginName, false);
+            
+            user.LastLoginDateTime = DateTime.Now;
             UpdateLoginDate(user);
         }
     }
