@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Platform.Process.Process;
 using SHWDTech.Web_Cloud_Platform.Common;
 
 namespace SHWDTech.Web_Cloud_Platform.Controllers
@@ -8,9 +8,12 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
     {
         public WdContext WdContext { get; }
 
+        private readonly ControllerProcess _controllerProcess;
+
         public WdControllerBase()
         {
             WdContext = (WdContext)HttpContext;
+            _controllerProcess = new ControllerProcess();
         }
 
         protected override void OnActionExecuting(ActionExecutingContext context)
@@ -20,7 +23,8 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
                 base.OnActionExecuting(context);
                 return;
             }
-            
+
+            WdContext.WdUser = _controllerProcess.GetCurrentUser(WdContext.HttpContext);
         }
     }
 }

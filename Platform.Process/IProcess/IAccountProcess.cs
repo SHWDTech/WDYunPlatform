@@ -1,6 +1,4 @@
-﻿using System.Web;
-using Platform.Process.Enums;
-using SHWDTech.Platform.Model.IModel;
+﻿using Platform.Process.Enums;
 
 namespace Platform.Process.IProcess
 {
@@ -9,13 +7,6 @@ namespace Platform.Process.IProcess
     /// </summary>
     public interface IAccountProcess
     {
-        /// <summary>
-        /// 获取当前登录用户
-        /// </summary>
-        /// <param name="context">当前HttpContext</param>
-        /// <returns>当前登录用户信息</returns>
-        IWdUser GetCurrentUser(HttpContextBase context);
-
         /// <summary>
         /// 使用密码登陆
         /// </summary>

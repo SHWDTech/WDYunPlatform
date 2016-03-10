@@ -20,17 +20,6 @@ namespace Platform.Process.Process
             _userRepository = new UserRepository();
         }
 
-        public IWdUser GetCurrentUser(HttpContextBase context)
-        {
-            if((context.User as IWdUser) == null) throw new ArgumentException();
-
-            var user = _userRepository.GetUserById(((IWdUser)context.User).Id);
-
-            if (user == null) throw new InvalidOperationException("未找到用户");
-
-            return user;
-        }
-
         public void SignOut()
         {
             

@@ -21,11 +21,11 @@ namespace SHWDTech.Web_Cloud_Platform.Common
         {
             get
             {
-                return HttpContext.User as IWdUser;
+                return (IWdUser)HttpContext.Items["WdUser"];
             }
             set
             {
-                HttpContext.User = value;
+                HttpContext.Items["WdUser"] = value;
             }
         }
     }
