@@ -11,11 +11,11 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Protocol : SysModelBase, IProtocol
     {
-        [Required]
+        //Required]
         [Display(Name = "协议应用领域")]
         public SysDictionary Field { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "协议应用子领域")]
         public SysDictionary SubField { get; set; }
 

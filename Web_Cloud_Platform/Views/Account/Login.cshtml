@@ -1,5 +1,23 @@
-﻿@{
+﻿@using SHWDTech.Web_Cloud_Platform.Models
+@model AccountLoginViewModel
+@{
     ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<h2>Login</h2>
+@using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"}))
+{
+    @Html.AntiForgeryToken()
+    <div class="section-title">
+        <h3>测试登录</h3>
+    </div>
+    <div>
+        @Html.ValidationSummary(null, new {@class = "text-danger"})
+    </div>
+    <div class="">
+        <div class="input-group">
+            @Html.LabelFor(m => m.LoginName)
+            @Html.TextBoxFor(m => m.LoginName);
+        </div>
+    </div>
+}

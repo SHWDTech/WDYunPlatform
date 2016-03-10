@@ -2,9 +2,9 @@
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.IModel;
-using System.Web;
 using System.Web.Security;
 using Platform.Process.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
 {
@@ -57,7 +57,7 @@ namespace Platform.Process.Process
         /// 更新登陆时间
         /// </summary>
         /// <param name="user"></param>
-        private void UpdateLoginDate(IWdUser user)
+        private void UpdateLoginDate(WdUser user)
         {
             user.LastLoginDateTime = DateTime.Now;
             _userRepository.AddOrUpdate(user);
@@ -67,7 +67,7 @@ namespace Platform.Process.Process
         /// 设置登录用户Cookie缓存
         /// </summary>
         /// <param name="user"></param>
-        private void SetAuthCookie(IWdUser user)
+        private void SetAuthCookie(WdUser user)
         {
             FormsAuthentication.SetAuthCookie(user.LoginName, false);
             

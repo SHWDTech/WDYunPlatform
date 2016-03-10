@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Security.Principal;
 using SHWDTech.Platform.Model.Enums;
@@ -45,7 +46,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "最后登录时间")]
         [DataType(DataType.DateTime)]
-        public DateTime LastLoginDateTime { get; set; }
+        public SqlDateTime LastLoginDateTime { get; set; }
 
         [Required]
         [Display(Name = "用户状态")]

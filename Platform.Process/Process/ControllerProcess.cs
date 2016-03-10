@@ -1,10 +1,11 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using System.Web;
+using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 
 namespace Platform.Process.Process
 {
-    public class ControllerProcess
+    public class ControllerProcess : IControllerProcess
     {
         public IWdUser GetCurrentUser(HttpContext context)
         {

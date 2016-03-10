@@ -35,12 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Platform.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Model\bin\Debug\Platform.Model.dll</HintPath>
+    <Reference Include="SHWDTech.Platform.Model">
+      <HintPath>..\Model\bin\Debug\SHWDTech.Platform.Model.dll</HintPath>
     </Reference>
-    <Reference Include="Platform.Repository">
-      <HintPath>..\Platform.Repository\bin\Debug\Platform.Repository.dll</HintPath>
+    <Reference Include="SHWDTech.Platform.Repository">
+      <HintPath>..\Platform.Repository\bin\Debug\SHWDTech.Platform.Repository.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,8 +54,10 @@
   <ItemGroup>
     <Compile Include="Enums\SignInStatus.cs" />
     <Compile Include="IProcess\IAccountProcess.cs" />
+    <Compile Include="IProcess\IControllerProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
     <Compile Include="Process\AccountProcess.cs" />
+    <Compile Include="Process\ControllerProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

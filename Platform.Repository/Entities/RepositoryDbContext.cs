@@ -99,5 +99,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 用户自定义词典
         /// </summary>
         public virtual DbSet<UserDictionary> UserDictionaries { get; set; }
+
+        /// <summary>
+        /// 协议结构
+        /// </summary>
+        public virtual DbSet<ProtocolStructure> ProtocolStructures { get; set; }
     }
 }

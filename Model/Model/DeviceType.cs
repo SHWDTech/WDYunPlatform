@@ -11,11 +11,11 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class DeviceType : SysModelBase, IDeviceType
     {
-        [Required]
+        //[Required]
         [Display(Name = "设备应用领域")]
         public SysDictionary Field { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "设备应用子领域")]
         public SysDictionary SubField { get; set; }
 
