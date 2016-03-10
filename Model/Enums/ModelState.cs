@@ -1,9 +1,9 @@
-﻿namespace SHWDTech.Platform.Model.Enum
+﻿namespace SHWDTech.Platform.Model.Enums
 {
     /// <summary>
     /// 数据对象模型状态
     /// </summary>
-    public enum ModelState
+    public enum ModelState : byte
     {
         /// <summary>
         /// 新增

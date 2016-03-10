@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
-using SHWDTech.Platform.Model.Enum;
 using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWD.Platform.Repository.Repository
 {

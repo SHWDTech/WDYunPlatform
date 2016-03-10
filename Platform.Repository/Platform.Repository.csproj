@@ -79,6 +79,7 @@
     <Compile Include="IRepository\IPhotoRepository.cs" />
     <Compile Include="IRepository\IProjectRepository.cs" />
     <Compile Include="IRepository\IProtocolDataRepository.cs" />
+    <Compile Include="IRepository\IProtocolStructureRepository.cs" />
     <Compile Include="IRepository\IRepository.cs" />
     <Compile Include="IRepository\IRepositoryContext.cs" />
     <Compile Include="IRepository\IRoleRepository.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Repository\ProjectRepository.cs" />
     <Compile Include="Repository\ProtocolDataRepository.cs" />
     <Compile Include="Repository\ProtocolRepository.cs" />
+    <Compile Include="Repository\ProtocolStructureRepository.cs" />
     <Compile Include="Repository\RepositoryContext.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />

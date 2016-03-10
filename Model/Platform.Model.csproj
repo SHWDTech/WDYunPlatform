@@ -68,6 +68,8 @@
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\DeviceStatus.cs" />
     <Compile Include="Enums\ModelState.cs" />
+    <Compile Include="Enums\RoleStatus.cs" />
+    <Compile Include="Enums\UserStatus.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
     <Compile Include="IModel\IDataModel.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="IModel\IPhoto.cs" />
     <Compile Include="IModel\IProtocol.cs" />
     <Compile Include="IModel\IProtocolData.cs" />
+    <Compile Include="IModel\IProtocolStructure.cs" />
     <Compile Include="IModel\IWdRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
     <Compile Include="IModel\ISysDictionary.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Protocol.cs" />
     <Compile Include="Model\ProtocolData.cs" />
+    <Compile Include="Model\ProtocolStructure.cs" />
     <Compile Include="Model\WdRole.cs" />
     <Compile Include="Model\SysConfig.cs" />
     <Compile Include="Model\SysDictionary.cs" />

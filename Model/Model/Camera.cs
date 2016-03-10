@@ -32,7 +32,7 @@ namespace SHWDTech.Platform.Model.Model
         public int AccessPort { get; set; }
 
         [Display(Name = "摄像头登录类型")]
-        public int AccessType { get; set; }
+        public SysDictionary AccessType { get; set; }
 
         [Display(Name = "摄像头所属公司")]
         public string Compnany { get; set; }

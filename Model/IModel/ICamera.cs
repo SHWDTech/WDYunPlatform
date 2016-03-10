@@ -1,4 +1,5 @@
 ﻿using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -35,7 +36,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 摄像头登录类型
         /// </summary>
-        int AccessType { get; set; }
+        SysDictionary AccessType { get; set; }
 
         /// <summary>
         /// 摄像头所属公司

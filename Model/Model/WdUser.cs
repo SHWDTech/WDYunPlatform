@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Principal;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -45,6 +46,10 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "最后登录时间")]
         [DataType(DataType.DateTime)]
         public DateTime LastLoginDateTime { get; set; }
+
+        [Required]
+        [Display(Name = "用户状态")]
+        public UserStatus Status { get; set; }
 
         [Display(Name = "所属用户组")]
         public List<WdRole> Roles { get; set; }

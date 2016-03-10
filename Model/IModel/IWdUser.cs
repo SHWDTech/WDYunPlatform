@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Principal;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -39,6 +40,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 用户最后登录时间
         /// </summary>
         DateTime LastLoginDateTime { get; set; }
+
+        /// <summary>
+        /// 用户状态
+        /// </summary>
+        UserStatus Status { get; set; }
 
         /// <summary>
         /// 用户所属角色

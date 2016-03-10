@@ -1,5 +1,6 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -22,6 +23,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 属于该用户的角色
         /// </summary>
         List<WdUser> Users { get; set; }
+
+        /// <summary>
+        /// 角色状态
+        /// </summary>
+        RoleStatus Status { get; set; }
 
         /// <summary>
         /// 角色拥有的权限

@@ -65,6 +65,7 @@
     <Compile Include="IProcess\IProjectProcess.cs" />
     <Compile Include="IProcess\IProtocolDataProcess.cs" />
     <Compile Include="IProcess\IProtocolProcess.cs" />
+    <Compile Include="IProcess\IProtocolStructureProcess.cs" />
     <Compile Include="IProcess\IRoleProcess.cs" />
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ISysDictionaryProcess.cs" />
@@ -124,6 +125,10 @@
     <Compile Include="Process\ProtocolProcess.cs" />
     <Compile Include="Process\ProtocolProcessBase.cs">
       <DependentUpon>ProtocolProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\ProtocolStructureProcess.cs" />
+    <Compile Include="Process\ProtocolStructureProcessBase.cs">
+      <DependentUpon>ProtocolStructureProcess.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\RoleProcess.cs" />
     <Compile Include="Process\RoleProcessBase.cs">

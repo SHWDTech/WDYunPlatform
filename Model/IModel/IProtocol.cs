@@ -32,10 +32,5 @@ namespace SHWDTech.Platform.Model.IModel
         /// 协议发布时间
         /// </summary>
         DateTime ReleaseDateTime { get; set; }
-
-        /// <summary>
-        /// 协议结构（JSON字符串）
-        /// </summary>
-        string ProtocolStructure { get; set; }
     }
 }

@@ -30,9 +30,5 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "协议发布时间")]
         public DateTime ReleaseDateTime { get; set; }
-
-        [Required]
-        [Display(Name = "协议结构")]
-        public string ProtocolStructure { get; set; }
     }
 }

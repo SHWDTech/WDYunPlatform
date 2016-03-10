@@ -1,4 +1,5 @@
 ﻿using SHWD.Platform.Repository.IRepository;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
@@ -8,5 +9,12 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class RoleRepository : SysDomainRepository<IWdRole>, IRoleRepository
     {
+        public override IWdRole CreateDefaultModel()
+        {
+            var model =  base.CreateDefaultModel();
+            model.Status = RoleStatus.Enabled;
+
+            return model;
+        }
     }
 }

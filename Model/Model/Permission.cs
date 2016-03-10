@@ -15,5 +15,8 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "权限名称")]
         [MaxLength(25)]
         public string PermissionName { get; set; }
+
+        [Display(Name = "父级权限")]
+        public Permission ParentPermission { get; set; }
     }
 }

@@ -25,6 +25,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 照片类型
         /// </summary>
-        int PhotoType { get; set; }
+        SysDictionary PhotoType { get; set; }
     }
 }

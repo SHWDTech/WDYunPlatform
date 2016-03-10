@@ -25,6 +25,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "照片类型")]
-        public int PhotoType { get; set; }
+        public SysDictionary PhotoType { get; set; }
     }
 }
