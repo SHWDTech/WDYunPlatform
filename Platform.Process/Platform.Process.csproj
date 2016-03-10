@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,112 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IProcess\IAlarmProcess.cs" />
-    <Compile Include="IProcess\ICameraProcess.cs" />
-    <Compile Include="IProcess\IDeviceProcess.cs" />
-    <Compile Include="IProcess\IDeviceTypeProcess.cs" />
-    <Compile Include="IProcess\IFirmwareProcess.cs" />
-    <Compile Include="IProcess\IFirmwareSetProcess.cs" />
-    <Compile Include="IProcess\IMenuProcess.cs" />
-    <Compile Include="IProcess\IMonitorDataProcess.cs" />
-    <Compile Include="IProcess\IPermissionProcess.cs" />
-    <Compile Include="IProcess\IPhotoProcess.cs" />
-    <Compile Include="IProcess\IProjectProcess.cs" />
-    <Compile Include="IProcess\IProtocolDataProcess.cs" />
-    <Compile Include="IProcess\IProtocolProcess.cs" />
-    <Compile Include="IProcess\IProtocolStructureProcess.cs" />
-    <Compile Include="IProcess\IRoleProcess.cs" />
-    <Compile Include="IProcess\ISysConfigProcess.cs" />
-    <Compile Include="IProcess\ISysDictionaryProcess.cs" />
-    <Compile Include="IProcess\ITaskProcess.cs" />
-    <Compile Include="IProcess\IUserConfigProcess.cs" />
-    <Compile Include="IProcess\IUserDictionaryProcess.cs" />
-    <Compile Include="IProcess\IUserProcess.cs" />
+    <Compile Include="Enums\SignInStatus.cs" />
+    <Compile Include="IProcess\IAccountProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
-    <Compile Include="Process\AlarmProcess.cs" />
-    <Compile Include="Process\AlarmProcessBase.cs">
-      <DependentUpon>AlarmProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\CameraProcess.cs" />
-    <Compile Include="Process\CameraProcessBase.cs">
-      <DependentUpon>CameraProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\DeviceProcess.cs" />
-    <Compile Include="Process\DeviceProcessBase.cs">
-      <DependentUpon>DeviceProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\DeviceTypeProcess.cs" />
-    <Compile Include="Process\DeviceTypeProcessBase.cs">
-      <DependentUpon>DeviceTypeProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\FirmwareProcess.cs" />
-    <Compile Include="Process\FirmwareProcessBase.cs">
-      <DependentUpon>FirmwareProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\FirmwareSetProcess.cs" />
-    <Compile Include="Process\FirmwareSetProcessBase.cs">
-      <DependentUpon>FirmwareSetProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\MenuProcess.cs" />
-    <Compile Include="Process\MenuProcessBase.cs">
-      <DependentUpon>MenuProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\MonitorDataProcess.cs" />
-    <Compile Include="Process\MonitorDataProcessBase.cs">
-      <DependentUpon>MonitorDataProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\PermissionProcess.cs" />
-    <Compile Include="Process\PermissionProcessBase.cs">
-      <DependentUpon>PermissionProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\PhotoProcess.cs" />
-    <Compile Include="Process\PhotoProcessBase.cs">
-      <DependentUpon>PhotoProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\ProjectProcess.cs" />
-    <Compile Include="Process\ProjectProcessBase.cs">
-      <DependentUpon>ProjectProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\ProtocolDataProcess.cs" />
-    <Compile Include="Process\ProtocolDataProcessBase.cs">
-      <DependentUpon>ProtocolDataProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\ProtocolProcess.cs" />
-    <Compile Include="Process\ProtocolProcessBase.cs">
-      <DependentUpon>ProtocolProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\ProtocolStructureProcess.cs" />
-    <Compile Include="Process\ProtocolStructureProcessBase.cs">
-      <DependentUpon>ProtocolStructureProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\RoleProcess.cs" />
-    <Compile Include="Process\RoleProcessBase.cs">
-      <DependentUpon>RoleProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\SysConfigProcess.cs" />
-    <Compile Include="Process\SysConfigProcessBase.cs">
-      <DependentUpon>SysConfigProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\SysDictionaryProcess.cs" />
-    <Compile Include="Process\SysDictionaryProcessBase.cs">
-      <DependentUpon>SysDictionaryProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\TaskProcess.cs" />
-    <Compile Include="Process\TaskProcessBase.cs">
-      <DependentUpon>TaskProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\UserConfigProcess.cs" />
-    <Compile Include="Process\UserConfigProcessBase.cs">
-      <DependentUpon>UserConfigProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\UserDictionaryProcess.cs" />
-    <Compile Include="Process\UserDictionaryProcessBase.cs">
-      <DependentUpon>UserDictionaryProcess.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\UserProcess.cs" />
-    <Compile Include="Process\UserProcessBase.cs">
-      <DependentUpon>UserProcess.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Process\AccountProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

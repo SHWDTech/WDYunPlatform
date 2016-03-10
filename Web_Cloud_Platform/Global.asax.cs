@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Web_Cloud_Platform;
 
-namespace Web_Cloud_Platform
+namespace SHWDTech.Web_Cloud_Platform
 {
     public class MvcApplication : System.Web.HttpApplication
     {

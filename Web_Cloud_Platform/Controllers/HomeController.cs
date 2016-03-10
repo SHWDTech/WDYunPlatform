@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
 
-namespace Web_Cloud_Platform.Controllers
+namespace SHWDTech.Web_Cloud_Platform.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : WdControllerBase
     {
         public ActionResult Index() => View();
 
