@@ -1,9 +1,6 @@
-﻿using System.Threading;
-using System.Web.Mvc;
-using Platform.Process.Process;
-using SHWD.Platform.Repository.IRepository;
-using SHWD.Platform.Repository.Repository;
+﻿using Platform.Process.Process;
 using SHWDTech.Web_Cloud_Platform.Common;
+using System.Web.Mvc;
 
 namespace SHWDTech.Web_Cloud_Platform.Controllers
 {
@@ -38,11 +35,6 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
             WdContext = (WdContext)HttpContext;
 
             WdContext.WdUser = _controllerProcess.GetCurrentUser(WdContext.HttpContext);
-            RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>()
-            {
-                
-            };
-           
         }
     }
 }
