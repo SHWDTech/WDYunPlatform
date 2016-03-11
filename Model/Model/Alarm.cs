@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "报警信息来源设备")]
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
         [Required]
         [Display(Name = "报警信息值")]

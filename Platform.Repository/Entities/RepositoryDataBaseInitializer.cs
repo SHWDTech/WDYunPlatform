@@ -53,8 +53,6 @@ namespace SHWD.Platform.Repository.Entities
             domain.CreateUser = user.Id;
             domain.LastUpdateUser = user.Id;
             domain.LastUpdateDateTime = DateTime.Now;
-            domain.WdUsers = new List<WdUser>();
-            domain.WdUsers.Add(user);
             role.CreateUser = user.Id;
             role.LastUpdateUser = user.Id;
             role.LastUpdateDateTime = DateTime.Now;
