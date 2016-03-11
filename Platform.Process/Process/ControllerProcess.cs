@@ -1,13 +1,13 @@
-﻿using SHWDTech.Platform.Model.IModel;
-using System.Web;
-using Platform.Process.IProcess;
+﻿using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Model;
+using System.Web;
 
 namespace Platform.Process.Process
 {
     public class ControllerProcess : IControllerProcess
     {
-        public IWdUser GetCurrentUser(HttpContext context)
+        public WdUser GetCurrentUser(HttpContext context)
         {
             var repo = new UserRepository();
 

@@ -11,13 +11,13 @@
     <div class="section-title">
         <h3>测试登录</h3>
     </div>
-    <div>
-        @Html.ValidationSummary(null, new {@class = "text-danger"})
-    </div>
     <div class="">
         <div class="input-group">
             @Html.LabelFor(m => m.LoginName)
-            @Html.TextBoxFor(m => m.LoginName);
+            @Html.TextBoxFor(m => m.LoginName, new {@class = "input-control"})
+        </div>
+        <div>
+            @Html.ValidationSummary(null, new {@class = "text-danger"})
         </div>
     </div>
 }

@@ -1,5 +1,6 @@
-﻿using System.Web;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
+using System.Web;
 
 namespace SHWDTech.Web_Cloud_Platform.Common
 {
@@ -10,7 +11,6 @@ namespace SHWDTech.Web_Cloud_Platform.Common
     {
         private WdContext()
         {
-
         }
 
         public WdContext(HttpContext context) : this()
@@ -26,12 +26,12 @@ namespace SHWDTech.Web_Cloud_Platform.Common
         /// <summary>
         /// 当前登录用户
         /// </summary>
-        public IWdUser WdUser
+        public WdUser WdUser
         {
             get
             {
                 if (!HttpContext.Items.Contains("WdUser")) return null;
-                return (IWdUser)HttpContext.Items["WdUser"];
+                return (WdUser)HttpContext.Items["WdUser"];
             }
             set
             {

@@ -1,5 +1,5 @@
-﻿using System.Web;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.Model;
+using System.Web;
 
 namespace Platform.Process.IProcess
 {
@@ -13,6 +13,6 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <param name="context">HTTP上下文</param>
         /// <returns>当前登录用户</returns>
-        IWdUser GetCurrentUser(HttpContext context);
+        WdUser GetCurrentUser(HttpContext context);
     }
 }
