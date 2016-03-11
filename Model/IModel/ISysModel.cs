@@ -1,5 +1,4 @@
 ﻿using System;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -16,7 +15,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字段创建人
         /// </summary>
-        WdUser CreateUser { get; set; }
+        Guid CreateUser { get; set; }
 
         /// <summary>
         /// 字段最后一次修改时间
@@ -26,7 +25,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字段最后一次修改人
         /// </summary>
-        WdUser LastUpdateUser { get; set; }
+        Guid LastUpdateUser { get; set; }
 
         /// <summary>
         /// 字段是否删除

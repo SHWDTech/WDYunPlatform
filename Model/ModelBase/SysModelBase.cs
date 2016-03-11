@@ -2,8 +2,6 @@
 using SHWDTech.Platform.Model.IModel;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Data.SqlTypes;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
@@ -18,14 +16,14 @@ namespace SHWDTech.Platform.Model.ModelBase
         public DateTime CreateDateTime { get; set; }
 
         [JsonIgnore]
-        public WdUser CreateUser { get; set; }
+        public Guid CreateUser { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
         public DateTime LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public WdUser LastUpdateUser { get; set; }
+        public Guid LastUpdateUser { get; set; }
 
         [JsonIgnore]
         public bool IsDeleted { get; set; }

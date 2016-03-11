@@ -1,5 +1,6 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace SHWD.Platform.Repository.Entities
 {
@@ -13,6 +14,12 @@ namespace SHWD.Platform.Repository.Entities
         /// </summary>
         public RepositoryDbContext() : base("DefaultConnection")
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            base.OnModelCreating(modelBuilder);
         }
 
         /// <summary>

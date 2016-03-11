@@ -1,6 +1,6 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Security.Principal;
 using SHWDTech.Platform.Model.Enums;
 
@@ -39,7 +39,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户最后登录时间
         /// </summary>
-        SqlDateTime LastLoginDateTime { get; set; }
+        DateTime LastLoginDateTime { get; set; }
 
         /// <summary>
         /// 用户状态
