@@ -1,8 +1,8 @@
-﻿using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IProtocolStructureRepository : ISysRepository<IProtocolStructure>
+    public interface IProtocolStructureRepository : ISysRepository<ProtocolStructure>
     {
     }
 }

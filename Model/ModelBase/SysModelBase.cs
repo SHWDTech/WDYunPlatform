@@ -3,6 +3,7 @@ using SHWDTech.Platform.Model.IModel;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
@@ -14,17 +15,17 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [JsonIgnore]
         [DataType(DataType.DateTime)]
-        public SqlDateTime CreateDateTime { get; set; }
+        public DateTime CreateDateTime { get; set; }
 
         [JsonIgnore]
-        public IWdUser CreateUser { get; set; }
+        public WdUser CreateUser { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
-        public SqlDateTime LastUpdateDateTime { get; set; }
+        public DateTime LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public IWdUser LastUpdateUser { get; set; }
+        public WdUser LastUpdateUser { get; set; }
 
         [JsonIgnore]
         public bool IsDeleted { get; set; }

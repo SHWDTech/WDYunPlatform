@@ -1,4 +1,4 @@
-﻿using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -10,11 +10,11 @@ namespace SHWD.Platform.Repository.IRepository
         /// <summary>
         /// 当前操作用户
         /// </summary>
-        IWdUser CurrentUser { get; set; }
+        WdUser CurrentUser { get; set; }
 
         /// <summary>
         /// 当前操作域
         /// </summary>
-        IDomain CurrentDomain { get; set; }
+        Domain CurrentDomain { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SqlTypes;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -11,22 +11,22 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字段创建时间
         /// </summary>
-        SqlDateTime CreateDateTime { get; set; }
+        DateTime CreateDateTime { get; set; }
 
         /// <summary>
         /// 字段创建人
         /// </summary>
-        IWdUser CreateUser { get; set; }
+        WdUser CreateUser { get; set; }
 
         /// <summary>
         /// 字段最后一次修改时间
         /// </summary>
-        SqlDateTime LastUpdateDateTime { get; set; }
+        DateTime LastUpdateDateTime { get; set; }
 
         /// <summary>
         /// 字段最后一次修改人
         /// </summary>
-        IWdUser LastUpdateUser { get; set; }
+        WdUser LastUpdateUser { get; set; }
 
         /// <summary>
         /// 字段是否删除

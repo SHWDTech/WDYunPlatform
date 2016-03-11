@@ -1,5 +1,5 @@
 ﻿using SHWD.Platform.Repository.IRepository;
-using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -8,8 +8,8 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class RepositoryContext : IRepositoryContext
     {
-        public IWdUser CurrentUser { get; set; }
+        public WdUser CurrentUser { get; set; }
 
-        public IDomain CurrentDomain { get; set; }
+        public Domain CurrentDomain { get; set; }
     }
 }

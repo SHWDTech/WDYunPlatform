@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using System;
 using System.ComponentModel.DataAnnotations;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
@@ -12,6 +13,6 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [Required]
         [Display(Name = "所属域")]
-        public IDomain Domain { get; set; }
+        public Domain Domain { get; set; }
     }
 }
