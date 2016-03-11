@@ -13,11 +13,11 @@ namespace SHWDTech.Platform.Model.Model
     {
         //Required]
         [Display(Name = "协议应用领域")]
-        public SysDictionary Field { get; set; }
+        public virtual SysDictionary Field { get; set; }
 
         //[Required]
         [Display(Name = "协议应用子领域")]
-        public SysDictionary SubField { get; set; }
+        public virtual SysDictionary SubField { get; set; }
 
         [Required]
         [Display(Name = "协议自定义段")]

@@ -27,6 +27,6 @@ namespace SHWDTech.Platform.Model.Model
         public string SysConfigValue { get; set; }
 
         [Display(Name = "所属系统配置")]
-        public SysConfig ParentSysConfig { get; set; }
+        public virtual SysConfig ParentSysConfig { get; set; }
     }
 }

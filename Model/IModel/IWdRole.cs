@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 属于该用户的角色
         /// </summary>
-        List<WdUser> Users { get; set; }
+        ICollection<WdUser> Users { get; set; }
 
         /// <summary>
         /// 角色状态
@@ -32,6 +32,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 角色拥有的权限
         /// </summary>
-        List<Permission> Permissions { get; set; }
+        ICollection<Permission> Permissions { get; set; }
     }
 }

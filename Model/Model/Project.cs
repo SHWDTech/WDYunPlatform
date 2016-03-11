@@ -55,7 +55,7 @@ namespace SHWDTech.Platform.Model.Model
         public string Street { get; set; }
 
         [Display(Name = "项目所属区域")]
-        public SysDictionary District { get; set; }
+        public virtual SysDictionary District { get; set; }
 
         [Display(Name = "项目面积")]
         public short Square { get; set; }

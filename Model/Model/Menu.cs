@@ -12,7 +12,7 @@ namespace SHWDTech.Platform.Model.Model
     public class Menu : SysDomainModelBase, IMenu
     {
         [Display(Name = "所属父菜单")]
-        public Menu ParentMenu { get; set; }
+        public virtual Menu ParentMenu { get; set; }
 
         [Required]
         [Display(Name = "菜单层级")]
@@ -35,6 +35,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "菜单所属权限")]
-        public Permission Permission { get; set; }
+        public virtual Permission Permission { get; set; }
     }
 }

@@ -16,6 +16,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 固件支持的协议类型
         /// </summary>
-        List<Protocol> Protocols { get; set; }
+        ICollection<Protocol> Protocols { get; set; }
     }
 }

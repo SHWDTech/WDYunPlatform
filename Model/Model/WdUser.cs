@@ -52,7 +52,7 @@ namespace SHWDTech.Platform.Model.Model
         public UserStatus Status { get; set; }
 
         [Display(Name = "所属用户组")]
-        public List<WdRole> Roles { get; set; }
+        public virtual ICollection<WdRole> Roles { get; set; }
 
         public bool IsInRole(string role) => Roles.Any(item => item.RoleName == role);
 

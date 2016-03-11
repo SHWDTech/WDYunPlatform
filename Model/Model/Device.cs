@@ -18,7 +18,7 @@ namespace SHWDTech.Platform.Model.Model
         public DeviceType DeviceType { get; set; }
 
         [Display(Name = "设备对应的原设备")]
-        public Device OriginalDevice { get; set; }
+        public virtual Device OriginalDevice { get; set; }
 
         [Required]
         [Display(Name = "设备名称")]
@@ -39,10 +39,10 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "设备关联固件集")]
-        public FirmwareSet FirmwareSet { get; set; }
+        public virtual FirmwareSet FirmwareSet { get; set; }
 
         [Display(Name = "设备所属项目")]
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
         [Display(Name = "设备启用时间")]
         public DateTime StartTime { get; set; }
@@ -57,6 +57,6 @@ namespace SHWDTech.Platform.Model.Model
         public DeviceStatus Status { get; set; }
 
         [Display(Name = "设备关联摄像头")]
-        public Camera Camera { get; set; }
+        public virtual Camera Camera { get; set; }
     }
 }

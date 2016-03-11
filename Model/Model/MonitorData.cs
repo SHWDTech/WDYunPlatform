@@ -12,7 +12,7 @@ namespace SHWDTech.Platform.Model.Model
     public class MonitorData : DataModelBase, IMonitorData
     {
         [Display(Name = "数据来源协议包")]
-        public ProtocolData ProtocolData { get; set; }
+        public virtual ProtocolData ProtocolData { get; set; }
 
         [Display(Name = "数据类型")]
         public int MonitorDataType { get; set; }

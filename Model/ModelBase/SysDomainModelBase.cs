@@ -11,6 +11,6 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [Required]
         [Display(Name = "所属域")]
-        public Domain Domain { get; set; }
+        public virtual Domain Domain { get; set; }
     }
 }

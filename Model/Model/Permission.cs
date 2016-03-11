@@ -17,6 +17,6 @@ namespace SHWDTech.Platform.Model.Model
         public string PermissionName { get; set; }
 
         [Display(Name = "父级权限")]
-        public Permission ParentPermission { get; set; }
+        public virtual Permission ParentPermission { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "报警信息类别")]
-        public SysDictionary AlarmType { get; set; }
+        public virtual SysDictionary AlarmType { get; set; }
 
         [Required]
         [Display(Name = "报警信息更新时间")]

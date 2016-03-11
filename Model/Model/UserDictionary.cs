@@ -26,6 +26,6 @@ namespace SHWDTech.Platform.Model.Model
         public int ItemLevel { get; set; }
 
         [Display(Name = "父级字典项")]
-        public SysDictionary ParentDictionary { get; set; }
+        public virtual SysDictionary ParentDictionary { get; set; }
     }
 }

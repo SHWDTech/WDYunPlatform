@@ -22,13 +22,13 @@ namespace SHWDTech.Platform.Model.Model
         public string RoleName { get; set; }
 
         [Display(Name = "包含用户")]
-        public List<WdUser> Users { get; set; }
+        public virtual ICollection<WdUser> Users { get; set; }
 
         [Required]
         [Display(Name = "角色状态")]
         public RoleStatus Status { get; set; }
 
         [Display(Name = "包含权限")]
-        public List<Permission> Permissions { get; set; }
+        public ICollection<Permission> Permissions { get; set; }
     }
 }

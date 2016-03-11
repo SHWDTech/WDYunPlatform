@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "协议所属设备")]
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
         [Required]
         [Display(Name = "协议内容")]
@@ -25,7 +25,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "协议类型")]
-        public Protocol Protocol { get; set; }
+        public virtual Protocol Protocol { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime UpdateTime { get; set; }

@@ -49,6 +49,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户所属角色
         /// </summary>
-        List<WdRole> Roles { get; set; }
+        ICollection<WdRole> Roles { get; set; }
     }
 }

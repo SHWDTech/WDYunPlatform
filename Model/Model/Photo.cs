@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "照片所属设备")]
-        public Device PhtotDevice { get; set; }
+        public virtual Device PhtotDevice { get; set; }
 
         [Display(Name = "照片附加信息")]
         public string PhotoTag { get; set; }
@@ -25,6 +25,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "照片类型")]
-        public SysDictionary PhotoType { get; set; }
+        public virtual SysDictionary PhotoType { get; set; }
     }
 }

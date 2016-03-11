@@ -12,10 +12,10 @@ namespace SHWDTech.Platform.Model.Model
     public class ProtocolStructure : SysModelBase, IProtocolStructure
     {
         [Display(Name = "所属协议")]
-        public Protocol Procotol { get; set; }
+        public virtual Protocol Procotol { get; set; }
 
         [Display(Name = "所属父结构")]
-        public ProtocolStructure Parenttructure { get; set; }
+        public virtual ProtocolStructure Parenttructure { get; set; }
 
         [Display(Name = "协议段名称")]
         [MaxLength(50)]

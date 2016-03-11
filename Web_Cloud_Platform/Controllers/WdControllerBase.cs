@@ -15,7 +15,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
         /// <summary>
         /// 控制器上下文信息
         /// </summary>
-        public WdContext WdContext { get; }
+        public WdContext WdContext { get; set; }
 
         /// <summary>
         /// 控制器处理类
@@ -24,7 +24,6 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
 
         public WdControllerBase()
         {
-            WdContext = (WdContext)HttpContext;
             _controllerProcess = new ControllerProcess();
         }
 
@@ -35,6 +34,8 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
                 base.OnActionExecuting(context);
                 return;
             }
+
+            WdContext = (WdContext)HttpContext;
 
             WdContext.WdUser = _controllerProcess.GetCurrentUser(WdContext.HttpContext);
             RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>()

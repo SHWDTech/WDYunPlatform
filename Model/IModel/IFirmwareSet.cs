@@ -16,6 +16,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 固件集包含固件列表
         /// </summary>
-        List<Firmware> Firmwares { get; set; }
+        ICollection<Firmware> Firmwares { get; set; }
     }
 }

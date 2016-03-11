@@ -17,6 +17,6 @@ namespace SHWDTech.Platform.Model.Model
         public string FirmwareName { get; set; }
 
         [Display(Name = "固件支持的协议类型")]
-        public List<Protocol> Protocols { get; set; }
+        public virtual ICollection<Protocol> Protocols { get; set; }
     }
 }

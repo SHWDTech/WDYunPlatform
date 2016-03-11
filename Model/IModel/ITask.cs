@@ -37,7 +37,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 任务包含协议
         /// </summary>
-        List<ProtocolData> TaskProtocols { get; set; }
+        ICollection<ProtocolData> TaskProtocols { get; set; }
 
         /// <summary>
         /// 任务生成时间

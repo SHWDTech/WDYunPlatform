@@ -14,7 +14,7 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "设备所属设备")]
-        public Device TaskDevice { get; set; }
+        public virtual Device TaskDevice { get; set; }
 
         [MaxLength(25)]
         [Display(Name = "任务编码")]
@@ -34,7 +34,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "任务包含协议")]
-        public List<ProtocolData> TaskProtocols { get; set; }
+        public virtual ICollection<ProtocolData> TaskProtocols { get; set; }
 
         [Required]
         [Display(Name = "任务生成时间")]

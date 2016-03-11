@@ -1,7 +1,6 @@
 ﻿using System;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
-using SHWDTech.Platform.Model.IModel;
 using System.Web.Security;
 using Platform.Process.Enums;
 using SHWDTech.Platform.Model.Model;
@@ -51,7 +50,7 @@ namespace Platform.Process.Process
         /// <param name="user">当前登录的用户</param>
         /// <param name="password">用户输入的密码</param>
         /// <returns></returns>
-        private bool CheckPassword(IWdUser user, string password) => user.Password == password;
+        private bool CheckPassword(WdUser user, string password) => user.Password == password;
 
         /// <summary>
         /// 更新登陆时间
