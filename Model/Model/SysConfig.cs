@@ -14,17 +14,17 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "系统配置名称")]
         [MaxLength(25)]
-        public string SysConfigName { get; set; }
+        public virtual string SysConfigName { get; set; }
 
         [Required]
         [Display(Name = "系统配置类型")]
         [MaxLength(25)]
-        public string SysConfigType { get; set; }
+        public virtual string SysConfigType { get; set; }
 
         [Required]
         [Display(Name = "系统配置值")]
         [MaxLength(200)]
-        public string SysConfigValue { get; set; }
+        public virtual string SysConfigValue { get; set; }
 
         [Display(Name = "所属系统配置")]
         public virtual SysConfig ParentSysConfig { get; set; }

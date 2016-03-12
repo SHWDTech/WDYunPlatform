@@ -17,7 +17,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "报警信息值")]
-        public double AlarmValue { get; set; }
+        public virtual double AlarmValue { get; set; }
 
         [Required]
         [Display(Name = "报警信息类别")]
@@ -25,6 +25,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "报警信息更新时间")]
-        public DateTime UpdateTime { get; set; }
+        public virtual DateTime UpdateTime { get; set; }
     }
 }

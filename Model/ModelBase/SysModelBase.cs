@@ -13,21 +13,21 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [JsonIgnore]
         [DataType(DataType.DateTime)]
-        public DateTime CreateDateTime { get; set; }
+        public virtual DateTime CreateDateTime { get; set; }
 
         [JsonIgnore]
-        public Guid CreateUser { get; set; }
+        public virtual Guid CreateUser { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
-        public DateTime LastUpdateDateTime { get; set; }
+        public virtual DateTime LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public Guid LastUpdateUser { get; set; }
+        public virtual Guid LastUpdateUser { get; set; }
 
         [JsonIgnore]
-        public bool IsDeleted { get; set; }
+        public virtual bool IsDeleted { get; set; }
 
-        public bool IsEnabled { get; set; }
+        public virtual bool IsEnabled { get; set; }
     }
 }

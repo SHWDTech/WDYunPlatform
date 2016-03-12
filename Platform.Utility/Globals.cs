@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SHWDTech.Platform.Utility
@@ -80,6 +81,17 @@ namespace SHWDTech.Platform.Utility
             }
 
             return defaultValue;
+        }
+
+        public static string GetMd5(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return string.Empty;
+            }
+
+            var md5 = new MD5CryptoServiceProvider();
+            return BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(str))).ToLower().Replace("-", "");
         }
     }
 }

@@ -15,15 +15,15 @@ namespace SHWDTech.Platform.Model.Model
         public virtual ProtocolData ProtocolData { get; set; }
 
         [Display(Name = "数据类型")]
-        public int MonitorDataType { get; set; }
+        public virtual int MonitorDataType { get; set; }
 
         [Display(Name = "数据值")]
-        public double MonitorDataValue { get; set; }
+        public virtual double MonitorDataValue { get; set; }
 
         [Display(Name = "数据上传时间")]
-        public DateTime UpdateTime { get; set; }
+        public virtual DateTime UpdateTime { get; set; }
 
         [Display(Name = "是否有效数据")]
-        public bool DataIsValid { get; set; }
+        public virtual bool DataIsValid { get; set; }
     }
 }

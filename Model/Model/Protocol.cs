@@ -21,14 +21,14 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "协议自定义段")]
-        public string CustomerInfo { get; set; }
+        public virtual string CustomerInfo { get; set; }
 
         [Required]
         [Display(Name = "协议版本号")]
-        public string Version { get; set; }
+        public virtual string Version { get; set; }
 
         [Required]
         [Display(Name = "协议发布时间")]
-        public DateTime ReleaseDateTime { get; set; }
+        public virtual DateTime ReleaseDateTime { get; set; }
     }
 }

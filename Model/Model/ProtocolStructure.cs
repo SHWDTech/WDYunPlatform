@@ -19,15 +19,15 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "协议段名称")]
         [MaxLength(50)]
-        public string ComponentName { get; set; }
+        public virtual string ComponentName { get; set; }
 
         [Display(Name = "协议段索引值")]
-        public int ComponentIndex { get; set; }
+        public virtual int ComponentIndex { get; set; }
 
         [Display(Name = "协议段长度")]
-        public int ComponentLength { get; set; }
+        public virtual int ComponentLength { get; set; }
 
         [Display(Name = "协议段数据长度")]
-        public int ComponentDataLength { get; set; }
+        public virtual int ComponentDataLength { get; set; }
     }
 }

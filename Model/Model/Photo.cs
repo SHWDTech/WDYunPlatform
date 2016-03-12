@@ -16,12 +16,12 @@ namespace SHWDTech.Platform.Model.Model
         public virtual Device PhtotDevice { get; set; }
 
         [Display(Name = "照片附加信息")]
-        public string PhotoTag { get; set; }
+        public virtual string PhotoTag { get; set; }
 
         [Required]
         [MaxLength(2000)]
         [Display(Name = "照片地址")]
-        public string PhotoUrl { get; set; }
+        public virtual string PhotoUrl { get; set; }
 
         [Required]
         [Display(Name = "照片类型")]

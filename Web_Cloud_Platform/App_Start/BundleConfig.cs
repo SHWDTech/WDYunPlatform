@@ -28,7 +28,7 @@ namespace SHWDTech.Web_Cloud_Platform
                       "~/Content/Metro.UI.CSS/metro-responsive.css",
                       "~/Content/Metro.UI.CSS/metro-rtl.css",
                       "~/Content/Metro.UI.CSS/metro-schemes.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }

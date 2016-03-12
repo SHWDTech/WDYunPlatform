@@ -18,19 +18,19 @@ namespace SHWDTech.Platform.Model.Model
 
         [MaxLength(25)]
         [Display(Name = "任务编码")]
-        public string TaskCode { get; set; }
+        public virtual string TaskCode { get; set; }
 
         [Required]
         [Display(Name = "任务类型")]
-        public int TaskType { get; set; }
+        public virtual int TaskType { get; set; }
 
         [Required]
         [Display(Name = "任务状态")]
-        public int TaskStatus { get; set; }
+        public virtual int TaskStatus { get; set; }
 
         [Required]
         [Display(Name = "任务执行状态")]
-        public int ExecuteStatus { get; set; }
+        public virtual int ExecuteStatus { get; set; }
 
         [Required]
         [Display(Name = "任务包含协议")]
@@ -38,6 +38,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "任务生成时间")]
-        public DateTime SetUpDateTime { get; set; }
+        public virtual DateTime SetUpDateTime { get; set; }
     }
 }

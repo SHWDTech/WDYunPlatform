@@ -16,22 +16,22 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "菜单层级")]
-        public int MenuLevel { get; set; }
+        public virtual int MenuLevel { get; set; }
 
         [Required]
         [Display(Name = "菜单名称")]
         [MaxLength(25)]
-        public string MenuName { get; set; }
+        public virtual string MenuName { get; set; }
 
         [Required]
         [Display(Name = "菜单所属控制器")]
         [MaxLength(25)]
-        public string Controller { get; set; }
+        public virtual string Controller { get; set; }
 
         [Display(Name = "菜单所属操作")]
         [MaxLength(25)]
         [Required]
-        public string Action { get; set; }
+        public virtual string Action { get; set; }
 
         [Required]
         [Display(Name = "菜单所属权限")]

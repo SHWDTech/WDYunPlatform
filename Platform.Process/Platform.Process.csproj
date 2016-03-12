@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Platform.Utility">
+      <HintPath>..\Platform.Utility\bin\Debug\Platform.Utility.dll</HintPath>
+    </Reference>
     <Reference Include="SHWDTech.Platform.Model">
       <HintPath>..\Model\bin\Debug\SHWDTech.Platform.Model.dll</HintPath>
     </Reference>

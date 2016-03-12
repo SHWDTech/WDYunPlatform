@@ -17,10 +17,10 @@ namespace SHWDTech.Platform.Model.ModelBase
 
         [NotMapped]
         [Display(Name = "模型状态")]
-        public ModelState ModelState { get; set; } = ModelState.UnChanged;
+        public virtual ModelState ModelState { get; set; } = ModelState.UnChanged;
 
         [NotMapped]
         [Display(Name = "是否新创建对象")]
-        public bool IsNew => ModelState == ModelState.Added;
+        public virtual bool IsNew => ModelState == ModelState.Added;
     }
 }

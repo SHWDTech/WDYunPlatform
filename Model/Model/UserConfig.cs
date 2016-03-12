@@ -14,16 +14,16 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "用户配置名称")]
         [Required]
         [MaxLength(25)]
-        public string UserConfigName { get; set; }
+        public virtual string UserConfigName { get; set; }
 
         [Required]
         [Display(Name = "用户配置类型")]
         [MaxLength(25)]
-        public string UserConfigType { get; set; }
+        public virtual string UserConfigType { get; set; }
 
         [Required]
         [Display(Name = "用户配置值")]
         [MaxLength(200)]
-        public string UserConfigValue { get; set; }
+        public virtual string UserConfigValue { get; set; }
     }
 }

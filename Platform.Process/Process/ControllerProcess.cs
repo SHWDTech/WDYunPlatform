@@ -11,7 +11,7 @@ namespace Platform.Process.Process
         {
             var repo = new UserRepository();
 
-            return repo.GetUserByName(context.User.Identity.Name);
+            return repo.GetUserByLoginName(context.User.Identity.Name);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// </summary>
         /// <param name="userName">用户名</param>
         /// <returns>符合要求的用户</returns>
-        WdUser GetUserByName(string userName);
+        List<WdUser> GetUserByName(string userName);
 
         /// <summary>
         /// 通过用户ID查找用户
@@ -36,5 +36,11 @@ namespace SHWD.Platform.Repository.IRepository
         /// <param name="idList">用户ID列表</param>
         /// <returns>符合要求的用户列表</returns>
         IList<WdUser> GetUsersByIdList(IEnumerable<Guid> idList);
+
+        /// <summary>
+        /// 更新登录信息
+        /// </summary>
+        /// <param name="loginName">用户登录名</param>
+        void UpdateLoginInfo(string loginName);
     }
 }

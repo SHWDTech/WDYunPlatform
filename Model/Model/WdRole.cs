@@ -14,21 +14,21 @@ namespace SHWDTech.Platform.Model.Model
     public class WdRole : SysDomainModelBase, IWdRole
     {
         [Display(Name = "父级角色")]
-        public WdRole ParentRole { get; set; }
+        public virtual WdRole ParentRole { get; set; }
 
         [Required]
         [Display(Name = "用户组名")]
         [MaxLength(25)]
-        public string RoleName { get; set; }
+        public virtual string RoleName { get; set; }
 
         [Display(Name = "包含用户")]
         public virtual ICollection<WdUser> Users { get; set; }
 
         [Required]
         [Display(Name = "角色状态")]
-        public RoleStatus Status { get; set; }
+        public virtual RoleStatus Status { get; set; }
 
         [Display(Name = "包含权限")]
-        public ICollection<Permission> Permissions { get; set; }
+        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

@@ -17,17 +17,17 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "协议内容")]
-        public byte[] ProtocolContent { get; set; }
+        public virtual byte[] ProtocolContent { get; set; }
 
         [Required]
         [Display(Name = "协议长度")]
-        public int Length { get; set; }
+        public virtual int Length { get; set; }
 
         [Required]
         [Display(Name = "协议类型")]
         public virtual Protocol Protocol { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime UpdateTime { get; set; }
+        public virtual DateTime UpdateTime { get; set; }
     }
 }

@@ -1,3 +1,21 @@
-﻿.text-danger {
+﻿body {
+    font-family: "Microsoft YaHei", Helvetica,sans-serif,"simsun" !important;
+}
+
+.text-danger {
     color: #ce352c;
+}
+
+.bg-login {
+    /*background-color: #06f;*/
+    background-image: radial-gradient(circle farthest-side at center top, #55e7ca 0, #1abc9c 100%);
+}
+
+.login-form {
+    background-color: #fff;
+    padding: 10px;
+}
+
+.section-title h4 {
+    color: #1abc9c;
 }

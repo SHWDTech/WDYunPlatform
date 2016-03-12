@@ -14,7 +14,7 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "固件集名称")]
-        public string FirmwareSetName { get; set; }
+        public virtual string FirmwareSetName { get; set; }
 
         [Required]
         [Display(Name = "固件集包含固件列表")]

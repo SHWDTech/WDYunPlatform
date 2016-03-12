@@ -14,34 +14,34 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Display(Name = "摄像头外部ID")]
         [MaxLength(50)]
-        public string CameraOutId { get; set; }
+        public virtual string CameraOutId { get; set; }
 
         [Display(Name = "摄像头登录名")]
         [MaxLength(25)]
-        public string AccessName { get; set; }
+        public virtual string AccessName { get; set; }
 
         [Display(Name = "摄像头登陆密码")]
         [MaxLength(50)]
-        public string AccessPassword { get; set; }
+        public virtual string AccessPassword { get; set; }
 
         [Display(Name = "摄像头登录地址")]
         [MaxLength(200)]
-        public string AccessUrl { get; set; }
+        public virtual string AccessUrl { get; set; }
 
         [Display(Name = "摄像头登陆地址端口号")]
-        public int AccessPort { get; set; }
+        public virtual int AccessPort { get; set; }
 
         [Display(Name = "摄像头登录类型")]
         public virtual SysDictionary AccessType { get; set; }
 
         [Display(Name = "摄像头所属公司")]
-        public string Compnany { get; set; }
+        public virtual string Compnany { get; set; }
 
         [Display(Name = "摄像头附加信息")]
-        public string ExtraInformation { get; set; }
+        public virtual string ExtraInformation { get; set; }
 
         [Required]
         [Display(Name = "摄像头状态")]
-        public CameraStatus CameraStatus { get; set; }
+        public virtual CameraStatus CameraStatus { get; set; }
     }
 }

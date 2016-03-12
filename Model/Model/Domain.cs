@@ -14,10 +14,10 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "域名称")]
         [MaxLength(50)]
-        public string DomainName { get; set; }
+        public virtual string DomainName { get; set; }
 
         [Display(Name = "域类型")]
         [MaxLength(25)]
-        public string DomianType { get; set; }
+        public virtual string DomianType { get; set; }
     }
 }

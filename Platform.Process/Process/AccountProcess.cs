@@ -1,9 +1,8 @@
-﻿using System;
-using Platform.Process.IProcess;
+﻿using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using System.Web.Security;
 using Platform.Process.Enums;
-using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Utility;
 
 namespace Platform.Process.Process
 {
@@ -29,15 +28,13 @@ namespace Platform.Process.Process
         {
             SignInStatus signInStatus;
 
-            var user = _userRepository.GetUserByName(loginName);
-
-            if (user == null || !CheckPassword(user, password))
+            if (!_userRepository.IsExists(item => item.LoginName == loginName) || !CheckPassword(loginName, Globals.GetMd5(password)))
             {
                 signInStatus = SignInStatus.Failure;
             }
             else
             {
-                SetAuthCookie(user);
+                SetAuthCookie(loginName);
                 signInStatus = SignInStatus.Success;
             }
 
@@ -47,31 +44,20 @@ namespace Platform.Process.Process
         /// <summary>
         /// 检查用户输入的密码
         /// </summary>
-        /// <param name="user">当前登录的用户</param>
+        /// <param name="loginName">当前登录的用户</param>
         /// <param name="password">用户输入的密码</param>
         /// <returns></returns>
-        private bool CheckPassword(WdUser user, string password) => user.Password == password;
-
-        /// <summary>
-        /// 更新登陆时间
-        /// </summary>
-        /// <param name="user"></param>
-        private void UpdateLoginDate(WdUser user)
-        {
-            user.LastLoginDateTime = DateTime.Now;
-            _userRepository.AddOrUpdate(user);
-        }
+        private bool CheckPassword(string loginName, string password) => _userRepository.IsExists(user => user.LoginName == loginName && user.Password == password);
 
         /// <summary>
         /// 设置登录用户Cookie缓存
         /// </summary>
-        /// <param name="user"></param>
-        private void SetAuthCookie(WdUser user)
+        /// <param name="loginName"></param>
+        private void SetAuthCookie(string loginName)
         {
-            FormsAuthentication.SetAuthCookie(user.LoginName, false);
+            FormsAuthentication.SetAuthCookie(loginName, false);
             
-            user.LastLoginDateTime = DateTime.Now;
-            UpdateLoginDate(user);
+            _userRepository.UpdateLoginInfo(loginName);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SHWD.Platform.Repository.Entities
                 Id = Guid.Parse("77F05B52-AE62-4225-9F09-153C5634031F"),
                 UserName = "admin",
                 LoginName = "admin",
-                Password = "21232f297a57a5a743894a0e4a801fc3",
+                Password = "0192023a7bbd73250516f069df18b500",
                 Email = "shweidongtech@126.com",
                 Telephone = "18679361687",
                 Status = UserStatus.Enabled,

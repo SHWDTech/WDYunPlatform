@@ -21,18 +21,18 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "设备自定义字段")]
-        public string CustomerInfo { get; set; }
+        public virtual string CustomerInfo { get; set; }
 
         [Required]
         [Display(Name = "设备版本")]
-        public string Version { get; set; }
+        public virtual string Version { get; set; }
 
         [Required]
         [Display(Name = "设备发布时间")]
-        public DateTime ReleaseDateTime { get; set; }
+        public virtual DateTime ReleaseDateTime { get; set; }
 
         [Required]
         [Display(Name = "设备类型编码")]
-        public string DeviceTypeCode { get; set; }
+        public virtual string DeviceTypeCode { get; set; }
     }
 }

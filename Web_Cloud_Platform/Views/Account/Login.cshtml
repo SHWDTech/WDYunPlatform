@@ -5,19 +5,37 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-@using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"}))
-{
-    @Html.AntiForgeryToken()
-    <div class="section-title">
-        <h3>测试登录</h3>
-    </div>
-    <div class="">
-        <div class="input-group">
-            @Html.LabelFor(m => m.LoginName)
-            @Html.TextBoxFor(m => m.LoginName, new {@class = "input-control"})
+<div class="grid">
+    <div class="row cells12">
+        <div class="cell offset7 colspan3 login-form">
+            @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {role = "form"}))
+            {
+                @Html.AntiForgeryToken()
+                <div class="section-title">
+                    <h4><span class="mif-cloudy2"></span>  输入账号密码</h4>
+                </div>
+                <hr class="thin"/>
+                <div>
+                    <div class="input-control text full-size" data-role="input">
+                        <span class="mif-user prepend-icon"></span>
+                        @Html.TextBoxFor(m => m.LoginName, new {padding = "0 39px 0 0"})
+                        <button class="button helper-button clear" tabindex="-1" type="button"><span class="mif-cross"></span></button>
+                    </div>
+                    <div class="input-control password full-size" data-role="input">
+                        <span class="mif-lock prepend-icon"></span>
+                        @Html.PasswordFor(m => m.Password, new {padding = "0 39px 0 0"})
+                        <button class="button helper-button reveal" tabindex="-1" type="button"><span class="mif-looks"></span></button>
+                    </div>
+                    <div>
+                        @Html.ValidationSummary(null, new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="login-form-action">
+                    <button type="submit" class="button success">
+                        登录
+                    </button>
+                </div>
+            }
         </div>
-        <div>
-            @Html.ValidationSummary(null, new {@class = "text-danger"})
-        </div>
     </div>
-}
+</div>

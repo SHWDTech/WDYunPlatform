@@ -16,7 +16,7 @@ namespace SHWD.Platform.Repository.Repository
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
     {
-        private RepositoryDbContext DbContext { get; }
+        protected RepositoryDbContext DbContext { get; }
         /// <summary>
         /// 创建一个新的数据仓库泛型基类对象
         /// </summary>
@@ -89,7 +89,7 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual bool IsExists(T model) => DbContext.Set<T>().Find(model.Id) != null;
 
-        public virtual bool IsExists(Func<T, bool> exp) => DbContext.Set<T>().Find(exp) != null;
+        public virtual bool IsExists(Func<T, bool> exp) => DbContext.Set<T>().Any(exp);
 
         void IRepository<T>.Delete(T model)
         {

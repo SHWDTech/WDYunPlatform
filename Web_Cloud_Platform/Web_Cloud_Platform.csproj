@@ -73,6 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Platform.Process\bin\Debug\Platform.Process.dll</HintPath>
     </Reference>
+    <Reference Include="Platform.Utility">
+      <HintPath>..\Platform.Utility\bin\Debug\Platform.Utility.dll</HintPath>
+    </Reference>
     <Reference Include="SHWDTech.Platform.Model">
       <HintPath>..\Model\bin\Debug\SHWDTech.Platform.Model.dll</HintPath>
     </Reference>
@@ -171,6 +174,8 @@
     <Content Include="Fonts\metro.ttf" />
     <Content Include="Fonts\metro.woff" />
     <Content Include="Fonts\selection.json" />
+    <Content Include="Images\SIte\70275-106.png" />
+    <Content Include="Scripts\Base\Base.js" />
     <Content Include="Scripts\Utility\jquery-2.2.1.js" />
     <Content Include="Scripts\Utility\jquery-2.2.1.min.js" />
     <None Include="Scripts\Utility\jquery.validate-vsdoc.js" />
@@ -180,7 +185,6 @@
     <Content Include="Scripts\Utility\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Utility\metro.js" />
     <Content Include="Scripts\Utility\metro.min.js" />
-    <Content Include="Scripts\Utility\modernizr-2.6.2.js" />
     <Content Include="Scripts\Utility\modernizr-2.8.3.js" />
     <Content Include="Scripts\Utility\respond.js" />
     <Content Include="Scripts\Utility\respond.matchmedia.addListener.js" />
