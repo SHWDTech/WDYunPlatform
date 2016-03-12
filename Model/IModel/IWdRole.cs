@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 角色所属父角色ID
         /// </summary>
-        Guid ParentRoleId { get; set; }
+        Guid? ParentRoleId { get; set; }
 
         /// <summary>
         /// 角色所属父角色

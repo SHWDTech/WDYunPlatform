@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 照片所属设备ID
         /// </summary>
-        Guid DeviceId { get; set; }
+        Guid? DeviceId { get; set; }
 
         /// <summary>
         /// 照片所属设备

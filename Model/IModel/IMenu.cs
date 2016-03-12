@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 父菜单ID
         /// </summary>
-        Guid ParentMenuId { get; set; }
+        Guid? ParentMenuId { get; set; }
 
         /// <summary>
         /// 父菜单

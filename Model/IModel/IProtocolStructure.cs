@@ -21,7 +21,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 所属协议父结构ID
         /// </summary>
-        Guid ParentStructureId { get; set; }
+        Guid? ParentStructureId { get; set; }
 
         /// <summary>
         /// 所属协议父结构

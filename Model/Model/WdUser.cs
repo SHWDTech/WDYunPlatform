@@ -45,7 +45,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "最后登录时间")]
         [DataType(DataType.DateTime)]
-        public virtual DateTime LastLoginDateTime { get; set; }
+        public virtual DateTime? LastLoginDateTime { get; set; }
 
         [Required]
         [Display(Name = "用户状态")]

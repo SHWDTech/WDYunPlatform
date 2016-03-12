@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 对应的原设备ID
         /// </summary>
-        Guid OriginalDeviceId { get; set; }
+        Guid? OriginalDeviceId { get; set; }
 
         /// <summary>
         /// 设备对应的原设备
@@ -62,7 +62,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备所属项目ID
         /// </summary>
-        Guid ProjectId { get; set; }
+        Guid? ProjectId { get; set; }
 
         /// <summary>
         /// 设备所属项目
@@ -92,7 +92,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备关联摄像头ID
         /// </summary>
-        Guid CameraId { get; set; }
+        Guid? CameraId { get; set; }
 
         /// <summary>
         /// 设备关联摄像头

@@ -26,7 +26,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户配置所属父级配置项ID
         /// </summary>
-        Guid ParentUserConfigId { get; set; }
+        Guid? ParentUserConfigId { get; set; }
 
         /// <summary>
         /// 用户配置所属父级配置项

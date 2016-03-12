@@ -26,7 +26,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 父级系统设置项ID
         /// </summary>
-        Guid ParentSysConfigId { get; set; }
+        Guid? ParentSysConfigId { get; set; }
 
         /// <summary>
         /// 父级系统设置项

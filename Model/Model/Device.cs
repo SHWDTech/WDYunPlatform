@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual DeviceType DeviceType { get; set; }
 
         [Display(Name = "设备对应的原设备ID")]
-        public virtual Guid OriginalDeviceId { get; set; }
+        public virtual Guid? OriginalDeviceId { get; set; }
 
         [Display(Name = "设备对应的原设备")]
         [ForeignKey("OriginalDeviceId")]
@@ -54,7 +54,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual FirmwareSet FirmwareSet { get; set; }
 
         [Display(Name = "设备所属项目ID")]
-        public virtual Guid ProjectId { get; set; }
+        public virtual Guid? ProjectId { get; set; }
 
         [Display(Name = "设备所属项目")]
         [ForeignKey("ProjectId")]
@@ -73,7 +73,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual DeviceStatus Status { get; set; }
 
         [Display(Name = "设备关联摄像头ID")]
-        public Guid CameraId { get; set; }
+        public Guid? CameraId { get; set; }
 
         [Display(Name = "设备关联摄像头")]
         [ForeignKey("CameraId")]

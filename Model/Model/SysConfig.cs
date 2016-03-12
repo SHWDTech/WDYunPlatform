@@ -28,7 +28,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string SysConfigValue { get; set; }
 
         [Display(Name = "所属系统配置ID")]
-        public virtual Guid ParentSysConfigId { get; set; }
+        public virtual Guid? ParentSysConfigId { get; set; }
 
         [Display(Name = "所属系统配置")]
         [ForeignKey("ParentSysConfigId")]

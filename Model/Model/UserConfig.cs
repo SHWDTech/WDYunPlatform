@@ -28,7 +28,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string UserConfigValue { get; set; }
 
         [Display(Name = "父级用户配置项ID")]
-        public Guid ParentUserConfigId { get; set; }
+        public Guid? ParentUserConfigId { get; set; }
 
         [Display(Name = "父级用户配置项")]
         [ForeignKey("ParentUserConfigId")]

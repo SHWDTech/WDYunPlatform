@@ -69,21 +69,21 @@ namespace SHWDTech.Platform.Model.Model
         public virtual DateTime StartDate { get; set; }
 
         [Display(Name = "项目所属阶段ID")]
-        public virtual Guid StageId { get; set; }
+        public virtual Guid? StageId { get; set; }
 
         [Display(Name = "项目所属阶段")]
         [ForeignKey("StageId")]
         public virtual SysDictionary Stage { get; set; }
 
         [Display(Name = "项目类型ID")]
-        public virtual Guid TypeId { get; set; }
+        public virtual Guid? TypeId { get; set; }
 
         [Display(Name = "项目类型")]
         [ForeignKey("TypeId")]
         public virtual SysDictionary Type { get; set; }
 
         [Display(Name = "项目报警类型ID")]
-        public virtual Guid AlarmTypeId { get; set; }
+        public virtual Guid? AlarmTypeId { get; set; }
 
         [Display(Name = "项目报警类型")]
         [ForeignKey("AlarmTypeId")]

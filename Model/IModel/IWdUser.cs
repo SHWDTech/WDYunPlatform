@@ -39,7 +39,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户最后登录时间
         /// </summary>
-        DateTime LastLoginDateTime { get; set; }
+        DateTime? LastLoginDateTime { get; set; }
 
         /// <summary>
         /// 用户状态

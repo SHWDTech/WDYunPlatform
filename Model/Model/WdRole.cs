@@ -15,7 +15,7 @@ namespace SHWDTech.Platform.Model.Model
     public class WdRole : SysDomainModelBase, IWdRole
     {
         [Display(Name = "父级角色ID")]
-        public virtual Guid ParentRoleId { get; set; }
+        public virtual Guid? ParentRoleId { get; set; }
 
         [Display(Name = "父级角色")]
         [ForeignKey("ParentRoleId")]

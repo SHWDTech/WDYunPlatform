@@ -18,7 +18,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string PermissionName { get; set; }
 
         [Display(Name = "父级权限ID")]
-        public virtual Guid ParentPermissionId { get; set; }
+        public virtual Guid? ParentPermissionId { get; set; }
 
         [Display(Name = "父级权限")]
         [ForeignKey("ParentPermissionId")]

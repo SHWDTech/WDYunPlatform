@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.Model
     public class Menu : SysDomainModelBase, IMenu
     {
         [Display(Name = "所属父菜单ID")]
-        public virtual Guid ParentMenuId { get; set; }
+        public virtual Guid? ParentMenuId { get; set; }
 
         [Display(Name = "所属父菜单")]
         [ForeignKey("ParentMenuId")]

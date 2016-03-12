@@ -31,7 +31,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 父级字典项ID
         /// </summary>
-        Guid ParentDictionaryId { get; set; }
+        Guid? ParentDictionaryId { get; set; }
 
         /// <summary>
         /// 父级字典项

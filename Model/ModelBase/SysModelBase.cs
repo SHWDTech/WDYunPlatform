@@ -24,10 +24,10 @@ namespace SHWDTech.Platform.Model.ModelBase
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
-        public virtual DateTime LastUpdateDateTime { get; set; }
+        public virtual DateTime? LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public virtual Guid LastUpdateUserId { get; set; }
+        public virtual Guid? LastUpdateUserId { get; set; }
 
         //[JsonIgnore]
         //[ForeignKey("LastUpdateUserId")]

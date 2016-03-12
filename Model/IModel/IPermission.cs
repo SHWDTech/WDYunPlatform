@@ -16,7 +16,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 所属父级权限ID
         /// </summary>
-        Guid ParentPermissionId { get; set; }
+        Guid? ParentPermissionId { get; set; }
 
         /// <summary>
         /// 所属父级权限

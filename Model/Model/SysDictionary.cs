@@ -27,7 +27,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual int ItemLevel { get; set; }
 
         [Display(Name = "父级字典项ID")]
-        public virtual Guid ParentDictionaryId { get; set; }
+        public virtual Guid? ParentDictionaryId { get; set; }
 
         [Display(Name = "父级字典项")]
         [ForeignKey("ParentDictionaryId")]

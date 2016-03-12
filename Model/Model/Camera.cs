@@ -30,10 +30,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string AccessUrl { get; set; }
 
         [Display(Name = "摄像头登陆地址端口号")]
-        public virtual int AccessPort { get; set; }
+        public virtual int? AccessPort { get; set; }
 
         [Display(Name = "摄像头登录类型ID")]
-        public virtual Guid AccessTypeId { get; set; }
+        public virtual Guid? AccessTypeId { get; set; }
 
         [Display(Name = "摄像头登录类型")]
         [ForeignKey("AccessTypeId")]

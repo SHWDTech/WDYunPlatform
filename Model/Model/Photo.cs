@@ -17,7 +17,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual Device PhtotDevice { get; set; }
 
         [Display(Name = "所属设备ID")]
-        public virtual Guid DeviceId { get; set; }
+        public virtual Guid? DeviceId { get; set; }
 
         [Display(Name = "所属设备")]
         [ForeignKey("DeviceId")]

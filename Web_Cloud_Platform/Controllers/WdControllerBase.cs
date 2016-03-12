@@ -52,7 +52,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
             //设置数据仓库类当前线程所需的用户和用户所属域信息
             RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>
             {
-                Value =
+                Value = new RepositoryContext
                 {
                     CurrentUser = WdContext.WdUser,
                     CurrentDomain = WdContext.WdUser.Domain

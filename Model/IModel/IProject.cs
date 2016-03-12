@@ -81,7 +81,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 项目所属阶段ID
         /// </summary>
-        Guid StageId { get; set; }
+        Guid? StageId { get; set; }
 
         /// <summary>
         /// 项目所属阶段
@@ -91,7 +91,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 项目类型ID
         /// </summary>
-        Guid TypeId { get; set; }
+        Guid? TypeId { get; set; }
 
         /// <summary>
         /// 项目类型
@@ -101,7 +101,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 项目报警类型ID
         /// </summary>
-        Guid AlarmTypeId { get; set; }
+        Guid? AlarmTypeId { get; set; }
 
         /// <summary>
         /// 项目报警类型

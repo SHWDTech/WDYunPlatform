@@ -32,12 +32,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 摄像头登陆端口
         /// </summary>
-        int AccessPort { get; set; }
+        int? AccessPort { get; set; }
 
         /// <summary>
         /// 摄像头登录类型ID
         /// </summary>
-        Guid AccessTypeId { get; set; }
+        Guid? AccessTypeId { get; set; }
 
         /// <summary>
         /// 摄像头登录类型

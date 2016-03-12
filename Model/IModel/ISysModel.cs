@@ -25,12 +25,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字段最后修改时间
         /// </summary>
-        DateTime LastUpdateDateTime { get; set; }
+        DateTime? LastUpdateDateTime { get; set; }
 
         /// <summary>
         /// 字段最后修改人ID
         /// </summary>
-        Guid LastUpdateUserId { get; set; }
+        Guid? LastUpdateUserId { get; set; }
 
         /// <summary>
         /// 字段最后修改人

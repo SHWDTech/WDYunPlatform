@@ -21,7 +21,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual Protocol Procotol { get; set; }
 
         [Display(Name = "所属父结构ID")]
-        public virtual Guid ParentStructureId { get; set; }
+        public virtual Guid? ParentStructureId { get; set; }
         
         [Display(Name = "所属父结构")]
         [ForeignKey("ParentStructureId")]
