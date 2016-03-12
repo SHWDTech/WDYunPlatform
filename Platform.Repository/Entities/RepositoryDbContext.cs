@@ -17,11 +17,11 @@ namespace SHWD.Platform.Repository.Entities
             Configuration.LazyLoadingEnabled = false;
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            base.OnModelCreating(modelBuilder);
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        //    base.OnModelCreating(modelBuilder);
+        //}
 
         /// <summary>
         /// 报警信息

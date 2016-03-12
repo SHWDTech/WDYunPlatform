@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SHWDTech.Platform.Model.Model
@@ -19,5 +20,9 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "域类型")]
         [MaxLength(25)]
         public virtual string DomianType { get; set; }
+
+        public ICollection<WdUser> Users { get; set; }
+
+        public ICollection<Device> Devices { get; set; }
     }
 }
