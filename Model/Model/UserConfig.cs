@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -25,5 +26,12 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "用户配置值")]
         [MaxLength(200)]
         public virtual string UserConfigValue { get; set; }
+
+        [Display(Name = "父级用户配置项ID")]
+        public Guid ParentUserConfigId { get; set; }
+
+        [Display(Name = "父级用户配置项")]
+        [ForeignKey("ParentUserConfigId")]
+        public UserConfig ParentUserConfig { get; set; }
     }
 }

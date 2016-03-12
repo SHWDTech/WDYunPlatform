@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -11,11 +12,19 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class DeviceType : SysModelBase, IDeviceType
     {
-        //[Required]
+        [Required]
+        [Display(Name = "设备应用领域ID")]
+        public Guid FieldId { get; set; }
+
         [Display(Name = "设备应用领域")]
+        [ForeignKey("FieldId")]
         public virtual SysDictionary Field { get; set; }
 
-        //[Required]
+        [Required]
+        [Display(Name = "设备应用子领域ID")]
+        public Guid SubFieldId { get; set; }
+
+        [ForeignKey("SubFieldId")]
         [Display(Name = "设备应用子领域")]
         public virtual SysDictionary SubField { get; set; }
 

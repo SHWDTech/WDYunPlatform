@@ -29,7 +29,7 @@ namespace SHWD.Platform.Repository.Entities
                 Telephone = "18679361687",
                 Status = UserStatus.Enabled,
                 CreateDateTime = DateTime.Now,
-                Domain = domain,
+                DomainId = domain.Id,
                 Roles = new List<WdRole>(),
                 IsEnabled = true
             };
@@ -41,20 +41,20 @@ namespace SHWD.Platform.Repository.Entities
                 Users = new List<WdUser>(),
                 CreateDateTime = DateTime.Now,
                 Status = RoleStatus.Enabled,
-                CreateUser = user.Id,
-                Domain = domain,
+                CreateUserId = user.Id,
+                DomainId = domain.Id,
                 IsEnabled = true
             };
 
-            user.CreateUser = user.Id;
-            user.LastUpdateUser = user.Id;
+            user.CreateUserId = user.Id;
+            user.LastUpdateUserId = user.Id;
             user.LastUpdateDateTime = DateTime.Now;
             user.LastLoginDateTime = DateTime.Now;
-            domain.CreateUser = user.Id;
-            domain.LastUpdateUser = user.Id;
+            domain.CreateUserId = user.Id;
+            domain.LastUpdateUserId = user.Id;
             domain.LastUpdateDateTime = DateTime.Now;
-            role.CreateUser = user.Id;
-            role.LastUpdateUser = user.Id;
+            role.CreateUserId = user.Id;
+            role.LastUpdateUserId = user.Id;
             role.LastUpdateDateTime = DateTime.Now;
             user.Roles.Add(role);
             role.Users.Add(user);

@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
@@ -31,7 +32,11 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "摄像头登陆地址端口号")]
         public virtual int AccessPort { get; set; }
 
+        [Display(Name = "摄像头登录类型ID")]
+        public virtual Guid AccessTypeId { get; set; }
+
         [Display(Name = "摄像头登录类型")]
+        [ForeignKey("AccessTypeId")]
         public virtual SysDictionary AccessType { get; set; }
 
         [Display(Name = "摄像头所属公司")]

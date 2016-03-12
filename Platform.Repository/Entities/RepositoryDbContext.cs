@@ -14,14 +14,25 @@ namespace SHWD.Platform.Repository.Entities
         /// </summary>
         public RepositoryDbContext() : base("DefaultConnection")
         {
-            Configuration.LazyLoadingEnabled = false;
+            
         }
 
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-        //    base.OnModelCreating(modelBuilder);
-        //}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+            modelBuilder.Entity<WdUser>()
+                .HasMany(s => s.Roles)
+                .WithMany(c => c.Users)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("UserId");
+                    cs.MapRightKey("RoleId");
+                    cs.ToTable("UserRole");
+                });
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         /// <summary>
         /// 报警信息

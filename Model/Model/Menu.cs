@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -11,7 +12,11 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Menu : SysDomainModelBase, IMenu
     {
+        [Display(Name = "所属父菜单ID")]
+        public virtual Guid ParentMenuId { get; set; }
+
         [Display(Name = "所属父菜单")]
+        [ForeignKey("ParentMenuId")]
         public virtual Menu ParentMenu { get; set; }
 
         [Required]
@@ -34,7 +39,11 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string Action { get; set; }
 
         [Required]
+        [Display(Name = "菜单所属权限ID")]
+        public virtual Guid PermissionId { get; set; }
+
         [Display(Name = "菜单所属权限")]
+        [ForeignKey("PermissionId")]
         public virtual Permission Permission { get; set; }
     }
 }

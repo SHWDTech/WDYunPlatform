@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -11,6 +12,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 权限名称
         /// </summary>
         string PermissionName { get; set; }
+
+        /// <summary>
+        /// 所属父级权限ID
+        /// </summary>
+        Guid ParentPermissionId { get; set; }
 
         /// <summary>
         /// 所属父级权限

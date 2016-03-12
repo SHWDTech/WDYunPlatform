@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -21,6 +22,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 系统设置值
         /// </summary>
         string SysConfigValue { get; set; }
+
+        /// <summary>
+        /// 父级系统设置项ID
+        /// </summary>
+        Guid ParentSysConfigId { get; set; }
 
         /// <summary>
         /// 父级系统设置项

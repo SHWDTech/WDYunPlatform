@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -7,6 +8,11 @@ namespace SHWDTech.Platform.Model.IModel
     /// </summary>
     public interface IDataModel : IModel
     {
+        /// <summary>
+        /// 所属域ID
+        /// </summary>
+        Guid DomainId { get; set; }
+
         /// <summary>
         /// 所属域
         /// </summary>

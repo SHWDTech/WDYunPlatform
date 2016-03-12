@@ -9,6 +9,11 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IMonitorData : IDataModel
     {
         /// <summary>
+        /// 数据所属协议包ID
+        /// </summary>
+        Guid ProtocolDataId { get; set; }
+
+        /// <summary>
         /// 数据所属协议包
         /// </summary>
         ProtocolData ProtocolData { get; set; }

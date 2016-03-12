@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -28,8 +29,13 @@ namespace SHWDTech.Platform.Model.IModel
         int ItemLevel { get; set; }
 
         /// <summary>
+        /// 父级字典项ID
+        /// </summary>
+        Guid ParentDictionaryId { get; set; }
+
+        /// <summary>
         /// 父级字典项
         /// </summary>
-        SysDictionary ParentDictionary { get; set; }
+        SysDictionary ParentDictionary { get; }
     }
 }

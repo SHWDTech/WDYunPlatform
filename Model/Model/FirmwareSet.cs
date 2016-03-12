@@ -18,6 +18,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "固件集包含固件列表")]
-        public virtual ICollection<Firmware> Firmwares { get; set; }
+        public virtual ICollection<Firmware> Firmwares { get; set; } = new List<Firmware>();
     }
 }

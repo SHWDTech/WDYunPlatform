@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -54,7 +55,11 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(200)]
         public virtual string Street { get; set; }
 
+        [Display(Name = "项目所属区域ID")]
+        public virtual Guid DistrictId { get; set; }
+
         [Display(Name = "项目所属区域")]
+        [ForeignKey("DistrictId")]
         public virtual SysDictionary District { get; set; }
 
         [Display(Name = "项目面积")]
@@ -63,13 +68,25 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "项目开始时间")]
         public virtual DateTime StartDate { get; set; }
 
+        [Display(Name = "项目所属阶段ID")]
+        public virtual Guid StageId { get; set; }
+
         [Display(Name = "项目所属阶段")]
-        public virtual int Stage { get; set; }
+        [ForeignKey("StageId")]
+        public virtual SysDictionary Stage { get; set; }
+
+        [Display(Name = "项目类型ID")]
+        public virtual Guid TypeId { get; set; }
 
         [Display(Name = "项目类型")]
-        public virtual int Type { get; set; }
+        [ForeignKey("TypeId")]
+        public virtual SysDictionary Type { get; set; }
+
+        [Display(Name = "项目报警类型ID")]
+        public virtual Guid AlarmTypeId { get; set; }
 
         [Display(Name = "项目报警类型")]
-        public virtual int AlarmType { get; set; }
+        [ForeignKey("AlarmTypeId")]
+        public virtual SysDictionary AlarmType { get; set; }
     }
 }

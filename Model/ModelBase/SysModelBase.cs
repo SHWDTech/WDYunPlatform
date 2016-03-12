@@ -16,14 +16,22 @@ namespace SHWDTech.Platform.Model.ModelBase
         public virtual DateTime CreateDateTime { get; set; }
 
         [JsonIgnore]
-        public virtual Guid CreateUser { get; set; }
+        public virtual Guid CreateUserId { get; set; }
+
+        //[JsonIgnore]
+        //[ForeignKey("CreateUserId")]
+        //public virtual WdUser CreateUser { get; set; }
 
         [JsonIgnore]
         [DataType(DataType.DateTime)]
         public virtual DateTime LastUpdateDateTime { get; set; }
 
         [JsonIgnore]
-        public virtual Guid LastUpdateUser { get; set; }
+        public virtual Guid LastUpdateUserId { get; set; }
+
+        //[JsonIgnore]
+        //[ForeignKey("LastUpdateUserId")]
+        //public virtual WdUser LastUpdateUser { get; set; }
 
         [JsonIgnore]
         public virtual bool IsDeleted { get; set; }

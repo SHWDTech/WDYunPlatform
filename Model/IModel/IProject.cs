@@ -59,6 +59,11 @@ namespace SHWDTech.Platform.Model.IModel
         string Street { get; set; }
 
         /// <summary>
+        /// 项目所属区域ID
+        /// </summary>
+        Guid DistrictId { get; set; }
+
+        /// <summary>
         /// 项目所属区域
         /// </summary>
         SysDictionary District { get; set; }
@@ -74,18 +79,33 @@ namespace SHWDTech.Platform.Model.IModel
         DateTime StartDate { get; set; }
 
         /// <summary>
+        /// 项目所属阶段ID
+        /// </summary>
+        Guid StageId { get; set; }
+
+        /// <summary>
         /// 项目所属阶段
         /// </summary>
-        int Stage { get; set; }
+        SysDictionary Stage { get; set; }
+
+        /// <summary>
+        /// 项目类型ID
+        /// </summary>
+        Guid TypeId { get; set; }
 
         /// <summary>
         /// 项目类型
         /// </summary>
-        int Type { get; set; }
+        SysDictionary Type { get; set; }
+
+        /// <summary>
+        /// 项目报警类型ID
+        /// </summary>
+        Guid AlarmTypeId { get; set; }
 
         /// <summary>
         /// 项目报警类型
         /// </summary>
-        int AlarmType { get; set; }
+        SysDictionary AlarmType { get; set; }
     }
 }

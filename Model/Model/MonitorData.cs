@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -11,7 +12,12 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class MonitorData : DataModelBase, IMonitorData
     {
+        [Required]
+        [Display(Name = "数据来源协议包ID")]
+        public virtual Guid ProtocolDataId { get; set; }
+
         [Display(Name = "数据来源协议包")]
+        [ForeignKey("ProtocolDataId")]
         public virtual ProtocolData ProtocolData { get; set; }
 
         [Display(Name = "数据类型")]

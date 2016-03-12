@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -8,14 +9,24 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IProtocolStructure : ISysModel
     {
         /// <summary>
+        /// 所属协议ID
+        /// </summary>
+        Guid ProtocolId { get; set; }
+
+        /// <summary>
         /// 所属协议
         /// </summary>
         Protocol Procotol { get; set; }
 
         /// <summary>
+        /// 所属协议父结构ID
+        /// </summary>
+        Guid ParentStructureId { get; set; }
+
+        /// <summary>
         /// 所属协议父结构
         /// </summary>
-        ProtocolStructure Parenttructure { get; set; }
+        ProtocolStructure ParentStructure { get; set; }
 
         /// <summary>
         /// 协议段名称

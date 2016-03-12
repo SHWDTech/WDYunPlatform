@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -11,12 +12,20 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Protocol : SysModelBase, IProtocol
     {
-        //Required]
+        [Required]
+        [Display(Name = "协议应用领域ID")]
+        public virtual Guid FieldId { get; set; }
+
         [Display(Name = "协议应用领域")]
+        [ForeignKey("FieldId")]
         public virtual SysDictionary Field { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "协议应用子领域")]
+        public virtual Guid SubFieldId { get; set; }
+
+        [Display(Name = "协议应用子领域")]
+        [ForeignKey("SubFieldId")]
         public virtual SysDictionary SubField { get; set; }
 
         [Required]

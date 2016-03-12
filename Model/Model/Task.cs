@@ -3,6 +3,7 @@ using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -13,7 +14,11 @@ namespace SHWDTech.Platform.Model.Model
     public class Task : SysDomainModelBase, ITask
     {
         [Required]
-        [Display(Name = "设备所属设备")]
+        [Display(Name = "任务所属设备ID")]
+        public virtual Guid TaskDeviceId { get; set; }
+
+        [Display(Name = "任务所属设备")]
+        [ForeignKey("TaskDeviceId")]
         public virtual Device TaskDevice { get; set; }
 
         [MaxLength(25)]
@@ -34,7 +39,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "任务包含协议")]
-        public virtual ICollection<ProtocolData> TaskProtocols { get; set; }
+        public virtual ICollection<ProtocolData> TaskProtocols { get; set; } = new List<ProtocolData>();
 
         [Required]
         [Display(Name = "任务生成时间")]

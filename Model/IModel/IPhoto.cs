@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -8,9 +9,14 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IPhoto : ISysDomainModel
     {
         /// <summary>
+        /// 照片所属设备ID
+        /// </summary>
+        Guid DeviceId { get; set; }
+
+        /// <summary>
         /// 照片所属设备
         /// </summary>
-        Device PhtotDevice { get; set; }
+        Device Device { get; set; }
 
         /// <summary>
         /// 照片附加信息
@@ -21,6 +27,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 照片地址
         /// </summary>
         string PhotoUrl { get; set; }
+
+        /// <summary>
+        /// 照片类型ID
+        /// </summary>
+        Guid PhotoTypeId { get; set; }
 
         /// <summary>
         /// 照片类型

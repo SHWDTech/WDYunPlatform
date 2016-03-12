@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 using System.Collections.Generic;
 using SHWDTech.Platform.Model.Enums;
 
@@ -9,6 +10,11 @@ namespace SHWDTech.Platform.Model.IModel
     /// </summary>
     public interface IWdRole : ISysDomainModel
     {
+        /// <summary>
+        /// 角色所属父角色ID
+        /// </summary>
+        Guid ParentRoleId { get; set; }
+
         /// <summary>
         /// 角色所属父角色
         /// </summary>

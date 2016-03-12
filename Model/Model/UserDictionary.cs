@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -25,7 +26,11 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "字典项层级")]
         public virtual int ItemLevel { get; set; }
 
+        [Display(Name = "父级字典项ID")]
+        public virtual Guid ParentDictionaryId { get; set; }
+
         [Display(Name = "父级字典项")]
+        [ForeignKey("ParentDictionaryId")]
         public virtual SysDictionary ParentDictionary { get; set; }
     }
 }

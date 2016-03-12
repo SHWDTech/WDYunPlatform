@@ -10,6 +10,11 @@ namespace SHWDTech.Platform.Model.IModel
     public interface ITask : ISysDomainModel
     {
         /// <summary>
+        /// 任务所属设备ID
+        /// </summary>
+        Guid TaskDeviceId { get; set; }
+
+        /// <summary>
         /// 任务所属设备
         /// </summary>
         Device TaskDevice { get; set; }

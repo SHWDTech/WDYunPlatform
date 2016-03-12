@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -7,6 +8,11 @@ namespace SHWDTech.Platform.Model.IModel
     /// </summary>
     public interface IMenu : ISysDomainModel
     {
+        /// <summary>
+        /// 父菜单ID
+        /// </summary>
+        Guid ParentMenuId { get; set; }
+
         /// <summary>
         /// 父菜单
         /// </summary>
@@ -31,6 +37,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 菜单所属操作
         /// </summary>
         string Action { get; set; }
+
+        /// <summary>
+        /// 菜单关联权限ID
+        /// </summary>
+        Guid PermissionId { get; set; }
 
         /// <summary>
         /// 菜单关联的权限

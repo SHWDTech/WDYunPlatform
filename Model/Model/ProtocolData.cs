@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -12,7 +13,11 @@ namespace SHWDTech.Platform.Model.Model
     public class ProtocolData : DataModelBase, IProtocolData
     {
         [Required]
+        [Display(Name = "协议所属设备ID")]
+        public virtual Guid DeviceId { get; set; }
+
         [Display(Name = "协议所属设备")]
+        [ForeignKey("DeviceId")]
         public virtual Device Device { get; set; }
 
         [Required]
@@ -24,10 +29,15 @@ namespace SHWDTech.Platform.Model.Model
         public virtual int Length { get; set; }
 
         [Required]
+        [Display(Name = "协议类型ID")]
+        public virtual Guid ProtocolId { get; set; }
+
         [Display(Name = "协议类型")]
+        [ForeignKey("ProtocolId")]
         public virtual Protocol Protocol { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "协议数据更新时间")]
         public virtual DateTime UpdateTime { get; set; }
     }
 }

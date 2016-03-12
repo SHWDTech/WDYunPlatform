@@ -14,6 +14,11 @@ namespace SHWDTech.Platform.Model.IModel
         string FirmwareName { get; set; }
 
         /// <summary>
+        /// 包含该固件的固件集
+        /// </summary>
+        ICollection<FirmwareSet> FirmwareSets { get; set; }
+
+        /// <summary>
         /// 固件支持的协议类型
         /// </summary>
         ICollection<Protocol> Protocols { get; set; }

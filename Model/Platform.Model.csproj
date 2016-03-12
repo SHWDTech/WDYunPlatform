@@ -70,7 +70,7 @@
     <Compile Include="Enums\ModelState.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
     <Compile Include="Enums\UserStatus.cs" />
-    <Compile Include="IModel\Alarm.cs" />
+    <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDevice.cs" />

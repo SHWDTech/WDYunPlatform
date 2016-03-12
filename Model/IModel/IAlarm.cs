@@ -9,14 +9,24 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IAlarm : IDataModel
     {
         /// <summary>
+        /// 所属设备ID
+        /// </summary>
+        Guid AlarmDeviceId { get; set; }
+
+        /// <summary>
         /// 报警信息所属设备
         /// </summary>
-        Device Device { get; set; }
+        Device AlarmDevice { get; set; }
 
         /// <summary>
         /// 报警信息值
         /// </summary>
         double AlarmValue { get; set; }
+
+        /// <summary>
+        /// 报警类别ID
+        /// </summary>
+        Guid AlarmTypeId { get; set; }
 
         /// <summary>
         /// 报警类别

@@ -9,6 +9,11 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IProtocolData : IDataModel
     {
         /// <summary>
+        /// 协议所属设备ID
+        /// </summary>
+        Guid DeviceId { get; set; }
+
+        /// <summary>
         /// 协议所属设备
         /// </summary>
         Device Device { get; set; }
@@ -22,6 +27,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 协议内容长度
         /// </summary>
         int Length { get; set; }
+
+        /// <summary>
+        /// 协议类型ID
+        /// </summary>
+        Guid ProtocolId { get; set; }
 
         /// <summary>
         /// 协议类型

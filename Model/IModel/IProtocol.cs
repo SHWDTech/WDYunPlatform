@@ -9,9 +9,19 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IProtocol : ISysModel
     {
         /// <summary>
+        /// 协议应用领域ID
+        /// </summary>
+        Guid FieldId { get; set; }
+
+        /// <summary>
         /// 协议应用领域
         /// </summary>
         SysDictionary Field { get; set; }
+
+        /// <summary>
+        /// 协议应用子领域ID
+        /// </summary>
+        Guid SubFieldId { get; set; }
 
         /// <summary>
         /// 协议应用子领域

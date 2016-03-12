@@ -10,9 +10,19 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IDevice : ISysDomainModel
     {
         /// <summary>
+        /// 设备类型ID
+        /// </summary>
+        Guid DeviceTypeId { get; set; }
+
+        /// <summary>
         /// 设备类型
         /// </summary>
         DeviceType DeviceType { get; set; }
+
+        /// <summary>
+        /// 对应的原设备ID
+        /// </summary>
+        Guid OriginalDeviceId { get; set; }
 
         /// <summary>
         /// 设备对应的原设备
@@ -32,7 +42,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备唯一标识符
         /// </summary>
-        Guid DeviceGuid { get; set; }
+        Guid DeviceModuleGuid { get; set; }
 
         /// <summary>
         /// 设备NODE编码
@@ -40,9 +50,19 @@ namespace SHWDTech.Platform.Model.IModel
         byte[] DeviceNodeId { get; set; }
 
         /// <summary>
+        /// 设备关联固件集ID
+        /// </summary>
+        Guid FirmwareSetId { get; set; }
+
+        /// <summary>
         /// 设备关联固件集
         /// </summary>
         FirmwareSet FirmwareSet { get; set; }
+
+        /// <summary>
+        /// 设备所属项目ID
+        /// </summary>
+        Guid ProjectId { get; set; }
 
         /// <summary>
         /// 设备所属项目
@@ -68,6 +88,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 设备状态
         /// </summary>
         DeviceStatus Status { get; set; }
+
+        /// <summary>
+        /// 设备关联摄像头ID
+        /// </summary>
+        Guid CameraId { get; set; }
 
         /// <summary>
         /// 设备关联摄像头

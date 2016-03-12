@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Enums;
+﻿using System;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -32,6 +33,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 摄像头登陆端口
         /// </summary>
         int AccessPort { get; set; }
+
+        /// <summary>
+        /// 摄像头登录类型ID
+        /// </summary>
+        Guid AccessTypeId { get; set; }
 
         /// <summary>
         /// 摄像头登录类型

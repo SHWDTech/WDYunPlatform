@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -26,7 +27,11 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(200)]
         public virtual string SysConfigValue { get; set; }
 
+        [Display(Name = "所属系统配置ID")]
+        public virtual Guid ParentSysConfigId { get; set; }
+
         [Display(Name = "所属系统配置")]
+        [ForeignKey("ParentSysConfigId")]
         public virtual SysConfig ParentSysConfig { get; set; }
     }
 }
