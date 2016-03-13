@@ -7,6 +7,9 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
 {
     public class AccountController : WdControllerBase
     {
+        /// <summary>
+        /// 账号信息处理类
+        /// </summary>
         private readonly AccountProcess _accountProcess;
 
         public AccountController()
@@ -20,7 +23,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            return View();
+            return ProgressedView();
         }
 
         [HttpPost]
@@ -30,17 +33,18 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return ProgressedView(model);
             }
 
             var signResult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
             switch (signResult)
             {
                     case SignInStatus.Success:
+                    if (string.IsNullOrWhiteSpace(returnUrl)) return RedirectToAction("Index", "Home");
                     return Redirect(returnUrl);
             }
 
-            return View();
+            return ProgressedView();
         }
     }
 }

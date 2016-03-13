@@ -1,5 +1,5 @@
-﻿body {
-    font-family: "Microsoft YaHei", Helvetica,sans-serif,"simsun" !important;
+﻿input,button,textarea,keygen,select {
+    font-family:"Segoe UI", "Microsoft YaHei", Helvetica,sans-serif,"simsun";
 }
 
 .text-danger {
@@ -7,7 +7,6 @@
 }
 
 .bg-login {
-    /*background-color: #06f;*/
     background-image: radial-gradient(circle farthest-side at center top, #55e7ca 0, #1abc9c 100%);
 }
 

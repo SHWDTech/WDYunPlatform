@@ -5,6 +5,7 @@ using SHWDTech.Web_Cloud_Platform.Common;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using SHWDTech.Web_Cloud_Platform.Models;
 
 namespace SHWDTech.Web_Cloud_Platform.Controllers
 {
@@ -58,6 +59,40 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
                     CurrentDomain = WdContext.WdUser.Domain
                 }
             };
+        }
+
+        /// <summary>
+        /// 处理页面通用数据模型
+        /// </summary>
+        /// <param name="model"></param>
+        private static void InitBasePageModel(IBaseViewModel model)
+        {
+            
+        }
+
+        /// <summary>
+        /// 处理页面通用数据模型，并使用模型创建一个将视图呈现给响应的ViewResult对象。
+        /// </summary>
+        /// <returns>视图呈现的模型。</returns>
+        protected ActionResult ProgressedView()
+        {
+            var model = new BasicViewModel();
+
+            InitBasePageModel(model);
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// 处理页面通用数据模型，并使用模型创建一个将视图呈现给响应的ViewResult对象。
+        /// </summary>
+        /// <param name="model">需要使用的模型对象</param>
+        /// <returns>视图呈现的模型。</returns>
+        protected ActionResult ProgressedView(object model)
+        {
+            InitBasePageModel((IBaseViewModel)model);
+
+            return View(model);
         }
     }
 }

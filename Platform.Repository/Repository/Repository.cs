@@ -17,11 +17,21 @@ namespace SHWD.Platform.Repository.Repository
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
     {
+        /// <summary>
+        /// 数据库上下文
+        /// </summary>
         protected RepositoryDbContext DbContext { get; }
 
+        /// <summary>
+        /// 进行操作的数据实体
+        /// </summary>
         protected IEnumerable<T> EntitySet { get; set; } 
 
+        /// <summary>
+        /// 数据检查条件
+        /// </summary>
         protected Func<T, bool> ChechFunc { get; set; } 
+
         /// <summary>
         /// 创建一个新的数据仓库泛型基类对象
         /// </summary>
