@@ -40,9 +40,11 @@ namespace SHWDTech.Platform.Model.Model
         public virtual SysDictionary AccessType { get; set; }
 
         [Display(Name = "摄像头所属公司")]
+        [MaxLength(50)]
         public virtual string Compnany { get; set; }
 
         [Display(Name = "摄像头附加信息")]
+        [MaxLength(2000)]
         public virtual string ExtraInformation { get; set; }
 
         [Required]

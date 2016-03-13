@@ -18,11 +18,6 @@ namespace SHWDTech.Platform.Model.IModel
         Guid CreateUserId { get; set; }
 
         /// <summary>
-        /// 字段创建人
-        /// </summary>
-        //WdUser CreateUser { get; set; }
-
-        /// <summary>
         /// 字段最后修改时间
         /// </summary>
         DateTime? LastUpdateDateTime { get; set; }
@@ -31,11 +26,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// 字段最后修改人ID
         /// </summary>
         Guid? LastUpdateUserId { get; set; }
-
-        /// <summary>
-        /// 字段最后修改人
-        /// </summary>
-        //WdUser LastUpdateUser { get; set; }
 
         /// <summary>
         /// 字段是否删除

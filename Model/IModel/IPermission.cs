@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -22,5 +23,10 @@ namespace SHWDTech.Platform.Model.IModel
         /// 所属父级权限
         /// </summary>
         Permission ParentPermission { get; set; }
+
+        /// <summary>
+        /// 拥有权限的角色
+        /// </summary>
+        ICollection<WdRole> Roles { get; set; } 
     }
 }

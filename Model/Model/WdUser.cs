@@ -58,9 +58,5 @@ namespace SHWDTech.Platform.Model.Model
 
         [NotMapped]
         public virtual IIdentity Identity { get; set; }
-
-        public virtual ICollection<WdUser> CreateUsers { get; set; } = new List<WdUser>();
-
-        public virtual ICollection<WdUser> LastUpdateUsers { get; set; } = new List<WdUser>();
     }
 }

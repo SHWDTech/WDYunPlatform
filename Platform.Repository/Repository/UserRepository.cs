@@ -14,7 +14,7 @@ namespace SHWD.Platform.Repository.Repository
     {
         public override WdUser CreateDefaultModel()
         {
-            var model =  base.CreateDefaultModel();
+            var model = base.CreateDefaultModel();
             model.Status = UserStatus.Enabled;
 
             return model;
@@ -44,15 +44,7 @@ namespace SHWD.Platform.Repository.Repository
         {
             var user = GetUserByLoginName(loginName);
             user.LastLoginDateTime = DateTime.Now;
-            try
-            {
-                DbContext.SaveChanges();
-            }
-            catch (System.Exception ex)
-            {
-                if (ex.Message.Contains("123")) 
-                throw ;
-            }
+            DbContext.SaveChanges();
         }
     }
 }

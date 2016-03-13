@@ -1,4 +1,5 @@
-﻿using SHWD.Platform.Repository.IRepository;
+﻿using System.Linq;
+using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
@@ -9,11 +10,17 @@ namespace SHWD.Platform.Repository.Repository
     /// <typeparam name="T"></typeparam>
     public class DataRepository<T> : Repository<T>, IDataRepository<T> where T : class, IDataModel
     {
+        public DataRepository()
+        {
+            EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
+            ChechFunc = (obj => obj.DomainId == CurrentDomain.Id);
+        }
+
         public override T CreateDefaultModel()
         {
             var model = base.CreateDefaultModel();
 
-            model.Domain = ContextLocal.Value.CurrentDomain;
+            model.DomainId = CurrentDomain.Id;
 
             return model;
         }
@@ -21,7 +28,7 @@ namespace SHWD.Platform.Repository.Repository
         public override T ParseModel(string jsonString)
         {
             var model = base.ParseModel(jsonString);
-            model.Domain = ContextLocal.Value.CurrentDomain;
+            model.DomainId = CurrentDomain.Id;
 
             return model;
         }

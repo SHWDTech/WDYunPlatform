@@ -31,6 +31,16 @@ namespace SHWD.Platform.Repository.Entities
                     cs.ToTable("UserRole");
                 });
 
+            modelBuilder.Entity<Permission>()
+                .HasMany(s => s.Roles)
+                .WithMany(c => c.Permissions)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("PermissionId");
+                    cs.MapRightKey("RoleId");
+                    cs.ToTable("RolePermission");
+                });
+
             base.OnModelCreating(modelBuilder);
         }
 

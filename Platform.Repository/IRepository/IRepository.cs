@@ -61,7 +61,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// 删除对象
         /// </summary>
         /// <param name="model">被删除的对象</param>
-        void Delete(T model);
+        bool Delete(T model);
 
         /// <summary>
         /// 批量删除对象

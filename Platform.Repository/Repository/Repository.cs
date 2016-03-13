@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -17,19 +18,24 @@ namespace SHWD.Platform.Repository.Repository
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
     {
         protected RepositoryDbContext DbContext { get; }
+
+        protected IEnumerable<T> EntitySet { get; set; } 
+
+        protected Func<T, bool> ChechFunc { get; set; } 
         /// <summary>
         /// 创建一个新的数据仓库泛型基类对象
         /// </summary>
         protected Repository()
         {
             DbContext = new RepositoryDbContext();
+            EntitySet = DbContext.Set<T>();
         }
 
-        public virtual IEnumerable<T> GetAllModels() => DbContext.Set<T>().ToList();
+        public virtual IEnumerable<T> GetAllModels() => EntitySet;
 
-        public virtual IEnumerable<T> GetModels(Func<T, bool> exp) => DbContext.Set<T>().Where(exp).ToList();
+        public virtual IEnumerable<T> GetModels(Func<T, bool> exp) => EntitySet.Where(exp);
 
-        public virtual int GetCount(Func<T, bool> exp) => DbContext.Set<T>().Where(exp).Count();
+        public virtual int GetCount(Func<T, bool> exp) => EntitySet.Where(exp).Count();
 
         public virtual T CreateDefaultModel()
         {
@@ -49,6 +55,8 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual Guid AddOrUpdate(T model)
         {
+            CheckModel(model);
+
             if (!IsExists(model))
             {
                 DbContext.Set<T>().Add(model);
@@ -59,12 +67,11 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual int AddOrUpdate(IEnumerable<T> models)
         {
-            foreach (var model in models)
+            CheckModel(models);
+
+            foreach (var model in models.Where(model => !IsExists(model)))
             {
-                if (!IsExists(model))
-                {
-                    DbContext.Set<T>().Add(model);
-                }
+                DbContext.Set<T>().Add(model);
             }
 
             return DbContext.SaveChanges();
@@ -72,6 +79,8 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual bool Delete(T model)
         {
+            CheckModel(model);
+
             DbContext.Set<T>().Remove(model);
 
             return DbContext.SaveChanges() == 1;
@@ -79,6 +88,8 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual int Delete(IEnumerable<T> models)
         {
+            CheckModel(models);
+
             foreach (var model in models)
             {
                 DbContext.Set<T>().Remove(model);
@@ -87,15 +98,24 @@ namespace SHWD.Platform.Repository.Repository
             return DbContext.SaveChanges();
         }
 
-        public virtual bool IsExists(T model) => DbContext.Set<T>().Find(model.Id) != null;
+        public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
 
-        public virtual bool IsExists(Func<T, bool> exp) => DbContext.Set<T>().Any(exp);
+        public virtual bool IsExists(Func<T, bool> exp) => EntitySet.Any(exp);
 
-        void IRepository<T>.Delete(T model)
+        private void CheckModel(object models)
         {
-            DbContext.Set<T>().Remove(model);
+            if (ChechFunc == null) return;
 
-            DbContext.SaveChanges();
+            if (models == null) throw new ArgumentNullException(nameof(models));
+
+            var checkList = new List<T>();
+            var item = models as T;
+            if(item != null) checkList.Add(item);
+
+            var items = models as IEnumerable<T>;
+            if(items != null) checkList.AddRange(items);
+
+            if(!checkList.Any(ChechFunc)) throw new ArgumentException("参数不符合要求");
         }
     }
 
@@ -110,6 +130,12 @@ namespace SHWD.Platform.Repository.Repository
         protected RepositoryBase()
         {
         }
+
+        public static IRepositoryContext RepositoryContext => ContextLocal.Value;
+
+        public static WdUser CurrentUser => RepositoryContext.CurrentUser;
+
+        public static Domain CurrentDomain => RepositoryContext.CurrentDomain;
 
         public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; }
     }

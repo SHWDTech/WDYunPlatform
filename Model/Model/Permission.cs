@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,5 +24,8 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "父级权限")]
         [ForeignKey("ParentPermissionId")]
         public virtual Permission ParentPermission { get; set; }
+
+        [Display(Name = "拥有权限的角色")]
+        public virtual ICollection<WdRole> Roles { get; set; } 
     }
 }

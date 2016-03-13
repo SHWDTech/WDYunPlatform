@@ -25,7 +25,7 @@ namespace SHWD.Platform.Repository.Repository
 
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
-            model.CreateUserId = ContextLocal.Value.CurrentUser.Id;
+            model.CreateUserId = CurrentUser.Id;
 
             return model;
         }
@@ -35,7 +35,7 @@ namespace SHWD.Platform.Repository.Repository
             var model = base.ParseModel(jsonString);
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
-            model.CreateUserId = ContextLocal.Value.CurrentUser.Id;
+            model.CreateUserId = CurrentUser.Id;
 
             return model;
         }
@@ -43,7 +43,7 @@ namespace SHWD.Platform.Repository.Repository
         public override Guid AddOrUpdate(T model)
         {
             model.LastUpdateDateTime = DateTime.Now;
-            model.LastUpdateUserId = ContextLocal.Value.CurrentUser.Id;
+            model.LastUpdateUserId = CurrentUser.Id;
 
             return base.AddOrUpdate(model);
         }
@@ -54,7 +54,7 @@ namespace SHWD.Platform.Repository.Repository
             foreach (var model in enumerable)
             {
                 model.LastUpdateDateTime = DateTime.Now;
-                model.LastUpdateUserId = ContextLocal.Value.CurrentUser.Id;
+                model.LastUpdateUserId = CurrentUser.Id;
             }
 
             return base.AddOrUpdate(enumerable);
@@ -63,6 +63,7 @@ namespace SHWD.Platform.Repository.Repository
         public virtual void MarkDelete(T model)
         {
             model.IsDeleted = true;
+            AddOrUpdate(model);
         }
 
         public virtual void MarkDelete(IEnumerable<T> models)
@@ -76,6 +77,7 @@ namespace SHWD.Platform.Repository.Repository
         public void SetEnableStatus(T model, bool enableStatus)
         {
             model.IsDeleted = enableStatus;
+            AddOrUpdate(model);
         }
 
         public void SetEnableStatus(IEnumerable<T> models, bool enableStatus)
