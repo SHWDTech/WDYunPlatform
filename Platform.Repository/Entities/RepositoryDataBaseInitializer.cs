@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using SHWDTech.Platform.Model.Enums;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Entities
 {
@@ -65,6 +65,7 @@ namespace SHWD.Platform.Repository.Entities
             dbContext.SysDomains.Add(domain);
         }
     }
+
     public class DevelopInitializer : DropCreateDatabaseIfModelChanges<RepositoryDbContext>
     {
         protected override void Seed(RepositoryDbContext dbContext)

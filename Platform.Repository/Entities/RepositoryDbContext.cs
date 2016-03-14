@@ -14,7 +14,6 @@ namespace SHWD.Platform.Repository.Entities
         /// </summary>
         public RepositoryDbContext() : base("DefaultConnection")
         {
-            
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
