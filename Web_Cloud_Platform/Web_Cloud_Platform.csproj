@@ -330,6 +330,10 @@
     <Content Include="Content\bootstrap\less\bootstrap.less" />
     <Content Include="Content\bootstrap\less\badges.less" />
     <Content Include="Content\bootstrap\less\alerts.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
