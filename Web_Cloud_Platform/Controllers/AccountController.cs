@@ -23,7 +23,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            return ProgressedView(new AccountLoginViewModel());
+            return DynamicView();
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ProgressedView(model);
+                return DynamicView(model);
             }
 
             var signResult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
@@ -44,7 +44,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
                     return Redirect(returnUrl);
             }
 
-            return ProgressedView();
+            return DynamicView();
         }
     }
 }
