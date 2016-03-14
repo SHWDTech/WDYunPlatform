@@ -51,9 +51,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Platform.Common\bin\Debug\Platform.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Platform.Utility">
-      <HintPath>..\Platform.Utility\bin\Debug\Platform.Utility.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -67,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\DeviceStatus.cs" />
+    <Compile Include="Enums\DomainStatus.cs" />
+    <Compile Include="Enums\DomainType.cs" />
     <Compile Include="Enums\ModelState.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
     <Compile Include="Enums\UserStatus.cs" />

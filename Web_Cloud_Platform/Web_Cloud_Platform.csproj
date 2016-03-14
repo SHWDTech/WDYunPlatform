@@ -65,22 +65,17 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC5.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Platform.Process, Version=1.0.5907.21385, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Platform.Process\bin\Debug\Platform.Process.dll</HintPath>
-    </Reference>
-    <Reference Include="Platform.Utility">
-      <HintPath>..\Platform.Utility\bin\Debug\Platform.Utility.dll</HintPath>
-    </Reference>
-    <Reference Include="SHWDTech.Platform.Model">
-      <HintPath>..\Model\bin\Debug\SHWDTech.Platform.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="SHWDTech.Platform.Repository">
-      <HintPath>..\Platform.Repository\bin\Debug\SHWDTech.Platform.Repository.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,6 +130,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -179,6 +178,10 @@
     <Content Include="Scripts\Base\Base.js" />
     <Content Include="Scripts\Utility\jquery-2.2.1.js" />
     <Content Include="Scripts\Utility\jquery-2.2.1.min.js" />
+    <Content Include="Mvc.sitemap" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\Utility\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\Utility\jquery.validate.js" />
     <Content Include="Scripts\Utility\jquery.validate.min.js" />
@@ -192,7 +195,9 @@
     <Content Include="Scripts\Utility\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\Utility\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -209,6 +214,14 @@
     <Content Include="Scripts\Utility\jquery-2.2.1.min.map" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -219,6 +232,24 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Platform.Model.csproj">
+      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
+      <Name>Platform.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Common\Platform.Common.csproj">
+      <Project>{1328ee07-f6c6-4762-8d87-45d026f60dd8}</Project>
+      <Name>Platform.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Process\Platform.Process.csproj">
+      <Project>{9bb3c321-2f61-4efe-9315-b1a035470a57}</Project>
+      <Name>Platform.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{3caf3855-4870-4065-8755-5af2897bd10a}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

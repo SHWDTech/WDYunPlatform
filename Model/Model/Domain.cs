@@ -2,6 +2,7 @@
 using SHWDTech.Platform.Model.ModelBase;
 using System;
 using System.ComponentModel.DataAnnotations;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -17,7 +18,11 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string DomainName { get; set; }
 
         [Display(Name = "域类型")]
-        [MaxLength(25)]
+        [MaxLength(50)]
         public virtual string DomianType { get; set; }
+
+        [Required]
+        [Display(Name = "域状态")]
+        public virtual DomainStatus DomainStatus { get; set; }
     }
 }

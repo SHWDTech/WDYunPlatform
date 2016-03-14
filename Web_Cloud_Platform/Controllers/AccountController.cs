@@ -23,7 +23,7 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            return ProgressedView();
+            return ProgressedView(new AccountLoginViewModel());
         }
 
         [HttpPost]

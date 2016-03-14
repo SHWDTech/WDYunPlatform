@@ -47,7 +47,10 @@ namespace Platform.Process.Process
         /// <param name="loginName">当前登录的用户</param>
         /// <param name="password">用户输入的密码</param>
         /// <returns></returns>
-        private bool CheckPassword(string loginName, string password) => _userRepository.IsExists(user => user.LoginName == loginName && user.Password == password);
+        private bool CheckPassword(string loginName, string password) 
+            => _userRepository.IsExists(user => user.LoginName == loginName 
+            && user.Password == password
+            && user.IsEnabled);
 
         /// <summary>
         /// 设置登录用户Cookie缓存

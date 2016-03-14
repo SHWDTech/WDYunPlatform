@@ -18,16 +18,19 @@
                 <div>
                     <div class="input-control text full-size" data-role="input">
                         <span class="mif-user prepend-icon"></span>
-                        @Html.TextBoxFor(m => m.LoginName, new {padding = "0 39px 0 0"})
+                        @Html.TextBoxFor(m => m.LoginName, new {padding = "0 39px 0 0", placeholder = "请输入登录名称"})
                         <button class="button helper-button clear" tabindex="-1" type="button"><span class="mif-cross"></span></button>
+                    </div>
+                    <div>
+                        @Html.ValidationMessageFor(m => m.LoginName)
                     </div>
                     <div class="input-control password full-size" data-role="input">
                         <span class="mif-lock prepend-icon"></span>
-                        @Html.PasswordFor(m => m.Password, new {padding = "0 39px 0 0"})
+                        @Html.PasswordFor(m => m.Password, new {padding = "0 39px 0 0", placeholder = "请输入登录密码"})
                         <button class="button helper-button reveal" tabindex="-1" type="button"><span class="mif-looks"></span></button>
                     </div>
                     <div>
-                        @Html.ValidationSummary(null, new {@class = "text-danger"})
+                        @Html.ValidationMessageFor(m => m.Password)
                     </div>
                 </div>
                 <div class="login-form-action">

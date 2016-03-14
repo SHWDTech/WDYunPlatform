@@ -13,18 +13,19 @@ namespace SHWD.Platform.Repository.Entities
             var domain = new Domain
             {
                 Id = Guid.Parse("DB07AB5E-A23F-4238-94CE-D52411199C18"),
-                DomainName = "admin",
-                DomianType = "system",
+                DomainName = "Root",
+                DomianType = DomainType.RootDomain,
                 CreateDateTime = DateTime.Now,
+                DomainStatus = DomainStatus.Enabled,
                 IsEnabled = true
             };
 
             var user = new WdUser
             {
                 Id = Guid.Parse("77F05B52-AE62-4225-9F09-153C5634031F"),
-                UserName = "admin",
-                LoginName = "admin",
-                Password = "0192023a7bbd73250516f069df18b500",
+                UserName = "Root",
+                LoginName = "Root",
+                Password = "b5ede2dc220e9c28362d5454d4f6bbd4",
                 Email = "shweidongtech@126.com",
                 Telephone = "18679361687",
                 Status = UserStatus.Enabled,
@@ -37,7 +38,7 @@ namespace SHWD.Platform.Repository.Entities
             var role = new WdRole
             {
                 Id = Guid.Parse("650BFB4C-7277-484A-812E-6052F6DB71C7"),
-                RoleName = "Admin",
+                RoleName = "Root",
                 Users = new List<WdUser>(),
                 CreateDateTime = DateTime.Now,
                 Status = RoleStatus.Enabled,

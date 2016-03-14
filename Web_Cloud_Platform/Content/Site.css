@@ -18,3 +18,7 @@
 .section-title h4 {
     color: #1abc9c;
 }
+
+.field-validation-error {
+    color: #ce352c;
+}

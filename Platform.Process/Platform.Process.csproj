@@ -35,15 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Platform.Utility">
-      <HintPath>..\Platform.Utility\bin\Debug\Platform.Utility.dll</HintPath>
-    </Reference>
-    <Reference Include="SHWDTech.Platform.Model">
-      <HintPath>..\Model\bin\Debug\SHWDTech.Platform.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="SHWDTech.Platform.Repository">
-      <HintPath>..\Platform.Repository\bin\Debug\SHWDTech.Platform.Repository.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -63,7 +54,20 @@
     <Compile Include="Process\ControllerProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Platform.Model.csproj">
+      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
+      <Name>Platform.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{3caf3855-4870-4065-8755-5af2897bd10a}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
+      <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
+      <Name>Platform.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
