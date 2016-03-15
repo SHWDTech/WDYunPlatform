@@ -107,7 +107,7 @@ namespace SHWDTech.Platform.Utility
         {
             var identityNum = GetDateBytes(DateTime.Now);
 
-            return identityNum.ToString("x2");
+            return identityNum.ToString("X2");
         }
 
         /// <summary>
