@@ -83,6 +83,11 @@ namespace SHWDTech.Platform.Utility
             return defaultValue;
         }
 
+        /// <summary>
+        /// 获取MD5加密字符串
+        /// </summary>
+        /// <param name="str">被加密的字符串</param>
+        /// <returns>加密后的字符串</returns>
         public static string GetMd5(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
@@ -92,6 +97,50 @@ namespace SHWDTech.Platform.Utility
 
             var md5 = new MD5CryptoServiceProvider();
             return BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(str))).ToLower().Replace("-", "");
+        }
+
+        /// <summary>
+        /// 生成22个字符的标识码
+        /// </summary>
+        /// <returns>标识码</returns>
+        public static string NewIdentityCode()
+        {
+            var identityNum = GetDateBytes(DateTime.Now);
+
+            return identityNum.ToString("x2");
+        }
+
+        /// <summary>
+        /// 根据传入的时间，计算一个long类型的值，存储时间信息（主要用来生成标识码）
+        /// </summary>
+        /// <param name="dt">传入的时间</param>
+        /// <returns>一个Long</returns>
+        public static long GetDateBytes(DateTime dt)
+        {
+            long identityNum = 0;
+
+            //年取值0-9999， 12位 = 4098
+            identityNum |= (long) dt.Year << 36;
+
+            //月取值1-12， 4位 = 16
+            identityNum |= (long) dt.Month << 32;
+
+            //日取值0-31，5位 = 32
+            identityNum |= (long) dt.Day << 27;
+
+            //时取值0-23，5位 = 32
+            identityNum |= (long) dt.Hour << 22;
+
+            //分取值0-59，6位 = 64
+            identityNum |= (long) dt.Minute << 16;
+
+            //秒取值0-59，6位 = 64
+            identityNum |= (long) dt.Second << 10;
+
+            //毫秒取值0-999，10位 = 1024
+            identityNum |= (long)dt.Millisecond << 0;
+
+            return identityNum;
         }
     }
 }

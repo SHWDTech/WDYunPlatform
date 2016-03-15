@@ -68,6 +68,7 @@
     <Compile Include="Enums\DomainType.cs" />
     <Compile Include="Enums\ModelState.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
+    <Compile Include="Enums\SysConfigType.cs" />
     <Compile Include="Enums\UserStatus.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
