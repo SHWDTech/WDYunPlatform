@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace SHWDTech.Platform.Utility
 {
@@ -105,6 +106,8 @@ namespace SHWDTech.Platform.Utility
         /// <returns>标识码</returns>
         public static string NewIdentityCode()
         {
+            Thread.Sleep(1);
+
             var identityNum = GetDateBytes(DateTime.Now);
 
             return identityNum.ToString("X2");
@@ -138,7 +141,7 @@ namespace SHWDTech.Platform.Utility
             identityNum |= (long) dt.Second << 10;
 
             //毫秒取值0-999，10位 = 1024
-            identityNum |= (long)dt.Millisecond << 0;
+            identityNum |= (long) dt.Millisecond << 0;
 
             return identityNum;
         }
