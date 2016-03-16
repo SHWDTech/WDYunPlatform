@@ -37,6 +37,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual Protocol Protocol { get; set; }
 
         [DataType(DataType.DateTime)]
+        [Display(Name = "协议包组包完成时间")]
+        public DateTime ProtocolTime { get; set; }
+
+        [DataType(DataType.DateTime)]
         [Display(Name = "协议数据更新时间")]
         public virtual DateTime UpdateTime { get; set; }
     }

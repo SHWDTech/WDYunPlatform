@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -27,6 +28,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 所属协议父结构
         /// </summary>
         ProtocolStructure ParentStructure { get; set; }
+
+        /// <summary>
+        /// 包含的协议子结构
+        /// </summary>
+        List<ProtocolStructure> SubStructures { get; set; }
 
         /// <summary>
         /// 协议段名称

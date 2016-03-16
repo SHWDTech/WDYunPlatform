@@ -17,11 +17,24 @@ namespace SHWD.Platform.Repository.IRepository
         IEnumerable<T> GetAllModels();
 
         /// <summary>
+        /// 获取所有模型对象的列表
+        /// </summary>
+        /// <returns>所有模型对象的列表</returns>
+        IList<T> GetAllModelList();
+
+        /// <summary>
         /// 获取指定模型对象
         /// </summary>
         /// <param name="exp">查询条件表达式</param>
         /// <returns>符合查询条件的对象</returns>
         IEnumerable<T> GetModels(Func<T, bool> exp);
+
+        /// <summary>
+        /// 获取指定模型对象的列表
+        /// </summary>
+        /// <param name="exp">查询条件表达式</param>
+        /// <returns>符合查询条件的对象列表</returns>
+        IList<T> GetModelList(Func<T, bool> exp);
 
         /// <summary>
         /// 获取符合条件的对象的数量

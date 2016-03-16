@@ -17,6 +17,13 @@ namespace SHWD.Platform.Repository.IRepository
         List<WdUser> GetUserByName(string userName);
 
         /// <summary>
+        /// 通过登录名称来查找用户
+        /// </summary>
+        /// <param name="loginName">用户登录名</param>
+        /// <returns>符合要求的用户</returns>
+        WdUser GetUserByLoginName(string loginName);
+
+        /// <summary>
         /// 通过用户ID查找用户
         /// </summary>
         /// <param name="id">用户ID</param>

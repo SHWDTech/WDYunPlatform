@@ -1,5 +1,7 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -37,6 +39,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 协议版本号
         /// </summary>
         string Version { get; set; }
+
+        /// <summary>
+        /// 协议的协议结构
+        /// </summary>
+        ICollection<ProtocolStructure> ProtocolStructures { get; set; }
 
         /// <summary>
         /// 协议发布时间

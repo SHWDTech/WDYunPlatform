@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,6 +36,9 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "协议版本号")]
         public virtual string Version { get; set; }
+
+        [Display(Name = "协议包含的结构")]
+        public ICollection<ProtocolStructure> ProtocolStructures { get; set; }
 
         [Required]
         [Display(Name = "协议发布时间")]

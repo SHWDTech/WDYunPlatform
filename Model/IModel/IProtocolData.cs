@@ -39,6 +39,11 @@ namespace SHWDTech.Platform.Model.IModel
         Protocol Protocol { get; set; }
 
         /// <summary>
+        /// 协议包组包完成时间
+        /// </summary>
+        DateTime ProtocolTime { get; set; }
+
+        /// <summary>
         /// 协议更新时间
         /// </summary>
         DateTime UpdateTime { get; set; }

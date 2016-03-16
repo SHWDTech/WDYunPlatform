@@ -43,7 +43,11 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual IEnumerable<T> GetAllModels() => EntitySet;
 
+        public IList<T> GetAllModelList() => GetAllModels().ToList();
+
         public virtual IEnumerable<T> GetModels(Func<T, bool> exp) => EntitySet.Where(exp);
+
+        public IList<T> GetModelList(Func<T, bool> exp) => GetModels(exp).ToList();
 
         public virtual int GetCount(Func<T, bool> exp) => EntitySet.Where(exp).Count();
 
