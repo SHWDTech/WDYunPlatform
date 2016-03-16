@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -7,5 +8,10 @@ namespace SHWD.Platform.Repository.IRepository
     /// </summary>
     public interface IFirmwareRepository : ISysRepository<Firmware>
     {
+        /// <summary>
+        /// 读取所有固件信息以及关联的固件集以及协议
+        /// </summary>
+        /// <returns></returns>
+        IList<Firmware> GetFirmwaresFullLoaded();
     }
 }

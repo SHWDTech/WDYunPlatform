@@ -2,6 +2,7 @@
 using SHWD.Platform.Repository.Repository;
 using System.Web.Security;
 using Platform.Process.Enums;
+using SHWD.Platform.Repository;
 using SHWDTech.Platform.Utility;
 
 namespace Platform.Process.Process
@@ -15,7 +16,7 @@ namespace Platform.Process.Process
 
         public AccountProcess()
         {
-            _userRepository = new UserRepository();
+            _userRepository = DbRepository.Repo<UserRepository>();
         }
 
         public void SignOut()

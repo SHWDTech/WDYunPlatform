@@ -84,6 +84,16 @@ namespace SHWD.Platform.Repository.Entities
         public DbSet<Project> Projects { get; set; }
 
         /// <summary>
+        /// 固件
+        /// </summary>
+        public DbSet<Firmware> Firmwares { get; set; }
+
+        /// <summary>
+        /// 固件集
+        /// </summary>
+        public DbSet<FirmwareSet> FirmwareSets { get; set; }
+
+        /// <summary>
         /// 协议数据包
         /// </summary>
         public DbSet<ProtocolData> ProtocolDatas { get; set; }

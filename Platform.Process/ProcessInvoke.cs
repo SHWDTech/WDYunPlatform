@@ -25,5 +25,12 @@ namespace Platform.Process
         {
             RepositoryBase.ContextLocal.Dispose();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T GetInstance<T>() where T : class, new() => new T();
     }
 }

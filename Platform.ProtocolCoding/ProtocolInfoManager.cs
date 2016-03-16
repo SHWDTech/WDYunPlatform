@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.ProtocolCoding
     {
         #region Fields
 
-        private static IList<Firmware> _firmwares; 
+        public static IList<Firmware> Firmwares { get; private set; }
         #endregion
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var process = new ProtocolCodingProcess();
 
-            _firmwares = process.GetAllFirmwares();
+            Firmwares = process.GetAllFirmwares();
         }
     }
 }
