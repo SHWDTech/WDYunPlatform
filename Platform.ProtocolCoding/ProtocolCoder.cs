@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.ProtocolCoding
@@ -23,9 +24,14 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         private readonly IList<Protocol> _protocols; 
 
-        public void EncodeProtocol()
+        public void EncodeProtocol(byte[] protocolBytes)
         {
-            
+            Protocol correspondProtocol = null;
+
+            foreach (var protocol in _protocols)
+            {
+                //if(protocol["Head"])
+            }
         }
 
 

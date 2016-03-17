@@ -166,6 +166,9 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
+                CheckType = ProtocolCheckType.Crc16,
+                Head = 0xAACC,
+                Tail = 0xB1B1
             };
 
             var proa1 = new Protocol
@@ -181,6 +184,9 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
+                CheckType = ProtocolCheckType.Crc16,
+                Head = 0xAACC,
+                Tail = 0xB1B1
             };
 
             firma.Protocols.Add(proa);
@@ -199,7 +205,9 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-
+                CheckType = ProtocolCheckType.Crc16,
+                Head = 0xAACC,
+                Tail = 0xB1B1
             };
 
             var prob1 = new Protocol
@@ -215,7 +223,9 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-
+                CheckType = ProtocolCheckType.Crc16,
+                Head = 0xAACC,
+                Tail = 0xB1B1
             };
 
             firmb.Protocols.Add(prob);
@@ -233,7 +243,8 @@ namespace SHWD.Platform.Repository.Entities
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                IsEnabled = true
+                IsEnabled = true,
+                DataType = ProtocolDataType.Character
             };
 
             var structurea1 = new ProtocolStructure
@@ -248,7 +259,8 @@ namespace SHWD.Platform.Repository.Entities
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                IsEnabled = true
+                IsEnabled = true,
+                DataType = ProtocolDataType.Character
             };
 
             var structureb = new ProtocolStructure
@@ -263,7 +275,8 @@ namespace SHWD.Platform.Repository.Entities
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                IsEnabled = true
+                IsEnabled = true,
+                DataType = ProtocolDataType.Character
             };
 
             var structureb1 = new ProtocolStructure
@@ -278,7 +291,8 @@ namespace SHWD.Platform.Repository.Entities
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                IsEnabled = true
+                IsEnabled = true,
+                DataType = ProtocolDataType.Character
             };
 
             dbContext.ProtocolStructures.Add(structurea);
@@ -293,7 +307,7 @@ namespace SHWD.Platform.Repository.Entities
                 DeviceCode = "wohao",
                 DevicePassword = string.Empty,
                 DeviceModuleGuid = Guid.Parse("024849d6-2538-48a0-8f0d-5a289e27f955"),
-                DeviceNodeId = new byte[8] { 0, 0, 0, 0, 0, 2, 5, 4 },
+                DeviceNodeId = new byte[] { 0, 0, 0, 0, 0, 2, 5, 4 },
                 FirmwareSetId = firmSet.Id,
                 StartTime = DateTime.Now,
                 PreEndTime = DateTime.Now,

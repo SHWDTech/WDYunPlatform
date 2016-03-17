@@ -40,6 +40,16 @@ namespace SHWDTech.Platform.Model.IModel
         string Version { get; set; }
 
         /// <summary>
+        /// 协议头
+        /// </summary>
+        ushort Head { get; set; }
+
+        /// <summary>
+        /// 协议尾
+        /// </summary>
+        ushort Tail { get; set; }
+
+        /// <summary>
         /// 协议的协议结构
         /// </summary>
         ICollection<ProtocolStructure> ProtocolStructures { get; set; }

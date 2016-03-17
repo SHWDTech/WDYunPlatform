@@ -19,7 +19,7 @@ namespace Platform.Process
         }
 
         /// <summary>
-        /// 注销仓库泪Context资源
+        /// 注销仓库类Context资源
         /// </summary>
         public static void DisposeRepositoryContext()
         {

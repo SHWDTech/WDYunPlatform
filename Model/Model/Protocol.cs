@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -35,6 +36,14 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "协议版本号")]
         public virtual string Version { get; set; }
+
+        [Required]
+        [Display(Name = "协议头")]
+        public ushort Head { get; set; }
+
+        [Required]
+        [Display(Name = "协议尾")]
+        public ushort Tail { get; set; }
 
         [Display(Name = "协议包含的结构")]
         public virtual ICollection<ProtocolStructure> ProtocolStructures { get; set; }
