@@ -9,9 +9,15 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IProject : ISysDomainModel
     {
         /// <summary>
-        /// 项目编码
+        /// 监测点编号
         /// </summary>
-        string ProjectCode { get; set; }
+        int StatCode { get; set; }
+
+        /// <summary>
+        /// 工程报建号
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        string StatBJH { get; set; }
 
         /// <summary>
         /// 项目外部编码
@@ -21,7 +27,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 项目名称
         /// </summary>
-        string ProjectName { get; set; }
+        string StatName { get; set; }
 
         /// <summary>
         /// 负责人
@@ -44,6 +50,11 @@ namespace SHWDTech.Platform.Model.IModel
         float Latitude { get; set; }
 
         /// <summary>
+        /// 施工单位
+        /// </summary>
+        string Department { get; set; }
+
+        /// <summary>
         /// 公司名称
         /// </summary>
         string Compnany { get; set; }
@@ -52,6 +63,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 项目地址
         /// </summary>
         string Address { get; set; }
+
+        /// <summary>
+        /// 所属区县
+        /// </summary>
+        string Country { get; set; }
 
         /// <summary>
         /// 项目所在街道
@@ -76,17 +92,22 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 项目开始时间
         /// </summary>
-        DateTime StartDate { get; set; }
+        DateTime ProStartDate { get; set; }
+
+        /// <summary>
+        /// 施工进展情况
+        /// </summary>
+        string Stage { get; set; }
 
         /// <summary>
         /// 项目所属阶段ID
         /// </summary>
-        Guid? StageId { get; set; }
+        Guid? ProjectStageId { get; set; }
 
         /// <summary>
         /// 项目所属阶段
         /// </summary>
-        SysDictionary Stage { get; set; }
+        SysDictionary ProjectStage { get; set; }
 
         /// <summary>
         /// 项目类型ID

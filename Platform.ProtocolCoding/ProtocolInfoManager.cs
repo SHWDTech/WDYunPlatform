@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
 
@@ -10,8 +12,10 @@ namespace SHWDTech.Platform.ProtocolCoding
     public static class ProtocolInfoManager
     {
         #region Fields
-
-        public static IList<Firmware> Firmwares { get; private set; }
+        /// <summary>
+        /// 设备对应协议信息缓存
+        /// </summary>
+        private static Dictionary<Guid, IList<Protocol>> _deviceProtocolsCache; 
         #endregion
 
         /// <summary>
@@ -19,18 +23,22 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         public static void InitManager()
         {
-            ReadProtocolsFromServer();
+            _deviceProtocolsCache = new Dictionary<Guid, IList<Protocol>>();
         }
 
         /// <summary>
-        /// 从服务器读取所有通信协议的信息
+        /// 获取设备对应的协议信息
         /// </summary>
+        /// <param name="deviceGuid"></param>
         /// <returns></returns>
-        private static void ReadProtocolsFromServer()
+        public static IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid)
         {
-            var process = new ProtocolCodingProcess();
+            //先从缓存中读取协议信息，如果缓存中没有，再从数据库读取
+            if (_deviceProtocolsCache.ContainsKey(deviceGuid)) return _deviceProtocolsCache[deviceGuid];
 
-            Firmwares = process.GetAllFirmwares();
+            _deviceProtocolsCache.Add(deviceGuid, ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetDeviceProtocolsFullLoaded(deviceGuid));
+
+            return _deviceProtocolsCache[deviceGuid];
         }
     }
 }

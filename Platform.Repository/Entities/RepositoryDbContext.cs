@@ -46,57 +46,67 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 报警信息
         /// </summary>
-        public DbSet<Alarm> Alarms { get; set; }
+        public virtual DbSet<Alarm> Alarms { get; set; }
 
         /// <summary>
         /// 摄像头
         /// </summary>
-        public DbSet<Camera> Cameras { get; set; }
+        public virtual DbSet<Camera> Cameras { get; set; }
 
         /// <summary>
         /// 设备
         /// </summary>
-        public DbSet<Device> Devices { get; set; }
+        public virtual DbSet<Device> Devices { get; set; }
+
+        /// <summary>
+        /// 设备类型
+        /// </summary>
+        public virtual DbSet<DeviceType> DeviceTypes { get; set; }
 
         /// <summary>
         /// 菜单
         /// </summary>
-        public DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
 
         /// <summary>
         /// 监测数据
         /// </summary>
-        public DbSet<MonitorData> MonitorDatas { get; set; }
+        public virtual DbSet<MonitorData> MonitorDatas { get; set; }
 
         /// <summary>
         /// 系统权限
         /// </summary>
-        public DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
 
         /// <summary>
         /// 图片
         /// </summary>
-        public DbSet<Photo> Photos { get; set; }
+        public virtual DbSet<Photo> Photos { get; set; }
 
         /// <summary>
         /// 项目
         /// </summary>
-        public DbSet<Project> Projects { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
 
         /// <summary>
         /// 固件
         /// </summary>
-        public DbSet<Firmware> Firmwares { get; set; }
+        public virtual DbSet<Firmware> Firmwares { get; set; }
 
         /// <summary>
         /// 固件集
         /// </summary>
-        public DbSet<FirmwareSet> FirmwareSets { get; set; }
+        public virtual DbSet<FirmwareSet> FirmwareSets { get; set; }
+
+        /// <summary>
+        /// 协议信息
+        /// </summary>
+        public virtual DbSet<Protocol> Protocols { get; set; }
 
         /// <summary>
         /// 协议数据包
         /// </summary>
-        public DbSet<ProtocolData> ProtocolDatas { get; set; }
+        public virtual DbSet<ProtocolData> ProtocolDatas { get; set; }
 
         /// <summary>
         /// 系统角色
@@ -106,41 +116,51 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 系统配置
         /// </summary>
-        public DbSet<SysConfig> SysConfigs { get; set; }
+        public virtual DbSet<SysConfig> SysConfigs { get; set; }
 
         /// <summary>
         /// 系统域
         /// </summary>
-        public DbSet<Domain> SysDomains { get; set; }
+        public virtual DbSet<Domain> SysDomains { get; set; }
 
         /// <summary>
         /// 任务
         /// </summary>
-        public DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
 
         /// <summary>
         /// 用户
         /// </summary>
-        public DbSet<WdUser> Users { get; set; }
+        public virtual DbSet<WdUser> Users { get; set; }
 
         /// <summary>
         /// 用户配置
         /// </summary>
-        public DbSet<UserConfig> UserConfigs { get; set; }
+        public virtual DbSet<UserConfig> UserConfigs { get; set; }
 
         /// <summary>
         /// 系统自定义词典
         /// </summary>
-        public DbSet<SysDictionary> SysDictionaries { get; set; }
+        public virtual DbSet<SysDictionary> SysDictionaries { get; set; }
 
         /// <summary>
         /// 用户自定义词典
         /// </summary>
-        public DbSet<UserDictionary> UserDictionaries { get; set; }
+        public virtual DbSet<UserDictionary> UserDictionaries { get; set; }
 
         /// <summary>
         /// 协议结构
         /// </summary>
-        public DbSet<ProtocolStructure> ProtocolStructures { get; set; }
+        public virtual DbSet<ProtocolStructure> ProtocolStructures { get; set; }
+
+        /// <summary>
+        /// 协议指令
+        /// </summary>
+        public virtual DbSet<ProtocolCommand> ProtocolCommands { get; set; }
+
+        /// <summary>
+        /// 指令数据
+        /// </summary>
+        public virtual DbSet<CommandData> CommandDatas { get; set; }
     }
 }

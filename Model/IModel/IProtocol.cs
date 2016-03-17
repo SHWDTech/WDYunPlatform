@@ -1,6 +1,5 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -46,8 +45,18 @@ namespace SHWDTech.Platform.Model.IModel
         ICollection<ProtocolStructure> ProtocolStructures { get; set; }
 
         /// <summary>
+        /// 协议包含的指令
+        /// </summary>
+        ICollection<ProtocolCommand> ProtocolCommands { get; set; }
+
+        /// <summary>
         /// 协议发布时间
         /// </summary>
         DateTime ReleaseDateTime { get; set; }
+
+        /// <summary>
+        /// 校验类型
+        /// </summary>
+        string CheckType { get; set; }
     }
 }

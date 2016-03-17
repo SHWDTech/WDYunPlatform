@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -20,19 +19,9 @@ namespace SHWDTech.Platform.Model.IModel
         Protocol Procotol { get; set; }
 
         /// <summary>
-        /// 所属协议父结构ID
+        /// 协议段数据类型
         /// </summary>
-        Guid? ParentStructureId { get; set; }
-
-        /// <summary>
-        /// 所属协议父结构
-        /// </summary>
-        ProtocolStructure ParentStructure { get; set; }
-
-        /// <summary>
-        /// 包含的协议子结构
-        /// </summary>
-        List<ProtocolStructure> SubStructures { get; set; }
+        string DataType { get; set; }
 
         /// <summary>
         /// 协议段名称
@@ -43,11 +32,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// 协议段索引值
         /// </summary>
         int ComponentIndex { get; set; }
-
-        /// <summary>
-        /// 协议段长度
-        /// </summary>
-        int ComponentLength { get; set; }
 
         /// <summary>
         /// 协议段数据长度

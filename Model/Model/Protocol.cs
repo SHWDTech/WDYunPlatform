@@ -29,7 +29,6 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("SubFieldId")]
         public virtual SysDictionary SubField { get; set; }
 
-        [Required]
         [Display(Name = "协议自定义段")]
         public virtual string CustomerInfo { get; set; }
 
@@ -38,10 +37,17 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string Version { get; set; }
 
         [Display(Name = "协议包含的结构")]
-        public ICollection<ProtocolStructure> ProtocolStructures { get; set; }
+        public virtual ICollection<ProtocolStructure> ProtocolStructures { get; set; }
+
+        [Display(Name = "协议包含的指令")]
+        public virtual ICollection<ProtocolCommand> ProtocolCommands { get; set; }
 
         [Required]
         [Display(Name = "协议发布时间")]
         public virtual DateTime ReleaseDateTime { get; set; }
+
+        [Required]
+        [Display(Name = "校验类型")]
+        public virtual string CheckType { get; set; }
     }
 }

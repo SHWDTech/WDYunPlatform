@@ -31,7 +31,10 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "设备名称")]
         [MaxLength(25)]
-        public virtual string DeviceName { get; set; }
+        public virtual string DeviceCode { get; set; }
+
+        [Display(Name = "监测点编号")]
+        public virtual int? StatCode { get; set; }
 
         [MaxLength(25)]
         [Display(Name = "设备访问密码")]
@@ -64,10 +67,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual DateTime StartTime { get; set; }
 
         [Display(Name = "设备预定启用时间")]
-        public virtual DateTime PreEndTime { get; set; }
+        public virtual DateTime? PreEndTime { get; set; }
 
         [Display(Name = "设备结束时间")]
-        public virtual DateTime EndTime { get; set; }
+        public virtual DateTime? EndTime { get; set; }
 
         [Display(Name = "设备状态")]
         public virtual DeviceStatus Status { get; set; }

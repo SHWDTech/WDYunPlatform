@@ -30,9 +30,14 @@ namespace SHWDTech.Platform.Model.IModel
         Device OriginalDevice { get; set; }
 
         /// <summary>
-        /// 设备名称
+        /// 设备编码
         /// </summary>
-        string DeviceName { get; set; }
+        string DeviceCode { get; set; }
+
+        /// <summary>
+        /// 监测点编号
+        /// </summary>
+        int? StatCode { get; set; }
 
         /// <summary>
         /// 设备访问密码
@@ -77,12 +82,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备预结束时间
         /// </summary>
-        DateTime PreEndTime { get; set; }
+        DateTime? PreEndTime { get; set; }
 
         /// <summary>
         /// 设备结束时间
         /// </summary>
-        DateTime EndTime { get; set; }
+        DateTime? EndTime { get; set; }
 
         /// <summary>
         /// 设备状态

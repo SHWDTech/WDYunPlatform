@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
@@ -9,9 +10,10 @@ namespace SHWD.Platform.Repository.IRepository
     public interface IFirmwareRepository : ISysRepository<Firmware>
     {
         /// <summary>
-        /// 读取所有固件信息以及关联的固件集以及协议
+        /// 获取设备相关的固件信息
         /// </summary>
-        /// <returns></returns>
-        IList<Firmware> GetFirmwaresFullLoaded();
+        /// <param name="deviceGuid">设备ID</param>
+        /// <returns>设备相关的固件信息</returns>
+        IList<Firmware> GetFirmwaresByDeviceGuid(Guid deviceGuid);
     }
 }

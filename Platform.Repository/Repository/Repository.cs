@@ -145,12 +145,24 @@ namespace SHWD.Platform.Repository.Repository
         {
         }
 
+        /// <summary>
+        /// 数据仓库上下文（线程唯一）
+        /// </summary>
         public static IRepositoryContext RepositoryContext => ContextLocal.Value;
 
+        /// <summary>
+        /// 当前线程的用户
+        /// </summary>
         public static WdUser CurrentUser => RepositoryContext.CurrentUser;
 
+        /// <summary>
+        /// 当前线程用户所属域
+        /// </summary>
         public static Domain CurrentDomain => RepositoryContext.CurrentDomain;
 
+        /// <summary>
+        /// 数据仓库上下文线程对象
+        /// </summary>
         public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; }
     }
 }

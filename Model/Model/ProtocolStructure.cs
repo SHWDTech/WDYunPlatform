@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.IModel;
@@ -21,15 +20,9 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("ProtocolId")]
         public virtual Protocol Procotol { get; set; }
 
-        [Display(Name = "所属父结构ID")]
-        public virtual Guid? ParentStructureId { get; set; }
-        
-        [Display(Name = "所属父结构")]
-        [ForeignKey("ParentStructureId")]
-        public virtual ProtocolStructure ParentStructure { get; set; }
-
-        [Display(Name = "包含的子结构")]
-        public virtual List<ProtocolStructure> SubStructures { get; set; }
+        [Required]
+        [Display(Name = "协议段数据类型")]
+        public virtual string DataType { get; set; }
 
         [Display(Name = "协议段名称")]
         [MaxLength(50)]

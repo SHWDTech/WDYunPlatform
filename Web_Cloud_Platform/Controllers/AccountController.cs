@@ -36,8 +36,9 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
                 return DynamicView(model);
             }
 
-            var signResult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
-            switch (signResult)
+            var signresult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
+
+            switch (signresult)
             {
                     case SignInStatus.Success:
                     if (string.IsNullOrWhiteSpace(returnUrl)) return RedirectToAction("Index", "Home");

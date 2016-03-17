@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolCoder.cs" />
     <Compile Include="ProtocolInfoManager.cs" />
   </ItemGroup>
   <ItemGroup>
