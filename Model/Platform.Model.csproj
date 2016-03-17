@@ -70,6 +70,7 @@
     <Compile Include="Enums\RoleStatus.cs" />
     <Compile Include="Enums\SysConfigType.cs" />
     <Compile Include="Enums\UserStatus.cs" />
+    <Compile Include="IModel\ICommandData.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
     <Compile Include="IModel\IDataModel.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="IModel\IPermission.cs" />
     <Compile Include="IModel\IPhoto.cs" />
     <Compile Include="IModel\IProtocol.cs" />
+    <Compile Include="IModel\IProtocolCommand.cs" />
     <Compile Include="IModel\IProtocolData.cs" />
     <Compile Include="IModel\IProtocolStructure.cs" />
     <Compile Include="IModel\IWdRole.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="ModelBase\SysModelBase.cs" />
     <Compile Include="Model\Alarm.cs" />
     <Compile Include="Model\Camera.cs" />
+    <Compile Include="Model\CommandData.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Model\Photo.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Protocol.cs" />
+    <Compile Include="Model\ProtocolCommand.cs" />
     <Compile Include="Model\ProtocolData.cs" />
     <Compile Include="Model\ProtocolStructure.cs" />
     <Compile Include="Model\WdRole.cs" />
