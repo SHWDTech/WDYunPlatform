@@ -17,7 +17,8 @@ namespace SHWD.Platform.Repository.Repository
         {
             var device =
                 DbContext.Devices.Include("FirmwareSet.Firmwares.Protocols.ProtocolStructures")
-                    .First(dev => dev.Id == deviceGuid);
+                                 .Include("FirmwareSet.Firmwares.Protocols.ProtocolCommands.CommandDatas")
+                                 .First(dev => dev.Id == deviceGuid);
 
             var protocols = new List<Protocol>();
             foreach (var firmware in device.FirmwareSet.Firmwares)
