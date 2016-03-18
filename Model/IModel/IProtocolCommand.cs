@@ -12,12 +12,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 指令类型
         /// </summary>
-        byte CommandType { get; set; }
+        byte[] CommandType { get; set; }
 
         /// <summary>
         /// 指令编码
         /// </summary>
-        byte CommandCode { get; set; }
+        byte[] CommandCode { get; set; }
 
         /// <summary>
         /// 指令数据长度

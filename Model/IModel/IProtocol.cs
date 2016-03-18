@@ -42,12 +42,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 协议头
         /// </summary>
-        ushort Head { get; set; }
+        byte[] Head { get; set; }
 
         /// <summary>
         /// 协议尾
         /// </summary>
-        ushort Tail { get; set; }
+        byte[] Tail { get; set; }
 
         /// <summary>
         /// 协议的协议结构

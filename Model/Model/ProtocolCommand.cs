@@ -13,13 +13,12 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class ProtocolCommand : SysModelBase, IProtocolCommand
     {
-        [Required]
         [Display(Name = "指令类型")]
-        public byte CommandType { get; set; }
+        public byte[] CommandType { get; set; }
 
         [Required]
         [Display(Name = "指令编码")]
-        public byte CommandCode { get; set; }
+        public byte[] CommandCode { get; set; }
 
         [Required]
         [Display(Name = "指令数据长度")]

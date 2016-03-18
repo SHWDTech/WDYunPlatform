@@ -151,7 +151,7 @@ namespace SHWD.Platform.Repository.Entities
 
             dbContext.DeviceTypes.Add(deviceType);
 
-            
+
 
             var proa = new Protocol
             {
@@ -167,8 +167,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
                 CheckType = ProtocolCheckType.Crc16,
-                Head = 0xAACC,
-                Tail = 0xB1B1
+                Head = new byte[] { 0xAA, 0XCC },
+                Tail = new byte[] { 0xB1, 0XB1 }
             };
 
             var proa1 = new Protocol
@@ -185,8 +185,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
                 CheckType = ProtocolCheckType.Crc16,
-                Head = 0xAACC,
-                Tail = 0xB1B1
+                Head = new byte[] { 0xAA, 0XCC },
+                Tail = new byte[] { 0xB1, 0XB1 }
             };
 
             firma.Protocols.Add(proa);
@@ -206,8 +206,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
                 CheckType = ProtocolCheckType.Crc16,
-                Head = 0xAACC,
-                Tail = 0xB1B1
+                Head = new byte[] { 0xAA, 0XCC },
+                Tail = new byte[] { 0xB1, 0XB1 }
             };
 
             var prob1 = new Protocol
@@ -224,8 +224,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
                 CheckType = ProtocolCheckType.Crc16,
-                Head = 0xAACC,
-                Tail = 0xB1B1
+                Head = new byte[] { 0xAA, 0XCC },
+                Tail = new byte[] { 0xB1, 0XB1 }
             };
 
             firmb.Protocols.Add(prob);

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace SHWDTech.Platform.Utility
 {
-    public class Globals
+    public static class Globals
     {
         private static string _applicationPath = string.Empty;
 
@@ -144,6 +144,29 @@ namespace SHWDTech.Platform.Utility
             identityNum |= (long) dt.Millisecond << 0;
 
             return identityNum;
+        }
+
+        /// <summary>
+        /// 返回位于指定起始位置和结束位置之间的字节数组
+        /// </summary>
+        /// <param name="sourceBytes">源字节数组</param>
+        /// <param name="startIndex">返回字节集合的起始位置</param>
+        /// <param name="endIndex">返回字节集合的结束位置</param>
+        /// <returns></returns>
+        public static byte[] SubBytes(this byte[] sourceBytes, int startIndex, int endIndex)
+        {
+            if (endIndex >= sourceBytes.Length) throw new ArgumentOutOfRangeException();
+
+            if(startIndex >= endIndex) throw new ArgumentException("起始位置必须小于结束位置");
+
+            var returnBytes = new byte[startIndex - endIndex];
+
+            for (var i = 0; i < returnBytes.Length; i++)
+            {
+                returnBytes[i] = sourceBytes[startIndex + i];
+            }
+
+            return returnBytes;;
         }
     }
 }
