@@ -10,26 +10,36 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     {
         public ProtocolPackage()
         {
-            _componentData = new Dictionary<string, Component>();
+            _componentData = new Dictionary<string, PackageComponent>();
         }
 
         public Guid DeviceGuid { get; set; }
+
+        public PackageComponent DataComponent { get; private set; }
 
         public DateTime ReceiveDateTime { get; set; }
 
         /// <summary>
         /// 协议包组件字典
         /// </summary>
-        private readonly Dictionary<string, Component> _componentData;
+        private readonly Dictionary<string, PackageComponent> _componentData;
 
-        public Component this[string name]
+        public PackageComponent this[string name]
         {
             get
             {
+                if (name == "Data") return DataComponent;
+
                 return !_componentData.ContainsKey(name) ? null : _componentData[name];
             }
             set
             {
+                if (name == "Data")
+                {
+                    DataComponent = value;
+                    return;
+                }
+
                 if (!_componentData.ContainsKey(name))
                 {
                     _componentData.Add(name, value);

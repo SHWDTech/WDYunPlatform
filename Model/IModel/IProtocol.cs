@@ -30,6 +30,11 @@ namespace SHWDTech.Platform.Model.IModel
         SysDictionary SubField { get; set; }
 
         /// <summary>
+        /// 协议名称
+        /// </summary>
+        string ProtocolName { get; set; }
+
+        /// <summary>
         /// 自定义信息
         /// </summary>
         string CustomerInfo { get; set; }

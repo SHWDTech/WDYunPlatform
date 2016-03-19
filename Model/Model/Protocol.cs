@@ -29,6 +29,10 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("SubFieldId")]
         public virtual SysDictionary SubField { get; set; }
 
+        [Required]
+        [Display(Name = "协议名称")]
+        public string ProtocolName { get; set; }
+
         [Display(Name = "协议自定义段")]
         public virtual string CustomerInfo { get; set; }
 

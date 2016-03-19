@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{36163146-A970-46FE-A259-A2B01B87C472}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TestConsole</RootNamespace>
+    <AssemblyName>TestConsole</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Platform.Model.csproj">
+      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
+      <Name>Platform.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Common\Platform.Common.csproj">
+      <Project>{1328ee07-f6c6-4762-8d87-45d026f60dd8}</Project>
+      <Name>Platform.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Process\Platform.Process.csproj">
+      <Project>{9bb3c321-2f61-4efe-9315-b1a035470a57}</Project>
+      <Name>Platform.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.ProtocolCoding\Platform.ProtocolCoding.csproj">
+      <Project>{7924589d-fb3d-4496-8f48-c9dd58ff1574}</Project>
+      <Name>Platform.ProtocolCoding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{3caf3855-4870-4065-8755-5af2897bd10a}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
+      <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
+      <Name>Platform.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WdAdminTools\WdAdminTools.csproj">
+      <Project>{003d437e-3634-41e6-ac2e-8ac8b10def1d}</Project>
+      <Name>WdAdminTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web_Cloud_Platform\Web_Cloud_Platform.csproj">
+      <Project>{c723121b-defd-49e7-82a4-dd1ef3fd5769}</Project>
+      <Name>Web_Cloud_Platform</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

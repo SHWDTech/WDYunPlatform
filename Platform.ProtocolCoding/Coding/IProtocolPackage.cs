@@ -15,8 +15,18 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议接收时间
         /// </summary>
-        DateTime ReceiveDateTime { get; set; } 
+        DateTime ReceiveDateTime { get; set; }
 
-        Component this[string name] { get; set; }
+        /// <summary>
+        /// 协议数据段
+        /// </summary>
+        PackageComponent DataComponent { get; }
+
+        /// <summary>
+        /// 获取指定名称的数据段
+        /// </summary>
+        /// <param name="name">数据段名称</param>
+        /// <returns>指定名称的数据段</returns>
+        PackageComponent this[string name] { get; set; }
     }
 }

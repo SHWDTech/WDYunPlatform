@@ -12,7 +12,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 指令类型
         /// </summary>
-        byte[] CommandType { get; set; }
+        byte[] CommandTypeCode { get; set; }
 
         /// <summary>
         /// 指令编码
@@ -23,6 +23,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 指令数据长度
         /// </summary>
         int CommandDataLength { get; set; }
+
+        /// <summary>
+        /// 指令分类
+        /// </summary>
+        string CommandCategory { get; set; }
 
         /// <summary>
         /// 所属协议ID

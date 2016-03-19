@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Web_Cloud_Platform
+namespace SHWDTech.Web_Cloud_Platform
 {
     public class RouteConfig
     {
