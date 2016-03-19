@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using SHWDTech.Platform.Utility.Enum;
 
 namespace SHWDTech.Platform.Utility
 {
@@ -166,7 +167,87 @@ namespace SHWDTech.Platform.Utility
                 returnBytes[i] = sourceBytes[startIndex + i];
             }
 
-            return returnBytes;;
+            return returnBytes;
+        }
+
+        /// <summary>
+        /// 判断风向
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static string DetectiveWindDirection(double angle)
+        {
+            if (angle < 0 || angle > 360) return WindDirection.OutOfRange;
+            if (angle <= 11.25 || angle > 348.75) return WindDirection.North;
+            if (angle > 11.25 && angle <= 33.75) return WindDirection.NorthNorthEast;
+            if (angle > 33.75 && angle <= 56.25) return WindDirection.NorthEast;
+            if (angle > 56.25 && angle <= 78.75) return WindDirection.EastNorthEast;
+            if (angle > 78.75 && angle <= 101.25) return WindDirection.East;
+            if (angle > 101.25 && angle <= 123.75) return WindDirection.EastSouthEast;
+            if (angle > 123.75 && angle <= 146.25) return WindDirection.SouthEast;
+            if (angle > 146.25 && angle <= 168.75) return WindDirection.SouthSouthEast;
+            if (angle > 168.75 && angle <= 191.25) return WindDirection.South;
+            if (angle > 191.25 && angle <= 213.75) return WindDirection.SouthSouthWest;
+            if (angle > 213.75 && angle <= 236.25) return WindDirection.SouthWest;
+            if (angle > 236.25 && angle <= 258.75) return WindDirection.WestSouthWest;
+            if (angle > 258.75 && angle <= 281.25) return WindDirection.West;
+            if (angle > 281.25 && angle <= 303.75) return WindDirection.WestNorthWest;
+            if (angle > 303.75 && angle <= 326.25) return WindDirection.NorthWest;
+            if (angle > 326.25 && angle <= 348.75) return WindDirection.NorthNorthWest;
+
+            return WindDirection.UnKnow;
+        }
+
+        /// <summary>
+        /// 判断风速
+        /// </summary>
+        /// <param name="speed"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string DetectiveWindSpeed(double speed, WindSpeedType type)
+        {
+            if (speed < 0) return WindSpeed.OutOfRange;
+
+            if ((type == WindSpeedType.Hour && speed <= 1) ||
+                (type == WindSpeedType.Second && speed <= 0.2)) return WindDirection.Const;
+
+            if ((type == WindSpeedType.Hour && (speed  > 1 || speed <= 5)) ||
+                (type == WindSpeedType.Second && (speed > 0.2 || speed <= 1.5))) return WindSpeed.Soft;
+
+            if ((type == WindSpeedType.Hour && (speed > 5 || speed <= 11)) ||
+                (type == WindSpeedType.Second && (speed > 1.5 || speed <= 3.3))) return WindSpeed.Breeze;
+
+            if ((type == WindSpeedType.Hour && (speed > 11 || speed <= 19)) ||
+                (type == WindSpeedType.Second && (speed > 3.3 || speed <= 5.4))) return WindSpeed.GentleBreeze;
+
+            if ((type == WindSpeedType.Hour && (speed > 19 || speed <= 28)) ||
+                (type == WindSpeedType.Second && (speed > 5.4 || speed <= 7.9))) return WindSpeed.SoftBreeze;
+
+            if ((type == WindSpeedType.Hour && (speed > 28 || speed <= 38)) ||
+                (type == WindSpeedType.Second && (speed > 7.9 || speed <= 10.7))) return WindSpeed.CoolBreeze;
+
+            if ((type == WindSpeedType.Hour && (speed > 38 || speed <= 49)) ||
+                (type == WindSpeedType.Second && (speed > 10.7 || speed <= 13.8))) return WindSpeed.StrongBreeze;
+
+            if ((type == WindSpeedType.Hour && (speed > 49 || speed <= 61)) ||
+                (type == WindSpeedType.Second && (speed > 13.8 || speed <= 17.1))) return WindSpeed.StrongWind;
+
+            if ((type == WindSpeedType.Hour && (speed > 61 || speed <= 74)) ||
+                (type == WindSpeedType.Second && (speed > 17.1 || speed <=20.7))) return WindSpeed.HighWind;
+
+            if ((type == WindSpeedType.Hour && (speed > 74 || speed <= 88)) ||
+                (type == WindSpeedType.Second && (speed > 20.7 || speed <= 24.4))) return WindSpeed.Gale;
+
+            if ((type == WindSpeedType.Hour && (speed > 88 || speed <= 102)) ||
+                (type == WindSpeedType.Second && (speed > 24.4 || speed <= 28.4))) return WindSpeed.StrongGale;
+
+            if ((type == WindSpeedType.Hour && (speed > 102 || speed <= 117)) ||
+                (type == WindSpeedType.Second && (speed > 28.4 || speed <= 32.6))) return WindSpeed.Storm;
+
+            if ((type == WindSpeedType.Hour && (speed > 117)) ||
+                (type == WindSpeedType.Second && (speed > 32.6))) return WindSpeed.Typhoon;
+
+            return WindSpeed.UnKnow;
         }
     }
 }
