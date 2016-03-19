@@ -4,8 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="上海卫东TCP通信服务运行平台" 
+        Height="800" Width="1200" 
+        WindowStartupLocation="CenterScreen" 
+        FontFamily="16"
+        ResizeMode="CanMinimize">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Row="1">
+            <DockPanel>
+                <StatusBar x:Name="MainStatusBar" DockPanel.Dock="Bottom">
+                    <StatusBarItem>
+                        <TextBlock FontSize="16">Addr:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#0000CC">
+                        <TextBlock Name="ServerIpAddress" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="16">Port:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#006633">
+                        <TextBlock Name="ServerPort" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="16">Start:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#003366">
+                        <TextBlock Name="ServerStartTDateTime" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="16">Now:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#006600">
+                        <TextBlock Name="ServerNowDateTime" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="16">Run:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#CC0000">
+                        <TextBlock Name="ServerRunningDateTime" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
+        </Grid>
     </Grid>
 </Window>
