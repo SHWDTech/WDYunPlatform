@@ -15,11 +15,15 @@ namespace WdTech_Protocol_AdminTools.Models
         /// </summary>
         public static int ServerPort { get; }
 
+        public static int DefaultTcpBufferSize { get; }
+
         static AppConfig()
         {
             ServerIpAddress = IPAddress.Parse(ConfigurationManager.AppSettings["ServerAddress"]);
 
             ServerPort = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
+
+            DefaultTcpBufferSize = int.Parse(ConfigurationManager.AppSettings["DefaultTcpBufferSize"]);
         }
 
     }

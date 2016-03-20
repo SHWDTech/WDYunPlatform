@@ -1,6 +1,6 @@
 ﻿using WdTech_Protocol_AdminTools.Enums;
 
-namespace WdTech_Protocol_AdminTools.Application
+namespace WdTech_Protocol_AdminTools.WorkApp
 {
     /// <summary>
     /// 界面原色显示格式

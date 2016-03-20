@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -22,37 +20,39 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         public static bool IsStart { get; private set; }
 
         /// <summary>
-        /// 设备请求侦测线程
+        /// TCP客户端管理器
         /// </summary>
-        private static readonly Thread ClientDetectiveThread = new Thread(ClientDetective)
-        {
-            IsBackground = true,
-            Name = "ClientDetective"
-        };
-
-        /// <summary>
-        /// 未确定设备身份的TCP连接
-        /// </summary>
-        private static readonly Dictionary<string, Thread> UndefineTcpClientThreads = new Dictionary<string, Thread>(); 
+        private static readonly ActiveClientManager Manager;
 
         /// <summary>
         /// 服务监听器
         /// </summary>
         private static TcpListener _serverListener;
 
+        static CommunicationServices()
+        {
+            Manager = new ActiveClientManager();
+        }
+
+        /// <summary>
+        /// 开启服务
+        /// </summary>
+        /// <param name="ipEndPoint"></param>
         public static void Start(IPEndPoint ipEndPoint)
         {
             if (IsStart) return;
 
             _serverListener = new TcpListener(ipEndPoint) {ExclusiveAddressUse = false};
             _serverListener.Start();
+            _serverListener.BeginAcceptSocket(AcceptClient, _serverListener);
 
-            //在TCP接收线程开始前设置服务器开始标识，否则服务器接收线程无法正常启动
             IsStart = true;
-            ClientDetectiveThread.Start();
             StartDateTime = DateTime.Now;
         }
 
+        /// <summary>
+        /// 停止服务
+        /// </summary>
         public static void Stop()
         {
             if (!IsStart) return;
@@ -64,16 +64,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 侦测设备连接请求
         /// </summary>
-        public static void ClientDetective()
+        public static void AcceptClient(IAsyncResult result)
         {
-            while (IsStart)
-            {
-                var clientAcceptResult = _serverListener.AcceptSocketAsync();
-                if (clientAcceptResult.Result != null)
-                {
-                    
-                }
-            }
+            var server = (TcpListener) result.AsyncState;
+
+            var client = server.EndAcceptSocket(result);
+
+            Manager.AddClient(client);
+
+            server.BeginAcceptSocket(AcceptClient, server);
         }
     }
 }

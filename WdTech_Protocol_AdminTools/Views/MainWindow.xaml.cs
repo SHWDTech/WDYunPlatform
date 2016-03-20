@@ -1,10 +1,11 @@
 ﻿using SHWDTech.Platform.Utility;
 using System;
+using System.Windows;
 using System.Windows.Threading;
-using WdTech_Protocol_AdminTools.Application;
 using WdTech_Protocol_AdminTools.Enums;
 using WdTech_Protocol_AdminTools.Models;
 using WdTech_Protocol_AdminTools.TcpCore;
+using WdTech_Protocol_AdminTools.WorkApp;
 
 namespace WdTech_Protocol_AdminTools.Views
 {
@@ -55,6 +56,11 @@ namespace WdTech_Protocol_AdminTools.Views
             UpdateStatusBar(sender, e);
         }
 
+        /// <summary>
+        /// 窗口关闭处理程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
@@ -63,8 +69,9 @@ namespace WdTech_Protocol_AdminTools.Views
             }
             catch (Exception ex)
             {
-                LogService.Instance.Error("通信服务停止失败", ex);
                 e.Cancel = true;
+                LogService.Instance.Error("通信服务停止失败", ex);
+                MessageBox.Show("程序关闭时发生严重错误，请检查错误信息。", "警告", MessageBoxButton.OK);
             }
         }
     }

@@ -98,10 +98,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Application\UiElementViewFormat.cs" />
+    <Compile Include="WorkApp\UiElementViewFormat.cs" />
     <Compile Include="Enums\DateTimeViewFormat.cs" />
     <Compile Include="Models\AppConfig.cs" />
+    <Compile Include="TcpCore\ActiveClientManager.cs" />
     <Compile Include="TcpCore\CommunicationServices.cs" />
+    <Compile Include="TcpCore\TcpClientReceiver.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -133,7 +135,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
