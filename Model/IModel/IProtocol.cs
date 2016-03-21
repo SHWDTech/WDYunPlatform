@@ -35,6 +35,11 @@ namespace SHWDTech.Platform.Model.IModel
         string ProtocolName { get; set; }
 
         /// <summary>
+        /// 协议处理模块
+        /// </summary>
+        string ProtocolModule { get; set; }
+
+        /// <summary>
         /// 自定义信息
         /// </summary>
         string CustomerInfo { get; set; }

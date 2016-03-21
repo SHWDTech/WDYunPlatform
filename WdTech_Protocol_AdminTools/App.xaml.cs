@@ -31,6 +31,7 @@ namespace WdTech_Protocol_AdminTools
         {
             LogService.Instance.Fatal("未处理异常。", (Exception)e.ExceptionObject);
             MessageBox.Show("系统运行出现严重错误！");
+
             Current.Shutdown();
         }
 

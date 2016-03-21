@@ -17,6 +17,11 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// 设备对应协议信息缓存
         /// </summary>
         private static Dictionary<Guid, IList<Protocol>> _deviceProtocolsCache; 
+
+        /// <summary>
+        /// 授权协议
+        /// </summary>
+        public static List<Protocol> AuthenticationProtocol { get; } = new List<Protocol>();
         #endregion
 
         /// <summary>
@@ -25,6 +30,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         public static void InitManager()
         {
             _deviceProtocolsCache = new Dictionary<Guid, IList<Protocol>>();
+            AuthenticationProtocol.AddRange(ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetAuthenticationProtocols());
         }
 
         /// <summary>
@@ -52,24 +58,6 @@ namespace SHWDTech.Platform.ProtocolCoding
             _deviceProtocolsCache.Add(deviceGuid, protocol);
 
             return _deviceProtocolsCache[deviceGuid];
-        }
-
-        /// <summary>
-        /// 协议帧头与字节流匹配
-        /// </summary>
-        /// <param name="protocolBytes">协议字节流</param>
-        /// <param name="protocolHead">协议定义帧头</param>
-        /// <returns>匹配返回TRUE，否则返回FALSE</returns>
-        public static bool IsHeadMatched(IReadOnlyList<byte> protocolBytes, IReadOnlyList<byte> protocolHead)
-        {
-            var matched = true;
-
-            for (var i = 0; i < protocolHead.Count; i++)
-            {
-                if (protocolBytes[i] != protocolHead[i]) matched = false;
-            }
-
-            return matched;
         }
     }
 }

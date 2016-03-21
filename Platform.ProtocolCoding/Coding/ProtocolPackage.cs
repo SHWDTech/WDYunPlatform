@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -12,6 +13,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         {
             _componentData = new Dictionary<string, PackageComponent>();
         }
+
+        public bool Finalized { get; private set; }
+
+        public int PackageLenth { get; private set; } = -1;
 
         public Guid DeviceGuid { get; set; }
 
@@ -49,6 +54,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     _componentData[name] = value;
                 }
             }
+        }
+
+        public void Finalization()
+        {
+            PackageLenth = _componentData.Sum(obj => obj.Value.ComponentData.Length);
+            Finalized = true;
         }
     }
 }

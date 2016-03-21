@@ -33,6 +33,10 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "协议名称")]
         public string ProtocolName { get; set; }
 
+        [Required]
+        [Display(Name = "协议处理模块")]
+        public string ProtocolModule { get; set; }
+
         [Display(Name = "协议自定义段")]
         public virtual string CustomerInfo { get; set; }
 

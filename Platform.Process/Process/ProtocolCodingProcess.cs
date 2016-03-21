@@ -13,5 +13,8 @@ namespace Platform.Process.Process
     public class ProtocolCodingProcess : IProtocolCodingProcess
     {
         public IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid) => DbRepository.Repo<DeviceRepository>().GetDeviceProtocolsFullLoaded(deviceGuid);
+
+        public IList<Protocol> GetAuthenticationProtocols()
+            => DbRepository.Repo<ProtocolRepository>().GetAuthenticationProtocols();
     }
 }

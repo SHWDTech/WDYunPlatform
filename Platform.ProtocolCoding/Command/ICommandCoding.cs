@@ -9,8 +9,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         /// 解码协议指令相关信息
         /// </summary>
         /// <param name="package">协议包</param>
-        /// <returns>解码完成后的协议包</returns>
-        ProtocolPackage DecodeCommand(out ProtocolPackage package);
+        /// <param name="matchedProtocol">对应的协议</param>
+        /// <returns>协议解码完成后的长度</returns>
+        void DecodeCommand(ProtocolPackage package, Protocol matchedProtocol);
 
         /// <summary>
         /// 编码指定指令的协议

@@ -6,33 +6,48 @@
     public static class ProtocolDataType
     {
         /// <summary>
-        /// 英文字符
+        /// 字节数字
         /// </summary>
-        public const string Character = "Character";
+        public const string SingleByte = "SingleByte";
 
         /// <summary>
-        /// 浮点数
+        /// 纯数字密码
         /// </summary>
-        public const string Float = "Float";
+        public const string NumPassword = "NumPassword";
 
         /// <summary>
-        /// 整数类型
+        /// 经典协议设备身份标识
         /// </summary>
-        public const string Interger = "Interger";
+        public const string ClassicNodeId = "ClassicNodeId";
 
         /// <summary>
-        /// 长整形
+        /// 暂不解码
         /// </summary>
-        public const string LongInterger = "LongInterger";
+        public const string Description = "Description";
 
         /// <summary>
-        /// 汉字
+        /// 源地址
         /// </summary>
-        public const string Chinese = "Chinese";
+        public const string SourceAddr = "SourceAddr";
 
         /// <summary>
-        /// 时间
+        /// 目标地址
         /// </summary>
-        public const string DateTime = "DateTime";
+        public const string Destination = "Destination";
+
+        /// <summary>
+        /// 数据段长度
+        /// </summary>
+        public const string DataLength = "DataLength";
+
+        /// <summary>
+        /// 数据段
+        /// </summary>
+        public const string Data = "Data";
+
+        /// <summary>
+        /// CRC校验码
+        /// </summary>
+        public const string Crc = "Crc";
     }
 }

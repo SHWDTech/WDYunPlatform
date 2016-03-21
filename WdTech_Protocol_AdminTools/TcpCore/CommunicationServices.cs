@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using SHWDTech.Platform.ProtocolCoding;
+using SHWDTech.Platform.Utility;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -46,6 +48,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             _serverListener.Start();
             _serverListener.BeginAcceptSocket(AcceptClient, _serverListener);
 
+            ProtocolInfoManager.InitManager();
+
             IsStart = true;
             StartDateTime = DateTime.Now;
         }
@@ -66,12 +70,20 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public static void AcceptClient(IAsyncResult result)
         {
-            var server = (TcpListener) result.AsyncState;
+            var server = (TcpListener)result.AsyncState;
 
-            var client = server.EndAcceptSocket(result);
+            try
+            {
 
-            Manager.AddClient(client);
+                var client = server.EndAcceptSocket(result);
 
+                Manager.AddClient(client);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Warn("接收客户端请求失败！", ex);
+            }
+            
             server.BeginAcceptSocket(AcceptClient, server);
         }
     }

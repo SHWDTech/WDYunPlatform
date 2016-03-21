@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -7,5 +8,10 @@ namespace SHWD.Platform.Repository.IRepository
     /// </summary>
     public interface IProtocolRepository : ISysRepository<Protocol>
     {
+        /// <summary>
+        /// 获取注册协议及协议结构
+        /// </summary>
+        /// <returns></returns>
+        IList<Protocol> GetAuthenticationProtocols();
     }
 }

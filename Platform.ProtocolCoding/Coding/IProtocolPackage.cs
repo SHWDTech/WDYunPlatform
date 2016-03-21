@@ -8,6 +8,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     public interface IProtocolPackage
     {
         /// <summary>
+        /// 是否已完成编解码
+        /// </summary>
+        bool Finalized { get; }
+
+        /// <summary>
+        /// 协议包长度
+        /// </summary>
+        int PackageLenth { get; }
+
+        /// <summary>
         /// 设备GUID
         /// </summary>
         Guid DeviceGuid { get; set; }
@@ -28,5 +38,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="name">数据段名称</param>
         /// <returns>指定名称的数据段</returns>
         PackageComponent this[string name] { get; set; }
+
+        /// <summary>
+        /// 完成协议包的编解码
+        /// </summary>
+        void Finalization();
     }
 }

@@ -5,7 +5,6 @@ using System.Windows.Threading;
 using WdTech_Protocol_AdminTools.Enums;
 using WdTech_Protocol_AdminTools.Models;
 using WdTech_Protocol_AdminTools.TcpCore;
-using WdTech_Protocol_AdminTools.WorkApp;
 
 namespace WdTech_Protocol_AdminTools.Views
 {
@@ -38,7 +37,7 @@ namespace WdTech_Protocol_AdminTools.Views
             ServerPort.Text = $"{AppConfig.ServerPort}";
             ServerStartTDateTime.Text = !CommunicationServices.IsStart
                                         ? "-"
-                                        : $"{CommunicationServices.StartDateTime.ToString(UiElementViewFormat.StartDateFormat)}";
+                                        : $"{CommunicationServices.StartDateTime.ToString(AppConfig.StartDateFormat)}";
             ServerRunningDateTime.Text = $"{(CommunicationServices.StartDateTime - DateTime.Now).ToString("h'h 'm'm 's's'")}";
         }
 
@@ -49,7 +48,7 @@ namespace WdTech_Protocol_AdminTools.Views
         /// <param name="e"></param>
         private void SwitchDateDisplayMode(object sender, EventArgs e)
         {
-            UiElementViewFormat.StartDateFormat = UiElementViewFormat.StartDateFormat == DateTimeViewFormat.DateTimeWithoutYear
+            AppConfig.StartDateFormat = AppConfig.StartDateFormat == DateTimeViewFormat.DateTimeWithoutYear
                 ? DateTimeViewFormat.DateTimeWithYear
                 : DateTimeViewFormat.DateTimeWithoutYear;
 

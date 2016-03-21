@@ -98,7 +98,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WorkApp\UiElementViewFormat.cs" />
     <Compile Include="Enums\DateTimeViewFormat.cs" />
     <Compile Include="Models\AppConfig.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />

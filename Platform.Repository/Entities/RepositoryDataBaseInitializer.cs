@@ -69,7 +69,7 @@ namespace SHWD.Platform.Repository.Entities
                 Id = Guid.Parse("7402cdb5-1e1e-4633-a7e9-7d6d15634fc0"),
                 ItemName = "Field",
                 ItemKey = "7E0384B37CFJ",
-                ItemValue = "TESTFIELD",
+                ItemValue = "环境保护",
                 ItemLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -82,9 +82,9 @@ namespace SHWD.Platform.Repository.Entities
             {
                 Id = Guid.Parse("24ae6ee7-a024-4052-a1de-3cc0d542d908"),
                 ParentDictionaryId = field.Id,
-                ItemName = "FSubield",
+                ItemName = "Subield",
                 ItemKey = "7E0384B37CFL",
-                ItemValue = "TESTSUB FIELD",
+                ItemValue = "扬尘",
                 ItemLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -103,7 +103,7 @@ namespace SHWD.Platform.Repository.Entities
                 SubField = subfield,
                 Version = "2016-03-17",
                 ReleaseDateTime = DateTime.Now,
-                DeviceTypeCode = "AACC",
+                DeviceTypeCode = "WD_YC_Classic",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
@@ -122,23 +122,12 @@ namespace SHWD.Platform.Repository.Entities
                 Protocols = new List<Protocol>()
             };
 
-            var firmb = new Firmware
-            {
-                Id = Guid.Parse("ee1c7113-ff3e-4768-9788-ee66207d40fc"),
-                FirmwareName = "firmb",
-                CreateUserId = user.Id,
-                CreateDateTime = DateTime.Now,
-                LastUpdateDateTime = DateTime.Now,
-                LastUpdateUserId = user.Id
-            };
-
             dbContext.Firmwares.Add(firma);
-            dbContext.Firmwares.Add(firmb);
 
             var firmSet = new FirmwareSet
             {
                 Id = Guid.Parse("6c36fddf-d3d9-416b-84df-cd849006eef1"),
-                FirmwareSetName = "jiujiu",
+                FirmwareSetName = "扬尘第一版",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
@@ -151,15 +140,15 @@ namespace SHWD.Platform.Repository.Entities
 
             dbContext.DeviceTypes.Add(deviceType);
 
-
-
             var proa = new Protocol
             {
                 Id = Guid.Parse("f59022bc-6f8c-4ced-954f-3a6d7dd29335"),
                 FieldId = field.Id,
                 SubFieldId = subfield.Id,
                 CustomerInfo = "1",
-                Version = "versiona",
+                ProtocolName = "Classic",
+                ProtocolModule = "Classic",
+                Version = "Dust Protocol Brief V0017",
                 ReleaseDateTime = DateTime.Now,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -167,138 +156,172 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
                 CheckType = ProtocolCheckType.Crc16,
-                Head = new byte[] { 0xAA, 0XCC },
-                Tail = new byte[] { 0xB1, 0XB1 }
-            };
-
-            var proa1 = new Protocol
-            {
-                Id = Guid.Parse("4aed48ad-f3f9-466d-ac4e-926a88069e3c"),
-                FieldId = field.Id,
-                SubFieldId = subfield.Id,
-                CustomerInfo = "2",
-                Version = "versiona1",
-                ReleaseDateTime = DateTime.Now,
-                CreateUserId = user.Id,
-                CreateDateTime = DateTime.Now,
-                LastUpdateDateTime = DateTime.Now,
-                LastUpdateUserId = user.Id,
-                IsEnabled = true,
-                CheckType = ProtocolCheckType.Crc16,
-                Head = new byte[] { 0xAA, 0XCC },
-                Tail = new byte[] { 0xB1, 0XB1 }
+                Head = new byte[] { 0xAA },
+                Tail = new byte[] { 0xDD }
             };
 
             firma.Protocols.Add(proa);
-            firma.Protocols.Add(proa1);
 
-            var prob = new Protocol
-            {
-                Id = Guid.Parse("cbe44af8-3f9a-412a-8a52-8698461df31c"),
-                FieldId = field.Id,
-                SubFieldId = subfield.Id,
-                CustomerInfo = "3",
-                Version = "versionb",
-                ReleaseDateTime = DateTime.Now,
-                CreateUserId = user.Id,
-                CreateDateTime = DateTime.Now,
-                LastUpdateDateTime = DateTime.Now,
-                LastUpdateUserId = user.Id,
-                IsEnabled = true,
-                CheckType = ProtocolCheckType.Crc16,
-                Head = new byte[] { 0xAA, 0XCC },
-                Tail = new byte[] { 0xB1, 0XB1 }
-            };
-
-            var prob1 = new Protocol
-            {
-                Id = Guid.Parse("01d6601b-3bfb-43ea-a952-0ae9e416dff5"),
-                FieldId = field.Id,
-                SubFieldId = subfield.Id,
-                CustomerInfo = "4",
-                Version = "versionb1",
-                ReleaseDateTime = DateTime.Now,
-                CreateUserId = user.Id,
-                CreateDateTime = DateTime.Now,
-                LastUpdateDateTime = DateTime.Now,
-                LastUpdateUserId = user.Id,
-                IsEnabled = true,
-                CheckType = ProtocolCheckType.Crc16,
-                Head = new byte[] { 0xAA, 0XCC },
-                Tail = new byte[] { 0xB1, 0XB1 }
-            };
-
-            firmb.Protocols.Add(prob);
-            firmb.Protocols.Add(prob1);
-
-            var structurea = new ProtocolStructure
+            var cmdtype = new ProtocolStructure
             {
                 Id = Guid.Parse("dcdb914f-62ec-42dc-bece-04124cfd61fa"),
                 ProtocolId = proa.Id,
-                ComponentName = "Head",
-                ComponentIndex = 1,
-                ComponentLength = 1,
+                ComponentName = "CmdType",
+                ComponentIndex = 0,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Character
+                DataType = ProtocolDataType.SingleByte
             };
 
-            var structurea1 = new ProtocolStructure
+            var cmdbyte = new ProtocolStructure
             {
-                Id = Guid.Parse("b1d67223-3b20-44ca-bec6-f7f5449b6efb"),
-                ProtocolId = proa1.Id,
-                ComponentName = "Head",
+                Id = Guid.Parse("fa009ac1-8a08-4243-a143-eb7cb8942660"),
+                ProtocolId = proa.Id,
+                ComponentName = "CmdByte",
                 ComponentIndex = 1,
-                ComponentLength = 1,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Character
+                DataType = ProtocolDataType.SingleByte
             };
 
-            var structureb = new ProtocolStructure
+            var password = new ProtocolStructure()
             {
-                Id = Guid.Parse("18bbd2ce-a799-4edc-9ebb-0e513b00c56a"),
-                ProtocolId = proa1.Id,
-                ComponentName = "Head",
-                ComponentIndex = 1,
-                ComponentLength = 1,
-                ComponentDataLength = 1,
+                Id = Guid.Parse("eddaa794-088a-4cc0-8c8e-b09635ba249a"),
+                ProtocolId = proa.Id,
+                ComponentName = "Password",
+                ComponentIndex = 2,
+                ComponentDataLength = 8,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Character
+                DataType = ProtocolDataType.NumPassword
             };
 
-            var structureb1 = new ProtocolStructure
+            var nodeid = new ProtocolStructure()
             {
-                Id = Guid.Parse("313d5bfc-6de1-43b2-b6b6-fa33d6899b70"),
-                ProtocolId = proa1.Id,
-                ComponentName = "Head",
-                ComponentIndex = 1,
-                ComponentLength = 1,
+                Id = Guid.Parse("ff20af2c-8f93-4755-889f-e8943c023e7d"),
+                ProtocolId = proa.Id,
+                ComponentName = "NodeId",
+                ComponentIndex = 3,
+                ComponentDataLength = 4,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.ClassicNodeId
+            };
+
+            var descrip = new ProtocolStructure()
+            {
+                Id = Guid.Parse("92006a07-3726-4cdc-99a4-7b3fdf7ef03d"),
+                ProtocolId = proa.Id,
+                ComponentName = "Description",
+                ComponentIndex = 4,
+                ComponentDataLength = 12,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Description
+            };
+
+            var sourceaddr = new ProtocolStructure()
+            {
+                Id = Guid.Parse("9ccdffd7-7d22-43d1-9185-a58541ce87f8"),
+                ProtocolId = proa.Id,
+                ComponentName = "SourceAddr",
+                ComponentIndex = 5,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Character
+                DataType = ProtocolDataType.SourceAddr
             };
 
-            dbContext.ProtocolStructures.Add(structurea);
-            dbContext.ProtocolStructures.Add(structurea1);
-            dbContext.ProtocolStructures.Add(structureb);
-            dbContext.ProtocolStructures.Add(structureb1);
+            var destination = new ProtocolStructure()
+            {
+                Id = Guid.Parse("20ddc634-6ce6-47cc-82e1-c3df8f68abaa"),
+                ProtocolId = proa.Id,
+                ComponentName = "DestinationAddr",
+                ComponentIndex = 6,
+                ComponentDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Destination
+            };
+
+            var datalength = new ProtocolStructure()
+            {
+                Id = Guid.Parse("ad465018-24d3-400d-b7d5-712abf54ceeb"),
+                ProtocolId = proa.Id,
+                ComponentName = "PayhloadLength",
+                ComponentIndex = 7,
+                ComponentDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.DataLength
+            };
+
+            var data = new ProtocolStructure()
+            {
+                Id = Guid.Parse("4cde87be-468c-46cf-a1f9-0172f21761ca"),
+                ProtocolId = proa.Id,
+                ComponentName = "Data",
+                ComponentIndex = 8,
+                ComponentDataLength = -1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Data
+            };
+
+            var crc = new ProtocolStructure()
+            {
+                Id = Guid.Parse("1bd5725a-0408-4c4a-b7ad-f2c92dd830e2"),
+                ProtocolId = proa.Id,
+                ComponentName = "CrcValue",
+                ComponentIndex = 9,
+                ComponentDataLength = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Crc
+            };
+
+            dbContext.ProtocolStructures.Add(cmdtype);
+            dbContext.ProtocolStructures.Add(cmdbyte);
+            dbContext.ProtocolStructures.Add(password);
+            dbContext.ProtocolStructures.Add(nodeid);
+            dbContext.ProtocolStructures.Add(descrip);
+            dbContext.ProtocolStructures.Add(sourceaddr);
+            dbContext.ProtocolStructures.Add(destination);
+            dbContext.ProtocolStructures.Add(datalength);
+            dbContext.ProtocolStructures.Add(data);
+            dbContext.ProtocolStructures.Add(crc);
 
             var device = new Device
             {

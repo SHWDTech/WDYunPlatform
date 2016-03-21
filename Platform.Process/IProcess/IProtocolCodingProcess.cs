@@ -15,5 +15,11 @@ namespace Platform.Process.IProcess
         /// <param name="deviceGuid"></param>
         /// <returns></returns>
         IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid);
+
+        /// <summary>
+        /// 读取注册协议及协议结构
+        /// </summary>
+        /// <returns></returns>
+        IList<Protocol> GetAuthenticationProtocols();
     }
 }

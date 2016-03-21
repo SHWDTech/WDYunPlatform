@@ -40,9 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coding\IDeviceAuthentication.cs" />
     <Compile Include="Coding\PackageComponent.cs" />
+    <Compile Include="Command\ClassicCommandCoding.cs" />
     <Compile Include="Command\ICommandCoding.cs" />
     <Compile Include="DataConvert.cs" />
+    <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\StructureNames.cs" />
     <Compile Include="Coding\IComponent.cs" />
     <Compile Include="Coding\IProtocolPackage.cs" />
