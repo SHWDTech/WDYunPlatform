@@ -49,9 +49,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             _serverListener.BeginAcceptSocket(AcceptClient, _serverListener);
 
             ProtocolInfoManager.InitManager();
-
-            IsStart = true;
             StartDateTime = DateTime.Now;
+            IsStart = true;
         }
 
         /// <summary>

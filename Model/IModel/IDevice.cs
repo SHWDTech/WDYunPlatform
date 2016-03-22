@@ -52,7 +52,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备NODE编码
         /// </summary>
-        byte[] DeviceNodeId { get; set; }
+        string DeviceNodeId { get; set; }
 
         /// <summary>
         /// 设备关联固件集ID

@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace SHWDTech.Web_Cloud_Platform
+namespace Web_Cloud_Platform
 {
     public class BundleConfig
     {

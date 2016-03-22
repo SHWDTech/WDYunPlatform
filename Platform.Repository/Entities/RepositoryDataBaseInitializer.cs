@@ -323,6 +323,37 @@ namespace SHWD.Platform.Repository.Entities
             dbContext.ProtocolStructures.Add(data);
             dbContext.ProtocolStructures.Add(crc);
 
+            var sysConfig = new SysConfig()
+            {
+                Id = Guid.Parse("6ca98eba-47df-45c3-9bfb-1b56865b0a11"),
+                SysConfigName = ProtocolDeliveryParam.ReplyStayOriginal,
+                SysConfigType = SysConfigType.ProtocolDeliveryParam,
+                SysConfigValue = ProtocolDeliveryParam.ReplyStayOriginal,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            dbContext.SysConfigs.Add(sysConfig);
+
+            var command = new ProtocolCommand
+            {
+                Id = Guid.Parse("d2ccf8b0-ed68-48ef-b185-f94b504944ca"),
+                CommandTypeCode = new byte[] {0xF9},
+                CommandCode = new byte[] {0x81},
+                CommandDataLength = 0,
+                CommandCategory = CommandCategory.Authentication,
+                ProtocolId = proa.Id,
+                CommandDeliverParams = new List<SysConfig> {sysConfig},
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            dbContext.ProtocolCommands.Add(command);
+
             var device = new Device
             {
                 Id = Guid.Parse("ba0ca1dc-0331-4d5a-96e5-49ac20665a13"),
@@ -330,7 +361,7 @@ namespace SHWD.Platform.Repository.Entities
                 DeviceCode = "wohao",
                 DevicePassword = string.Empty,
                 DeviceModuleGuid = Guid.Parse("024849d6-2538-48a0-8f0d-5a289e27f955"),
-                DeviceNodeId = new byte[] { 0, 0, 0, 0, 0, 2, 5, 4 },
+                DeviceNodeId = "00001F1F",
                 FirmwareSetId = firmSet.Id,
                 StartTime = DateTime.Now,
                 PreEndTime = DateTime.Now,

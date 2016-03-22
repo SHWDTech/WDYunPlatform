@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SHWD.Platform.Repository;
+using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -47,6 +50,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
 
                 package[data.DataName] = component;
             }
+
+            if (command.CommandCategory != CommandCategory.Authentication) return;
+            var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
+            var device = DbRepository.Repo<DeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
+            if (device != null) package.Device = device;
         }
 
         public ProtocolPackage EncodeCommand(ProtocolCommand command)

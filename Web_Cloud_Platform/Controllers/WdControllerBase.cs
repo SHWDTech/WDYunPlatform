@@ -1,12 +1,12 @@
-﻿using Platform.Process.Process;
-using SHWD.Platform.Repository.IRepository;
-using SHWD.Platform.Repository.Repository;
-using SHWDTech.Web_Cloud_Platform.Common;
-using System.Threading;
+﻿using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using Platform.Process.Process;
+using SHWD.Platform.Repository.IRepository;
+using SHWD.Platform.Repository.Repository;
+using Web_Cloud_Platform.Common;
 
-namespace SHWDTech.Web_Cloud_Platform.Controllers
+namespace Web_Cloud_Platform.Controllers
 {
     /// <summary>
     /// 系统控制器基类

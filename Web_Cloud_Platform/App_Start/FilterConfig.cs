@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace SHWDTech.Web_Cloud_Platform
+namespace Web_Cloud_Platform
 {
     public class FilterConfig
     {

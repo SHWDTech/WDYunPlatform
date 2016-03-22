@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -11,25 +12,31 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     {
         public ProtocolPackage()
         {
-            _componentData = new Dictionary<string, PackageComponent>();
+            _componentData = new Dictionary<string, IPackageComponent>();
         }
 
         public bool Finalized { get; private set; }
 
         public int PackageLenth { get; private set; } = -1;
 
-        public Guid DeviceGuid { get; set; }
+        public IDevice Device { get; set; }
 
-        public PackageComponent DataComponent { get; private set; }
+        public IProtocolCommand Command { get; set; }
+
+        public IPackageComponent DataComponent { get; private set; }
 
         public DateTime ReceiveDateTime { get; set; }
+
+        public IProtocol Protocol { get; set; }
+
+        public string DeliverParams { get; set; }
 
         /// <summary>
         /// 协议包组件字典
         /// </summary>
-        private readonly Dictionary<string, PackageComponent> _componentData;
+        private readonly Dictionary<string, IPackageComponent> _componentData;
 
-        public PackageComponent this[string name]
+        public IPackageComponent this[string name]
         {
             get
             {

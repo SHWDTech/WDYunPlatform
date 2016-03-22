@@ -3,7 +3,7 @@
     /// <summary>
     /// 协议结果组件
     /// </summary>
-    public class PackageComponent : IComponent
+    public class PackageComponent : IPackageComponent
     {
         public string ComponentName { get; set; }
 

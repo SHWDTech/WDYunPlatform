@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SHWDTech.Web_Cloud_Platform.Models
+namespace Web_Cloud_Platform.Models
 {
     public class AccountLoginViewModel : IBaseViewModel
     {

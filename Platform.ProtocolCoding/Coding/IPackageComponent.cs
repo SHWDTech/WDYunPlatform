@@ -3,7 +3,7 @@
     /// <summary>
     /// 协议组件对象
     /// </summary>
-    public interface IComponent
+    public interface IPackageComponent
     {
         /// <summary>
         /// 组件名称

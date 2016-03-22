@@ -1,4 +1,5 @@
 ﻿using System;
+using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -18,9 +19,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         int PackageLenth { get; }
 
         /// <summary>
-        /// 设备GUID
+        /// 协议包所属设备
         /// </summary>
-        Guid DeviceGuid { get; set; }
+        IDevice Device { get; set; }
 
         /// <summary>
         /// 协议接收时间
@@ -28,16 +29,31 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         DateTime ReceiveDateTime { get; set; }
 
         /// <summary>
+        /// 所属协议
+        /// </summary>
+        IProtocol Protocol { get; set; }
+
+        /// <summary>
+        /// 所属指令
+        /// </summary>
+        IProtocolCommand Command { get; set; }
+
+        /// <summary>
         /// 协议数据段
         /// </summary>
-        PackageComponent DataComponent { get; }
+        IPackageComponent DataComponent { get; }
 
         /// <summary>
         /// 获取指定名称的数据段
         /// </summary>
         /// <param name="name">数据段名称</param>
         /// <returns>指定名称的数据段</returns>
-        PackageComponent this[string name] { get; set; }
+        IPackageComponent this[string name] { get; set; }
+
+        /// <summary>
+        /// 数据包处理参数
+        /// </summary>
+        string DeliverParams { get; set; }
 
         /// <summary>
         /// 完成协议包的编解码

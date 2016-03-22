@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using SHWDTech.Platform.ProtocolCoding.Coding;
+using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -18,7 +19,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="packageComponent"></param>
         /// <returns></returns>
-        public static object DecodeComponentData(PackageComponent packageComponent)
+        public static object DecodeComponentData(IPackageComponent packageComponent)
         {
             var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Decode", BindingFlags.Static);
 
@@ -31,11 +32,13 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="packageComponent"></param>
         /// <param name="componentData"></param>
         /// <returns></returns>
-        public static byte[] EncodeComponentData(PackageComponent packageComponent, object componentData)
+        public static byte[] EncodeComponentData(IPackageComponent packageComponent, object componentData)
         {
             var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Encode", BindingFlags.Static);
 
             return (byte[]) convertMethod.Invoke(convertMethod, new[] { componentData });
         }
+
+        public static string NodeIdDecode(byte[] nodeIdBytes) => Globals.ByteArrayToHexString(nodeIdBytes);
     }
 }

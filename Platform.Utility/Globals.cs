@@ -323,5 +323,20 @@ namespace SHWDTech.Platform.Utility
 
             return crc16;
         }
+
+        /// <summary>
+        /// 将输入的Byte数组转换为十六进制显示的字符串
+        /// </summary>
+        /// <param name="data">需要转换的Byte数组</param>
+        /// <returns>data的字符串表示形式</returns>
+        public static string ByteArrayToHexString(byte[] data)
+        {
+            var sb = new StringBuilder(data.Length * 3);
+            foreach (byte b in data)
+            {
+                sb.Append(Convert.ToString(b, 16).PadLeft(2, '0').PadRight(3, ' '));
+            }
+            return sb.ToString().ToUpper();
+        }
     }
 }

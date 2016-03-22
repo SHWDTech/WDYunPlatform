@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SHWD.Platform.Repository.IRepository;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
@@ -11,7 +12,7 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class DeviceRepository : SysDomainRepository<Device>, IDeviceRepository
     {
-        public Device GetDeviceById(Guid deviceGuid) => GetAllModels().First(device => device.Id == deviceGuid);
+        public IDevice GetDeviceById(Guid deviceGuid) => GetAllModels().First(device => device.Id == deviceGuid);
 
         public IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid)
         {
@@ -28,5 +29,8 @@ namespace SHWD.Platform.Repository.Repository
 
             return protocols;
         }
+
+        public IList<Device> GetDeviceByNodeId(string nodeId)
+            => GetModelList(device => device.DeviceNodeId == nodeId);
     }
 }

@@ -39,10 +39,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             return matchedProtocol == null ? null : DecodeProtocol(protocolBytes, matchedProtocol);
         }
 
-        public void Encode()
-        {
-            
-        }
+        /// <summary>
+        /// 对指定的指令进行编码
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        public byte[] Encode(ProtocolCommand command) => EncodeProtocol(command);
 
         /// <summary>
         /// 协议帧头与字节流匹配
@@ -69,7 +71,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <returns>协议字节流</returns>
         public static byte[] EncodeProtocol(ProtocolCommand command)
         {
-            var package = UnityFactory.Resolve<ICommandCoding>().EncodeCommand(command);
+            var package = UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command);
 
             var byteList = new List<byte>();
             var structures = command.Protocol.ProtocolStructures;
@@ -122,15 +124,23 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 验证设备身份
         /// </summary>
         /// <returns></returns>
-        public static IDevice Authentication(byte[] authBytes)
-            => UnityFactory.Resolve<IDeviceAuthentication>().DeviceAuthentication(authBytes);
+        public static IDevice Authentication(byte[] authBytes) => (from protocol in ProtocolInfoManager.AuthenticationProtocol
+                                                                   select DecodeProtocol(authBytes, protocol)
+                                                                   into package
+                                                                   where package.Finalized
+                                                                   select package.Device).FirstOrDefault();
+
+        /// <summary>
+        /// 回复验证信息
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] ReplyAuthentication(IDevice clientDevice) => null;
 
         /// <summary>
         /// 确认设备身份授权信息
         /// </summary>
         /// <param name="authConfirmBytes"></param>
         /// <returns></returns>
-        public static bool ConfirmAUthentication(byte[] authConfirmBytes)
-            => UnityFactory.Resolve<IDeviceAuthentication>().ConfirmDeviceAuthentication(authConfirmBytes);
+        public static bool ConfirmAuthentication(byte[] authConfirmBytes) => false;
     }
 }

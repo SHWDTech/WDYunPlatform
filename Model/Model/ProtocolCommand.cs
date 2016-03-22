@@ -14,31 +14,33 @@ namespace SHWDTech.Platform.Model.Model
     public class ProtocolCommand : SysModelBase, IProtocolCommand
     {
         [Display(Name = "指令类型编码")]
-        public byte[] CommandTypeCode { get; set; }
+        public virtual byte[] CommandTypeCode { get; set; }
 
         [Required]
         [Display(Name = "指令编码")]
-        public byte[] CommandCode { get; set; }
+        public virtual byte[] CommandCode { get; set; }
 
         [Required]
         [Display(Name = "指令数据长度")]
-        public int CommandDataLength { get; set; }
+        public virtual int CommandDataLength { get; set; }
 
         [Required]
         [Display(Name = "指令类型")]
         [MaxLength(50)]
-        public string CommandCategory { get; set; }
+        public virtual string CommandCategory { get; set; }
 
         [Required]
         [Display(Name = "所属协议ID")]
-        public Guid ProtocolId { get; set; }
+        public virtual Guid ProtocolId { get; set; }
 
         [Display(Name = "所属协议")]
         [ForeignKey("ProtocolId")]
-        public Protocol Protocol { get; set; }
+        public virtual Protocol Protocol { get; set; }
 
-        [Required]
         [Display(Name = "指令包含数据")]
-        public ICollection<CommandData> CommandDatas { get; set; }
+        public virtual ICollection<CommandData> CommandDatas { get; set; }
+
+        [Display(Name = "指令处理参数")]
+        public virtual ICollection<SysConfig> CommandDeliverParams { get; set; } 
     }
 }

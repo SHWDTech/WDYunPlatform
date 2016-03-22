@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="SHWDTech.Web_Cloud_Platform.MvcApplication" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Web_Cloud_Platform.MvcApplication" Language="C#" %>

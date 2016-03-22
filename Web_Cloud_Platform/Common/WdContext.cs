@@ -1,8 +1,8 @@
-﻿using SHWDTech.Platform.Model.IModel;
+﻿using System.Web;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
-using System.Web;
 
-namespace SHWDTech.Web_Cloud_Platform.Common
+namespace Web_Cloud_Platform.Common
 {
     /// <summary>
     /// 系统处理上下文

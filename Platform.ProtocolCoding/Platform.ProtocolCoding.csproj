@@ -40,15 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coding\IDeviceAuthentication.cs" />
     <Compile Include="Coding\PackageComponent.cs" />
     <Compile Include="Command\ClassicCommandCoding.cs" />
     <Compile Include="Command\ICommandCoding.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\StructureNames.cs" />
-    <Compile Include="Coding\IComponent.cs" />
+    <Compile Include="Coding\IPackageComponent.cs" />
     <Compile Include="Coding\IProtocolPackage.cs" />
+    <Compile Include="PackageDeliver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Coding\ProtocolEncoding.cs" />
     <Compile Include="ProtocolInfoManager.cs" />

@@ -1,10 +1,10 @@
 ﻿using System;
-using SHWDTech.Web_Cloud_Platform.Models;
 using System.Web.Mvc;
 using Platform.Process.Enums;
 using Platform.Process.Process;
+using Web_Cloud_Platform.Models;
 
-namespace SHWDTech.Web_Cloud_Platform.Controllers
+namespace Web_Cloud_Platform.Controllers
 {
     public class AccountController : WdControllerBase
     {
@@ -37,14 +37,14 @@ namespace SHWDTech.Web_Cloud_Platform.Controllers
                 return DynamicView(model);
             }
 
-            try
-            {
-                var x = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex);
-            }
+            //try
+            //{
+            //    var x = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.Write(ex);
+            //}
             var signresult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
 
             switch (signresult)

@@ -2,5 +2,6 @@
 {
     public static class CommandCategory 
     {
+        public const string Authentication = "Authentication";
     }
 }

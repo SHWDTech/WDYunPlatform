@@ -70,6 +70,7 @@
     <Compile Include="Enums\DomainStatus.cs" />
     <Compile Include="Enums\DomainType.cs" />
     <Compile Include="Enums\ModelState.cs" />
+    <Compile Include="Enums\ProtocolDeliveryParam.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
     <Compile Include="Enums\SysConfigType.cs" />
     <Compile Include="Enums\UserStatus.cs" />

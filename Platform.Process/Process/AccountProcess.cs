@@ -1,4 +1,5 @@
-﻿using Platform.Process.IProcess;
+﻿using System;
+using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using System.Web.Security;
 using Platform.Process.Enums;
@@ -21,12 +22,13 @@ namespace Platform.Process.Process
 
         public void SignOut()
         {
-            
+
         }
 
         public SignInStatus PasswordSignIn(string loginName, string password, bool rememberMe,
             bool shouldLockout = false)
         {
+
             SignInStatus signInStatus;
 
             if (!_userRepository.IsExists(item => item.LoginName == loginName) || !CheckPassword(loginName, Globals.GetMd5(password)))
@@ -48,8 +50,8 @@ namespace Platform.Process.Process
         /// <param name="loginName">当前登录的用户</param>
         /// <param name="password">用户输入的密码</param>
         /// <returns></returns>
-        private bool CheckPassword(string loginName, string password) 
-            => _userRepository.IsExists(user => user.LoginName == loginName 
+        private bool CheckPassword(string loginName, string password)
+            => _userRepository.IsExists(user => user.LoginName == loginName
             && user.Password == password
             && user.IsEnabled);
 
@@ -60,7 +62,7 @@ namespace Platform.Process.Process
         private void SetAuthCookie(string loginName)
         {
             FormsAuthentication.SetAuthCookie(loginName, false);
-            
+
             _userRepository.UpdateLoginInfo(loginName);
         }
     }

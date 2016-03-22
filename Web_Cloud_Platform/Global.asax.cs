@@ -2,7 +2,7 @@
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace SHWDTech.Web_Cloud_Platform
+namespace Web_Cloud_Platform
 {
     public class MvcApplication : System.Web.HttpApplication
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace SHWDTech.Web_Cloud_Platform.Controllers
+namespace Web_Cloud_Platform.Controllers
 {
     public class HomeController : WdControllerBase
     {

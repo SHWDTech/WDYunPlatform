@@ -46,7 +46,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "设备NODE编码")]
         [MaxLength(16)]
-        public virtual byte[] DeviceNodeId { get; set; }
+        public virtual string DeviceNodeId { get; set; }
 
         [Required]
         [Display(Name = "设备关联固件集ID")]

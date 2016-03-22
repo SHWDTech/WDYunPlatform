@@ -14,27 +14,27 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "数据索引值")]
-        public int DataIndex { get; set; }
+        public virtual int DataIndex { get; set; }
 
         [Required]
         [Display(Name = "数据长度")]
-        public int DataLength { get; set; }
+        public virtual int DataLength { get; set; }
 
         [Required]
         [Display(Name = "数据名称")]
-        public string DataName { get; set; }
+        public virtual string DataName { get; set; }
 
         [Required]
         [Display(Name = "数据类型值")]
-        public string DataType { get; set; }
+        public virtual string DataType { get; set; }
 
         [Required]
         [Display(Name = "所属指令ID")]
-        public Guid CommandId { get; set; }
+        public virtual Guid CommandId { get; set; }
 
         [Required]
         [Display(Name = "所属指令")]
         [ForeignKey("CommandId")]
-        public ProtocolCommand Command { get; set; }
+        public virtual ProtocolCommand Command { get; set; }
     }
 }
