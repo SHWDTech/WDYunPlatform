@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
+using MisakaBanZai.Common;
 using MisakaBanZai.Models;
 using SHWDTech.Platform.Utility;
 
@@ -26,6 +28,12 @@ namespace MisakaBanZai.Services
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
 
         /// <summary>
+        /// 数据接收缓存
+        /// </summary>
+        public IList<ArraySegment<byte>> ReceiveBuffer { get; }
+            = new List<ArraySegment<byte>>() { new ArraySegment<byte>(new byte[Appconfig.TcpBufferSize]) };
+
+        /// <summary>
         /// 数据处理缓存
         /// </summary>
         public IList<byte> ProcessBuffer { get; } = new List<byte>();
@@ -46,7 +54,7 @@ namespace MisakaBanZai.Services
 
         public string ConnectionType { get; set; }
 
-        public object ConnObject => _tcpListener; 
+        public object ConnObject => _tcpListener;
 
         /// <summary>
         /// 侦听服务已经启动
@@ -64,15 +72,72 @@ namespace MisakaBanZai.Services
         /// </summary>
         public void Start()
         {
-            _tcpListener.Start();
-            _tcpListener.BeginAcceptTcpClient(AcceptClient, _tcpListener);
-            IsStarted = true;
+            try
+            {
+                _tcpListener.Start();
+                _tcpListener.BeginAcceptTcpClient(AcceptClient, _tcpListener);
+                var receiveThread = new Thread(StartReceive) {IsBackground = true};
+                receiveThread.Start();
+                IsStarted = true;
+            }
+            catch (Exception ex)
+            {
+                ParentWindow.DispatcherAddReportData("接收客户端数据错误！");
+                LogService.Instance.Error("服务器启动失败！", ex);
+            }
         }
 
+        /// <summary>
+        /// 停止TCP服务
+        /// </summary>
         public void Stop()
         {
             _tcpListener.Stop();
             IsStarted = false;
+        }
+
+        private void StartReceive()
+        {
+            while (!_tcpListener.Server.Connected)
+            {
+                Thread.Sleep(1);
+            }
+
+            _tcpListener.Server.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpListener.Server);
+        }
+
+        /// <summary>
+        /// TCP客户端异步接收数据
+        /// </summary>
+        /// <param name="result"></param>
+        private void Received(IAsyncResult result)
+        {
+            var client = (Socket)result.AsyncState;
+
+            lock (ReceiveBuffer)
+            {
+                try
+                {
+                    var readCount = client.EndReceive(result);
+
+                    var array = ReceiveBuffer.Last().Array;
+                    for (var i = 0; i < readCount; i++)
+                    {
+                        ProcessBuffer.Add(array[i]);
+                    }
+
+                    OnReceivedData();
+                }
+                catch (Exception ex)
+                {
+                    ParentWindow.DispatcherAddReportData("接收客户端数据错误！");
+                    LogService.Instance.Error("接收客户端数据错误！", ex);
+                    return;
+                }
+
+            }
+
+            client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
         }
 
         /// <summary>
@@ -85,9 +150,7 @@ namespace MisakaBanZai.Services
             try
             {
                 var client = server.EndAcceptTcpClient(result);
-                var misakaClient = new MisakaTcpClient(client);
-                misakaClient.ClientReceivedDataEvent += OnClientReceivedData;
-                _tcpClients.Add(client.Client.RemoteEndPoint.ToString(), misakaClient);
+                _tcpClients.Add(client.Client.RemoteEndPoint.ToString(), new MisakaTcpClient(client));
                 ParentWindow.DispatcherAddReportData($"添加客户端成功。{client.Client.RemoteEndPoint}");
                 OnClientAccepted(EventArgs.Empty);
             }
@@ -138,16 +201,6 @@ namespace MisakaBanZai.Services
         /// <returns></returns>
         public List<string> GetClientNameList()
             => _tcpClients.Select(misakaTcpClient => misakaTcpClient.Key).ToList();
-
-
-        private void OnClientReceivedData(IMisakaConnection conn)
-        {
-            foreach (var socketByte in conn.OutPutSocketBytes())
-            {
-                ProcessBuffer.Add(socketByte);
-            }
-            OnReceivedData();
-        }
 
         /// <summary>
         /// 数据接收时出发

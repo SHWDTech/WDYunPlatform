@@ -31,12 +31,12 @@
                                  Foreground="#CC0000"></TextBox>
                             <TextBox x:Name="TxtRemoteConnPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 135, 5, 0"
                                  Foreground="DarkTurquoise"></TextBox>
-                            <Button Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 175, 5, 0" Click="Connect"></Button>
+                            <Button x:Name="BtnConnect" Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 175, 5, 0" Click="Connect"></Button>
 
                         </Grid>
                         <Grid x:Name="ServerLayer" Visibility="Hidden">
                             <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="选择已连接客户端" Margin="0, 85,0 ,0"></Label>
-                            <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 125, 5, 0" Height="35"></ComboBox>
+                            <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 125, 5, 0" Height="35" SelectionChanged="SetCurrentClient"></ComboBox>
                             <Button Content="刷新列表" VerticalAlignment="Top" HorizontalAlignment="Left" 
                                     Margin="5, 165, 0, 0" Height="35" Width="100" Click="RefreshClients"></Button>
                             <Button x:Name="BtnStartListening" Content="开始侦听" VerticalAlignment="Top" HorizontalAlignment="Right"

@@ -25,9 +25,15 @@ namespace MisakaBanZai.Services
         public object ConnObject => _tcpClient.Client;
 
         /// <summary>
+        /// 指示客户端是否已经连接到服务器
+        /// </summary>
+        public bool Connected => _tcpClient.Connected;
+
+        /// <summary>
         /// 数据接收缓存
         /// </summary>
-        public IList<ArraySegment<byte>> ReceiveBuffer { get; } = new List<ArraySegment<byte>>() { new ArraySegment<byte>(new byte[Appconfig.TcpBufferSize]) };
+        public IList<ArraySegment<byte>> ReceiveBuffer { get; } 
+            = new List<ArraySegment<byte>>() { new ArraySegment<byte>(new byte[Appconfig.TcpBufferSize]) };
 
         public IMisakaConnectionManagerWindow ParentWindow { get; set; }
 
@@ -54,11 +60,14 @@ namespace MisakaBanZai.Services
         public MisakaTcpClient(IPAddress ipAddress, int port)
         {
             _tcpClient = new TcpClient(new IPEndPoint(ipAddress, port));
+            ConnectionName = $"{ipAddress}:{port}";
         }
 
         public MisakaTcpClient(TcpClient client)
         {
             _tcpClient = client;
+            var ipEndPoint = ((IPEndPoint)client.Client.LocalEndPoint).ToString().Split(':');
+            ConnectionName = $"{IPAddress.Parse(ipEndPoint[0])}:{ipEndPoint[1]}";
         }
 
         /// <summary>
@@ -71,7 +80,7 @@ namespace MisakaBanZai.Services
             try
             {
                 _tcpClient.Connect(ipAddress, port);
-                _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient);
+                _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
                 ParentWindow.DispatcherAddReportData("连接服务器成功！");
             }
             catch (Exception ex)
@@ -80,6 +89,14 @@ namespace MisakaBanZai.Services
                 LogService.Instance.Error("连接服务器失败！", ex);
             }
             
+        }
+
+        /// <summary>
+        /// 关闭连接
+        /// </summary>
+        public void Disconnect()
+        {
+            _tcpClient.Client.Disconnect(true);
         }
 
         public void Send(byte[] bytes)
@@ -91,7 +108,7 @@ namespace MisakaBanZai.Services
         /// TCP客户端异步接收数据
         /// </summary>
         /// <param name="result"></param>
-        public void Received(IAsyncResult result)
+        private void Received(IAsyncResult result)
         {
             var client = (Socket)result.AsyncState;
 

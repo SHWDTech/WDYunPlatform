@@ -44,6 +44,17 @@ namespace MisakaBanZai.Views
         private delegate void AddReportDataDispatcherDelegate(string str);
 
         /// <summary>
+        /// 无返回值无参通用委托
+        /// </summary>
+        private delegate void CommonMethodDispatcherDelegate();
+
+        /// <summary>
+        /// 数据接收委托
+        /// </summary>
+        /// <param name="conn"></param>
+        private delegate void ReceivedDataDispatcherDelegate(IMisakaConnection conn);
+
+        /// <summary>
         /// 时间显示格式
         /// </summary>
         private string DateDisplayFormat => ChkFullDateMode.IsChecked == true
@@ -92,7 +103,7 @@ namespace MisakaBanZai.Views
             var server = (TcpListener)connection.ConnObject;
             var endPoint = ((IPEndPoint)server.LocalEndpoint).ToString().Split(':');
             connection.ParentWindow = this;
-            connection.ClientReceivedDataEvent += OutPutSocketData;
+            connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
             var misakaServer = connection as MisakaTcpServer;
             if (misakaServer != null) misakaServer.ClientAccept += RefreshClients;
             LocalConnInfo.Content = $"{IPAddress.Parse(endPoint[0])}：{endPoint[1]}";
@@ -108,6 +119,7 @@ namespace MisakaBanZai.Views
             var client = (Socket)connection.ConnObject;
             var endPoint = ((IPEndPoint)client.LocalEndPoint).ToString().Split(':');
             connection.ParentWindow = this;
+            connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
             LocalConnInfo.Content = $"{IPAddress.Parse(endPoint[0])}：{endPoint[1]}";
             ClientLayer.Visibility = Visibility.Visible;
         }
@@ -119,10 +131,19 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void RefreshClients(object sender, EventArgs e)
         {
+            Dispatcher.Invoke(DispatcherPriority.Normal, new CommonMethodDispatcherDelegate(RefreshClients));
+        }
+
+        /// <summary>
+        /// 刷新已连接客户端列表
+        /// </summary>
+        private void RefreshClients()
+        {
             CmbConnectedClient.Items.Clear();
             foreach (var clientName in ((MisakaTcpServer)_misakaConnection).GetClientNameList())
             {
                 CmbConnectedClient.Items.Add(clientName);
+                CmbConnectedClient.SelectedIndex = CmbConnectedClient.Items.Count - 1;
             }
         }
 
@@ -138,11 +159,13 @@ namespace MisakaBanZai.Views
             {
                 conn.Start();
                 BtnStartListening.Content = "停止侦听";
+                DispatcherAddReportData("服务器侦听启动");
             }
             else
             {
                 conn.Stop();
                 BtnStartListening.Content = "开始侦听";
+                DispatcherAddReportData("服务器侦听结束");
             }
         }
 
@@ -161,27 +184,62 @@ namespace MisakaBanZai.Views
             }
         }
 
+        /// <summary>
+        /// 添加报告数据调度方法
+        /// </summary>
+        /// <param name="str"></param>
         public void DispatcherAddReportData(string str)
         {
             Dispatcher.Invoke(DispatcherPriority.Normal,
                 new AddReportDataDispatcherDelegate(AddReportData), str);
         }
 
+        /// <summary>
+        /// 添加报告数据
+        /// </summary>
+        /// <param name="str"></param>
         private void AddReportData(string str)
         {
             ReportService.AddReportData(str);
         }
 
         /// <summary>
+        /// 设置当前客户端
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SetCurrentClient(object sender, RoutedEventArgs e)
+        {
+            if (!(_misakaConnection is MisakaTcpServer)) return;
+
+            var conn = (MisakaTcpServer) _misakaConnection;
+            conn.SetCurrentClient(CmbConnectedClient.SelectedItem.ToString());
+        }
+
+        /// <summary>
         /// 输出套接字接收到的字节
         /// </summary>
-        private void OutPutSocketData(IMisakaConnection conn)
+        private void DispatcherOutPutSocketData(IMisakaConnection conn)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, new ReceivedDataDispatcherDelegate(OutPutSocketData), conn);
+        }
+
+        /// <summary>
+        /// 输出套接字接收到的字节
+        /// </summary>
+        /// <param name="conn"></param>
+        private void OutPutSocketData (IMisakaConnection conn)
         {
             var socketBytes = conn.OutPutSocketBytes();
 
-            TxtReceiveViewer.AppendText(Globals.ByteArrayToString(socketBytes, HexReceive == true));
+            TxtReceiveViewer.AppendText($"Data[{DateTime.Now.ToString(DateDisplayFormat)}]:{Globals.ByteArrayToString(socketBytes, HexReceive == true)}\r\n");
         }
 
+        /// <summary>
+        /// 发送数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Send(object sender, RoutedEventArgs e)
         {
             _misakaConnection.Send(Globals.StringToByteArray(TxtDataSend.Text, HexSend == true));
@@ -194,31 +252,42 @@ namespace MisakaBanZai.Views
         {
             if (!(_misakaConnection is MisakaTcpClient)) return;
 
-            IPAddress ipAddress;
-            int port;
-            try
-            {
-                ipAddress = IPAddress.Parse(TxtRemoteConnAddr.Text);
+            var conn = (MisakaTcpClient) _misakaConnection;
 
-            }
-            catch (Exception)
+            if (conn.Connected)
             {
-                ReportService.AddReportData("非法的IP地址！");
-                return;
+                conn.Disconnect();
+                BtnConnect.Content = "连接服务器";
             }
+            else
+            {
+                IPAddress ipAddress;
+                int port;
+                try
+                {
+                    ipAddress = IPAddress.Parse(TxtRemoteConnAddr.Text);
 
-            try
-            {
-                port = int.Parse(TxtRemoteConnPort.Text);
-            }
-            catch (Exception)
-            {
-                ReportService.AddReportData("非法的端口号！");
-                return;
-            }
+                }
+                catch (Exception)
+                {
+                    ReportService.AddReportData("非法的IP地址！");
+                    return;
+                }
 
-            var misakaClient = (MisakaTcpClient) _misakaConnection;
-            misakaClient.Connect(ipAddress, port);
+                try
+                {
+                    port = int.Parse(TxtRemoteConnPort.Text);
+                }
+                catch (Exception)
+                {
+                    ReportService.AddReportData("非法的端口号！");
+                    return;
+                }
+
+                var misakaClient = (MisakaTcpClient)_misakaConnection;
+                misakaClient.Connect(ipAddress, port);
+                BtnConnect.Content = "断开连接";
+            }
         }
     }
 }

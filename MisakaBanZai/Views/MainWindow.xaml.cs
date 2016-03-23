@@ -35,11 +35,20 @@ namespace MisakaBanZai.Views
             createWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// 连接添加事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConnectionAdded(object sender, MisakaConnectionEventArgs e)
         {
             AddNewConnection(e.Connection);
         }
 
+        /// <summary>
+        /// 添加新连接
+        /// </summary>
+        /// <param name="connection"></param>
         private void AddNewConnection(IMisakaConnection connection)
         {
             TreeViewItem item = null;
@@ -58,6 +67,11 @@ namespace MisakaBanZai.Views
             AddTreeViewItem(item, connection);
         }
 
+        /// <summary>
+        /// 添加属性图项目
+        /// </summary>
+        /// <param name="treeViewItem"></param>
+        /// <param name="connection"></param>
         private void AddTreeViewItem(TreeViewItem treeViewItem, IMisakaConnection connection)
         {
             var label = new Label {Content = connection.ConnectionName};
