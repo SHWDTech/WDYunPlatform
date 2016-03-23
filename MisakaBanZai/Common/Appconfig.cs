@@ -7,7 +7,17 @@ namespace MisakaBanZai.Common
         /// <summary>
         /// TCP接收Buffer大小
         /// </summary>
-        public static int TcpBufferSize { get; set; }
+        public static readonly int TcpBufferSize;
+
+        /// <summary>
+        /// 完整时间格式
+        /// </summary>
+        public const string FullDateFormat = "yyyy-MM-dd HH:mm:ss fff";
+
+        /// <summary>
+        /// 短时间格式
+        /// </summary>
+        public const string ShortDateFormat = "HH:mm:ss fff";
 
         static Appconfig()
         {

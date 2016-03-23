@@ -338,5 +338,46 @@ namespace SHWDTech.Platform.Utility
             }
             return sb.ToString().ToUpper();
         }
+
+        /// <summary>
+        /// 将输入的Byte数组转换为GBK字符串
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string ByteArrayToGbkString(byte[] data) => Encoding.GetEncoding("GBK").GetString(data);
+
+        /// <summary>
+        /// 将输入的Byte数组转换为字符串
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="isHexMode"></param>
+        /// <returns></returns>
+        public static string ByteArrayToString(byte[] data, bool isHexMode) 
+            => isHexMode ? ByteArrayToHexString(data) : ByteArrayToGbkString(data);
+
+        /// <summary>
+        /// 将输入的字符串转换为Byte数组
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static byte[] GbkStringToByteArray(string str) => Encoding.GetEncoding("GBK").GetBytes(str);
+
+        /// <summary>
+        /// 将输入的HEX字符串转换为Byte数组
+        /// </summary>
+        /// <returns></returns>
+        public static byte[] HexStringToByteArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str.Length % 2 != 0)
+                str = str.Substring(0, str.Length - 1);
+            byte[] buffer = new byte[str.Length / 2];
+            for (int i = 0; i < str.Length; i += 2)
+                buffer[i / 2] = Convert.ToByte(str.Substring(i, 2), 16);
+            return buffer;
+        }
+
+        public static byte[] StringToByteArray(string str, bool isHexMode)
+            => isHexMode ? HexStringToByteArray(str) : GbkStringToByteArray(str);
     }
 }

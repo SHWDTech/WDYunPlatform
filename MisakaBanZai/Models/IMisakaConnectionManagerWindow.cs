@@ -1,0 +1,18 @@
+﻿using MisakaBanZai.Services;
+
+namespace MisakaBanZai.Models
+{
+    public interface IMisakaConnectionManagerWindow
+    {
+        /// <summary>
+        /// 报告服务
+        /// </summary>
+        ReportService ReportService { get; set; }
+
+        /// <summary>
+        /// 添加报告数据
+        /// </summary>
+        /// <param name="str"></param>
+        void DispatcherAddReportData(string str);
+    }
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using MisakaBanZai.Models;
 using SHWDTech.Platform.Utility;
 
 namespace MisakaBanZai.Services
@@ -22,10 +23,19 @@ namespace MisakaBanZai.Services
         /// </summary>
         private readonly Dictionary<string, MisakaTcpClient> _tcpClients = new Dictionary<string, MisakaTcpClient>();
 
+        public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
+
+        /// <summary>
+        /// 数据处理缓存
+        /// </summary>
+        public IList<byte> ProcessBuffer { get; } = new List<byte>();
+
         /// <summary>
         /// 当前选中的客户端
         /// </summary>
         private MisakaTcpClient _currenTcpClient;
+
+        public IMisakaConnectionManagerWindow ParentWindow { get; set; }
 
         /// <summary>
         /// 客户端接入事件
@@ -37,6 +47,11 @@ namespace MisakaBanZai.Services
         public string ConnectionType { get; set; }
 
         public object ConnObject => _tcpListener; 
+
+        /// <summary>
+        /// 侦听服务已经启动
+        /// </summary>
+        public bool IsStarted { get; private set; }
 
         public MisakaTcpServer(IPAddress ipaddress, int port)
         {
@@ -51,6 +66,13 @@ namespace MisakaBanZai.Services
         {
             _tcpListener.Start();
             _tcpListener.BeginAcceptTcpClient(AcceptClient, _tcpListener);
+            IsStarted = true;
+        }
+
+        public void Stop()
+        {
+            _tcpListener.Stop();
+            IsStarted = false;
         }
 
         /// <summary>
@@ -63,12 +85,22 @@ namespace MisakaBanZai.Services
             try
             {
                 var client = server.EndAcceptTcpClient(result);
-                _tcpClients.Add(client.Client.RemoteEndPoint.ToString(), new MisakaTcpClient(client));
+                var misakaClient = new MisakaTcpClient(client);
+                misakaClient.ClientReceivedDataEvent += OnClientReceivedData;
+                _tcpClients.Add(client.Client.RemoteEndPoint.ToString(), misakaClient);
+                ParentWindow.DispatcherAddReportData($"添加客户端成功。{client.Client.RemoteEndPoint}");
                 OnClientAccepted(EventArgs.Empty);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                LogService.Instance.Info("侦听器已经关闭", ex);
+                return;
             }
             catch (Exception ex)
             {
                 LogService.Instance.Warn("接收客户端请求失败！", ex);
+                ParentWindow.DispatcherAddReportData("接收客户端请求失败！");
+                return;
             }
 
             server.BeginAcceptSocket(AcceptClient, server);
@@ -106,5 +138,38 @@ namespace MisakaBanZai.Services
         /// <returns></returns>
         public List<string> GetClientNameList()
             => _tcpClients.Select(misakaTcpClient => misakaTcpClient.Key).ToList();
+
+
+        private void OnClientReceivedData(IMisakaConnection conn)
+        {
+            foreach (var socketByte in conn.OutPutSocketBytes())
+            {
+                ProcessBuffer.Add(socketByte);
+            }
+            OnReceivedData();
+        }
+
+        /// <summary>
+        /// 数据接收时出发
+        /// </summary>
+        private void OnReceivedData()
+        {
+            ClientReceivedDataEvent?.Invoke(this);
+        }
+
+        public byte[] OutPutSocketBytes()
+        {
+            byte[] receivedData;
+
+            lock (ProcessBuffer)
+            {
+                receivedData = ProcessBuffer.ToArray();
+                for (var i = 0; i < receivedData.Length; i++)
+                {
+                    ProcessBuffer.RemoveAt(0);
+                }
+            }
+            return receivedData;
+        }
     }
 }

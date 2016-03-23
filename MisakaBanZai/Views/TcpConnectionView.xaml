@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TcpConnectionView" Height="600" Width="800" Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="16"
+        Title="TcpConnectionView" Height="800" Width="1000"
+        MinHeight="800" MinWidth="1000"
+        Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="16"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,17 +26,21 @@
                         <Label Content="本地连接信息：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 30, 0, 0"></Label>
                         <Label x:Name="LocalConnInfo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 60, 0, 0" Foreground="#0000CC"></Label>
                         <Grid x:Name="ClientLayer" Visibility="Hidden">
-                            <TextBox x:Name="RemoteConnAddr" Height="30" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 95, 0, 0" 
+                            <Label Content="服务器地址" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 95, 0, 0"></Label>
+                            <TextBox x:Name="TxtRemoteConnAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 135, 0, 0" 
                                  Foreground="#CC0000"></TextBox>
-                            <TextBox x:Name="RemoteConnPort" Height="30" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120, 95, 0, 0"
+                            <TextBox x:Name="TxtRemoteConnPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 135, 5, 0"
                                  Foreground="DarkTurquoise"></TextBox>
-                            <Button Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 135, 5, 0"></Button>
+                            <Button Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 175, 5, 0" Click="Connect"></Button>
 
                         </Grid>
                         <Grid x:Name="ServerLayer" Visibility="Hidden">
                             <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="选择已连接客户端" Margin="0, 85,0 ,0"></Label>
-                            <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 125, 5, 0"></ComboBox>
-                            <Button Content="刷新客户端列表" VerticalAlignment="Top" Margin="5, 160, 5, 0" Height="35" Click="RefreshClients"></Button>
+                            <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 125, 5, 0" Height="35"></ComboBox>
+                            <Button Content="刷新列表" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                    Margin="5, 165, 0, 0" Height="35" Width="100" Click="RefreshClients"></Button>
+                            <Button x:Name="BtnStartListening" Content="开始侦听" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                    Margin="0, 165, 5, 0" Height="35" Width="100" Click="SwitchServerStatus"></Button>
                         </Grid>
                     </Grid>
                 </GroupBox>
@@ -43,6 +49,7 @@
                 <GroupBox Header="连接配置">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -62,6 +69,10 @@
                             <CheckBox x:Name="ChkHexReceive" Margin="5,10,0,0"></CheckBox>
                             <Label Content="启用HEX接收" Margin="25,0,0,0"></Label>
                         </Grid>
+                        <Grid Row="2">
+                            <CheckBox x:Name="ChkFullDateMode" Margin="5, 10, 0, 0"></CheckBox>
+                            <Label Content="显示完整时间戳" Margin="25, 0, 0, 0"></Label>
+                        </Grid>
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -73,12 +84,16 @@
             </Grid.RowDefinitions>
             <Grid Row="0">
                 <GroupBox Header="数据接收显示">
-                    <TextBox x:Name="TxtReceiveViewer" IsEnabled="False"></TextBox>
+                    <TextBox x:Name="TxtReceiveViewer"></TextBox>
                 </GroupBox>
             </Grid>
             <Grid Row="1">
                 <GroupBox Header="数据发送">
-                    <TextBox x:Name="TxtDataSend"></TextBox>
+                    <Grid>
+                        <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40"></TextBox>
+                        <Button Content="发送数据" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                                Width="100" Height="35" Click="Send"></Button>
+                    </Grid>
                 </GroupBox>
             </Grid>
         </Grid>

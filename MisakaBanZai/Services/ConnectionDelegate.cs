@@ -18,5 +18,11 @@ namespace MisakaBanZai.Services
     /// <summary>
     /// TCP客户端数据接收委托
     /// </summary>
-    public delegate void ClientReceivedDataEventHandler();
+    public delegate void ClientReceivedDataEventHandler(IMisakaConnection conn);
+
+    /// <summary>
+    /// 报告数据添加时间委托
+    /// </summary>
+    /// <param name="e"></param>
+    public delegate void ReportDataAddedEventHandler(EventArgs e);
 }

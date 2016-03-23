@@ -68,6 +68,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Appconfig.cs" />
+    <Compile Include="Models\IMisakaConnectionManagerWindow.cs" />
+    <Compile Include="Services\ReportService.cs" />
     <Compile Include="Views\TcpConnectionView.xaml.cs">
       <DependentUpon>TcpConnectionView.xaml</DependentUpon>
     </Compile>
