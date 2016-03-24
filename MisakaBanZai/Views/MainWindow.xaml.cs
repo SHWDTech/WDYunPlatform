@@ -140,7 +140,7 @@ namespace MisakaBanZai.Views
 
             _connectionWindows.Remove(label.Content.ToString());
 
-            window.DoClose();
+            Dispatcher.Invoke(() => window.DoClose());
 
             ConnectionManager.ConnectionRemove(label.Content.ToString());
 
@@ -154,7 +154,7 @@ namespace MisakaBanZai.Views
         {
             foreach (var misakaConnectionManagerWindow in _connectionWindows)
             {
-                misakaConnectionManagerWindow.Value.DoClose();
+                Dispatcher.Invoke(() => misakaConnectionManagerWindow.Value.DoClose());
             }
 
             Process.GetCurrentProcess().Kill();

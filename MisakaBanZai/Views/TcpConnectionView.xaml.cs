@@ -601,10 +601,8 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            if (_hideInstead)
-            {
-                Hide();
-            }
+            if (!_hideInstead) return;
+            Hide();
             e.Cancel = true;
         }
 
