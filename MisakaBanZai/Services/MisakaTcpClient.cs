@@ -144,11 +144,11 @@ namespace MisakaBanZai.Services
                         ProcessBuffer.Add(array[i]);
                     }
 
-                    //TODO 客户端发送数据到服务器，服务器回复了一个空包，是否正常。搞清楚才能判断。
                     if (readCount <= 0)
                     {
                         OnClientDisconnect();
-                        client.Close();
+                        client.Close(50);
+                        return;
                     }
 
                     OnReceivedData();
@@ -167,7 +167,7 @@ namespace MisakaBanZai.Services
             }
             catch(Exception)
             {
-                client.Close();
+                client.Close(50);
             }
         }
 

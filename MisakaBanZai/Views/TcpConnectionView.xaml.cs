@@ -199,12 +199,10 @@ namespace MisakaBanZai.Views
             var misakaServer = connection as MisakaTcpServer;
             if (misakaServer != null) misakaServer.ClientAccept += RefreshClients;
 
-            if (isFirst)
-            {
-                TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
-                TxtLocalPort.Text = endPoint[1];
-                ServerLayer.Visibility = Visibility.Visible;
-            }
+            if (!isFirst) return;
+            TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
+            TxtLocalPort.Text = endPoint[1];
+            ServerLayer.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -219,12 +217,10 @@ namespace MisakaBanZai.Views
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
 
-            if (isFirst)
-            {
-                TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
-                TxtLocalPort.Text = endPoint[1];
-                ClientLayer.Visibility = Visibility.Visible;
-            }
+            if (!isFirst) return;
+            TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
+            TxtLocalPort.Text = endPoint[1];
+            ClientLayer.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -454,6 +450,8 @@ namespace MisakaBanZai.Views
 
             TxtLocalAddr.IsEnabled = !TxtLocalAddr.IsEnabled;
             TxtLocalPort.IsEnabled = !TxtLocalPort.IsEnabled;
+            TxtRemoteConnAddr.IsEnabled = !TxtRemoteConnAddr.IsEnabled;
+            TxtRemoteConnPort.IsEnabled = !TxtRemoteConnPort.IsEnabled;
             _clientConnected = !_clientConnected;
         }
 
@@ -558,14 +556,14 @@ namespace MisakaBanZai.Views
             if (_hideInstead)
             {
                 Hide();
-                e.Cancel = true;
             }
+            e.Cancel = true;
         }
 
         public void DoClose()
         {
             _hideInstead = false;
-            _misakaConnection.Close();
+            _misakaConnection?.Close();
             Close();
         }
     }

@@ -152,11 +152,19 @@ namespace MisakaBanZai.Services
 
         public void Close()
         {
-            _tcpListener.Server.Close();
-            foreach (var misakaTcpClient in _tcpClients)
+            try
             {
-                misakaTcpClient.Value.Close();
+                _tcpListener.Server.Close(50);
+                foreach (var misakaTcpClient in _tcpClients)
+                {
+                    misakaTcpClient.Value.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("关闭套接字错误。", ex);
+            }
+            
         }
 
         /// <summary>

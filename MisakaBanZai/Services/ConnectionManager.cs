@@ -28,7 +28,7 @@ namespace MisakaBanZai.Services
         /// <returns></returns>
         public static bool AddConnection(IMisakaConnection connection)
         {
-            if (MisakaConnections.Any(conn => conn.ConnectionName == connection.ConnectionName))
+            if (MisakaConnections.Contains(connection))
             {
                 return false;
             }
@@ -46,6 +46,17 @@ namespace MisakaBanZai.Services
         private static void ConnectionAdded(object sender, MisakaConnectionEventArgs e)
         {
             ConnectionAddEvent?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// 移除连接
+        /// </summary>
+        /// <param name="connName"></param>
+        public static void ConnectionRemove(string connName)
+        {
+            var conn = MisakaConnections.FirstOrDefault(obj => obj.ConnectionName == connName);
+            if (conn != null)
+            MisakaConnections.Remove(conn);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -137,7 +138,11 @@ namespace MisakaBanZai.Views
 
             var window = _connectionWindows[label.Content.ToString()];
 
+            _connectionWindows.Remove(label.Content.ToString());
+
             window.DoClose();
+
+            ConnectionManager.ConnectionRemove(label.Content.ToString());
 
             ((TreeViewItem)label.Parent).Items.Remove(treeViewItem);
         }
@@ -151,6 +156,8 @@ namespace MisakaBanZai.Views
             {
                 misakaConnectionManagerWindow.Value.DoClose();
             }
+
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
