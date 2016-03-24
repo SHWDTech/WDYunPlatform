@@ -45,6 +45,11 @@ namespace MisakaBanZai.Services
         /// 发送字节流
         /// </summary>
         /// <param name="bytes"></param>
-        void Send(byte[] bytes);
+        int Send(byte[] bytes);
+
+        /// <summary>
+        /// 关闭套接字
+        /// </summary>
+        void Close();
     }
 }

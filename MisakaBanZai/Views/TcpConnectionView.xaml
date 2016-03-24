@@ -4,98 +4,163 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TcpConnectionView" Height="800" Width="1000"
-        MinHeight="800" MinWidth="1000"
-        Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="16"
-        WindowStartupLocation="CenterScreen">
+        Title="TcpConnectionView" Height="640" Width="800"
+        MinHeight="640" MinWidth="800"
+        Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="14"
+        Closing="OnClosing">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="4*"></RowDefinition>
-                <RowDefinition Height="6*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Row="0">
-                <GroupBox Header="连接信息">
-                    <Grid>
-                        <Label Content="连接类型：" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-                        <Label x:Name="ConnType" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,0,0,0" Foreground="#006633"></Label>
-                        <Label Content="本地连接信息：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 30, 0, 0"></Label>
-                        <Label x:Name="LocalConnInfo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 60, 0, 0" Foreground="#0000CC"></Label>
-                        <Grid x:Name="ClientLayer" Visibility="Hidden">
-                            <Label Content="服务器地址" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 95, 0, 0"></Label>
-                            <TextBox x:Name="TxtRemoteConnAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 135, 0, 0" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Row="0">
+                    <GroupBox Header="连接信息">
+                        <Grid>
+                            <Label Content="连接类型：" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
+                            <Label x:Name="ConnType" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,0,0,0" Foreground="#006633"></Label>
+                            <Label Content="本地连接信息：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 30, 0, 0"></Label>
+                            <TextBox x:Name="TxtLocalAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 60, 0, 0" 
                                  Foreground="#CC0000"></TextBox>
-                            <TextBox x:Name="TxtRemoteConnPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 135, 5, 0"
-                                 Foreground="DarkTurquoise"></TextBox>
-                            <Button x:Name="BtnConnect" Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 175, 5, 0" Click="Connect"></Button>
+                            <TextBox x:Name="TxtLocalPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 60, 5, 0"
+                                 Foreground="DarkTurquoise" KeyUp="EnterHandler"></TextBox>
 
+                            <Grid x:Name="ClientLayer" Visibility="Hidden">
+                                <Label Content="服务器地址" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 85, 0, 0"></Label>
+                                <TextBox x:Name="TxtRemoteConnAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 115, 0, 0" 
+                                 Foreground="#CC0000"></TextBox>
+                                <TextBox x:Name="TxtRemoteConnPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 115, 5, 0"
+                                 Foreground="DarkTurquoise" KeyUp="EnterHandler"></TextBox>
+                                <Button x:Name="BtnConnect" Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 155, 5, 0" Click="Connect"></Button>
+                            </Grid>
+
+                            <Grid x:Name="ServerLayer" Visibility="Hidden">
+                                <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="选择已连接客户端" Margin="0, 85,0 ,0"></Label>
+                                <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 115, 5, 0" Height="30" SelectionChanged="SetCurrentClient">
+                                </ComboBox>
+                                <Button Content="刷新列表" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                    Margin="5, 155, 0, 0" Height="30" Width="100" Click="RefreshClients"></Button>
+                                <Button x:Name="BtnStartListening" Content="开始侦听" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                    Margin="0, 155, 5, 0" Height="30" Width="100" Click="SwitchServerStatus"></Button>
+                            </Grid>
                         </Grid>
-                        <Grid x:Name="ServerLayer" Visibility="Hidden">
-                            <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="选择已连接客户端" Margin="0, 85,0 ,0"></Label>
-                            <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 125, 5, 0" Height="35" SelectionChanged="SetCurrentClient"></ComboBox>
-                            <Button Content="刷新列表" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                    Margin="5, 165, 0, 0" Height="35" Width="100" Click="RefreshClients"></Button>
-                            <Button x:Name="BtnStartListening" Content="开始侦听" VerticalAlignment="Top" HorizontalAlignment="Right"
-                                    Margin="0, 165, 5, 0" Height="35" Width="100" Click="SwitchServerStatus"></Button>
+                    </GroupBox>
+                </Grid>
+                <Grid Row="1">
+                    <GroupBox Header="连接配置">
+                        <Grid x:Name="ConfigGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Row="0">
+                                <CheckBox x:Name="ChkHexSend" Margin="5,10,0,0"></CheckBox>
+                                <Label Content="启用HEX发送" Margin="25,0,0,0" Tag="ChkHexSend" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                            </Grid>
+                            <Grid Row="1">
+                                <CheckBox x:Name="ChkHexReceive" Margin="5,10,0,0"></CheckBox>
+                                <Label Content="启用HEX接收" Margin="25,0,0,0" Tag="ChkHexReceive" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                            </Grid>
+                            <Grid Row="2">
+                                <CheckBox x:Name="ChkShowSource" Margin="5, 10, 0, 0"></CheckBox>
+                                <Label Content="显示消息源" Margin="25, 0, 0, 0" Tag="ChkShowSource" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                            </Grid>
+                            <Grid Row="3">
+                                <CheckBox x:Name="ChkShowDate" Margin="5, 10, 0, 0"></CheckBox>
+                                <Label Content="显示时间戳" Margin="25, 0, 0, 0" Tag="ChkShowDate" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                            </Grid>
+                            <Grid Row="4">
+                                <CheckBox x:Name="ChkFullDateMode" Margin="5, 10, 0, 0"></CheckBox>
+                                <Label Content="显示完整时间戳" Margin="25, 0, 0, 0" Tag="ChkFullDateMode" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </GroupBox>
+                    </GroupBox>
+                </Grid>
             </Grid>
-            <Grid Row="1">
-                <GroupBox Header="连接配置">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Row="0">
-                            <CheckBox x:Name="ChkHexSend" Margin="5,10,0,0"></CheckBox>
-                            <Label Content="启用HEX发送" Margin="25,0,0,0"></Label>
+            <Grid Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Row="0">
+                    <GroupBox Header="数据接收显示">
+                        <RichTextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto"></RichTextBox>
+                    </GroupBox>
+                </Grid>
+                <Grid Row="1">
+                    <GroupBox Header="数据发送">
+                        <Grid>
+                            <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40" VerticalScrollBarVisibility="Auto"></TextBox>
+
+                            <Button Content="清空接收框" x:Name="ClearReceive" HorizontalAlignment="Left" Margin="0, 0, 0, 0" VerticalAlignment="Bottom"
+                                    Width="100" Height="35" Click="ClearTextBox"></Button>
+
+                            <Button Content="清空发送框" x:Name="ClearSend" HorizontalAlignment="Right" Margin="0, 0, 120, 0" VerticalAlignment="Bottom" 
+                                Width="100" Height="35" Click="ClearTextBox"></Button>
+
+                            <Button Content="发送数据" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                                Width="100" Height="35" Click="Send"></Button>
                         </Grid>
-                        <Grid Row="1">
-                            <CheckBox x:Name="ChkHexReceive" Margin="5,10,0,0"></CheckBox>
-                            <Label Content="启用HEX接收" Margin="25,0,0,0"></Label>
-                        </Grid>
-                        <Grid Row="2">
-                            <CheckBox x:Name="ChkFullDateMode" Margin="5, 10, 0, 0"></CheckBox>
-                            <Label Content="显示完整时间戳" Margin="25, 0, 0, 0"></Label>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
+                    </GroupBox>
+                </Grid>
             </Grid>
         </Grid>
-        <Grid Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="6*"></RowDefinition>
-                <RowDefinition Height="4*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Row="0">
-                <GroupBox Header="数据接收显示">
-                    <TextBox x:Name="TxtReceiveViewer"></TextBox>
-                </GroupBox>
-            </Grid>
-            <Grid Row="1">
-                <GroupBox Header="数据发送">
-                    <Grid>
-                        <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40"></TextBox>
-                        <Button Content="发送数据" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                                Width="100" Height="35" Click="Send"></Button>
-                    </Grid>
-                </GroupBox>
-            </Grid>
+        <Grid Row="1">
+            <DockPanel>
+                <StatusBar>
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">总接收:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#990066">
+                        <TextBlock x:Name="LabelTotalReceive" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">上次接收:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#0000FF">
+                        <TextBlock x:Name="LabelLastReceive" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">总发送:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#993366">
+                        <TextBlock x:Name="LabelTotalSend" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">上次发送:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="#6633FF">
+                        <TextBlock x:Name="LabelLastSend" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">消息:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem x:Name="MsgItem" Foreground="#339966">
+                        <TextBlock x:Name="LabelMsg" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <Button Content="消息管理" Height="30" Click="OpenMessageManager"></Button>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>

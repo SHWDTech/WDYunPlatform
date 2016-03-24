@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using MisakaBanZai.Common;
+using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
 using SHWDTech.Platform.Utility;
 
@@ -18,6 +19,11 @@ namespace MisakaBanZai.Services
 
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
 
+        /// <summary>
+        /// 客户端断开事件
+        /// </summary>
+        public event ClientDisconnectEventHandler ClientDisconnectEvent;
+
         public string ConnectionName { get; set; }
 
         public string ConnectionType { get; set; }
@@ -27,12 +33,12 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// 指示客户端是否已经连接到服务器
         /// </summary>
-        public bool Connected => _tcpClient.Connected;
+        public bool Connected;
 
         /// <summary>
         /// 数据接收缓存
         /// </summary>
-        public IList<ArraySegment<byte>> ReceiveBuffer { get; } 
+        public IList<ArraySegment<byte>> ReceiveBuffer { get; }
             = new List<ArraySegment<byte>>() { new ArraySegment<byte>(new byte[Appconfig.TcpBufferSize]) };
 
         public IMisakaConnectionManagerWindow ParentWindow { get; set; }
@@ -71,37 +77,47 @@ namespace MisakaBanZai.Services
         }
 
         /// <summary>
+        /// 开始接受数据
+        /// </summary>
+        public void ClientBeginReceive()
+        {
+            _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
+        }
+
+        /// <summary>
         /// 连接服务器
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <param name="port"></param>
         public void Connect(IPAddress ipAddress, int port)
         {
+            _tcpClient.Connect(ipAddress, port);
+            _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
+            ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "连接服务器成功！");
+            Connected = !Connected;
+        }
+
+        public int Send(byte[] bytes)
+        {
+            if (!_tcpClient.Connected) return 0;
+            _tcpClient.Client.Send(bytes);
+            Connected = !Connected;
+            return bytes.Length;
+        }
+
+        public void Close()
+        {
             try
             {
-                _tcpClient.Connect(ipAddress, port);
-                _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
-                ParentWindow.DispatcherAddReportData("连接服务器成功！");
+                ClientReceivedDataEvent = null;
+                _tcpClient.Client.Shutdown(SocketShutdown.Both);
+                _tcpClient.Client.Disconnect(false);
+                Connected = !Connected;
             }
             catch (Exception ex)
             {
-                ParentWindow.DispatcherAddReportData("连接服务器失败！");
-                LogService.Instance.Error("连接服务器失败！", ex);
+                LogService.Instance.Error("关闭套接字错误。", ex);
             }
-            
-        }
-
-        /// <summary>
-        /// 关闭连接
-        /// </summary>
-        public void Disconnect()
-        {
-            _tcpClient.Client.Disconnect(true);
-        }
-
-        public void Send(byte[] bytes)
-        {
-            _tcpClient.Client.Send(bytes);
         }
 
         /// <summary>
@@ -125,17 +141,33 @@ namespace MisakaBanZai.Services
                     }
 
                     OnReceivedData();
+                    if (readCount == 0)
+                    {
+                        client.Close(50);
+                        Connected = !Connected;
+                        ParentWindow.DispatcherAddReportData(ReportMessageType.Info, "服务器连接断开！");
+                        OnClientDisconnect();
+                        return;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    ParentWindow.DispatcherAddReportData("接收客户端数据错误！");
+                    ParentWindow.DispatcherAddReportData(ReportMessageType.Warning, "接收客户端数据错误！");
                     LogService.Instance.Error("接收客户端数据错误！", ex);
                     return;
                 }
 
             }
 
-            client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+            if (Connected)
+            {
+                client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+            }
+            else
+            {
+                client.Close(50);
+                Connected = !Connected;
+            }
         }
 
         /// <summary>
@@ -144,6 +176,14 @@ namespace MisakaBanZai.Services
         private void OnReceivedData()
         {
             ClientReceivedDataEvent?.Invoke(this);
+        }
+
+        /// <summary>
+        /// 断开连接时触发
+        /// </summary>
+        private void OnClientDisconnect()
+        {
+            ClientDisconnectEvent?.Invoke(this);
         }
     }
 }

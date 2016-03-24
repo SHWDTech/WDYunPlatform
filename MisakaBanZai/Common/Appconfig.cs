@@ -19,6 +19,11 @@ namespace MisakaBanZai.Common
         /// </summary>
         public const string ShortDateFormat = "HH:mm:ss fff";
 
+        /// <summary>
+        /// 选择全部连接
+        /// </summary>
+        public const string SelectAllConnection = "选择全部";
+
         static Appconfig()
         {
             TcpBufferSize = int.Parse(ConfigurationManager.AppSettings["TcpBufferSize"]);

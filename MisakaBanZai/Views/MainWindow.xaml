@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="炮姐万岁！" 
-        MinHeight="600" MinWidth="400" 
-        Height="600" Width="400" 
-        MaxHeight="600" MaxWidth="400"
-        WindowStartupLocation="CenterScreen" Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="16">
+        MinHeight="640" MinWidth="300" 
+        Height="640" Width="300" 
+        MaxHeight="640" MaxWidth="300" Closing="OnClosing"
+        Left="200" Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="14">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Row="0">
             <TabControl>
@@ -25,8 +25,8 @@
                         </Grid.RowDefinitions>
                         <Grid Row="0">
                             <Grid Margin="0, 3, 0, 3">
-                                <Button Content="创建" HorizontalAlignment="Left" Width="120" Margin="30,0,0,0" Click="CreateNewConnection"></Button>
-                                <Button Content="删除" HorizontalAlignment="Left" Width="120" Margin="180,0,0,0"></Button>
+                                <Button Content="创建" HorizontalAlignment="Left" Width="120" Margin="10,0,0,0" Click="CreateNewConnection"></Button>
+                                <Button Content="删除" HorizontalAlignment="Left" Width="120" Margin="155,0,0,0" Click="RemoveTreeViewItem"></Button>
                             </Grid>
                         </Grid>
                         <Grid Row="1">
@@ -34,9 +34,9 @@
                         </Grid>
                         <Grid Row="2">
                             <TreeView x:Name="ConnTypeTreeView">
-                                <TreeViewItem x:Name="TcpServerTreeItem" Header="TCP Server" Tag="TcpServer" MouseDoubleClick="CreateNewConnection">
+                                <TreeViewItem x:Name="TcpServerTreeItem" Header="TCP服务器" Tag="TcpServer" MouseDoubleClick="CreateNewConnection">
                                 </TreeViewItem>
-                                <TreeViewItem x:Name="TcpClientTreeItem" Header="TCP Client" Tag="TcpClient" MouseDoubleClick="CreateNewConnection">
+                                <TreeViewItem x:Name="TcpClientTreeItem" Header="TCP客户端" Tag="TcpClient" MouseDoubleClick="CreateNewConnection">
                                 </TreeViewItem>
                             </TreeView>
                         </Grid>
@@ -52,7 +52,12 @@
         <Grid Row="1">
             <DockPanel>
                 <StatusBar>
-
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">本地IP地址:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="DarkViolet">
+                        <TextBlock x:Name="LocalAddr" FontSize="16"></TextBlock>
+                    </StatusBarItem>
                 </StatusBar>
             </DockPanel>
         </Grid>

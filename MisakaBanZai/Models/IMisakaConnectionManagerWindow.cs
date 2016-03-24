@@ -1,4 +1,5 @@
-﻿using MisakaBanZai.Services;
+﻿using MisakaBanZai.Enums;
+using MisakaBanZai.Services;
 
 namespace MisakaBanZai.Models
 {
@@ -12,7 +13,13 @@ namespace MisakaBanZai.Models
         /// <summary>
         /// 添加报告数据
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="str"></param>
-        void DispatcherAddReportData(string str);
+        void DispatcherAddReportData(ReportMessageType type, string str);
+
+        /// <summary>
+        /// 关闭窗口
+        /// </summary>
+        void DoClose();
     }
 }

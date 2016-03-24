@@ -21,6 +21,12 @@ namespace MisakaBanZai.Services
     public delegate void ClientReceivedDataEventHandler(IMisakaConnection conn);
 
     /// <summary>
+    /// TCP客户端连接断开委托
+    /// </summary>
+    /// <param name="conn"></param>
+    public delegate void ClientDisconnectEventHandler(IMisakaConnection conn);
+
+    /// <summary>
     /// 报告数据添加时间委托
     /// </summary>
     /// <param name="e"></param>

@@ -68,8 +68,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Appconfig.cs" />
+    <Compile Include="Common\RichTextBoxExtensionMethod.cs" />
+    <Compile Include="Enums\OutPutDataColor.cs" />
+    <Compile Include="Enums\ReportMessageColor.cs" />
+    <Compile Include="Enums\ReportMessageType.cs" />
     <Compile Include="Models\IMisakaConnectionManagerWindow.cs" />
+    <Compile Include="Services\ReportMessage.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Views\MessageManager.xaml.cs">
+      <DependentUpon>MessageManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TcpConnectionView.xaml.cs">
       <DependentUpon>TcpConnectionView.xaml</DependentUpon>
     </Compile>
@@ -99,6 +107,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MessageManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TcpConnectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

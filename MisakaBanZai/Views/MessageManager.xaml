@@ -1,0 +1,12 @@
+﻿<Window x:Class="MisakaBanZai.Views.MessageManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MessageManager" Height="640" Width="400" Icon="/MisakaBanZai;component/MisakaMisaka.ico"
+        Closing="OnClosing" FontSize="14">
+    <Grid>
+        <RichTextBox x:Name="TxtMessageContainer" VerticalScrollBarVisibility="Auto"></RichTextBox>
+    </Grid>
+</Window>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -340,11 +342,11 @@ namespace SHWDTech.Platform.Utility
         }
 
         /// <summary>
-        /// 将输入的Byte数组转换为GBK字符串
+        /// 将输入的Byte数组转换为UTF8字符串
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string ByteArrayToGbkString(byte[] data) => Encoding.GetEncoding("GBK").GetString(data);
+        public static string ByteArrayToUtf8String(byte[] data) => Encoding.UTF8.GetString(data);
 
         /// <summary>
         /// 将输入的Byte数组转换为字符串
@@ -353,7 +355,7 @@ namespace SHWDTech.Platform.Utility
         /// <param name="isHexMode"></param>
         /// <returns></returns>
         public static string ByteArrayToString(byte[] data, bool isHexMode) 
-            => isHexMode ? ByteArrayToHexString(data) : ByteArrayToGbkString(data);
+            => isHexMode ? ByteArrayToHexString(data) : ByteArrayToUtf8String(data);
 
         /// <summary>
         /// 将输入的字符串转换为Byte数组
@@ -377,7 +379,30 @@ namespace SHWDTech.Platform.Utility
             return buffer;
         }
 
+        /// <summary>
+        /// 字符串转换为字节数组
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="isHexMode"></param>
+        /// <returns></returns>
         public static byte[] StringToByteArray(string str, bool isHexMode)
             => isHexMode ? HexStringToByteArray(str) : GbkStringToByteArray(str);
+
+        /// <summary>
+        /// 获取本地IP地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
+        }
     }
 }
