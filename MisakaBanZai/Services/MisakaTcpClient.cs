@@ -33,7 +33,7 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// 指示客户端是否已经连接到服务器
         /// </summary>
-        public bool Connected;
+        //public bool Connected;
 
         /// <summary>
         /// 数据接收缓存
@@ -72,7 +72,7 @@ namespace MisakaBanZai.Services
         public MisakaTcpClient(TcpClient client)
         {
             _tcpClient = client;
-            var ipEndPoint = ((IPEndPoint)client.Client.LocalEndPoint).ToString().Split(':');
+            var ipEndPoint = ((IPEndPoint)client.Client.RemoteEndPoint).ToString().Split(':');
             ConnectionName = $"{IPAddress.Parse(ipEndPoint[0])}:{ipEndPoint[1]}";
         }
 
@@ -94,14 +94,19 @@ namespace MisakaBanZai.Services
             _tcpClient.Connect(ipAddress, port);
             _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
             ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "连接服务器成功！");
-            Connected = !Connected;
         }
 
         public int Send(byte[] bytes)
         {
             if (!_tcpClient.Connected) return 0;
-            _tcpClient.Client.Send(bytes);
-            Connected = !Connected;
+            try
+            {
+                _tcpClient.Client.Send(bytes);
+            }
+            catch (ObjectDisposedException)
+            {
+                OnClientDisconnect();
+            }
             return bytes.Length;
         }
 
@@ -112,7 +117,6 @@ namespace MisakaBanZai.Services
                 ClientReceivedDataEvent = null;
                 _tcpClient.Client.Shutdown(SocketShutdown.Both);
                 _tcpClient.Client.Disconnect(false);
-                Connected = !Connected;
             }
             catch (Exception ex)
             {
@@ -140,15 +144,14 @@ namespace MisakaBanZai.Services
                         ProcessBuffer.Add(array[i]);
                     }
 
-                    OnReceivedData();
-                    if (readCount == 0)
+                    //TODO 客户端发送数据到服务器，服务器回复了一个空包，是否正常。搞清楚才能判断。
+                    if (readCount <= 0)
                     {
-                        client.Close(50);
-                        Connected = !Connected;
-                        ParentWindow.DispatcherAddReportData(ReportMessageType.Info, "服务器连接断开！");
                         OnClientDisconnect();
-                        return;
+                        client.Close();
                     }
+
+                    OnReceivedData();
                 }
                 catch (Exception ex)
                 {
@@ -156,17 +159,15 @@ namespace MisakaBanZai.Services
                     LogService.Instance.Error("接收客户端数据错误！", ex);
                     return;
                 }
-
             }
 
-            if (Connected)
+            try
             {
                 client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
             }
-            else
+            catch(Exception)
             {
-                client.Close(50);
-                Connected = !Connected;
+                client.Close();
             }
         }
 

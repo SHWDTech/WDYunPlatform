@@ -263,7 +263,7 @@ namespace MisakaBanZai.Views
             {
                 try
                 {
-                    _misakaConnection = new MisakaTcpServer(GetLocalIpAddress(), GetLocalPort());
+                    _misakaConnection = new MisakaTcpServer(GetLocalIpAddress(), GetLocalPort()) {ConnectionType = ConnectionItemType.TcpServer};
                     InitServer(_misakaConnection, false);
                     ((MisakaTcpServer)_misakaConnection).Start();
                     BtnStartListening.Content = "停止侦听";
@@ -271,7 +271,7 @@ namespace MisakaBanZai.Views
                 }
                 catch (Exception ex)
                 {
-                    DispatcherAddReportData(ReportMessageType.Warning, "接收客户端数据错误！");
+                    DispatcherAddReportData(ReportMessageType.Warning, "服务器启动失败！");
                     LogService.Instance.Error("服务器启动失败！", ex);
                     return;
                 }
@@ -287,7 +287,7 @@ namespace MisakaBanZai.Views
                 catch (Exception ex)
                 {
                     DispatcherAddReportData(ReportMessageType.Error, "关闭服务器失败");
-                    LogService.Instance.Error("关闭服务器套接字错误！", ex);
+                    LogService.Instance.Error("关闭服务器失败！", ex);
                     return;
                 }
             }
@@ -421,6 +421,7 @@ namespace MisakaBanZai.Views
                     _misakaConnection.Close();
                     BtnConnect.Content = "连接服务器";
                     _misakaConnection = null;
+                    ReportService.Info("断开服务器连接。");
                 }
                 catch (Exception ex)
                 {
@@ -436,7 +437,7 @@ namespace MisakaBanZai.Views
                 {
                     if (_misakaConnection == null)
                     {
-                        _misakaConnection = new MisakaTcpClient(GetLocalIpAddress(), GetLocalPort());
+                        _misakaConnection = new MisakaTcpClient(GetLocalIpAddress(), GetLocalPort()) {ConnectionType = ConnectionItemType.TcpClient};
                         InitClient(_misakaConnection, false);
                     }
                     var misakaClient = (MisakaTcpClient)_misakaConnection;

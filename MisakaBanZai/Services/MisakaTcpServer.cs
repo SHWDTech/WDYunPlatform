@@ -95,7 +95,7 @@ namespace MisakaBanZai.Services
             try
             {
                 var client = server.EndAcceptTcpClient(result);
-                var misakaClient = new MisakaTcpClient(client) {ParentWindow = ParentWindow };
+                var misakaClient = new MisakaTcpClient(client) { ParentWindow = ParentWindow, ConnectionType = ConnectionItemType.TcpAcceptedClient };
                 misakaClient.ClientBeginReceive();
                 misakaClient.ClientReceivedDataEvent += OnClientReceivedData;
                 misakaClient.ClientDisconnectEvent += OnClientDisconnect;
@@ -152,18 +152,7 @@ namespace MisakaBanZai.Services
 
         public void Close()
         {
-            try
-            {
-                if (_tcpClients.Count > 0)
-                {
-                    _tcpListener.Server.Shutdown(SocketShutdown.Both);
-                }
-                _tcpListener.Server.Close(50);
-            }
-            catch (Exception ex)
-            {
-                LogService.Instance.Error("关闭套接字错误。", ex);
-            }
+            _tcpListener.Server.Close();
             foreach (var misakaTcpClient in _tcpClients)
             {
                 misakaTcpClient.Value.Close();
@@ -213,8 +202,11 @@ namespace MisakaBanZai.Services
         /// <param name="conn"></param>
         private void OnClientDisconnect(IMisakaConnection conn)
         {
-            if(_tcpClients.ContainsKey(conn.ConnectionName))
-            _tcpClients.Remove(conn.ConnectionName);
+            if (_tcpClients.ContainsKey(conn.ConnectionName))
+                _tcpClients.Remove(conn.ConnectionName);
+
+            var address = ((IPEndPoint) ((Socket) conn.ConnObject).RemoteEndPoint).ToString().Split(':');
+            ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"与客户端的连接断开{address[0]}:{address[1]}");
         }
 
         public byte[] OutPutSocketBytes()
