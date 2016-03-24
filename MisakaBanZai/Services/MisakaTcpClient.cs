@@ -15,7 +15,7 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// TCP客户端对象
         /// </summary>
-        private readonly TcpClient _tcpClient;
+        private readonly Socket _tcpClient;
 
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
 
@@ -28,7 +28,9 @@ namespace MisakaBanZai.Services
 
         public string ConnectionType { get; set; }
 
-        public object ConnObject => _tcpClient.Client;
+        public object ConnObject => _tcpClient;
+
+        public bool IsConnected { get;  private set; }
 
         /// <summary>
         /// 指示客户端是否已经连接到服务器
@@ -65,14 +67,15 @@ namespace MisakaBanZai.Services
 
         public MisakaTcpClient(IPAddress ipAddress, int port)
         {
-            _tcpClient = new TcpClient(new IPEndPoint(ipAddress, port));
+            _tcpClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _tcpClient.Bind(new IPEndPoint(ipAddress, port));
             ConnectionName = $"{ipAddress}:{port}";
         }
 
-        public MisakaTcpClient(TcpClient client)
+        public MisakaTcpClient(Socket client)
         {
             _tcpClient = client;
-            var ipEndPoint = ((IPEndPoint)client.Client.RemoteEndPoint).ToString().Split(':');
+            var ipEndPoint = ((IPEndPoint)client.RemoteEndPoint).ToString().Split(':');
             ConnectionName = $"{IPAddress.Parse(ipEndPoint[0])}:{ipEndPoint[1]}";
         }
 
@@ -81,7 +84,7 @@ namespace MisakaBanZai.Services
         /// </summary>
         public void ClientBeginReceive()
         {
-            _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
+            _tcpClient.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient);
         }
 
         /// <summary>
@@ -89,11 +92,21 @@ namespace MisakaBanZai.Services
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <param name="port"></param>
-        public void Connect(IPAddress ipAddress, int port)
+        public bool Connect(IPAddress ipAddress, int port)
         {
-            _tcpClient.Connect(ipAddress, port);
-            _tcpClient.Client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient.Client);
-            ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "连接服务器成功！");
+            try
+            {
+                _tcpClient.Connect(ipAddress, port);
+                _tcpClient.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _tcpClient);
+                IsConnected = true;
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("连接服务器失败！", ex);
+                return false;
+            }
+
+            return true;
         }
 
         public int Send(byte[] bytes)
@@ -101,27 +114,32 @@ namespace MisakaBanZai.Services
             if (!_tcpClient.Connected) return 0;
             try
             {
-                _tcpClient.Client.Send(bytes);
+                _tcpClient.Send(bytes);
             }
             catch (ObjectDisposedException)
             {
                 OnClientDisconnect();
+                IsConnected = false;
             }
             return bytes.Length;
         }
 
-        public void Close()
+        public bool Close()
         {
             try
             {
                 ClientReceivedDataEvent = null;
-                _tcpClient.Client.Shutdown(SocketShutdown.Both);
-                _tcpClient.Client.Disconnect(false);
+                _tcpClient.Shutdown(SocketShutdown.Both);
+                _tcpClient.Disconnect(false);
+                IsConnected = false;
             }
             catch (Exception ex)
             {
                 LogService.Instance.Error("关闭套接字错误。", ex);
+                return false;
             }
+
+            return true;
         }
 
         /// <summary>

@@ -79,31 +79,16 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void ConfirmCreate(object sender, EventArgs e)
         {
-            IPAddress address;
-            int port;
+            IMisakaConnection connection;
             try
             {
-                address = IPAddress.Parse(IpAddressBox.Text);
+                connection = ConnectionManager.NewMisakaConnection(_type, GetIpAddress(), GetPort());
             }
             catch (Exception)
             {
-                MessageBox.Show("非法IP地址，请重新输入！", "警告", MessageBoxButton.OK, MessageBoxImage.Error);
-                IpAddressBox.Focus();
+                MessageBox.Show("无效的IP地址或端口号。", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            try
-            {
-                port = int.Parse(PortBox.Text);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("非法端口号，请重新输入！", "警告", MessageBoxButton.OK, MessageBoxImage.Error);
-                PortBox.Focus();
-                return;
-            }
-
-            var connection = ConnectionManager.NewMisakaConnection(_type, address, port);
 
             if (connection == null)
             {
@@ -116,6 +101,18 @@ namespace MisakaBanZai.Views
             DialogResult = true;
             Close();
         }
+
+        /// <summary>
+        /// 获取IP地址
+        /// </summary>
+        /// <returns></returns>
+        private IPAddress GetIpAddress() => IPAddress.Parse(IpAddressBox.Text);
+
+        /// <summary>
+        /// 获取端口号
+        /// </summary>
+        /// <returns></returns>
+        private int GetPort() => int.Parse(PortBox.Text);
 
         /// <summary>
         /// 关闭

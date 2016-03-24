@@ -57,16 +57,6 @@ namespace MisakaBanZai.Views
         private bool _hideInstead = true;
 
         /// <summary>
-        /// 客户端已经连上
-        /// </summary>
-        private bool _clientConnected;
-
-        /// <summary>
-        /// 服务器已经连上
-        /// </summary>
-        private bool _serverConnected;
-
-        /// <summary>
         /// 报告委托
         /// </summary>
         /// <returns></returns>
@@ -155,7 +145,7 @@ namespace MisakaBanZai.Views
 
             if (textBox.Name == "TxtRemoteConnPort")
             {
-                Connect(sender, e);
+                SwitchConnectStatus(sender, e);
             }
             e.Handled = true;
         }
@@ -166,7 +156,6 @@ namespace MisakaBanZai.Views
         /// <param name="connection"></param>
         private void InitControl(IMisakaConnection connection)
         {
-            ConnType.Content = _misakaConnection.ConnectionType;
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
             CmbConnectedClient.SelectedIndex = 0;
 
@@ -192,8 +181,8 @@ namespace MisakaBanZai.Views
         /// <param name="isFirst"></param>
         private void InitServer(IMisakaConnection connection, bool isFirst = true)
         {
-            var server = (TcpListener)connection.ConnObject;
-            var endPoint = ((IPEndPoint)server.LocalEndpoint).ToString().Split(':');
+            var server = (Socket)connection.ConnObject;
+            var endPoint = ((IPEndPoint)server.LocalEndPoint).ToString().Split(':');
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
             var misakaServer = connection as MisakaTcpServer;
@@ -202,7 +191,9 @@ namespace MisakaBanZai.Views
             if (!isFirst) return;
             TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
             TxtLocalPort.Text = endPoint[1];
+            ConnType.Content = "Tcp服务器";
             ServerLayer.Visibility = Visibility.Visible;
+            SwitchServerStatus(null, null);
         }
 
         /// <summary>
@@ -220,6 +211,7 @@ namespace MisakaBanZai.Views
             if (!isFirst) return;
             TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
             TxtLocalPort.Text = endPoint[1];
+            ConnType.Content = "Tcp客户端";
             ClientLayer.Visibility = Visibility.Visible;
         }
 
@@ -255,42 +247,74 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void SwitchServerStatus(object sender, RoutedEventArgs e)
         {
-            if (!_serverConnected)
+            CheckServerConnection();
+
+            if (!_misakaConnection.IsConnected)
             {
-                try
-                {
-                    _misakaConnection = new MisakaTcpServer(GetLocalIpAddress(), GetLocalPort()) {ConnectionType = ConnectionItemType.TcpServer};
-                    InitServer(_misakaConnection, false);
-                    ((MisakaTcpServer)_misakaConnection).Start();
-                    BtnStartListening.Content = "停止侦听";
-                    DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
-                }
-                catch (Exception ex)
-                {
-                    DispatcherAddReportData(ReportMessageType.Warning, "服务器启动失败！");
-                    LogService.Instance.Error("服务器启动失败！", ex);
-                    return;
-                }
+                StartServer();
             }
             else
             {
-                try
-                {
-                    _misakaConnection.Close();
-                    BtnStartListening.Content = "开始侦听";
-                    DispatcherAddReportData(ReportMessageType.Info, "服务器侦听结束");
-                }
-                catch (Exception ex)
-                {
-                    DispatcherAddReportData(ReportMessageType.Error, "关闭服务器失败");
-                    LogService.Instance.Error("关闭服务器失败！", ex);
-                    return;
-                }
+                StopServer();
             }
 
+            ChangeServerControlStatus();
+        }
+
+        /// <summary>
+        /// 开启侦听服务
+        /// </summary>
+        private void StartServer()
+        {
+            if (((MisakaTcpServer)_misakaConnection).Start())
+            {
+                BtnStartListening.Content = "停止侦听";
+                DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
+            }
+            else
+            {
+                DispatcherAddReportData(ReportMessageType.Info, "服务器侦听失败");
+            }
+
+        }
+
+        /// <summary>
+        /// 关闭侦听服务
+        /// </summary>
+        private void StopServer()
+        {
+            if (_misakaConnection.Close())
+            {
+                _misakaConnection = null;
+                BtnStartListening.Content = "开始侦听";
+                DispatcherAddReportData(ReportMessageType.Info, "服务器侦听结束");
+            }
+            else
+            {
+                DispatcherAddReportData(ReportMessageType.Error, "关闭服务器失败");
+            }
+        }
+
+        /// <summary>
+        /// 更改服务器套接字控件状态
+        /// </summary>
+        private void ChangeServerControlStatus()
+        {
             TxtLocalAddr.IsEnabled = !TxtLocalAddr.IsEnabled;
             TxtLocalPort.IsEnabled = !TxtLocalPort.IsEnabled;
-            _serverConnected = !_serverConnected;
+        }
+
+        /// <summary>
+        /// 检查服务器连接对象
+        /// </summary>
+        private void CheckServerConnection()
+        {
+            if (_misakaConnection != null) return;
+            _misakaConnection = new MisakaTcpServer(GetLocalIpAddress(), GetLocalPort())
+            {
+                ConnectionType = ConnectionItemType.TcpServer
+            };
+            InitServer(_misakaConnection, false);
         }
 
         /// <summary>
@@ -367,7 +391,7 @@ namespace MisakaBanZai.Views
 
             if (ShowDate || ShowSource)
             {
-                TxtReceiveViewer.AppendText("Dt:", OutPutDataColor.DefualtColor);
+                TxtReceiveViewer.AppendText("数据：", OutPutDataColor.DefualtColor);
             }
             if (ShowDate)
             {
@@ -408,51 +432,76 @@ namespace MisakaBanZai.Views
         /// <summary>
         /// 尝试连接服务器
         /// </summary>
-        private void Connect(object sender, RoutedEventArgs e)
+        private void SwitchConnectStatus(object sender, RoutedEventArgs e)
         {
-            if (_clientConnected)
+            CheckClientConnection();
+
+            if (!_misakaConnection.IsConnected)
             {
-                try
-                {
-                    _misakaConnection.Close();
-                    BtnConnect.Content = "连接服务器";
-                    _misakaConnection = null;
-                    ReportService.Info("断开服务器连接。");
-                }
-                catch (Exception ex)
-                {
-                    ReportService.Error("断开连接失败！");
-                    LogService.Instance.Error("断开连接失败！", ex);
-                    return;
-                }
+                ClientConnect();
             }
             else
             {
-
-                try
-                {
-                    if (_misakaConnection == null)
-                    {
-                        _misakaConnection = new MisakaTcpClient(GetLocalIpAddress(), GetLocalPort()) {ConnectionType = ConnectionItemType.TcpClient};
-                        InitClient(_misakaConnection, false);
-                    }
-                    var misakaClient = (MisakaTcpClient)_misakaConnection;
-                    misakaClient.Connect(GetTargetIpAddress(), GetTargetPort());
-                    BtnConnect.Content = "断开连接";
-                }
-                catch (Exception ex)
-                {
-                    ReportService.Error("尝试连接失败！");
-                    LogService.Instance.Error("尝试连接失败！", ex);
-                    return;
-                }
+                ClientDisconnect();
             }
 
+            ChangeClientControlStatus();
+        }
+
+        /// <summary>
+        /// 检查客户端连接对象
+        /// </summary>
+        private void CheckClientConnection()
+        {
+            if (_misakaConnection != null) return;
+            _misakaConnection = new MisakaTcpClient(GetLocalIpAddress(), GetLocalPort()) { ConnectionType = ConnectionItemType.TcpClient };
+            InitClient(_misakaConnection, false);
+        }
+
+        /// <summary>
+        /// 客户端发起连接
+        /// </summary>
+        private void ClientConnect()
+        {
+            var misakaClient = (MisakaTcpClient)_misakaConnection;
+
+            if (misakaClient.Connect(GetTargetIpAddress(), GetTargetPort()))
+            {
+                BtnConnect.Content = "断开连接";
+                ReportService.Info("连接服务器成功！");
+            }
+            else
+            {
+                ReportService.Error("尝试连接失败！");
+            }
+        }
+
+        /// <summary>
+        /// 关闭远程连接
+        /// </summary>
+        private void ClientDisconnect()
+        {
+            if (_misakaConnection.Close())
+            {
+                BtnConnect.Content = "连接服务器";
+                _misakaConnection = null;
+                ReportService.Info("断开服务器连接。");
+            }
+            else
+            {
+                ReportService.Error("断开连接失败！");
+            }
+        }
+
+        /// <summary>
+        /// 更改客户端连接控件状态
+        /// </summary>
+        private void ChangeClientControlStatus()
+        {
             TxtLocalAddr.IsEnabled = !TxtLocalAddr.IsEnabled;
             TxtLocalPort.IsEnabled = !TxtLocalPort.IsEnabled;
             TxtRemoteConnAddr.IsEnabled = !TxtRemoteConnAddr.IsEnabled;
             TxtRemoteConnPort.IsEnabled = !TxtRemoteConnPort.IsEnabled;
-            _clientConnected = !_clientConnected;
         }
 
         /// <summary>
@@ -490,18 +539,17 @@ namespace MisakaBanZai.Views
 
             var label = (Label)sender;
 
-            foreach (var result in ConfigGrid.Children.OfType<Grid>())
+            foreach (var checkBox in from result in ConfigGrid.Children.OfType<Grid>()
+                                     select result.Children.OfType<CheckBox>() 
+                                     into chks
+                                     from checkBox in chks
+                                     where checkBox.Name == label.Tag.ToString()
+                                     select checkBox)
             {
-                var chks = result.Children.OfType<CheckBox>();
-                foreach (var checkBox in chks)
+                checkBox.IsChecked = !checkBox.IsChecked;
+                if (checkBox.Name == "ChkFullDateMode")
                 {
-                    if (checkBox.Name != label.Tag.ToString()) continue;
-
-                    checkBox.IsChecked = !checkBox.IsChecked;
-                    if (checkBox.Name == "ChkFullDateMode")
-                    {
-                        ChkShowDate.IsChecked = ChkFullDateMode.IsChecked;
-                    }
+                    ChkShowDate.IsChecked = ChkFullDateMode.IsChecked;
                 }
             }
         }

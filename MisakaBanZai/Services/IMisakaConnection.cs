@@ -21,6 +21,11 @@ namespace MisakaBanZai.Services
         object ConnObject { get; }
 
         /// <summary>
+        /// 指示通信对象是否已经连接上
+        /// </summary>
+        bool IsConnected { get; }
+
+        /// <summary>
         /// 所属窗体
         /// </summary>
         IMisakaConnectionManagerWindow ParentWindow { get; set; }
@@ -50,6 +55,6 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// 关闭套接字
         /// </summary>
-        void Close();
+        bool Close();
     }
 }

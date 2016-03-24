@@ -31,7 +31,7 @@ namespace MisakaBanZai.Views
         /// <param name="message"></param>
         private void AppendMessage(ReportMessage message)
         {
-            TxtMessageContainer.AppendText($"[{DateTime.Now.ToString(Appconfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
+            TxtMessageContainer.AppendText($"消息：[{DateTime.Now.ToString(Appconfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
             TxtMessageContainer.AppendText("=>\r", OutPutDataColor.DefualtColor);
             TxtMessageContainer.AppendText($"{message.Message}", message.MessageColor);
             TxtMessageContainer.AppendText("\r\n");

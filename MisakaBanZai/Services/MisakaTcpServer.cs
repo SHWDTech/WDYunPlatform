@@ -18,7 +18,7 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// TCP传入连接监听对象
         /// </summary>
-        private readonly TcpListener _tcpListener;
+        private readonly Socket _tcpListener;
 
         /// <summary>
         /// 已经接入的TCP连接
@@ -64,25 +64,35 @@ namespace MisakaBanZai.Services
 
         public object ConnObject => _tcpListener;
 
-        /// <summary>
-        /// 侦听服务已经启动
-        /// </summary>
-        public bool IsStarted { get; private set; }
+        public bool IsConnected { get; private set; }
 
         public MisakaTcpServer(IPAddress ipaddress, int port)
         {
-            _tcpListener = new TcpListener(ipaddress, port);
+            _tcpListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _tcpListener.Bind(new IPEndPoint(ipaddress, port));
+            _tcpListener.LingerState = new LingerOption(false, 1);
             ConnectionName = $"{ipaddress}:{port}";
         }
 
         /// <summary>
         /// 开始侦听TCP传入连接
         /// </summary>
-        public void Start()
+        public bool Start()
         {
-            _tcpListener.Start();
-            _tcpListener.BeginAcceptTcpClient(AcceptClient, _tcpListener);
-            IsStarted = true;
+            try
+            {
+                _tcpListener.Listen(2048);
+                _tcpListener.BeginAccept(AcceptClient, _tcpListener);
+                IsConnected = true;
+            }
+            catch (Exception ex)
+            {
+                ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "启动侦听失败！");
+                LogService.Instance.Error("启动真挺失败！", ex);
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -90,17 +100,17 @@ namespace MisakaBanZai.Services
         /// </summary>
         private void AcceptClient(IAsyncResult result)
         {
-            var server = (TcpListener)result.AsyncState;
+            var server = (Socket)result.AsyncState;
 
             try
             {
-                var client = server.EndAcceptTcpClient(result);
+                var client = server.EndAccept(result);
                 var misakaClient = new MisakaTcpClient(client) { ParentWindow = ParentWindow, ConnectionType = ConnectionItemType.TcpAcceptedClient };
                 misakaClient.ClientBeginReceive();
                 misakaClient.ClientReceivedDataEvent += OnClientReceivedData;
                 misakaClient.ClientDisconnectEvent += OnClientDisconnect;
-                _tcpClients.Add(client.Client.RemoteEndPoint.ToString(), misakaClient);
-                ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"添加客户端成功。{client.Client.RemoteEndPoint}");
+                _tcpClients.Add(client.RemoteEndPoint.ToString(), misakaClient);
+                ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"添加客户端成功。{client.RemoteEndPoint}");
                 OnClientAccepted(EventArgs.Empty);
             }
             catch (ObjectDisposedException ex)
@@ -114,7 +124,7 @@ namespace MisakaBanZai.Services
                 ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "接收客户端请求失败！");
             }
 
-            server.BeginAcceptSocket(AcceptClient, server);
+            server.BeginAccept(AcceptClient, server);
         }
 
         /// <summary>
@@ -150,21 +160,30 @@ namespace MisakaBanZai.Services
             return count;
         }
 
-        public void Close()
+        public bool Close()
         {
             try
             {
-                _tcpListener.Server.Close(50);
+                if (_tcpListener.Connected)
+                {
+                    _tcpListener.Shutdown(SocketShutdown.Both);
+                    _tcpListener.Disconnect(false);
+                    IsConnected = false;
+                }
+                _tcpListener.Close(50);
                 foreach (var misakaTcpClient in _tcpClients)
                 {
                     misakaTcpClient.Value.Close();
                 }
+
             }
             catch (Exception ex)
             {
                 LogService.Instance.Error("关闭套接字错误。", ex);
+                return false;
             }
-            
+
+            return true;
         }
 
         /// <summary>
@@ -213,7 +232,7 @@ namespace MisakaBanZai.Services
             if (_tcpClients.ContainsKey(conn.ConnectionName))
                 _tcpClients.Remove(conn.ConnectionName);
 
-            var address = ((IPEndPoint) ((Socket) conn.ConnObject).RemoteEndPoint).ToString().Split(':');
+            var address = ((IPEndPoint)((Socket)conn.ConnObject).RemoteEndPoint).ToString().Split(':');
             ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"与客户端的连接断开{address[0]}:{address[1]}");
         }
 

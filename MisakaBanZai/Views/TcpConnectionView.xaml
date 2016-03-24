@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TcpConnectionView" Height="640" Width="800"
+        Title="TcpSwitchConnectStatusionView" Height="640" Width="800"
         MinHeight="640" MinWidth="800"
         Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="14"
         Closing="OnClosing">
@@ -40,7 +40,7 @@
                                  Foreground="#CC0000"></TextBox>
                                 <TextBox x:Name="TxtRemoteConnPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 115, 5, 0"
                                  Foreground="DarkTurquoise" KeyUp="EnterHandler"></TextBox>
-                                <Button x:Name="BtnConnect" Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 155, 5, 0" Click="Connect"></Button>
+                                <Button x:Name="BtnConnect" Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 155, 5, 0" Click="SwitchConnectStatus"></Button>
                             </Grid>
 
                             <Grid x:Name="ServerLayer" Visibility="Hidden">
