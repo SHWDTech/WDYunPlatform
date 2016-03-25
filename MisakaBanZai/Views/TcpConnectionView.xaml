@@ -26,20 +26,22 @@
                 <Grid Row="0">
                     <GroupBox Header="连接信息">
                         <Grid>
-                            <Label Content="连接类型：" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
-                            <Label x:Name="ConnType" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,0,0,0" Foreground="#006633"></Label>
+                            <Label Content="连接类型：" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            </Label>
+                            <Label x:Name="ConnType" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90,0,0,0" Foreground="#006633">
+                            </Label>
                             <Label Content="本地连接信息：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 30, 0, 0"></Label>
-                            <TextBox x:Name="TxtLocalAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 60, 0, 0" 
-                                 Foreground="#CC0000"></TextBox>
+                            <TextBox x:Name="TxtLocalAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 60, 0, 0"
+                                     Foreground="#CC0000"></TextBox>
                             <TextBox x:Name="TxtLocalPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 60, 5, 0"
-                                 Foreground="DarkTurquoise" KeyUp="EnterHandler"></TextBox>
+                                     Foreground="#009933" KeyUp="EnterHandler"></TextBox>
 
                             <Grid x:Name="ClientLayer" Visibility="Hidden">
                                 <Label Content="服务器地址" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 85, 0, 0"></Label>
-                                <TextBox x:Name="TxtRemoteConnAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 115, 0, 0" 
-                                 Foreground="#CC0000"></TextBox>
+                                <TextBox x:Name="TxtRemoteConnAddr" Height="30" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 115, 0, 0"
+                                         Foreground="#CC0000"></TextBox>
                                 <TextBox x:Name="TxtRemoteConnPort" Height="30" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 115, 5, 0"
-                                 Foreground="DarkTurquoise" KeyUp="EnterHandler"></TextBox>
+                                         Foreground="#009933" KeyUp="EnterHandler"></TextBox>
                                 <Button x:Name="BtnConnect" Height="35" VerticalAlignment="Top" Content="连接服务器" Margin="5, 155, 5, 0" Click="SwitchConnectStatus"></Button>
                             </Grid>
 
@@ -47,10 +49,10 @@
                                 <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="选择已连接客户端" Margin="0, 85,0 ,0"></Label>
                                 <ComboBox x:Name="CmbConnectedClient" VerticalAlignment="Top" Margin="5, 115, 5, 0" Height="30" SelectionChanged="SetCurrentClient">
                                 </ComboBox>
-                                <Button Content="刷新列表" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                                    Margin="5, 155, 0, 0" Height="30" Width="100" Click="RefreshClients"></Button>
+                                <Button Content="刷新列表" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                        Margin="5, 155, 0, 0" Height="30" Width="100" Click="RefreshClients"></Button>
                                 <Button x:Name="BtnStartListening" Content="开始侦听" VerticalAlignment="Top" HorizontalAlignment="Right"
-                                    Margin="0, 155, 5, 0" Height="30" Width="100" Click="SwitchServerStatus"></Button>
+                                        Margin="0, 155, 5, 0" Height="30" Width="100" Click="SwitchServerStatus"></Button>
                             </Grid>
                         </Grid>
                     </GroupBox>
@@ -108,16 +110,16 @@
                 <Grid Row="1">
                     <GroupBox Header="数据发送">
                         <Grid>
-                            <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40" VerticalScrollBarVisibility="Auto"></TextBox>
+                            <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
 
                             <Button Content="清空接收框" x:Name="ClearReceive" HorizontalAlignment="Left" Margin="0, 0, 0, 0" VerticalAlignment="Bottom"
                                     Width="100" Height="35" Click="ClearTextBox"></Button>
 
-                            <Button Content="清空发送框" x:Name="ClearSend" HorizontalAlignment="Right" Margin="0, 0, 120, 0" VerticalAlignment="Bottom" 
-                                Width="100" Height="35" Click="ClearTextBox"></Button>
+                            <Button Content="清空发送框" x:Name="ClearSend" HorizontalAlignment="Right" Margin="0, 0, 120, 0" VerticalAlignment="Bottom"
+                                    Width="100" Height="35" Click="ClearTextBox"></Button>
 
-                            <Button Content="发送数据" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
-                                Width="100" Height="35" Click="Send"></Button>
+                            <Button Content="发送数据" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                    Width="100" Height="35" Click="Send"></Button>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -149,6 +151,9 @@
                     </StatusBarItem>
                     <StatusBarItem Foreground="#6633FF">
                         <TextBlock x:Name="LabelLastSend" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <Button Content="清空计数" Height="30" Click="ClearCount"></Button>
                     </StatusBarItem>
                     <StatusBarItem>
                         <TextBlock FontSize="14">消息:</TextBlock>

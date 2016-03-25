@@ -18,17 +18,16 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// TCP传入连接监听对象
         /// </summary>
-        private readonly Socket _tcpListener;
+        private Socket _tcpListener;
 
         /// <summary>
         /// 已经接入的TCP连接
         /// </summary>
         private readonly Dictionary<string, MisakaTcpClient> _tcpClients = new Dictionary<string, MisakaTcpClient>();
 
-        /// <summary>
-        /// 客户端数据接收事件
-        /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
+
+        public event ClientDisconnectEventHandler ClientDisconnectEvent;
 
         /// <summary>
         /// 是否向所有子TCP连接广播
@@ -58,29 +57,36 @@ namespace MisakaBanZai.Services
         /// </summary>
         public event ClientAcceptEventHandler ClientAccept;
 
-        public string ConnectionName { get; set; }
+        public string ConnectionName => $"{IpAddress}:{Port}";
 
         public string ConnectionType { get; set; }
 
         public object ConnObject => _tcpListener;
 
+        public string IpAddress { get; private set; }
+
+        public int Port { get; private set; }
+
         public bool IsConnected { get; private set; }
 
         public MisakaTcpServer(IPAddress ipaddress, int port)
         {
-            _tcpListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _tcpListener.Bind(new IPEndPoint(ipaddress, port));
-            _tcpListener.LingerState = new LingerOption(false, 1);
-            ConnectionName = $"{ipaddress}:{port}";
+            IpAddress = $"{ipaddress}";
+            Port = port;
         }
 
         /// <summary>
         /// 开始侦听TCP传入连接
         /// </summary>
-        public bool Start()
+        public bool Connect(IPAddress ipaddress, int port)
         {
             try
             {
+                _tcpListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _tcpListener.Bind(new IPEndPoint(ipaddress, port));
+                IpAddress = $"{ipaddress}";
+                Port = port;
+                _tcpListener.LingerState = new LingerOption(false, 1);
                 _tcpListener.Listen(2048);
                 _tcpListener.BeginAccept(AcceptClient, _tcpListener);
                 IsConnected = true;
@@ -88,7 +94,7 @@ namespace MisakaBanZai.Services
             catch (Exception ex)
             {
                 ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "启动侦听失败！");
-                LogService.Instance.Error("启动真挺失败！", ex);
+                LogService.Instance.Error("启动侦听失败！", ex);
                 return false;
             }
 

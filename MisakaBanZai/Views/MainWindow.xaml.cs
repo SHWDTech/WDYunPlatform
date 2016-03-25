@@ -28,7 +28,7 @@ namespace MisakaBanZai.Views
             var desktopWorkingArea = SystemParameters.WorkArea;
             Top = (desktopWorkingArea.Bottom - Height) / 2;
 
-            LocalAddr.Text = Globals.GetLocalIpAddress();
+            LocalAddr.Text = Globals.GetLocalIpAddressString();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace MisakaBanZai.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CreateNewConnection(object sender, EventArgs e)
+        private void CreateNewConnection(object sender, RoutedEventArgs e)
         {
             if (ConnTypeTreeView.SelectedValue is Label) return;
 
@@ -48,6 +48,8 @@ namespace MisakaBanZai.Views
             }
             var createWindow = new CreateTcpConnection(selectType.Tag.ToString());
             createWindow.ShowDialog();
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -92,7 +94,10 @@ namespace MisakaBanZai.Views
             var label = new Label {Content = connection.ConnectionName, Tag = "ConnectionItem"};
 
             treeViewItem.Items.Add(label);
-            treeViewItem.ExpandSubtree();
+            if (!treeViewItem.IsExpanded)
+            {
+                treeViewItem.ExpandSubtree();
+            }
             label.MouseDoubleClick += ViewConnectionWindow;
             var view = new TcpConnectionView(connection);
             _connectionWindows.Add(connection.ConnectionName, connection.ParentWindow);

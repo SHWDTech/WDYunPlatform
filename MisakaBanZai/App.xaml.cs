@@ -27,15 +27,13 @@ namespace MisakaBanZai
         {
             LogService.Instance.Fatal("未处理异常。", (Exception)e.ExceptionObject);
             MessageBox.Show("系统运行出现严重错误！");
-
-            Current.Shutdown();
         }
 
         protected virtual void AppUnhandleExceptionHandler(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             LogService.Instance.Fatal("未处理异常。", e.Exception);
 
-            Current.Shutdown();
+            e.Handled = true;
         }
     }
 }

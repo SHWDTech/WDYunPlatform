@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
+using SHWDTech.Platform.Utility;
 
 namespace MisakaBanZai.Services
 {
@@ -73,7 +74,7 @@ namespace MisakaBanZai.Services
                 case ConnectionItemType.TcpServer:
                     return new MisakaTcpServer(ipAddress, port) {ConnectionType = type};
                 case ConnectionItemType.TcpClient:
-                    return new MisakaTcpClient(ipAddress, port) {ConnectionType = type};
+                    return new MisakaTcpClient(Globals.GetLocalIpAddress(), Globals.RandomPort()) {ConnectionType = type};
                 default:
                     return null;
             }

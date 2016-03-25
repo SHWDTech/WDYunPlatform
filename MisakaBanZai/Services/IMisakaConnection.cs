@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using MisakaBanZai.Models;
 
 namespace MisakaBanZai.Services
@@ -8,17 +9,27 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// 连接名称
         /// </summary>
-        string ConnectionName { get; set; }
+        string ConnectionName { get; }
 
         /// <summary>
         /// 连接类型
         /// </summary>
-        string ConnectionType { get; set; }
+        string ConnectionType { get; }
 
         /// <summary>
         /// 连接对象
         /// </summary>
         object ConnObject { get; }
+
+        /// <summary>
+        /// 连接IP地址
+        /// </summary>
+        string IpAddress { get; }
+
+        /// <summary>
+        /// 端口号
+        /// </summary>
+        int Port { get; }
 
         /// <summary>
         /// 指示通信对象是否已经连接上
@@ -31,9 +42,14 @@ namespace MisakaBanZai.Services
         IMisakaConnectionManagerWindow ParentWindow { get; set; }
 
         /// <summary>
-        /// 客户端接收数据事件
+        /// 接收数据事件
         /// </summary>
         event ClientReceivedDataEventHandler ClientReceivedDataEvent;
+
+        /// <summary>
+        /// 断开连接事件
+        /// </summary>
+        event ClientDisconnectEventHandler ClientDisconnectEvent;
 
         /// <summary>
         /// 输出套接字字节流
@@ -47,13 +63,18 @@ namespace MisakaBanZai.Services
         IList<byte> ProcessBuffer { get; }
 
         /// <summary>
+        /// 开始连接
+        /// </summary>
+        bool Connect(IPAddress ipAddress, int port);
+
+        /// <summary>
         /// 发送字节流
         /// </summary>
         /// <param name="bytes"></param>
         int Send(byte[] bytes);
 
         /// <summary>
-        /// 关闭套接字
+        /// 关闭连接
         /// </summary>
         bool Close();
     }

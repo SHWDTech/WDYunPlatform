@@ -389,10 +389,10 @@ namespace SHWDTech.Platform.Utility
             => isHexMode ? HexStringToByteArray(str) : GbkStringToByteArray(str);
 
         /// <summary>
-        /// 获取本地IP地址
+        /// 获取本地IP地址的字符串
         /// </summary>
         /// <returns></returns>
-        public static string GetLocalIpAddress()
+        public static string GetLocalIpAddressString()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
@@ -403,6 +403,33 @@ namespace SHWDTech.Platform.Utility
                 }
             }
             throw new Exception("Local IP Address Not Found!");
+        }
+
+        /// <summary>
+        /// 获取IP地址
+        /// </summary>
+        /// <returns></returns>
+        public static IPAddress GetLocalIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip;
+                }
+            }
+            throw new Exception("Local IP Address Not Found!");
+        }
+
+        /// <summary>
+        /// 获取一个端口号
+        /// </summary>
+        /// <returns></returns>
+        public static int RandomPort()
+        {
+            var rd = new Random();
+            return rd.Next(0, 65536);
         }
     }
 }

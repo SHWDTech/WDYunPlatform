@@ -24,11 +24,15 @@ namespace MisakaBanZai.Services
         /// </summary>
         public event ClientDisconnectEventHandler ClientDisconnectEvent;
 
-        public string ConnectionName { get; set; }
+        public string ConnectionName => $"{IpAddress}:{Port}";
 
         public string ConnectionType { get; set; }
 
         public object ConnObject => _tcpClient;
+
+        public string IpAddress { get; }
+
+        public int Port { get; }
 
         public bool IsConnected { get;  private set; }
 
@@ -69,14 +73,16 @@ namespace MisakaBanZai.Services
         {
             _tcpClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _tcpClient.Bind(new IPEndPoint(ipAddress, port));
-            ConnectionName = $"{ipAddress}:{port}";
+            IpAddress = $"{ipAddress}";
+            Port = port;
         }
 
         public MisakaTcpClient(Socket client)
         {
             _tcpClient = client;
             var ipEndPoint = ((IPEndPoint)client.RemoteEndPoint).ToString().Split(':');
-            ConnectionName = $"{IPAddress.Parse(ipEndPoint[0])}:{ipEndPoint[1]}";
+            IpAddress = $"{ipEndPoint[0]}";
+            Port = int.Parse(ipEndPoint[1]);
         }
 
         /// <summary>

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -181,19 +180,16 @@ namespace MisakaBanZai.Views
         /// <param name="isFirst"></param>
         private void InitServer(IMisakaConnection connection, bool isFirst = true)
         {
-            var server = (Socket)connection.ConnObject;
-            var endPoint = ((IPEndPoint)server.LocalEndPoint).ToString().Split(':');
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
             var misakaServer = connection as MisakaTcpServer;
             if (misakaServer != null) misakaServer.ClientAccept += RefreshClients;
 
             if (!isFirst) return;
-            TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
-            TxtLocalPort.Text = endPoint[1];
+            TxtLocalAddr.Text = connection.IpAddress;
+            TxtLocalPort.Text = $"{connection.Port}";
             ConnType.Content = "Tcp服务器";
             ServerLayer.Visibility = Visibility.Visible;
-            SwitchServerStatus(null, null);
         }
 
         /// <summary>
@@ -203,14 +199,12 @@ namespace MisakaBanZai.Views
         /// <param name="isFirst"></param>
         private void InitClient(IMisakaConnection connection, bool isFirst = true)
         {
-            var client = (Socket)connection.ConnObject;
-            var endPoint = ((IPEndPoint)client.LocalEndPoint).ToString().Split(':');
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
 
             if (!isFirst) return;
-            TxtLocalAddr.Text = IPAddress.Parse(endPoint[0]).ToString();
-            TxtLocalPort.Text = endPoint[1];
+            TxtLocalAddr.Text = connection.IpAddress;
+            TxtLocalPort.Text = $"{connection.Port}";
             ConnType.Content = "Tcp客户端";
             ClientLayer.Visibility = Visibility.Visible;
         }
@@ -257,8 +251,6 @@ namespace MisakaBanZai.Views
             {
                 StopServer();
             }
-
-            ChangeServerControlStatus();
         }
 
         /// <summary>
@@ -266,7 +258,7 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void StartServer()
         {
-            if (((MisakaTcpServer)_misakaConnection).Start())
+            if (_misakaConnection.Connect(GetLocalIpAddress(), GetLocalPort()))
             {
                 BtnStartListening.Content = "停止侦听";
                 DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
@@ -274,8 +266,10 @@ namespace MisakaBanZai.Views
             else
             {
                 DispatcherAddReportData(ReportMessageType.Info, "服务器侦听失败");
+                return;
             }
 
+            ChangeServerControlStatus();
         }
 
         /// <summary>
@@ -292,7 +286,10 @@ namespace MisakaBanZai.Views
             else
             {
                 DispatcherAddReportData(ReportMessageType.Error, "关闭服务器失败");
+                return;
             }
+
+            ChangeServerControlStatus();
         }
 
         /// <summary>
@@ -421,7 +418,19 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void Send(object sender, RoutedEventArgs e)
         {
-            var sendBytes = Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+            byte[] sendBytes;
+            try
+            {
+                sendBytes = Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+            }
+            catch (Exception ex)
+            {
+                DispatcherAddReportData(ReportMessageType.Error, "非法字符！");
+                LogService.Instance.Error("字符串转换失败！", ex);
+                MessageBox.Show("文本中含有非法字符！", "错误！", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             var count = _misakaConnection.Send(sendBytes);
 
             if (count <= 0) return;
@@ -444,8 +453,6 @@ namespace MisakaBanZai.Views
             {
                 ClientDisconnect();
             }
-
-            ChangeClientControlStatus();
         }
 
         /// <summary>
@@ -473,7 +480,10 @@ namespace MisakaBanZai.Views
             else
             {
                 ReportService.Error("尝试连接失败！");
+                return;
             }
+
+            ChangeClientControlStatus();
         }
 
         /// <summary>
@@ -490,7 +500,10 @@ namespace MisakaBanZai.Views
             else
             {
                 ReportService.Error("断开连接失败！");
+                return;
             }
+
+            ChangeClientControlStatus();
         }
 
         /// <summary>
@@ -540,7 +553,7 @@ namespace MisakaBanZai.Views
             var label = (Label)sender;
 
             foreach (var checkBox in from result in ConfigGrid.Children.OfType<Grid>()
-                                     select result.Children.OfType<CheckBox>() 
+                                     select result.Children.OfType<CheckBox>()
                                      into chks
                                      from checkBox in chks
                                      where checkBox.Name == label.Tag.ToString()
@@ -592,6 +605,17 @@ namespace MisakaBanZai.Views
         private void OpenMessageManager(object sender, EventArgs e)
         {
             _messageManager.ShowAtPosition(Left + Width, Top);
+        }
+
+        /// <summary>
+        /// 清空计数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearCount(object sender, EventArgs e)
+        {
+            _totalReceive = _lastReceive = _totalSend = _lastSend = 0;
+            UpdateStatusBar(sender, e);
         }
 
         /// <summary>
