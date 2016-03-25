@@ -122,6 +122,7 @@ namespace MisakaBanZai.Services
             catch (ObjectDisposedException ex)
             {
                 LogService.Instance.Info("侦听器已经关闭", ex);
+                OnServerDisconnected();
                 return;
             }
             catch (Exception ex)
@@ -176,7 +177,7 @@ namespace MisakaBanZai.Services
                     _tcpListener.Disconnect(false);
                     IsConnected = false;
                 }
-                _tcpListener.Close(50);
+                _tcpListener.Close(0);
                 foreach (var misakaTcpClient in _tcpClients)
                 {
                     misakaTcpClient.Value.Close();
@@ -227,6 +228,11 @@ namespace MisakaBanZai.Services
                 ProcessBuffer.Add(socketByte);
             }
             OnReceivedData();
+        }
+
+        private void OnServerDisconnected()
+        {
+            ClientDisconnectEvent?.Invoke(this);
         }
 
         /// <summary>

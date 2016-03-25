@@ -31,4 +31,10 @@ namespace MisakaBanZai.Services
     /// </summary>
     /// <param name="e"></param>
     public delegate void ReportDataAddedEventHandler(EventArgs e);
+
+    /// <summary>
+    /// 连接信息更改事件
+    /// </summary>
+    /// <param name="conn"></param>
+    public delegate void ConnectionModefiedEventHandler(IMisakaConnection conn);
 }

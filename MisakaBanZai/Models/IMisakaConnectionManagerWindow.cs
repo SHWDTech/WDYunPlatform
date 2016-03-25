@@ -18,6 +18,12 @@ namespace MisakaBanZai.Models
         void DispatcherAddReportData(ReportMessageType type, string str);
 
         /// <summary>
+        /// 获取连接名称
+        /// </summary>
+        /// <returns></returns>
+        string GetConnectionName();
+
+        /// <summary>
         /// 关闭窗口
         /// </summary>
         void DoClose();

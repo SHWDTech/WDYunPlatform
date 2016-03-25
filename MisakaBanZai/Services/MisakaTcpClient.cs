@@ -139,6 +139,11 @@ namespace MisakaBanZai.Services
                 _tcpClient.Disconnect(false);
                 IsConnected = false;
             }
+            catch (ObjectDisposedException)
+            {
+                OnClientDisconnect();
+                IsConnected = false;
+            }
             catch (Exception ex)
             {
                 LogService.Instance.Error("关闭套接字错误。", ex);
@@ -171,11 +176,21 @@ namespace MisakaBanZai.Services
                     if (readCount <= 0)
                     {
                         OnClientDisconnect();
-                        client.Close(50);
+                        client.Close(0);
                         return;
                     }
 
                     OnReceivedData();
+                }
+                catch (SocketException)
+                {
+                    OnClientDisconnect();
+                    client.Close(0);
+                }
+                catch (ObjectDisposedException)
+                {
+                    OnClientDisconnect();
+                    client.Close(0);
                 }
                 catch (Exception ex)
                 {
@@ -191,7 +206,7 @@ namespace MisakaBanZai.Services
             }
             catch(Exception)
             {
-                client.Close(50);
+                client.Close(0);
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
 using SHWDTech.Platform.Utility;
@@ -64,20 +63,21 @@ namespace MisakaBanZai.Services
         /// 创建新的连接
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="ipAddress"></param>
-        /// <param name="port"></param>
         /// <returns></returns>
-        public static IMisakaConnection NewMisakaConnection(string type, IPAddress ipAddress, int port)
+        public static void NewMisakaConnection(string type)
         {
+            IMisakaConnection conn = null;
             switch (type)
             {
                 case ConnectionItemType.TcpServer:
-                    return new MisakaTcpServer(ipAddress, port) {ConnectionType = type};
+                    conn = new MisakaTcpServer(Globals.GetLocalIpAddress(), Globals.RandomPort()) {ConnectionType = type};
+                    break;
                 case ConnectionItemType.TcpClient:
-                    return new MisakaTcpClient(Globals.GetLocalIpAddress(), Globals.RandomPort()) {ConnectionType = type};
-                default:
-                    return null;
+                    conn = new MisakaTcpClient(Globals.GetLocalIpAddress(), Globals.RandomPort()) {ConnectionType = type};
+                    break;
             }
+
+            AddConnection(conn);
         }
     }
 }

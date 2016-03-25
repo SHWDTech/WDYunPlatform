@@ -30,6 +30,8 @@ namespace MisakaBanZai.Views
         /// </summary>
         private readonly MessageManager _messageManager = new MessageManager();
 
+        public event ConnectionModefiedEventHandler ConnectionModefied;
+
         /// <summary>
         /// 是否HEX发送
         /// </summary>
@@ -182,6 +184,7 @@ namespace MisakaBanZai.Views
         {
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
+            connection.ClientDisconnectEvent += ServerDisconnected;
             var misakaServer = connection as MisakaTcpServer;
             if (misakaServer != null) misakaServer.ClientAccept += RefreshClients;
 
@@ -201,6 +204,7 @@ namespace MisakaBanZai.Views
         {
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
+            connection.ClientDisconnectEvent += ClientDisconnected;
 
             if (!isFirst) return;
             TxtLocalAddr.Text = connection.IpAddress;
@@ -261,6 +265,7 @@ namespace MisakaBanZai.Views
             if (_misakaConnection.Connect(GetLocalIpAddress(), GetLocalPort()))
             {
                 BtnStartListening.Content = "停止侦听";
+                OnConnectionModefied(_misakaConnection);
                 DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
             }
             else
@@ -269,7 +274,7 @@ namespace MisakaBanZai.Views
                 return;
             }
 
-            ChangeServerControlStatus();
+            ChangeServerControlStatus(false);
         }
 
         /// <summary>
@@ -281,7 +286,6 @@ namespace MisakaBanZai.Views
             {
                 _misakaConnection = null;
                 BtnStartListening.Content = "开始侦听";
-                DispatcherAddReportData(ReportMessageType.Info, "服务器侦听结束");
             }
             else
             {
@@ -289,16 +293,16 @@ namespace MisakaBanZai.Views
                 return;
             }
 
-            ChangeServerControlStatus();
+            ChangeServerControlStatus(true);
         }
 
         /// <summary>
         /// 更改服务器套接字控件状态
         /// </summary>
-        private void ChangeServerControlStatus()
+        private void ChangeServerControlStatus(bool status)
         {
-            TxtLocalAddr.IsEnabled = !TxtLocalAddr.IsEnabled;
-            TxtLocalPort.IsEnabled = !TxtLocalPort.IsEnabled;
+            TxtLocalAddr.IsEnabled = status;
+            TxtLocalPort.IsEnabled = status;
         }
 
         /// <summary>
@@ -470,12 +474,11 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void ClientConnect()
         {
-            var misakaClient = (MisakaTcpClient)_misakaConnection;
-
-            if (misakaClient.Connect(GetTargetIpAddress(), GetTargetPort()))
+            if (_misakaConnection.Connect(GetTargetIpAddress(), GetTargetPort()))
             {
                 BtnConnect.Content = "断开连接";
                 ReportService.Info("连接服务器成功！");
+                OnConnectionModefied(_misakaConnection);
             }
             else
             {
@@ -483,7 +486,7 @@ namespace MisakaBanZai.Views
                 return;
             }
 
-            ChangeClientControlStatus();
+            ChangeClientControlStatus(false);
         }
 
         /// <summary>
@@ -503,18 +506,34 @@ namespace MisakaBanZai.Views
                 return;
             }
 
-            ChangeClientControlStatus();
+            ChangeClientControlStatus(true);
         }
 
         /// <summary>
         /// 更改客户端连接控件状态
         /// </summary>
-        private void ChangeClientControlStatus()
+        private void ChangeClientControlStatus(bool status)
         {
-            TxtLocalAddr.IsEnabled = !TxtLocalAddr.IsEnabled;
-            TxtLocalPort.IsEnabled = !TxtLocalPort.IsEnabled;
-            TxtRemoteConnAddr.IsEnabled = !TxtRemoteConnAddr.IsEnabled;
-            TxtRemoteConnPort.IsEnabled = !TxtRemoteConnPort.IsEnabled;
+            TxtLocalAddr.IsEnabled = status;
+            TxtLocalPort.IsEnabled = status;
+            TxtRemoteConnAddr.IsEnabled = status;
+            TxtRemoteConnPort.IsEnabled = status;
+        }
+
+        /// <summary>
+        /// 服务器连接断开
+        /// </summary>
+        /// <param name="conn"></param>
+        private void ServerDisconnected(IMisakaConnection conn)
+        {
+            DispatcherAddReportData(ReportMessageType.Warning, "服务器连接已经断开！");
+            Dispatcher.Invoke(() => ChangeServerControlStatus(true));
+        }
+
+        private void ClientDisconnected(IMisakaConnection conn)
+        {
+            DispatcherAddReportData(ReportMessageType.Warning, "客户端连接已经断开！");
+            Dispatcher.Invoke(() => ChangeClientControlStatus(true));
         }
 
         /// <summary>
@@ -540,6 +559,17 @@ namespace MisakaBanZai.Views
         /// </summary>
         /// <returns></returns>
         private int GetTargetPort() => int.Parse(TxtRemoteConnPort.Text);
+
+        /// <summary>
+        /// 当连接信息更改时触发
+        /// </summary>
+        /// <param name="conn"></param>
+        private void OnConnectionModefied(IMisakaConnection conn)
+        {
+            ConnectionModefied?.Invoke(conn);
+        }
+
+        public string GetConnectionName() => _misakaConnection.ConnectionName;
 
         /// <summary>
         /// 点击标签更改勾选框状态

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace MisakaBanZai.Views
         /// <summary>
         /// 连接对象窗口
         /// </summary>
-        private readonly Dictionary<string, IMisakaConnectionManagerWindow> _connectionWindows = new Dictionary<string, IMisakaConnectionManagerWindow>(); 
+        private readonly Dictionary<Label, IMisakaConnectionManagerWindow> _connectionWindows = new Dictionary<Label, IMisakaConnectionManagerWindow>();
 
         public MainWindow()
         {
@@ -46,8 +47,8 @@ namespace MisakaBanZai.Views
                 MessageBox.Show("请先选择一个连接类型！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            var createWindow = new CreateTcpConnection(selectType.Tag.ToString());
-            createWindow.ShowDialog();
+
+            ConnectionManager.NewMisakaConnection($"{selectType.Tag}");
 
             e.Handled = true;
         }
@@ -91,7 +92,7 @@ namespace MisakaBanZai.Views
         /// <param name="connection"></param>
         private void AddTreeViewItem(TreeViewItem treeViewItem, IMisakaConnection connection)
         {
-            var label = new Label {Content = connection.ConnectionName, Tag = "ConnectionItem"};
+            var label = new Label { Content = connection.ConnectionName, Tag = "ConnectionItem" };
 
             treeViewItem.Items.Add(label);
             if (!treeViewItem.IsExpanded)
@@ -100,7 +101,8 @@ namespace MisakaBanZai.Views
             }
             label.MouseDoubleClick += ViewConnectionWindow;
             var view = new TcpConnectionView(connection);
-            _connectionWindows.Add(connection.ConnectionName, connection.ParentWindow);
+            _connectionWindows.Add(label, connection.ParentWindow);
+            view.ConnectionModefied += OnConnectionModefied;
             view.ShowAtPosition(Left + Width, Top);
         }
 
@@ -113,8 +115,8 @@ namespace MisakaBanZai.Views
         {
             if (!(sender is Label)) return;
 
-            var label = (Label) sender;
-            var connWindow = _connectionWindows[label.Content.ToString()];
+            var label = (Label)sender;
+            var connWindow = _connectionWindows[label];
 
             ((Window)connWindow).Show();
 
@@ -137,19 +139,30 @@ namespace MisakaBanZai.Views
 
             if (!(treeViewItem is Label)) return;
 
-            var label = (Label) treeViewItem;
+            var label = (Label)treeViewItem;
 
-            if (label.Tag.ToString() != "ConnectionItem" || !_connectionWindows.ContainsKey(label.Content.ToString())) return;
+            if (label.Tag.ToString() != "ConnectionItem" || !_connectionWindows.ContainsKey(label)) return;
 
-            var window = _connectionWindows[label.Content.ToString()];
+            var window = _connectionWindows[label];
 
-            _connectionWindows.Remove(label.Content.ToString());
+            _connectionWindows.Remove(label);
 
             Dispatcher.Invoke(() => window.DoClose());
 
             ConnectionManager.ConnectionRemove(label.Content.ToString());
 
             ((TreeViewItem)label.Parent).Items.Remove(treeViewItem);
+        }
+
+        /// <summary>
+        /// 连接改变时触发
+        /// </summary>
+        /// <param name="conn"></param>
+        private void OnConnectionModefied(IMisakaConnection conn)
+        {
+            if (!_connectionWindows.ContainsValue(conn.ParentWindow)) return;
+            var connection = _connectionWindows.FirstOrDefault(obj => obj.Value == conn.ParentWindow);
+            connection.Key.Content = Dispatcher.Invoke(() => connection.Value.GetConnectionName());
         }
 
         /// <summary>
