@@ -115,7 +115,7 @@
                             <Button Content="清空接收框" x:Name="ClearReceive" HorizontalAlignment="Left" Margin="0, 0, 0, 0" VerticalAlignment="Bottom"
                                     Width="100" Height="35" Click="ClearTextBox"></Button>
 
-                            <Button Content="清空发送框" x:Name="ClearSend" HorizontalAlignment="Right" Margin="0, 0, 120, 0" VerticalAlignment="Bottom"
+                            <Button Content="清空发送框" x:Name="ClearSend" HorizontalAlignment="Left" Margin="120, 0, 0, 0" VerticalAlignment="Bottom"
                                     Width="100" Height="35" Click="ClearTextBox"></Button>
 
                             <Button Content="发送数据" HorizontalAlignment="Right" VerticalAlignment="Bottom"

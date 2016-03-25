@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using MisakaBanZai.Common;
 using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
+using MisakaBanZai.Views;
 using SHWDTech.Platform.Utility;
 
 namespace MisakaBanZai.Services
@@ -144,6 +145,7 @@ namespace MisakaBanZai.Services
                 _broadcast = true;
                 return;
             }
+
             _currenTcpClient = _tcpClients[clientName];
         }
 
@@ -182,7 +184,6 @@ namespace MisakaBanZai.Services
                 {
                     misakaTcpClient.Value.Close();
                 }
-
             }
             catch (Exception ex)
             {
@@ -206,8 +207,7 @@ namespace MisakaBanZai.Services
         /// 获取连接客户端的名称
         /// </summary>
         /// <returns></returns>
-        public List<string> GetClientNameList()
-            => _tcpClients.Select(misakaTcpClient => misakaTcpClient.Key).ToList();
+        public List<string> GetClientNameList() => _tcpClients.Select(misakaTcpClient => misakaTcpClient.Key).ToList();
 
         /// <summary>
         /// 数据接收时出发
@@ -244,8 +244,8 @@ namespace MisakaBanZai.Services
             if (_tcpClients.ContainsKey(conn.ConnectionName))
                 _tcpClients.Remove(conn.ConnectionName);
 
-            var address = ((IPEndPoint)((Socket)conn.ConnObject).RemoteEndPoint).ToString().Split(':');
-            ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"与客户端的连接断开{address[0]}:{address[1]}");
+            ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"与客户端的连接断开{conn.IpAddress}:{conn.Port}");
+            ((TcpConnectionView)ParentWindow).OnServerClientDisconnect();
         }
 
         public byte[] OutPutSocketBytes()

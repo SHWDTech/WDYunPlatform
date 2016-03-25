@@ -34,7 +34,7 @@ namespace MisakaBanZai.Services
 
         public int Port { get; }
 
-        public bool IsConnected { get;  private set; }
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// 指示客户端是否已经连接到服务器
@@ -127,6 +127,7 @@ namespace MisakaBanZai.Services
                 OnClientDisconnect();
                 IsConnected = false;
             }
+
             return bytes.Length;
         }
 
@@ -163,9 +164,10 @@ namespace MisakaBanZai.Services
 
             lock (ReceiveBuffer)
             {
+                int readCount;
                 try
                 {
-                    var readCount = client.EndReceive(result);
+                    readCount = client.EndReceive(result);
 
                     var array = ReceiveBuffer.Last().Array;
                     for (var i = 0; i < readCount; i++)
@@ -173,41 +175,35 @@ namespace MisakaBanZai.Services
                         ProcessBuffer.Add(array[i]);
                     }
 
-                    if (readCount <= 0)
-                    {
-                        OnClientDisconnect();
-                        client.Close(0);
-                        return;
-                    }
-
                     OnReceivedData();
-                }
-                catch (SocketException)
-                {
-                    OnClientDisconnect();
-                    client.Close(0);
-                }
-                catch (ObjectDisposedException)
-                {
-                    OnClientDisconnect();
-                    client.Close(0);
                 }
                 catch (Exception ex)
                 {
-                    ParentWindow.DispatcherAddReportData(ReportMessageType.Warning, "接收客户端数据错误！");
-                    LogService.Instance.Error("接收客户端数据错误！", ex);
+                    if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
+                    {
+                        client.Close();
+                        IsConnected = false;
+                    }
+                    else
+                    {
+                        ParentWindow.DispatcherAddReportData(ReportMessageType.Warning, "接收客户端数据错误！");
+                        LogService.Instance.Error("接收客户端数据错误！", ex);
+                    }
+
+                    OnClientDisconnect();
+                    return;
+                }
+
+                if (readCount <= 0)
+                {
+                    OnClientDisconnect();
+                    client.Close(0);
+                    IsConnected = false;
                     return;
                 }
             }
 
-            try
-            {
-                client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
-            }
-            catch(Exception)
-            {
-                client.Close(0);
-            }
+            client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
         }
 
         /// <summary>

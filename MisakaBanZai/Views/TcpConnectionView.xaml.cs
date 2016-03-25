@@ -224,15 +224,27 @@ namespace MisakaBanZai.Views
         }
 
         /// <summary>
+        /// 服务器所属客户端连接断开刷新列表
+        /// </summary>
+        public void OnServerClientDisconnect()
+        {
+            RefreshClients(this, new EventArgs());
+        }
+
+        /// <summary>
         /// 刷新已连接客户端列表
         /// </summary>
         private void RefreshClients()
         {
             CmbConnectedClient.Items.Clear();
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
-            foreach (var clientName in ((MisakaTcpServer)_misakaConnection).GetClientNameList())
+
+            if (_misakaConnection != null)
             {
-                CmbConnectedClient.Items.Add(clientName);
+                foreach (var clientName in ((MisakaTcpServer)_misakaConnection).GetClientNameList())
+                {
+                    CmbConnectedClient.Items.Add(clientName);
+                }
             }
 
             CmbConnectedClient.SelectedIndex = CmbConnectedClient.Items.Count - 1;
@@ -532,8 +544,10 @@ namespace MisakaBanZai.Views
 
         private void ClientDisconnected(IMisakaConnection conn)
         {
+            _misakaConnection = null;
             DispatcherAddReportData(ReportMessageType.Warning, "客户端连接已经断开！");
             Dispatcher.Invoke(() => ChangeClientControlStatus(true));
+            Dispatcher.Invoke(() => BtnConnect.Content = "连接服务器");
         }
 
         /// <summary>
