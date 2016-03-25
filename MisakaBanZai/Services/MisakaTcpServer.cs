@@ -30,6 +30,8 @@ namespace MisakaBanZai.Services
 
         public event ClientDisconnectEventHandler ClientDisconnectEvent;
 
+        public event DataSendEventHandler DataSendEvent;
+
         /// <summary>
         /// 是否向所有子TCP连接广播
         /// </summary>
@@ -158,7 +160,9 @@ namespace MisakaBanZai.Services
             var count = 0;
             if (!_broadcast)
             {
-                return _currenTcpClient.Send(bytes);
+                count = _currenTcpClient.Send(bytes);
+                OnDataSend(count);
+                return count;
             }
 
             foreach (var tcpClient in _tcpClients)
@@ -167,6 +171,15 @@ namespace MisakaBanZai.Services
             }
 
             return count;
+        }
+
+        /// <summary>
+        /// 当发送数据时触发事件
+        /// </summary>
+        /// <param name="count"></param>
+        private void OnDataSend(int count)
+        {
+            DataSendEvent?.Invoke(count);
         }
 
         public bool Close()

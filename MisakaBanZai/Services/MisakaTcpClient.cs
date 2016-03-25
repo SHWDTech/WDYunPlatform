@@ -24,6 +24,8 @@ namespace MisakaBanZai.Services
         /// </summary>
         public event ClientDisconnectEventHandler ClientDisconnectEvent;
 
+        public event DataSendEventHandler DataSendEvent;
+
         public string ConnectionName => $"{IpAddress}:{Port}";
 
         public string ConnectionType { get; set; }
@@ -121,6 +123,7 @@ namespace MisakaBanZai.Services
             try
             {
                 _tcpClient.Send(bytes);
+                OnDataSend(bytes.Length);
             }
             catch (ObjectDisposedException)
             {
@@ -130,6 +133,15 @@ namespace MisakaBanZai.Services
             }
 
             return bytes.Length;
+        }
+
+        /// <summary>
+        /// 当发送数据时触发事件
+        /// </summary>
+        /// <param name="count"></param>
+        private void OnDataSend(int count)
+        {
+            DataSendEvent?.Invoke(count);
         }
 
         public bool Close()

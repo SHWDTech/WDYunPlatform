@@ -54,6 +54,11 @@ namespace MisakaBanZai.Views
         private bool ShowDate => ChkShowDate.IsChecked == true;
 
         /// <summary>
+        /// 自动发送线程
+        /// </summary>
+        private Thread _autoSendThread;
+
+        /// <summary>
         /// 不是关闭而是隐藏窗口
         /// </summary>
         private bool _hideInstead = true;
@@ -161,9 +166,11 @@ namespace MisakaBanZai.Views
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
             CmbConnectedClient.SelectedIndex = 0;
 
-            _dispatcherTimer.Interval = new TimeSpan(5);
+            _dispatcherTimer.Interval = new TimeSpan(50);
             _dispatcherTimer.Tick += UpdateStatusBar;
             _dispatcherTimer.Start();
+
+            InitConnection(connection);
 
             switch (connection.ConnectionType)
             {
@@ -177,19 +184,33 @@ namespace MisakaBanZai.Views
         }
 
         /// <summary>
-        /// 初始化服务器模式
+        /// 初始化连接对象
         /// </summary>
         /// <param name="connection"></param>
-        /// <param name="isFirst"></param>
-        private void InitServer(IMisakaConnection connection, bool isFirst = true)
+        private void InitConnection(IMisakaConnection connection)
         {
             connection.ParentWindow = this;
             connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
-            connection.ClientDisconnectEvent += ServerDisconnected;
-            var misakaServer = connection as MisakaTcpServer;
-            if (misakaServer != null) misakaServer.ClientAccept += RefreshClients;
+            connection.DataSendEvent += DispatcherUpdateSendData;
 
-            if (!isFirst) return;
+            var misakaServer = connection as MisakaTcpServer;
+            if (misakaServer != null)
+            {
+                misakaServer.ClientAccept += RefreshClients;
+                connection.ClientDisconnectEvent += ServerDisconnected;
+            }
+            else
+            {
+                connection.ClientDisconnectEvent += ClientDisconnected;
+            }
+        }
+
+        /// <summary>
+        /// 初始化服务器模式
+        /// </summary>
+        /// <param name="connection"></param>
+        private void InitServer(IMisakaConnection connection)
+        {
             TxtLocalAddr.Text = connection.IpAddress;
             TxtLocalPort.Text = $"{connection.Port}";
             ConnType.Content = "Tcp服务器";
@@ -200,14 +221,8 @@ namespace MisakaBanZai.Views
         /// 初始化客户端模式
         /// </summary>
         /// <param name="connection"></param>
-        /// <param name="isFirst"></param>
-        private void InitClient(IMisakaConnection connection, bool isFirst = true)
+        private void InitClient(IMisakaConnection connection)
         {
-            connection.ParentWindow = this;
-            connection.ClientReceivedDataEvent += DispatcherOutPutSocketData;
-            connection.ClientDisconnectEvent += ClientDisconnected;
-
-            if (!isFirst) return;
             TxtLocalAddr.Text = connection.IpAddress;
             TxtLocalPort.Text = $"{connection.Port}";
             ConnType.Content = "Tcp客户端";
@@ -328,7 +343,7 @@ namespace MisakaBanZai.Views
             {
                 ConnectionType = ConnectionItemType.TcpServer
             };
-            InitServer(_misakaConnection, false);
+            InitConnection(_misakaConnection);
         }
 
         /// <summary>
@@ -438,30 +453,42 @@ namespace MisakaBanZai.Views
             Send();
         }
 
-        private bool Send()
+        private void Send()
         {
-            var sendBytes = Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+            var sendBytes = GetSendText();
 
             if (sendBytes == null)
             {
                 DispatcherAddReportData(ReportMessageType.Error, "文本中含有非法字符！");
                 MessageBox.Show("文本中含有非法字符！", "错误！", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                return;
             }
 
             try
             {
-                var count = _misakaConnection.Send(sendBytes);
-                if (count <= 0) return false;
-                _totalSend += sendBytes.Length;
-                _lastSend = sendBytes.Length;
+                _misakaConnection.Send(sendBytes);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                ReportService.Error("发送失败！");
+                LogService.Instance.Error("发送数据失败", ex);
             }
+        }
 
-            return true;
+        /// <summary>
+        /// 跨线程调用更新方法
+        /// </summary>
+        /// <param name="count"></param>
+        private void DispatcherUpdateSendData(int count) => Dispatcher.Invoke(() => UpdateSendData(count));
+
+        /// <summary>
+        /// 更新发送数据
+        /// </summary>
+        /// <param name="count"></param>
+        private void UpdateSendData(int count)
+        {
+            _totalSend += count;
+            _lastSend = count;
         }
 
         /// <summary>
@@ -488,7 +515,7 @@ namespace MisakaBanZai.Views
         {
             if (_misakaConnection != null) return;
             _misakaConnection = new MisakaTcpClient(GetLocalIpAddress(), GetLocalPort()) { ConnectionType = ConnectionItemType.TcpClient };
-            InitClient(_misakaConnection, false);
+            InitConnection(_misakaConnection);
         }
 
         /// <summary>
@@ -629,16 +656,22 @@ namespace MisakaBanZai.Views
         private void AutoSend(object sender, EventArgs e)
         {
             var interval = int.Parse(AutoSendInterval.Text);
-            var autoSendThread = new Thread(() => DoAutoSend(interval));
-            autoSendThread.Start();
+            _autoSendThread = new Thread(() => DoAutoSend(interval));
+            _autoSendThread.Start();
+            TxtDataSend.IsEnabled = false;
+            AutoSendInterval.IsEnabled = false;
         }
 
         /// <summary>
-        /// 自动发送自动调用
+        /// 停止自动发送
         /// </summary>
-        private void DispatcherAutoSend()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StopAutoSend(object sender, EventArgs e)
         {
-            ChkAutoSend.IsChecked = Send();
+            _autoSendThread.Abort();
+            TxtDataSend.IsEnabled = true;
+            AutoSendInterval.IsEnabled = true;
         }
 
         /// <summary>
@@ -647,18 +680,51 @@ namespace MisakaBanZai.Views
         /// <param name="sendInterver"></param>
         private void DoAutoSend(int sendInterver)
         {
+            var sendBytes = Dispatcher.Invoke(GetSendText);
+            if (sendBytes == null)
+            {
+                DispatcherAddReportData(ReportMessageType.Error, "文本中含有非法字符！");
+                MessageBox.Show("文本中含有非法字符！", "错误！", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var conn = Dispatcher.Invoke(GetCurrentConnection);
+
             while (true)
             {
-                Dispatcher.Invoke(DispatcherAutoSend);
+                try
+                {
+                    conn.Send(sendBytes);
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.Invoke(RestoreAutoSendControls);
+                    LogService.Instance.Error("发送数据错误", ex);
+                    return;
+                }
+
                 Thread.Sleep(sendInterver);
             }
+            // ReSharper disable once FunctionNeverReturns
+        }
+
+        private void RestoreAutoSendControls()
+        {
+            TxtDataSend.IsEnabled = true;
+            AutoSendInterval.IsEnabled = true;
         }
 
         /// <summary>
-        /// 是否在自动发送状态
+        /// 获取发送数据
         /// </summary>
         /// <returns></returns>
-        private bool IsAutoSend() => ChkAutoSend.IsChecked == true;
+        private byte[] GetSendText() => Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+
+        /// <summary>
+        /// 获取连接对象
+        /// </summary>
+        /// <returns></returns>
+        private IMisakaConnection GetCurrentConnection() => _misakaConnection;
 
         /// <summary>
         /// 检查自动发送间隔输入内容

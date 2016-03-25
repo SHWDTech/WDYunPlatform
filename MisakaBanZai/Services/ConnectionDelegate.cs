@@ -37,4 +37,10 @@ namespace MisakaBanZai.Services
     /// </summary>
     /// <param name="conn"></param>
     public delegate void ConnectionModefiedEventHandler(IMisakaConnection conn);
+
+    /// <summary>
+    /// 数据发送事件
+    /// </summary>
+    /// <param name="count"></param>
+    public delegate void DataSendEventHandler(int count);
 }

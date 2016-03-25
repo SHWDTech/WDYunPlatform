@@ -52,6 +52,11 @@ namespace MisakaBanZai.Services
         event ClientDisconnectEventHandler ClientDisconnectEvent;
 
         /// <summary>
+        /// 数据发送事件
+        /// </summary>
+        event DataSendEventHandler DataSendEvent;
+
+        /// <summary>
         /// 输出套接字字节流
         /// </summary>
         /// <returns></returns>
