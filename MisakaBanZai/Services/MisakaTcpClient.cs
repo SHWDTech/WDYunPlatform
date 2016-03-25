@@ -125,11 +125,18 @@ namespace MisakaBanZai.Services
                 _tcpClient.Send(bytes);
                 OnDataSend(bytes.Length);
             }
+            catch (SocketException ex)
+            {
+                LogService.Instance.Error("发送数据失败！", ex);
+                OnClientDisconnect();
+                IsConnected = false;
+                return 0;
+            }
             catch (ObjectDisposedException)
             {
                 OnClientDisconnect();
                 IsConnected = false;
-                throw;
+                return 0;
             }
 
             return bytes.Length;

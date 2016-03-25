@@ -166,7 +166,7 @@ namespace MisakaBanZai.Views
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
             CmbConnectedClient.SelectedIndex = 0;
 
-            _dispatcherTimer.Interval = new TimeSpan(50);
+            _dispatcherTimer.Interval = new TimeSpan(100);
             _dispatcherTimer.Tick += UpdateStatusBar;
             _dispatcherTimer.Start();
 
@@ -420,22 +420,22 @@ namespace MisakaBanZai.Views
 
             if (ShowDate || ShowSource)
             {
-                TxtReceiveViewer.AppendText("数据：", OutPutDataColor.DefualtColor);
+                TxtReceiveViewer.AppendText("数据：");
             }
             if (ShowDate)
             {
-                TxtReceiveViewer.AppendText($"[{DateTime.Now.ToString(DateDisplayFormat)}]", OutPutDataColor.DateTimeColor);
+                TxtReceiveViewer.AppendText($"[{DateTime.Now.ToString(DateDisplayFormat)}]");
             }
             if (ShowSource)
             {
-                TxtReceiveViewer.AppendText($"[{conn.ConnectionName}]", OutPutDataColor.ConnectionColor);
+                TxtReceiveViewer.AppendText($"[{conn.ConnectionName}]");
             }
             if (ShowDate || ShowSource)
             {
-                TxtReceiveViewer.AppendText("=>", OutPutDataColor.DefualtColor);
+                TxtReceiveViewer.AppendText("=>");
                 TxtReceiveViewer.AppendText("\r");
             }
-            TxtReceiveViewer.AppendText($"{Globals.ByteArrayToString(socketBytes, HexReceive)}", OutPutDataColor.ReceiveDataColor);
+            TxtReceiveViewer.AppendText($"{Globals.ByteArrayToString(socketBytes, HexReceive)}");
             TxtReceiveViewer.AppendText("\r\n");
 
             _totalReceive += _lastReceive = socketBytes.Length;
@@ -455,7 +455,7 @@ namespace MisakaBanZai.Views
 
         private void Send()
         {
-            var sendBytes = GetSendText();
+            var sendBytes = GetSendBytes();
 
             if (sendBytes == null)
             {
@@ -464,14 +464,15 @@ namespace MisakaBanZai.Views
                 return;
             }
 
-            try
+            if (sendBytes.Length == 0)
             {
-                _misakaConnection.Send(sendBytes);
+                MessageBox.Show("没有可发送的文本！", "消息！", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
             }
-            catch (Exception ex)
+
+            if (_misakaConnection.Send(sendBytes) == 0)
             {
                 ReportService.Error("发送失败！");
-                LogService.Instance.Error("发送数据失败", ex);
             }
         }
 
@@ -641,9 +642,9 @@ namespace MisakaBanZai.Views
                                      select checkBox)
             {
                 checkBox.IsChecked = !checkBox.IsChecked;
-                if (checkBox.Name == "ChkFullDateMode")
+                if (checkBox.Name == "ChkFullDateMode" && ChkFullDateMode.IsChecked == true)
                 {
-                    ChkShowDate.IsChecked = ChkFullDateMode.IsChecked;
+                    ChkShowDate.IsChecked = true;
                 }
             }
         }
@@ -680,7 +681,7 @@ namespace MisakaBanZai.Views
         /// <param name="sendInterver"></param>
         private void DoAutoSend(int sendInterver)
         {
-            var sendBytes = Dispatcher.Invoke(GetSendText);
+            var sendBytes = Dispatcher.Invoke(GetSendBytes);
             if (sendBytes == null)
             {
                 DispatcherAddReportData(ReportMessageType.Error, "文本中含有非法字符！");
@@ -690,16 +691,24 @@ namespace MisakaBanZai.Views
 
             var conn = Dispatcher.Invoke(GetCurrentConnection);
 
+            if (sendBytes.Length == 0)
+            {
+                MessageBox.Show("没有可发送的文本！", "消息！", MessageBoxButton.OK, MessageBoxImage.Information);
+                Dispatcher.Invoke(RestoreAutoSendControls);
+                return;
+            }
+
             while (true)
             {
-                try
-                {
-                    conn.Send(sendBytes);
-                }
-                catch (Exception ex)
+                if (conn == null)
                 {
                     Dispatcher.Invoke(RestoreAutoSendControls);
-                    LogService.Instance.Error("发送数据错误", ex);
+                    return;
+                }
+                if (conn.Send(sendBytes) == 0)
+                {
+                    Dispatcher.Invoke(RestoreAutoSendControls);
+                    DispatcherAddReportData(ReportMessageType.Error, "数据发送失败！");
                     return;
                 }
 
@@ -712,13 +721,14 @@ namespace MisakaBanZai.Views
         {
             TxtDataSend.IsEnabled = true;
             AutoSendInterval.IsEnabled = true;
+            ChkAutoSend.IsChecked = false;
         }
 
         /// <summary>
         /// 获取发送数据
         /// </summary>
         /// <returns></returns>
-        private byte[] GetSendText() => Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+        private byte[] GetSendBytes() => Globals.StringToByteArray(TxtDataSend.Text, HexSend);
 
         /// <summary>
         /// 获取连接对象
@@ -758,7 +768,7 @@ namespace MisakaBanZai.Views
 
             if (button.Name == "ClearSend") TxtDataSend.Clear();
 
-            if (button.Name == "ClearReceive") TxtReceiveViewer.Document.Blocks.Clear();
+            if (button.Name == "ClearReceive") TxtReceiveViewer.Clear();
         }
 
         /// <summary>

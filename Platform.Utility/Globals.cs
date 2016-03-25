@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
@@ -409,14 +410,18 @@ namespace SHWDTech.Platform.Utility
         public static string GetLocalIpAddressString()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+
+            var ipv4 = host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).ToList();
+
+            if(ipv4.Count == 0) return string.Empty;
+
+            foreach (var ipAddress in ipv4)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
+                var ipStr = ipAddress.ToString().Split('.');
+                if (ipStr[0] == "192") return ipAddress.ToString();
             }
-            throw new Exception("Local IP Address Not Found!");
+
+            return ipv4[0].ToString();
         }
 
         /// <summary>
@@ -426,14 +431,18 @@ namespace SHWDTech.Platform.Utility
         public static IPAddress GetLocalIpAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+
+            var ipv4 = host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).ToList();
+
+            if (ipv4.Count == 0) return null;
+
+            foreach (var ipAddress in ipv4)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip;
-                }
+                var ipStr = ipAddress.ToString().Split('.');
+                if (ipStr[0] == "192") return ipAddress;
             }
-            throw new Exception("Local IP Address Not Found!");
+
+            return ipv4[0];
         }
 
         /// <summary>

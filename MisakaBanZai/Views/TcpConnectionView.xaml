@@ -110,7 +110,7 @@
                 </Grid.RowDefinitions>
                 <Grid Row="0">
                     <GroupBox Header="数据接收显示">
-                        <RichTextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto"></RichTextBox>
+                        <TextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto"></TextBox>
                     </GroupBox>
                 </Grid>
                 <Grid Row="1">
