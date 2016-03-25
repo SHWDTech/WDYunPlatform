@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -434,24 +435,33 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void Send(object sender, RoutedEventArgs e)
         {
-            byte[] sendBytes;
+            Send();
+        }
+
+        private bool Send()
+        {
+            var sendBytes = Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+
+            if (sendBytes == null)
+            {
+                DispatcherAddReportData(ReportMessageType.Error, "文本中含有非法字符！");
+                MessageBox.Show("文本中含有非法字符！", "错误！", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
             try
             {
-                sendBytes = Globals.StringToByteArray(TxtDataSend.Text, HexSend);
+                var count = _misakaConnection.Send(sendBytes);
+                if (count <= 0) return false;
+                _totalSend += sendBytes.Length;
+                _lastSend = sendBytes.Length;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                DispatcherAddReportData(ReportMessageType.Error, "非法字符！");
-                LogService.Instance.Error("字符串转换失败！", ex);
-                MessageBox.Show("文本中含有非法字符！", "错误！", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                return false;
             }
 
-            var count = _misakaConnection.Send(sendBytes);
-
-            if (count <= 0) return;
-            _totalSend += sendBytes.Length;
-            _lastSend = sendBytes.Length;
+            return true;
         }
 
         /// <summary>
@@ -608,6 +618,64 @@ namespace MisakaBanZai.Views
                 {
                     ChkShowDate.IsChecked = ChkFullDateMode.IsChecked;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 自动发送
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AutoSend(object sender, EventArgs e)
+        {
+            var interval = int.Parse(AutoSendInterval.Text);
+            var autoSendThread = new Thread(() => DoAutoSend(interval));
+            autoSendThread.Start();
+        }
+
+        /// <summary>
+        /// 自动发送自动调用
+        /// </summary>
+        private void DispatcherAutoSend()
+        {
+            ChkAutoSend.IsChecked = Send();
+        }
+
+        /// <summary>
+        /// 执行自动发送
+        /// </summary>
+        /// <param name="sendInterver"></param>
+        private void DoAutoSend(int sendInterver)
+        {
+            while (true)
+            {
+                Dispatcher.Invoke(DispatcherAutoSend);
+                Thread.Sleep(sendInterver);
+            }
+        }
+
+        /// <summary>
+        /// 是否在自动发送状态
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAutoSend() => ChkAutoSend.IsChecked == true;
+
+        /// <summary>
+        /// 检查自动发送间隔输入内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckTextInput(object sender, EventArgs e)
+        {
+            if (!(sender is TextBox)) return;
+
+            var textBox = (TextBox)sender;
+
+            int result;
+            if (!int.TryParse(textBox.Text, out result) || result == 0)
+            {
+                textBox.Text = "10000";
+                MessageBox.Show("自动发送间隔只能输入大于零的数字！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

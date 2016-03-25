@@ -126,6 +126,7 @@ namespace MisakaBanZai.Services
             {
                 OnClientDisconnect();
                 IsConnected = false;
+                throw;
             }
 
             return bytes.Length;

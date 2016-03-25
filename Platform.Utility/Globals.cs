@@ -371,11 +371,25 @@ namespace SHWDTech.Platform.Utility
         public static byte[] HexStringToByteArray(string str)
         {
             str = str.Replace(" ", "");
-            if (str.Length % 2 != 0)
+            if (str.Length%2 != 0)
+            {
                 str = str.Substring(0, str.Length - 1);
+            }
             byte[] buffer = new byte[str.Length / 2];
-            for (int i = 0; i < str.Length; i += 2)
-                buffer[i / 2] = Convert.ToByte(str.Substring(i, 2), 16);
+
+            try
+            {
+                for (int i = 0; i < str.Length; i += 2)
+                {
+                    buffer[i / 2] = Convert.ToByte(str.Substring(i, 2), 16);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
+                
             return buffer;
         }
 

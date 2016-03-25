@@ -93,6 +93,12 @@
                                 <CheckBox x:Name="ChkFullDateMode" Margin="5, 10, 0, 0"></CheckBox>
                                 <Label Content="显示完整时间戳" Margin="25, 0, 0, 0" Tag="ChkFullDateMode" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
                             </Grid>
+                            <Grid Row="5">
+                                <CheckBox x:Name="ChkAutoSend" Margin="5, 10, 0, 0" Checked="AutoSend"></CheckBox>
+                                <Label Content="自动发送" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Tag="ChkAutoSend" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                                <TextBox x:Name="AutoSendInterval" HorizontalAlignment="Right" Margin="0, 0, 55, 0" Width="80" TextChanged="CheckTextInput">2000</TextBox>
+                                <Label Content="毫秒" HorizontalAlignment="Right" Margin="0, 0, 10, 0"></Label>
+                            </Grid>
                         </Grid>
                     </GroupBox>
                 </Grid>
