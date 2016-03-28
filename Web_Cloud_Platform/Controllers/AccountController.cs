@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Platform.Process.Enums;
 using Platform.Process.Process;
 using Web_Cloud_Platform.Models;
@@ -18,15 +17,26 @@ namespace Web_Cloud_Platform.Controllers
             _accountProcess = new AccountProcess();
         }
 
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
 
-            return DynamicView();
+            return View();
         }
 
+        /// <summary>
+        /// 登陆处理
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -37,14 +47,6 @@ namespace Web_Cloud_Platform.Controllers
                 return DynamicView(model);
             }
 
-            //try
-            //{
-            //    var x = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.Write(ex);
-            //}
             var signresult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
 
             switch (signresult)
@@ -54,7 +56,7 @@ namespace Web_Cloud_Platform.Controllers
                     return Redirect(returnUrl);
             }
 
-            return DynamicView();
+            return View(model);
         }
     }
 }

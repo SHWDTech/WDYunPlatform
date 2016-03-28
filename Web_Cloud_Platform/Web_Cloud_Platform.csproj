@@ -176,7 +176,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BasicViewModel.cs" />
-    <Compile Include="Models\IBaseViewModel.cs" />
+    <Compile Include="Models\CompanyInfomation.cs" />
+    <Compile Include="Models\IBasicViewModel.cs" />
+    <Compile Include="Models\ICompanyInfomation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

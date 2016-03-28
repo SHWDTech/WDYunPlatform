@@ -1,5 +1,7 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.Model;
 using System.Web;
+using SHWDTech.Platform.Model.IModel;
 
 namespace Platform.Process.IProcess
 {
@@ -14,5 +16,12 @@ namespace Platform.Process.IProcess
         /// <param name="context">HTTP上下文</param>
         /// <returns>当前登录用户</returns>
         WdUser GetCurrentUser(HttpContext context);
+
+        /// <summary>
+        /// 获取页面基础模型相关信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        Dictionary<string, string> GetBasePageInformation(IWdUser user);
     }
 }

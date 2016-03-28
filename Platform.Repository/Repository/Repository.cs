@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using SHWDTech.Platform.Model.Enums;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -25,12 +25,12 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// 进行操作的数据实体
         /// </summary>
-        protected IEnumerable<T> EntitySet { get; set; } 
+        protected IEnumerable<T> EntitySet { get; set; }
 
         /// <summary>
         /// 数据检查条件
         /// </summary>
-        protected Func<T, bool> ChechFunc { get; set; } 
+        protected Func<T, bool> CheckFunc { get; set; }
 
         /// <summary>
         /// 创建一个新的数据仓库泛型基类对象
@@ -41,15 +41,20 @@ namespace SHWD.Platform.Repository.Repository
             EntitySet = DbContext.Set<T>();
         }
 
-        public virtual IEnumerable<T> GetAllModels() => EntitySet;
+        public virtual IEnumerable<T> GetAllModels()
+            => CheckFunc == null ? EntitySet : EntitySet.Where(CheckFunc);
 
-        public IList<T> GetAllModelList() => GetAllModels().ToList();
+        public virtual IList<T> GetAllModelList()
+            => CheckFunc == null ? GetAllModels().ToList() : GetAllModels().Where(CheckFunc).ToList();
 
-        public virtual IEnumerable<T> GetModels(Func<T, bool> exp) => EntitySet.Where(exp);
+        public virtual IEnumerable<T> GetModels(Func<T, bool> exp) 
+            => CheckFunc == null ? EntitySet.Where(exp) : EntitySet.Where(exp).Where(CheckFunc);
 
-        public IList<T> GetModelList(Func<T, bool> exp) => GetModels(exp).ToList();
+        public virtual IList<T> GetModelList(Func<T, bool> exp) 
+            => CheckFunc == null ? GetModels(exp).ToList() : GetModels(exp).Where(CheckFunc).ToList();
 
-        public virtual int GetCount(Func<T, bool> exp) => EntitySet.Where(exp).Count();
+        public virtual int GetCount(Func<T, bool> exp) 
+            => CheckFunc == null ? EntitySet.Where(exp).Count() : EntitySet.Where(exp).Where(CheckFunc).Count();
 
         public virtual T CreateDefaultModel()
         {
@@ -118,18 +123,18 @@ namespace SHWD.Platform.Repository.Repository
 
         private void CheckModel(object models)
         {
-            if (ChechFunc == null) return;
+            if (CheckFunc == null) return;
 
             if (models == null) throw new ArgumentNullException(nameof(models));
 
             var checkList = new List<T>();
             var item = models as T;
-            if(item != null) checkList.Add(item);
+            if (item != null) checkList.Add(item);
 
             var items = models as IEnumerable<T>;
-            if(items != null) checkList.AddRange(items);
+            if (items != null) checkList.AddRange(items);
 
-            if(!checkList.Any(ChechFunc)) throw new ArgumentException("参数不符合要求");
+            if (!checkList.Any(CheckFunc)) throw new ArgumentException("参数不符合要求");
         }
     }
 

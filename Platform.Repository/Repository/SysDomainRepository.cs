@@ -16,7 +16,7 @@ namespace SHWD.Platform.Repository.Repository
         protected SysDomainRepository()
         {
             EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
-            ChechFunc = (obj => obj.DomainId == CurrentDomain.Id);
+            CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
         public override T CreateDefaultModel()

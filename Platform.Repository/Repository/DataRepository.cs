@@ -13,7 +13,7 @@ namespace SHWD.Platform.Repository.Repository
         public DataRepository()
         {
             EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
-            ChechFunc = (obj => obj.DomainId == CurrentDomain.Id);
+            CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
         public override T CreateDefaultModel()

@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WdTech_Protocol_AdminTools"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisakaBanZai", "MisakaBanZai\MisakaBanZai.csproj", "{93604FE4-DEB4-41AB-96D8-163E05F853EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Cache", "Platform.Cache\Platform.Cache.csproj", "{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{93604FE4-DEB4-41AB-96D8-163E05F853EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93604FE4-DEB4-41AB-96D8-163E05F853EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93604FE4-DEB4-41AB-96D8-163E05F853EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,5 +113,6 @@ Global
 		{36163146-A970-46FE-A259-A2B01B87C472} = {1A8B85F6-2DEB-41AD-B3D0-A8E30A8A75D2}
 		{7EFF150A-22D6-4062-B626-BE67CFD21CC9} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 		{93604FE4-DEB4-41AB-96D8-163E05F853EB} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
+		{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7} = {8417CC2C-4AC0-489A-B7E3-814B2CC96644}
 	EndGlobalSection
 EndGlobal

@@ -194,8 +194,6 @@ namespace MisakaBanZai.Services
                     {
                         ProcessBuffer.Add(array[i]);
                     }
-
-                    OnReceivedData();
                 }
                 catch (Exception ex)
                 {
@@ -222,6 +220,8 @@ namespace MisakaBanZai.Services
                     return;
                 }
             }
+
+            OnReceivedData();
 
             client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
         }

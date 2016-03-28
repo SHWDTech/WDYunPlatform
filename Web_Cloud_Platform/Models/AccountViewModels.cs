@@ -2,7 +2,7 @@
 
 namespace Web_Cloud_Platform.Models
 {
-    public class AccountLoginViewModel : IBaseViewModel
+    public class AccountLoginViewModel : BasicViewModel
     {
         [Display(Name = "登录名称")]
         [MaxLength(50)]

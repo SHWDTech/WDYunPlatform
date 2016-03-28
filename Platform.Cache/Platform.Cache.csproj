@@ -4,18 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9BB3C321-2F61-4EFE-9315-B1A035470A57}</ProjectGuid>
+    <ProjectGuid>{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Platform.Process</RootNamespace>
-    <AssemblyName>Platform.Process</AssemblyName>
+    <RootNamespace>Platform.Cache</RootNamespace>
+    <AssemblyName>Platform.Cache</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
-    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
-    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
-    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-    <AssemblyVersion>1.0.</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,7 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,36 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\SignInStatus.cs" />
-    <Compile Include="Enums\SystemCacheNames.cs" />
-    <Compile Include="Enums\SystemConfigType.cs" />
-    <Compile Include="IProcess\IAccountProcess.cs" />
-    <Compile Include="IProcess\IControllerProcess.cs" />
-    <Compile Include="IProcess\IProtocolCodingProcess.cs" />
-    <Compile Include="ProcessInvoke.cs" />
-    <Compile Include="Process\AccountProcess.cs" />
-    <Compile Include="Process\AccountProcessInvoker.cs" />
-    <Compile Include="Process\ControllerProcess.cs" />
-    <Compile Include="Process\ProtocolCodingProcess.cs" />
+    <Compile Include="Enums\CacheExpireInterval.cs" />
+    <Compile Include="Manager\CacheManager.cs" />
+    <Compile Include="Manager\ICacheManager.cs" />
+    <Compile Include="Manager\IPlatformCache.cs" />
+    <Compile Include="Manager\PlatformCache.cs" />
+    <Compile Include="PlatformCaches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Model\Platform.Model.csproj">
-      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
-      <Name>Platform.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Cache\Platform.Cache.csproj">
-      <Project>{5ee1e1c1-00a8-4d4c-a0ea-55cb528f7ed7}</Project>
-      <Name>Platform.Cache</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
-      <Project>{3caf3855-4870-4065-8755-5af2897bd10a}</Project>
-      <Name>Platform.Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
-      <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
-      <Name>Platform.Utility</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
