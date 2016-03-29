@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
@@ -16,12 +14,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <summary>
         /// 设备对应协议信息缓存
         /// </summary>
-        private static Dictionary<Guid, IList<Protocol>> _deviceProtocolsCache; 
-
-        /// <summary>
-        /// 授权协议
-        /// </summary>
-        public static List<Protocol> AuthenticationProtocol { get; } = new List<Protocol>();
+        public static List<Protocol> ProtocolsCache { get; } = new List<Protocol>(); 
         #endregion
 
         /// <summary>
@@ -29,35 +22,22 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         public static void InitManager()
         {
-            _deviceProtocolsCache = new Dictionary<Guid, IList<Protocol>>();
-            AuthenticationProtocol.AddRange(ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetAuthenticationProtocols());
+            GetProtocolsFullLoaded();
         }
 
         /// <summary>
-        /// 获取设备对应的协议信息
+        /// 获取所有协议信息
         /// </summary>
-        /// <param name="deviceGuid"></param>
         /// <returns></returns>
-        public static IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid)
+        private static void GetProtocolsFullLoaded()
         {
-            //先从缓存中读取协议信息，如果缓存中没有，再从数据库读取
-            if (_deviceProtocolsCache.ContainsKey(deviceGuid)) return _deviceProtocolsCache[deviceGuid];
-
-            var protocol = ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetDeviceProtocolsFullLoaded(deviceGuid);
-
-            foreach (var prot in protocol)
+            foreach (var protocol in ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolsFullLoaded())
             {
-                prot.ProtocolStructures = prot.ProtocolStructures.OrderBy(obj => obj.ComponentIndex).ToList();
-
-                foreach (var command in prot.ProtocolCommands)
+                if (!ProtocolsCache.Contains(protocol))
                 {
-                    command.CommandDatas = command.CommandDatas.OrderBy(obj => obj.DataIndex).ToList();
+                    ProtocolsCache.Add(protocol);
                 }
             }
-
-            _deviceProtocolsCache.Add(deviceGuid, protocol);
-
-            return _deviceProtocolsCache[deviceGuid];
         }
     }
 }

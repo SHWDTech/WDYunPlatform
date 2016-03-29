@@ -1,9 +1,11 @@
 ﻿using SHWDTech.Platform.Utility;
 using System;
+using System.Net;
 using System.Windows;
 using System.Windows.Threading;
 using WdTech_Protocol_AdminTools.Enums;
 using WdTech_Protocol_AdminTools.Models;
+using WdTech_Protocol_AdminTools.Services;
 using WdTech_Protocol_AdminTools.TcpCore;
 
 namespace WdTech_Protocol_AdminTools.Views
@@ -18,13 +20,45 @@ namespace WdTech_Protocol_AdminTools.Views
         /// </summary>
         private readonly DispatcherTimer _statusBarTimer = new DispatcherTimer();
 
+        /// <summary>
+        /// 服务器IP地址
+        /// </summary>
+        private IPAddress _serverAddress;
+
+        /// <summary>
+        /// 服务器端口
+        /// </summary>
+        private ushort _serverPort;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            InitControl();
+        }
+
+        /// <summary>
+        /// 初始化窗口控件
+        /// </summary>
+        private void InitControl()
+        {
             _statusBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _statusBarTimer.Tick += UpdateStatusBar;
             _statusBarTimer.Start();
+
+            TxtServerIpAddress.Text = $"{AppConfig.ServerIpAddress}";
+            TxtServerPort.Text = $"{AppConfig.ServerPort}";
+
+            ReportService.AppendTimeStamp = true;
+            ReportService.Instance.ReportDataAdded += AppendReport;
         }
+
+        /// <summary>
+        /// 发送报告文本到界面
+        /// </summary>
+        /// <param name="e"></param>
+        private void AppendReport(EventArgs e)
+            => Dispatcher.Invoke(() => TxtReport.AppendText(ReportService.Instance.PopupReport().Message));
 
         /// <summary>
         /// 更新状态栏
@@ -33,12 +67,16 @@ namespace WdTech_Protocol_AdminTools.Views
         /// <param name="e"></param>
         private void UpdateStatusBar(object sender, EventArgs e)
         {
-            ServerIpAddress.Text = $"{AppConfig.ServerIpAddress}";
-            ServerPort.Text = $"{AppConfig.ServerPort}";
+            if (CommunicationServices.IsStart)
+            {
+                ServerIpAddress.Text = $"{CommunicationServices.ServerIpEndPoint}";
+            }
             ServerStartTDateTime.Text = !CommunicationServices.IsStart
                                         ? "-"
                                         : $"{CommunicationServices.StartDateTime.ToString(AppConfig.StartDateFormat)}";
-            ServerRunningDateTime.Text = $"{(CommunicationServices.StartDateTime - DateTime.Now).ToString("h'h 'm'm 's's'")}";
+            ServerRunningDateTime.Text = !CommunicationServices.IsStart
+                                        ? "-"
+                                        : $"{(CommunicationServices.StartDateTime - DateTime.Now).ToString("h'h 'm'm 's's'")}";
         }
 
         /// <summary>
@@ -72,6 +110,62 @@ namespace WdTech_Protocol_AdminTools.Views
                 LogService.Instance.Error("通信服务停止失败", ex);
                 MessageBox.Show("程序关闭时发生严重错误，请检查错误信息。", "警告", MessageBoxButton.OK);
             }
+        }
+
+        /// <summary>
+        /// 开始服务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartService(object sender, EventArgs e)
+        {
+            if (!ParseServerAddress()) return;
+
+            if (CommunicationServices.Start(new IPEndPoint(_serverAddress, _serverPort)))
+            {
+                SetServerInfoInput(true);
+            }
+        }
+
+        /// <summary>
+        /// 体制服务
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StopService(object sender, EventArgs e)
+        {
+            if (CommunicationServices.Stop())
+            {
+                SetServerInfoInput(false);
+            }
+        }
+
+        /// <summary>
+        /// 设置服务器信息控件状态
+        /// </summary>
+        /// <param name="status"></param>
+        private void SetServerInfoInput(bool status)
+             => TxtServerIpAddress.IsEnabled = TxtServerPort.IsEnabled = status;
+
+        /// <summary>
+        /// 获取服务器IP地址和端口号
+        /// </summary>
+        /// <returns></returns>
+        private bool ParseServerAddress()
+        {
+            if (!IPAddress.TryParse(TxtServerIpAddress.Text, out _serverAddress))
+            {
+                MessageBox.Show("无效的IP地址！", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (!ushort.TryParse(TxtServerPort.Text, out _serverPort))
+            {
+                MessageBox.Show("无效的端口号！", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            return true;
         }
     }
 }

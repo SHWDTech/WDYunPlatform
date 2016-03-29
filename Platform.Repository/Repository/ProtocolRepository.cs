@@ -10,14 +10,10 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class ProtocolRepository : SysRepository<Protocol>, IProtocolRepository
     {
-        public IList<Protocol> GetAuthenticationProtocols()
-        {
-            var protocols = DbContext.Protocols
+        public IList<Protocol> GetProtocolsFullLoaded()
+            => DbContext.Protocols
                 .Include("ProtocolStructures")
                 .Include("ProtocolCommands.CommandDatas")
-                .Where(pro => pro.ProtocolName == "Authentication").ToList();
-
-            return protocols;
-        }
+                .ToList();
     }
 }

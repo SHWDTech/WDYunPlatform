@@ -8,6 +8,7 @@ using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Models;
+using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -30,6 +31,21 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 协议编解码器
         /// </summary>
         private ProtocolEncoding _protocolEncoding;
+
+        /// <summary>
+        /// 客户端数据接收事件
+        /// </summary>
+        public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
+
+        /// <summary>
+        /// 客户端断开事件
+        /// </summary>
+        public event ClientDisconnectEventHandler ClientDisconnectEvent;
+
+        /// <summary>
+        /// 指示通信对象是否已经连接上
+        /// </summary>
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// 设备认证状态
@@ -76,16 +92,68 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             lock (ReceiveBuffer)
             {
-                var readCount = client.EndReceive(result);
-
-                var array = ReceiveBuffer.Last().Array;
-                for (var i = 0; i < readCount; i++)
+                int readCount;
+                try
                 {
-                    _processBuffer.Add(array[i]);
+                    readCount = client.EndReceive(result);
+
+                    var array = ReceiveBuffer.Last().Array;
+                    for (var i = 0; i < readCount; i++)
+                    {
+                        _processBuffer.Add(array[i]);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
+                    {
+                        client.Close();
+                        IsConnected = false;
+                    }
+                    else
+                    {
+                        ReportService.Instance.Warning("接收客户端数据错误！", ex);
+                    }
+
+                    OnClientDisconnect();
+                    return;
+                }
+
+                if (readCount <= 0)
+                {
+                    OnClientDisconnect();
+                    client.Close(0);
+                    IsConnected = false;
+                    return;
                 }
             }
 
+            OnReceivedData();
+
             client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+        }
+
+        private void OnReceivedData()
+        {
+            switch (_authStatus)
+            {
+                case AuthenticationStatus.NotAuthed:
+                    Authentication();
+                    break;
+                case AuthenticationStatus.Authed:
+
+                    break;
+            }
+
+            ClientReceivedDataEvent?.Invoke(this);
+        }
+
+        /// <summary>
+        /// 断开连接时触发
+        /// </summary>
+        private void OnClientDisconnect()
+        {
+            ClientDisconnectEvent?.Invoke(this);
         }
 
         /// <summary>
@@ -99,61 +167,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 身份验证
         /// </summary>
-        public bool Authentication()
+        public void Authentication()
         {
-            if (_processBuffer.Count <= 0) return false;
+            if (_processBuffer.Count <= 0) return;
 
-            switch (_authStatus)
-            {
-                case AuthenticationStatus.NotAuthed:
-                    lock (_processBuffer)
-                    {
-                        var device = ProtocolEncoding.Authentication(_processBuffer.ToArray());
-                        if (device == null) return false;
-                        _authStatus = AuthenticationStatus.Authed;
-                        ClientDevice = device;
-                        _protocolEncoding = new ProtocolEncoding(device.Id);
-                    }
-                    break;
-                case AuthenticationStatus.Authed:
-                    Send(ProtocolEncoding.ReplyAuthentication(ClientDevice));
-                    _authStatus = AuthenticationStatus.AuthReplyed;
-                    break;
-                case AuthenticationStatus.AuthReplyed:
-                    lock (_processBuffer)
-                    {
-                        if (ProtocolEncoding.ConfirmAuthentication(_processBuffer.ToArray()))
-                        {
-                            _authStatus = AuthenticationStatus.AuthConfirmed;
-                        }
-                    }
-                    break;
-            }
-
-            return _authStatus == AuthenticationStatus.AuthConfirmed;
+            
         }
-
-        public ProtocolPackage Decode()
-        {
-            ProtocolPackage package;
-            lock (_processBuffer)
-            {
-                package = _protocolEncoding.Decode(_processBuffer.ToArray());
-
-                if (package == null)
-                {
-                    _processBuffer.RemoveAt(0);
-                    return null;
-                }
-
-                for (var i = 0; i < package.PackageLenth; i++)
-                {
-                    _processBuffer.RemoveAt(0);
-                }
-            }
-
-            return package;
-        } 
 
         /// <summary>
         /// 发送数据

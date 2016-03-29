@@ -185,9 +185,11 @@ namespace SHWDTech.Platform.Utility
         {
             if (endIndex >= sourceBytes.Count) throw new ArgumentOutOfRangeException();
 
-            if (startIndex >= endIndex) throw new ArgumentException("起始位置必须小于结束位置");
+            if (startIndex > endIndex) throw new ArgumentException("起始位置必须小于结束位置");
 
-            var returnBytes = new byte[startIndex - endIndex];
+            if(startIndex == endIndex) return new byte[0];
+
+            var returnBytes = new byte[endIndex - startIndex];
 
             for (var i = 0; i < returnBytes.Length; i++)
             {

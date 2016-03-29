@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
@@ -10,16 +9,9 @@ namespace Platform.Process.IProcess
     public interface IProtocolCodingProcess
     {
         /// <summary>
-        /// （同步）读取设备相关协议信息及协议结构
-        /// </summary>
-        /// <param name="deviceGuid"></param>
-        /// <returns></returns>
-        IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid);
-
-        /// <summary>
-        /// 读取注册协议及协议结构
+        /// （同步）读取协议信息及协议结构
         /// </summary>
         /// <returns></returns>
-        IList<Protocol> GetAuthenticationProtocols();
+        IList<Protocol> GetProtocolsFullLoaded();
     }
 }

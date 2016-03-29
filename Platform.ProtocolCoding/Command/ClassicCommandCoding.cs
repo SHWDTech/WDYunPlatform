@@ -62,6 +62,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             throw new NotImplementedException();
         }
 
+        public ProtocolPackage DecodeAuthentication(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 获取协议包对应的指令
         /// </summary>

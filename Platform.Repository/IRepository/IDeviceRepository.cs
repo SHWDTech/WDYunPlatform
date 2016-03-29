@@ -18,13 +18,6 @@ namespace SHWD.Platform.Repository.IRepository
         IDevice GetDeviceById(Guid deviceGuid);
 
         /// <summary>
-        /// （同步）读取设备关联的协议信息
-        /// </summary>
-        /// <param name="deviceGuid">设备ID</param>
-        /// <returns>设备关联的协议信息</returns>
-        IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid);
-
-        /// <summary>
         /// 通过设备短ID号获取设备信息
         /// </summary>
         /// <param name="nodeId"></param>

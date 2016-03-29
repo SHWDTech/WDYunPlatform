@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.Utility;
+using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -31,6 +32,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private static TcpListener _serverListener;
 
+        /// <summary>
+        /// 服务器监听地址
+        /// </summary>
+        public static IPEndPoint ServerIpEndPoint { get; private set; }
+
         static CommunicationServices()
         {
             Manager = new ActiveClientManager();
@@ -40,28 +46,65 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 开启服务
         /// </summary>
         /// <param name="ipEndPoint"></param>
-        public static void Start(IPEndPoint ipEndPoint)
+        public static bool Start(IPEndPoint ipEndPoint)
         {
-            if (IsStart) return;
+            if (IsStart) return true;
 
-            _serverListener = new TcpListener(ipEndPoint) {ExclusiveAddressUse = false};
-            _serverListener.Start();
-            _serverListener.BeginAcceptSocket(AcceptClient, _serverListener);
+            try
+            {
+                _serverListener = new TcpListener(ipEndPoint) {ExclusiveAddressUse = false};
+                ServerIpEndPoint = ipEndPoint;
+                _serverListener.Start();
+                _serverListener.BeginAcceptSocket(AcceptClient, _serverListener);
 
-            ProtocolInfoManager.InitManager();
-            StartDateTime = DateTime.Now;
-            IsStart = true;
+                ProtocolInfoManager.InitManager();
+                StartDateTime = DateTime.Now;
+                IsStart = true;
+
+                ReportService.Instance.Info("服务器启动成功！");
+            }
+            catch (SocketException ex)
+            {
+                ReportService.Instance.Warning("服务器启动失败!", ex);
+                return false;
+            }
+            catch (ObjectDisposedException ex)
+            {
+                ReportService.Instance.Warning("服务器启动侦听失败，套接字已经关闭!", ex);
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
         /// 停止服务
         /// </summary>
-        public static void Stop()
+        public static bool Stop()
         {
-            if (!IsStart) return;
+            if (!IsStart) return true;
 
-            IsStart = false;
-            StartDateTime = DateTime.MinValue;
+            try
+            {
+                if (_serverListener.Server.Connected)
+                {
+                    _serverListener.Server.Shutdown(SocketShutdown.Both);
+                    _serverListener.Server.Disconnect(false);
+                    IsStart = false;
+                }
+
+                _serverListener.Server.Close(0);
+
+                StartDateTime = DateTime.MinValue;
+
+                ReportService.Instance.Info("服务器停止成功！");
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Info("关闭服务器时，发生套接字错误。", ex);
+            }
+            
+            return true;
         }
 
         /// <summary>
@@ -73,16 +116,22 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             try
             {
-
                 var client = server.EndAcceptSocket(result);
 
                 Manager.AddClient(client);
+
+                ReportService.Instance.Info($"客户端连接建立，IP地址：{client.RemoteEndPoint}。");
             }
-            catch (Exception ex)
+            catch (ObjectDisposedException ex)
             {
-                LogService.Instance.Warn("接收客户端请求失败！", ex);
+                ReportService.Instance.Info("侦听器已经关闭", ex);
+                return;
             }
-            
+            catch (SocketException ex)
+            {
+                ReportService.Instance.Warning("接收客户端请求失败！", ex);
+            }
+
             server.BeginAcceptSocket(AcceptClient, server);
         }
     }

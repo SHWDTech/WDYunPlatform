@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.Utility;
@@ -20,7 +19,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public ProtocolEncoding(Guid deviceGuid)
         {
-            _deviceProtocols = ProtocolInfoManager.GetDeviceProtocolsFullLoaded(deviceGuid);
+            //_deviceProtocols = ProtocolInfoManager.GetDeviceProtocol(deviceGuid);
         }
 
         /// <summary>
@@ -28,7 +27,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         /// <param name="protocolBytes"></param>
         /// <returns></returns>
-        public ProtocolPackage Decode(IReadOnlyList<byte> protocolBytes)
+        public ProtocolPackage Decode(byte[] protocolBytes)
         {
             Protocol matchedProtocol = null;
             foreach (var deviceProtocol in _deviceProtocols.Where(deviceProtocol => IsHeadMatched(protocolBytes, deviceProtocol.Head)))
@@ -52,11 +51,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="protocolBytes">协议字节流</param>
         /// <param name="protocolHead">协议定义帧头</param>
         /// <returns>匹配返回TRUE，否则返回FALSE</returns>
-        public static bool IsHeadMatched(IReadOnlyList<byte> protocolBytes, IReadOnlyList<byte> protocolHead)
+        public static bool IsHeadMatched(byte[] protocolBytes, byte[] protocolHead)
         {
             var matched = true;
 
-            for (var i = 0; i < protocolHead.Count; i++)
+            for (var i = 0; i < protocolHead.Length; i++)
             {
                 if (protocolBytes[i] != protocolHead[i]) matched = false;
             }
@@ -91,7 +90,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="protocolBytes">字节流</param>
         /// <param name="matchedProtocol">对应的协议</param>
         /// <returns>协议解析结果</returns>
-        public static ProtocolPackage DecodeProtocol(IReadOnlyList<byte> protocolBytes, Protocol matchedProtocol)
+        public static ProtocolPackage DecodeProtocol(byte[] protocolBytes, Protocol matchedProtocol)
         {
             var result = new ProtocolPackage();
 
@@ -99,8 +98,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             var currentIndex = 0;
 
-            foreach (var structure in structures)
+            for (int i = 0; i < structures.Count; i++)
             {
+                var structure = structures.First(obj => obj.ComponentIndex == i);
+
                 var component = new PackageComponent
                 {
                     ComponentName = structure.ComponentName,
@@ -119,28 +120,5 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             return result;
         }
-
-        /// <summary>
-        /// 验证设备身份
-        /// </summary>
-        /// <returns></returns>
-        public static IDevice Authentication(byte[] authBytes) => (from protocol in ProtocolInfoManager.AuthenticationProtocol
-                                                                   select DecodeProtocol(authBytes, protocol)
-                                                                   into package
-                                                                   where package.Finalized
-                                                                   select package.Device).FirstOrDefault();
-
-        /// <summary>
-        /// 回复验证信息
-        /// </summary>
-        /// <returns></returns>
-        public static byte[] ReplyAuthentication(IDevice clientDevice) => null;
-
-        /// <summary>
-        /// 确认设备身份授权信息
-        /// </summary>
-        /// <param name="authConfirmBytes"></param>
-        /// <returns></returns>
-        public static bool ConfirmAuthentication(byte[] authConfirmBytes) => false;
     }
 }

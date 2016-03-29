@@ -18,5 +18,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         /// </summary>
         /// <returns></returns>
         ProtocolPackage EncodeCommand(ProtocolCommand command);
+
+        /// <summary>
+        /// 解码验证协议
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        ProtocolPackage DecodeAuthentication(byte[] bytes);
     }
 }

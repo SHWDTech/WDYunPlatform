@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
@@ -12,9 +11,7 @@ namespace Platform.Process.Process
     /// </summary>
     public class ProtocolCodingProcess : IProtocolCodingProcess
     {
-        public IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid) => DbRepository.Repo<DeviceRepository>().GetDeviceProtocolsFullLoaded(deviceGuid);
-
-        public IList<Protocol> GetAuthenticationProtocols()
-            => DbRepository.Repo<ProtocolRepository>().GetAuthenticationProtocols();
+        public IList<Protocol> GetProtocolsFullLoaded() 
+            => DbRepository.Repo<ProtocolRepository>().GetProtocolsFullLoaded();
     }
 }

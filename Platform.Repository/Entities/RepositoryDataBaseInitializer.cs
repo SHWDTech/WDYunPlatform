@@ -140,7 +140,7 @@ namespace SHWD.Platform.Repository.Entities
 
             dbContext.DeviceTypes.Add(deviceType);
 
-            var proa = new Protocol
+            var classic = new Protocol
             {
                 Id = Guid.Parse("f59022bc-6f8c-4ced-954f-3a6d7dd29335"),
                 FieldId = field.Id,
@@ -160,14 +160,29 @@ namespace SHWD.Platform.Repository.Entities
                 Tail = new byte[] { 0xDD }
             };
 
-            firma.Protocols.Add(proa);
+            firma.Protocols.Add(classic);
+
+            var head = new ProtocolStructure
+            {
+                Id = Guid.Parse("2bb54221-f036-48ff-babc-22358bdf50e2"),
+                ProtocolId = classic.Id,
+                ComponentName = "CmdType",
+                ComponentIndex = 0,
+                ComponentDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.SingleByte
+            };
 
             var cmdtype = new ProtocolStructure
             {
                 Id = Guid.Parse("dcdb914f-62ec-42dc-bece-04124cfd61fa"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "CmdType",
-                ComponentIndex = 0,
+                ComponentIndex = 1,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -180,9 +195,9 @@ namespace SHWD.Platform.Repository.Entities
             var cmdbyte = new ProtocolStructure
             {
                 Id = Guid.Parse("fa009ac1-8a08-4243-a143-eb7cb8942660"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "CmdByte",
-                ComponentIndex = 1,
+                ComponentIndex = 2,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -195,9 +210,9 @@ namespace SHWD.Platform.Repository.Entities
             var password = new ProtocolStructure()
             {
                 Id = Guid.Parse("eddaa794-088a-4cc0-8c8e-b09635ba249a"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "Password",
-                ComponentIndex = 2,
+                ComponentIndex = 3,
                 ComponentDataLength = 8,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -210,9 +225,9 @@ namespace SHWD.Platform.Repository.Entities
             var nodeid = new ProtocolStructure()
             {
                 Id = Guid.Parse("ff20af2c-8f93-4755-889f-e8943c023e7d"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "NodeId",
-                ComponentIndex = 3,
+                ComponentIndex = 4,
                 ComponentDataLength = 4,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -225,9 +240,9 @@ namespace SHWD.Platform.Repository.Entities
             var descrip = new ProtocolStructure()
             {
                 Id = Guid.Parse("92006a07-3726-4cdc-99a4-7b3fdf7ef03d"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "Description",
-                ComponentIndex = 4,
+                ComponentIndex = 5,
                 ComponentDataLength = 12,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -240,9 +255,9 @@ namespace SHWD.Platform.Repository.Entities
             var sourceaddr = new ProtocolStructure()
             {
                 Id = Guid.Parse("9ccdffd7-7d22-43d1-9185-a58541ce87f8"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "SourceAddr",
-                ComponentIndex = 5,
+                ComponentIndex = 6,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -255,9 +270,9 @@ namespace SHWD.Platform.Repository.Entities
             var destination = new ProtocolStructure()
             {
                 Id = Guid.Parse("20ddc634-6ce6-47cc-82e1-c3df8f68abaa"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "DestinationAddr",
-                ComponentIndex = 6,
+                ComponentIndex = 7,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -270,9 +285,9 @@ namespace SHWD.Platform.Repository.Entities
             var datalength = new ProtocolStructure()
             {
                 Id = Guid.Parse("ad465018-24d3-400d-b7d5-712abf54ceeb"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "PayhloadLength",
-                ComponentIndex = 7,
+                ComponentIndex = 8,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -285,10 +300,10 @@ namespace SHWD.Platform.Repository.Entities
             var data = new ProtocolStructure()
             {
                 Id = Guid.Parse("4cde87be-468c-46cf-a1f9-0172f21761ca"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "Data",
-                ComponentIndex = 8,
-                ComponentDataLength = -1,
+                ComponentIndex = 9,
+                ComponentDataLength = 0,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
@@ -300,9 +315,9 @@ namespace SHWD.Platform.Repository.Entities
             var crc = new ProtocolStructure()
             {
                 Id = Guid.Parse("1bd5725a-0408-4c4a-b7ad-f2c92dd830e2"),
-                ProtocolId = proa.Id,
+                ProtocolId = classic.Id,
                 ComponentName = "CrcValue",
-                ComponentIndex = 9,
+                ComponentIndex = 10,
                 ComponentDataLength = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -312,6 +327,22 @@ namespace SHWD.Platform.Repository.Entities
                 DataType = ProtocolDataType.Crc
             };
 
+            var tail = new ProtocolStructure()
+            {
+                Id = Guid.Parse("6aea3080-bb97-4e50-8140-7c31728b1637"),
+                ProtocolId = classic.Id,
+                ComponentName = "Tail",
+                ComponentIndex = 11,
+                ComponentDataLength = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Crc
+            };
+
+            dbContext.ProtocolStructures.Add(head);
             dbContext.ProtocolStructures.Add(cmdtype);
             dbContext.ProtocolStructures.Add(cmdbyte);
             dbContext.ProtocolStructures.Add(password);
@@ -322,30 +353,31 @@ namespace SHWD.Platform.Repository.Entities
             dbContext.ProtocolStructures.Add(datalength);
             dbContext.ProtocolStructures.Add(data);
             dbContext.ProtocolStructures.Add(crc);
+            dbContext.ProtocolStructures.Add(tail);
 
-            var sysConfig = new SysConfig()
+            var commandReply = new SysConfig()
             {
                 Id = Guid.Parse("6ca98eba-47df-45c3-9bfb-1b56865b0a11"),
-                SysConfigName = ProtocolDeliveryParam.ReplyStayOriginal,
+                SysConfigName = ProtocolDeliveryParam.ReplyOriginal,
                 SysConfigType = SysConfigType.ProtocolDeliveryParam,
-                SysConfigValue = ProtocolDeliveryParam.ReplyStayOriginal,
+                SysConfigValue = ProtocolDeliveryParam.ReplyOriginal,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id
             };
 
-            dbContext.SysConfigs.Add(sysConfig);
+            dbContext.SysConfigs.Add(commandReply);
 
             var command = new ProtocolCommand
             {
                 Id = Guid.Parse("d2ccf8b0-ed68-48ef-b185-f94b504944ca"),
                 CommandTypeCode = new byte[] {0xF9},
-                CommandCode = new byte[] {0x81},
+                CommandCode = new byte[] {0x1F},
                 CommandDataLength = 0,
-                CommandCategory = CommandCategory.Authentication,
-                ProtocolId = proa.Id,
-                CommandDeliverParams = new List<SysConfig> {sysConfig},
+                CommandCategory = CommandCategory.HeartBeat,
+                ProtocolId = classic.Id,
+                CommandDeliverParamConfigs = new List<SysConfig> {commandReply},
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,

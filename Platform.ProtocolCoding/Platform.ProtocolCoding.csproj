@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\AuthResult.cs" />
+    <Compile Include="Authentication\AuthResultType.cs" />
     <Compile Include="Coding\PackageComponent.cs" />
     <Compile Include="Command\ClassicCommandCoding.cs" />
     <Compile Include="Command\ICommandCoding.cs" />

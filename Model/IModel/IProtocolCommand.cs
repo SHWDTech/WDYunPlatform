@@ -43,5 +43,15 @@ namespace SHWDTech.Platform.Model.IModel
         /// 指令数据
         /// </summary>
         ICollection<CommandData> CommandDatas { get; set; }
+
+        /// <summary>
+        /// 指令处理参数相关配置
+        /// </summary>
+        ICollection<SysConfig> CommandDeliverParamConfigs { get; set; }
+
+        /// <summary>
+        /// 指令处理参数列表
+        /// </summary>
+        List<string> CommandDeliverParams { get; }
     }
 }

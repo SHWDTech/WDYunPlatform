@@ -9,9 +9,9 @@ namespace SHWD.Platform.Repository.IRepository
     public interface IProtocolRepository : ISysRepository<Protocol>
     {
         /// <summary>
-        /// 获取注册协议及协议结构
+        /// （同步）读取所有协议信息
         /// </summary>
         /// <returns></returns>
-        IList<Protocol> GetAuthenticationProtocols();
+        IList<Protocol> GetProtocolsFullLoaded();
     }
 }

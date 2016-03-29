@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -41,6 +42,12 @@ namespace SHWDTech.Platform.Model.Model
         public virtual ICollection<CommandData> CommandDatas { get; set; }
 
         [Display(Name = "指令处理参数")]
-        public virtual ICollection<SysConfig> CommandDeliverParams { get; set; } 
+        public virtual ICollection<SysConfig> CommandDeliverParamConfigs { get; set; }
+
+        [NotMapped]
+        public virtual List<string> CommandDeliverParams
+            => CommandDeliverParamConfigs.Count > 0
+                ? CommandDeliverParamConfigs.Select(config => config.SysConfigName).ToList()
+                : new List<string>();
     }
 }

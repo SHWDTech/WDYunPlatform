@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Utility
 
                 var fileMap = new ExeConfigurationFileMap
                 {
-                    ExeConfigFilename = appPath + "\\" + "Unity.Config"
+                    ExeConfigFilename = appPath + "\\" + "Unity.config"
                 };
 
                 Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap,

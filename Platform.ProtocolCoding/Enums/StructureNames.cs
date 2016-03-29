@@ -6,6 +6,16 @@
     public static class StructureNames
     {
         /// <summary>
+        /// 协议头
+        /// </summary>
+        public const string Head = "Head";
+
+        /// <summary>
+        /// 协议尾
+        /// </summary>
+        public const string Tail = "Tail";
+
+        /// <summary>
         /// 数据结构
         /// </summary>
         public const string Data = "Data";

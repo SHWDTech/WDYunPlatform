@@ -14,22 +14,6 @@ namespace SHWD.Platform.Repository.Repository
     {
         public IDevice GetDeviceById(Guid deviceGuid) => GetAllModels().First(device => device.Id == deviceGuid);
 
-        public IList<Protocol> GetDeviceProtocolsFullLoaded(Guid deviceGuid)
-        {
-            var device =
-                DbContext.Devices.Include("FirmwareSet.Firmwares.Protocols.ProtocolStructures")
-                                 .Include("FirmwareSet.Firmwares.Protocols.ProtocolCommands.CommandDatas")
-                                 .First(dev => dev.Id == deviceGuid);
-
-            var protocols = new List<Protocol>();
-            foreach (var firmware in device.FirmwareSet.Firmwares)
-            {
-                protocols.AddRange(firmware.Protocols);
-            }
-
-            return protocols;
-        }
-
         public IList<Device> GetDeviceByNodeId(string nodeId)
             => GetModelList(device => device.DeviceNodeId == nodeId);
     }

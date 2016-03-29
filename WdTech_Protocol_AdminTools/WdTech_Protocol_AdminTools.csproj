@@ -99,7 +99,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Enums\DateTimeViewFormat.cs" />
+    <Compile Include="Enums\OutPutDataColor.cs" />
+    <Compile Include="Enums\ReportMessageColor.cs" />
+    <Compile Include="Enums\ReportMessageType.cs" />
     <Compile Include="Models\AppConfig.cs" />
+    <Compile Include="Services\AdminDelegate.cs" />
+    <Compile Include="Services\ReportMessage.cs" />
+    <Compile Include="Services\ReportService.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />
     <Compile Include="TcpCore\CommunicationServices.cs" />
     <Compile Include="TcpCore\TcpClientManager.cs" />
@@ -126,6 +132,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Unity.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
