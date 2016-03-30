@@ -39,6 +39,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             var container = package[StructureNames.Data].ComponentData;
             foreach (var data in command.CommandDatas)
             {
+                if (currentIndex + data.DataLength > container.Length) return;
+
                 var component = new PackageComponent
                 {
                     ComponentName = data.DataName,
@@ -55,6 +57,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
             var device = DbRepository.Repo<DeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
             if (device != null) package.Device = device;
+
+            package.Finalization();
         }
 
         public ProtocolPackage EncodeCommand(ProtocolCommand command)

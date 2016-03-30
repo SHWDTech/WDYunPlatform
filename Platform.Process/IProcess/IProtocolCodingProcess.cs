@@ -13,5 +13,12 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <returns></returns>
         IList<Protocol> GetProtocolsFullLoaded();
+
+        /// <summary>
+        /// 通过协议名称获取协议
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        Protocol GetProtocolByName(string name);
     }
 }

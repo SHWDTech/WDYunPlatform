@@ -17,7 +17,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public bool Finalized { get; private set; }
 
-        public int PackageLenth { get; private set; } = -1;
+        public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentData.Length);
 
         public IDevice Device { get; set; }
 
@@ -65,7 +65,6 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public void Finalization()
         {
-            PackageLenth = _componentData.Sum(obj => obj.Value.ComponentData.Length);
             Finalized = true;
         }
     }

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.Utility;
@@ -15,11 +15,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 设备包含协议
         /// </summary>
-        private readonly IList<Protocol> _deviceProtocols;
+        private readonly List<Protocol> _deviceProtocols = new List<Protocol>();
 
-        public ProtocolEncoding(Guid deviceGuid)
+        public ProtocolEncoding(IDevice device)
         {
-            //_deviceProtocols = ProtocolInfoManager.GetDeviceProtocol(deviceGuid);
+            foreach (var firmware in device.FirmwareSet.Firmwares)
+            {
+                _deviceProtocols.AddRange(firmware.Protocols);
+            }
         }
 
         /// <summary>
@@ -98,9 +101,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             var currentIndex = 0;
 
-            for (int i = 0; i < structures.Count; i++)
+            for (var i = 0; i < structures.Count; i++)
             {
                 var structure = structures.First(obj => obj.ComponentIndex == i);
+
+                if (currentIndex + structure.ComponentDataLength > protocolBytes.Length)
+                {
+                    return result;
+                }
 
                 var component = new PackageComponent
                 {
@@ -115,8 +123,6 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             }
 
             UnityFactory.Resolve<ICommandCoding>(matchedProtocol.ProtocolModule).DecodeCommand(result, matchedProtocol);
-
-            result.Finalization();
 
             return result;
         }

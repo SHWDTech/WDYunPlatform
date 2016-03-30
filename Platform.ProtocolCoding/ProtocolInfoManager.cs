@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
@@ -14,7 +15,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <summary>
         /// 设备对应协议信息缓存
         /// </summary>
-        public static List<Protocol> ProtocolsCache { get; } = new List<Protocol>(); 
+        private static Dictionary<string, Protocol> ProtocolsCache { get; } = new Dictionary<string, Protocol>();
         #endregion
 
         /// <summary>
@@ -31,13 +32,30 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         private static void GetProtocolsFullLoaded()
         {
-            foreach (var protocol in ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolsFullLoaded())
+            foreach (var protocol in ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolsFullLoaded()
+                .Where(protocol => !ProtocolsCache.ContainsValue(protocol)))
             {
-                if (!ProtocolsCache.Contains(protocol))
-                {
-                    ProtocolsCache.Add(protocol);
-                }
+                ProtocolsCache.Add(protocol.ProtocolName, protocol);
             }
+        }
+
+        /// <summary>
+        /// 通过协议名称获取协议
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static Protocol GetProtocolByName(string name)
+        {
+            if (ProtocolsCache.ContainsKey(name))
+            {
+                return ProtocolsCache[name];
+            }
+
+            var protocol = ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolByName(name);
+            if (protocol == null) return null;
+
+            ProtocolsCache.Add(protocol.ProtocolName, protocol);
+            return ProtocolsCache[name];
         }
     }
 }
