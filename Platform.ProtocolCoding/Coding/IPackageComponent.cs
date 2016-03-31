@@ -16,6 +16,11 @@
         string DataType { get; set; }
 
         /// <summary>
+        /// 数据索引
+        /// </summary>
+        int ComponentIndex { get; set; }
+
+        /// <summary>
         /// 组件数据
         /// </summary>
         byte[] ComponentData { get; set; }

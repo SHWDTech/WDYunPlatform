@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.ProtocolCoding.Enums;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -28,6 +29,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         public DateTime ReceiveDateTime { get; set; }
 
         public IProtocol Protocol { get; set; }
+
+        public PackageStatus Status { get; set; } = PackageStatus.UnFinalized;
 
         public string DeliverParams { get; set; }
 
@@ -61,6 +64,19 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     _componentData[name] = value;
                 }
             }
+        }
+
+        public byte[] GetBytes()
+        {
+            var bytes = new List<byte>();
+
+            for (int i = 0; i < _componentData.Count; i++)
+            {
+                var comp = _componentData.First(obj => obj.Value.ComponentIndex == i).Value;
+                //if(comp.ComponentIndex)
+            }
+
+            return null;
         }
 
         public void Finalization()

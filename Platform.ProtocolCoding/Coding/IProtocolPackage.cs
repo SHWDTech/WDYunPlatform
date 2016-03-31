@@ -55,6 +55,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         string DeliverParams { get; set; }
 
+        byte[] GetBytes();
+
         /// <summary>
         /// 完成协议包的编解码
         /// </summary>

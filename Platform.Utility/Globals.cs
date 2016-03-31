@@ -181,7 +181,7 @@ namespace SHWDTech.Platform.Utility
         /// <param name="startIndex">返回字节集合的起始位置</param>
         /// <param name="endIndex">返回字节集合的结束位置</param>
         /// <returns>子字节数组</returns>
-        public static byte[] SubBytes(this IReadOnlyList<byte> sourceBytes, int startIndex, int endIndex)
+        public static byte[] SubBytes(this IList<byte> sourceBytes, int startIndex, int endIndex)
         {
             if (endIndex >= sourceBytes.Count) throw new ArgumentOutOfRangeException();
 

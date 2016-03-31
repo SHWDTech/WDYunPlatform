@@ -48,6 +48,7 @@
     <Compile Include="Command\ICommandCoding.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="Enums\AuthenticationStatus.cs" />
+    <Compile Include="Enums\PackageStatus.cs" />
     <Compile Include="Enums\ProtocolNames.cs" />
     <Compile Include="Enums\StructureNames.cs" />
     <Compile Include="Coding\IPackageComponent.cs" />

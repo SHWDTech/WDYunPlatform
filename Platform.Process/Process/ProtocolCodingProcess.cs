@@ -17,5 +17,7 @@ namespace Platform.Process.Process
 
         public Protocol GetProtocolByName(string name)
             => DbRepository.Repo<ProtocolRepository>().GetModels(model => model.ProtocolName == name).FirstOrDefault();
+
+
     }
 }

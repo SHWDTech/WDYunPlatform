@@ -3,6 +3,7 @@ using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Command;
+using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
@@ -28,17 +29,19 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 将字节流解码成协议包
         /// </summary>
-        /// <param name="protocolBytes"></param>
+        /// <param name="bufferBytes"></param>
         /// <returns></returns>
-        public ProtocolPackage Decode(byte[] protocolBytes)
+        public ProtocolPackage Decode(IList<byte> bufferBytes)
         {
             Protocol matchedProtocol = null;
-            foreach (var deviceProtocol in _deviceProtocols.Where(deviceProtocol => IsHeadMatched(protocolBytes, deviceProtocol.Head)))
+            foreach (var deviceProtocol in _deviceProtocols.Where(deviceProtocol => IsHeadMatched(bufferBytes, deviceProtocol.Head)))
             {
                 matchedProtocol = deviceProtocol;
             }
 
-            return matchedProtocol == null ? null : DecodeProtocol(protocolBytes, matchedProtocol);
+            return matchedProtocol == null
+                ? new ProtocolPackage() { Status = PackageStatus.InvalidHead }
+                : DecodeProtocol(bufferBytes, matchedProtocol);
         }
 
         /// <summary>
@@ -51,16 +54,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议帧头与字节流匹配
         /// </summary>
-        /// <param name="protocolBytes">协议字节流</param>
+        /// <param name="bufferBytes">协议字节流</param>
         /// <param name="protocolHead">协议定义帧头</param>
         /// <returns>匹配返回TRUE，否则返回FALSE</returns>
-        public static bool IsHeadMatched(byte[] protocolBytes, byte[] protocolHead)
+        public static bool IsHeadMatched(IList<byte> bufferBytes, byte[] protocolHead)
         {
             var matched = true;
 
             for (var i = 0; i < protocolHead.Length; i++)
             {
-                if (protocolBytes[i] != protocolHead[i]) matched = false;
+                if (bufferBytes[i] != protocolHead[i]) matched = false;
             }
 
             return matched;
@@ -90,10 +93,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议解码
         /// </summary>
-        /// <param name="protocolBytes">字节流</param>
+        /// <param name="bufferBytes">字节流</param>
         /// <param name="matchedProtocol">对应的协议</param>
         /// <returns>协议解析结果</returns>
-        public static ProtocolPackage DecodeProtocol(byte[] protocolBytes, Protocol matchedProtocol)
+        public static ProtocolPackage DecodeProtocol(IList<byte> bufferBytes, Protocol matchedProtocol)
         {
             var result = new ProtocolPackage();
 
@@ -105,8 +108,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             {
                 var structure = structures.First(obj => obj.ComponentIndex == i);
 
-                if (currentIndex + structure.ComponentDataLength > protocolBytes.Length)
+                if (currentIndex + structure.ComponentDataLength > bufferBytes.Count)
                 {
+                    result.Status = PackageStatus.NoEnoughBuffer;
                     return result;
                 }
 
@@ -114,7 +118,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 {
                     ComponentName = structure.ComponentName,
                     DataType = structure.DataType,
-                    ComponentData = protocolBytes.SubBytes(currentIndex, currentIndex + structure.ComponentDataLength)
+                    ComponentIndex = structure.ComponentIndex,
+                    ComponentData = bufferBytes.SubBytes(currentIndex, currentIndex + structure.ComponentDataLength)
                 };
 
                 currentIndex += structure.ComponentDataLength;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.ProtocolCoding.Authentication;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
@@ -98,9 +99,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     readCount = client.EndReceive(result);
 
                     var array = ReceiveBuffer.Last().Array;
-                    for (var i = 0; i < readCount; i++)
+                    lock (_processBuffer)
                     {
-                        _processBuffer.Add(array[i]);
+                        for (var i = 0; i < readCount; i++)
+                        {
+                            _processBuffer.Add(array[i]);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -141,7 +145,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     Authentication();
                     break;
                 case AuthenticationStatus.Authed:
-
+                    Decode();
                     break;
             }
 
@@ -167,10 +171,35 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 身份验证
         /// </summary>
-        public void Authentication()
+        private void Authentication()
         {
             if (_processBuffer.Count <= 0) return;
 
+            lock (_processBuffer)
+            {
+                var result = AuthenticationService.DeviceAuthcation(_processBuffer);
+
+                if (result.ResultType == AuthResultType.Faild && result.Package.Status == PackageStatus.NoEnoughBuffer)
+                    return;
+
+                if (result.ResultType == AuthResultType.Faild && result.Package.Status == PackageStatus.InvalidHead)
+                {
+                    _processBuffer.RemoveAt(0);
+                }
+                else if(result.ResultType == AuthResultType.Faild && result.Package.Status == PackageStatus.InvalidPackage)
+                {
+                    _processBuffer.Clear();
+                }
+
+                ClientDevice = result.AuthDevice;
+                _protocolEncoding = new ProtocolEncoding(ClientDevice);
+                _authStatus = AuthenticationStatus.Authed;
+                Send(result.ReplyBytes);
+            }
+        }
+
+        private void Decode()
+        {
             
         }
 

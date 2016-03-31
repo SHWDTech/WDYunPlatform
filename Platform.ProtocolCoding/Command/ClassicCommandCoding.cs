@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWD.Platform.Repository;
-using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
@@ -39,7 +37,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             var container = package[StructureNames.Data].ComponentData;
             foreach (var data in command.CommandDatas)
             {
-                if (currentIndex + data.DataLength > container.Length) return;
+                if (currentIndex + data.DataLength > container.Length)
+                {
+                    package.Status = PackageStatus.NoEnoughBuffer;
+                    return;
+                }
 
                 var component = new PackageComponent
                 {
@@ -54,19 +56,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             }
 
             if (command.CommandCategory != CommandCategory.Authentication) return;
-            var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
-            var device = DbRepository.Repo<DeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
-            if (device != null) package.Device = device;
 
             package.Finalization();
         }
 
         public ProtocolPackage EncodeCommand(ProtocolCommand command)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ProtocolPackage DecodeAuthentication(byte[] bytes)
         {
             throw new NotImplementedException();
         }

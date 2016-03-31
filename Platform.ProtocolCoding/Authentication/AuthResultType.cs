@@ -6,14 +6,9 @@
     public enum AuthResultType
     {
         /// <summary>
-        /// 无效的帧头
+        /// 认证失败
         /// </summary>
-        InvaildHead,
-
-        /// <summary>
-        /// 无效的数据包
-        /// </summary>
-        InvalidPackage,
+        Faild,
 
         /// <summary>
         /// 认证成功

@@ -13,16 +13,6 @@
         /// <summary>
         /// 已授权
         /// </summary>
-        Authed,
-
-        /// <summary>
-        /// 已回复授权信息
-        /// </summary>
-        AuthReplyed,
-
-        /// <summary>
-        /// 已确认授权
-        /// </summary>
-        AuthConfirmed
+        Authed
     }
 }

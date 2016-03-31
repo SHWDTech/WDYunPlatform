@@ -9,6 +9,8 @@
 
         public string DataType { get; set; }
 
+        public int ComponentIndex { get; set; }
+
         public byte[] ComponentData { get; set; }
     }
 }
