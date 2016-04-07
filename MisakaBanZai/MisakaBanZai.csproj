@@ -75,12 +75,19 @@
     <Compile Include="Models\IMisakaConnectionManagerWindow.cs" />
     <Compile Include="Services\ReportMessage.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Views\CommonlyUsed.xaml.cs">
+      <DependentUpon>CommonlyUsed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MessageManager.xaml.cs">
       <DependentUpon>MessageManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TcpConnectionView.xaml.cs">
       <DependentUpon>TcpConnectionView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CommonlyUsed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -427,6 +427,18 @@ namespace SHWDTech.Platform.Utility
         }
 
         /// <summary>
+        /// 获取所有IP地址的列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetLocalIpV4AddressStringList()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+
+            return host.AddressList.Where(obj => obj.AddressFamily == AddressFamily.InterNetwork)
+                .Select(ipAddress => ipAddress.ToString()).ToList();
+        }
+
+        /// <summary>
         /// 获取IP地址
         /// </summary>
         /// <returns></returns>

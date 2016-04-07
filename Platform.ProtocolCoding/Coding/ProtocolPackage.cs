@@ -20,6 +20,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentData.Length);
 
+        /// <summary>
+        /// 数据段索引
+        /// </summary>
+        private int _dataIndex;
+
         public IDevice Device { get; set; }
 
         public IProtocolCommand Command { get; set; }
@@ -52,6 +57,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 if (name == "Data")
                 {
                     DataComponent = value;
+                    _dataIndex = value.ComponentIndex;
                     return;
                 }
 
@@ -68,12 +74,17 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public byte[] GetBytes()
         {
+            if (!Finalized) return null;
+
             var bytes = new List<byte>();
 
-            for (int i = 0; i < _componentData.Count; i++)
+            for (var i = 0; i < _componentData.Count; i++)
             {
-                var comp = _componentData.First(obj => obj.Value.ComponentIndex == i).Value;
-                //if(comp.ComponentIndex)
+                var component = i == _dataIndex 
+                    ? DataComponent 
+                    : _componentData.First(obj => obj.Value.ComponentIndex == i).Value;
+
+                bytes.AddRange(component.ComponentData);
             }
 
             return null;

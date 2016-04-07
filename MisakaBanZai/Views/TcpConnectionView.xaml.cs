@@ -117,6 +117,11 @@ namespace MisakaBanZai.Views
         private TcpConnectionView()
         {
             InitializeComponent();
+
+            foreach (var ipAddress in Globals.GetLocalIpV4AddressStringList())
+            {
+                TxtLocalAddr.Items.Add(ipAddress);
+            }
         }
 
         public TcpConnectionView(IMisakaConnection connection) : this()
@@ -166,7 +171,7 @@ namespace MisakaBanZai.Views
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
             CmbConnectedClient.SelectedIndex = 0;
 
-            _dispatcherTimer.Interval = new TimeSpan(100);
+            _dispatcherTimer.Interval = new TimeSpan(500);
             _dispatcherTimer.Tick += UpdateStatusBar;
             _dispatcherTimer.Start();
 
@@ -211,8 +216,9 @@ namespace MisakaBanZai.Views
         /// <param name="connection"></param>
         private void InitServer(IMisakaConnection connection)
         {
-            TxtLocalAddr.Text = connection.IpAddress;
+            TxtLocalAddr.SelectedItem = connection.IpAddress;
             TxtLocalPort.Text = $"{connection.Port}";
+            Title = "Tcp服务器";
             ConnType.Content = "Tcp服务器";
             ServerLayer.Visibility = Visibility.Visible;
         }
@@ -223,8 +229,9 @@ namespace MisakaBanZai.Views
         /// <param name="connection"></param>
         private void InitClient(IMisakaConnection connection)
         {
-            TxtLocalAddr.Text = connection.IpAddress;
+            TxtLocalAddr.SelectedItem = connection.IpAddress;
             TxtLocalPort.Text = $"{connection.Port}";
+            Title = "Tcp客户端";
             ConnType.Content = "Tcp客户端";
             ClientLayer.Visibility = Visibility.Visible;
         }
@@ -804,6 +811,17 @@ namespace MisakaBanZai.Views
         {
             _totalReceive = _lastReceive = _totalSend = _lastSend = 0;
             UpdateStatusBar(sender, e);
+        }
+
+        /// <summary>
+        /// 打开常用指令窗口
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OpenCommonUsed(object sender, EventArgs e)
+        {
+            var window = new CommonlyUsed();
+            window.Show();
         }
 
         /// <summary>

@@ -161,14 +161,16 @@ namespace MisakaBanZai.Services
             if (!_broadcast)
             {
                 count = _currenTcpClient.Send(bytes);
-                OnDataSend(count);
-                return count;
+            }
+            else
+            {
+                foreach (var tcpClient in _tcpClients)
+                {
+                    count = tcpClient.Value.Send(bytes);
+                }
             }
 
-            foreach (var tcpClient in _tcpClients)
-            {
-                count = tcpClient.Value.Send(bytes);
-            }
+            OnDataSend(count);
 
             return count;
         }

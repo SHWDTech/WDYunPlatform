@@ -123,7 +123,7 @@ namespace WdTech_Protocol_AdminTools.Views
 
             if (CommunicationServices.Start(new IPEndPoint(_serverAddress, _serverPort)))
             {
-                SetServerInfoInput(true);
+                SetServerInfoInput(false);
             }
         }
 
@@ -136,7 +136,7 @@ namespace WdTech_Protocol_AdminTools.Views
         {
             if (CommunicationServices.Stop())
             {
-                SetServerInfoInput(false);
+                SetServerInfoInput(true);
             }
         }
 

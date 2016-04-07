@@ -30,7 +30,6 @@ namespace SHWDTech.Platform.Model.Model
         public virtual SysDictionary SubField { get; set; }
 
         [Required]
-        [Index(IsUnique = true)]
         [Display(Name = "协议名称")]
         public string ProtocolName { get; set; }
 

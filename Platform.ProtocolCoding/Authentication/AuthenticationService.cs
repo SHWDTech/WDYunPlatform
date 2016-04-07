@@ -31,9 +31,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
 
             var device = ProcessInvoke.GetInstance<DeviceProcess>() .GetDeviceByNodeId(nodeId);
 
-            if(device == null) return new AuthResult(AuthResultType.Faild, package);
-
-            //var replyBytes = package.GetBytes();
+            return device == null 
+                ? new AuthResult(AuthResultType.Faild, package) 
+                : new AuthResult(AuthResultType.Success, package, device);
         }
     }
 }
