@@ -78,6 +78,9 @@
     <Compile Include="Views\CommonlyUsed.xaml.cs">
       <DependentUpon>CommonlyUsed.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CommonUsedListItem.xaml.cs">
+      <DependentUpon>CommonUsedListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MessageManager.xaml.cs">
       <DependentUpon>MessageManager.xaml</DependentUpon>
     </Compile>
@@ -87,6 +90,10 @@
     <Page Include="Views\CommonlyUsed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CommonUsedListItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -144,7 +151,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\edit.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="MisakaMisaka.ico" />
   </ItemGroup>
@@ -153,6 +162,9 @@
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\edit2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

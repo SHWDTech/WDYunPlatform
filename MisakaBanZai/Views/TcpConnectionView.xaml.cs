@@ -683,6 +683,17 @@ namespace MisakaBanZai.Views
         }
 
         /// <summary>
+        /// Receives the text box text changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void ReceiveTextBoxTextChanged(object sender, EventArgs e)
+        {
+            if(TxtReceiveViewer.Text.Length > 10000)
+                TxtReceiveViewer.Clear();
+        }
+
+        /// <summary>
         /// 执行自动发送
         /// </summary>
         /// <param name="sendInterver"></param>
@@ -710,14 +721,16 @@ namespace MisakaBanZai.Views
                 if (conn == null)
                 {
                     Dispatcher.Invoke(RestoreAutoSendControls);
-                    return;
+                    continue;
                 }
-                if (conn.Send(sendBytes) == 0)
-                {
-                    Dispatcher.Invoke(RestoreAutoSendControls);
-                    DispatcherAddReportData(ReportMessageType.Error, "数据发送失败！");
-                    return;
-                }
+                //if (conn.Send(sendBytes) == 0)
+                //{
+                //    Dispatcher.Invoke(RestoreAutoSendControls);
+                //    DispatcherAddReportData(ReportMessageType.Error, "数据发送失败！");
+                //    continue;
+                //}
+
+                conn.Send(sendBytes);
 
                 Thread.Sleep(sendInterver);
             }

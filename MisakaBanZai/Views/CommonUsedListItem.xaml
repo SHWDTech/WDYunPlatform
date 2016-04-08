@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="MisakaBanZai.Views.CommonUsedListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Top"
+             DockPanel.Dock="Top"
+             d:DesignHeight="72" d:DesignWidth="400">
+    <Grid>
+        <Label Content="HEX" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4, 8, 0, 0"></Label>
+        <CheckBox x:Name="ChkAutoSend" Margin="70, 12, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
+        <TextBox x:Name="TxtCommandName" VerticalAlignment="Top" Height="30" Margin="100, 6, 44, 0"></TextBox>
+        <Button x:Name="BtnEdit" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="30" Margin="0, 6, 6, 4" FontSize="18" Content="E"></Button>
+        <Label Content="自动发送" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4, 36, 0, 0"></Label>
+        <CheckBox x:Name="ChkHexSend" Margin="70, 42, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
+        <TextBox x:Name="TxtCommand" Margin="100, 38, 6, 2" MinHeight="30" 
+                 TextWrapping="Wrap" GotFocus="TextBoxGetFocus" LostFocus="TextBoxLostFocus" Padding="0, 4, 0, 0"></TextBox>
+    </Grid>
+</UserControl>

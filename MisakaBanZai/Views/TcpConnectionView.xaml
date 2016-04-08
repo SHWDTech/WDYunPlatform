@@ -122,7 +122,7 @@
                     </Grid.RowDefinitions>
                     <Grid Row="0">
                         <GroupBox Header="数据接收显示">
-                            <TextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap"></TextBox>
+                            <TextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" TextChanged="ReceiveTextBoxTextChanged"></TextBox>
                         </GroupBox>
                     </Grid>
                     <Grid Row="1">

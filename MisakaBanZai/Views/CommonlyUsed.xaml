@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:MisakaBanZai.Views"
         mc:Ignorable="d"
         Title="常用指令" Height="640" Width="400" ResizeMode="NoResize" FontSize="14">
     <Grid>
@@ -11,15 +12,19 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Row="0">
-            <CheckBox x:Name="ChkAutoSend" Margin="10, 10, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
+            <CheckBox x:Name="ChkAutoSend" Margin="16, 10, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
             <Label Content="自动发送" Margin="30, 4, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
             <TextBox x:Name="TxtAutoSendInterval" Margin="100, 6, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Height="25"></TextBox>
             <Label Content="发送间隔（毫秒）" Margin="210, 4, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
         </Grid>
         <Grid Row="1">
-            <ListBox>
-                
-            </ListBox>
+            <GroupBox Header="常用指令">
+                <Grid>
+                    <DockPanel>
+                        <uc:CommonUsedListItem></uc:CommonUsedListItem>
+                    </DockPanel>
+                </Grid>
+            </GroupBox>
         </Grid>
     </Grid>
 </Window>
