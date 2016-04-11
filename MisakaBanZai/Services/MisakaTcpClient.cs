@@ -39,11 +39,6 @@ namespace MisakaBanZai.Services
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        /// 指示客户端是否已经连接到服务器
-        /// </summary>
-        //public bool Connected;
-
-        /// <summary>
         /// 数据接收缓存
         /// </summary>
         public IList<ArraySegment<byte>> ReceiveBuffer { get; }
@@ -110,7 +105,7 @@ namespace MisakaBanZai.Services
             }
             catch (Exception ex)
             {
-                LogService.Instance.Error("连接服务器失败！", ex);
+                LogService.Instance.Error(ReportMessageEnum.ConnectServerFailed, ex);
                 return false;
             }
 
@@ -127,7 +122,7 @@ namespace MisakaBanZai.Services
             }
             catch (SocketException ex)
             {
-                LogService.Instance.Error("发送数据失败！", ex);
+                LogService.Instance.Error(ReportMessageEnum.DataSendFailed, ex);
                 OnClientDisconnect();
                 IsConnected = false;
                 return 0;
@@ -167,7 +162,7 @@ namespace MisakaBanZai.Services
             }
             catch (Exception ex)
             {
-                LogService.Instance.Error("关闭套接字错误。", ex);
+                LogService.Instance.Error(ReportMessageEnum.SocketCloseException, ex);
                 return false;
             }
 
@@ -204,8 +199,8 @@ namespace MisakaBanZai.Services
                     }
                     else
                     {
-                        ParentWindow.DispatcherAddReportData(ReportMessageType.Warning, "接收客户端数据错误！");
-                        LogService.Instance.Error("接收客户端数据错误！", ex);
+                        ParentWindow.DispatcherAddReportData(ReportMessageType.Warning, ReportMessageEnum.ClientReceiveException);
+                        LogService.Instance.Error(ReportMessageEnum.ClientReceiveException, ex);
                     }
 
                     OnClientDisconnect();
@@ -215,6 +210,7 @@ namespace MisakaBanZai.Services
                 if (readCount <= 0)
                 {
                     OnClientDisconnect();
+                    ParentWindow.DispatcherAddReportData(ReportMessageType.Info, ReportMessageEnum.GetEmptyData);
                     client.Close(0);
                     IsConnected = false;
                     return;

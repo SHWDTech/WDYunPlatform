@@ -723,12 +723,6 @@ namespace MisakaBanZai.Views
                     Dispatcher.Invoke(RestoreAutoSendControls);
                     continue;
                 }
-                //if (conn.Send(sendBytes) == 0)
-                //{
-                //    Dispatcher.Invoke(RestoreAutoSendControls);
-                //    DispatcherAddReportData(ReportMessageType.Error, "数据发送失败！");
-                //    continue;
-                //}
 
                 conn.Send(sendBytes);
 

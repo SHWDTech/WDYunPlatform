@@ -96,8 +96,8 @@ namespace MisakaBanZai.Services
             }
             catch (Exception ex)
             {
-                ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "启动侦听失败！");
-                LogService.Instance.Error("启动侦听失败！", ex);
+                ParentWindow.DispatcherAddReportData(ReportMessageType.Error, ReportMessageEnum.StartListenerFailed);
+                LogService.Instance.Error(ReportMessageEnum.StartListenerFailed, ex);
                 return false;
             }
 
@@ -119,19 +119,19 @@ namespace MisakaBanZai.Services
                 misakaClient.ClientReceivedDataEvent += OnClientReceivedData;
                 misakaClient.ClientDisconnectEvent += OnClientDisconnect;
                 _tcpClients.Add(client.RemoteEndPoint.ToString(), misakaClient);
-                ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"添加客户端成功。{client.RemoteEndPoint}");
+                ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"{ReportMessageEnum.AcceptClientSuccess}{client.RemoteEndPoint}");
                 OnClientAccepted(EventArgs.Empty);
             }
             catch (ObjectDisposedException ex)
             {
-                LogService.Instance.Info("侦听器已经关闭", ex);
+                LogService.Instance.Info(ReportMessageEnum.ListenerClosed, ex);
                 OnServerDisconnected();
                 return;
             }
             catch (Exception ex)
             {
-                LogService.Instance.Warn("接收客户端请求失败！", ex);
-                ParentWindow.DispatcherAddReportData(ReportMessageType.Error, "接收客户端请求失败！");
+                LogService.Instance.Warn(ReportMessageEnum.AcceptClientFailed, ex);
+                ParentWindow.DispatcherAddReportData(ReportMessageType.Error, ReportMessageEnum.AcceptClientFailed);
             }
 
             server.BeginAccept(AcceptClient, server);
@@ -202,7 +202,7 @@ namespace MisakaBanZai.Services
             }
             catch (Exception ex)
             {
-                LogService.Instance.Error("关闭套接字错误。", ex);
+                LogService.Instance.Error(ReportMessageEnum.CloseSocketException, ex);
                 return false;
             }
 
@@ -259,7 +259,7 @@ namespace MisakaBanZai.Services
             if (_tcpClients.ContainsKey(conn.ConnectionName))
                 _tcpClients.Remove(conn.ConnectionName);
 
-            ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"与客户端的连接断开{conn.IpAddress}:{conn.Port}");
+            ParentWindow.DispatcherAddReportData(ReportMessageType.Info, $"{ReportMessageEnum.ClientDisconnected}：{conn.IpAddress}:{conn.Port}");
             ((TcpConnectionView)ParentWindow).OnServerClientDisconnect();
         }
 

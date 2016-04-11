@@ -70,6 +70,7 @@
     <Compile Include="Common\Appconfig.cs" />
     <Compile Include="Common\RichTextBoxExtensionMethod.cs" />
     <Compile Include="Enums\OutPutDataColor.cs" />
+    <Compile Include="Enums\ReportMessageEnum.cs" />
     <Compile Include="Enums\ReportMessageColor.cs" />
     <Compile Include="Enums\ReportMessageType.cs" />
     <Compile Include="Models\IMisakaConnectionManagerWindow.cs" />

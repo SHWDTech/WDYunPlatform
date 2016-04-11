@@ -26,7 +26,10 @@ namespace MisakaBanZai
         protected virtual void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {
             LogService.Instance.Fatal("未处理异常。", (Exception)e.ExceptionObject);
-            MessageBox.Show("系统运行出现严重错误！");
+            if (e.IsTerminating)
+            {
+                MessageBox.Show("系统运行出现严重错误！");
+            }
         }
 
         protected virtual void AppUnhandleExceptionHandler(object sender, DispatcherUnhandledExceptionEventArgs e)
