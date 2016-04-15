@@ -4,6 +4,9 @@ using MisakaBanZai.Models;
 
 namespace MisakaBanZai.Services
 {
+    /// <summary>
+    /// 通信对象通用接口
+    /// </summary>
     public interface IMisakaConnection
     {
         /// <summary>

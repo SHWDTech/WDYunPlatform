@@ -101,11 +101,6 @@ namespace MisakaBanZai.Views
         private int _lastSend;
 
         /// <summary>
-        /// 计时器
-        /// </summary>
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-
-        /// <summary>
         /// 时间显示格式
         /// </summary>
         private string DateDisplayFormat => ChkFullDateMode.IsChecked == true
@@ -170,10 +165,6 @@ namespace MisakaBanZai.Views
         {
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
             CmbConnectedClient.SelectedIndex = 0;
-
-            _dispatcherTimer.Interval = new TimeSpan(500);
-            _dispatcherTimer.Tick += UpdateStatusBar;
-            _dispatcherTimer.Start();
 
             InitConnection(connection);
 
@@ -448,6 +439,8 @@ namespace MisakaBanZai.Views
             _totalReceive += _lastReceive = socketBytes.Length;
 
             TxtReceiveViewer.ScrollToEnd();
+
+            UpdateStatusBar();
         }
 
         /// <summary>
@@ -497,6 +490,8 @@ namespace MisakaBanZai.Views
         {
             _totalSend += count;
             _lastSend = count;
+
+            UpdateStatusBar();
         }
 
         /// <summary>
@@ -585,6 +580,11 @@ namespace MisakaBanZai.Views
         {
             DispatcherAddReportData(ReportMessageType.Warning, "服务器连接已经断开！");
             Dispatcher.Invoke(() => ChangeServerControlStatus(true));
+
+            if (_autoSendThread!= null && _autoSendThread.IsAlive)
+            {
+                _autoSendThread.Abort();
+            }
         }
 
         private void ClientDisconnected(IMisakaConnection conn)
@@ -593,6 +593,11 @@ namespace MisakaBanZai.Views
             DispatcherAddReportData(ReportMessageType.Warning, "客户端连接已经断开！");
             Dispatcher.Invoke(() => ChangeClientControlStatus(true));
             Dispatcher.Invoke(() => BtnConnect.Content = "连接服务器");
+
+            if (_autoSendThread != null && _autoSendThread.IsAlive)
+            {
+                _autoSendThread.Abort();
+            }
         }
 
         /// <summary>
@@ -788,9 +793,7 @@ namespace MisakaBanZai.Views
         /// <summary>
         /// 更新状态栏
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UpdateStatusBar(object sender, EventArgs e)
+        private void UpdateStatusBar()
         {
             LabelTotalReceive.Text = $"{_totalReceive}";
 
@@ -817,7 +820,7 @@ namespace MisakaBanZai.Views
         private void ClearCount(object sender, EventArgs e)
         {
             _totalReceive = _lastReceive = _totalSend = _lastSend = 0;
-            UpdateStatusBar(sender, e);
+            UpdateStatusBar();
         }
 
         /// <summary>
