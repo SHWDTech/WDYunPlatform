@@ -111,6 +111,10 @@
                                     <TextBox x:Name="AutoSendInterval" HorizontalAlignment="Right" Margin="0, 0, 55, 0" Width="80" TextChanged="CheckTextInput">2000</TextBox>
                                     <Label Content="毫秒" HorizontalAlignment="Right" Margin="0, 0, 10, 0"></Label>
                                 </Grid>
+                                <Grid Row="6">
+                                    <CheckBox x:Name="ChkAddBlankToReceive" Margin="5, 10, 0, 0" IsChecked="True"></CheckBox>
+                                    <Label Content="接收数据自动添加空行" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Tag="ChkAddBlankToReceive" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                                </Grid>
                             </Grid>
                         </GroupBox>
                     </Grid>

@@ -225,7 +225,7 @@ namespace MisakaBanZai.Services
         public List<string> GetClientNameList() => _tcpClients.Select(misakaTcpClient => misakaTcpClient.Key).ToList();
 
         /// <summary>
-        /// 数据接收时出发
+        /// 触发数据接收事件
         /// </summary>
         private void OnReceivedData()
         {
@@ -245,6 +245,9 @@ namespace MisakaBanZai.Services
             OnReceivedData();
         }
 
+        /// <summary>
+        /// 触发服务器断开连接事件
+        /// </summary>
         private void OnServerDisconnected()
         {
             ClientDisconnectEvent?.Invoke(this);

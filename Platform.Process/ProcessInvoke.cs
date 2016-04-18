@@ -27,7 +27,7 @@ namespace Platform.Process
         }
 
         /// <summary>
-        /// 
+        /// 获取指定的Process实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

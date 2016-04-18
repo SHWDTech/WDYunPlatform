@@ -54,6 +54,11 @@ namespace MisakaBanZai.Views
         private bool ShowDate => ChkShowDate.IsChecked == true;
 
         /// <summary>
+        /// 是否添加空行
+        /// </summary>
+        private bool AddBlankToReceive => ChkAddBlankToReceive.IsChecked == true;
+
+        /// <summary>
         /// 自动发送线程
         /// </summary>
         private Thread _autoSendThread;
@@ -436,6 +441,11 @@ namespace MisakaBanZai.Views
             TxtReceiveViewer.AppendText($"{Globals.ByteArrayToString(socketBytes, HexReceive)}");
             TxtReceiveViewer.AppendText("\r\n");
 
+            if (AddBlankToReceive)
+            {
+                TxtReceiveViewer.AppendText("\r\n");
+            }
+
             _totalReceive += _lastReceive = socketBytes.Length;
 
             TxtReceiveViewer.ScrollToEnd();
@@ -570,6 +580,7 @@ namespace MisakaBanZai.Views
             TxtLocalPort.IsEnabled = status;
             TxtRemoteConnAddr.IsEnabled = status;
             TxtRemoteConnPort.IsEnabled = status;
+            ChkAutoSend.IsChecked = false;
         }
 
         /// <summary>
@@ -581,7 +592,7 @@ namespace MisakaBanZai.Views
             DispatcherAddReportData(ReportMessageType.Warning, "服务器连接已经断开！");
             Dispatcher.Invoke(() => ChangeServerControlStatus(true));
 
-            if (_autoSendThread!= null && _autoSendThread.IsAlive)
+            if (_autoSendThread != null && _autoSendThread.IsAlive)
             {
                 _autoSendThread.Abort();
             }
@@ -694,7 +705,7 @@ namespace MisakaBanZai.Views
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void ReceiveTextBoxTextChanged(object sender, EventArgs e)
         {
-            if(TxtReceiveViewer.Text.Length > 10000)
+            if (TxtReceiveViewer.Text.Length > 10000)
                 TxtReceiveViewer.Clear();
         }
 
