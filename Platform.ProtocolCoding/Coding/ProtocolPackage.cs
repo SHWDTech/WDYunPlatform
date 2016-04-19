@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     {
         public bool Finalized { get; private set; }
 
-        public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentBytes.Length);
+        public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentBytes.Length) + DataComponent.ComponentBytes.Length;
 
         /// <summary>
         /// 数据段索引
@@ -73,8 +73,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             for (var i = 0; i <= _componentData.Count; i++)
             {
-                var component = i == _dataIndex 
-                    ? DataComponent 
+                var component = i == _dataIndex
+                    ? DataComponent
                     : _componentData.First(obj => obj.Value.ComponentIndex == i).Value;
 
                 bytes.AddRange(component.ComponentBytes);
@@ -85,12 +85,20 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public void Finalization()
         {
-            //数据段单独存放，因此_componentData的长度为协议结构长度减一
-            if (_componentData.Count + 1 != Protocol.ProtocolStructures.Count) return;
-
-            if (DataComponent == null || DataComponent.ComponentBytes.Length != Command.CommandBytesLength) return;
+            if (
+                //数据段单独存放，因此_componentData的长度为协议结构长度减一
+                (_componentData.Count + 1 != Protocol.ProtocolStructures.Count)
+                || !ProtocolChecker.CheckProtocol(this)
+                || DataComponent == null
+                || DataComponent.ComponentBytes.Length != Command.CommandBytesLength
+                )
+            {
+                Status = PackageStatus.InvalidPackage;
+                return;
+            }
 
             Status = PackageStatus.Finalized;
+
             Finalized = true;
         }
     }

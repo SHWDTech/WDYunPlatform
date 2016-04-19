@@ -31,7 +31,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         /// <param name="bufferBytes"></param>
         /// <returns></returns>
-        public ProtocolPackage Decode(byte[] bufferBytes)
+        public IProtocolPackage Decode(byte[] bufferBytes)
             => Decode(bufferBytes, _deviceProtocols);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="bufferBytes"></param>
         /// <param name="protocols"></param>
         /// <returns></returns>
-        public static ProtocolPackage Decode(byte[] bufferBytes, List<Protocol> protocols)
+        public static IProtocolPackage Decode(byte[] bufferBytes, List<Protocol> protocols)
         {
             var matchedProtocol = DetectProtocol(bufferBytes, protocols);
 
@@ -62,7 +62,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="bufferBytes"></param>
         /// <param name="protocols"></param>
         /// <returns></returns>
-        public static Protocol DetectProtocol(byte[] bufferBytes, List<Protocol> protocols)
+        public static IProtocol DetectProtocol(byte[] bufferBytes, List<Protocol> protocols)
             => protocols.FirstOrDefault(obj => IsHeadMatched(bufferBytes, obj.Head));
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         /// <param name="command">指定的指令</param>
         /// <returns>协议字节流</returns>
-        public static byte[] EncodeProtocol(ProtocolCommand command)
+        public static byte[] EncodeProtocol(IProtocolCommand command)
         {
             var package = UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command);
 
@@ -108,11 +108,13 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="bufferBytes">字节流</param>
         /// <param name="matchedProtocol">对应的协议</param>
         /// <returns>协议解析结果</returns>
-        public static ProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
+        public static IProtocolPackage DecodeProtocol(byte[] bufferBytes, IProtocol matchedProtocol)
         {
-            var result = new ProtocolPackage() {Protocol = matchedProtocol};
+            var package = new ProtocolPackage() {Protocol = matchedProtocol};
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
+
+            var commandCoder = UnityFactory.Resolve<ICommandCoding>(matchedProtocol.ProtocolModule);
 
             var currentIndex = 0;
 
@@ -122,8 +124,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
                 if (currentIndex + structure.ComponentDataLength > bufferBytes.Length)
                 {
-                    result.Status = PackageStatus.NoEnoughBuffer;
-                    return result;
+                    package.Status = PackageStatus.NoEnoughBuffer;
+                    return package;
+                }
+
+                var componentDataLength = structure.ComponentDataLength;
+
+                if (structure.ComponentName == StructureNames.Data)
+                {
+                    commandCoder.DetectCommand(package, matchedProtocol);
+                    componentDataLength = package.Command.CommandBytesLength;
                 }
 
                 var component = new PackageComponent
@@ -131,17 +141,17 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     ComponentName = structure.ComponentName,
                     DataType = structure.DataType,
                     ComponentIndex = structure.ComponentIndex,
-                    ComponentBytes = bufferBytes.SubBytes(currentIndex, currentIndex + structure.ComponentDataLength)
+                    ComponentBytes = bufferBytes.SubBytes(currentIndex, currentIndex + componentDataLength)
                 };
 
                 currentIndex += structure.ComponentDataLength;
 
-                result[structure.ComponentName] = component;
+                package[structure.ComponentName] = component;
             }
 
-            UnityFactory.Resolve<ICommandCoding>(matchedProtocol.ProtocolModule).DecodeCommand(result, matchedProtocol);
+            commandCoder.DecodeCommand(package);
 
-            return result;
+            return package;
         }
     }
 }

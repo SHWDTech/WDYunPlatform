@@ -21,14 +21,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         /// <summary>
         /// 认证协议的协议包
         /// </summary>
-        public ProtocolPackage Package { get; }
+        public IProtocolPackage Package { get; }
 
         /// <summary>
         /// 设备回复协议字节流
         /// </summary>
         public byte[] ReplyBytes => Package.Finalized ? Package.GetBytes() : new byte[0];
 
-        public AuthResult(AuthResultType type, ProtocolPackage package, IDevice device = null)
+        public AuthResult(AuthResultType type, IProtocolPackage package, IDevice device = null)
         {
             ResultType = type;
             AuthDevice = device;

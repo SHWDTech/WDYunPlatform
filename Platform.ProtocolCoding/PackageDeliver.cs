@@ -18,7 +18,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// 协议包处理程序
         /// </summary>
         /// <param name="package"></param>
-        public static void Deliver(ProtocolPackage package)
+        public static void Deliver(IProtocolPackage package)
         {
             foreach (var deliverMethod in package.DeliverParams.Split(';').Select(param => DeliverType.GetMethod(param, BindingFlags.Static)))
             {

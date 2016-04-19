@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Reflection;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
+    /// <summary>
+    /// 协议数据段解码工具
+    /// </summary>
     public static class DataConvert
     {
         static DataConvert()
