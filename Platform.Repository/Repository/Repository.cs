@@ -3,7 +3,6 @@ using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,23 +37,23 @@ namespace SHWD.Platform.Repository.Repository
         protected Repository()
         {
             DbContext = new RepositoryDbContext();
-            EntitySet = DbContext.Set<T>();
+            EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
         public virtual IEnumerable<T> GetAllModels()
-            => CheckFunc == null ? EntitySet : EntitySet.Where(CheckFunc);
+            => EntitySet;
 
         public virtual IList<T> GetAllModelList()
-            => CheckFunc == null ? GetAllModels().ToList() : GetAllModels().Where(CheckFunc).ToList();
+            => GetAllModels().ToList();
 
-        public virtual IEnumerable<T> GetModels(Func<T, bool> exp) 
-            => CheckFunc == null ? EntitySet.Where(exp) : EntitySet.Where(exp).Where(CheckFunc);
+        public virtual IEnumerable<T> GetModels(Func<T, bool> exp)
+            => EntitySet.Where(exp);
 
         public virtual IList<T> GetModelList(Func<T, bool> exp) 
-            => CheckFunc == null ? GetModels(exp).ToList() : GetModels(exp).Where(CheckFunc).ToList();
+            => GetModels(exp).ToList();
 
         public virtual int GetCount(Func<T, bool> exp) 
-            => CheckFunc == null ? EntitySet.Where(exp).Count() : EntitySet.Where(exp).Where(CheckFunc).Count();
+            => EntitySet.Where(exp).Count();
 
         public virtual T CreateDefaultModel()
         {
@@ -121,6 +120,10 @@ namespace SHWD.Platform.Repository.Repository
 
         public virtual bool IsExists(Func<T, bool> exp) => EntitySet.Any(exp);
 
+        /// <summary>
+        /// 检查模型是否符合要求
+        /// </summary>
+        /// <param name="models"></param>
         private void CheckModel(object models)
         {
             if (CheckFunc == null) return;
@@ -151,23 +154,28 @@ namespace SHWD.Platform.Repository.Repository
         }
 
         /// <summary>
-        /// 数据仓库上下文（线程唯一）
+        /// 数据仓库上下文
         /// </summary>
-        public static IRepositoryContext RepositoryContext => ContextLocal.Value;
+        public static IRepositoryContext RepositoryContext => ContextLocal == null ? ContextGlobal : ContextLocal.Value;
 
         /// <summary>
         /// 当前线程的用户
         /// </summary>
-        public static WdUser CurrentUser => RepositoryContext.CurrentUser;
+        public static IWdUser CurrentUser => RepositoryContext.CurrentUser;
 
         /// <summary>
         /// 当前线程用户所属域
         /// </summary>
-        public static Domain CurrentDomain => RepositoryContext.CurrentDomain;
+        public static IDomain CurrentDomain => RepositoryContext.CurrentDomain;
 
         /// <summary>
         /// 数据仓库上下文线程对象
         /// </summary>
         public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; }
+
+        /// <summary>
+        /// 全局数据仓库上下文线程对象
+        /// </summary>
+        public static IRepositoryContext ContextGlobal { get; set; }
     }
 }

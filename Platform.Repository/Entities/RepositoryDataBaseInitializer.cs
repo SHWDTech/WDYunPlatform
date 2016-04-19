@@ -35,6 +35,21 @@ namespace SHWD.Platform.Repository.Entities
                 IsEnabled = true
             };
 
+            var commUser = new WdUser()
+            {
+                Id = Guid.Parse("c8c95a88-5d5d-4e80-a2d6-3ff32d472bde"),
+                UserName = "CommnicationServer",
+                LoginName = "CommnicationServer",
+                Password = "b5ede2dc220e9c28362d5454d4f6bbd4",
+                Email = "shweidongtech@126.com",
+                Telephone = "18679361687",
+                Status = UserStatus.Enabled,
+                CreateDateTime = DateTime.Now,
+                DomainId = domain.Id,
+                Roles = new List<WdRole>(),
+                IsEnabled = true
+            };
+
             var role = new WdRole
             {
                 Id = Guid.Parse("650BFB4C-7277-484A-812E-6052F6DB71C7"),
@@ -47,21 +62,60 @@ namespace SHWD.Platform.Repository.Entities
                 IsEnabled = true
             };
 
+            var adminRole = new WdRole()
+            {
+                Id = Guid.Parse("fce321ca-8761-44c4-8204-546dfa6134e1"),
+                RoleName = "Admin",
+                Users = new List<WdUser>(),
+                CreateDateTime = DateTime.Now,
+                Status = RoleStatus.Enabled,
+                CreateUserId = user.Id,
+                DomainId = domain.Id,
+                IsEnabled = true
+            };
+
+            var serverRole = new WdRole()
+            {
+                Id = Guid.Parse("a45ae4cd-d0ad-4cea-b666-6787a42b2b4d"),
+                RoleName = "Server",
+                Users = new List<WdUser>(),
+                CreateDateTime = DateTime.Now,
+                Status = RoleStatus.Enabled,
+                CreateUserId = user.Id,
+                DomainId = domain.Id,
+                IsEnabled = true
+            };
+
             user.CreateUserId = user.Id;
             user.LastUpdateUserId = user.Id;
             user.LastUpdateDateTime = DateTime.Now;
             user.LastLoginDateTime = DateTime.Now;
+            commUser.CreateUserId = user.Id;
+            commUser.LastUpdateUserId = user.Id;
+            commUser.LastUpdateDateTime = DateTime.Now;
+            commUser.LastLoginDateTime = DateTime.Now;
             domain.CreateUserId = user.Id;
             domain.LastUpdateUserId = user.Id;
             domain.LastUpdateDateTime = DateTime.Now;
             role.CreateUserId = user.Id;
             role.LastUpdateUserId = user.Id;
             role.LastUpdateDateTime = DateTime.Now;
+            adminRole.CreateUserId = user.Id;
+            adminRole.LastUpdateUserId = user.Id;
+            adminRole.LastUpdateDateTime = DateTime.Now;
+            serverRole.CreateUserId = user.Id;
+            serverRole.LastUpdateUserId = user.Id;
+            serverRole.LastUpdateDateTime = DateTime.Now;
             user.Roles.Add(role);
             role.Users.Add(user);
+            commUser.Roles.Add(serverRole);
+            serverRole.Users.Add(commUser);
 
             dbContext.Users.Add(user);
+            dbContext.Users.Add(commUser);
             dbContext.Roles.Add(role);
+            dbContext.Roles.Add(adminRole);
+            dbContext.Roles.Add(serverRole);
             dbContext.SysDomains.Add(domain);
 
             var field = new SysDictionary
@@ -69,7 +123,7 @@ namespace SHWD.Platform.Repository.Entities
                 Id = Guid.Parse("7402cdb5-1e1e-4633-a7e9-7d6d15634fc0"),
                 ItemName = "Field",
                 ItemKey = "7E0384B37CFJ",
-                ItemValue = "环境保护",
+                ItemValue = "GpsCommunication",
                 ItemLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -84,7 +138,7 @@ namespace SHWD.Platform.Repository.Entities
                 ParentDictionaryId = field.Id,
                 ItemName = "Subield",
                 ItemKey = "7E0384B37CFL",
-                ItemValue = "扬尘",
+                ItemValue = "GeneralFunction",
                 ItemLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -166,7 +220,7 @@ namespace SHWD.Platform.Repository.Entities
             {
                 Id = Guid.Parse("2bb54221-f036-48ff-babc-22358bdf50e2"),
                 ProtocolId = classic.Id,
-                ComponentName = "CmdType",
+                ComponentName = "Head",
                 ComponentIndex = 0,
                 ComponentDataLength = 1,
                 CreateUserId = user.Id,
@@ -234,7 +288,7 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.ClassicNodeId
+                DataType = ProtocolDataType.NodeId
             };
 
             var descrip = new ProtocolStructure()
@@ -339,7 +393,7 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Crc
+                DataType = ProtocolDataType.SingleByte
             };
 
             dbContext.ProtocolStructures.Add(head);
@@ -372,12 +426,12 @@ namespace SHWD.Platform.Repository.Entities
             var command = new ProtocolCommand
             {
                 Id = Guid.Parse("d2ccf8b0-ed68-48ef-b185-f94b504944ca"),
-                CommandTypeCode = new byte[] {0xF9},
-                CommandCode = new byte[] {0x1F},
-                CommandDataLength = 0,
+                CommandTypeCode = new byte[] { 0xF9 },
+                CommandCode = new byte[] { 0x1F },
+                CommandBytesLength = 0,
                 CommandCategory = CommandCategory.HeartBeat,
                 ProtocolId = classic.Id,
-                CommandDeliverParamConfigs = new List<SysConfig> {commandReply},
+                CommandDeliverParamConfigs = new List<SysConfig> { commandReply },
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,

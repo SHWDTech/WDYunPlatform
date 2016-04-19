@@ -26,7 +26,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         /// <summary>
         /// 设备回复协议字节流
         /// </summary>
-        public byte[] ReplyBytes { get; set; }
+        public byte[] ReplyBytes => Package.Finalized ? Package.GetBytes() : new byte[0];
 
         public AuthResult(AuthResultType type, ProtocolPackage package, IDevice device = null)
         {

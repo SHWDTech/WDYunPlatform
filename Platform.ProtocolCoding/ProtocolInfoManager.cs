@@ -57,5 +57,26 @@ namespace SHWDTech.Platform.ProtocolCoding
             ProtocolsCache.Add(protocol.ProtocolName, protocol);
             return ProtocolsCache[name];
         }
+
+        /// <summary>
+        /// 通过协议所属域获取协议集合
+        /// </summary>
+        /// <param name="fieldName">协议所属域名称</param>
+        /// <returns></returns>
+        public static List<Protocol> GerProtocolsByField(string fieldName)
+        {
+            var protocolList = ProtocolsCache.Where(protocol => protocol.Value.SubField.ItemValue == fieldName)
+                    .Select(obj => obj.Value)
+                    .ToList();
+
+            if (protocolList.Count == 0)
+            {
+                protocolList = ProtocolsCache.Where(protocol => protocol.Value.Field.ItemValue == fieldName)
+                    .Select(obj => obj.Value)
+                    .ToList();
+            }
+
+            return protocolList;
+        }
     }
 }

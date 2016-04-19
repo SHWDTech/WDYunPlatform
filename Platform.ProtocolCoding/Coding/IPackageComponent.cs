@@ -23,6 +23,6 @@
         /// <summary>
         /// 组件数据
         /// </summary>
-        byte[] ComponentData { get; set; }
+        byte[] ComponentBytes { get; set; }
     }
 }

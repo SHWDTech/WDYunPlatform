@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWDTech.Platform.Model.Enums;
-using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
@@ -17,24 +16,26 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         /// <summary>
         /// 协议包含的指令
         /// </summary>
-        private readonly IList<ProtocolCommand> _protocolCommands = new List<ProtocolCommand>();
+        private readonly IList<IProtocolCommand> _protocolCommands = new List<IProtocolCommand>();
 
-        public void DecodeCommand(ProtocolPackage package, Protocol matchedProtocol)
+        public void DecodeCommand(IProtocolPackage package, IProtocol matchedProtocol)
         {
             foreach (var com in matchedProtocol.ProtocolCommands)
             {
                 _protocolCommands.Add(com);
             }
 
-            var cmdType = package[StructureNames.CmdType].ComponentData;
+            var cmdType = package[StructureNames.CmdType].ComponentBytes;
 
-            var cmdByte = package[StructureNames.CmdByte].ComponentData;
+            var cmdByte = package[StructureNames.CmdByte].ComponentBytes;
 
             var command = GetCommand(cmdType, cmdByte);
 
+            package.Command = command;
+
             var currentIndex = 0;
 
-            var container = package[StructureNames.Data].ComponentData;
+            var container = package[StructureNames.Data].ComponentBytes;
             foreach (var data in command.CommandDatas)
             {
                 if (currentIndex + data.DataLength > container.Length)
@@ -47,7 +48,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
                 {
                     ComponentName = data.DataName,
                     DataType = data.DataType,
-                    ComponentData = container.SubBytes(currentIndex, currentIndex + data.DataLength)
+                    ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength)
                 };
 
                 currentIndex += data.DataLength;
@@ -55,12 +56,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
                 package[data.DataName] = component;
             }
 
-            if (command.CommandCategory != CommandCategory.Authentication) return;
-
             package.Finalization();
         }
 
-        public ProtocolPackage EncodeCommand(ProtocolCommand command)
+        public IProtocolPackage EncodeCommand(IProtocolCommand command)
         {
             throw new NotImplementedException();
         }
@@ -71,9 +70,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         /// <param name="cmdTypeBytes"></param>
         /// <param name="cmdBytes"></param>
         /// <returns></returns>
-        private ProtocolCommand GetCommand(IEnumerable<byte> cmdTypeBytes, IEnumerable<byte> cmdBytes)
+        private IProtocolCommand GetCommand(IEnumerable<byte> cmdTypeBytes, IEnumerable<byte> cmdBytes)
         {
-            ProtocolCommand cmd = null;
+            IProtocolCommand cmd = null;
             foreach (var command in _protocolCommands.Where(command => (cmdTypeBytes.SequenceEqual(command.CommandTypeCode) &&
                                                                         cmdBytes.SequenceEqual(command.CommandCode))))
             {
@@ -81,6 +80,13 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             }
 
             return cmd;
+        }
+
+        private void ProcotolCheck(IProtocolPackage package)
+        {
+            var calcCrc = Globals.GetUsmbcrc16(package.GetBytes(), (ushort)(package.PackageLenth - 3));
+
+            //var protocolCrc = 
         }
     }
 }

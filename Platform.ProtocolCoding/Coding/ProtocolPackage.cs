@@ -11,14 +11,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     /// </summary>
     public class ProtocolPackage : IProtocolPackage
     {
-        public ProtocolPackage()
-        {
-            _componentData = new Dictionary<string, IPackageComponent>();
-        }
-
         public bool Finalized { get; private set; }
 
-        public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentData.Length);
+        public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentBytes.Length);
 
         /// <summary>
         /// 数据段索引
@@ -42,7 +37,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议包组件字典
         /// </summary>
-        private readonly Dictionary<string, IPackageComponent> _componentData;
+        private readonly Dictionary<string, IPackageComponent> _componentData = new Dictionary<string, IPackageComponent>();
 
         public IPackageComponent this[string name]
         {
@@ -74,24 +69,28 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public byte[] GetBytes()
         {
-            if (!Finalized) return null;
-
             var bytes = new List<byte>();
 
-            for (var i = 0; i < _componentData.Count; i++)
+            for (var i = 0; i <= _componentData.Count; i++)
             {
                 var component = i == _dataIndex 
                     ? DataComponent 
                     : _componentData.First(obj => obj.Value.ComponentIndex == i).Value;
 
-                bytes.AddRange(component.ComponentData);
+                bytes.AddRange(component.ComponentBytes);
             }
 
-            return null;
+            return bytes.ToArray();
         }
 
         public void Finalization()
         {
+            //数据段单独存放，因此_componentData的长度为协议结构长度减一
+            if (_componentData.Count + 1 != Protocol.ProtocolStructures.Count) return;
+
+            if (DataComponent == null || DataComponent.ComponentBytes.Length != Command.CommandBytesLength) return;
+
+            Status = PackageStatus.Finalized;
             Finalized = true;
         }
     }

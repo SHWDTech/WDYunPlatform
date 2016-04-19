@@ -23,7 +23,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "指令数据长度")]
-        public virtual int CommandDataLength { get; set; }
+        public virtual int CommandBytesLength { get; set; }
 
         [Required]
         [Display(Name = "指令类型")]

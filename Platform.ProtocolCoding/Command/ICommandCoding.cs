@@ -1,4 +1,4 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 
 namespace SHWDTech.Platform.ProtocolCoding.Command
@@ -11,12 +11,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         /// <param name="package">协议包</param>
         /// <param name="matchedProtocol">对应的协议</param>
         /// <returns>协议解码完成后的长度</returns>
-        void DecodeCommand(ProtocolPackage package, Protocol matchedProtocol);
+        void DecodeCommand(IProtocolPackage package, IProtocol matchedProtocol);
 
         /// <summary>
         /// 编码指定指令的协议
         /// </summary>
         /// <returns></returns>
-        ProtocolPackage EncodeCommand(ProtocolCommand command);
+        IProtocolPackage EncodeCommand(IProtocolCommand command);
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
+using Platform.Process.Process;
+using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Utility;
+using WdTech_Protocol_AdminTools.Models;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools
@@ -15,7 +18,20 @@ namespace WdTech_Protocol_AdminTools
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Current.DispatcherUnhandledException += AppUnhandleExceptionHandler;
-            //CommunicationServices.Start(new IPEndPoint(AppConfig.ServerIpAddress, AppConfig.ServerPort));
+
+            var serverUser = GeneralProcess.GetUserByLoginName(AppConfig.ServerAccount);
+
+            if (serverUser == null)
+            {
+                MessageBox.Show("通信管理员账号信息错误，请检查配置！");
+                return;
+            }
+
+            RepositoryBase.ContextGlobal = new RepositoryContext()
+            {
+                CurrentUser = serverUser,
+                CurrentDomain = serverUser.Domain
+            };
 
             base.OnStartup(e);
         }

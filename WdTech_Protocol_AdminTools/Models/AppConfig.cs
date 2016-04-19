@@ -25,6 +25,11 @@ namespace WdTech_Protocol_AdminTools.Models
         public static int TcpBufferSize { get; }
 
         /// <summary>
+        /// 管理员账号
+        /// </summary>
+        public static readonly string ServerAccount;
+
+        /// <summary>
         /// 服务开始时间显示格式
         /// </summary>
         public static string StartDateFormat { get; set; } = DateTimeViewFormat.DateTimeWithoutYear;
@@ -36,6 +41,8 @@ namespace WdTech_Protocol_AdminTools.Models
             ServerPort = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
 
             TcpBufferSize = int.Parse(ConfigurationManager.AppSettings["TcpBufferSize"]);
+
+            ServerAccount = ConfigurationManager.AppSettings["ServerAccount"];
         }
 
     }

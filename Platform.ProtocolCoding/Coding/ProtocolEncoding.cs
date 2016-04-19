@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -31,18 +31,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         /// <param name="bufferBytes"></param>
         /// <returns></returns>
-        public ProtocolPackage Decode(IList<byte> bufferBytes)
-        {
-            Protocol matchedProtocol = null;
-            foreach (var deviceProtocol in _deviceProtocols.Where(deviceProtocol => IsHeadMatched(bufferBytes, deviceProtocol.Head)))
-            {
-                matchedProtocol = deviceProtocol;
-            }
-
-            return matchedProtocol == null
-                ? new ProtocolPackage() { Status = PackageStatus.InvalidHead }
-                : DecodeProtocol(bufferBytes, matchedProtocol);
-        }
+        public ProtocolPackage Decode(byte[] bufferBytes)
+            => Decode(bufferBytes, _deviceProtocols);
 
         /// <summary>
         /// 对指定的指令进行编码
@@ -52,21 +42,43 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         public byte[] Encode(ProtocolCommand command) => EncodeProtocol(command);
 
         /// <summary>
+        /// 根据指定的协议集解码协议
+        /// </summary>
+        /// <param name="bufferBytes"></param>
+        /// <param name="protocols"></param>
+        /// <returns></returns>
+        public static ProtocolPackage Decode(byte[] bufferBytes, List<Protocol> protocols)
+        {
+            var matchedProtocol = DetectProtocol(bufferBytes, protocols);
+
+            return matchedProtocol == null
+                ? new ProtocolPackage() { Status = PackageStatus.InvalidHead }
+                : DecodeProtocol(bufferBytes, matchedProtocol);
+        }
+
+        /// <summary>
+        /// 监测字节流所属协议
+        /// </summary>
+        /// <param name="bufferBytes"></param>
+        /// <param name="protocols"></param>
+        /// <returns></returns>
+        public static Protocol DetectProtocol(byte[] bufferBytes, List<Protocol> protocols)
+            => protocols.FirstOrDefault(obj => IsHeadMatched(bufferBytes, obj.Head));
+
+        /// <summary>
         /// 协议帧头与字节流匹配
         /// </summary>
         /// <param name="bufferBytes">协议字节流</param>
         /// <param name="protocolHead">协议定义帧头</param>
         /// <returns>匹配返回TRUE，否则返回FALSE</returns>
-        public static bool IsHeadMatched(IList<byte> bufferBytes, byte[] protocolHead)
+        public static bool IsHeadMatched(byte[] bufferBytes, byte[] protocolHead)
         {
-            var matched = true;
-
-            for (var i = 0; i < protocolHead.Length; i++)
+            if (bufferBytes.Length < protocolHead.Length)
             {
-                if (bufferBytes[i] != protocolHead[i]) matched = false;
+                return false;
             }
 
-            return matched;
+            return !protocolHead.Where((t, i) => bufferBytes[i] != t).Any();
         }
 
         /// <summary>
@@ -84,7 +96,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             for (var i = 0; i < structures.Count; i++)
             {
                 var structure = structures.First(struc => struc.ComponentIndex == i);
-                byteList.AddRange(package[structure.ComponentName].ComponentData);
+                byteList.AddRange(package[structure.ComponentName].ComponentBytes);
             }
 
             return byteList.ToArray();
@@ -96,9 +108,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="bufferBytes">字节流</param>
         /// <param name="matchedProtocol">对应的协议</param>
         /// <returns>协议解析结果</returns>
-        public static ProtocolPackage DecodeProtocol(IList<byte> bufferBytes, Protocol matchedProtocol)
+        public static ProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
         {
-            var result = new ProtocolPackage();
+            var result = new ProtocolPackage() {Protocol = matchedProtocol};
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
 
@@ -108,7 +120,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             {
                 var structure = structures.First(obj => obj.ComponentIndex == i);
 
-                if (currentIndex + structure.ComponentDataLength > bufferBytes.Count)
+                if (currentIndex + structure.ComponentDataLength > bufferBytes.Length)
                 {
                     result.Status = PackageStatus.NoEnoughBuffer;
                     return result;
@@ -119,7 +131,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     ComponentName = structure.ComponentName,
                     DataType = structure.DataType,
                     ComponentIndex = structure.ComponentIndex,
-                    ComponentData = bufferBytes.SubBytes(currentIndex, currentIndex + structure.ComponentDataLength)
+                    ComponentBytes = bufferBytes.SubBytes(currentIndex, currentIndex + structure.ComponentDataLength)
                 };
 
                 currentIndex += structure.ComponentDataLength;

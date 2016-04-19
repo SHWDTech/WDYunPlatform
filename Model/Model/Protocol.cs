@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual SysDictionary Field { get; set; }
 
         [Required]
-        [Display(Name = "协议应用子领域")]
+        [Display(Name = "协议应用子领域ID")]
         public virtual Guid SubFieldId { get; set; }
 
         [Display(Name = "协议应用子领域")]

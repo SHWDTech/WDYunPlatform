@@ -1,5 +1,6 @@
 ﻿using System;
 using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.ProtocolCoding.Enums;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -54,6 +55,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 数据包处理参数
         /// </summary>
         string DeliverParams { get; set; }
+
+        /// <summary>
+        /// 协议包状态
+        /// </summary>
+        PackageStatus Status { get; set; }
 
         byte[] GetBytes();
 

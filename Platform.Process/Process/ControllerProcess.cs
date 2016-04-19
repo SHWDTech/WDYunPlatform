@@ -12,12 +12,9 @@ namespace Platform.Process.Process
 {
     public class ControllerProcess : IControllerProcess
     {
-        public WdUser GetCurrentUser(HttpContext context)
-        {
-            var repo = DbRepository.Repo<UserRepository>();
 
-            return repo.GetUserByLoginName(context.User.Identity.Name);
-        }
+        public WdUser GetCurrentUser(HttpContext context) 
+            => GeneralProcess.GetUserByLoginName(context.User.Identity.Name);
 
         public Dictionary<string, string> GetBasePageInformation(IWdUser user)
         {

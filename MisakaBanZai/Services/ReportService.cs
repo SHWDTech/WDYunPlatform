@@ -7,6 +7,9 @@ namespace MisakaBanZai.Services
 {
     public class ReportService
     {
+        /// <summary>
+        /// 报告数据列表
+        /// </summary>
         private IList<ReportMessage> ReportData { get; } = new List<ReportMessage>();
 
         /// <summary>

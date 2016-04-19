@@ -26,7 +26,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 协议解析缓存
         /// </summary>
-        private readonly IList<byte> _processBuffer = new List<byte>();
+        private readonly List<byte> _processBuffer = new List<byte>();
 
         /// <summary>
         /// 协议编解码器
@@ -177,18 +177,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             lock (_processBuffer)
             {
-                var result = AuthenticationService.DeviceAuthcation(_processBuffer);
+                var result = AuthenticationService.DeviceAuthcation(_processBuffer.ToArray());
 
-                if (result.ResultType == AuthResultType.Faild && result.Package.Status == PackageStatus.NoEnoughBuffer)
+                AsyncCleanBuffer(result.Package);
+
+                if (result.ResultType == AuthResultType.Faild)
+                {
                     return;
-
-                if (result.ResultType == AuthResultType.Faild && result.Package.Status == PackageStatus.InvalidHead)
-                {
-                    _processBuffer.RemoveAt(0);
-                }
-                else if(result.ResultType == AuthResultType.Faild && result.Package.Status == PackageStatus.InvalidPackage)
-                {
-                    _processBuffer.Clear();
                 }
 
                 ClientDevice = result.AuthDevice;
@@ -200,7 +195,36 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
         private void Decode()
         {
-            
+            lock (_processBuffer)
+            {
+                var result = _protocolEncoding.Decode(_processBuffer.ToArray());
+
+                AsyncCleanBuffer(result);
+            }
+        }
+
+        /// <summary>
+        /// 同步清除处理BUFF
+        /// </summary>
+        /// <param name="package"></param>
+        private void AsyncCleanBuffer(IProtocolPackage package)
+        {
+
+            switch (package.Status)
+            {
+                case PackageStatus.NoEnoughBuffer:
+                    return;
+                case PackageStatus.InvalidHead:
+                    _processBuffer.RemoveAt(0);
+                    return;
+                case PackageStatus.InvalidPackage:
+                    _processBuffer.RemoveRange(0, package.PackageLenth);
+                    return;
+                case PackageStatus.Finalized:
+                    _processBuffer.RemoveRange(0, package.PackageLenth);
+                    return;
+            }
+
         }
 
         /// <summary>

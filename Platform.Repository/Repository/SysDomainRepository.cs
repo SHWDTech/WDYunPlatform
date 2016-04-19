@@ -1,6 +1,7 @@
 ﻿using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 using System.Linq;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -22,7 +23,7 @@ namespace SHWD.Platform.Repository.Repository
         public override T CreateDefaultModel()
         {
             var model = base.CreateDefaultModel();
-            model.Domain = CurrentDomain;
+            model.Domain = (Domain)CurrentDomain;
 
             return model;
         }
@@ -30,7 +31,7 @@ namespace SHWD.Platform.Repository.Repository
         public override T ParseModel(string jsonString)
         {
             var model = base.ParseModel(jsonString);
-            model.Domain = CurrentDomain;
+            model.Domain = (Domain)CurrentDomain;
 
             return model;
         }

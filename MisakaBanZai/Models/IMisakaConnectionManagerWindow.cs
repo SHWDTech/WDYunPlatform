@@ -3,8 +3,16 @@ using MisakaBanZai.Services;
 
 namespace MisakaBanZai.Models
 {
+    /// <summary>
+    /// TCP连接管理窗口
+    /// </summary>
     public interface IMisakaConnectionManagerWindow
     {
+        /// <summary>
+        /// 连接变动事件
+        /// </summary>
+        event ConnectionModefiedEventHandler ConnectionModefied;
+
         /// <summary>
         /// 报告服务
         /// </summary>

@@ -11,6 +11,11 @@
         Faild,
 
         /// <summary>
+        /// 设备未注册
+        /// </summary>
+        DeviceNotRegisted,
+
+        /// <summary>
         /// 认证成功
         /// </summary>
         Success

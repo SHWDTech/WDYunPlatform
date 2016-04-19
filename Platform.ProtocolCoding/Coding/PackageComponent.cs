@@ -11,6 +11,6 @@
 
         public int ComponentIndex { get; set; }
 
-        public byte[] ComponentData { get; set; }
+        public byte[] ComponentBytes { get; set; }
     }
 }

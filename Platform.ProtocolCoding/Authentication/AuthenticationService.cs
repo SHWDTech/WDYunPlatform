@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Platform.Process;
 using Platform.Process.Process;
-using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -16,24 +16,43 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         /// <summary>
         /// 认证协议
         /// </summary>
-        private static Protocol AuthenticationProtocol => ProtocolInfoManager.GetProtocolByName(ProtocolNames.Classic);
+        private static List<Protocol> AuthenticationProtocols => ProtocolInfoManager.GerProtocolsByField(ProtocolFieldNames.GeneralFunction);
 
-        public static AuthResult DeviceAuthcation(IList<byte> buffer)
+        /// <summary>
+        /// 设备认证
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
+        public static AuthResult DeviceAuthcation(byte[] buffer)
         {
-            var package = ProtocolEncoding.DecodeProtocol(buffer, AuthenticationProtocol);
+            var package = ProtocolEncoding.Decode(buffer, AuthenticationProtocols);
 
-            if (!package.Finalized || package.Command.CommandCategory != CommandCategory.HeartBeat)
+            if (!package.Finalized)
             {
                 return new AuthResult(AuthResultType.Faild, package);
             }
 
-            var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
+            var device = GetAuthedDevice(package);
 
-            var device = ProcessInvoke.GetInstance<DeviceProcess>() .GetDeviceByNodeId(nodeId);
-
-            return device == null 
-                ? new AuthResult(AuthResultType.Faild, package) 
+            return device == null
+                ? new AuthResult(AuthResultType.Faild, package)
                 : new AuthResult(AuthResultType.Success, package, device);
+        }
+
+        /// <summary>
+        /// 获取授权设备
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        private static IDevice GetAuthedDevice(IProtocolPackage package)
+        {
+            if (package.Protocol.ProtocolName == ProtocolNames.Classic)
+            {
+                var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
+                return ProcessInvoke.GetInstance<DeviceProcess>().GetDeviceByNodeId(nodeId);
+            }
+
+            return null;
         }
     }
 }

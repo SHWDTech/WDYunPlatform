@@ -1,5 +1,8 @@
 ﻿namespace MisakaBanZai.Enums
 {
+    /// <summary>
+    /// 报告消息枚举
+    /// </summary>
     public static class ReportMessageEnum
     {
         /// <summary>

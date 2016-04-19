@@ -160,11 +160,13 @@ namespace SHWDTech.Platform.Utility
         /// <returns>子字节数组</returns>
         public static byte[] SubBytes(this byte[] sourceBytes, int startIndex, int endIndex)
         {
-            if (endIndex >= sourceBytes.Length) throw new ArgumentOutOfRangeException();
+            if (endIndex > sourceBytes.Length) throw new ArgumentOutOfRangeException();
 
-            if (startIndex >= endIndex) throw new ArgumentException("起始位置必须小于结束位置");
+            if (startIndex > endIndex) throw new ArgumentException("起始位置必须小于结束位置");
 
-            var returnBytes = new byte[startIndex - endIndex];
+            if (startIndex == endIndex) return new byte[0];
+
+            var returnBytes = new byte[endIndex - startIndex];
 
             for (var i = 0; i < returnBytes.Length; i++)
             {
@@ -183,7 +185,7 @@ namespace SHWDTech.Platform.Utility
         /// <returns>子字节数组</returns>
         public static byte[] SubBytes(this IList<byte> sourceBytes, int startIndex, int endIndex)
         {
-            if (endIndex >= sourceBytes.Count) throw new ArgumentOutOfRangeException();
+            if (endIndex > sourceBytes.Count) throw new ArgumentOutOfRangeException();
 
             if (startIndex > endIndex) throw new ArgumentException("起始位置必须小于结束位置");
 
@@ -333,13 +335,19 @@ namespace SHWDTech.Platform.Utility
         /// 将输入的Byte数组转换为十六进制显示的字符串
         /// </summary>
         /// <param name="data">需要转换的Byte数组</param>
+        /// <param name="addPad">是否要添加空字符</param>
         /// <returns>data的字符串表示形式</returns>
-        public static string ByteArrayToHexString(byte[] data)
+        public static string ByteArrayToHexString(byte[] data, bool addPad = true)
         {
             var sb = new StringBuilder(data.Length * 3);
-            foreach (byte b in data)
+            foreach (var b in data)
             {
-                sb.Append(Convert.ToString(b, 16).PadLeft(2, '0').PadRight(3, ' '));
+                var Char = Convert.ToString(b, 16).PadLeft(2, '0');
+                if (addPad)
+                {
+                    Char = Char.PadRight(3, ' ');
+                }
+                sb.Append(Char);
             }
             return sb.ToString().ToUpper();
         }

@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 指令数据长度
         /// </summary>
-        int CommandDataLength { get; set; }
+        int CommandBytesLength { get; set; }
 
         /// <summary>
         /// 指令分类

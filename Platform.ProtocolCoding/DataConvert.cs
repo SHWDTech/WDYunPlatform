@@ -21,9 +21,9 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         public static object DecodeComponentData(IPackageComponent packageComponent)
         {
-            var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Decode", BindingFlags.Static);
+            var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Decode");
 
-            return convertMethod.Invoke(convertMethod, new object[] { packageComponent });
+            return convertMethod.Invoke(convertMethod, new object[] { packageComponent.ComponentBytes });
         }
 
         /// <summary>
@@ -34,11 +34,16 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         public static byte[] EncodeComponentData(IPackageComponent packageComponent, object componentData)
         {
-            var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Encode", BindingFlags.Static);
+            var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Encode");
 
             return (byte[]) convertMethod.Invoke(convertMethod, new[] { componentData });
         }
 
-        public static string NodeIdDecode(byte[] nodeIdBytes) => Globals.ByteArrayToHexString(nodeIdBytes);
+        /// <summary>
+        /// 解码NodeId
+        /// </summary>
+        /// <param name="nodeIdBytes"></param>
+        /// <returns></returns>
+        public static string NodeIdDecode(byte[] nodeIdBytes) => Globals.ByteArrayToHexString(nodeIdBytes, false).Trim();
     }
 }

@@ -18,7 +18,7 @@
         /// <summary>
         /// 经典协议设备身份标识
         /// </summary>
-        public const string ClassicNodeId = "ClassicNodeId";
+        public const string NodeId = "NodeId";
 
         /// <summary>
         /// 暂不解码
