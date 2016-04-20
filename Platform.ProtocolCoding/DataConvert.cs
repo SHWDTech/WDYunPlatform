@@ -48,10 +48,79 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         public static string NodeIdDecode(byte[] nodeIdBytes) => Globals.ByteArrayToHexString(nodeIdBytes, false).Trim();
 
-
-        public static string DataValidFlagDecode(byte[] flagBytes)
+        /// <summary>
+        /// 解码数据有效性验证位
+        /// </summary>
+        /// <param name="flagBytes"></param>
+        /// <returns></returns>
+        public static IDataVallidFlag DataValidFlagDecode(byte[] flagBytes)
         {
+            var flagLength = flagBytes.Length * 8;
+
+            var flagUShort = Globals.BytesToUint16(flagBytes, 0, false);
+
+            var flag = new DataValidFlag(flagLength);
+
+            for (var i = 0; i < flagLength; i++)
+            {
+                flag.AddFlag(i, ((flagUShort >> i) & 0x01 ) == 1 );
+            }
             
+            return flag;
+        }
+
+        /// <summary>
+        /// 解码两个字节存储的无符号整型
+        /// </summary>
+        /// <param name="uintBytes"></param>
+        /// <returns></returns>
+        public static uint FourBytesToUInt32Decode(byte[] uintBytes)
+            => Globals.BytesToUint32(uintBytes, 0, false);
+
+        /// <summary>
+        /// 解码两个字节存储的浮点数，整数和小数部分分别储存
+        /// </summary>
+        /// <param name="doubleBytes"></param>
+        /// <returns></returns>
+        public static double TwoBytesToDoubleSeparateDecode(byte[] doubleBytes)
+        {
+            var intPart = doubleBytes[0];
+
+            var decimalPart = doubleBytes[1]/100.0;
+
+            return intPart + decimalPart;
+        }
+
+        /// <summary>
+        /// 解码两个字节存储的无符号短整型
+        /// </summary>
+        /// <param name="ushortBytes"></param>
+        /// <returns></returns>
+        public static ushort TwoBytesToUShortDecode(byte[] ushortBytes)
+            => Globals.BytesToUint16(ushortBytes, 0, false);
+
+        /// <summary>
+        /// 解码两个字节存储的浮点数，整数和小数部分统一储存
+        /// </summary>
+        /// <param name="doubleBytes"></param>
+        /// <returns></returns>
+        public static double TwoBytesToDoubleMergeDecode(byte[] doubleBytes)
+            => Globals.BytesToUint16(doubleBytes, 0, false) / 10.0;
+
+        /// <summary>
+        /// 解码存储在四个字节中的两个无符号短整型
+        /// </summary>
+        /// <param name="intsBytes"></param>
+        /// <returns></returns>
+        public static ushort[] FourBytesToTwoUShortSeparateDecode(byte[] intsBytes)
+        {
+            var intArray = new ushort[2];
+
+            intArray[0] = Globals.BytesToUint16(intsBytes, 0, false);
+
+            intArray[1] = Globals.BytesToUint16(intsBytes, 2, false);
+
+            return intArray;
         }
     }
 }

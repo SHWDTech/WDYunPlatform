@@ -12,7 +12,6 @@ namespace Platform.Process.Process
 {
     public class ControllerProcess : IControllerProcess
     {
-
         public WdUser GetCurrentUser(HttpContext context) 
             => GeneralProcess.GetUserByLoginName(context.User.Identity.Name);
 

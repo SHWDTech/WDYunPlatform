@@ -11,7 +11,12 @@ namespace Platform.Process.Process
     /// </summary>
     public class DeviceProcess : IDeviceProcess
     {
+        /// <summary>
+        /// 设备数据仓库
+        /// </summary>
+        private readonly DeviceRepository _repository = DbRepository.Repo<DeviceRepository>();
+
         public IDevice GetDeviceByNodeId(string nodeId)
-            => DbRepository.Repo<DeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
+            => _repository.GetDeviceByNodeId(nodeId).FirstOrDefault();
     }
 }

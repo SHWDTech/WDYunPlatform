@@ -12,12 +12,16 @@ namespace Platform.Process.Process
     /// </summary>
     public class ProtocolCodingProcess : IProtocolCodingProcess
     {
+        /// <summary>
+        /// 协议数据仓库
+        /// </summary>
+        private readonly ProtocolRepository _repository = DbRepository.Repo<ProtocolRepository>();
+
         public IList<Protocol> GetProtocolsFullLoaded() 
-            => DbRepository.Repo<ProtocolRepository>().GetProtocolsFullLoaded();
+            => _repository.GetProtocolsFullLoaded();
 
         public Protocol GetProtocolByName(string name)
-            => DbRepository.Repo<ProtocolRepository>().GetModels(model => model.ProtocolName == name).FirstOrDefault();
-
+            => _repository.GetModels(model => model.ProtocolName == name).FirstOrDefault();
 
     }
 }

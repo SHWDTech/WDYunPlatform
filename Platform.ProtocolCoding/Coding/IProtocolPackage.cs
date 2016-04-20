@@ -1,5 +1,5 @@
 ﻿using System;
-using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议包所属设备
         /// </summary>
-        IDevice Device { get; set; }
+        Device Device { get; set; }
 
         /// <summary>
         /// 协议接收时间
@@ -32,12 +32,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 所属协议
         /// </summary>
-        IProtocol Protocol { get; set; }
+        Protocol Protocol { get; set; }
 
         /// <summary>
         /// 所属指令
         /// </summary>
-        IProtocolCommand Command { get; set; }
+        ProtocolCommand Command { get; set; }
 
         /// <summary>
         /// 协议数据段

@@ -12,12 +12,10 @@ namespace Platform.Process.Process
     /// </summary>
     public class AccountProcess : IAccountProcess
     {
-        private readonly UserRepository _userRepository;
-
-        public AccountProcess()
-        {
-            _userRepository = DbRepository.Repo<UserRepository>();
-        }
+        /// <summary>
+        /// 账户数据仓库
+        /// </summary>
+        private readonly UserRepository _userRepository = DbRepository.Repo<UserRepository>();
 
         public void SignOut()
         {

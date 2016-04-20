@@ -47,6 +47,7 @@
     <Compile Include="Command\ClassicCommandCoding.cs" />
     <Compile Include="Command\ICommandCoding.cs" />
     <Compile Include="DataConvert.cs" />
+    <Compile Include="DataValidFlag.cs" />
     <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\PackageSourceType.cs" />
     <Compile Include="Enums\PackageStatus.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Enums\StructureNames.cs" />
     <Compile Include="Coding\IPackageComponent.cs" />
     <Compile Include="Coding\IProtocolPackage.cs" />
+    <Compile Include="IDataVallidFlag.cs" />
     <Compile Include="IPackageSource.cs" />
     <Compile Include="PackageDeliver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

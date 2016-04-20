@@ -441,7 +441,7 @@ namespace SHWD.Platform.Repository.Entities
             {
                 DataIndex = 0,
                 DataLength = 2,
-                DataName = "有效性验证标志",
+                DataName = ProtocolDataName.DataValidFlag,
                 DataType = ProtocolDataType.DataValidFlag
             };
 
@@ -450,7 +450,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 1,
                 DataLength = 4,
                 DataName = "PM2.5",
-                DataType = ProtocolDataType.ParticulateMatter
+                DataType = ProtocolDataType.FourBytesToUInt32
             };
 
             var commandDataC = new CommandData()
@@ -458,7 +458,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 2,
                 DataLength = 4,
                 DataName = "PM10",
-                DataType = ProtocolDataType.ParticulateMatter
+                DataType = ProtocolDataType.FourBytesToUInt32
             };
 
             var commandDataD = new CommandData()
@@ -466,7 +466,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 3,
                 DataLength = 4,
                 DataName = "CPM",
-                DataType = ProtocolDataType.ParticulateMatter
+                DataType = ProtocolDataType.FourBytesToUInt32
             };
 
             var commandDataE = new CommandData()
@@ -474,7 +474,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 4,
                 DataLength = 2,
                 DataName = "总体扬尘值",
-                DataType = ProtocolDataType.Noise
+                DataType = ProtocolDataType.TwoBytesToDoubleSeparate
             };
 
             var commandDataF = new CommandData()
@@ -482,7 +482,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 5,
                 DataLength = 3,
                 DataName = "风向",
-                DataType = ProtocolDataType.WindDirction
+                DataType = ProtocolDataType.TwoBytesToUShort
             };
 
             var commandDataG = new CommandData()
@@ -490,7 +490,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 6,
                 DataLength = 3,
                 DataName = "风速",
-                DataType = ProtocolDataType.WindSpeed
+                DataType = ProtocolDataType.TwoBytesToDoubleMerge
             };
 
             var commandDataH = new CommandData()
@@ -498,7 +498,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 7,
                 DataLength = 4,
                 DataName = "温湿度",
-                DataType = ProtocolDataType.TemperatureAndHumidity
+                DataType = ProtocolDataType.FourBytesToTwoUShortSeparate
             };
 
             var commandDataI = new CommandData()
@@ -506,7 +506,7 @@ namespace SHWD.Platform.Repository.Entities
                 DataIndex = 8,
                 DataLength = 4,
                 DataName = "挥发性有机物",
-                DataType = ProtocolDataType.VolatileOrganicCompounds
+                DataType = ProtocolDataType.FourBytesToUInt32
             };
 
             var command = new ProtocolCommand

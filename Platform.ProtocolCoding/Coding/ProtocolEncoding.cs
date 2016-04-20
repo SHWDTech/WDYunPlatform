@@ -62,7 +62,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="bufferBytes">缓存字节数组</param>
         /// <param name="protocols">准备匹配的协议列表</param>
         /// <returns></returns>
-        public static IProtocol DetectProtocol(byte[] bufferBytes, List<Protocol> protocols)
+        public static Protocol DetectProtocol(byte[] bufferBytes, List<Protocol> protocols)
             => protocols.FirstOrDefault(obj => IsHeadMatched(bufferBytes, obj.Head));
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="bufferBytes">字节流</param>
         /// <param name="matchedProtocol">对应的协议</param>
         /// <returns>协议解析结果</returns>
-        public static IProtocolPackage DecodeProtocol(byte[] bufferBytes, IProtocol matchedProtocol)
+        public static IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
         {
             var package = new ProtocolPackage() {Protocol = matchedProtocol};
 

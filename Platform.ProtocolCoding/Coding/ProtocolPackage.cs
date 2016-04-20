@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
@@ -20,15 +20,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         private int _dataIndex;
 
-        public IDevice Device { get; set; }
+        public Device Device { get; set; }
 
-        public IProtocolCommand Command { get; set; }
+        public ProtocolCommand Command { get; set; }
 
         public IPackageComponent DataComponent { get; private set; }
 
         public DateTime ReceiveDateTime { get; set; }
 
-        public IProtocol Protocol { get; set; }
+        public Protocol Protocol { get; set; }
 
         public PackageStatus Status { get; set; } = PackageStatus.UnFinalized;
 
@@ -50,7 +50,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             {
                 if (name == "Data") return DataComponent;
 
-                return !_structureComponents.ContainsKey(name) ? null : _structureComponents[name];
+                if(_structureComponents.ContainsKey(name)) return _structureComponents[name];
+
+                return _dataComponents.ContainsKey(name) ? _dataComponents[name] : null;
             }
             set
             {

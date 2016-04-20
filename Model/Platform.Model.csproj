@@ -65,6 +65,7 @@
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\CommandCategory.cs" />
     <Compile Include="Enums\ProtocolCheckType.cs" />
+    <Compile Include="Enums\ProtocolDataName.cs" />
     <Compile Include="Enums\ProtocolDataType.cs" />
     <Compile Include="Enums\DeviceStatus.cs" />
     <Compile Include="Enums\DomainStatus.cs" />

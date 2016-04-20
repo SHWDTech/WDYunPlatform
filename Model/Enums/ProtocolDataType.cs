@@ -56,33 +56,28 @@
         public const string DataValidFlag = "DataValidFlag";
 
         /// <summary>
-        /// 颗粒物数值
+        /// 四个字节存储的无符号整型
         /// </summary>
-        public const string ParticulateMatter = "ParticulateMatter";
+        public const string FourBytesToUInt32 = "FourBytesToUInt32";
 
         /// <summary>
-        /// 噪音数据
+        /// 两个字节存储的Double类型，精度两位小数，一个字节存储整数部分，一个字节存储小数部分
         /// </summary>
-        public const string Noise = "Noise";
+        public const string TwoBytesToDoubleSeparate = "TwoBytesToDoubleSeparate";
 
         /// <summary>
-        /// 风向值
+        /// 两个字节存储的无符号短整型
         /// </summary>
-        public const string WindDirction = "WindDirction";
+        public const string TwoBytesToUShort = "TwoBytesToUShort";
 
         /// <summary>
-        /// 风速值
+        /// 两个字节存储的Double类型，精度一位小数。
         /// </summary>
-        public const string WindSpeed = "WindSpeed";
+        public const string TwoBytesToDoubleMerge = "TwoBytesToDoubleMerge";
 
         /// <summary>
-        /// 温湿度
+        /// 四个字节存储两个无符号短整型。
         /// </summary>
-        public const string TemperatureAndHumidity = "TemperatureAndHumidity";
-
-        /// <summary>
-        /// 挥发性有机物数值
-        /// </summary>
-        public const string VolatileOrganicCompounds = "VolatileOrganicCompounds";
+        public const string FourBytesToTwoUShortSeparate = "FourBytesToTwoUShortSeparate";
     }
 }
