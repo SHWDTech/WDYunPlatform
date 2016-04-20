@@ -35,7 +35,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
 
                 currentIndex += data.DataLength;
 
-                package[data.DataName] = component;
+                package.AppendData(component);
             }
 
             package.Finalization();

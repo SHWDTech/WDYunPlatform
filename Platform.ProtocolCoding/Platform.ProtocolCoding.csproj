@@ -48,12 +48,14 @@
     <Compile Include="Command\ICommandCoding.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="Enums\AuthenticationStatus.cs" />
+    <Compile Include="Enums\PackageSourceType.cs" />
     <Compile Include="Enums\PackageStatus.cs" />
     <Compile Include="Enums\ProtocolFieldNames.cs" />
     <Compile Include="Enums\ProtocolNames.cs" />
     <Compile Include="Enums\StructureNames.cs" />
     <Compile Include="Coding\IPackageComponent.cs" />
     <Compile Include="Coding\IProtocolPackage.cs" />
+    <Compile Include="IPackageSource.cs" />
     <Compile Include="PackageDeliver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Coding\ProtocolEncoding.cs" />

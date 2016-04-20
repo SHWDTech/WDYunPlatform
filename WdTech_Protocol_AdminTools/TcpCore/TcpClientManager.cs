@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Sockets;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.Authentication;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -16,7 +17,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
     /// <summary>
     /// TCP客户端数据接收器
     /// </summary>
-    public class TcpClientManager
+    public class TcpClientManager : IPackageSource
     {
         /// <summary>
         /// 接收器关联的套接字
@@ -47,6 +48,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 指示通信对象是否已经连接上
         /// </summary>
         public bool IsConnected { get; private set; }
+
+        public PackageSourceType Type { get; } = PackageSourceType.CommunicationServer;
 
         /// <summary>
         /// 设备认证状态
@@ -137,8 +140,21 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
         }
 
+        /// <summary>
+        /// 数据接收事件
+        /// </summary>
         private void OnReceivedData()
         {
+            ClientReceivedDataEvent?.Invoke(this);
+        }
+
+        /// <summary>
+        /// 处理缓存
+        /// </summary>
+        public void Process()
+        {
+            if (_processBuffer.Count <= 0) return;
+
             switch (_authStatus)
             {
                 case AuthenticationStatus.NotAuthed:
@@ -148,8 +164,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     Decode();
                     break;
             }
-
-            ClientReceivedDataEvent?.Invoke(this);
         }
 
         /// <summary>
@@ -173,8 +187,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void Authentication()
         {
-            if (_processBuffer.Count <= 0) return;
-
             lock (_processBuffer)
             {
                 var result = AuthenticationService.DeviceAuthcation(_processBuffer.ToArray());
@@ -200,6 +212,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 var result = _protocolEncoding.Decode(_processBuffer.ToArray());
 
                 AsyncCleanBuffer(result);
+
+                PackageDeliver.Delive(result, this);
             }
         }
 
@@ -231,7 +245,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 发送数据
         /// </summary>
         /// <param name="protocolBytes"></param>
-        private void Send(byte[] protocolBytes)
+        public void Send(byte[] protocolBytes)
         {
             try
             {
@@ -247,10 +261,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
         }
 
-        /// <summary>
-        /// 发送协议包数据
-        /// </summary>
-        /// <param name="command"></param>
         public void Send(ProtocolCommand command) => Send(_protocolEncoding.Encode(command));
     }
 }

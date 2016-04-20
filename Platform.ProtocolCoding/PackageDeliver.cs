@@ -1,29 +1,45 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using SHWDTech.Platform.ProtocolCoding.Coding;
+using SHWDTech.Platform.ProtocolCoding.Enums;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
+    /// <summary>
+    /// 协议包分发工具
+    /// </summary>
     public static class PackageDeliver
     {
-        private static readonly Type DeliverType;
+        /// <summary>
+        /// 分发工具
+        /// </summary>
+        private static readonly Type Deliver;
 
         static PackageDeliver()
         {
-            DeliverType = typeof (PackageDeliver);
+            Deliver = typeof (PackageDeliver);
         }
 
         /// <summary>
         /// 协议包处理程序
         /// </summary>
         /// <param name="package"></param>
-        public static void Deliver(IProtocolPackage package)
+        /// <param name="source"></param>
+        public static void Delive(IProtocolPackage package, IPackageSource source)
         {
-            foreach (var deliverMethod in package.DeliverParams.Split(';').Select(param => DeliverType.GetMethod(param, BindingFlags.Static)))
+            var deliverParams = package.DeliverParams.Split(';');
+
+            foreach (var deliverMethod in deliverParams.Select(param => Deliver.GetMethod(param)))
             {
-                deliverMethod.Invoke(deliverMethod, new object[] {package});
+                deliverMethod.Invoke(deliverMethod, new object[] {package, source });
             }
+        }
+
+        public static void ReplyOriginal(IProtocolPackage package, IPackageSource source)
+        {
+            if (source.Type != PackageSourceType.CommunicationServer) return;
+
+            source.Send(package.GetBytes());
         }
     }
 }

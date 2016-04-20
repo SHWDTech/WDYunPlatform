@@ -14,5 +14,10 @@
         /// 心跳包指令
         /// </summary>
         public const string HeartBeat = "HeartBeat";
+
+        /// <summary>
+        /// 定时自动上报
+        /// </summary>
+        public const string TimingAutoReport = "TimingAutoReport";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.IModel;
@@ -29,12 +30,8 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string DataType { get; set; }
 
         [Required]
-        [Display(Name = "所属指令ID")]
-        public virtual Guid CommandId { get; set; }
-
-        [Required]
         [Display(Name = "所属指令")]
         [ForeignKey("CommandId")]
-        public virtual ProtocolCommand Command { get; set; }
+        public virtual ICollection<ProtocolCommand> Commands { get; set; }
     }
 }

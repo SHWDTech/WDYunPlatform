@@ -59,8 +59,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 监测字节流所属协议
         /// </summary>
-        /// <param name="bufferBytes"></param>
-        /// <param name="protocols"></param>
+        /// <param name="bufferBytes">缓存字节数组</param>
+        /// <param name="protocols">准备匹配的协议列表</param>
         /// <returns></returns>
         public static IProtocol DetectProtocol(byte[] bufferBytes, List<Protocol> protocols)
             => protocols.FirstOrDefault(obj => IsHeadMatched(bufferBytes, obj.Head));

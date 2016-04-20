@@ -47,5 +47,11 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="nodeIdBytes"></param>
         /// <returns></returns>
         public static string NodeIdDecode(byte[] nodeIdBytes) => Globals.ByteArrayToHexString(nodeIdBytes, false).Trim();
+
+
+        public static string DataValidFlagDecode(byte[] flagBytes)
+        {
+            
+        }
     }
 }

@@ -421,7 +421,93 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id
             };
 
+
+            var commandReplyA = new SysConfig()
+            {
+                Id = Guid.Parse("b06c49c1-f9f7-4e69-92df-04fa55f95045"),
+                SysConfigName = ProtocolDeliveryParam.StoreData,
+                SysConfigType = SysConfigType.ProtocolDeliveryParam,
+                SysConfigValue = ProtocolDeliveryParam.StoreData,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
             dbContext.SysConfigs.Add(commandReply);
+            dbContext.SysConfigs.Add(commandReplyA);
+
+            var commandDataA = new CommandData()
+            {
+                DataIndex = 0,
+                DataLength = 2,
+                DataName = "有效性验证标志",
+                DataType = ProtocolDataType.DataValidFlag
+            };
+
+            var commandDataB = new CommandData()
+            {
+                DataIndex = 1,
+                DataLength = 4,
+                DataName = "PM2.5",
+                DataType = ProtocolDataType.ParticulateMatter
+            };
+
+            var commandDataC = new CommandData()
+            {
+                DataIndex = 2,
+                DataLength = 4,
+                DataName = "PM10",
+                DataType = ProtocolDataType.ParticulateMatter
+            };
+
+            var commandDataD = new CommandData()
+            {
+                DataIndex = 3,
+                DataLength = 4,
+                DataName = "CPM",
+                DataType = ProtocolDataType.ParticulateMatter
+            };
+
+            var commandDataE = new CommandData()
+            {
+                DataIndex = 4,
+                DataLength = 2,
+                DataName = "总体扬尘值",
+                DataType = ProtocolDataType.Noise
+            };
+
+            var commandDataF = new CommandData()
+            {
+                DataIndex = 5,
+                DataLength = 3,
+                DataName = "风向",
+                DataType = ProtocolDataType.WindDirction
+            };
+
+            var commandDataG = new CommandData()
+            {
+                DataIndex = 6,
+                DataLength = 3,
+                DataName = "风速",
+                DataType = ProtocolDataType.WindSpeed
+            };
+
+            var commandDataH = new CommandData()
+            {
+                DataIndex = 7,
+                DataLength = 4,
+                DataName = "温湿度",
+                DataType = ProtocolDataType.TemperatureAndHumidity
+            };
+
+            var commandDataI = new CommandData()
+            {
+                DataIndex = 8,
+                DataLength = 4,
+                DataName = "挥发性有机物",
+                DataType = ProtocolDataType.VolatileOrganicCompounds
+            };
 
             var command = new ProtocolCommand
             {
@@ -438,7 +524,33 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id
             };
 
+            var commandA = new ProtocolCommand
+            {
+                Id = Guid.Parse("29b2f9c1-a79b-4598-bc33-2b4c20488159"),
+                CommandTypeCode = new byte[] { 0xFD },
+                CommandCode = new byte[] { 0x27 },
+                CommandBytesLength = 30,
+                CommandCategory = CommandCategory.TimingAutoReport,
+                ProtocolId = classic.Id,
+                CommandDeliverParamConfigs = new List<SysConfig> { commandReplyA },
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            commandA.CommandDatas.Add(commandDataA);
+            commandA.CommandDatas.Add(commandDataB);
+            commandA.CommandDatas.Add(commandDataC);
+            commandA.CommandDatas.Add(commandDataD);
+            commandA.CommandDatas.Add(commandDataE);
+            commandA.CommandDatas.Add(commandDataF);
+            commandA.CommandDatas.Add(commandDataG);
+            commandA.CommandDatas.Add(commandDataH);
+            commandA.CommandDatas.Add(commandDataI);
+
             dbContext.ProtocolCommands.Add(command);
+            dbContext.ProtocolCommands.Add(commandA);
 
             var device = new Device
             {

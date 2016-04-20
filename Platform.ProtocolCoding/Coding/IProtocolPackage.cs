@@ -61,6 +61,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         PackageStatus Status { get; set; }
 
+        /// <summary>
+        /// 添加数据段数据
+        /// </summary>
+        /// <param name="component"></param>
+        void AppendData(IPackageComponent component);
+
+        /// <summary>
+        /// 获取数据包字节流
+        /// </summary>
+        /// <returns></returns>
         byte[] GetBytes();
 
         /// <summary>

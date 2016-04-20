@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     {
         public bool Finalized { get; private set; }
 
-        public int PackageLenth => _componentData.Sum(obj => obj.Value.ComponentBytes.Length) + DataComponent.ComponentBytes.Length;
+        public int PackageLenth => _structureComponents.Sum(obj => obj.Value.ComponentBytes.Length) + DataComponent.ComponentBytes.Length;
 
         /// <summary>
         /// 数据段索引
@@ -37,7 +37,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议包组件字典
         /// </summary>
-        private readonly Dictionary<string, IPackageComponent> _componentData = new Dictionary<string, IPackageComponent>();
+        private readonly Dictionary<string, IPackageComponent> _structureComponents = new Dictionary<string, IPackageComponent>();
+
+        /// <summary>
+        /// 协议数据组件字典
+        /// </summary>
+        private readonly Dictionary<string, IPackageComponent> _dataComponents = new Dictionary<string, IPackageComponent>(); 
 
         public IPackageComponent this[string name]
         {
@@ -45,7 +50,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             {
                 if (name == "Data") return DataComponent;
 
-                return !_componentData.ContainsKey(name) ? null : _componentData[name];
+                return !_structureComponents.ContainsKey(name) ? null : _structureComponents[name];
             }
             set
             {
@@ -56,28 +61,51 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     return;
                 }
 
-                if (!_componentData.ContainsKey(name))
+                if (!_structureComponents.ContainsKey(name))
                 {
-                    _componentData.Add(name, value);
+                    _structureComponents.Add(name, value);
                 }
                 else
                 {
-                    _componentData[name] = value;
+                    _structureComponents[name] = value;
                 }
             }
+        }
+
+        public void AppendData(IPackageComponent component)
+        {
+            _dataComponents.Add(component.ComponentName, component);
         }
 
         public byte[] GetBytes()
         {
             var bytes = new List<byte>();
 
-            for (var i = 0; i <= _componentData.Count; i++)
+            for (var i = 0; i <= _structureComponents.Count; i++)
             {
-                var component = i == _dataIndex
-                    ? DataComponent
-                    : _componentData.First(obj => obj.Value.ComponentIndex == i).Value;
+                var componentBytes = i == _dataIndex
+                    ? GetDataComponentBytes()
+                    : _structureComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentBytes;
 
-                bytes.AddRange(component.ComponentBytes);
+                bytes.AddRange(componentBytes);
+            }
+
+            return bytes.ToArray();
+        }
+
+        /// <summary>
+        /// 获取数据段字节流
+        /// </summary>
+        /// <returns></returns>
+        private byte[] GetDataComponentBytes()
+        {
+            var bytes = new List<byte>();
+
+            for (var i = 0; i < _dataComponents.Count; i++)
+            {
+                var dataBytes = _dataComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentBytes;
+
+                bytes.AddRange(dataBytes);
             }
 
             return bytes.ToArray();
@@ -87,7 +115,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         {
             if (
                 //数据段单独存放，因此_componentData的长度为协议结构长度减一
-                (_componentData.Count + 1 != Protocol.ProtocolStructures.Count)
+                (_structureComponents.Count + 1 != Protocol.ProtocolStructures.Count)
                 || !ProtocolChecker.CheckProtocol(this)
                 || DataComponent == null
                 || DataComponent.ComponentBytes.Length != Command.CommandBytesLength

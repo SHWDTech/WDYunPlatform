@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -29,13 +29,8 @@ namespace SHWDTech.Platform.Model.IModel
         string DataType { get; set; }
 
         /// <summary>
-        /// 指令ID
-        /// </summary>
-        Guid CommandId { get; set; }
-
-        /// <summary>
         /// 所属指令
         /// </summary>
-        ProtocolCommand Command { get; set; }
+        ICollection<ProtocolCommand> Commands { get; set; }
     }
 }
