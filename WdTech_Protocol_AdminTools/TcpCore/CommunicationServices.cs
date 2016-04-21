@@ -30,7 +30,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 服务监听器
         /// </summary>
-        private static TcpListener _serverListener;
+        private static Socket _serverListener;
 
         /// <summary>
         /// 服务器监听地址
@@ -40,6 +40,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         static CommunicationServices()
         {
             Manager = new ActiveClientManager();
+            ProtocolInfoManager.InitManager();
         }
 
         /// <summary>
@@ -52,12 +53,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             try
             {
-                _serverListener = new TcpListener(ipEndPoint) {ExclusiveAddressUse = false};
+                _serverListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _serverListener.Bind(ipEndPoint);
                 ServerIpEndPoint = ipEndPoint;
-                _serverListener.Start();
-                _serverListener.BeginAcceptSocket(AcceptClient, _serverListener);
+                _serverListener.LingerState = new LingerOption(false, 1);
+                _serverListener.Listen(2048);
+                _serverListener.BeginAccept(AcceptClient, _serverListener);
 
-                ProtocolInfoManager.InitManager();
                 StartDateTime = DateTime.Now;
                 IsStart = true;
 
@@ -82,18 +84,21 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public static bool Stop()
         {
+            Manager.Stop();
+
             if (!IsStart) return true;
 
             try
             {
-                if (_serverListener.Server.Connected)
+                if (_serverListener.Connected)
                 {
-                    _serverListener.Server.Shutdown(SocketShutdown.Both);
-                    _serverListener.Server.Disconnect(false);
-                    IsStart = false;
+                    _serverListener.Shutdown(SocketShutdown.Both);
+                    _serverListener.Disconnect(false);
                 }
 
-                _serverListener.Server.Close(0);
+                _serverListener.Close(0);
+
+                IsStart = false;
 
                 StartDateTime = DateTime.MinValue;
 
@@ -112,11 +117,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public static void AcceptClient(IAsyncResult result)
         {
-            var server = (TcpListener)result.AsyncState;
+            var server = (Socket)result.AsyncState;
 
             try
             {
-                var client = server.EndAcceptSocket(result);
+                var client = server.EndAccept(result);
 
                 Manager.AddClient(client);
 
@@ -132,7 +137,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 ReportService.Instance.Warning("接收客户端请求失败！", ex);
             }
 
-            server.BeginAcceptSocket(AcceptClient, server);
+            server.BeginAccept(AcceptClient, server);
         }
     }
 }

@@ -58,7 +58,18 @@ namespace WdTech_Protocol_AdminTools.Views
         /// </summary>
         /// <param name="e"></param>
         private void AppendReport(EventArgs e)
-            => Dispatcher.Invoke(() => TxtReport.AppendText(ReportService.Instance.PopupReport().Message));
+        {
+            Dispatcher.Invoke(DispatcherAppendReport);
+        }
+
+        /// <summary>
+        /// 发送报告文本到界面
+        /// </summary>
+        private void DispatcherAppendReport()
+        {
+            TxtReport.AppendText(ReportService.Instance.PopupReport().Message);
+            TxtReport.ScrollToEnd();
+        }
 
         /// <summary>
         /// 更新状态栏
@@ -102,6 +113,7 @@ namespace WdTech_Protocol_AdminTools.Views
         {
             try
             {
+                _statusBarTimer.Stop();
                 CommunicationServices.Stop();
             }
             catch (Exception ex)

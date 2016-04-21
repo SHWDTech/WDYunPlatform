@@ -50,11 +50,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 lock (_clientSockets)
                 {
+                    if (_clientSockets.Count <= 0) continue;
+
                     foreach (var tcpClientManager in _clientSockets)
                     {
                         tcpClientManager.Value.Process();
 
-                        Thread.Sleep(10);
+                        //Thread.Sleep(10);
                     }
                 }
             }

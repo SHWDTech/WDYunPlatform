@@ -44,7 +44,7 @@
                                     Margin="0, 60, 10, 0" Click="StopService"></Button>
                         </Grid>
                         <Grid Row="1">
-                            <TextBox x:Name="TxtReport" IsReadOnly="True"></TextBox>
+                            <TextBox x:Name="TxtReport" IsReadOnly="True" VerticalScrollBarVisibility="Auto"></TextBox>
                         </Grid>
                     </Grid>
                 </TabItem>

@@ -194,7 +194,9 @@ namespace MisakaBanZai.Services
                     _tcpListener.Disconnect(false);
                     IsConnected = false;
                 }
+
                 _tcpListener.Close(0);
+
                 foreach (var misakaTcpClient in _tcpClients)
                 {
                     misakaTcpClient.Value.Close();
