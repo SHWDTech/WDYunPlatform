@@ -19,9 +19,19 @@ namespace SHWDTech.Platform.Model.IModel
         ProtocolData ProtocolData { get; set; }
 
         /// <summary>
+        /// 数据类型ID
+        /// </summary>
+        Guid CommandDataId { get; set; }
+
+        /// <summary>
         /// 数据类型
         /// </summary>
-        int MonitorDataType { get; set; }
+        CommandData CommandData { get; set; }
+
+        /// <summary>
+        /// 数据名称类型
+        /// </summary>
+        string DataName { get; set; }
 
         /// <summary>
         /// 数据值

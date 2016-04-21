@@ -33,5 +33,8 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "所属指令")]
         [ForeignKey("CommandId")]
         public virtual ICollection<ProtocolCommand> Commands { get; set; }
+
+        [Display(Name = "数据有效性标志位索引值")]
+        public int ValidFlagIndex { get; set; } = -1;
     }
 }

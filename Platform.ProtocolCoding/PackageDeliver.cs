@@ -32,7 +32,9 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="source">接收数据源</param>
         public static void Delive(IProtocolPackage package, IPackageSource source)
         {
-            var deliverParams = package.DeliverParams.Split(';');
+            var deliverParams = package.DeliverParams;
+
+            if (deliverParams.Count == 0) return;
 
             foreach (var deliverMethod in deliverParams.Select(param => Deliver.GetMethod(param)))
             {
@@ -63,18 +65,19 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             var protocolData = process.GetNewProtocolData();
 
-            protocolData.Device = package.Device;
-            protocolData.Protocol = package.Protocol;
+            protocolData.DeviceId = package.Device.Id;
+            protocolData.ProtocolId = package.Protocol.Id;
             protocolData.ProtocolTime = package.ReceiveDateTime;
             protocolData.UpdateTime = DateTime.Now;
             protocolData.ProtocolContent = package.GetBytes();
+            protocolData.Length = protocolData.ProtocolContent.Length;
 
             process.AddProtocolData(protocolData);
 
 
             var dataProcess = ProcessInvoke.GetInstance<MonitorDataProcess>();
 
-            var dataValidFlag = (DataValidFlag)DataConvert.DecodeComponentData(package[ProtocolDataName.DataValidFlag]);
+            var dataValidFlag = DataConvert.GetDataValidFlag(package[ProtocolDataName.DataValidFlag].ComponentBytes);
 
             var monitorDataList = new List<MonitorData>();
 
@@ -82,13 +85,17 @@ namespace SHWDTech.Platform.ProtocolCoding
             {
                 var monitorData = dataProcess.GetNewMonitorData();
 
-                monitorData.DataIsValid = dataValidFlag[i];
-                monitorData.MonitorDataValue =
-                    (double)
-                        DataConvert.DecodeComponentData(
-                            package[package.Command.CommandDatas.First(obj => obj.DataIndex == i).DataName]);
-                monitorData.ProtocolData = protocolData;
+                var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+
+                monitorData.DataIsValid = dataValidFlag[commandData.ValidFlagIndex];
+
+                var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
+
+                monitorData.MonitorDataValue = Convert.ToDouble(temp);
+                monitorData.ProtocolDataId = protocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
+                monitorData.CommandDataId = commandData.Id;
+                monitorData.DataName = commandData.DataName;
 
                 monitorDataList.Add(monitorData);
             }

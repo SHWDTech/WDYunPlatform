@@ -439,74 +439,141 @@ namespace SHWD.Platform.Repository.Entities
 
             var commandDataA = new CommandData()
             {
+                Id = Guid.Parse("46225dc9-ffe2-43af-bba4-7b45bbb55af2"),
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.DataValidFlag,
-                DataType = ProtocolDataType.DataValidFlag
+                DataType = ProtocolDataType.TwoBytesToUShort,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataB = new CommandData()
             {
+                Id = Guid.Parse("489287c6-e179-4864-bd02-7f8962d5e81c"),
                 DataIndex = 1,
                 DataLength = 4,
                 DataName = "PM2.5",
-                DataType = ProtocolDataType.FourBytesToUInt32
+                DataType = ProtocolDataType.FourBytesToUInt32,
+                ValidFlagIndex = 1,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataC = new CommandData()
             {
+                Id = Guid.Parse("b69c75a5-c813-42a6-a3a6-5eeef561c068"),
                 DataIndex = 2,
                 DataLength = 4,
                 DataName = "PM10",
-                DataType = ProtocolDataType.FourBytesToUInt32
+                DataType = ProtocolDataType.FourBytesToUInt32,
+                ValidFlagIndex = 1,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataD = new CommandData()
             {
+                Id = Guid.Parse("36b4d5eb-b141-4cfd-9df5-d4508103fbbf"),
                 DataIndex = 3,
                 DataLength = 4,
                 DataName = "CPM",
-                DataType = ProtocolDataType.FourBytesToUInt32
+                DataType = ProtocolDataType.FourBytesToUInt32,
+                ValidFlagIndex = 2,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataE = new CommandData()
             {
+                Id = Guid.Parse("57874a4a-9a91-42dd-86de-e8940ad92c10"),
                 DataIndex = 4,
                 DataLength = 2,
-                DataName = "总体扬尘值",
-                DataType = ProtocolDataType.TwoBytesToDoubleSeparate
+                DataName = "噪音值",
+                DataType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                ValidFlagIndex = 3,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataF = new CommandData()
             {
+                Id = Guid.Parse("7e175d64-be72-48ed-baf2-549f80c27319"),
                 DataIndex = 5,
                 DataLength = 3,
                 DataName = "风向",
-                DataType = ProtocolDataType.TwoBytesToUShort
+                DataType = ProtocolDataType.ThreeBytesToUShort,
+                ValidFlagIndex = 4,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataG = new CommandData()
             {
+                Id = Guid.Parse("0c9124b1-168d-4510-bd8b-1acd183895a3"),
                 DataIndex = 6,
                 DataLength = 3,
                 DataName = "风速",
-                DataType = ProtocolDataType.TwoBytesToDoubleMerge
+                DataType = ProtocolDataType.ThreeBytesToUShort,
+                ValidFlagIndex = 5,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataH = new CommandData()
             {
+                Id = Guid.Parse("dc8815aa-0203-4c82-a09a-73521bcf208b"),
                 DataIndex = 7,
-                DataLength = 4,
-                DataName = "温湿度",
-                DataType = ProtocolDataType.FourBytesToTwoUShortSeparate
+                DataLength = 2,
+                DataName = "温度",
+                DataType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                ValidFlagIndex = 6,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var commandDataI = new CommandData()
             {
+                Id = Guid.Parse("1ff2c99a-e0af-4419-80f6-53e69574d2c4"),
                 DataIndex = 8,
+                DataLength = 2,
+                DataName = "湿度",
+                DataType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                ValidFlagIndex = 6,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var commandDataJ = new CommandData()
+            {
+                Id = Guid.Parse("d24a7c0b-05f1-4a3f-b82c-6a5615ccdfc5"),
+                DataIndex = 9,
                 DataLength = 4,
                 DataName = "挥发性有机物",
-                DataType = ProtocolDataType.FourBytesToUInt32
+                DataType = ProtocolDataType.FourBytesToUInt32,
+                ValidFlagIndex = 7,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
             };
 
             var command = new ProtocolCommand
@@ -536,7 +603,8 @@ namespace SHWD.Platform.Repository.Entities
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
-                LastUpdateUserId = user.Id
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
             };
 
             commandA.CommandDatas.Add(commandDataA);
@@ -548,6 +616,7 @@ namespace SHWD.Platform.Repository.Entities
             commandA.CommandDatas.Add(commandDataG);
             commandA.CommandDatas.Add(commandDataH);
             commandA.CommandDatas.Add(commandDataI);
+            commandA.CommandDatas.Add(commandDataJ);
 
             dbContext.ProtocolCommands.Add(command);
             dbContext.ProtocolCommands.Add(commandA);

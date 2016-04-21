@@ -32,5 +32,10 @@ namespace SHWDTech.Platform.Model.IModel
         /// 所属指令
         /// </summary>
         ICollection<ProtocolCommand> Commands { get; set; }
+
+        /// <summary>
+        /// 数据有效性验证位索引
+        /// </summary>
+        int ValidFlagIndex { get; set; }
     }
 }

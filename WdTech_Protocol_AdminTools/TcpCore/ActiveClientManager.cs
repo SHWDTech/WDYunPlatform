@@ -20,7 +20,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 未认证的客户端连接
         /// </summary>
-        private readonly Dictionary<string, TcpClientManager> _clientSockets 
+        private readonly Dictionary<string, TcpClientManager> _clientSockets
             = new Dictionary<string, TcpClientManager>();
 
         /// <summary>
@@ -29,12 +29,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="client"></param>
         public void AddClient(Socket client)
         {
-            var tcpClientManager = new TcpClientManager(client) {ReceiverName = "UnIdentified - " + client.LocalEndPoint};
+            var tcpClientManager = new TcpClientManager(client) { ReceiverName = "UnIdentified - " + client.LocalEndPoint };
             client.BeginReceive(tcpClientManager.ReceiveBuffer, SocketFlags.None, tcpClientManager.Received, client);
 
-            if (!_clientSockets.ContainsKey(tcpClientManager.ReceiverName))
+            lock (_clientSockets)
             {
-                _clientSockets.Add(tcpClientManager.ReceiverName, tcpClientManager);
+                if (!_clientSockets.ContainsKey(tcpClientManager.ReceiverName))
+                {
+                    _clientSockets.Add(tcpClientManager.ReceiverName, tcpClientManager);
+                }
             }
         }
 
@@ -45,11 +48,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             while (!_isClosing)
             {
-                foreach (var tcpClientManager in _clientSockets)
+                lock (_clientSockets)
                 {
-                    tcpClientManager.Value.Process();
+                    foreach (var tcpClientManager in _clientSockets)
+                    {
+                        tcpClientManager.Value.Process();
 
-                    Thread.Sleep(10);
+                        Thread.Sleep(10);
+                    }
                 }
             }
         }

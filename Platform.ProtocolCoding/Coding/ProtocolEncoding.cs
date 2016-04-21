@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.IModel;
+﻿using System;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -18,8 +19,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         private readonly List<Protocol> _deviceProtocols = new List<Protocol>();
 
+        /// <summary>
+        /// 解码包对应设备
+        /// </summary>
+        private readonly Device _device;
+
         public ProtocolEncoding(IDevice device)
         {
+            _device = (Device)device;
+
             foreach (var firmware in device.FirmwareSet.Firmwares)
             {
                 _deviceProtocols.AddRange(firmware.Protocols);
@@ -29,10 +37,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 将字节流解码成协议包
         /// </summary>
-        /// <param name="bufferBytes"></param>
         /// <returns></returns>
         public IProtocolPackage Decode(byte[] bufferBytes)
-            => Decode(bufferBytes, _deviceProtocols);
+        {
+            var package = Decode(bufferBytes, _deviceProtocols);
+            package.Device = _device;
+
+            return package;
+        } 
 
         /// <summary>
         /// 对指定的指令进行编码
@@ -110,7 +122,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <returns>协议解析结果</returns>
         public static IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
         {
-            var package = new ProtocolPackage() {Protocol = matchedProtocol};
+            var package = new ProtocolPackage() {Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now};
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
 
@@ -144,7 +156,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     ComponentBytes = bufferBytes.SubBytes(currentIndex, currentIndex + componentDataLength)
                 };
 
-                currentIndex += structure.ComponentDataLength;
+                currentIndex += componentDataLength;
 
                 package[structure.ComponentName] = component;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 
@@ -54,7 +55,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 数据包处理参数
         /// </summary>
-        string DeliverParams { get; set; }
+        List<string> DeliverParams { get; }
 
         /// <summary>
         /// 协议包状态

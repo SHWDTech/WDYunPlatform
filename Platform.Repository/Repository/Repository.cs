@@ -58,6 +58,7 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T CreateDefaultModel()
         {
             var model = DbContext.Set<T>().Create();
+            model.Id = Guid.NewGuid();
             model.ModelState = ModelState.Added;
 
             return model;

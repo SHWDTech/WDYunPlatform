@@ -1,6 +1,7 @@
 ﻿using System;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.Utility;
+// ReSharper disable UnusedMember.Local
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -11,7 +12,7 @@ namespace SHWDTech.Platform.ProtocolCoding
     {
         static DataConvert()
         {
-            Convert = typeof (DataConvert);
+            Convert = typeof(DataConvert);
         }
 
         private static readonly Type Convert;
@@ -38,7 +39,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Encode");
 
-            return (byte[]) convertMethod.Invoke(convertMethod, new[] { componentData });
+            return (byte[])convertMethod.Invoke(convertMethod, new[] { componentData });
         }
 
         /// <summary>
@@ -53,19 +54,22 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="flagBytes"></param>
         /// <returns></returns>
-        public static IDataVallidFlag DataValidFlagDecode(byte[] flagBytes)
+        public static IDataVallidFlag GetDataValidFlag(byte[] flagBytes)
         {
             var flagLength = flagBytes.Length * 8;
 
-            var flagUShort = Globals.BytesToUint16(flagBytes, 0, false);
-
             var flag = new DataValidFlag(flagLength);
 
-            for (var i = 0; i < flagLength; i++)
+            var index = 0;
+            foreach (var t in flagBytes)
             {
-                flag.AddFlag(i, ((flagUShort >> i) & 0x01 ) == 1 );
+                for (var j = 0; j < 8; j++)
+                {
+                    flag.AddFlag(index, ((t >> j) & 0x01) == 1);
+                    index++;
+                }
             }
-            
+
             return flag;
         }
 
@@ -86,7 +90,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var intPart = doubleBytes[0];
 
-            var decimalPart = doubleBytes[1]/100.0;
+            var decimalPart = doubleBytes[1] / 100.0;
 
             return intPart + decimalPart;
         }
@@ -98,6 +102,14 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         public static ushort TwoBytesToUShortDecode(byte[] ushortBytes)
             => Globals.BytesToUint16(ushortBytes, 0, false);
+
+        /// <summary>
+        /// 解码两个字节存储的无符号短整型
+        /// </summary>
+        /// <param name="ushortBytes"></param>
+        /// <returns></returns>
+        public static ushort ThreeBytesToUShortDecode(byte[] ushortBytes)
+            => Globals.BytesToUint16(ushortBytes, 1, false);
 
         /// <summary>
         /// 解码两个字节存储的浮点数，整数和小数部分统一储存

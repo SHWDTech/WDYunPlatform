@@ -21,7 +21,16 @@
             _dataFlagsList[index] = flag;
         }
 
-        public bool this[int index] => index <= _dataFlagsList.Length && _dataFlagsList[index];
+        public bool this[int index]
+        {
+            get
+            {
+                if (index == -1 || index >= _dataFlagsList.Length) return false;
+
+                return _dataFlagsList[index];
+            }
+
+        } 
 
         /// <summary>
         /// 有效性标志位集合

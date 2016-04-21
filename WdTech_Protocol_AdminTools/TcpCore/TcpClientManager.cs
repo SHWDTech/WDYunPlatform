@@ -155,15 +155,23 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             if (_processBuffer.Count <= 0) return;
 
-            switch (_authStatus)
+            try
             {
-                case AuthenticationStatus.NotAuthed:
-                    Authentication();
-                    break;
-                case AuthenticationStatus.Authed:
-                    Decode();
-                    break;
+                switch (_authStatus)
+                {
+                    case AuthenticationStatus.NotAuthed:
+                        Authentication();
+                        break;
+                    case AuthenticationStatus.Authed:
+                        Decode();
+                        break;
+                }
             }
+            catch (Exception ex)
+            {
+                LogService.Instance.Warn("协议解码错误！", ex);
+            }
+            
         }
 
         /// <summary>

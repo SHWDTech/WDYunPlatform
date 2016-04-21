@@ -20,12 +20,22 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("ProtocolDataId")]
         public virtual ProtocolData ProtocolData { get; set; }
 
-        [Display(Name = "数据类型")]
-        public virtual int MonitorDataType { get; set; }
+        [Required]
+        [Display(Name = "数据类型ID")]
+        public virtual Guid CommandDataId { get; set; }
 
+        [Display(Name = "数据类型")]
+        [ForeignKey("CommandDataId")]
+        public virtual CommandData CommandData { get; set; }
+
+        [Display(Name = "数据名称")]
+        public virtual string DataName { get; set; }
+
+        [Required]
         [Display(Name = "数据值")]
         public virtual double MonitorDataValue { get; set; }
 
+        [Required]
         [Display(Name = "数据上传时间")]
         public virtual DateTime UpdateTime { get; set; }
 

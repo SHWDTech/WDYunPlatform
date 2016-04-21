@@ -32,7 +32,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public PackageStatus Status { get; set; } = PackageStatus.UnFinalized;
 
-        public string DeliverParams { get; set; }
+        public List<string> DeliverParams => Command.CommandDeliverParams;
 
         /// <summary>
         /// 协议包组件字典

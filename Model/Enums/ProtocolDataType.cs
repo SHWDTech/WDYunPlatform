@@ -71,6 +71,11 @@
         public const string TwoBytesToUShort = "TwoBytesToUShort";
 
         /// <summary>
+        /// 两个字节存储的无符号短整型
+        /// </summary>
+        public const string ThreeBytesToUShort = "ThreeBytesToUShort";
+
+        /// <summary>
         /// 两个字节存储的Double类型，精度一位小数。
         /// </summary>
         public const string TwoBytesToDoubleMerge = "TwoBytesToDoubleMerge";

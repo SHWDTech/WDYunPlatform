@@ -18,8 +18,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
 
             var container = package[StructureNames.Data].ComponentBytes;
 
-            foreach (var data in package.Command.CommandDatas)
+            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
+                var data = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+
                 if (currentIndex + data.DataLength > container.Length)
                 {
                     package.Status = PackageStatus.NoEnoughBuffer;
@@ -30,6 +32,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
                 {
                     ComponentName = data.DataName,
                     DataType = data.DataType,
+                    ComponentIndex = data.DataIndex,
                     ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength)
                 };
 
