@@ -107,8 +107,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             for (var i = 0; i < structures.Count; i++)
             {
-                var structure = structures.First(struc => struc.ComponentIndex == i);
-                byteList.AddRange(package[structure.ComponentName].ComponentBytes);
+                var structure = structures.First(struc => struc.StructureIndex == i);
+                byteList.AddRange(package[structure.StructureName].ComponentBytes);
             }
 
             return byteList.ToArray();
@@ -132,17 +132,17 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             for (var i = 0; i < structures.Count; i++)
             {
-                var structure = structures.First(obj => obj.ComponentIndex == i);
+                var structure = structures.First(obj => obj.StructureIndex == i);
 
-                if (currentIndex + structure.ComponentDataLength > bufferBytes.Length)
+                if (currentIndex + structure.StructureDataLength > bufferBytes.Length)
                 {
                     package.Status = PackageStatus.NoEnoughBuffer;
                     return package;
                 }
 
-                var componentDataLength = structure.ComponentDataLength;
+                var componentDataLength = structure.StructureDataLength;
 
-                if (structure.ComponentName == StructureNames.Data)
+                if (structure.StructureName == StructureNames.Data)
                 {
                     commandCoder.DetectCommand(package, matchedProtocol);
                     componentDataLength = package.Command.CommandBytesLength;
@@ -150,15 +150,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
                 var component = new PackageComponent
                 {
-                    ComponentName = structure.ComponentName,
+                    ComponentName = structure.StructureName,
                     DataType = structure.DataType,
-                    ComponentIndex = structure.ComponentIndex,
+                    ComponentIndex = structure.StructureIndex,
                     ComponentBytes = bufferBytes.SubBytes(currentIndex, currentIndex + componentDataLength)
                 };
 
                 currentIndex += componentDataLength;
 
-                package[structure.ComponentName] = component;
+                package[structure.StructureName] = component;
             }
 
             commandCoder.DecodeCommand(package);

@@ -26,16 +26,16 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 协议段名称
         /// </summary>
-        string ComponentName { get; set; }
+        string StructureName { get; set; }
 
         /// <summary>
         /// 协议段索引值
         /// </summary>
-        int ComponentIndex { get; set; }
+        int StructureIndex { get; set; }
 
         /// <summary>
         /// 协议段数据长度
         /// </summary>
-        int ComponentDataLength { get; set; }
+        int StructureDataLength { get; set; }
     }
 }
