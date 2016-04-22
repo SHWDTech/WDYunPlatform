@@ -84,8 +84,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public static bool Stop()
         {
-            Manager.Stop();
-
             if (!IsStart) return true;
 
             try
@@ -110,6 +108,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
             
             return true;
+        }
+
+        /// <summary>
+        /// 服务关闭
+        /// </summary>
+        public static void Close()
+        {
+            Stop();
+            Manager.Stop();
         }
 
         /// <summary>

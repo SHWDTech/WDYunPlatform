@@ -114,7 +114,7 @@ namespace WdTech_Protocol_AdminTools.Views
             try
             {
                 _statusBarTimer.Stop();
-                CommunicationServices.Stop();
+                CommunicationServices.Close();
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
+using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -29,7 +30,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="client"></param>
         public void AddClient(Socket client)
         {
-            var tcpClientManager = new TcpClientManager(client) { ReceiverName = "UnIdentified - " + client.LocalEndPoint };
+            var tcpClientManager = new TcpClientManager(client) { ReceiverName = $"UnIdentified - {client.LocalEndPoint}"};
+            tcpClientManager.ClientDisconnectEvent += ClientDisconnected;
             client.BeginReceive(tcpClientManager.ReceiveBuffer, SocketFlags.None, tcpClientManager.Received, client);
 
             lock (_clientSockets)
@@ -39,6 +41,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     _clientSockets.Add(tcpClientManager.ReceiverName, tcpClientManager);
                 }
             }
+        }
+
+        /// <summary>
+        /// 客户端断开连接事件
+        /// </summary>
+        /// <param name="tcpclient"></param>
+        private static void ClientDisconnected(TcpClientManager tcpclient)
+        {
+            ReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpclient.ReceiverName}");
         }
 
         /// <summary>
@@ -55,8 +66,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     foreach (var tcpClientManager in _clientSockets)
                     {
                         tcpClientManager.Value.Process();
-
-                        //Thread.Sleep(10);
                     }
                 }
             }
