@@ -17,6 +17,12 @@ namespace WdTech_Protocol_AdminTools.Services
     /// <summary>
     /// TCP客户端连接断开委托
     /// </summary>
-    /// <param name="conn"></param>
+    /// <param name="client"></param>
     public delegate void ClientDisconnectEventHandler(TcpClientManager client);
+
+    /// <summary>
+    /// TCP客户端完成授权委托
+    /// </summary>
+    /// <param name="client"></param>
+    public delegate void ClientAuthenticationEventHandler(TcpClientManager client);
 }

@@ -20,11 +20,12 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "字典项关键字")]
         public virtual string ItemKey { get; set; }
 
+        [Required]
         [Display(Name = "字典项值")]
         public virtual string ItemValue { get; set; }
 
         [Display(Name = "字典项层级")]
-        public virtual int ItemLevel { get; set; }
+        public virtual byte ItemLevel { get; set; }
 
         [Display(Name = "父级字典项ID")]
         public virtual Guid? ParentDictionaryId { get; set; }

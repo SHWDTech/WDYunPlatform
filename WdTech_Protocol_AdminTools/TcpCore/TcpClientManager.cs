@@ -45,6 +45,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         public event ClientDisconnectEventHandler ClientDisconnectEvent;
 
         /// <summary>
+        /// 客户端完成授权事件
+        /// </summary>
+        public event ClientAuthenticationEventHandler ClientAuthenticationEvent;
+
+        /// <summary>
         /// 指示通信对象是否已经连接上
         /// </summary>
         public bool IsConnected { get; private set; }
@@ -183,6 +188,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         }
 
         /// <summary>
+        /// 完成授权时触发
+        /// </summary>
+        private void OnClientAuthentication()
+        {
+            ClientAuthenticationEvent?.Invoke(this);
+        }
+
+        /// <summary>
         /// 关闭TCP客户端连接
         /// </summary>
         public void Close()
@@ -207,12 +220,18 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 }
 
                 ClientDevice = result.AuthDevice;
+                ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id}";
                 _protocolEncoding = new ProtocolEncoding(ClientDevice);
                 _authStatus = AuthenticationStatus.Authed;
                 Send(result.ReplyBytes);
             }
+
+            OnClientAuthentication();
         }
 
+        /// <summary>
+        /// 解码缓存字节为协议包
+        /// </summary>
         private void Decode()
         {
             lock (_processBuffer)

@@ -26,7 +26,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 字典项层级
         /// </summary>
-        int ItemLevel { get; set; }
+        byte ItemLevel { get; set; }
 
         /// <summary>
         /// 父级字典项ID
