@@ -55,23 +55,35 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Delegates\GlobalsDelegates.cs" />
+    <Compile Include="Enum\OutPutDataColor.cs" />
+    <Compile Include="Enum\ReportMessageColor.cs" />
+    <Compile Include="Enum\ReportMessageEnum.cs" />
+    <Compile Include="Enum\ReportMessageType.cs" />
     <Compile Include="Enum\WindDirection.cs" />
     <Compile Include="Enum\WindSpeed.cs" />
     <Compile Include="Enum\WindSpeedType.cs" />
+    <Compile Include="ExtensionMethod\RichTextBoxExtensionMethod.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="ILogService.cs" />
     <Compile Include="LogService.cs" />
+    <Compile Include="ReportMessage.cs" />
+    <Compile Include="ReportService.cs" />
     <Compile Include="UnityFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

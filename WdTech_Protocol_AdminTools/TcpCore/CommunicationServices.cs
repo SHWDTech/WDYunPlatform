@@ -63,16 +63,16 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 StartDateTime = DateTime.Now;
                 IsStart = true;
 
-                ReportService.Instance.Info("服务器启动成功！");
+                AdminReportService.Instance.Info("服务器启动成功！");
             }
             catch (SocketException ex)
             {
-                ReportService.Instance.Warning("服务器启动失败!", ex);
+                AdminReportService.Instance.Warning("服务器启动失败!", ex);
                 return false;
             }
             catch (ObjectDisposedException ex)
             {
-                ReportService.Instance.Warning("服务器启动侦听失败，套接字已经关闭!", ex);
+                AdminReportService.Instance.Warning("服务器启动侦听失败，套接字已经关闭!", ex);
                 return false;
             }
 
@@ -100,7 +100,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                 StartDateTime = DateTime.MinValue;
 
-                ReportService.Instance.Info("服务器停止成功！");
+                AdminReportService.Instance.Info("服务器停止成功！");
             }
             catch (Exception ex)
             {
@@ -132,16 +132,16 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                 Manager.AddClient(client);
 
-                ReportService.Instance.Info($"客户端连接建立，IP地址：{client.RemoteEndPoint}。");
+                AdminReportService.Instance.Info($"客户端连接建立，IP地址：{client.RemoteEndPoint}。");
             }
             catch (ObjectDisposedException ex)
             {
-                ReportService.Instance.Info("侦听器已经关闭", ex);
+                AdminReportService.Instance.Info("侦听器已经关闭", ex);
                 return;
             }
             catch (SocketException ex)
             {
-                ReportService.Instance.Warning("接收客户端请求失败！", ex);
+                AdminReportService.Instance.Warning("接收客户端请求失败！", ex);
             }
 
             server.BeginAccept(AcceptClient, server);

@@ -105,7 +105,7 @@
     <Compile Include="Models\AppConfig.cs" />
     <Compile Include="Services\AdminDelegate.cs" />
     <Compile Include="Services\ReportMessage.cs" />
-    <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\AdminReportService.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />
     <Compile Include="TcpCore\CommunicationServices.cs" />
     <Compile Include="TcpCore\TcpClientManager.cs" />

@@ -49,8 +49,8 @@ namespace WdTech_Protocol_AdminTools.Views
             TxtServerIpAddress.Text = $"{AppConfig.ServerIpAddress}";
             TxtServerPort.Text = $"{AppConfig.ServerPort}";
 
-            ReportService.AppendTimeStamp = true;
-            ReportService.Instance.ReportDataAdded += AppendReport;
+            AdminReportService.AppendTimeStamp = true;
+            AdminReportService.Instance.ReportDataAdded += AppendReport;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace WdTech_Protocol_AdminTools.Views
         /// </summary>
         private void DispatcherAppendReport()
         {
-            TxtReport.AppendText(ReportService.Instance.PopupReport().Message);
+            TxtReport.AppendText(AdminReportService.Instance.PopupReport().Message);
             TxtReport.ScrollToEnd();
         }
 

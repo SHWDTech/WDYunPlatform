@@ -49,7 +49,7 @@ namespace WdTech_Protocol_AdminTools
 
         protected virtual void AppUnhandleExceptionHandler(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            ReportService.Instance.Fatal("程序出现未处理异常。", e.Exception);
+            AdminReportService.Instance.Fatal("程序出现未处理异常。", e.Exception);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 初始化新的TCP客户端接收器实例
         /// </summary>
-        /// <param name="clientSocket"></param>
+        /// <param name="clientSocket">客户端Socket</param>
         public TcpClientManager(Socket clientSocket)
         {
             _clientSocket = clientSocket;
@@ -94,7 +94,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// TCP客户端异步接收数据
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="result">同步接受结果</param>
         public void Received(IAsyncResult result)
         {
             var client = (Socket)result.AsyncState;
@@ -124,7 +124,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     }
                     else
                     {
-                        ReportService.Instance.Warning("接收客户端数据错误！", ex);
+                        AdminReportService.Instance.Warning("接收客户端数据错误！", ex);
                     }
 
                     OnClientDisconnect();
@@ -247,7 +247,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 同步清除处理BUFF
         /// </summary>
-        /// <param name="package"></param>
+        /// <param name="package">当前处理中的协议包</param>
         private void AsyncCleanBuffer(IProtocolPackage package)
         {
 
@@ -271,7 +271,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 发送数据
         /// </summary>
-        /// <param name="protocolBytes"></param>
+        /// <param name="protocolBytes">协议包字节流</param>
         public void Send(byte[] protocolBytes)
         {
             try

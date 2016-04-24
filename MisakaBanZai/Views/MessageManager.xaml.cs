@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using MisakaBanZai.Common;
-using MisakaBanZai.Enums;
-using MisakaBanZai.Services;
+using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.Utility.Enum;
+using SHWDTech.Platform.Utility.ExtensionMethod;
 
 namespace MisakaBanZai.Views
 {
@@ -28,7 +29,7 @@ namespace MisakaBanZai.Views
         /// <summary>
         /// 添加消息信息
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">报告消息</param>
         private void AppendMessage(ReportMessage message)
         {
             TxtMessageContainer.AppendText($"消息：[{DateTime.Now.ToString(Appconfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);

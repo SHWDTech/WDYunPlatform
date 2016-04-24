@@ -8,6 +8,7 @@ using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
 using MisakaBanZai.Views;
 using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.Utility.Enum;
 
 namespace MisakaBanZai.Services
 {

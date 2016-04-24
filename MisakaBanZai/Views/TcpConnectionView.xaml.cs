@@ -13,6 +13,7 @@ using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
 using MisakaBanZai.Services;
 using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.Utility.Enum;
 
 namespace MisakaBanZai.Views
 {

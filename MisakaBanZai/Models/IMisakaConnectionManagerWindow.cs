@@ -1,5 +1,6 @@
-﻿using MisakaBanZai.Enums;
-using MisakaBanZai.Services;
+﻿using MisakaBanZai.Services;
+using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.Utility.Enum;
 
 namespace MisakaBanZai.Models
 {

@@ -1,6 +1,6 @@
-﻿using MisakaBanZai.Enums;
+﻿using SHWDTech.Platform.Utility.Enum;
 
-namespace MisakaBanZai.Services
+namespace SHWDTech.Platform.Utility
 {
     /// <summary>
     /// 报告消息

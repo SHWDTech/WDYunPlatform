@@ -1,4 +1,4 @@
-﻿namespace MisakaBanZai.Enums
+﻿namespace SHWDTech.Platform.Utility.Enum
 {
     /// <summary>
     /// 输出文字颜色

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MisakaBanZai.Enums;
+using SHWDTech.Platform.Utility.Delegates;
+using SHWDTech.Platform.Utility.Enum;
 
-namespace MisakaBanZai.Services
+namespace SHWDTech.Platform.Utility
 {
     public class ReportService
     {

@@ -17,6 +17,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             bufferProcessThread.Start();
         }
 
+        /// <summary>
+        /// 是否正在结束程序
+        /// </summary>
         private bool _isClosing;
 
         /// <summary>
@@ -51,7 +54,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="tcpclient"></param>
         private static void ClientDisconnected(TcpClientManager tcpclient)
         {
-            ReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpclient.ReceiverName}");
+            AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpclient.ReceiverName}");
         }
 
         /// <summary>

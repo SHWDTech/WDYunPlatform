@@ -1,28 +1,28 @@
-﻿namespace MisakaBanZai.Enums
+﻿namespace SHWDTech.Platform.Utility.Enum
 {
     /// <summary>
-    /// 报告消息颜色
+    /// 错误报告类型
     /// </summary>
-    public static class ReportMessageColor
+    public enum ReportMessageType
     {
         /// <summary>
         /// 消息
         /// </summary>
-        public const string Info = "#449d44";
+        Info,
 
         /// <summary>
         /// 错误
         /// </summary>
-        public const string Error = "#286090";
+        Error,
 
         /// <summary>
         /// 警告
         /// </summary>
-        public const string Warning = "#EC971F";
+        Warning,
 
         /// <summary>
         /// 严重错误
         /// </summary>
-        public const string Danger = "#C9302C";
+        Danger
     }
 }

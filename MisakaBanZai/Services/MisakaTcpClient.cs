@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using MisakaBanZai.Common;
-using MisakaBanZai.Enums;
 using MisakaBanZai.Models;
 using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.Utility.Enum;
 
 namespace MisakaBanZai.Services
 {

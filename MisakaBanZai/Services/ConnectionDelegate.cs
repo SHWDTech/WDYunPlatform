@@ -27,12 +27,6 @@ namespace MisakaBanZai.Services
     public delegate void ClientDisconnectEventHandler(IMisakaConnection conn);
 
     /// <summary>
-    /// 报告数据添加时间委托
-    /// </summary>
-    /// <param name="e"></param>
-    public delegate void ReportDataAddedEventHandler(EventArgs e);
-
-    /// <summary>
     /// 连接信息更改事件
     /// </summary>
     /// <param name="conn"></param>

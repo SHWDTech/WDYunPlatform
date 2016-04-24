@@ -6,12 +6,12 @@ using WdTech_Protocol_AdminTools.Enums;
 
 namespace WdTech_Protocol_AdminTools.Services
 {
-    public class ReportService
+    public class AdminReportService
     {
         /// <summary>
-        /// ReportService 的实例
+        /// AdminReportService 的实例
         /// </summary>
-        public static ReportService Instance { get; }= new ReportService();
+        public static AdminReportService Instance { get; }= new AdminReportService();
 
         /// <summary>
         /// 记录时带上时间戳
