@@ -44,6 +44,9 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "指令处理参数")]
         public virtual ICollection<SysConfig> CommandDeliverParamConfigs { get; set; }
 
+        [Display(Name = "指令定义信息")]
+        public virtual ICollection<CommandDefinition> CommandDefinitions { get;set; }
+
         [NotMapped]
         public virtual List<string> CommandDeliverParams
             => CommandDeliverParamConfigs.Count > 0

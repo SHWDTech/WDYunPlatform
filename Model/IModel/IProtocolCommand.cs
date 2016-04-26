@@ -50,6 +50,11 @@ namespace SHWDTech.Platform.Model.IModel
         ICollection<SysConfig> CommandDeliverParamConfigs { get; set; }
 
         /// <summary>
+        /// 指令相关定义
+        /// </summary>
+        ICollection<CommandDefinition> CommandDefinitions { get; set; }
+
+        /// <summary>
         /// 指令处理参数列表
         /// </summary>
         List<string> CommandDeliverParams { get; }

@@ -78,6 +78,7 @@
     <Compile Include="IModel\ICommandData.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
+    <Compile Include="IModel\ICommandDefinition.cs" />
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDevice.cs" />
     <Compile Include="IModel\IDeviceType.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Model\Alarm.cs" />
     <Compile Include="Model\Camera.cs" />
     <Compile Include="Model\CommandData.cs" />
+    <Compile Include="Model\CommandDefinition.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />

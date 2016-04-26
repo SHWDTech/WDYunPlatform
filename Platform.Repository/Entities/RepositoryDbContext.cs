@@ -162,5 +162,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 指令数据
         /// </summary>
         public virtual DbSet<CommandData> CommandDatas { get; set; }
+
+        /// <summary>
+        /// 指令定义数据
+        /// </summary>
+        public virtual DbSet<CommandDefinition> CommandDefinitions { get; set; }
     }
 }

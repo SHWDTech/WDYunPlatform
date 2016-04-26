@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 using WdTech_Protocol_AdminTools.Services;
@@ -25,8 +24,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 未认证的客户端连接
         /// </summary>
-        private readonly Dictionary<string, TcpClientManager> _clientSockets
-            = new Dictionary<string, TcpClientManager>();
+        private readonly List<TcpClientManager> _clientSockets
+            = new List<TcpClientManager>();
 
         /// <summary>
         /// 添加一个客户端
@@ -34,18 +33,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="client"></param>
         public void AddClient(Socket client)
         {
-            var tcpClientManager = new TcpClientManager(client) { ReceiverName = $"UnIdentified - {client.LocalEndPoint}"};
+            var tcpClientManager = new TcpClientManager(client) { ReceiverName = $"UnIdentified - {client.RemoteEndPoint}"};
             tcpClientManager.ClientDisconnectEvent += ClientDisconnected;
-            tcpClientManager.ClientAuthenticationEvent += ClientAuthentication;
             client.BeginReceive(tcpClientManager.ReceiveBuffer, SocketFlags.None, tcpClientManager.Received, client);
 
-            lock (_clientSockets)
-            {
-                if (!_clientSockets.ContainsKey(tcpClientManager.ReceiverName))
-                {
-                    _clientSockets.Add(tcpClientManager.ReceiverName, tcpClientManager);
-                }
-            }
+            _clientSockets.Add(tcpClientManager);
         }
 
         /// <summary>
@@ -58,37 +50,16 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         }
 
         /// <summary>
-        /// 客户端授权通过事件
-        /// </summary>
-        /// <param name="tcpclient"></param>
-        private void ClientAuthentication(TcpClientManager tcpclient)
-        {
-            lock (_clientSockets)
-            {
-                var client = _clientSockets.FirstOrDefault(obj => obj.Value == tcpclient);
-                if (client.Value == null) return;
-
-                var tcpManager = client.Value;
-                _clientSockets.Remove(client.Key);
-                _clientSockets.Add(tcpManager.ReceiverName, tcpManager);
-            }
-        }
-
-        /// <summary>
         /// 处理数据缓存
         /// </summary>
         private void ProcessBuffer()
         {
             while (!_isClosing)
             {
-                lock (_clientSockets)
+                // ReSharper disable once ForCanBeConvertedToForeach
+                for (var i = 0; i < _clientSockets.Count; i++)
                 {
-                    if (_clientSockets.Count <= 0) continue;
-
-                    foreach (var tcpClientManager in _clientSockets)
-                    {
-                        tcpClientManager.Value.Process();
-                    }
+                    _clientSockets[i].Process();
                 }
             }
         }

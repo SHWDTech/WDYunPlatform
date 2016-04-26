@@ -63,6 +63,7 @@
     <Compile Include="Entities\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Exception\ModelVerificationException.cs" />
     <Compile Include="IRepository\ICommandDataRepository.cs" />
+    <Compile Include="IRepository\ICommandDefinitionRepository.cs" />
     <Compile Include="IRepository\IProtocolCommandRepository.cs" />
     <Compile Include="IRepository\IProtocolRepository.cs" />
     <Compile Include="IRepository\IDeviceTypeRepository.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
     <Compile Include="Repository\CommandDataRepository.cs" />
+    <Compile Include="Repository\CommandDefinitionRepository.cs" />
     <Compile Include="Repository\DataRepository.cs" />
     <Compile Include="Repository\DeviceRepository.cs" />
     <Compile Include="Repository\DeviceTypeRepository.cs" />
