@@ -28,6 +28,8 @@ namespace MisakaBanZai.Services
 
         public string ConnectionName => $"{IpAddress}:{Port}";
 
+        public string TargetConnectionName { get; set; }
+
         public string ConnectionType { get; set; }
 
         public object ConnObject => _tcpClient;
@@ -80,6 +82,7 @@ namespace MisakaBanZai.Services
             var ipEndPoint = ((IPEndPoint)client.RemoteEndPoint).ToString().Split(':');
             IpAddress = $"{ipEndPoint[0]}";
             Port = int.Parse(ipEndPoint[1]);
+            TargetConnectionName = ConnectionName;
         }
 
         /// <summary>

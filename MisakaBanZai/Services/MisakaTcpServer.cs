@@ -63,6 +63,8 @@ namespace MisakaBanZai.Services
 
         public string ConnectionName => $"{IpAddress}:{Port}";
 
+        public string TargetConnectionName { get; set; }
+
         public string ConnectionType { get; set; }
 
         public object ConnObject => _tcpListener;
@@ -90,6 +92,7 @@ namespace MisakaBanZai.Services
                 _tcpListener.Bind(new IPEndPoint(ipaddress, port));
                 IpAddress = $"{ipaddress}";
                 Port = port;
+                TargetConnectionName = string.Empty;
                 _tcpListener.LingerState = new LingerOption(false, 1);
                 _tcpListener.Listen(2048);
                 _tcpListener.BeginAccept(AcceptClient, _tcpListener);
@@ -230,9 +233,9 @@ namespace MisakaBanZai.Services
         /// <summary>
         /// 触发数据接收事件
         /// </summary>
-        private void OnReceivedData()
+        private void OnReceivedData(IMisakaConnection conn)
         {
-            ClientReceivedDataEvent?.Invoke(this);
+            ClientReceivedDataEvent?.Invoke(conn);
         }
 
         /// <summary>
@@ -241,11 +244,7 @@ namespace MisakaBanZai.Services
         /// <param name="conn"></param>
         private void OnClientReceivedData(IMisakaConnection conn)
         {
-            foreach (var socketByte in conn.OutPutSocketBytes())
-            {
-                ProcessBuffer.Add(socketByte);
-            }
-            OnReceivedData();
+            OnReceivedData(conn);
         }
 
         /// <summary>

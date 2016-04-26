@@ -432,7 +432,7 @@ namespace MisakaBanZai.Views
             }
             if (ShowSource)
             {
-                TxtReceiveViewer.AppendText($"[{conn.ConnectionName}]");
+                TxtReceiveViewer.AppendText($"[{conn.TargetConnectionName}]");
             }
             if (ShowDate || ShowSource)
             {
@@ -537,19 +537,31 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void ClientConnect()
         {
-            if (_misakaConnection.Connect(GetTargetIpAddress(), GetTargetPort()))
+            try
             {
-                BtnConnect.Content = "断开连接";
-                ReportService.Info("连接服务器成功！");
-                OnConnectionModefied(_misakaConnection);
-            }
-            else
-            {
-                ReportService.Error("尝试连接失败！");
-                return;
-            }
+                var targetAddress = GetTargetIpAddress();
 
-            ChangeClientControlStatus(false);
+                var targetPort = GetTargetPort();
+
+                if (_misakaConnection.Connect(targetAddress, targetPort))
+                {
+                    _misakaConnection.TargetConnectionName = $"{targetAddress}:{targetPort}";
+                    BtnConnect.Content = "断开连接";
+                    ReportService.Info("连接服务器成功！");
+                    OnConnectionModefied(_misakaConnection);
+                }
+                else
+                {
+                    ReportService.Error("尝试连接失败！");
+                    return;
+                }
+
+                ChangeClientControlStatus(false);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("IP地址或端口号输入错误，请重新输入！");
+            }
         }
 
         /// <summary>

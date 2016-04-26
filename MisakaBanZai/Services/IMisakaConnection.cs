@@ -15,6 +15,11 @@ namespace MisakaBanZai.Services
         string ConnectionName { get; }
 
         /// <summary>
+        /// 连接对象名称
+        /// </summary>
+        string TargetConnectionName { get; set; }
+
+        /// <summary>
         /// 连接类型
         /// </summary>
         string ConnectionType { get; }
