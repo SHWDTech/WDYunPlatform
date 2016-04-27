@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -32,12 +33,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 任务状态
         /// </summary>
-        int TaskStatus { get; set; }
+        TaskStatus TaskStatus { get; set; }
 
         /// <summary>
         /// 任务执行状态
         /// </summary>
-        int ExecuteStatus { get; set; }
+        TaskExceteStatus ExecuteStatus { get; set; }
 
         /// <summary>
         /// 任务包含协议

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.Utility;
-using WdTech_Protocol_AdminTools.Enums;
+using SHWDTech.Platform.Utility.Enum;
 
 namespace WdTech_Protocol_AdminTools.Services
 {

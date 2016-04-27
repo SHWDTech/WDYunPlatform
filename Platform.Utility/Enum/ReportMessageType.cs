@@ -23,6 +23,11 @@
         /// <summary>
         /// 严重错误
         /// </summary>
-        Danger
+        Danger,
+
+        /// <summary>
+        /// 致命性错误
+        /// </summary>
+        Fatal
     }
 }

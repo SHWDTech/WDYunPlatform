@@ -74,6 +74,8 @@
     <Compile Include="Enums\ProtocolDeliveryParam.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
     <Compile Include="Enums\SysConfigType.cs" />
+    <Compile Include="Enums\TaskExceteStatus.cs" />
+    <Compile Include="Enums\TaskStatus.cs" />
     <Compile Include="Enums\UserStatus.cs" />
     <Compile Include="IModel\ICommandData.cs" />
     <Compile Include="IModel\IAlarm.cs" />

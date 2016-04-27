@@ -100,12 +100,10 @@
     </Compile>
     <Compile Include="Enums\DateTimeViewFormat.cs" />
     <Compile Include="Enums\OutPutDataColor.cs" />
-    <Compile Include="Enums\ReportMessageColor.cs" />
-    <Compile Include="Enums\ReportMessageType.cs" />
     <Compile Include="Models\AppConfig.cs" />
     <Compile Include="Services\AdminDelegate.cs" />
-    <Compile Include="Services\ReportMessage.cs" />
     <Compile Include="Services\AdminReportService.cs" />
+    <Compile Include="Services\TaskManager.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />
     <Compile Include="TcpCore\CommunicationServices.cs" />
     <Compile Include="TcpCore\TcpClientManager.cs" />

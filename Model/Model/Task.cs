@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -31,11 +32,11 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "任务状态")]
-        public virtual int TaskStatus { get; set; }
+        public virtual TaskStatus TaskStatus { get; set; }
 
         [Required]
         [Display(Name = "任务执行状态")]
-        public virtual int ExecuteStatus { get; set; }
+        public virtual TaskExceteStatus ExecuteStatus { get; set; }
 
         [Required]
         [Display(Name = "任务包含协议")]
