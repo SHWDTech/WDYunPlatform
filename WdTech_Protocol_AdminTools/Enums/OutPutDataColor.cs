@@ -29,5 +29,10 @@
         /// 默认颜色
         /// </summary>
         public const string DefualtColor = "#000000";
+
+        /// <summary>
+        /// 报告消息操作符颜色
+        /// </summary>
+        public const string OperaterColor = "#999966";
     }
 }

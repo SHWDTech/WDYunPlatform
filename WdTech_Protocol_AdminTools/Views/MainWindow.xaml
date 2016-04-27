@@ -18,7 +18,9 @@
         </Grid.RowDefinitions>
         <Grid Row="0">
             <Menu FontSize="16">
-                <MenuItem Header="文件"></MenuItem>
+                <MenuItem Header="文件">
+                    <MenuItem Header="清空消息记录" Click="ClearTextReport"></MenuItem>
+                </MenuItem>
             </Menu>
         </Grid>
         <Grid Row="1">

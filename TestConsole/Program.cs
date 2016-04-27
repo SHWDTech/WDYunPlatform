@@ -1,4 +1,5 @@
 ﻿using System;
+using SHWDTech.Platform.Utility;
 
 namespace TestConsole
 {
@@ -6,17 +7,17 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var datetime = typeof (DateTime).Name;
-            var inttype = typeof (int).Name;
-            var stringtype = typeof (string).Name;
-            var longtype = typeof (long).Name;
-            var bytetype = typeof (byte).Name;
-            var shorttype = typeof (short).Name;
-            var ushorttype = typeof (ushort).Name;
-            var uinttype = typeof (uint).Name;
-            var UInt16 = typeof (UInt16).Name;
+            var x = DateTime.Parse("2011-5-6 16:08:44");
 
-            Console.WriteLine($"{datetime}-{inttype}-{stringtype}-{longtype}-{bytetype}-{shorttype}-{ushorttype}-{uinttype}-{UInt16}");
+            var y = Globals.GetDateBytes(x);
+
+            Console.WriteLine(x);
+
+            var z = Globals.GetDateFormLong(y);
+
+            Console.WriteLine(z.ToString("yyyy-MM-dddd HH:mm:ss"));
+
+            Console.ReadLine();
         }
     }
 }

@@ -116,7 +116,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         public static void Close()
         {
             Stop();
-            Manager.Stop();
         }
 
         /// <summary>

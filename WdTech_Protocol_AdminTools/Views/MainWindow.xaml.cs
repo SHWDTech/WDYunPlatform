@@ -3,10 +3,12 @@ using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Threading;
+using SHWDTech.Platform.Utility.ExtensionMethod;
 using WdTech_Protocol_AdminTools.Enums;
 using WdTech_Protocol_AdminTools.Models;
 using WdTech_Protocol_AdminTools.Services;
 using WdTech_Protocol_AdminTools.TcpCore;
+using MisakaBanZai.Common;
 
 namespace WdTech_Protocol_AdminTools.Views
 {
@@ -48,8 +50,7 @@ namespace WdTech_Protocol_AdminTools.Views
 
             TxtServerIpAddress.Text = $"{AppConfig.ServerIpAddress}";
             TxtServerPort.Text = $"{AppConfig.ServerPort}";
-
-            AdminReportService.AppendTimeStamp = true;
+            
             AdminReportService.Instance.ReportDataAdded += AppendReport;
         }
 
@@ -67,7 +68,13 @@ namespace WdTech_Protocol_AdminTools.Views
         /// </summary>
         private void DispatcherAppendReport()
         {
-            TxtReport.AppendText(AdminReportService.Instance.PopupReport().Message);
+            var message = AdminReportService.Instance.PopupReport();
+            if (message == null) return;
+
+            TxtReport.AppendText($"[{DateTime.Now.ToString(Appconfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
+            TxtReport.AppendText(" => ", OutPutDataColor.OperaterColor);
+            TxtReport.AppendText(message.Message, message.MessageColor);
+            TxtReport.AppendText("\r\n");
             TxtReport.ScrollToEnd();
         }
 
@@ -178,6 +185,16 @@ namespace WdTech_Protocol_AdminTools.Views
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 清空消息记录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearTextReport(object sender, RoutedEventArgs e)
+        {
+            TxtReport.Document.Blocks.Clear();
         }
     }
 }

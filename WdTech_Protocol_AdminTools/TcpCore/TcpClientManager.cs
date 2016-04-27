@@ -35,6 +35,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private ProtocolEncoding _protocolEncoding;
 
         /// <summary>
+        /// 是否正在解析协议
+        /// </summary>
+        private bool _processing;
+
+        /// <summary>
         /// 客户端数据接收事件
         /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
@@ -150,6 +155,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void OnReceivedData()
         {
+            if (!_processing) Process();
             ClientReceivedDataEvent?.Invoke(this);
         }
 
@@ -158,25 +164,32 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public void Process()
         {
-            if (_processBuffer.Count <= 0) return;
+            lock (_processBuffer)
+            {
+                _processing = true;
 
-            try
-            {
-                switch (_authStatus)
+                while (_processBuffer.Count > 0)
                 {
-                    case AuthenticationStatus.NotAuthed:
-                        Authentication();
-                        break;
-                    case AuthenticationStatus.Authed:
-                        Decode();
-                        break;
+                    try
+                    {
+                        switch (_authStatus)
+                        {
+                            case AuthenticationStatus.NotAuthed:
+                                Authentication();
+                                break;
+                            case AuthenticationStatus.Authed:
+                                Decode();
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Warn("协议解码错误！", ex);
+                    }
                 }
+
+                _processing = false;
             }
-            catch (Exception ex)
-            {
-                LogService.Instance.Warn("协议解码错误！", ex);
-            }
-            
         }
 
         /// <summary>
@@ -201,6 +214,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         public void Close()
         {
             _clientSocket.Close();
+
+            OnClientDisconnect();
         }
 
         /// <summary>
@@ -208,23 +223,20 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void Authentication()
         {
-            lock (_processBuffer)
+            var result = AuthenticationService.DeviceAuthcation(_processBuffer.ToArray());
+
+            AsyncCleanBuffer(result.Package);
+
+            if (result.ResultType == AuthResultType.Faild)
             {
-                var result = AuthenticationService.DeviceAuthcation(_processBuffer.ToArray());
-
-                AsyncCleanBuffer(result.Package);
-
-                if (result.ResultType == AuthResultType.Faild)
-                {
-                    return;
-                }
-
-                ClientDevice = result.AuthDevice;
-                ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id}";
-                _protocolEncoding = new ProtocolEncoding(ClientDevice);
-                _authStatus = AuthenticationStatus.Authed;
-                Send(result.ReplyBytes);
+                return;
             }
+
+            ClientDevice = result.AuthDevice;
+            ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id.ToString().ToUpper()}";
+            _protocolEncoding = new ProtocolEncoding(ClientDevice);
+            _authStatus = AuthenticationStatus.Authed;
+            Send(result.ReplyBytes);
 
             OnClientAuthentication();
         }
@@ -234,14 +246,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void Decode()
         {
-            lock (_processBuffer)
-            {
-                var result = _protocolEncoding.Decode(_processBuffer.ToArray());
+            var result = _protocolEncoding.Decode(_processBuffer.ToArray());
 
-                AsyncCleanBuffer(result);
+            AsyncCleanBuffer(result);
 
-                PackageDeliver.Delive(result, this);
-            }
+            PackageDeliver.Delive(result, this);
         }
 
         /// <summary>
@@ -278,13 +287,17 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 _clientSocket.Send(protocolBytes);
             }
-            catch (Exception ex)
+            catch (ObjectDisposedException ex)
             {
                 LogService.Instance.Error($"套接字数据发送错误，相关套接字信息：{ReceiverName}", ex);
-                if (ex is ObjectDisposedException)
-                {
-                    Close();
-                }
+
+                Close();
+            }
+            catch (SocketException ex)
+            {
+                LogService.Instance.Error($"套接字数据发送错误，相关套接字信息：{ReceiverName}", ex);
+
+                Close();
             }
         }
 

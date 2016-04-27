@@ -146,6 +146,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MisakaBanZai\MisakaBanZai.csproj">
+      <Project>{93604FE4-DEB4-41AB-96D8-163E05F853EB}</Project>
+      <Name>MisakaBanZai</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>

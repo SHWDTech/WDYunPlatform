@@ -625,7 +625,7 @@ namespace SHWD.Platform.Repository.Entities
             {
                 Id = Guid.Parse("ba0ca1dc-0331-4d5a-96e5-49ac20665a13"),
                 DeviceTypeId = deviceType.Id,
-                DeviceCode = "wohao",
+                DeviceCode = "扬尘硬件第三版测试一号",
                 DevicePassword = string.Empty,
                 DeviceModuleGuid = Guid.Parse("024849d6-2538-48a0-8f0d-5a289e27f955"),
                 DeviceNodeId = "00001F1F",

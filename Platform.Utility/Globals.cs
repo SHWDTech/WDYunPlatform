@@ -119,36 +119,62 @@ namespace SHWDTech.Platform.Utility
         }
 
         /// <summary>
-        /// 根据传入的时间，计算一个long类型的值，存储时间信息（主要用来生成标识码）
+        /// 根据传入的时间，计算一个ulong类型的值，存储时间信息（主要用来生成标识码）
         /// </summary>
         /// <param name="dt">传入的时间</param>
         /// <returns>一个Long</returns>
-        public static long GetDateBytes(DateTime dt)
+        public static ulong GetDateBytes(DateTime dt)
         {
-            long identityNum = 0;
+            ulong identityNum = 0;
 
-            //年取值0-9999， 12位 = 4098
-            identityNum |= (long)dt.Year << 36;
+            //年取值0-9999， 12位 = 4096
+            identityNum |= (ulong)dt.Year << DateTimeToUlongMark.YearMark;
 
             //月取值1-12， 4位 = 16
-            identityNum |= (long)dt.Month << 32;
+            identityNum |= (ulong)dt.Month << DateTimeToUlongMark.MonthMark;
 
             //日取值0-31，5位 = 32
-            identityNum |= (long)dt.Day << 27;
+            identityNum |= (ulong)dt.Day << DateTimeToUlongMark.DayMark;
 
             //时取值0-23，5位 = 32
-            identityNum |= (long)dt.Hour << 22;
+            identityNum |= (ulong)dt.Hour << DateTimeToUlongMark.HourMark;
 
             //分取值0-59，6位 = 64
-            identityNum |= (long)dt.Minute << 16;
+            identityNum |= (ulong)dt.Minute << DateTimeToUlongMark.MinuteMark;
 
             //秒取值0-59，6位 = 64
-            identityNum |= (long)dt.Second << 10;
+            identityNum |= (ulong)dt.Second << DateTimeToUlongMark.SecondMark;
 
             //毫秒取值0-999，10位 = 1024
-            identityNum |= (long)dt.Millisecond << 0;
+            identityNum |= (ulong)dt.Millisecond << DateTimeToUlongMark.MillisecondMark;
 
             return identityNum;
+        }
+
+        /// <summary>
+        /// 根据传入的无符号长整型，计算一个时间值
+        /// </summary>
+        /// <param name="dtLong"></param>
+        /// <returns></returns>
+        public static DateTime GetDateFormLong(ulong dtLong)
+        {
+            var year = Convert.ToInt32((dtLong & UlongToDateTimeFlag.YearFlag) >> DateTimeToUlongMark.YearMark);
+
+            var month = Convert.ToInt32((dtLong & UlongToDateTimeFlag.MonthFlag) >> DateTimeToUlongMark.MonthMark);
+
+            var day = Convert.ToInt32((dtLong & UlongToDateTimeFlag.DayFlag) >> DateTimeToUlongMark.DayMark);
+
+            var hour = Convert.ToInt32((dtLong & UlongToDateTimeFlag.HourFlag) >> DateTimeToUlongMark.HourMark);
+
+            var minute = Convert.ToInt32((dtLong & UlongToDateTimeFlag.MinuteFlag) >> DateTimeToUlongMark.MinuteMark);
+
+            var second = Convert.ToInt32((dtLong & UlongToDateTimeFlag.SecondFlag) >> DateTimeToUlongMark.SecondMark);
+
+            var millisecond = Convert.ToInt32((dtLong & UlongToDateTimeFlag.MillisecondFlag) >> DateTimeToUlongMark.MillisecondMark);
+
+            var dt = new DateTime(year, month, day, hour, minute, second, millisecond);
+
+            return dt;
         }
 
         /// <summary>

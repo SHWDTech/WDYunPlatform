@@ -14,11 +14,6 @@ namespace WdTech_Protocol_AdminTools.Services
         public static AdminReportService Instance { get; }= new AdminReportService();
 
         /// <summary>
-        /// 记录时带上时间戳
-        /// </summary>
-        public static bool AppendTimeStamp { get; set; } = false;
-
-        /// <summary>
         /// 报告数据
         /// </summary>
         private IList<ReportMessage> ReportData { get; } = new List<ReportMessage>();
@@ -35,11 +30,6 @@ namespace WdTech_Protocol_AdminTools.Services
         /// <param name="type"></param>
         private void AddReportMessage(string message, ReportMessageType type)
         {
-            if (AppendTimeStamp)
-            {
-                message = $"[{DateTime.Now}]{message}\r\n";
-            }
-
             var reportMessage = new ReportMessage(type, message);
             Instance.ReportData.Add(reportMessage);
             OnReportDataAdded(EventArgs.Empty);
@@ -51,8 +41,10 @@ namespace WdTech_Protocol_AdminTools.Services
         /// <returns></returns>
         public ReportMessage PopupReport()
         {
-            var message = ReportData.FirstOrDefault();
-            if (message != null) ReportData.RemoveAt(0);
+            if (ReportData.Count <= 0) return null;
+
+            var message = ReportData.First();
+            ReportData.RemoveAt(0);
 
             return message;
         }

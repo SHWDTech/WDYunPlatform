@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Delegates\GlobalsDelegates.cs" />
+    <Compile Include="Enum\DateTimeToUlongMark.cs" />
     <Compile Include="Enum\OutPutDataColor.cs" />
     <Compile Include="Enum\ReportMessageColor.cs" />
     <Compile Include="Enum\ReportMessageEnum.cs" />
