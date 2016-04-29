@@ -228,7 +228,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.SingleByte
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[] { 0xAA }
             };
 
             var cmdtype = new ProtocolStructure
@@ -243,7 +244,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.SingleByte
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[0]
             };
 
             var cmdbyte = new ProtocolStructure
@@ -258,7 +260,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.SingleByte
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[0]
             };
 
             var password = new ProtocolStructure()
@@ -273,7 +276,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.NumPassword
+                DataType = ProtocolDataType.NumPassword,
+                DefaultBytes = new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 }
             };
 
             var nodeid = new ProtocolStructure()
@@ -288,7 +292,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.NodeId
+                DataType = ProtocolDataType.NodeId,
+                DefaultBytes = new byte[0]
             };
 
             var descrip = new ProtocolStructure()
@@ -303,7 +308,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Description
+                DataType = ProtocolDataType.Description,
+                DefaultBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
             };
 
             var sourceaddr = new ProtocolStructure()
@@ -318,7 +324,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.SourceAddr
+                DataType = ProtocolDataType.SourceAddr,
+                DefaultBytes = new byte[] { 0x01 }
             };
 
             var destination = new ProtocolStructure()
@@ -333,7 +340,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Destination
+                DataType = ProtocolDataType.Destination,
+                DefaultBytes = new byte[] { 0x01 }
             };
 
             var datalength = new ProtocolStructure()
@@ -348,7 +356,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.DataLength
+                DataType = ProtocolDataType.DataLength,
+                DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
             var data = new ProtocolStructure()
@@ -363,7 +372,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Data
+                DataType = ProtocolDataType.Data,
+                DefaultBytes = new byte[0]
             };
 
             var crc = new ProtocolStructure()
@@ -378,7 +388,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Crc
+                DataType = ProtocolDataType.Crc,
+                DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
             var tail = new ProtocolStructure()
@@ -393,7 +404,8 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.SingleByte
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[] { 0xDD }
             };
 
             dbContext.ProtocolStructures.Add(head);

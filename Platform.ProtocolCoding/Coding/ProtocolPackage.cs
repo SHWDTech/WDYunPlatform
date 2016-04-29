@@ -19,15 +19,18 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public ProtocolPackage(IProtocolCommand command)
         {
-            var protocol = command.Protocol;
+            Protocol = command.Protocol;
 
-            foreach (var structure in protocol.ProtocolStructures)
+            Command = command;
+
+            foreach (var structure in Protocol.ProtocolStructures)
             {
                 var component = new PackageComponent()
                 {
                     ComponentName = structure.StructureName,
                     DataType = structure.DataType,
-                    ComponentIndex = structure.StructureIndex
+                    ComponentIndex = structure.StructureIndex,
+                    ComponentBytes = structure.DefaultBytes
                 };
 
                 this[structure.StructureName] = component;
@@ -57,7 +60,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public Device Device { get; set; }
 
-        public ProtocolCommand Command { get; set; }
+        public IProtocolCommand Command { get; set; }
 
         private IPackageComponent DataComponent { get; set; }
 

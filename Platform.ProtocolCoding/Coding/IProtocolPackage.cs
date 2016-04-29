@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 
@@ -38,7 +39,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 所属指令
         /// </summary>
-        ProtocolCommand Command { get; set; }
+        IProtocolCommand Command { get; set; }
 
         /// <summary>
         /// 获取指定名称的数据段

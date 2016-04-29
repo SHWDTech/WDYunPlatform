@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.IModel;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 
 namespace SHWDTech.Platform.ProtocolCoding.Command
@@ -16,7 +17,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         /// 编码指定指令的协议
         /// </summary>
         /// <returns></returns>
-        IProtocolPackage EncodeCommand(IProtocolCommand command);
+        IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null);
 
         /// <summary>
         /// 检测协议包所属指令

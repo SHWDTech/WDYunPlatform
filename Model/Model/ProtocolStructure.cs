@@ -36,5 +36,9 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "协议段数据长度")]
         public virtual int StructureDataLength { get; set; }
+
+        [Required]
+        [Display(Name = "协议段默认值")]
+        public byte[] DefaultBytes { get; set; }
     }
 }

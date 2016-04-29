@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -43,7 +44,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             package.Finalization();
         }
 
-        public IProtocolPackage EncodeCommand(IProtocolCommand command)
+        public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
             var package = new ProtocolPackage(command);
 
@@ -52,6 +53,18 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
                 package[definition.StructureName].ComponentBytes = definition.ContentBytes;
             }
 
+            if (paramBytes != null)
+            {
+                foreach (var paramByte in paramBytes)
+                {
+                    package[paramByte.Key].ComponentBytes = paramByte.Value;
+                }
+            }
+
+            var crcValue = Globals.GetUsmbcrc16(package.GetBytes(), (ushort) (package.PackageLenth - 3));
+            package[StructureNames.CrcValue].ComponentBytes = Globals.Uint16ToBytes(crcValue, false);
+
+            package.Finalization();
             return package;
         }
 

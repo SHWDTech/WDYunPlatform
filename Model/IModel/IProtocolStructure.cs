@@ -37,5 +37,10 @@ namespace SHWDTech.Platform.Model.IModel
         /// 协议段数据长度
         /// </summary>
         int StructureDataLength { get; set; }
+
+        /// <summary>
+        /// 协议结构默认值
+        /// </summary>
+        byte[] DefaultBytes { get; set; }
     }
 }
