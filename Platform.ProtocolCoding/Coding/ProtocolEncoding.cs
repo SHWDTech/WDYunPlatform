@@ -99,20 +99,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="command">指定的指令</param>
         /// <returns>协议字节流</returns>
         public static byte[] EncodeProtocol(IProtocolCommand command)
-        {
-            var package = UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command);
-
-            var byteList = new List<byte>();
-            var structures = command.Protocol.ProtocolStructures;
-
-            for (var i = 0; i < structures.Count; i++)
-            {
-                var structure = structures.First(struc => struc.StructureIndex == i);
-                byteList.AddRange(package[structure.StructureName].ComponentBytes);
-            }
-
-            return byteList.ToArray();
-        }
+            => UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command).GetBytes();
 
         /// <summary>
         /// 协议解码

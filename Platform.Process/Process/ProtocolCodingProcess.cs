@@ -20,6 +20,10 @@ namespace Platform.Process.Process
         public IList<Protocol> GetProtocolsFullLoaded() 
             => _repository.GetProtocolsFullLoaded();
 
+
+        public Protocol GetProtocolFullLoadedByName(string name)
+            => _repository.GetProtocolFullLoadedByName(name);
+
         public Protocol GetProtocolByName(string name)
             => _repository.GetModels(model => model.ProtocolName == name).FirstOrDefault();
 

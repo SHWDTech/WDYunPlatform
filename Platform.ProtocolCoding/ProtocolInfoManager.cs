@@ -51,7 +51,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                 return ProtocolsCache[name];
             }
 
-            var protocol = ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolByName(name);
+            var protocol = ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolFullLoadedByName(name);
             if (protocol == null) return null;
 
             ProtocolsCache.Add(protocol.ProtocolName, protocol);

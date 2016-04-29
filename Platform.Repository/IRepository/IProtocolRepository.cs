@@ -13,5 +13,12 @@ namespace SHWD.Platform.Repository.IRepository
         /// </summary>
         /// <returns></returns>
         IList<Protocol> GetProtocolsFullLoaded();
+
+        /// <summary>
+        /// （同步）读取指定名称的协议信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        Protocol GetProtocolFullLoadedByName(string name);
     }
 }

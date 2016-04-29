@@ -4,7 +4,7 @@ using System.Windows.Threading;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Utility;
-using WdTech_Protocol_AdminTools.Models;
+using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools

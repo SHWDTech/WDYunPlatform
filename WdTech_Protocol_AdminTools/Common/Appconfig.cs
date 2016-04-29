@@ -2,13 +2,30 @@
 using System.Net;
 using WdTech_Protocol_AdminTools.Enums;
 
-namespace WdTech_Protocol_AdminTools.Models
+namespace WdTech_Protocol_AdminTools.Common
 {
-    /// <summary>
-    /// 系统全局设置
-    /// </summary>
     public static class AppConfig
     {
+        /// <summary>
+        /// TCP接收Buffer大小
+        /// </summary>
+        public static readonly int TcpBufferSize;
+
+        /// <summary>
+        /// 完整时间格式
+        /// </summary>
+        public const string FullDateFormat = "yyyy-MM-dd HH:mm:ss fff";
+
+        /// <summary>
+        /// 短时间格式
+        /// </summary>
+        public const string ShortDateFormat = "HH:mm:ss fff";
+
+        /// <summary>
+        /// 选择全部连接
+        /// </summary>
+        public const string SelectAllConnection = "选择全部";
+
         /// <summary>
         /// 服务器地址
         /// </summary>
@@ -18,11 +35,6 @@ namespace WdTech_Protocol_AdminTools.Models
         /// 服务器端口号
         /// </summary>
         public static int ServerPort { get; }
-
-        /// <summary>
-        /// TCP接收Buffer大小
-        /// </summary>
-        public static int TcpBufferSize { get; }
 
         /// <summary>
         /// 管理员账号
@@ -36,14 +48,13 @@ namespace WdTech_Protocol_AdminTools.Models
 
         static AppConfig()
         {
+            TcpBufferSize = int.Parse(ConfigurationManager.AppSettings["TcpBufferSize"]);
+
             ServerIpAddress = IPAddress.Parse(ConfigurationManager.AppSettings["ServerAddress"]);
 
             ServerPort = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
 
-            TcpBufferSize = int.Parse(ConfigurationManager.AppSettings["TcpBufferSize"]);
-
             ServerAccount = ConfigurationManager.AppSettings["ServerAccount"];
         }
-
     }
 }

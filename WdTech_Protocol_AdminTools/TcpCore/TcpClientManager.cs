@@ -9,7 +9,7 @@ using SHWDTech.Platform.ProtocolCoding.Authentication;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
-using WdTech_Protocol_AdminTools.Models;
+using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore

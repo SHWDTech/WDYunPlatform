@@ -9,13 +9,20 @@
              DockPanel.Dock="Top"
              d:DesignHeight="72" d:DesignWidth="400">
     <Grid>
-        <Label Content="HEX" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4, 8, 0, 0"></Label>
-        <CheckBox x:Name="ChkAutoSend" Margin="70, 12, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
-        <TextBox x:Name="TxtCommandName" VerticalAlignment="Top" Height="30" Margin="100, 6, 44, 0"></TextBox>
-        <Button x:Name="BtnEdit" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="30" Margin="0, 6, 6, 4" FontSize="18" Content="E"></Button>
-        <Label Content="自动发送" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4, 36, 0, 0"></Label>
-        <CheckBox x:Name="ChkHexSend" Margin="70, 42, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
-        <TextBox x:Name="TxtCommand" Margin="100, 38, 6, 2" MinHeight="30" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Row="0">
+            <Label Content="HEX" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4, 8, 0, 0"></Label>
+            <CheckBox x:Name="ChkAutoSend" Margin="40, 12, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
+            <Label Content="自动发送" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60, 8, 0, 0"></Label>
+            <CheckBox x:Name="ChkHexSend" Margin="120, 12, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
+        </Grid>
+        <Grid Row="1">
+            <TextBox x:Name="TxtCommandName" VerticalAlignment="Top" Height="30" Margin="100, 6, 44, 0"></TextBox>
+            <TextBox x:Name="TxtCommand" Margin="100, 38, 6, 2" MinHeight="30" 
                  TextWrapping="Wrap" GotFocus="TextBoxGetFocus" LostFocus="TextBoxLostFocus" Padding="0, 4, 0, 0"></TextBox>
+        </Grid>
     </Grid>
 </UserControl>

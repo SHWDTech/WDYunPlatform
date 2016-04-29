@@ -308,6 +308,42 @@ namespace SHWDTech.Platform.Utility
         }
 
         /// <summary>
+        /// 获得有顺序的GUID，用Guid前10位加时间参数生成，时间加在最前面6个字节
+        /// 需要注意的是，在SQL SERVER数据库中，使用GUID字段类型保存的话，SQL SERVER对GUID类型字段排序算法是以最后6字节为主要依据，
+        /// 这与Oracle不同，为了保证排序规则与Oracle一致，在SQL SERVER中要使用Binary(16)数据类型来保存。
+        /// </summary>
+        /// <returns>返回一个有顺序的GUID</returns>
+        public static Guid NewCombId()
+        {
+            var guidArray = Guid.NewGuid().ToByteArray();
+
+            var baseDate = new DateTime(1900, 1, 1);
+            var now = DateTime.Now;
+            // Get the days and milliseconds which will be used to build the byte string 
+            var days = new TimeSpan(now.Date.Ticks - baseDate.Ticks);
+            var msecs = new TimeSpan(now.Ticks - (now.Date.Ticks));
+
+            // Convert to a byte array 
+            // SQL Server is accurate to 1/300th of a millisecond so we divide by 3.333333 
+            var daysArray = BitConverter.GetBytes(days.Days);
+            var msecsArray = BitConverter.GetBytes((long)(msecs.TotalMilliseconds / 3.333333));
+
+            // Reverse the bytes to match SQL Servers ordering 
+            Array.Reverse(daysArray);
+            Array.Reverse(msecsArray);
+
+            for (var i = 15; i >= 6; i--)
+            {
+                guidArray[i] = guidArray[i - 6];
+            }
+
+            Array.Copy(daysArray, daysArray.Length - 2, guidArray, 0, 2);
+            Array.Copy(msecsArray, msecsArray.Length - 4, guidArray, 2, 4);
+
+            return new Guid(guidArray);
+        }
+
+        /// <summary>
         /// CRC校验数据表
         /// </summary>
         private static readonly ushort[] Crc1021Table = {
@@ -412,11 +448,11 @@ namespace SHWDTech.Platform.Utility
             {
                 str = str.Substring(0, str.Length - 1);
             }
-            byte[] buffer = new byte[str.Length / 2];
+            var buffer = new byte[str.Length / 2];
 
             try
             {
-                for (int i = 0; i < str.Length; i += 2)
+                for (var i = 0; i < str.Length; i += 2)
                 {
                     buffer[i / 2] = Convert.ToByte(str.Substring(i, 2), 16);
                 }

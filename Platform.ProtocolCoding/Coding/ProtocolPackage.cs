@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 
@@ -11,6 +12,40 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     /// </summary>
     public class ProtocolPackage : IProtocolPackage
     {
+        public ProtocolPackage()
+        {
+            
+        }
+
+        public ProtocolPackage(IProtocolCommand command)
+        {
+            var protocol = command.Protocol;
+
+            foreach (var structure in protocol.ProtocolStructures)
+            {
+                var component = new PackageComponent()
+                {
+                    ComponentName = structure.StructureName,
+                    DataType = structure.DataType,
+                    ComponentIndex = structure.StructureIndex
+                };
+
+                this[structure.StructureName] = component;
+            }
+
+            foreach (var commandData in command.CommandDatas)
+            {
+                var component = new PackageComponent()
+                {
+                    ComponentName = commandData.DataName,
+                    DataType = commandData.DataType,
+                    ComponentIndex = commandData.DataIndex
+                };
+
+                AppendData(component);
+            }
+        }
+
         public bool Finalized { get; private set; }
 
         public int PackageLenth => _structureComponents.Sum(obj => obj.Value.ComponentBytes.Length) + DataComponent.ComponentBytes.Length;
@@ -24,7 +59,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public ProtocolCommand Command { get; set; }
 
-        public IPackageComponent DataComponent { get; private set; }
+        private IPackageComponent DataComponent { get; set; }
 
         public DateTime ReceiveDateTime { get; set; }
 
@@ -86,7 +121,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             for (var i = 0; i <= _structureComponents.Count; i++)
             {
                 var componentBytes = i == _dataIndex
-                    ? GetDataComponentBytes()
+                    ? DataComponent.ComponentBytes
                     : _structureComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentBytes;
 
                 bytes.AddRange(componentBytes);
@@ -96,10 +131,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         }
 
         /// <summary>
-        /// 获取数据段字节流
+        /// 合并数据段字节流
         /// </summary>
         /// <returns></returns>
-        private byte[] GetDataComponentBytes()
+        public void CombineDataComponentBytes()
         {
             var bytes = new List<byte>();
 
@@ -110,7 +145,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 bytes.AddRange(dataBytes);
             }
 
-            return bytes.ToArray();
+            DataComponent.ComponentBytes = bytes.ToArray();
         }
 
         public void Finalization()

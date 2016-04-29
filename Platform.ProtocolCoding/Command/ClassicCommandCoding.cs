@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -46,7 +45,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
 
         public IProtocolPackage EncodeCommand(IProtocolCommand command)
         {
-            throw new NotImplementedException();
+            var package = new ProtocolPackage(command);
+
+            foreach (var definition in command.CommandDefinitions)
+            {
+                package[definition.StructureName].ComponentBytes = definition.ContentBytes;
+            }
+
+            return package;
         }
 
         public void DetectCommand(IProtocolPackage package, IProtocol matchedProtocol)

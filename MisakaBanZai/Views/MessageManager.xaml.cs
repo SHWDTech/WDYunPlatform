@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using MisakaBanZai.Common;
 using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.Enum;
@@ -49,6 +50,26 @@ namespace MisakaBanZai.Views
             Left = left;
             Top = top;
             Show();
+        }
+
+        /// <summary>
+        /// 清空消息框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearMessageBox(object sender, RoutedEventArgs e)
+        {
+            TxtMessageContainer.Document.Blocks.Clear();
+        }
+
+        /// <summary>
+        /// 复制选型内容到剪贴板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyToClipboard(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetData(DataFormats.UnicodeText, TxtMessageContainer.Selection.Text);
         }
 
         /// <summary>

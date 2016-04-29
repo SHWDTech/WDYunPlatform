@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace MisakaBanZai.Views
+﻿namespace MisakaBanZai.Views
 {
     /// <summary>
     /// CommonlyUsed.xaml 的交互逻辑

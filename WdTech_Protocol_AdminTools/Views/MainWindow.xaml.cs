@@ -4,11 +4,10 @@ using System.Net;
 using System.Windows;
 using System.Windows.Threading;
 using SHWDTech.Platform.Utility.ExtensionMethod;
+using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Enums;
-using WdTech_Protocol_AdminTools.Models;
 using WdTech_Protocol_AdminTools.Services;
 using WdTech_Protocol_AdminTools.TcpCore;
-using MisakaBanZai.Common;
 
 namespace WdTech_Protocol_AdminTools.Views
 {
@@ -71,7 +70,7 @@ namespace WdTech_Protocol_AdminTools.Views
             var message = AdminReportService.Instance.PopupReport();
             if (message == null) return;
 
-            TxtReport.AppendText($"[{DateTime.Now.ToString(Appconfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
+            TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
             TxtReport.AppendText(" => ", OutPutDataColor.OperaterColor);
             TxtReport.AppendText(message.Message, message.MessageColor);
             TxtReport.AppendText("\r\n");

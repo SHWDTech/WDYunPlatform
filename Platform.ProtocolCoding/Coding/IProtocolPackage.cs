@@ -41,11 +41,6 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         ProtocolCommand Command { get; set; }
 
         /// <summary>
-        /// 协议数据段
-        /// </summary>
-        IPackageComponent DataComponent { get; }
-
-        /// <summary>
         /// 获取指定名称的数据段
         /// </summary>
         /// <param name="name">数据段名称</param>

@@ -7,6 +7,13 @@
         Title="MessageManager" Height="640" Width="400" Icon="/MisakaBanZai;component/MisakaMisaka.ico"
         Closing="OnClosing" FontSize="14">
     <Grid>
-        <RichTextBox x:Name="TxtMessageContainer" VerticalScrollBarVisibility="Auto"></RichTextBox>
+        <RichTextBox x:Name="TxtMessageContainer" VerticalScrollBarVisibility="Auto" IsReadOnly="True">
+            <RichTextBox.ContextMenu>
+                <ContextMenu x:Name="TextMenu">
+                    <MenuItem Header="复制" Click="CopyToClipboard"></MenuItem>
+                    <MenuItem Header="清空消息框" Click="ClearMessageBox"></MenuItem>
+                </ContextMenu>
+            </RichTextBox.ContextMenu>
+        </RichTextBox>
     </Grid>
 </Window>

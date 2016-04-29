@@ -21,7 +21,9 @@
             <GroupBox Header="常用指令">
                 <Grid>
                     <DockPanel>
-                        <uc:CommonUsedListItem></uc:CommonUsedListItem>
+                        <ScrollViewer x:Name="ItemViewer" IsTabStop="True">
+                            <uc:CommonUsedListItem></uc:CommonUsedListItem>
+                        </ScrollViewer>
                     </DockPanel>
                 </Grid>
             </GroupBox>
