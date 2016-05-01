@@ -44,14 +44,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             package.Device = _device;
 
             return package;
-        } 
+        }
 
         /// <summary>
         /// 对指定的指令进行编码
         /// </summary>
         /// <param name="command"></param>
+        /// <param name="paramBytes"></param>
         /// <returns></returns>
-        public byte[] Encode(ProtocolCommand command) => EncodeProtocol(command);
+        public byte[] Encode(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) => EncodeProtocol(command, paramBytes);
 
         /// <summary>
         /// 根据指定的协议集解码协议
@@ -97,9 +98,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 协议编码
         /// </summary>
         /// <param name="command">指定的指令</param>
+        /// <param name="paramBytes"></param>
         /// <returns>协议字节流</returns>
-        public static byte[] EncodeProtocol(IProtocolCommand command)
-            => UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command).GetBytes();
+        public static byte[] EncodeProtocol(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
+            => UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
 
         /// <summary>
         /// 协议解码

@@ -14,5 +14,10 @@
         /// 协议处理参数
         /// </summary>
         public const string ProtocolDeliveryParam = "ProtocolDeliveryParam";
+
+        /// <summary>
+        /// 协议通信服务
+        /// </summary>
+        public const string ProtocolAdminTools = "ProtocolAdminTools";
     }
 }

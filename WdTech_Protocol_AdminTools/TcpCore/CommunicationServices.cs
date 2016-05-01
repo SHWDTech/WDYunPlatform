@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using Platform.WdQueue;
 using SHWDTech.Platform.ProtocolCoding;
+using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using SHWDTech.Platform.Utility;
+using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
@@ -33,6 +36,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private static Socket _serverListener;
 
         /// <summary>
+        /// 指令发送监听任务
+        /// </summary>
+        private static readonly WdTechTask CommandTask;
+
+        /// <summary>
         /// 服务器监听地址
         /// </summary>
         public static IPEndPoint ServerIpEndPoint { get; private set; }
@@ -41,6 +49,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             Manager = new ActiveClientManager();
             ProtocolInfoManager.InitManager();
+            CommandTask = WdQueue.CreateTask(AppConfig.CommandQueue, new[] {typeof(CommandMessage)});
         }
 
         /// <summary>
@@ -60,6 +69,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 _serverListener.Listen(2048);
                 _serverListener.BeginAccept(AcceptClient, _serverListener);
 
+                CommandTask.BeginReceive(TimeSpan.FromMinutes(1), null, MessageReceiveCompleted);
+
                 StartDateTime = DateTime.Now;
                 IsStart = true;
 
@@ -77,6 +88,20 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 发送相关指令
+        /// </summary>
+        /// <param name="result"></param>
+        private static void MessageReceiveCompleted(IAsyncResult result)
+        {
+            var message = CommandTask.EndReceive(result);
+
+            var commandMessage = (CommandMessage) message.Body;
+            if (commandMessage == null) return;
+
+            Manager.SendCommand(commandMessage);
         }
 
         /// <summary>

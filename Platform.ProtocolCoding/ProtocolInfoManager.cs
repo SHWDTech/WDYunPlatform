@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Platform.Process;
 using Platform.Process.Process;
@@ -78,5 +79,14 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             return protocolList;
         }
+
+        /// <summary>
+        /// 从协议缓存中获取指定ID的指令
+        /// </summary>
+        /// <param name="commandGuid"></param>
+        /// <returns></returns>
+        public static ProtocolCommand GetCommand(Guid commandGuid) 
+            => ProtocolsCache.Select(protocol => protocol.Value.ProtocolCommands.FirstOrDefault(cmd => cmd.Id == commandGuid))
+            .FirstOrDefault(targetCommand => targetCommand != null);
     }
 }

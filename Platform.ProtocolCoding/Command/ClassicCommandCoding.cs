@@ -46,7 +46,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
 
         public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
-            var package = new ProtocolPackage(command);
+            var package = new ProtocolPackage(command)
+            {
+                [StructureNames.CmdType] = {ComponentBytes = command.CommandTypeCode},
+                [StructureNames.CmdByte] = {ComponentBytes = command.CommandCode}
+            };
+
 
             foreach (var definition in command.CommandDefinitions)
             {

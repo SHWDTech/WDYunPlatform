@@ -446,8 +446,21 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateUserId = user.Id
             };
 
+            var messageSource = new SysConfig
+            {
+                Id = Guid.Parse("34EDC4EC-F046-418E-A9DC-9EA3EA284F84"),
+                SysConfigName = "CommandMessageQueueName",
+                SysConfigType = SysConfigType.ProtocolAdminTools,
+                SysConfigValue = @"FormatName:Direct=TCP:121.40.49.97\private$\protocolcommand",
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
             dbContext.SysConfigs.Add(commandReply);
             dbContext.SysConfigs.Add(commandReplyA);
+            dbContext.SysConfigs.Add(messageSource);
 
             var commandDataA = new CommandData()
             {
@@ -619,6 +632,22 @@ namespace SHWD.Platform.Repository.Entities
                 CommandDatas = new List<CommandData>()
             };
 
+            var commandB = new ProtocolCommand
+            {
+                Id = Guid.Parse("52FD2857-1607-4AD6-86C9-AC6B2B75BBB6"),
+                CommandTypeCode = new byte[] { 0xFC },
+                CommandCode = new byte[] { 0x1F },
+                CommandBytesLength = 0,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = classic.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
             commandA.CommandDatas.Add(commandDataA);
             commandA.CommandDatas.Add(commandDataB);
             commandA.CommandDatas.Add(commandDataC);
@@ -632,6 +661,7 @@ namespace SHWD.Platform.Repository.Entities
 
             dbContext.ProtocolCommands.Add(command);
             dbContext.ProtocolCommands.Add(commandA);
+            dbContext.ProtocolCommands.Add(commandB);
 
             var device = new Device
             {

@@ -58,6 +58,7 @@
     <Compile Include="Coding\IProtocolPackage.cs" />
     <Compile Include="IDataVallidFlag.cs" />
     <Compile Include="IPackageSource.cs" />
+    <Compile Include="MessageQueueModel\CommandMessage.cs" />
     <Compile Include="PackageDeliver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Coding\ProtocolEncoding.cs" />

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
+using SHWDTech.Platform.ProtocolCoding;
+using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
@@ -22,20 +25,44 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="client"></param>
         public void AddClient(Socket client)
         {
-            var tcpClientManager = new TcpClientManager(client) { ReceiverName = $"UnIdentified - {client.RemoteEndPoint}"};
+            var tcpClientManager = new TcpClientManager(client) { ReceiverName = $"UnIdentified - {client.RemoteEndPoint}" };
             tcpClientManager.ClientDisconnectEvent += ClientDisconnected;
             client.BeginReceive(tcpClientManager.ReceiveBuffer, SocketFlags.None, tcpClientManager.Received, client);
 
-            _clientSockets.Add(tcpClientManager);
+            lock (_clientSockets)
+            {
+                _clientSockets.Add(tcpClientManager);
+            }
         }
 
         /// <summary>
         /// 客户端断开连接事件
         /// </summary>
-        /// <param name="tcpClient"></param>
+        /// <param name="tcpClient">客户端连接</param>
         private static void ClientDisconnected(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
+        }
+
+        /// <summary>
+        /// 发送指令
+        /// </summary>
+        /// <param name="message">指令消息</param>
+        public void SendCommand(CommandMessage message)
+        {
+            TcpClientManager device;
+            lock (_clientSockets)
+            {
+                device = _clientSockets.FirstOrDefault(client => client.DeviceGuid == message.DeviceGuid);
+            }
+
+            if (device == null) return;
+
+            var command = ProtocolInfoManager.GetCommand(message.CommandGuid);
+
+            if (command == null) return;
+
+            device.Send(command, message.Params);
         }
     }
 }

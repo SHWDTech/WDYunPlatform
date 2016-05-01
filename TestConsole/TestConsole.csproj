@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +74,10 @@
     <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.WdQueue\Platform.WdQueue.csproj">
+      <Project>{0bc6a6bb-1e73-44f7-88c0-1a95f082ddbe}</Project>
+      <Name>Platform.WdQueue</Name>
     </ProjectReference>
     <ProjectReference Include="..\WdAdminTools\WdAdminTools.csproj">
       <Project>{003d437e-3634-41e6-ac2e-8ac8b10def1d}</Project>

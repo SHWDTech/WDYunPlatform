@@ -1,5 +1,9 @@
 ﻿using System.Configuration;
+using System.Linq;
 using System.Net;
+using Platform.Process;
+using Platform.Process.Process;
+using SHWDTech.Platform.Model.Enums;
 using WdTech_Protocol_AdminTools.Enums;
 
 namespace WdTech_Protocol_AdminTools.Common
@@ -42,6 +46,11 @@ namespace WdTech_Protocol_AdminTools.Common
         public static readonly string ServerAccount;
 
         /// <summary>
+        /// 指令消息名称
+        /// </summary>
+        public static readonly string CommandQueue;
+
+        /// <summary>
         /// 服务开始时间显示格式
         /// </summary>
         public static string StartDateFormat { get; set; } = DateTimeViewFormat.DateTimeWithoutYear;
@@ -55,6 +64,10 @@ namespace WdTech_Protocol_AdminTools.Common
             ServerPort = int.Parse(ConfigurationManager.AppSettings["ServerPort"]);
 
             ServerAccount = ConfigurationManager.AppSettings["ServerAccount"];
+
+            var configs = ProcessInvoke.GetInstance<SysConfigProcess>().GetSysConfigsByType(SysConfigType.ProtocolAdminTools);
+
+            CommandQueue = configs.FirstOrDefault(obj => obj.SysConfigName == "CommandMessageQueueName")?.SysConfigValue;
         }
     }
 }
