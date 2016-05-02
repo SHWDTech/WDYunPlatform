@@ -49,7 +49,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             Manager = new ActiveClientManager();
             ProtocolInfoManager.InitManager();
-            CommandTask = WdQueue.CreateTask(AppConfig.CommandQueue, new[] {typeof(CommandMessage)});
+            CommandTask = WdQueue.CreateTask(AppConfig.CommandQueue, new[] { typeof(CommandMessage) });
         }
 
         /// <summary>
@@ -69,7 +69,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 _serverListener.Listen(2048);
                 _serverListener.BeginAccept(AcceptClient, _serverListener);
 
-                CommandTask.BeginReceive(TimeSpan.FromMinutes(1), null, MessageReceiveCompleted);
+                CommandTask.BeginPeek();
+                CommandTask.PeekCompleted += Manager.MessagePeekCompleted;
 
                 StartDateTime = DateTime.Now;
                 IsStart = true;
@@ -88,20 +89,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// 发送相关指令
-        /// </summary>
-        /// <param name="result"></param>
-        private static void MessageReceiveCompleted(IAsyncResult result)
-        {
-            var message = CommandTask.EndReceive(result);
-
-            var commandMessage = (CommandMessage) message.Body;
-            if (commandMessage == null) return;
-
-            Manager.SendCommand(commandMessage);
         }
 
         /// <summary>
@@ -131,7 +118,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 LogService.Instance.Info("关闭服务器时，发生套接字错误。", ex);
             }
-            
+
             return true;
         }
 
@@ -141,6 +128,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         public static void Close()
         {
             Stop();
+            WdQueue.EndTasks();
         }
 
         /// <summary>

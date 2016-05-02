@@ -8,8 +8,17 @@ namespace Platform.WdQueue
     /// </summary>
     public static class WdQueue
     {
+        /// <summary>
+        /// 任务集合
+        /// </summary>
         private static readonly List<WdTechTask> TaskList = new List<WdTechTask>();
 
+        /// <summary>
+        /// 创建一个新的任务
+        /// </summary>
+        /// <param name="queueName"></param>
+        /// <param name="messageType"></param>
+        /// <returns></returns>
         public static WdTechTask CreateTask(string queueName, Type[] messageType)
         {
             var task = new WdTechTask(queueName, messageType);
@@ -18,11 +27,14 @@ namespace Platform.WdQueue
             return task;
         }
 
+        /// <summary>
+        /// 结束所有任务
+        /// </summary>
         public static void EndTasks()
         {
             foreach (var wdTechTask in TaskList)
             {
-                wdTechTask.StopTask();
+                wdTechTask.Close();
             }
         }
     }

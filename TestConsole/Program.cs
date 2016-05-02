@@ -1,5 +1,6 @@
 ﻿using System;
-using SHWDTech.Platform.Utility;
+using System.Messaging;
+using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 
 namespace TestConsole
 {
@@ -7,17 +8,23 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            var x = DateTime.Parse("2011-5-6 16:08:44");
+            var queue = new MessageQueue(@"FormatName:Direct=TCP:121.40.49.97\private$\protocolcommand")
+            {
+                Formatter = new XmlMessageFormatter(new[] {typeof(CommandMessage)})
+            };
 
-            var y = Globals.GetDateBytes(x);
+            var msg = new CommandMessage()
+            {
+                DeviceGuid = Guid.Parse("ba0ca1dc-0331-4d5a-96e5-49ac20665a13"),
+                CommandGuid = Guid.Parse("52FD2857-1607-4AD6-86C9-AC6B2B75BBB6"),
+                Params = null
+            };
 
-            Console.WriteLine(x);
+            queue.Send(msg);
 
-            var z = Globals.GetDateFormLong(y);
+            Console.WriteLine(@"Send Complete");
 
-            Console.WriteLine(z.ToString("yyyy-MM-dddd HH:mm:ss"));
-
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }

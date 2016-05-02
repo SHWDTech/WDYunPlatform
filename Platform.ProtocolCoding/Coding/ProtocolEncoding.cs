@@ -6,6 +6,7 @@ using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -52,7 +53,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="command"></param>
         /// <param name="paramBytes"></param>
         /// <returns></returns>
-        public byte[] Encode(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) => EncodeProtocol(command, paramBytes);
+        public byte[] Encode(ProtocolCommand command, List<CommandParam> paramBytes = null) => EncodeProtocol(command, paramBytes);
 
         /// <summary>
         /// 根据指定的协议集解码协议
@@ -100,7 +101,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="command">指定的指令</param>
         /// <param name="paramBytes"></param>
         /// <returns>协议字节流</returns>
-        public static byte[] EncodeProtocol(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
+        public static byte[] EncodeProtocol(IProtocolCommand command, List<CommandParam> paramBytes = null)
             => UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
 
         /// <summary>

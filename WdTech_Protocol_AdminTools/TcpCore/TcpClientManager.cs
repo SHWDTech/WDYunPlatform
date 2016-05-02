@@ -8,6 +8,7 @@ using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.Authentication;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
+using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
@@ -301,6 +302,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
         }
 
-        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) => Send(_protocolEncoding.Encode(command, paramBytes));
+        public void Send(ProtocolCommand command, List<CommandParam> paramBytes = null) => Send(_protocolEncoding.Encode(command, paramBytes));
     }
 }

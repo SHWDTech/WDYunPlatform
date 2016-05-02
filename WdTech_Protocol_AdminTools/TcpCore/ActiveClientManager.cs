@@ -1,8 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Messaging;
 using System.Net.Sockets;
+using System.Transactions;
+using Platform.Process;
+using Platform.Process.Process;
+using Platform.WdQueue;
+using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
+using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
@@ -18,6 +27,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         // ReSharper disable once CollectionNeverQueried.Local
         private readonly List<TcpClientManager> _clientSockets
             = new List<TcpClientManager>();
+
+        /// <summary>
+        /// 等待处理的任务
+        /// </summary>
+        private readonly List<Task> _responingTasks = new List<Task>();
 
         /// <summary>
         /// 添加一个客户端
@@ -42,6 +56,52 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private static void ClientDisconnected(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
+        }
+
+        /// <summary>
+        /// 发送相关指令
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="asyncResult"></param>
+        public void MessagePeekCompleted(object source, PeekCompletedEventArgs asyncResult)
+        {
+            var messageQueue = (WdTechTask) source;
+
+            var message = messageQueue.EndPeek(asyncResult.AsyncResult);
+
+            var commandMessage = (CommandMessage) message.Body;
+            if (commandMessage == null) return;
+
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var task = ProcessInvoke.GetInstance<TaskProcess>().GetTaskByGuid(commandMessage.TaskGuid);
+
+                    SendCommand(commandMessage);
+
+                    if (task != null)
+                    {
+                        task.ExecuteStatus = TaskExceteStatus.Sended;
+                        _responingTasks.Add(task);
+                    }
+
+                    messageQueue.ReceiveById(message.Id);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("发送指令错误！", ex);
+                    return;
+                }
+
+                scope.Complete();
+            }
+        }
+
+        private void CommandResponsed()
+        {
+            var task = _responingTasks.FirstOrDefault();
+            task.ExecuteStatus = TaskExceteStatus.Responsed;
         }
 
         /// <summary>
