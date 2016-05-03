@@ -104,7 +104,7 @@
     <Compile Include="IModel\IProject.cs" />
     <Compile Include="IModel\IWdUser.cs" />
     <Compile Include="IModel\IUserConfig.cs" />
-    <Compile Include="IModel\ITask.cs" />
+    <Compile Include="IModel\ICommandTask.cs" />
     <Compile Include="IModel\IUserDictionary.cs" />
     <Compile Include="ModelBase\DataModelBase.cs" />
     <Compile Include="ModelBase\ModelBase.cs" />
@@ -131,7 +131,7 @@
     <Compile Include="Model\SysConfig.cs" />
     <Compile Include="Model\SysDictionary.cs" />
     <Compile Include="Model\Domain.cs" />
-    <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\CommandTask.cs" />
     <Compile Include="Model\WdUser.cs" />
     <Compile Include="Model\UserConfig.cs" />
     <Compile Include="Model\UserDictionary.cs" />

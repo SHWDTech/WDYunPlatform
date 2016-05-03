@@ -56,6 +56,7 @@
     <Compile Include="Enums\StructureNames.cs" />
     <Compile Include="Coding\IPackageComponent.cs" />
     <Compile Include="Coding\IProtocolPackage.cs" />
+    <Compile Include="Enums\WdMessageCategory.cs" />
     <Compile Include="IDataVallidFlag.cs" />
     <Compile Include="IPackageSource.cs" />
     <Compile Include="MessageQueueModel\CommandMessage.cs" />

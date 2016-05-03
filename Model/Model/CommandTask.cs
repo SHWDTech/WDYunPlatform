@@ -12,7 +12,7 @@ namespace SHWDTech.Platform.Model.Model
     /// 任务
     /// </summary>
     [Serializable]
-    public class Task : SysDomainModelBase, ITask
+    public class CommandTask : SysDomainModelBase, ICommandTask
     {
         [Required]
         [Display(Name = "任务所属设备ID")]

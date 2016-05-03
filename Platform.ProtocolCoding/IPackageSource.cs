@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
-using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -20,7 +19,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="command">需要发送的指令</param>
         /// <param name="paramBytes">指令相关参数</param>
-        void Send(ProtocolCommand command, List<CommandParam> paramBytes = null);
+        void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null);
 
         /// <summary>
         /// 发送字节流

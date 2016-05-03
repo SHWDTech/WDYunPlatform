@@ -69,8 +69,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 _serverListener.Listen(2048);
                 _serverListener.BeginAccept(AcceptClient, _serverListener);
 
-                CommandTask.BeginPeek();
                 CommandTask.PeekCompleted += Manager.MessagePeekCompleted;
+                CommandTask.BeginPeek();
 
                 StartDateTime = DateTime.Now;
                 IsStart = true;

@@ -3,7 +3,6 @@ using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
-using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding.Command
@@ -45,7 +44,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             package.Finalization();
         }
 
-        public IProtocolPackage EncodeCommand(IProtocolCommand command, List<CommandParam> paramBytes = null)
+        public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
             var package = new ProtocolPackage(command)
             {
@@ -63,7 +62,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
             {
                 foreach (var paramByte in paramBytes)
                 {
-                    package[paramByte.ParamName].ComponentBytes = paramByte.ParamBytes;
+                    package[paramByte.Key].ComponentBytes = paramByte.Value;
                 }
             }
 

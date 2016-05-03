@@ -4,14 +4,13 @@ using System.Linq;
 using System.Messaging;
 using System.Net.Sockets;
 using System.Transactions;
-using Platform.Process;
-using Platform.Process.Process;
+using Newtonsoft.Json;
 using Platform.WdQueue;
 using SHWDTech.Platform.Model.Enums;
-using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using SHWDTech.Platform.Utility;
+using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
@@ -27,11 +26,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         // ReSharper disable once CollectionNeverQueried.Local
         private readonly List<TcpClientManager> _clientSockets
             = new List<TcpClientManager>();
-
-        /// <summary>
-        /// 等待处理的任务
-        /// </summary>
-        private readonly List<Task> _responingTasks = new List<Task>();
 
         /// <summary>
         /// 添加一个客户端
@@ -69,22 +63,21 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             var message = messageQueue.EndPeek(asyncResult.AsyncResult);
 
-            var commandMessage = (CommandMessage) message.Body;
-            if (commandMessage == null) return;
+            if (!(message.Body is IWdMessage)) return;
+
+            var messageContent = (IWdMessage)message.Body;
+
+            if (messageContent.MessageCategory != AppConfig.CommandMessageQueueCategory) return;
+
+            var commandRequest = JsonConvert.DeserializeObject<CommandMessage>(messageContent.MessageObjectJson); 
 
             using (var scope = new TransactionScope())
             {
                 try
                 {
-                    var task = ProcessInvoke.GetInstance<TaskProcess>().GetTaskByGuid(commandMessage.TaskGuid);
+                    SendCommand(commandRequest);
 
-                    SendCommand(commandMessage);
-
-                    if (task != null)
-                    {
-                        task.ExecuteStatus = TaskExceteStatus.Sended;
-                        _responingTasks.Add(task);
-                    }
+                    TaskManager.UpdateTaskExceteStatus(commandRequest.TaskGuid, TaskExceteStatus.Sended);
 
                     messageQueue.ReceiveById(message.Id);
                 }
@@ -96,12 +89,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                 scope.Complete();
             }
-        }
-
-        private void CommandResponsed()
-        {
-            var task = _responingTasks.FirstOrDefault();
-            task.ExecuteStatus = TaskExceteStatus.Responsed;
         }
 
         /// <summary>

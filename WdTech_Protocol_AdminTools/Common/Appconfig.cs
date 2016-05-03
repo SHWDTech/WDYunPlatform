@@ -55,6 +55,8 @@ namespace WdTech_Protocol_AdminTools.Common
         /// </summary>
         public static string StartDateFormat { get; set; } = DateTimeViewFormat.DateTimeWithoutYear;
 
+        public static readonly string CommandMessageQueueCategory;
+
         static AppConfig()
         {
             TcpBufferSize = int.Parse(ConfigurationManager.AppSettings["TcpBufferSize"]);
@@ -68,6 +70,8 @@ namespace WdTech_Protocol_AdminTools.Common
             var configs = ProcessInvoke.GetInstance<SysConfigProcess>().GetSysConfigsByType(SysConfigType.ProtocolAdminTools);
 
             CommandQueue = configs.FirstOrDefault(obj => obj.SysConfigName == "CommandMessageQueueName")?.SysConfigValue;
+
+            CommandMessageQueueCategory = ConfigurationManager.AppSettings["CommandMessageQueueCategory"];
         }
     }
 }

@@ -88,7 +88,7 @@
     <Compile Include="IRepository\ISysDictionaryRepository.cs" />
     <Compile Include="IRepository\ISysDomainRepository.cs" />
     <Compile Include="IRepository\ISysRepository.cs" />
-    <Compile Include="IRepository\ITaskRepository.cs" />
+    <Compile Include="IRepository\ICommandTaskRepository.cs" />
     <Compile Include="IRepository\IUserConfigRepository.cs" />
     <Compile Include="IRepository\IUserDictionaryRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Repository\SysDictionaryRepository.cs" />
     <Compile Include="Repository\SysDomainRepository.cs" />
     <Compile Include="Repository\SysRepository.cs" />
-    <Compile Include="Repository\TaskRepository.cs" />
+    <Compile Include="Repository\CommandTaskRepository.cs" />
     <Compile Include="Repository\UserConfigRepository.cs" />
     <Compile Include="Repository\UserDictionaryRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />

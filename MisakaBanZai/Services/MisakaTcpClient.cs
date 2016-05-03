@@ -193,7 +193,7 @@ namespace MisakaBanZai.Services
                         ProcessBuffer.Add(array[i]);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
                     if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
                     {

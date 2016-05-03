@@ -126,7 +126,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 任务
         /// </summary>
-        public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<CommandTask> Tasks { get; set; }
 
         /// <summary>
         /// 用户

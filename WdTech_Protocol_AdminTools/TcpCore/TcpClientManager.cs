@@ -8,7 +8,6 @@ using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.Authentication;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
-using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
@@ -121,7 +120,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception ex) when(ex is ObjectDisposedException || ex is SocketException)
                 {
                     if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
                     {
@@ -130,7 +129,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     }
                     else
                     {
-                        AdminReportService.Instance.Warning("接收客户端数据错误！", ex);
+                        AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
                     }
 
                     OnClientDisconnect();
@@ -290,18 +289,18 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
             catch (ObjectDisposedException ex)
             {
-                LogService.Instance.Error($"套接字数据发送错误，相关套接字信息：{ReceiverName}", ex);
+                LogService.Instance.Error($"发送失败，Socket对象已经释放，相关套接字信息：{ReceiverName}", ex);
 
                 Close();
             }
             catch (SocketException ex)
             {
-                LogService.Instance.Error($"套接字数据发送错误，相关套接字信息：{ReceiverName}", ex);
+                LogService.Instance.Error($"发送失败，套接字错误，相关套接字信息：{ReceiverName}", ex);
 
                 Close();
             }
         }
 
-        public void Send(ProtocolCommand command, List<CommandParam> paramBytes = null) => Send(_protocolEncoding.Encode(command, paramBytes));
+        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) => Send(_protocolEncoding.Encode(command, paramBytes));
     }
 }

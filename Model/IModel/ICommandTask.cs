@@ -8,7 +8,7 @@ namespace SHWDTech.Platform.Model.IModel
     /// <summary>
     /// 任务模型接口
     /// </summary>
-    public interface ITask : ISysDomainModel
+    public interface ICommandTask : ISysDomainModel
     {
         /// <summary>
         /// 任务所属设备ID
