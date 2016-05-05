@@ -40,6 +40,12 @@ namespace SHWD.Platform.Repository.Repository
             EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
+        protected Repository(string connString)
+        {
+            DbContext = new RepositoryDbContext(connString);
+            EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
+        }
+
         public virtual IEnumerable<T> GetAllModels()
             => EntitySet;
 

@@ -16,6 +16,15 @@ namespace SHWD.Platform.Repository.Entities
         {
         }
 
+        /// <summary>
+        /// 创建默认的DbContext
+        /// </summary>
+        /// <param name="connString">连接字符串或连接字符串名称</param>
+        public RepositoryDbContext(string connString) : base(connString)
+        {
+            
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

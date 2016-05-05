@@ -5,11 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="登陆" Height="240" Width="300" MaxHeight="240" MaxWidth="300"
+        Title="登陆" Height="250" Width="300" MaxHeight="250" MaxWidth="300"
                      ResizeMode="NoResize" FontFamily="微软雅黑"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1" FontSize="14"
                      WindowStartupLocation="CenterScreen" Icon="/WdAdminTools;component/Image/256.ico">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Content="设置" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Label HorizontalAlignment="Center" Margin="10, 35, 0, 0" Content="上海卫东后台管理工具" FontSize="16"></Label>
         <Label Content="登录名：" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10, 75, 0, 0"></Label>
