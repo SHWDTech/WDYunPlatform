@@ -33,6 +33,11 @@ namespace MisakaBanZai.Models
         string GetConnectionName();
 
         /// <summary>
+        /// 窗口弹出到最前
+        /// </summary>
+        void PopUp();
+
+        /// <summary>
         /// 关闭窗口
         /// </summary>
         void DoClose();

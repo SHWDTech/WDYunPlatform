@@ -118,7 +118,7 @@ namespace MisakaBanZai.Views
             var label = (Label)sender;
             var connWindow = _connectionWindows[label];
 
-            ((Window)connWindow).Show();
+            connWindow.PopUp();
 
             e.Handled = true;
         }

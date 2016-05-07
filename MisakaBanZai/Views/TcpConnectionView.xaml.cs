@@ -14,6 +14,7 @@ using MisakaBanZai.Models;
 using MisakaBanZai.Services;
 using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.Enum;
+using System.Threading.Tasks;
 
 namespace MisakaBanZai.Views
 {
@@ -294,7 +295,20 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void StartServer()
         {
-            if (_misakaConnection.Connect(GetLocalIpAddress(), GetLocalPort()))
+            AddressPort addressPort;
+            try
+            {
+                addressPort = GetLocalAddressPort();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("错误的IP地址或端口号！");
+                return;
+            }
+
+            var result = Task.Run(() => _misakaConnection.Connect(addressPort.Address, addressPort.Port));
+
+            if (result.Result)
             {
                 BtnStartListening.Content = "停止侦听";
                 OnConnectionModefied(_misakaConnection);
@@ -305,6 +319,18 @@ namespace MisakaBanZai.Views
                 DispatcherAddReportData(ReportMessageType.Info, "服务器侦听失败");
                 return;
             }
+
+            //if (_misakaConnection.Connect(GetLocalIpAddress(), GetLocalPort()))
+            //{
+            //    BtnStartListening.Content = "停止侦听";
+            //    OnConnectionModefied(_misakaConnection);
+            //    DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
+            //}
+            //else
+            //{
+            //    DispatcherAddReportData(ReportMessageType.Info, "服务器侦听失败");
+            //    return;
+            //}
 
             ChangeServerControlStatus(false);
         }
@@ -464,6 +490,9 @@ namespace MisakaBanZai.Views
             Send();
         }
 
+        /// <summary>
+        /// 发送数据
+        /// </summary>
         private void Send()
         {
             var sendBytes = GetSendBytes();
@@ -537,31 +566,33 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void ClientConnect()
         {
+            AddressPort addressPort;
             try
             {
-                var targetAddress = GetTargetIpAddress();
-
-                var targetPort = GetTargetPort();
-
-                if (_misakaConnection.Connect(targetAddress, targetPort))
-                {
-                    _misakaConnection.TargetConnectionName = $"{targetAddress}:{targetPort}";
-                    BtnConnect.Content = "断开连接";
-                    ReportService.Info("连接服务器成功！");
-                    OnConnectionModefied(_misakaConnection);
-                }
-                else
-                {
-                    ReportService.Error("尝试连接失败！");
-                    return;
-                }
-
-                ChangeClientControlStatus(false);
+                addressPort = GetTargetAddressPort();
             }
             catch (Exception)
             {
-                MessageBox.Show("IP地址或端口号输入错误，请重新输入！");
+                MessageBox.Show("错误的IP地址或端口号！");
+                return;
             }
+
+            var result = Task.Run(() => _misakaConnection.Connect(addressPort.Address, addressPort.Port));
+
+            if (result.Result)
+            {
+                _misakaConnection.TargetConnectionName = $"{addressPort.Address}:{addressPort.Port}";
+                BtnConnect.Content = "断开连接";
+                ReportService.Info("连接服务器成功！");
+                OnConnectionModefied(_misakaConnection);
+            }
+            else
+            {
+                ReportService.Error("尝试连接失败！");
+                return;
+            }
+
+            ChangeClientControlStatus(false);
         }
 
         /// <summary>
@@ -625,6 +656,36 @@ namespace MisakaBanZai.Views
         }
 
         /// <summary>
+        /// 获取本地连接目标地址及端口号
+        /// </summary>
+        /// <returns></returns>
+        private AddressPort GetLocalAddressPort()
+        {
+            var addressPort = new AddressPort
+            {
+                Address = GetLocalIpAddress(),
+                Port = GetLocalPort()
+            };
+
+            return addressPort;
+        }
+
+        /// <summary>
+        /// 获取目标连接目标地址及端口号
+        /// </summary>
+        /// <returns></returns>
+        private AddressPort GetTargetAddressPort()
+        {
+            var addressPort = new AddressPort
+            {
+                Address = GetTargetIpAddress(),
+                Port = GetTargetPort()
+            };
+
+            return addressPort;
+        }
+
+        /// <summary>
         /// 解析本地IP地址
         /// </summary>
         /// <returns></returns>
@@ -658,6 +719,24 @@ namespace MisakaBanZai.Views
         }
 
         public string GetConnectionName() => _misakaConnection.ConnectionName;
+
+        public void PopUp()
+        {
+            if (!IsVisible)
+            {
+                Show();
+            }
+
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
+
+            Activate();
+            Topmost = true;  // important
+            Topmost = false; // important
+            Focus();         // important
+        }
 
         /// <summary>
         /// 点击标签更改勾选框状态
@@ -876,5 +955,15 @@ namespace MisakaBanZai.Views
             _misakaConnection?.Close();
             Close();
         }
+    }
+
+    /// <summary>
+    /// IP地址及端口
+    /// </summary>
+    public struct AddressPort
+    {
+        public IPAddress Address { get; set; }
+
+        public int Port { get; set; }
     }
 }
