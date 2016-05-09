@@ -282,11 +282,11 @@ namespace MisakaBanZai.Views
 
             if (!_misakaConnection.IsConnected)
             {
-                StartServer();
+                Task.Run(() => StartServer());
             }
             else
             {
-                StopServer();
+                Task.Run(() => StopServer());
             }
         }
 
@@ -295,44 +295,52 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void StartServer()
         {
-            AddressPort addressPort;
+            var addressPort = new AddressPort();
             try
             {
-                addressPort = GetLocalAddressPort();
+                Dispatcher.Invoke(() =>
+                {
+                    BtnStartListening.IsEnabled = false;
+                    BtnStartListening.Content = "正在开始侦听";
+                    addressPort = GetLocalAddressPort();
+                });
             }
             catch (Exception)
             {
-                MessageBox.Show("错误的IP地址或端口号！");
+                Dispatcher.Invoke(() =>
+                {
+                    BtnStartListening.IsEnabled = true;
+                    MessageBox.Show("错误的IP地址或端口号！");
+                });
                 return;
             }
 
-            var result = Task.Run(() => _misakaConnection.Connect(addressPort.Address, addressPort.Port));
+            var result = _misakaConnection.Connect(addressPort.Address, addressPort.Port);
 
-            if (result.Result)
+            if (result)
             {
-                BtnStartListening.Content = "停止侦听";
-                OnConnectionModefied(_misakaConnection);
-                DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
+                Dispatcher.Invoke(() =>
+                {
+                    BtnStartListening.Content = "停止侦听";
+                    OnConnectionModefied(_misakaConnection);
+                    AddReportData(ReportMessageType.Info, "服务器侦听启动");
+                });
             }
             else
             {
-                DispatcherAddReportData(ReportMessageType.Info, "服务器侦听失败");
+                Dispatcher.Invoke(() =>
+                {
+                    BtnStartListening.Content = "开始侦听";
+                    AddReportData(ReportMessageType.Info, "服务器侦听失败");
+                });
                 return;
             }
 
-            //if (_misakaConnection.Connect(GetLocalIpAddress(), GetLocalPort()))
-            //{
-            //    BtnStartListening.Content = "停止侦听";
-            //    OnConnectionModefied(_misakaConnection);
-            //    DispatcherAddReportData(ReportMessageType.Info, "服务器侦听启动");
-            //}
-            //else
-            //{
-            //    DispatcherAddReportData(ReportMessageType.Info, "服务器侦听失败");
-            //    return;
-            //}
-
-            ChangeServerControlStatus(false);
+            Dispatcher.Invoke(() =>
+            {
+                ChangeServerControlStatus(false);
+                BtnStartListening.IsEnabled = true;
+            });
         }
 
         /// <summary>
@@ -340,18 +348,34 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void StopServer()
         {
+            Dispatcher.Invoke(() =>
+            {
+                BtnStartListening.Content = "正在结束侦听";
+                BtnStartListening.IsEnabled = false;
+            });
+
             if (_misakaConnection.Close())
             {
-                _misakaConnection = null;
-                BtnStartListening.Content = "开始侦听";
+                Dispatcher.Invoke(() =>
+                {
+                    _misakaConnection = null;
+                });
             }
             else
             {
-                DispatcherAddReportData(ReportMessageType.Error, "关闭服务器失败");
+                Dispatcher.Invoke(() =>
+                {
+                    AddReportData(ReportMessageType.Error, "关闭服务器失败");
+                });
                 return;
             }
 
-            ChangeServerControlStatus(true);
+            Dispatcher.Invoke(() =>
+            {
+                ChangeServerControlStatus(true);
+                BtnStartListening.IsEnabled = true;
+                BtnStartListening.Content = "开始侦听";
+            });
         }
 
         /// <summary>
@@ -543,11 +567,11 @@ namespace MisakaBanZai.Views
 
             if (!_misakaConnection.IsConnected)
             {
-                ClientConnect();
+                Task.Run(() => ClientConnect());
             }
             else
             {
-                ClientDisconnect();
+                Task.Run(() => ClientDisconnect());
             }
         }
 
@@ -566,33 +590,50 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void ClientConnect()
         {
-            AddressPort addressPort;
+            var addressPort = new AddressPort();
             try
             {
-                addressPort = GetTargetAddressPort();
+                Dispatcher.Invoke(() =>
+                {
+                    addressPort = Dispatcher.Invoke(GetTargetAddressPort);
+                    BtnConnect.IsEnabled = false;
+                    BtnConnect.Content = "正在连接服务器";
+                });
             }
             catch (Exception)
             {
-                MessageBox.Show("错误的IP地址或端口号！");
+                Dispatcher.Invoke(() => MessageBox.Show("错误的IP地址或端口号！"));
                 return;
             }
 
-            var result = Task.Run(() => _misakaConnection.Connect(addressPort.Address, addressPort.Port));
+            var result = _misakaConnection.Connect(addressPort.Address, addressPort.Port);
 
-            if (result.Result)
+            if (result)
             {
-                _misakaConnection.TargetConnectionName = $"{addressPort.Address}:{addressPort.Port}";
-                BtnConnect.Content = "断开连接";
-                ReportService.Info("连接服务器成功！");
-                OnConnectionModefied(_misakaConnection);
+                Dispatcher.Invoke(() =>
+                {
+                    _misakaConnection.TargetConnectionName = $"{addressPort.Address}:{addressPort.Port}";
+                    BtnConnect.Content = "断开连接";
+                    OnConnectionModefied(_misakaConnection);
+                    ReportService.Info("连接服务器成功！");
+                });
             }
             else
             {
-                ReportService.Error("尝试连接失败！");
+                Dispatcher.Invoke(() =>
+                {
+                    ReportService.Error("尝试连接失败！");
+                    BtnConnect.IsEnabled = true;
+                    BtnConnect.Content = "连接服务器";
+                });
                 return;
             }
 
-            ChangeClientControlStatus(false);
+            Dispatcher.Invoke(() =>
+            {
+                ChangeClientControlStatus(false);
+                BtnConnect.IsEnabled = true;
+            });
         }
 
         /// <summary>
@@ -602,17 +643,20 @@ namespace MisakaBanZai.Views
         {
             if (_misakaConnection.Close())
             {
-                BtnConnect.Content = "连接服务器";
-                _misakaConnection = null;
-                ReportService.Info("断开服务器连接。");
+                Dispatcher.Invoke(() =>
+                {
+                    BtnConnect.Content = "连接服务器";
+                    _misakaConnection = null;
+                    ReportService.Info("断开服务器连接。");
+                });
             }
             else
             {
-                ReportService.Error("断开连接失败！");
+                Dispatcher.Invoke(() => ReportService.Error("断开连接失败！"));
                 return;
             }
 
-            ChangeClientControlStatus(true);
+            Dispatcher.Invoke(() => ChangeClientControlStatus(true));
         }
 
         /// <summary>
