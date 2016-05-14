@@ -333,7 +333,6 @@ namespace MisakaBanZai.Views
                     BtnStartListening.Content = "开始侦听";
                     AddReportData(ReportMessageType.Info, "服务器侦听失败");
                 });
-                return;
             }
 
             Dispatcher.Invoke(() =>
