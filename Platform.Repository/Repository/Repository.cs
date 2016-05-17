@@ -36,7 +36,7 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected Repository()
         {
-            DbContext = new RepositoryDbContext();
+            DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString) ? new RepositoryDbContext() : new RepositoryDbContext(DbRepository.ConnectionString);
             EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
@@ -55,10 +55,10 @@ namespace SHWD.Platform.Repository.Repository
         public virtual IEnumerable<T> GetModels(Func<T, bool> exp)
             => EntitySet.Where(exp);
 
-        public virtual IList<T> GetModelList(Func<T, bool> exp) 
+        public virtual IList<T> GetModelList(Func<T, bool> exp)
             => GetModels(exp).ToList();
 
-        public virtual int GetCount(Func<T, bool> exp) 
+        public virtual int GetCount(Func<T, bool> exp)
             => EntitySet.Where(exp).Count();
 
         public virtual T CreateDefaultModel()
