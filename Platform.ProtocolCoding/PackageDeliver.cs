@@ -32,6 +32,8 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="source">接收数据源</param>
         public static void Delive(IProtocolPackage package, IPackageSource source)
         {
+            package.ProtocolData = StoreProtocolData(package);
+
             var deliverParams = package.DeliverParams;
 
             if (deliverParams.Count == 0) return;
@@ -61,6 +63,44 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="source">接收数据源</param>
         public static void StoreData(IProtocolPackage package, IPackageSource source)
         {
+            var protocolData = package.ProtocolData;
+
+            var dataProcess = ProcessInvoke.GetInstance<MonitorDataProcess>();
+
+            var monitorDataList = new List<MonitorData>();
+
+            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            {
+                var monitorData = dataProcess.GetNewMonitorData();
+
+                var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+
+                var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
+
+                monitorData.MonitorDataValue = Convert.ToDouble(temp);
+                monitorData.ProtocolDataId = protocolData.Id;
+                monitorData.UpdateTime = DateTime.Now;
+                monitorData.CommandDataId = commandData.Id;
+                monitorData.DataName = commandData.DataName;
+
+                monitorDataList.Add(monitorData);
+            }
+
+            if (package[ProtocolDataName.DataValidFlag] != null)
+            {
+                ProcessDataValidFlag(package, monitorDataList);
+            }
+
+            dataProcess.AddOrUpdateMonitorData(monitorDataList);
+        }
+
+        /// <summary>
+        /// 存储协议包数据
+        /// </summary>
+        /// <param name="package">协议数据包</param>
+        /// <returns>保存数据包相关信息</returns>
+        public static ProtocolData StoreProtocolData(IProtocolPackage package)
+        {
             var process = ProcessInvoke.GetInstance<ProtocolDataProcess>();
 
             var protocolData = process.GetNewProtocolData();
@@ -74,33 +114,23 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             process.AddProtocolData(protocolData);
 
+            return protocolData;
+        }
 
-            var dataProcess = ProcessInvoke.GetInstance<MonitorDataProcess>();
-
+        /// <summary>
+        /// 处理协议数据有效性标志位
+        /// </summary>
+        /// <param name="package">协议数据包</param>
+        /// <param name="monitorDatas">监测数据</param>
+        public static void ProcessDataValidFlag(IProtocolPackage package, List<MonitorData> monitorDatas)
+        {
             var dataValidFlag = DataConvert.GetDataValidFlag(package[ProtocolDataName.DataValidFlag].ComponentBytes);
 
-            var monitorDataList = new List<MonitorData>();
-
-            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            foreach (var commandData in package.Command.CommandDatas)
             {
-                var monitorData = dataProcess.GetNewMonitorData();
-
-                var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
-
+                var monitorData = monitorDatas.First(obj => obj.CommandDataId == commandData.Id);
                 monitorData.DataIsValid = dataValidFlag[commandData.ValidFlagIndex];
-
-                var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
-
-                monitorData.MonitorDataValue = Convert.ToDouble(temp);
-                monitorData.ProtocolDataId = protocolData.Id;
-                monitorData.UpdateTime = DateTime.Now;
-                monitorData.CommandDataId = commandData.Id;
-                monitorData.DataName = commandData.DataName;
-
-                monitorDataList.Add(monitorData);
             }
-
-            dataProcess.AddOrUpdateMonitorData(monitorDataList);
         }
     }
 }

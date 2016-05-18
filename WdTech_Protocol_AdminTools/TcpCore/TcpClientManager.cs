@@ -120,7 +120,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                         }
                     }
                 }
-                catch (Exception ex) when(ex is ObjectDisposedException || ex is SocketException)
+                catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
                     if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
                     {
@@ -250,7 +250,10 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             AsyncCleanBuffer(result);
 
-            PackageDeliver.Delive(result, this);
+            if (result.Finalized)
+            {
+                PackageDeliver.Delive(result, this);
+            }
         }
 
         /// <summary>
@@ -301,6 +304,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
         }
 
-        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) => Send(_protocolEncoding.Encode(command, paramBytes));
+        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) 
+            => Send(_protocolEncoding.Encode(command, paramBytes));
     }
 }

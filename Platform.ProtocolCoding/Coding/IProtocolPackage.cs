@@ -32,6 +32,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         DateTime ReceiveDateTime { get; set; }
 
         /// <summary>
+        /// 协议包数据记录ID
+        /// </summary>
+        ProtocolData ProtocolData { get; set; }
+
+        /// <summary>
         /// 所属协议
         /// </summary>
         Protocol Protocol { get; set; }

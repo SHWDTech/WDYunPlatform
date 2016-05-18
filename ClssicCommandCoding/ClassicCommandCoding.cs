@@ -2,10 +2,11 @@
 using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
+using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 
-namespace SHWDTech.Platform.ProtocolCoding.Command
+namespace SHWDTech.Platform.ClssicCommandCoding
 {
     /// <summary>
     /// 经典协议解析模块
@@ -48,8 +49,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
         {
             var package = new ProtocolPackage(command)
             {
-                [StructureNames.CmdType] = {ComponentBytes = command.CommandTypeCode},
-                [StructureNames.CmdByte] = {ComponentBytes = command.CommandCode}
+                [StructureNames.CmdType] = { ComponentBytes = command.CommandTypeCode },
+                [StructureNames.CmdByte] = { ComponentBytes = command.CommandCode }
             };
 
 
@@ -66,7 +67,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Command
                 }
             }
 
-            var crcValue = Globals.GetUsmbcrc16(package.GetBytes(), (ushort) (package.PackageLenth - 3));
+            var crcValue = Globals.GetUsmbcrc16(package.GetBytes(), (ushort)(package.PackageLenth - 3));
             package[StructureNames.CrcValue].ComponentBytes = Globals.Uint16ToBytes(crcValue, false);
 
             package.Finalization();

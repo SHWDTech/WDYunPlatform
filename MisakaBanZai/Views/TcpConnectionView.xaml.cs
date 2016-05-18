@@ -685,12 +685,19 @@ namespace MisakaBanZai.Views
             }
         }
 
+        /// <summary>
+        /// 客户端连接断开
+        /// </summary>
+        /// <param name="conn"></param>
         private void ClientDisconnected(IMisakaConnection conn)
         {
             _misakaConnection = null;
             DispatcherAddReportData(ReportMessageType.Warning, "客户端连接已经断开！");
-            Dispatcher.Invoke(() => ChangeClientControlStatus(true));
-            Dispatcher.Invoke(() => BtnConnect.Content = "连接服务器");
+            Dispatcher.Invoke(() =>
+            {
+                ChangeClientControlStatus(true);
+                BtnConnect.Content = "连接服务器";
+            });
 
             if (_autoSendThread != null && _autoSendThread.IsAlive)
             {
@@ -834,7 +841,7 @@ namespace MisakaBanZai.Views
         }
 
         /// <summary>
-        /// Receives the text box text changed.
+        /// 接收框文档变更
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
@@ -882,6 +889,9 @@ namespace MisakaBanZai.Views
             // ReSharper disable once FunctionNeverReturns
         }
 
+        /// <summary>
+        /// 还原自动发送相关控件状态
+        /// </summary>
         private void RestoreAutoSendControls()
         {
             TxtDataSend.IsEnabled = true;

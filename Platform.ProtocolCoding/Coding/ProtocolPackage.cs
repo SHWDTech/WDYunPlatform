@@ -66,6 +66,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public DateTime ReceiveDateTime { get; set; }
 
+        public ProtocolData ProtocolData { get; set; }
+
         public Protocol Protocol { get; set; }
 
         public PackageStatus Status { get; set; } = PackageStatus.UnFinalized;
