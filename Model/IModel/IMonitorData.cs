@@ -29,6 +29,16 @@ namespace SHWDTech.Platform.Model.IModel
         CommandData CommandData { get; set; }
 
         /// <summary>
+        /// 来源工地ID
+        /// </summary>
+        Guid? ProjectId { get; set; }
+
+        /// <summary>
+        /// 来源工地
+        /// </summary>
+        Project Project { get; set; }
+
+        /// <summary>
         /// 数据名称类型
         /// </summary>
         string DataName { get; set; }

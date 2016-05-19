@@ -55,6 +55,9 @@ namespace WdTech_Protocol_AdminTools.Common
         /// </summary>
         public static string StartDateFormat { get; set; } = DateTimeViewFormat.DateTimeWithoutYear;
 
+        /// <summary>
+        /// 协议指令消息分类
+        /// </summary>
         public static readonly string CommandMessageQueueCategory;
 
         static AppConfig()

@@ -1,5 +1,6 @@
 ﻿using SHWDTech.Platform.Utility;
 using System;
+using System.ComponentModel;
 using System.Net;
 using System.Windows;
 using System.Windows.Threading;
@@ -59,22 +60,17 @@ namespace WdTech_Protocol_AdminTools.Views
         /// <param name="e"></param>
         private void AppendReport(EventArgs e)
         {
-            Dispatcher.Invoke(DispatcherAppendReport);
-        }
+            Dispatcher.Invoke(() =>
+            {
+                var message = AdminReportService.Instance.PopupReport();
+                if (message == null) return;
 
-        /// <summary>
-        /// 发送报告文本到界面
-        /// </summary>
-        private void DispatcherAppendReport()
-        {
-            var message = AdminReportService.Instance.PopupReport();
-            if (message == null) return;
-
-            TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
-            TxtReport.AppendText(" => ", OutPutDataColor.OperaterColor);
-            TxtReport.AppendText(message.Message, message.MessageColor);
-            TxtReport.AppendText("\r\n");
-            TxtReport.ScrollToEnd();
+                TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
+                TxtReport.AppendText(" => ", OutPutDataColor.OperaterColor);
+                TxtReport.AppendText(message.Message, message.MessageColor);
+                TxtReport.AppendText("\r\n");
+                TxtReport.ScrollToEnd();
+            });
         }
 
         /// <summary>
@@ -115,7 +111,7 @@ namespace WdTech_Protocol_AdminTools.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OnClosing(object sender, CancelEventArgs e)
         {
             try
             {
@@ -141,7 +137,7 @@ namespace WdTech_Protocol_AdminTools.Views
 
             if (CommunicationServices.Start(new IPEndPoint(_serverAddress, _serverPort)))
             {
-                SetServerInfoInput(false);
+                SetServerInfoInputStatus(false);
             }
         }
 
@@ -154,7 +150,7 @@ namespace WdTech_Protocol_AdminTools.Views
         {
             if (CommunicationServices.Stop())
             {
-                SetServerInfoInput(true);
+                SetServerInfoInputStatus(true);
             }
         }
 
@@ -162,7 +158,7 @@ namespace WdTech_Protocol_AdminTools.Views
         /// 设置服务器信息控件状态
         /// </summary>
         /// <param name="status"></param>
-        private void SetServerInfoInput(bool status)
+        private void SetServerInfoInputStatus(bool status)
              => TxtServerIpAddress.IsEnabled = TxtServerPort.IsEnabled = status;
 
         /// <summary>
@@ -177,13 +173,10 @@ namespace WdTech_Protocol_AdminTools.Views
                 return false;
             }
 
-            if (!ushort.TryParse(TxtServerPort.Text, out _serverPort))
-            {
-                MessageBox.Show("无效的端口号！", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
+            if (ushort.TryParse(TxtServerPort.Text, out _serverPort)) return true;
 
-            return true;
+            MessageBox.Show("无效的端口号！", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
         }
 
         /// <summary>

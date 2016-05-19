@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Messaging;
 using System.Net.Sockets;
-using System.Transactions;
-using Newtonsoft.Json;
-using Platform.WdQueue;
-using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
-using SHWDTech.Platform.Utility;
-using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
@@ -50,45 +42,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private static void ClientDisconnected(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
-        }
-
-        /// <summary>
-        /// 发送相关指令
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="asyncResult"></param>
-        public void MessagePeekCompleted(object source, PeekCompletedEventArgs asyncResult)
-        {
-            var messageQueue = (WdTechTask) source;
-
-            var message = messageQueue.EndPeek(asyncResult.AsyncResult);
-
-            if (!(message.Body is IWdMessage)) return;
-
-            var messageContent = (IWdMessage)message.Body;
-
-            if (messageContent.MessageCategory != AppConfig.CommandMessageQueueCategory) return;
-
-            var commandRequest = JsonConvert.DeserializeObject<CommandMessage>(messageContent.MessageObjectJson); 
-
-            using (var scope = new TransactionScope())
-            {
-                try
-                {
-                    SendCommand(commandRequest);
-
-                    TaskManager.UpdateTaskExceteStatus(commandRequest.TaskGuid, TaskExceteStatus.Sended);
-
-                    messageQueue.ReceiveById(message.Id);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Instance.Error("发送指令错误！", ex);
-                    return;
-                }
-
-                scope.Complete();
-            }
         }
 
         /// <summary>

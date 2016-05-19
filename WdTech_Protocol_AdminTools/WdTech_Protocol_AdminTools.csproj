@@ -182,10 +182,6 @@
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Platform.WdQueue\Platform.WdQueue.csproj">
-      <Project>{0bc6a6bb-1e73-44f7-88c0-1a95f082ddbe}</Project>
-      <Name>Platform.WdQueue</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -52,7 +52,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="command"></param>
         /// <param name="paramBytes"></param>
         /// <returns></returns>
-        public byte[] Encode(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) => EncodeProtocol(command, paramBytes);
+        public byte[] Encode(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) 
+            => EncodeProtocol(command, paramBytes);
 
         /// <summary>
         /// 根据指定的协议集解码协议

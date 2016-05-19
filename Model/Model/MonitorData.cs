@@ -28,6 +28,13 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("CommandDataId")]
         public virtual CommandData CommandData { get; set; }
 
+        [Display(Name = "来源工地ID")]
+        public Guid? ProjectId { get; set; }
+
+        [Display(Name = "来源工地")]
+        [ForeignKey("ProjectId")]
+        public Project Project { get; set; }
+
         [Display(Name = "数据名称")]
         public virtual string DataName { get; set; }
 
