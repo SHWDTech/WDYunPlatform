@@ -158,6 +158,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AdminControlService\AdminControlService.csproj">
+      <Project>{30f98c23-f467-42e4-9756-e2d001fd848a}</Project>
+      <Name>AdminControlService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>
