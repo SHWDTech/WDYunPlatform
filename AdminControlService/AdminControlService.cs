@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using SHWDTech.Platform.PlatformServices;
 
 namespace SHWDTech.Platform.AdminControlService
@@ -6,39 +7,27 @@ namespace SHWDTech.Platform.AdminControlService
     /// <summary>
     /// 管理工具控制服务
     /// </summary>
-    public class AdminControlService : PlatformService
+    public class AdminControlService : PlatformService, IPlatformService
     {
-        public static Guid ServiceGuid { get; }
+        /// <summary>
+        /// 服务ID
+        /// </summary>
+        private static readonly Guid ServiceId;
 
         /// <summary>
         /// 创建新的管理工具控制服务
         /// </summary>
         static AdminControlService()
         {
-            ServiceGuid = new Guid("A3524115-D485-47BF-983D-8746CAB1F9B4");
+            ServiceId = new Guid("A3524115-D485-47BF-983D-8746CAB1F9B4");
         }
 
-        /// <summary>
-        /// 启动服务
-        /// </summary>
-        public override void Start(string path, Type[] formaterTypes)
+        public Guid ServiceGuid => ServiceId;
+
+        protected override void ProcessMessage(IServiceMessage message)
         {
+            var messageContent = JsonConvert.DeserializeObject<AdminControlServiceMessage>(message.MessageObjectJson);
 
-        }
-
-        /// <summary>
-        /// 停止服务
-        /// </summary>
-        public override void Stop()
-        {
-
-        }
-
-        /// <summary>
-        /// 重启服务
-        /// </summary>
-        public override void ReStart()
-        {
 
         }
 
