@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -27,21 +28,28 @@ namespace SHWD.Platform.Repository.IRepository
         /// </summary>
         /// <param name="exp">查询条件表达式</param>
         /// <returns>符合查询条件的对象</returns>
-        IEnumerable<T> GetModels(Func<T, bool> exp);
+        IEnumerable<T> GetModels(Expression<Func<T, bool>> exp);
 
         /// <summary>
         /// 获取指定模型对象的列表
         /// </summary>
         /// <param name="exp">查询条件表达式</param>
         /// <returns>符合查询条件的对象列表</returns>
-        IList<T> GetModelList(Func<T, bool> exp);
+        IList<T> GetModelList(Expression<Func<T, bool>> exp);
+
+        /// <summary>
+        /// 获取符合指定条件的模型
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        T GetModel(Expression<Func<T, bool>> exp);
 
         /// <summary>
         /// 获取符合条件的对象的数量
         /// </summary>
         /// <param name="exp">查询条件</param>
         /// <returns>符合条件的对象的数量</returns>
-        int GetCount(Func<T, bool> exp);
+        int GetCount(Expression<Func<T, bool>> exp);
 
         /// <summary>
         /// 新建默认数据模型对象

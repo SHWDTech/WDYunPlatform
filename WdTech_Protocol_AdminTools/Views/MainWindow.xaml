@@ -46,7 +46,7 @@
                                     Margin="0, 60, 10, 0" Click="StopService"></Button>
                         </Grid>
                         <Grid Row="1">
-                            <RichTextBox x:Name="TxtReport" IsReadOnly="True" VerticalScrollBarVisibility="Auto"></RichTextBox>
+                            <TextBox x:Name="TxtReport" IsReadOnly="True" VerticalScrollBarVisibility="Auto"></TextBox>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -72,6 +72,12 @@
                     </StatusBarItem>
                     <StatusBarItem Foreground="#CC0000">
                         <TextBlock Name="ServerRunningDateTime" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem FontSize="16">
+                        <TextBlock>Conn:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem FontSize="16">
+                        <TextBlock Name="AliveConnection"></TextBlock>
                     </StatusBarItem>
                 </StatusBar>
             </DockPanel>

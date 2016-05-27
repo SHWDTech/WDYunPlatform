@@ -18,6 +18,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         /// </summary>
         private static List<Protocol> AuthenticationProtocols => ProtocolInfoManager.GerProtocolsByField(ProtocolFieldNames.GeneralFunction);
 
+        private static readonly DeviceProcess DeviceProcess = ProcessInvoke.GetInstance<DeviceProcess>();
+
         /// <summary>
         /// 设备认证
         /// </summary>
@@ -49,7 +51,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
             if (package.Protocol.ProtocolName == ProtocolNames.Classic)
             {
                 var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
-                return ProcessInvoke.GetInstance<DeviceProcess>().GetDeviceByNodeId(nodeId);
+                return DeviceProcess.GetDeviceByNodeId(nodeId);
             }
 
             return null;

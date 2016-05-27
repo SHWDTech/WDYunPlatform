@@ -52,9 +52,7 @@
     <Compile Include="IProcess\IAccountProcess.cs" />
     <Compile Include="IProcess\IControllerProcess.cs" />
     <Compile Include="IProcess\IDeviceProcess.cs" />
-    <Compile Include="IProcess\IMonitorDataProcess.cs" />
     <Compile Include="IProcess\IProtocolCodingProcess.cs" />
-    <Compile Include="IProcess\IProtocolDataProcess.cs" />
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ICommandTaskProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
@@ -62,9 +60,8 @@
     <Compile Include="Process\ControllerProcess.cs" />
     <Compile Include="Process\DeviceProcess.cs" />
     <Compile Include="Process\GeneralProcess.cs" />
-    <Compile Include="Process\MonitorDataProcess.cs" />
     <Compile Include="Process\ProtocolCodingProcess.cs" />
-    <Compile Include="Process\ProtocolDataProcess.cs" />
+    <Compile Include="Process\ProtocolPackageProcess.cs" />
     <Compile Include="Process\SysConfigProcess.cs" />
     <Compile Include="Process\CommandTaskProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,6 +12,7 @@ namespace SHWDTech.Platform.Model.ModelBase
     public class ModelBase : IModel.IModel
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "唯一标识符")]
         public virtual Guid Id { get; set; }
 

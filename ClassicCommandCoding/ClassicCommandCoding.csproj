@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D94908D6-FFC4-4598-AC77-D33ACC3C2083}</ProjectGuid>
+    <ProjectGuid>{30C9F4EB-9BCF-4201-8C1D-9472B60F768B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SHWDTech.Platform.PlatformServices</RootNamespace>
-    <AssemblyName>SHWDTech.Platform.PlatformServices</AssemblyName>
+    <RootNamespace>SHWDTech.Platform.ClassicCommandCoding</RootNamespace>
+    <AssemblyName>SHWDTech.Platform.ClassicCommandCoding</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,13 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,22 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPlatformService.cs" />
-    <Compile Include="PlatformService.cs" />
+    <Compile Include="ClassicCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IServiceMessage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Model\Platform.Model.csproj">
+      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
+      <Name>Platform.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.ProtocolCoding\Platform.ProtocolCoding.csproj">
+      <Project>{7924589d-fb3d-4496-8f48-c9dd58ff1574}</Project>
+      <Name>Platform.ProtocolCoding</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServiceHandler\ServiceHandler.csproj">
-      <Project>{5630351b-8225-4a99-a800-36fe116f2841}</Project>
-      <Name>ServiceHandler</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

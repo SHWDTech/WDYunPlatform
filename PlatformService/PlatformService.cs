@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Messaging;
+using System.Threading.Tasks;
+using SHWDTech.Platform.ServiceHandler;
+using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.PlatformServices
 {
@@ -44,24 +47,6 @@ namespace SHWDTech.Platform.PlatformServices
             Start();
         }
 
-        public virtual void SendMessage(object message)
-            => ServiceMessageQueue.Send(message);
-
-        public virtual void SendMessage(object message, string label)
-            => ServiceMessageQueue.Send(message, label);
-
-        public virtual void SendMessage(object message, string label, MessageQueueTransactionType transationType)
-            => ServiceMessageQueue.Send(message, label, transationType);
-
-        public virtual void SendMessage(object message, string label, MessageQueueTransaction transaction)
-            => ServiceMessageQueue.Send(message, label, transaction);
-
-        public virtual void SendMessage(object message, MessageQueueTransactionType transationType)
-            => ServiceMessageQueue.Send(message, transationType);
-
-        public virtual void SendMessage(object message, MessageQueueTransaction transaction)
-            => ServiceMessageQueue.Send(message, transaction);
-
         /// <summary>
         /// 检查消息队列路径
         /// </summary>
@@ -91,7 +76,7 @@ namespace SHWDTech.Platform.PlatformServices
 
             if (messageContent.SourceServiceGuid != ServiceId) return;
 
-            ProcessMessage(messageContent);
+            Task.Run(() => ProcessMessage(messageContent));
 
             if (IsRuning)
             {
@@ -103,6 +88,7 @@ namespace SHWDTech.Platform.PlatformServices
         /// 处理服务消息
         /// </summary>
         /// <param name="message"></param>
-        protected abstract void ProcessMessage(IServiceMessage message);
+        protected virtual void ProcessMessage(IServiceMessage message)
+            => UnityFactory.Resolve<IServiceHandler>(message.MessageCommand).Execute(message.MessageParams, message.MessageType);
     }
 }

@@ -15,6 +15,6 @@ namespace SHWD.Platform.Repository.Repository
         public IDevice GetDeviceById(Guid deviceGuid) => GetAllModels().First(device => device.Id == deviceGuid);
 
         public IList<Device> GetDeviceByNodeId(string nodeId)
-            => GetModelList(device => device.DeviceNodeId == nodeId);
+            => GetModels(device => device.DeviceNodeId == nodeId).ToList();
     }
 }

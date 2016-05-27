@@ -119,6 +119,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             _processBuffer.Add(array[i]);
                         }
                     }
+
+                    client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
                 }
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
@@ -146,8 +148,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
 
             OnReceivedData();
-
-            client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
         }
 
         /// <summary>

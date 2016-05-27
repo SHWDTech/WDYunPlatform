@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
@@ -9,6 +10,6 @@ namespace SHWD.Platform.Repository.IRepository
     /// </summary>
     public interface ISysConfigRepository : ISysRepository<SysConfig>
     {
-        Dictionary<string, string> GetSysConfigDictionary(Func<SysConfig, bool> exp);
+        Dictionary<string, string> GetSysConfigDictionary(Expression<Func<SysConfig, bool>> exp);
     }
 }

@@ -6,12 +6,12 @@ using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 
-namespace SHWDTech.Platform.ClssicCommandCoding
+namespace SHWDTech.Platform.ClassicCommandCoding
 {
     /// <summary>
     /// 经典协议解析模块
     /// </summary>
-    public class ClassicCommandCoding : ICommandCoding
+    public class ClassicCommand : ICommandCoding
     {
         public void DecodeCommand(IProtocolPackage package)
         {

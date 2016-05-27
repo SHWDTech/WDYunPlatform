@@ -27,6 +27,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             var tcpClientManager = new TcpClientManager(client) { ReceiverName = $"UnIdentified - {client.RemoteEndPoint}" };
             tcpClientManager.ClientDisconnectEvent += ClientDisconnected;
+            tcpClientManager.ClientAuthenticationEvent += ClientAuthenticationed;
             client.BeginReceive(tcpClientManager.ReceiveBuffer, SocketFlags.None, tcpClientManager.Received, client);
 
             lock (_clientSockets)
@@ -42,6 +43,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private static void ClientDisconnected(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
+            CommunicationServices.AliveConnection -= 1;
+        }
+
+        private static void ClientAuthenticationed(TcpClientManager tcpClient)
+        {
+            AdminReportService.Instance.Info($"客户端授权通过，客户端设备NODEID：{tcpClient.ClientDevice.DeviceNodeId}");
         }
 
         /// <summary>

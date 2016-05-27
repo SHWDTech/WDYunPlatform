@@ -30,7 +30,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             foreach (var firmware in device.FirmwareSet.Firmwares)
             {
-                _deviceProtocols.AddRange(firmware.Protocols);
+                foreach (var protocol in firmware.Protocols)
+                {
+                    _deviceProtocols.Add(ProtocolInfoManager.GetProtocolByName(protocol.ProtocolName));
+                }
             }
         }
 

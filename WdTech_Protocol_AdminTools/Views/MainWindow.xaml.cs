@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Net;
 using System.Windows;
 using System.Windows.Threading;
-using SHWDTech.Platform.Utility.ExtensionMethod;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Enums;
 using WdTech_Protocol_AdminTools.Services;
@@ -50,7 +49,10 @@ namespace WdTech_Protocol_AdminTools.Views
 
             TxtServerIpAddress.Text = $"{AppConfig.ServerIpAddress}";
             TxtServerPort.Text = $"{AppConfig.ServerPort}";
-            
+
+            AliveConnection.Text = $"{CommunicationServices.AliveConnection}";
+
+
             AdminReportService.Instance.ReportDataAdded += AppendReport;
         }
 
@@ -63,13 +65,19 @@ namespace WdTech_Protocol_AdminTools.Views
             Dispatcher.Invoke(() =>
             {
                 var message = AdminReportService.Instance.PopupReport();
+
                 if (message == null) return;
 
-                TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]", OutPutDataColor.DateTimeColor);
-                TxtReport.AppendText(" => ", OutPutDataColor.OperaterColor);
-                TxtReport.AppendText(message.Message, message.MessageColor);
+                TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]");
+                TxtReport.AppendText(" => ");
+                TxtReport.AppendText(message.Message);
                 TxtReport.AppendText("\r\n");
                 TxtReport.ScrollToEnd();
+
+                if (TxtReport.Text.Length > 3000)
+                {
+                    TxtReport.Clear();
+                }
             });
         }
 
@@ -90,6 +98,8 @@ namespace WdTech_Protocol_AdminTools.Views
             ServerRunningDateTime.Text = !CommunicationServices.IsStart
                                         ? "-"
                                         : $"{(CommunicationServices.StartDateTime - DateTime.Now).ToString("h'h 'm'm 's's'")}";
+
+            AliveConnection.Text = $"{CommunicationServices.AliveConnection}";
         }
 
         /// <summary>
@@ -186,7 +196,7 @@ namespace WdTech_Protocol_AdminTools.Views
         /// <param name="e"></param>
         private void ClearTextReport(object sender, RoutedEventArgs e)
         {
-            TxtReport.Document.Blocks.Clear();
+            TxtReport.Clear();
         }
     }
 }

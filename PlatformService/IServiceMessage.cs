@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SHWDTech.Platform.PlatformServices
 {
@@ -13,8 +14,18 @@ namespace SHWDTech.Platform.PlatformServices
         Guid SourceServiceGuid { get; }
 
         /// <summary>
-        /// 消息内容JSON对象
+        /// 消息类型
         /// </summary>
-        string MessageObjectJson { get; }
+        string MessageType { get; set; }
+
+        /// <summary>
+        /// 消息参数列表
+        /// </summary>
+        List<object> MessageParams { get; set; }
+
+        /// <summary>
+        /// 消息指令
+        /// </summary>
+        string MessageCommand { get; set; }
     }
 }

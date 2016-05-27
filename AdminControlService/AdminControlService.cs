@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using SHWDTech.Platform.PlatformServices;
 
 namespace SHWDTech.Platform.AdminControlService
@@ -23,13 +22,6 @@ namespace SHWDTech.Platform.AdminControlService
         }
 
         public Guid ServiceGuid => ServiceId;
-
-        protected override void ProcessMessage(IServiceMessage message)
-        {
-            var messageContent = JsonConvert.DeserializeObject<AdminControlServiceMessage>(message.MessageObjectJson);
-
-
-        }
 
         /// <summary>
         /// 注册新服务

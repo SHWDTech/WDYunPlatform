@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Messaging;
 
 namespace SHWDTech.Platform.PlatformServices
 {
@@ -35,17 +34,5 @@ namespace SHWDTech.Platform.PlatformServices
         /// 重启服务
         /// </summary>
         void ReStart();
-
-        void SendMessage(object message);
-
-        void SendMessage(object message, MessageQueueTransaction transaction);
-
-        void SendMessage(object message, MessageQueueTransactionType transationType);
-
-        void SendMessage(object message, string label);
-
-        void SendMessage(object message, string label, MessageQueueTransaction transaction);
-
-        void SendMessage(object message, string label, MessageQueueTransactionType transationType);
     }
 }

@@ -6,6 +6,7 @@ using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 
 namespace SHWD.Platform.Repository.Repository
@@ -52,19 +53,21 @@ namespace SHWD.Platform.Repository.Repository
         public virtual IList<T> GetAllModelList()
             => GetAllModels().ToList();
 
-        public virtual IEnumerable<T> GetModels(Func<T, bool> exp)
-            => EntitySet.Where(exp);
+        public virtual IEnumerable<T> GetModels(Expression<Func<T, bool>> exp)
+            => DbContext.Set<T>().Where(exp);
 
-        public virtual IList<T> GetModelList(Func<T, bool> exp)
+        public virtual IList<T> GetModelList(Expression<Func<T, bool>> exp)
             => GetModels(exp).ToList();
 
-        public virtual int GetCount(Func<T, bool> exp)
-            => EntitySet.Where(exp).Count();
+        public virtual T GetModel(Expression<Func<T, bool>> exp)
+            => DbContext.Set<T>().SingleOrDefault(exp);
+
+        public virtual int GetCount(Expression<Func<T, bool>> exp)
+            => DbContext.Set<T>().Where(exp).Count();
 
         public virtual T CreateDefaultModel()
         {
             var model = DbContext.Set<T>().Create();
-            model.Id = Guid.NewGuid();
             model.ModelState = ModelState.Added;
 
             return model;

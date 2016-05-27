@@ -7,6 +7,7 @@ using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
+using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -20,9 +21,15 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         private static readonly Type Deliver;
 
+        private static readonly ProtocolPackageProcess Process = ProcessInvoke.GetInstance<ProtocolPackageProcess>();
+
+        private static readonly Dictionary<IProtocolPackage, IPackageSource> DeliverySources = new Dictionary<IProtocolPackage, IPackageSource>();
+
+        private static bool _isRunning;
+
         static PackageDeliver()
         {
-            Deliver = typeof (PackageDeliver);
+            Deliver = typeof(PackageDeliver);
         }
 
         /// <summary>
@@ -32,15 +39,50 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="source">接收数据源</param>
         public static void Delive(IProtocolPackage package, IPackageSource source)
         {
-            package.ProtocolData = StoreProtocolData(package);
+            ParseProtocolData(package);
+            DeliverySources.Add(package, source);
+            OnGetDelivePackage();
+        }
 
+        private static void DeliveProcess()
+        {
+            lock (DeliverySources)
+            {
+                _isRunning = true;
+
+                while (DeliverySources.Count > 0)
+                {
+                    var source = DeliverySources.First();
+
+                    try
+                    {
+                        DoDelive(source.Key, source.Value);
+                        DeliverySources.Remove(source.Key);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Warn("协议包分发错误！", ex);
+                    }
+                }
+
+                _isRunning = false;
+            }
+        }
+
+        private static void OnGetDelivePackage()
+        {
+            if (!_isRunning) DeliveProcess();
+        }
+
+        private static void DoDelive(IProtocolPackage package, IPackageSource source)
+        {
             var deliverParams = package.DeliverParams;
 
             if (deliverParams.Count == 0) return;
 
             foreach (var deliverMethod in deliverParams.Select(param => Deliver.GetMethod(param)))
             {
-                deliverMethod.Invoke(deliverMethod, new object[] {package, source });
+                deliverMethod.Invoke(deliverMethod, new object[] { package, source });
             }
         }
 
@@ -63,22 +105,18 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="source">接收数据源</param>
         public static void StoreData(IProtocolPackage package, IPackageSource source)
         {
-            var protocolData = package.ProtocolData;
-
-            var dataProcess = ProcessInvoke.GetInstance<MonitorDataProcess>();
-
             var monitorDataList = new List<MonitorData>();
 
             for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
-                var monitorData = dataProcess.GetNewMonitorData();
+                var monitorData = new MonitorData();
 
                 var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
 
                 var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
 
                 monitorData.MonitorDataValue = Convert.ToDouble(temp);
-                monitorData.ProtocolDataId = protocolData.Id;
+                monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
                 monitorData.DataName = commandData.DataName;
@@ -92,7 +130,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                 ProcessDataValidFlag(package, monitorDataList);
             }
 
-            dataProcess.AddOrUpdateMonitorData(monitorDataList);
+            Process.AddOrUpdateMonitorData(monitorDataList, package.ProtocolData);
         }
 
         /// <summary>
@@ -100,22 +138,20 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="package">协议数据包</param>
         /// <returns>保存数据包相关信息</returns>
-        public static ProtocolData StoreProtocolData(IProtocolPackage package)
+        public static void ParseProtocolData(IProtocolPackage package)
         {
-            var process = ProcessInvoke.GetInstance<ProtocolDataProcess>();
+            var protocolData = new ProtocolData
+            {
+                DeviceId = package.Device.Id,
+                ProtocolId = package.Protocol.Id,
+                ProtocolTime = package.ReceiveDateTime,
+                UpdateTime = DateTime.Now,
+                ProtocolContent = package.GetBytes()
+            };
 
-            var protocolData = process.GetNewProtocolData();
-
-            protocolData.DeviceId = package.Device.Id;
-            protocolData.ProtocolId = package.Protocol.Id;
-            protocolData.ProtocolTime = package.ReceiveDateTime;
-            protocolData.UpdateTime = DateTime.Now;
-            protocolData.ProtocolContent = package.GetBytes();
             protocolData.Length = protocolData.ProtocolContent.Length;
 
-            process.AddProtocolData(protocolData);
-
-            return protocolData;
+            package.ProtocolData = protocolData;
         }
 
         /// <summary>
