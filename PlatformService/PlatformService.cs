@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Messaging;
 using System.Threading.Tasks;
-using SHWDTech.Platform.ServiceHandler;
 using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.ServiceHandler;
 
 namespace SHWDTech.Platform.PlatformServices
 {
