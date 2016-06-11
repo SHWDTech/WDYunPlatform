@@ -14,9 +14,13 @@ namespace Platform.Process.Process
         /// <summary>
         /// 设备数据仓库
         /// </summary>
-        private readonly DeviceRepository _repository = DbRepository.Repo<DeviceRepository>();
+        //private readonly DeviceRepository _repository = DbRepository.Repo<DeviceRepository>();
 
         public IDevice GetDeviceByNodeId(string nodeId)
-            => _repository.GetDeviceByNodeId(nodeId).FirstOrDefault();
+        {
+            var repo = DbRepository.Repo<DeviceRepository>();
+
+            return repo.GetDeviceByNodeId(nodeId).FirstOrDefault();
+        }
     }
 }

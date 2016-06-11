@@ -14,12 +14,11 @@ namespace SHWD.Platform.Repository.Repository
             => DbContext.Protocols
                 .Include("ProtocolStructures")
                 .Include("ProtocolCommands.CommandDatas")
+                .Include("Field")
+                .Include("SubField")
                 .ToList();
 
         public Protocol GetProtocolFullLoadedByName(string name)
-            => DbContext.Protocols
-                .Include("ProtocolStructures")
-                .Include("ProtocolCommands.CommandDatas")
-                .FirstOrDefault(obj => obj.ProtocolName == name);
+            => GetProtocolsFullLoaded().FirstOrDefault(obj => obj.ProtocolName == name);
     }
 }

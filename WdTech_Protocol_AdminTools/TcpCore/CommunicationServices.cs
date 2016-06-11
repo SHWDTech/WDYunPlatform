@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Services;
@@ -27,7 +28,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private static readonly ActiveClientManager Manager;
 
-        public static int AliveConnection { get; set; } = 0;
+        public static int AliveConnection { get; set; }
 
         /// <summary>
         /// 服务监听器
@@ -38,6 +39,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 服务器监听地址
         /// </summary>
         public static IPEndPoint ServerIpEndPoint { get; private set; }
+
+        private static readonly ManualResetEvent AllDone = new ManualResetEvent(false);
 
         static CommunicationServices()
         {
@@ -147,6 +150,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
 
             server.BeginAccept(AcceptClient, server);
+
+            AllDone.Set();
         }
     }
 }

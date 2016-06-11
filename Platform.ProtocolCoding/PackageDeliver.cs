@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Platform.Process;
 using Platform.Process.Process;
+using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
@@ -25,6 +26,10 @@ namespace SHWDTech.Platform.ProtocolCoding
 
         private static readonly Dictionary<IProtocolPackage, IPackageSource> DeliverySources = new Dictionary<IProtocolPackage, IPackageSource>();
 
+        private static readonly List<ProtocolData> ProtocolDatas = new List<ProtocolData>();
+
+        private static readonly List<MonitorData> MonitorDatas = new List<MonitorData>();
+
         private static bool _isRunning;
 
         static PackageDeliver()
@@ -40,7 +45,14 @@ namespace SHWDTech.Platform.ProtocolCoding
         public static void Delive(IProtocolPackage package, IPackageSource source)
         {
             ParseProtocolData(package);
-            DeliverySources.Add(package, source);
+            try
+            {
+                DeliverySources.Add(package, source);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogService.Instance.Debug("", ex);
+            }
             OnGetDelivePackage();
         }
 
@@ -109,7 +121,7 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
-                var monitorData = new MonitorData();
+                var monitorData = Process.CreateNewMonitorData();
 
                 var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
 
@@ -123,6 +135,15 @@ namespace SHWDTech.Platform.ProtocolCoding
                 monitorData.ProjectId = package.Device.ProjectId;
 
                 monitorDataList.Add(monitorData);
+                lock (MonitorDatas)
+                {
+                    MonitorDatas.Add(monitorData);
+                }
+            }
+
+            lock (ProtocolDatas)
+            {
+                ProtocolDatas.Add(package.ProtocolData);
             }
 
             if (package[ProtocolDataName.DataValidFlag] != null)
@@ -130,7 +151,31 @@ namespace SHWDTech.Platform.ProtocolCoding
                 ProcessDataValidFlag(package, monitorDataList);
             }
 
-            Process.AddOrUpdateMonitorData(monitorDataList, package.ProtocolData);
+            //Process.AddOrUpdateMonitorData(monitorDataList, package.ProtocolData);
+
+            if (ProtocolDatas.Count >= 200)
+            {
+                
+                var repo = new ProtocolDataRepository();
+
+                ProtocolData[] pDatas;
+                lock (ProtocolDatas)
+                {
+                    pDatas = ProtocolDatas.ToArray();
+                    ProtocolDatas.Clear();
+                }
+                
+                repo.AddOrUpdate(pDatas);
+
+                MonitorData[] mDatas;
+                lock (MonitorDatas)
+                {
+                    mDatas = MonitorDatas.ToArray();
+                    MonitorDatas.Clear();
+                }
+                var monitorRepo = new MonitorDataRepository();
+                monitorRepo.AddOrUpdate(mDatas);
+            }
         }
 
         /// <summary>
@@ -140,15 +185,14 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns>保存数据包相关信息</returns>
         public static void ParseProtocolData(IProtocolPackage package)
         {
-            var protocolData = new ProtocolData
-            {
-                DeviceId = package.Device.Id,
-                ProtocolId = package.Protocol.Id,
-                ProtocolTime = package.ReceiveDateTime,
-                UpdateTime = DateTime.Now,
-                ProtocolContent = package.GetBytes()
-            };
+            var protocolData = Process.CreateNewProtocolData();
 
+            protocolData.DeviceId = package.Device.Id;
+            protocolData.ProtocolId = package.Protocol.Id;
+            protocolData.ProtocolTime = package.ReceiveDateTime;
+            protocolData.UpdateTime = DateTime.Now;
+            protocolData.DomainId = RepositoryBase.CurrentDomain.Id;
+            protocolData.ProtocolContent = package.GetBytes();
             protocolData.Length = protocolData.ProtocolContent.Length;
 
             package.ProtocolData = protocolData;

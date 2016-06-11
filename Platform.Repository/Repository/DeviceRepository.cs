@@ -15,6 +15,9 @@ namespace SHWD.Platform.Repository.Repository
         public IDevice GetDeviceById(Guid deviceGuid) => GetAllModels().First(device => device.Id == deviceGuid);
 
         public IList<Device> GetDeviceByNodeId(string nodeId)
-            => GetModels(device => device.DeviceNodeId == nodeId).ToList();
+            => DbContext.Devices.Include("FirmwareSet")
+                    .Include("FirmwareSet.Firmwares")
+                    .Where(device => device.DeviceNodeId == nodeId)
+                    .ToList();
     }
 }

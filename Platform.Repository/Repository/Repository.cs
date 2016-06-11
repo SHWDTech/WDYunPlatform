@@ -30,7 +30,7 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// 数据检查条件
         /// </summary>
-        protected Func<T, bool> CheckFunc { get; set; }
+        protected Expression<Func<T, bool>> CheckFunc { get; set; }
 
         /// <summary>
         /// 创建一个新的数据仓库泛型基类对象
@@ -147,7 +147,7 @@ namespace SHWD.Platform.Repository.Repository
             var items = models as IEnumerable<T>;
             if (items != null) checkList.AddRange(items);
 
-            if (!checkList.Any(CheckFunc)) throw new ArgumentException("参数不符合要求");
+            if (!checkList.Any(CheckFunc.Compile())) throw new ArgumentException("参数不符合要求");
         }
     }
 

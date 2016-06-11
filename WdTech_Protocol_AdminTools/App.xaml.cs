@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
-using Microsoft.Practices.Unity;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Repository;
-using SHWDTech.Platform.ClassicCommandCoding;
-using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;

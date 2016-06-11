@@ -4,6 +4,7 @@ using System.Linq;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -66,10 +67,10 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         public static List<Protocol> GerProtocolsByField(string fieldName)
         {
-            var protocolList = ProtocolsCache.Where(protocol => protocol.Value.SubField.ItemValue == fieldName)
-                    .Select(obj => obj.Value)
-                    .ToList();
 
+            var protocolList = ProtocolsCache.Where(protocol => protocol.Value.SubField.ItemValue == fieldName)
+                .Select(obj => obj.Value)
+                .ToList();
             if (protocolList.Count == 0)
             {
                 protocolList = ProtocolsCache.Where(protocol => protocol.Value.Field.ItemValue == fieldName)
@@ -85,7 +86,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="commandGuid"></param>
         /// <returns></returns>
-        public static ProtocolCommand GetCommand(Guid commandGuid) 
+        public static ProtocolCommand GetCommand(Guid commandGuid)
             => ProtocolsCache.Select(protocol => protocol.Value.ProtocolCommands.FirstOrDefault(cmd => cmd.Id == commandGuid))
             .FirstOrDefault(targetCommand => targetCommand != null);
     }
