@@ -121,7 +121,7 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
-                var monitorData = Process.CreateNewMonitorData();
+                var monitorData = MonitorDataRepository.CreateDefaultModel();
 
                 var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
 
@@ -185,7 +185,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns>保存数据包相关信息</returns>
         public static void ParseProtocolData(IProtocolPackage package)
         {
-            var protocolData = Process.CreateNewProtocolData();
+            var protocolData = ProtocolDataRepository.CreateDefaultModel();
 
             protocolData.DeviceId = package.Device.Id;
             protocolData.ProtocolId = package.Protocol.Id;

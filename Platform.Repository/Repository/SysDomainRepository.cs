@@ -1,7 +1,6 @@
 ﻿using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 using System.Linq;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -20,10 +19,10 @@ namespace SHWD.Platform.Repository.Repository
             CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
-        public override T CreateDefaultModel()
+        public new static T CreateDefaultModel()
         {
-            var model = base.CreateDefaultModel();
-            model.Domain = (Domain)CurrentDomain;
+            var model = SysRepository<T>.CreateDefaultModel();
+            model.DomainId = CurrentDomain.Id;
 
             return model;
         }
@@ -31,7 +30,7 @@ namespace SHWD.Platform.Repository.Repository
         public override T ParseModel(string jsonString)
         {
             var model = base.ParseModel(jsonString);
-            model.Domain = (Domain)CurrentDomain;
+            model.DomainId = CurrentDomain.Id;
 
             return model;
         }

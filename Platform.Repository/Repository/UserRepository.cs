@@ -12,9 +12,9 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class UserRepository : SysDomainRepository<WdUser>, IUserRepository
     {
-        public override WdUser CreateDefaultModel()
+        public new static WdUser CreateDefaultModel()
         {
-            var model = base.CreateDefaultModel();
+            var model = SysDomainRepository<WdUser>.CreateDefaultModel();
             model.Status = UserStatus.Enabled;
 
             return model;

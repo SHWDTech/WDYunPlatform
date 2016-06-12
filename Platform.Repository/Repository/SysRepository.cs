@@ -19,9 +19,9 @@ namespace SHWD.Platform.Repository.Repository
         {
         }
 
-        public override T CreateDefaultModel()
+        public new static T CreateDefaultModel()
         {
-            var model = base.CreateDefaultModel();
+            var model = Repository<T>.CreateDefaultModel();
 
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;

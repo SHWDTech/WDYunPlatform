@@ -9,9 +9,9 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class RoleRepository : SysDomainRepository<WdRole>, IRoleRepository
     {
-        public override WdRole CreateDefaultModel()
+        public new static WdRole CreateDefaultModel()
         {
-            var model = base.CreateDefaultModel();
+            var model = SysDomainRepository<WdRole>.CreateDefaultModel();
             model.Status = RoleStatus.Enabled;
 
             return model;

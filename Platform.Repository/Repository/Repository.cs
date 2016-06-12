@@ -65,9 +65,10 @@ namespace SHWD.Platform.Repository.Repository
         public virtual int GetCount(Expression<Func<T, bool>> exp)
             => DbContext.Set<T>().Where(exp).Count();
 
-        public virtual T CreateDefaultModel()
+        public static T CreateDefaultModel()
         {
-            var model = DbContext.Set<T>().Create();
+            
+            var model = BaseContext.Set<T>().Create();
             model.ModelState = ModelState.Added;
 
             return model;
@@ -187,5 +188,7 @@ namespace SHWD.Platform.Repository.Repository
         /// 全局数据仓库上下文线程对象
         /// </summary>
         public static IRepositoryContext ContextGlobal { get; set; }
+
+        public static RepositoryDbContext BaseContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString) ? new RepositoryDbContext() : new RepositoryDbContext(DbRepository.ConnectionString);
     }
 }
