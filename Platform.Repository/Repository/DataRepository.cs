@@ -8,7 +8,7 @@ namespace SHWD.Platform.Repository.Repository
     /// 数据类型仓库基类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class DataRepository<T> : Repository<T>, IDataRepository<T> where T : class, IDataModel
+    public class DataRepository<T> : Repository<T>, IDataRepository<T> where T : class, IDataModel, new()
     {
         public DataRepository()
         {
@@ -16,9 +16,9 @@ namespace SHWD.Platform.Repository.Repository
             CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
-        public new static T CreateDefaultModel()
+        public new static T CreateDefaultModelFromDataBase()
         {
-            var model = Repository<T>.CreateDefaultModel();
+            var model = Repository<T>.CreateDefaultModelFromDataBase();
 
             model.DomainId = CurrentDomain.Id;
 

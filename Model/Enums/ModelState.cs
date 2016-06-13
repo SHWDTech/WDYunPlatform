@@ -13,6 +13,11 @@
         /// <summary>
         /// 未改变
         /// </summary>
-        UnChanged = 1
+        UnChanged = 1,
+
+        /// <summary>
+        /// 从数据库新增
+        /// </summary>
+        AddedFromDb = 2
     }
 }

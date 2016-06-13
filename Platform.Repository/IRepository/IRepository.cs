@@ -55,7 +55,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// 新建默认数据模型对象
         /// </summary>
         /// <returns>默认数据模型对象</returns>
-        //T CreateDefaultModel();
+        //T CreateDefaultModelFromDataBase();
 
         /// <summary>
         /// 从JSON字符串解析对象

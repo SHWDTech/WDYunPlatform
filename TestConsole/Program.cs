@@ -1,30 +1,34 @@
 ﻿using System;
-using System.Messaging;
-using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
+using Platform.Process.Process;
+using SHWD.Platform.Repository.Repository;
+using WdAdminTools.Common;
 
 namespace TestConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var queue = new MessageQueue(@"FormatName:Direct=TCP:121.40.49.97\private$\protocolcommand")
+            var serverUser = GeneralProcess.GetUserByLoginName();
+
+            if (serverUser == null)
             {
-                Formatter = new XmlMessageFormatter(new[] {typeof(CommandMessage)})
+                Console.WriteLine(@"通信管理员账号信息错误，请检查配置！");
+                return;
+            }
+
+            RepositoryBase.ContextGlobal = new RepositoryContext()
+            {
+                CurrentUser = serverUser,
+                CurrentDomain = serverUser.Domain
             };
 
-            var msg = new CommandMessage()
-            {
-                DeviceGuid = Guid.Parse("ba0ca1dc-0331-4d5a-96e5-49ac20665a13"),
-                CommandGuid = Guid.Parse("52FD2857-1607-4AD6-86C9-AC6B2B75BBB6"),
-                Params = null
-            };
+            var user = UserRepository.CreateDefaultModel();
 
-            queue.Send(msg);
+            var userDb = UserRepository.CreateDefaultModelFromDataBase();
 
-            Console.WriteLine(@"Send Complete");
-
-            Console.ReadKey();
+            Console.WriteLine(user.Email);
+            Console.WriteLine(userDb.LoginName);
         }
     }
 }

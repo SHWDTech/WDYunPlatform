@@ -10,7 +10,7 @@ namespace SHWD.Platform.Repository.Repository
     /// 系统数据仓库
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SysRepository<T> : Repository<T>, ISysRepository<T> where T : class, ISysModel
+    public class SysRepository<T> : Repository<T>, ISysRepository<T> where T : class, ISysModel, new()
     {
         /// <summary>
         /// 初始化带有域的系统数据仓库基类
@@ -19,9 +19,9 @@ namespace SHWD.Platform.Repository.Repository
         {
         }
 
-        public new static T CreateDefaultModel()
+        public new static T CreateDefaultModelFromDataBase()
         {
-            var model = Repository<T>.CreateDefaultModel();
+            var model = Repository<T>.CreateDefaultModelFromDataBase();
 
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;

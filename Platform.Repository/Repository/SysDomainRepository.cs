@@ -8,7 +8,7 @@ namespace SHWD.Platform.Repository.Repository
     /// 带有域的系统数据仓库
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SysDomainRepository<T> : SysRepository<T>, ISysDomainRepository<T> where T : class, ISysDomainModel
+    public class SysDomainRepository<T> : SysRepository<T>, ISysDomainRepository<T> where T : class, ISysDomainModel, new()
     {
         /// <summary>
         /// 初始化带有域的系统数据仓库基类
@@ -19,9 +19,9 @@ namespace SHWD.Platform.Repository.Repository
             CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
-        public new static T CreateDefaultModel()
+        public new static T CreateDefaultModelFromDataBase()
         {
-            var model = SysRepository<T>.CreateDefaultModel();
+            var model = SysRepository<T>.CreateDefaultModelFromDataBase();
             model.DomainId = CurrentDomain.Id;
 
             return model;

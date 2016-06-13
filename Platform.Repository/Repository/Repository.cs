@@ -15,7 +15,7 @@ namespace SHWD.Platform.Repository.Repository
     /// 数据仓库泛型基类
     /// </summary>
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
-    public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel
+    public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel, new()
     {
         /// <summary>
         /// 数据库上下文
@@ -67,9 +67,16 @@ namespace SHWD.Platform.Repository.Repository
 
         public static T CreateDefaultModel()
         {
+            var model = new T {ModelState = ModelState.Added};
+
+            return model;
+        }
+
+        public static T CreateDefaultModelFromDataBase()
+        {
             
             var model = BaseContext.Set<T>().Create();
-            model.ModelState = ModelState.Added;
+            model.ModelState = ModelState.AddedFromDb;
 
             return model;
         }
@@ -98,7 +105,7 @@ namespace SHWD.Platform.Repository.Repository
         {
             CheckModel(models);
 
-            foreach (var model in models.Where(model => !IsExists(model)))
+            foreach (var model in models.Where(model => model.IsNew))
             {
                 DbContext.Set<T>().Add(model);
             }
