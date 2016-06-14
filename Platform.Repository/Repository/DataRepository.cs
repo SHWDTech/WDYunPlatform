@@ -16,9 +16,9 @@ namespace SHWD.Platform.Repository.Repository
             CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
-        public new static T CreateDefaultModelFromDataBase()
+        public new static T CreateDefaultModel()
         {
-            var model = Repository<T>.CreateDefaultModelFromDataBase();
+            var model = Repository<T>.CreateDefaultModel();
 
             model.DomainId = CurrentDomain.Id;
 

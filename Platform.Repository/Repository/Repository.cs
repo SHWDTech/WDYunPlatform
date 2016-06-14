@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
-using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
+using EntityFramework.BulkInsert.Extensions;
+using System.Transactions;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -37,14 +38,18 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected Repository()
         {
-            DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString) ? new RepositoryDbContext() : new RepositoryDbContext(DbRepository.ConnectionString);
+            if (DbContext == null)
+            {
+                DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
+                    ? new RepositoryDbContext()
+                    : new RepositoryDbContext(DbRepository.ConnectionString);
+            }
             EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
-        protected Repository(string connString)
+        protected Repository(string connString) : this()
         {
             DbContext = new RepositoryDbContext(connString);
-            EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
         public virtual IEnumerable<T> GetAllModels()
@@ -67,16 +72,7 @@ namespace SHWD.Platform.Repository.Repository
 
         public static T CreateDefaultModel()
         {
-            var model = new T {ModelState = ModelState.Added};
-
-            return model;
-        }
-
-        public static T CreateDefaultModelFromDataBase()
-        {
-            
-            var model = BaseContext.Set<T>().Create();
-            model.ModelState = ModelState.AddedFromDb;
+            var model = new T ();
 
             return model;
         }
@@ -84,7 +80,7 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T ParseModel(string jsonString)
         {
             var model = JsonConvert.DeserializeObject<T>(jsonString);
-            model.ModelState = ModelState.Added;
+            //model.ModelState = ModelState.Added;
 
             return model;
         }
@@ -93,7 +89,7 @@ namespace SHWD.Platform.Repository.Repository
         {
             CheckModel(model);
 
-            if (!IsExists(model))
+            if (model.IsNew)
             {
                 DbContext.Set<T>().Add(model);
             }
@@ -111,6 +107,16 @@ namespace SHWD.Platform.Repository.Repository
             }
 
             return DbContext.SaveChanges();
+        }
+
+        public virtual void BulkInsert(IEnumerable<T> models)
+        {
+            using (var scope = new TransactionScope())
+            {
+                DbContext.BulkInsert(models);
+                DbContext.SaveChanges();
+                scope.Complete();
+            }
         }
 
         public virtual bool Delete(T model)
@@ -196,6 +202,8 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         public static IRepositoryContext ContextGlobal { get; set; }
 
-        public static RepositoryDbContext BaseContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString) ? new RepositoryDbContext() : new RepositoryDbContext(DbRepository.ConnectionString);
+        public static RepositoryDbContext BaseContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
+                                                        ? new RepositoryDbContext()
+                                                        : new RepositoryDbContext(DbRepository.ConnectionString);
     }
 }

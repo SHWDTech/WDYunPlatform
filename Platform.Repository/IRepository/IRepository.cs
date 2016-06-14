@@ -79,6 +79,12 @@ namespace SHWD.Platform.Repository.IRepository
         int AddOrUpdate(IEnumerable<T> models);
 
         /// <summary>
+        /// 提价大量数据
+        /// </summary>
+        /// <param name="models">被添加或修改的对象列表</param>
+        void BulkInsert(IEnumerable<T> models);
+
+        /// <summary>
         /// 删除对象
         /// </summary>
         /// <param name="model">被删除的对象</param>

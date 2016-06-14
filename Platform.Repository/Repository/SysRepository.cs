@@ -19,9 +19,9 @@ namespace SHWD.Platform.Repository.Repository
         {
         }
 
-        public new static T CreateDefaultModelFromDataBase()
+        public new static T CreateDefaultModel()
         {
-            var model = Repository<T>.CreateDefaultModelFromDataBase();
+            var model = Repository<T>.CreateDefaultModel();
 
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;

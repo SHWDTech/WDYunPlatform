@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using Platform.Process;
-using Platform.Process.Process;
+using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
@@ -22,11 +22,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         private static readonly Type Deliver;
 
-        private static readonly ProtocolPackageProcess Process = ProcessInvoke.GetInstance<ProtocolPackageProcess>();
-
         private static readonly Dictionary<IProtocolPackage, IPackageSource> DeliverySources = new Dictionary<IProtocolPackage, IPackageSource>();
-
-        private static readonly List<ProtocolData> ProtocolDatas = new List<ProtocolData>();
 
         private static readonly List<MonitorData> MonitorDatas = new List<MonitorData>();
 
@@ -128,7 +124,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                 var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
 
                 monitorData.MonitorDataValue = Convert.ToDouble(temp);
-                monitorData.ProtocolDataId = package.ProtocolData.Id;
+                monitorData.ProtocolData = package.ProtocolData;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
                 monitorData.DataName = commandData.DataName;
@@ -141,40 +137,26 @@ namespace SHWDTech.Platform.ProtocolCoding
                 }
             }
 
-            lock (ProtocolDatas)
-            {
-                ProtocolDatas.Add(package.ProtocolData);
-            }
-
             if (package[ProtocolDataName.DataValidFlag] != null)
             {
                 ProcessDataValidFlag(package, monitorDataList);
             }
 
-            //Process.AddOrUpdateMonitorData(monitorDataList, package.ProtocolData);
-
-            if (ProtocolDatas.Count >= 200)
+            if (MonitorDatas.Count >= 2000)
             {
-                
-                var repo = new ProtocolDataRepository();
-
-                ProtocolData[] pDatas;
-                lock (ProtocolDatas)
-                {
-                    pDatas = ProtocolDatas.ToArray();
-                    ProtocolDatas.Clear();
-                }
-                
-                repo.AddOrUpdate(pDatas);
-
                 MonitorData[] mDatas;
                 lock (MonitorDatas)
                 {
                     mDatas = MonitorDatas.ToArray();
                     MonitorDatas.Clear();
                 }
-                var monitorRepo = new MonitorDataRepository();
-                monitorRepo.AddOrUpdate(mDatas);
+                var monitorRepo = DbRepository.Repo<MonitorDataRepository>();
+                var start = DateTime.Now;
+                Debug.WriteLine(start.ToString("hh:mm:ss"));
+                monitorRepo.BulkInsert(mDatas);
+                var end = DateTime.Now;
+                Debug.WriteLine(end.ToString("hh:mm:ss"));
+                Debug.WriteLine((end - start).TotalMilliseconds);
             }
         }
 
