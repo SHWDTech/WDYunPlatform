@@ -1,7 +1,6 @@
 ﻿using System;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Repository;
-using WdAdminTools.Common;
 
 namespace TestConsole
 {
@@ -9,7 +8,7 @@ namespace TestConsole
     {
         static void Main()
         {
-            var serverUser = GeneralProcess.GetUserByLoginName();
+            var serverUser = GeneralProcess.GetUserByLoginName("CommnicationServer");
 
             if (serverUser == null)
             {
