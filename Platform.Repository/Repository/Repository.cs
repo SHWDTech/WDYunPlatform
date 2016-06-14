@@ -16,7 +16,7 @@ namespace SHWD.Platform.Repository.Repository
     /// 数据仓库泛型基类
     /// </summary>
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
-    public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel, new()
+    public class Repository<T> : RepositoryBase, IDisposable, IRepository<T> where T : class, IModel, new()
     {
         /// <summary>
         /// 数据库上下文
@@ -50,6 +50,11 @@ namespace SHWD.Platform.Repository.Repository
         protected Repository(string connString) : this()
         {
             DbContext = new RepositoryDbContext(connString);
+        }
+
+        protected Repository(RepositoryDbContext dbContext)
+        {
+            DbContext = dbContext;
         }
 
         public virtual IEnumerable<T> GetAllModels()
@@ -162,6 +167,11 @@ namespace SHWD.Platform.Repository.Repository
             if (items != null) checkList.AddRange(items);
 
             if (!checkList.Any(CheckFunc.Compile())) throw new ArgumentException("参数不符合要求");
+        }
+
+        public void Dispose()
+        {
+            DbContext.Dispose();
         }
     }
 

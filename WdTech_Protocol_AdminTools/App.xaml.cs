@@ -33,8 +33,6 @@ namespace WdTech_Protocol_AdminTools
                 CurrentDomain = serverUser.Domain
             };
 
-            //((UnityContainer) UnityFactory.GetContainer()).RegisterType<ICommandCoding, ClassicCommand>("Classic");
-
             base.OnStartup(e);
         }
 

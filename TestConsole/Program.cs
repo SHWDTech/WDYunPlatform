@@ -21,13 +21,6 @@ namespace TestConsole
                 CurrentUser = serverUser,
                 CurrentDomain = serverUser.Domain
             };
-
-            var user = UserRepository.CreateDefaultModel();
-
-            var userDb = UserRepository.CreateDefaultModelFromDataBase();
-
-            Console.WriteLine(user.Email);
-            Console.WriteLine(userDb.LoginName);
         }
     }
 }

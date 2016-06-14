@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
@@ -12,6 +13,16 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class UserRepository : SysDomainRepository<WdUser>, IUserRepository
     {
+        public UserRepository()
+        {
+            
+        }
+
+        public UserRepository(RepositoryDbContext dbContext) : base(dbContext)
+        {
+            
+        }
+
         public new static WdUser CreateDefaultModel()
         {
             var model = SysDomainRepository<WdUser>.CreateDefaultModel();

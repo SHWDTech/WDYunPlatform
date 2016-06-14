@@ -3,6 +3,7 @@ using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SHWD.Platform.Repository.Entities;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -17,6 +18,11 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected SysRepository()
         {
+        }
+
+        protected SysRepository(RepositoryDbContext dbContext) : base(dbContext)
+        {
+            
         }
 
         public new static T CreateDefaultModel()

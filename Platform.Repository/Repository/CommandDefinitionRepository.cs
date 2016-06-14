@@ -1,4 +1,5 @@
-﻿using SHWD.Platform.Repository.IRepository;
+﻿using SHWD.Platform.Repository.Entities;
+using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
@@ -8,5 +9,14 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class CommandDefinitionRepository : SysRepository<CommandDefinition>, ICommandDefinitionRepository
     {
+        public CommandDefinitionRepository()
+        {
+            
+        }
+
+        public CommandDefinitionRepository(RepositoryDbContext dbContext) : base(dbContext)
+        {
+            
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Model;
 
@@ -10,6 +11,16 @@ namespace SHWD.Platform.Repository.Repository
     /// </summary>
     public class ProtocolRepository : SysRepository<Protocol>, IProtocolRepository
     {
+        public ProtocolRepository()
+        {
+            
+        }
+
+        public ProtocolRepository(RepositoryDbContext dbContext) : base(dbContext)
+        {
+            
+        }
+
         public IList<Protocol> GetProtocolsFullLoaded()
             => DbContext.Protocols
                 .Include("ProtocolStructures")
