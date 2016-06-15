@@ -27,7 +27,10 @@ namespace SHWDTech.Platform.ProtocolCoding
             Deliver = typeof(PackageDeliver);
         }
 
-        private static readonly List<MonitorData> MonitorDatas = new List<MonitorData>();
+        /// <summary>
+        /// 检测数据临时集合
+        /// </summary>
+        private static readonly List<MonitorData> TempMonitorDatas = new List<MonitorData>();
 
         /// <summary>
         /// 协议包处理程序
@@ -97,23 +100,26 @@ namespace SHWDTech.Platform.ProtocolCoding
                 ProcessDataValidFlag(package, monitorDataList);
             }
 
-            lock (MonitorDatas)
+            lock (TempMonitorDatas)
             {
-                MonitorDatas.AddRange(monitorDataList);
+                TempMonitorDatas.AddRange(monitorDataList);
             }
 
             OnMonitorDataReceived();
         }
 
+        /// <summary>
+        /// 检测数据接收事件
+        /// </summary>
         private static void OnMonitorDataReceived()
         {
-            lock (MonitorDatas)
+            lock (TempMonitorDatas)
             {
-                while (MonitorDatas.Count > 0)
+                while (TempMonitorDatas.Count > 0)
                 {
-                    var executeDatas = MonitorDatas.ToArray();
+                    var executeDatas = TempMonitorDatas.ToArray();
                     ProcessInvoke.GetInstance<ProtocolPackageProcess>().AddOrUpdateMonitorData(executeDatas);
-                    MonitorDatas.Clear();
+                    TempMonitorDatas.Clear();
                 }
             }
         }
