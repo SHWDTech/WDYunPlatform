@@ -9,7 +9,6 @@ using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
-using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -28,6 +27,8 @@ namespace SHWDTech.Platform.ProtocolCoding
             Deliver = typeof(PackageDeliver);
         }
 
+        private static readonly List<MonitorData> MonitorDatas = new List<MonitorData>();
+
         /// <summary>
         /// 协议包处理程序
         /// </summary>
@@ -36,14 +37,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         public static void Delive(IProtocolPackage package, IPackageSource source)
         {
             ParseProtocolData(package);
-            try
-            {
-                DoDelive(package, source);
-            }
-            catch (NullReferenceException ex)
-            {
-                LogService.Instance.Debug("", ex);
-            }
+            DoDelive(package, source);
         }
 
         private static void DoDelive(IProtocolPackage package, IPackageSource source)
@@ -51,6 +45,7 @@ namespace SHWDTech.Platform.ProtocolCoding
             var deliverParams = package.DeliverParams;
 
             if (deliverParams.Count == 0) return;
+
 
             foreach (var deliverMethod in deliverParams.Select(param => Deliver.GetMethod(param)))
             {
@@ -102,9 +97,25 @@ namespace SHWDTech.Platform.ProtocolCoding
                 ProcessDataValidFlag(package, monitorDataList);
             }
 
-            var packageProcess = ProcessInvoke.GetInstance<ProtocolPackageProcess>();
+            lock (MonitorDatas)
+            {
+                MonitorDatas.AddRange(monitorDataList);
+            }
 
-            packageProcess.AddOrUpdateMonitorData(monitorDataList, package.ProtocolData);
+            OnMonitorDataReceived();
+        }
+
+        private static void OnMonitorDataReceived()
+        {
+            lock (MonitorDatas)
+            {
+                while (MonitorDatas.Count > 0)
+                {
+                    var executeDatas = MonitorDatas.ToArray();
+                    ProcessInvoke.GetInstance<ProtocolPackageProcess>().AddOrUpdateMonitorData(executeDatas);
+                    MonitorDatas.Clear();
+                }
+            }
         }
 
         /// <summary>
@@ -125,7 +136,6 @@ namespace SHWDTech.Platform.ProtocolCoding
             protocolData.Length = protocolData.ProtocolContent.Length;
 
             package.ProtocolData = protocolData;
-
             DbRepository.Repo<ProtocolDataRepository>().AddOrUpdate(protocolData);
         }
 

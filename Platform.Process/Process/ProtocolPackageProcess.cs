@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
@@ -7,9 +8,12 @@ namespace Platform.Process.Process
 {
     public class ProtocolPackageProcess
     {
-        public void AddOrUpdateMonitorData(IList<MonitorData> monitorDatas, ProtocolData protocolData)
+        public void AddOrUpdateMonitorData(IList<MonitorData> monitorDatas)
         {
-            DbRepository.Repo<MonitorDataRepository>().BulkInsert(monitorDatas);
+            using (var repo = DbRepository.Repo<MonitorDataRepository>())
+            {
+                repo.BulkInsert(monitorDatas);
+            }
         }
     }
 }

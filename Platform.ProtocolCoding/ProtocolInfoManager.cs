@@ -4,7 +4,6 @@ using System.Linq;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
-using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {

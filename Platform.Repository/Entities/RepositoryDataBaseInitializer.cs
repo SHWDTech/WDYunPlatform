@@ -3,6 +3,7 @@ using SHWDTech.Platform.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using EntityFramework.BulkInsert.Extensions;
 
 namespace SHWD.Platform.Repository.Entities
 {
@@ -663,30 +664,12 @@ namespace SHWD.Platform.Repository.Entities
             dbContext.ProtocolCommands.Add(commandA);
             dbContext.ProtocolCommands.Add(commandB);
 
-            //var device = new Device
-            //{
-            //    Id = Guid.Parse("ba0ca1dc-0331-4d5a-96e5-49ac20665a13"),
-            //    DeviceTypeId = deviceType.Id,
-            //    DeviceCode = "扬尘硬件第三版测试一号",
-            //    DevicePassword = string.Empty,
-            //    DeviceModuleGuid = Guid.Parse("024849d6-2538-48a0-8f0d-5a289e27f955"),
-            //    DeviceNodeId = "00001F1F",
-            //    FirmwareSetId = firmSet.Id,
-            //    StartTime = DateTime.Now,
-            //    PreEndTime = DateTime.Now,
-            //    EndTime = DateTime.Now,
-            //    Status = DeviceStatus.Enabled,
-            //    DomainId = domain.Id,
-            //    CreateUserId = user.Id,
-            //    CreateDateTime = DateTime.Now,
-            //    IsEnabled = true
-            //};
-
+            var devices = new List<Device>();
             for (var i = 0; i < 1000; i++)
             {
                 var dev = new Device()
                 {
-                    //Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     DeviceTypeId = deviceType.Id,
                     DeviceCode = "扬尘硬件第三版测试一号",
                     DevicePassword = string.Empty,
@@ -703,8 +686,10 @@ namespace SHWD.Platform.Repository.Entities
                     IsEnabled = true
                 };
 
-                dbContext.Devices.Add(dev);
+                devices.Add(dev);
             }
+
+            dbContext.BulkInsert(devices);
 
         }
     }

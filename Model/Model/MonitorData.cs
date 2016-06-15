@@ -12,6 +12,10 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class MonitorData : DataModelBase, IMonitorData
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public override Guid Id { get; set; }
+
         [Required]
         [Display(Name = "数据来源协议包ID")]
         public virtual Guid ProtocolDataId { get; set; }

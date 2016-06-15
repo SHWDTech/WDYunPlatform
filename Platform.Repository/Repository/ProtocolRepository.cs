@@ -13,18 +13,19 @@ namespace SHWD.Platform.Repository.Repository
     {
         public ProtocolRepository()
         {
-            
+
         }
 
         public ProtocolRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
-            
+
         }
 
         public IList<Protocol> GetProtocolsFullLoaded()
             => DbContext.Protocols
                 .Include("ProtocolStructures")
                 .Include("ProtocolCommands.CommandDatas")
+                .Include("ProtocolCommands.CommandDeliverParamConfigs")
                 .Include("Field")
                 .Include("SubField")
                 .ToList();

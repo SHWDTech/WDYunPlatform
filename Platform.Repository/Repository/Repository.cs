@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using EntityFramework.BulkInsert.Extensions;
 using System.Transactions;
+using SHWDTech.Platform.Utility;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -77,7 +78,7 @@ namespace SHWD.Platform.Repository.Repository
 
         public static T CreateDefaultModel()
         {
-            var model = new T ();
+            var model = new T();
 
             return model;
         }
@@ -118,7 +119,16 @@ namespace SHWD.Platform.Repository.Repository
         {
             using (var scope = new TransactionScope())
             {
-                DbContext.BulkInsert(models);
+                try
+                {
+                    DbContext.BulkInsert(models);
+
+                }
+                catch (System.Exception ex)
+                {
+                    LogService.Instance.Debug("", ex);
+                    return;
+                }
                 DbContext.SaveChanges();
                 scope.Complete();
             }

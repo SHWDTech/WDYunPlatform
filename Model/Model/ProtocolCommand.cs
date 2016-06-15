@@ -49,8 +49,18 @@ namespace SHWDTech.Platform.Model.Model
 
         [NotMapped]
         public virtual List<string> CommandDeliverParams
-            => CommandDeliverParamConfigs.Count > 0
-                ? CommandDeliverParamConfigs.Select(config => config.SysConfigName).ToList()
-                : new List<string>();
+        {
+            get
+            {
+                if (_commandDeliverParams != null) return _commandDeliverParams;
+                _commandDeliverParams = CommandDeliverParamConfigs.Count > 0
+                    ? CommandDeliverParamConfigs.Select(config => config.SysConfigName).ToList()
+                    : new List<string>();
+
+                return _commandDeliverParams;
+            }
+        }
+
+        private List<string> _commandDeliverParams;
     }
 }

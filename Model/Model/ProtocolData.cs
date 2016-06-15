@@ -12,6 +12,10 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class ProtocolData : DataModelBase, IProtocolData
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public override Guid Id { get; set; }
+
         [Required]
         [Display(Name = "协议所属设备ID")]
         public virtual Guid DeviceId { get; set; }
