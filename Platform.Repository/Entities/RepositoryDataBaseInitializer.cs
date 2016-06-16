@@ -182,7 +182,7 @@ namespace SHWD.Platform.Repository.Entities
             var firmSet = new FirmwareSet
             {
                 Id = Guid.Parse("6c36fddf-d3d9-416b-84df-cd849006eef1"),
-                FirmwareSetName = "扬尘第一版",
+                FirmwareSetName = "扬尘第三版",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
@@ -349,7 +349,7 @@ namespace SHWD.Platform.Repository.Entities
             {
                 Id = Guid.Parse("ad465018-24d3-400d-b7d5-712abf54ceeb"),
                 ProtocolId = classic.Id,
-                StructureName = "PayhloadLength",
+                StructureName = "PayloadLength",
                 StructureIndex = 8,
                 StructureDataLength = 2,
                 CreateUserId = user.Id,
@@ -381,7 +381,7 @@ namespace SHWD.Platform.Repository.Entities
             {
                 Id = Guid.Parse("1bd5725a-0408-4c4a-b7ad-f2c92dd830e2"),
                 ProtocolId = classic.Id,
-                StructureName = "CrcValue",
+                StructureName = "CRCValue",
                 StructureIndex = 10,
                 StructureDataLength = 2,
                 CreateUserId = user.Id,
@@ -389,7 +389,7 @@ namespace SHWD.Platform.Repository.Entities
                 LastUpdateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 IsEnabled = true,
-                DataType = ProtocolDataType.Crc,
+                DataType = ProtocolDataType.CRC,
                 DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
@@ -663,6 +663,148 @@ namespace SHWD.Platform.Repository.Entities
             dbContext.ProtocolCommands.Add(command);
             dbContext.ProtocolCommands.Add(commandA);
             dbContext.ProtocolCommands.Add(commandB);
+
+            var lampblack = new Protocol
+            {
+                Id = Guid.Parse("ea38e48c-1df2-4bfb-8917-7f736795bdc3"),
+                FieldId = field.Id,
+                SubFieldId = subfield.Id,
+                CustomerInfo = "1",
+                ProtocolName = "Lampblack",
+                ProtocolModule = "Lampblack",
+                Version = "Lampblack_Protocol_V0001",
+                ReleaseDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                CheckType = ProtocolCheckType.Lrc,
+                Head = new byte[] { 0x3A },
+                Tail = new byte[] { 0x0D, 0x0A }
+            };
+
+            dbContext.Protocols.Add(lampblack);
+
+            var lbHead = new ProtocolStructure()
+            {
+                Id = Guid.Parse("a47ffc76-30ed-4d94-84d7-74540c51d9c4"),
+                ProtocolId = lampblack.Id,
+                StructureName = "Head",
+                StructureIndex = 0,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[] { 0x3A }
+            };
+
+            var lbFunctionCode = new ProtocolStructure()
+            {
+                Id = Guid.Parse("b9c7a5ef-d6ec-43e8-bdec-edcddbc8d4bb"),
+                ProtocolId = lampblack.Id,
+                StructureName = "FunctionCode",
+                StructureIndex = 1,
+                StructureDataLength = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.FunctionCode,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbDeviceNodeId = new ProtocolStructure()
+            {
+                Id = Guid.Parse("a98f5e06-5093-4ab9-9762-5dacc4bdaf73"),
+                ProtocolId = lampblack.Id,
+                StructureName = "DeviceNodeId",
+                StructureIndex = 2,
+                StructureDataLength = 7,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.NodeId,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbData = new ProtocolStructure()
+            {
+                Id = Guid.Parse("c3ec8746-7c23-43bd-9cf8-a0db19c29655"),
+                ProtocolId = lampblack.Id,
+                StructureName = "Data",
+                StructureIndex = 3,
+                StructureDataLength = 0,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Data,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbAscTime = new ProtocolStructure()
+            {
+                Id = Guid.Parse("c3ec8746-7c23-43bd-9cf8-a0db19c29655"),
+                ProtocolId = lampblack.Id,
+                StructureName = "ASCTime",
+                StructureIndex = 4,
+                StructureDataLength = 14,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.ASCTime,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbLrc = new ProtocolStructure()
+            {
+                Id = Guid.Parse("3e8b6176-19b0-4b0b-8635-a9a995799da4"),
+                ProtocolId = lampblack.Id,
+                StructureName = "LRCValue",
+                StructureIndex = 5,
+                StructureDataLength = 3,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.LRC,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbTail = new ProtocolStructure()
+            {
+                Id = Guid.Parse("56d4150a-7a22-4c74-8a22-9bc6b3bb70f7"),
+                ProtocolId = lampblack.Id,
+                StructureName = "Tail",
+                StructureIndex = 6,
+                StructureDataLength = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Bytes,
+                DefaultBytes = new byte[] { 0x0D, 0x0A }
+            };
+
+            dbContext.ProtocolStructures.Add(lbHead);
+            dbContext.ProtocolStructures.Add(lbFunctionCode);
+            dbContext.ProtocolStructures.Add(lbDeviceNodeId);
+            dbContext.ProtocolStructures.Add(lbData);
+            dbContext.ProtocolStructures.Add(lbAscTime);
+            dbContext.ProtocolStructures.Add(lbLrc);
+            dbContext.ProtocolStructures.Add(lbTail);
 
             var devices = new List<Device>();
             for (var i = 0; i < 1000; i++)

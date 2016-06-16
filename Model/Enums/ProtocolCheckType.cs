@@ -6,5 +6,7 @@
     public static class ProtocolCheckType
     {
         public const string Crc16 = "Crc16";
+
+        public const string Lrc = "Lrc";
     }
 }

@@ -11,9 +11,25 @@
         public const string SingleByte = "SingleByte";
 
         /// <summary>
+        /// 字节数组
+        /// </summary>
+        public const string Bytes = "Bytes";
+
+        /// <summary>
         /// 纯数字密码
         /// </summary>
         public const string NumPassword = "NumPassword";
+
+        /// <summary>
+        /// 功能码
+        /// </summary>
+        public const string FunctionCode = "FunctionCode";
+
+        /// <summary>
+        /// ASC值表示的时间
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        public const string ASCTime = "ASCTime";
 
         /// <summary>
         /// 经典协议设备身份标识
@@ -48,7 +64,14 @@
         /// <summary>
         /// CRC校验码
         /// </summary>
-        public const string Crc = "Crc";
+        // ReSharper disable once InconsistentNaming
+        public const string CRC = "CRC";
+
+        /// <summary>
+        /// LRC校验码
+        /// </summary>
+        // ReSharper disable once InconsistentNaming
+        public const string LRC = "LRC";
 
         /// <summary>
         /// 数据有效性标志位
