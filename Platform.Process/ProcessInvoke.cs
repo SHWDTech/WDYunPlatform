@@ -1,6 +1,6 @@
 ﻿using SHWD.Platform.Repository.IRepository;
 using SHWD.Platform.Repository.Repository;
-using System.Threading;
+using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process
 {
@@ -13,9 +13,18 @@ namespace Platform.Process
         /// 设置仓库类Context
         /// </summary>
         /// <param name="context"></param>
-        public static void SetupRepositoryContext(ThreadLocal<IRepositoryContext> context)
+        public static void SetupGlobalRepositoryContext(IRepositoryContext context)
         {
-            RepositoryBase.ContextLocal = context;
+            RepositoryBase.ContextGlobal = context;
+        }
+
+        public static void SetupGlobalRepositoryContext(WdUser user, Domain domain)
+        {
+            RepositoryBase.ContextGlobal = new RepositoryContext()
+            {
+                CurrentUser = user,
+                CurrentDomain = domain
+            };
         }
 
         /// <summary>

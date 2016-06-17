@@ -38,7 +38,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var calcCrc = Globals.GetUsmbcrc16(package.GetBytes(), (ushort)(package.PackageLenth - 3));
 
-            var protocolCrc = Globals.BytesToUint16(package[StructureNames.CrcValue].ComponentBytes, 0, false);
+            var protocolCrc = Globals.BytesToUint16(package[StructureNames.CRCValue].ComponentBytes, 0, false);
 
             return calcCrc == protocolCrc;
         }

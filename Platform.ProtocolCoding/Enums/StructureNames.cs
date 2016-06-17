@@ -63,6 +63,7 @@
         /// <summary>
         /// CRC校验码
         /// </summary>
-        public const string CrcValue = "CrcValue";
+        // ReSharper disable once InconsistentNaming
+        public const string CRCValue = "CRCValue";
     }
 }

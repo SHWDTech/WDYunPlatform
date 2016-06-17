@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Threading;
+using Platform.Process;
 using Platform.Process.Process;
-using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
@@ -27,11 +27,7 @@ namespace WdTech_Protocol_AdminTools
                 return;
             }
 
-            RepositoryBase.ContextGlobal = new RepositoryContext()
-            {
-                CurrentUser = serverUser,
-                CurrentDomain = serverUser.Domain
-            };
+            ProcessInvoke.SetupGlobalRepositoryContext(serverUser, serverUser.Domain);
 
             base.OnStartup(e);
         }

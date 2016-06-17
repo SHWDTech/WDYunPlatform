@@ -68,7 +68,7 @@ namespace SHWDTech.Platform.ClassicCommandCoding
             }
 
             var crcValue = Globals.GetUsmbcrc16(package.GetBytes(), (ushort)(package.PackageLenth - 3));
-            package[StructureNames.CrcValue].ComponentBytes = Globals.Uint16ToBytes(crcValue, false);
+            package[StructureNames.CRCValue].ComponentBytes = Globals.Uint16ToBytes(crcValue, false);
 
             package.Finalization();
             return package;

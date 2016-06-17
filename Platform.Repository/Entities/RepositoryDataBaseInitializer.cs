@@ -3,7 +3,6 @@ using SHWDTech.Platform.Model.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using EntityFramework.BulkInsert.Extensions;
 
 namespace SHWD.Platform.Repository.Entities
 {
@@ -752,7 +751,7 @@ namespace SHWD.Platform.Repository.Entities
 
             var lbAscTime = new ProtocolStructure()
             {
-                Id = Guid.Parse("c3ec8746-7c23-43bd-9cf8-a0db19c29655"),
+                Id = Guid.Parse("d9c5172a-233b-4ea8-b064-297bc9c8fb75"),
                 ProtocolId = lampblack.Id,
                 StructureName = "ASCTime",
                 StructureIndex = 4,
@@ -806,7 +805,7 @@ namespace SHWD.Platform.Repository.Entities
             dbContext.ProtocolStructures.Add(lbLrc);
             dbContext.ProtocolStructures.Add(lbTail);
 
-            var devices = new List<Device>();
+            //var devices = new List<Device>();
             for (var i = 0; i < 1000; i++)
             {
                 var dev = new Device()
@@ -828,10 +827,10 @@ namespace SHWD.Platform.Repository.Entities
                     IsEnabled = true
                 };
 
-                devices.Add(dev);
+                dbContext.Devices.Add(dev);
             }
 
-            dbContext.BulkInsert(devices);
+            //dbContext.BulkInsert(devices);
 
         }
     }

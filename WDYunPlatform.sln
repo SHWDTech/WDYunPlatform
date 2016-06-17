@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHandler", "ServiceHa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicCommandCoding", "ClassicCommandCoding\ClassicCommandCoding.csproj", "{30C9F4EB-9BCF-4201-8C1D-9472B60F768B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lampblack_Platform", "Lampblack_Platform\Lampblack_Platform.csproj", "{CAA66364-5455-4121-A20B-48CBC5268149}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{30C9F4EB-9BCF-4201-8C1D-9472B60F768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30C9F4EB-9BCF-4201-8C1D-9472B60F768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30C9F4EB-9BCF-4201-8C1D-9472B60F768B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA66364-5455-4121-A20B-48CBC5268149}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA66364-5455-4121-A20B-48CBC5268149}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA66364-5455-4121-A20B-48CBC5268149}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA66364-5455-4121-A20B-48CBC5268149}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,5 +169,6 @@ Global
 		{B4BD9744-E38B-44D7-91C2-8169481A9B1B} = {6308364F-E8C8-4838-A304-DC6887808B85}
 		{5630351B-8225-4A99-A800-36FE116F2841} = {6308364F-E8C8-4838-A304-DC6887808B85}
 		{30C9F4EB-9BCF-4201-8C1D-9472B60F768B} = {9A830392-AC75-4AF0-80C8-ABE30CF0649B}
+		{CAA66364-5455-4121-A20B-48CBC5268149} = {80AEBD73-0D67-436A-9FBB-38092240A79A}
 	EndGlobalSection
 EndGlobal

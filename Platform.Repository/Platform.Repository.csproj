@@ -92,6 +92,7 @@
     <Compile Include="IRepository\IProtocolStructureRepository.cs" />
     <Compile Include="IRepository\IRepository.cs" />
     <Compile Include="IRepository\IRepositoryContext.cs" />
+    <Compile Include="IRepository\IRestaurantRepository.cs" />
     <Compile Include="IRepository\IRoleRepository.cs" />
     <Compile Include="IRepository\ISysConfigRepository.cs" />
     <Compile Include="IRepository\ISysDictionaryRepository.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Repository\ProtocolStructureRepository.cs" />
     <Compile Include="Repository\RepositoryContext.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RestaurantRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\SysConfigRepository.cs" />
     <Compile Include="Repository\SysDictionaryRepository.cs" />

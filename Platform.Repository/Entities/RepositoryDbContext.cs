@@ -22,7 +22,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <param name="connString">连接字符串或连接字符串名称</param>
         public RepositoryDbContext(string connString) : base(connString)
         {
-            
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -47,6 +47,61 @@ namespace SHWD.Platform.Repository.Entities
                     cs.MapLeftKey("PermissionId");
                     cs.MapRightKey("RoleId");
                     cs.ToTable("RolePermission");
+                });
+
+            modelBuilder.Entity<RestaurantDevice>()
+                .Map(m =>
+                {
+                    m.Properties(p => new
+                    {
+                        p.CreateDateTime,
+                        p.CreateUserId,
+                        p.LastUpdateDateTime,
+                        p.LastUpdateUserId,
+                        p.IsDeleted,
+                        p.IsEnabled,
+                        p.DomainId,
+                        p.DeviceTypeId,
+                        p.OriginalDeviceId,
+                        p.DeviceCode,
+                        p.StatCode,
+                        p.DevicePassword,
+                        p.DeviceModuleGuid,
+                        p.DeviceNodeId,
+                        p.FirmwareSetId,
+                        p.ProjectId,
+                        p.StartTime,
+                        p.PreEndTime,
+                        p.EndTime,
+                        p.Status,
+                        p.CameraId
+                    });
+                    m.ToTable("Device");
+                }).Map(m =>
+                {
+                    m.Properties(p => new
+                    {
+                        p.ProductionDateTime,
+                        p.Telephone,
+                        p.CollectFrequency,
+                        p.CleanerName,
+                        p.CleanerTypeId,
+                        p.CleanerModel,
+                        p.CleanerManufacturer,
+                        p.CleanerRatedVoltage,
+                        p.CleanerMaxCurrent,
+                        p.CleanerRatedCurrent,
+                        p.CleanerMinCurrent,
+                        p.FanType,
+                        p.FanRatedVoltage,
+                        p.FanDeliveryRate,
+                        p.FanManufacturer,
+                        p.FanMaxCurrent,
+                        p.FanRatedCurrent,
+                        p.FanMinCurrent,
+                        p.Comment
+                    });
+                    m.ToTable("RestaurantDevice");
                 });
 
             base.OnModelCreating(modelBuilder);
@@ -176,5 +231,15 @@ namespace SHWD.Platform.Repository.Entities
         /// 指令定义数据
         /// </summary>
         public virtual DbSet<CommandDefinition> CommandDefinitions { get; set; }
+
+        /// <summary>
+        /// 餐饮企业
+        /// </summary>
+        public virtual DbSet<Restaurant> Restaurants { get; set; }
+
+        /// <summary>
+        /// 餐饮企业设备
+        /// </summary>
+        public virtual DbSet<RestaurantDevice> RestaurantDevices { get; set; }
     }
 }

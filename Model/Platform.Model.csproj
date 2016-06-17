@@ -95,6 +95,7 @@
     <Compile Include="IModel\IProtocolCommand.cs" />
     <Compile Include="IModel\IProtocolData.cs" />
     <Compile Include="IModel\IProtocolStructure.cs" />
+    <Compile Include="IModel\IRestaurant.cs" />
     <Compile Include="IModel\IWdRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
     <Compile Include="IModel\ISysDictionary.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="IModel\IUserConfig.cs" />
     <Compile Include="IModel\ICommandTask.cs" />
     <Compile Include="IModel\IUserDictionary.cs" />
+    <Compile Include="IModel\IRestaurantDevice.cs" />
     <Compile Include="ModelBase\DataModelBase.cs" />
     <Compile Include="ModelBase\ModelBase.cs" />
     <Compile Include="ModelBase\SysDomainModelBase.cs" />
@@ -127,6 +129,8 @@
     <Compile Include="Model\ProtocolCommand.cs" />
     <Compile Include="Model\ProtocolData.cs" />
     <Compile Include="Model\ProtocolStructure.cs" />
+    <Compile Include="Model\Restaurant.cs" />
+    <Compile Include="Model\RestaurantDevice.cs" />
     <Compile Include="Model\WdRole.cs" />
     <Compile Include="Model\SysConfig.cs" />
     <Compile Include="Model\SysDictionary.cs" />
