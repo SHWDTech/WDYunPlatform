@@ -7,14 +7,14 @@ namespace SHWD.Platform.Repository.Repository
     /// <summary>
     /// 项目数据仓库
     /// </summary>
-    public class ProjectRepository : SysDomainRepository<Project>, IProjectRepository
+    public class ParticulateMatterProjectRepository : SysDomainRepository<ParticulateMatterProject>, IParticulateMatterProjectRepository
     {
-        public ProjectRepository()
+        public ParticulateMatterProjectRepository()
         {
             
         }
 
-        public ProjectRepository(RepositoryDbContext dbContext) : base(dbContext)
+        public ParticulateMatterProjectRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
             
         }

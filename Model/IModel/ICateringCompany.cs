@@ -3,17 +3,17 @@
     /// <summary>
     /// 餐饮企业模型接口
     /// </summary>
-    public interface IRestaurant : ISysDomainModel
+    public interface ICateringCompany : ISysDomainModel
     {
         /// <summary>
         /// 餐饮企业名称
         /// </summary>
-        string RestaurantName { get; set; }
+        string CompanyName { get; set; }
 
         /// <summary>
         /// 餐饮企业编码
         /// </summary>
-        string RestaurantCode { get; set; }
+        string CompanyCode { get; set; }
 
         /// <summary>
         /// 负责人

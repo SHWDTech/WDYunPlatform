@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    public class RestaurantRepository : SysDomainRepository<Restaurant>, IRestaurantRepository
+    public class RestaurantRepository : SysDomainRepository<CateringCompany>, IRestaurantRepository
     {
         public RestaurantRepository()
         {

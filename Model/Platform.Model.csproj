@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\CommandCategory.cs" />
+    <Compile Include="Enums\HotelRestaurantStatus.cs" />
     <Compile Include="Enums\ProtocolCheckType.cs" />
     <Compile Include="Enums\ProtocolDataName.cs" />
     <Compile Include="Enums\ProtocolDataType.cs" />
@@ -86,16 +87,18 @@
     <Compile Include="IModel\IDeviceType.cs" />
     <Compile Include="IModel\IFirmware.cs" />
     <Compile Include="IModel\IFirmwareSet.cs" />
+    <Compile Include="IModel\IHotelRestaurant.cs" />
     <Compile Include="IModel\IMenu.cs" />
     <Compile Include="IModel\IModel.cs" />
     <Compile Include="IModel\IMonitorData.cs" />
+    <Compile Include="IModel\IParticulateMatterProject.cs" />
     <Compile Include="IModel\IPermission.cs" />
     <Compile Include="IModel\IPhoto.cs" />
     <Compile Include="IModel\IProtocol.cs" />
     <Compile Include="IModel\IProtocolCommand.cs" />
     <Compile Include="IModel\IProtocolData.cs" />
     <Compile Include="IModel\IProtocolStructure.cs" />
-    <Compile Include="IModel\IRestaurant.cs" />
+    <Compile Include="IModel\ICateringCompany.cs" />
     <Compile Include="IModel\IWdRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
     <Compile Include="IModel\ISysDictionary.cs" />
@@ -120,16 +123,18 @@
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />
     <Compile Include="Model\FirmwareSet.cs" />
+    <Compile Include="Model\HotelRestaurant.cs" />
     <Compile Include="Model\Menu.cs" />
     <Compile Include="Model\MonitorData.cs" />
     <Compile Include="Model\Permission.cs" />
     <Compile Include="Model\Photo.cs" />
+    <Compile Include="Model\ParticulateMatterProject..cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Protocol.cs" />
     <Compile Include="Model\ProtocolCommand.cs" />
     <Compile Include="Model\ProtocolData.cs" />
     <Compile Include="Model\ProtocolStructure.cs" />
-    <Compile Include="Model\Restaurant.cs" />
+    <Compile Include="Model\CateringCompany.cs" />
     <Compile Include="Model\RestaurantDevice.cs" />
     <Compile Include="Model\WdRole.cs" />
     <Compile Include="Model\SysConfig.cs" />

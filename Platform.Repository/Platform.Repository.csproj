@@ -87,7 +87,7 @@
     <Compile Include="IRepository\IMonitorDataRepository.cs" />
     <Compile Include="IRepository\IPermissionRepository.cs" />
     <Compile Include="IRepository\IPhotoRepository.cs" />
-    <Compile Include="IRepository\IProjectRepository.cs" />
+    <Compile Include="IRepository\IParticulateMatterProjectRepository.cs" />
     <Compile Include="IRepository\IProtocolDataRepository.cs" />
     <Compile Include="IRepository\IProtocolStructureRepository.cs" />
     <Compile Include="IRepository\IRepository.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="Repository\MonitorDataRepository.cs" />
     <Compile Include="Repository\PermissionRepository.cs" />
     <Compile Include="Repository\PhotoRepository.cs" />
-    <Compile Include="Repository\ProjectRepository.cs" />
+    <Compile Include="Repository\ParticulateMatterProjectRepository.cs" />
     <Compile Include="Repository\ProtocolCommandRepository.cs" />
     <Compile Include="Repository\ProtocolDataRepository.cs" />
     <Compile Include="Repository\ProtocolRepository.cs" />

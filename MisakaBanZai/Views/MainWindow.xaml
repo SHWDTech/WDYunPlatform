@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="炮姐万岁！" 
-        MinHeight="640" MinWidth="300" 
-        Height="640" Width="300" 
-        MaxHeight="640" MaxWidth="300" Closing="OnClosing"
+        MinHeight="680" MinWidth="300" 
+        Height="680" Width="300" 
+        MaxHeight="680" MaxWidth="300" Closing="OnClosing"
         Left="200" Icon="/MisakaBanZai;component/MisakaMisaka.ico" FontSize="14">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Row="0">
             <TabControl>
@@ -50,7 +50,7 @@
             </TabControl>
         </Grid>
         <Grid Row="1">
-            <DockPanel>
+            <StackPanel Orientation="Vertical">
                 <StatusBar>
                     <StatusBarItem>
                         <TextBlock FontSize="14">本地IP地址:</TextBlock>
@@ -59,7 +59,15 @@
                         <TextBlock x:Name="LocalAddr" FontSize="16"></TextBlock>
                     </StatusBarItem>
                 </StatusBar>
-            </DockPanel>
+                <StatusBar>
+                    <StatusBarItem>
+                        <TextBlock FontSize="14">软件版本:</TextBlock>
+                    </StatusBarItem>
+                    <StatusBarItem Foreground="OrangeRed">
+                        <TextBlock x:Name="AppVersion" FontSize="16"></TextBlock>
+                    </StatusBarItem>
+                </StatusBar>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,6 +31,8 @@ namespace MisakaBanZai.Views
             Top = (desktopWorkingArea.Bottom - Height) / 2;
 
             LocalAddr.Text = Globals.GetLocalIpAddressString();
+
+            AppVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
         }
 
         /// <summary>

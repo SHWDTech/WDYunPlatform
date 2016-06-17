@@ -104,6 +104,96 @@ namespace SHWD.Platform.Repository.Entities
                     m.ToTable("RestaurantDevice");
                 });
 
+            modelBuilder.Entity<ParticulateMatterProject>()
+                .Map(m =>
+                {
+                    m.Properties(p => new
+                    {
+                        p.CreateDateTime,
+                        p.CreateUserId,
+                        p.LastUpdateDateTime,
+                        p.LastUpdateUserId,
+                        p.IsDeleted,
+                        p.IsEnabled,
+                        p.DomainId,
+                        p.ProjectCode,
+                        p.ProjectName,
+                        p.ChargeMan,
+                        p.Telephone,
+                        p.Longitude,
+                        p.Latitude,
+                        p.Comment
+                    });
+                    m.ToTable("Project");
+                })
+                .Map(m =>
+                {
+                    m.Properties(p => new
+                    {
+                        p.StatCode,
+                        p.StatBJH,
+                        p.ProjectOutCode,
+                        p.StatName,
+                        p.Department,
+                        p.Compnany,
+                        p.Address,
+                        p.Country,
+                        p.Street,
+                        p.DistrictId,
+                        p.Square,
+                        p.ProStartDate,
+                        p.Stage,
+                        p.ProjectStageId,
+                        p.StartDate,
+                        p.TypeId,
+                        p.AlarmTypeId
+                    });
+
+                    m.ToTable("ParticulateMatterProject");
+                });
+
+            modelBuilder.Entity<HotelRestaurant>()
+               .Map(m =>
+               {
+                   m.Properties(p => new
+                   {
+                       p.CreateDateTime,
+                       p.CreateUserId,
+                       p.LastUpdateDateTime,
+                       p.LastUpdateUserId,
+                       p.IsDeleted,
+                       p.IsEnabled,
+                       p.DomainId,
+                       p.ProjectCode,
+                       p.ProjectName,
+                       p.ChargeMan,
+                       p.Telephone,
+                       p.Longitude,
+                       p.Latitude,
+                       p.Comment
+                   });
+                   m.ToTable("Project");
+               })
+               .Map(m =>
+               {
+                   m.Properties(p => new
+                   {
+                       p.RaletedCompanyId,
+                       p.RegisterDateTime,
+                       p.Email,
+                       p.DistrictId,
+                       p.StreetId,
+                       p.AddressId,
+                       p.Status,
+                       p.OpeningDateTime,
+                       p.StopDateTIme,
+                       p.CookStoveNumber,
+                       p.AddressDetail
+                   });
+
+                   m.ToTable("HotelRestaurant");
+               });
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -151,6 +241,11 @@ namespace SHWD.Platform.Repository.Entities
         /// 项目
         /// </summary>
         public virtual DbSet<Project> Projects { get; set; }
+
+        /// <summary>
+        /// 扬尘项目
+        /// </summary>
+        public virtual DbSet<ParticulateMatterProject> ParticulateMatterProject { get; set; }
 
         /// <summary>
         /// 固件
@@ -235,7 +330,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 餐饮企业
         /// </summary>
-        public virtual DbSet<Restaurant> Restaurants { get; set; }
+        public virtual DbSet<CateringCompany> Restaurants { get; set; }
 
         /// <summary>
         /// 餐饮企业设备

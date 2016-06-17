@@ -10,17 +10,17 @@ namespace SHWDTech.Platform.Model.Model
     /// 餐饮企业模型
     /// </summary>
     [Serializable]
-    public class Restaurant : SysDomainModelBase, IRestaurant
+    public class CateringCompany : SysDomainModelBase, ICateringCompany
     {
         [MaxLength(200)]
         [Required]
         [Display(Name = "餐饮企业名称")]
-        public virtual string RestaurantName { get; set; }
+        public virtual string CompanyName { get; set; }
 
         [MaxLength(50)]
         [Required]
         [Display(Name = "企业编码")]
-        public virtual string RestaurantCode { get; set; }
+        public virtual string CompanyCode { get; set; }
 
         [MaxLength(50)]
         [Required]
