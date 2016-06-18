@@ -80,6 +80,7 @@
     <Compile Include="Enum\WindSpeed.cs" />
     <Compile Include="Enum\WindSpeedType.cs" />
     <Compile Include="ExtensionMethod\RichTextBoxExtensionMethod.cs" />
+    <Compile Include="ExtensionMethod\WpfWindowExtrensionMethod.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="ILogService.cs" />
     <Compile Include="LogService.cs" />

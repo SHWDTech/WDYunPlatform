@@ -15,6 +15,7 @@ using MisakaBanZai.Services;
 using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.Enum;
 using System.Threading.Tasks;
+using SHWDTech.Platform.Utility.ExtensionMethod;
 
 namespace MisakaBanZai.Views
 {
@@ -132,18 +133,6 @@ namespace MisakaBanZai.Views
             _misakaConnection.ParentWindow = this;
             ReportService.ReportDataAdded += AppendReport;
             InitControl(connection);
-        }
-
-        /// <summary>
-        /// 在指定位置显示
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="top"></param>
-        public void ShowAtPosition(double left, double top)
-        {
-            Left = left;
-            Top = top;
-            Show();
         }
 
         /// <summary>
@@ -999,6 +988,7 @@ namespace MisakaBanZai.Views
         {
             if (!_hideInstead) return;
             Hide();
+            _messageManager.Hide();
             e.Cancel = true;
         }
 
@@ -1006,6 +996,7 @@ namespace MisakaBanZai.Views
         {
             _hideInstead = false;
             _misakaConnection?.Close();
+            _messageManager.Close();
             Close();
         }
     }

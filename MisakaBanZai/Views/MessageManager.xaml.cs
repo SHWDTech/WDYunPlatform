@@ -41,18 +41,6 @@ namespace MisakaBanZai.Views
         }
 
         /// <summary>
-        /// 在指定位置显示
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="top"></param>
-        public void ShowAtPosition(double left, double top)
-        {
-            Left = left;
-            Top = top;
-            Show();
-        }
-
-        /// <summary>
         /// 清空消息框
         /// </summary>
         /// <param name="sender"></param>

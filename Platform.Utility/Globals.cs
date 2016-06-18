@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using Microsoft.Win32;
 using SHWDTech.Platform.Utility.Enum;
 
 namespace SHWDTech.Platform.Utility
@@ -1137,6 +1138,16 @@ namespace SHWDTech.Platform.Utility
             }
 
             return val;
+        }
+
+        public static bool IsWindows10()
+        {
+            var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+
+            if (reg == null) return false;
+            var productName = (string)reg.GetValue("ProductName");
+
+            return productName.StartsWith("Windows 10");
         }
     }
 }
