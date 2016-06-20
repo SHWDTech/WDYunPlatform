@@ -65,6 +65,7 @@
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\CommandCategory.cs" />
     <Compile Include="Enums\HotelRestaurantStatus.cs" />
+    <Compile Include="Enums\PermissionType.cs" />
     <Compile Include="Enums\ProtocolCheckType.cs" />
     <Compile Include="Enums\ProtocolDataName.cs" />
     <Compile Include="Enums\ProtocolDataType.cs" />

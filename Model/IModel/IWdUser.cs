@@ -50,5 +50,10 @@ namespace SHWDTech.Platform.Model.IModel
         /// 用户所属角色
         /// </summary>
         ICollection<WdRole> Roles { get; set; }
+
+        /// <summary>
+        /// 用户拥有的权限
+        /// </summary>
+        ICollection<Permission> Permissions { get; set; }
     }
 }

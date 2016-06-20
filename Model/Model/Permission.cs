@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -25,7 +26,13 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("ParentPermissionId")]
         public virtual Permission ParentPermission { get; set; }
 
+        [Display(Name = "权限类型")]
+        public virtual PermissionType Type { get; set; }
+
         [Display(Name = "拥有权限的角色")]
         public virtual ICollection<WdRole> Roles { get; set; } 
+
+        [Display(Name = "拥有权限的用户")]
+        public virtual ICollection<WdUser> Users { get; set; }
     }
 }

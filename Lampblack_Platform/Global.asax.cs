@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using SHWD.Platform.Repository;
 
 namespace Lampblack_Platform
 {
@@ -13,6 +14,7 @@ namespace Lampblack_Platform
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DbRepository.ConnectionName = "Lampblack_Platform";
         }
     }
 }

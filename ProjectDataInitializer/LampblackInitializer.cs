@@ -818,6 +818,15 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.SysDomains.Add(userdomain);
 
+            var menuPermission1 = new Permission()
+            {
+                Id = Guid.Parse("c3ac6551-2d34-445d-9bd0-89983518e1ac"),
+                PermissionName = "Monitor",
+                Type = PermissionType.Controller
+            };
+
+            dbContext.Permissions.Add(menuPermission1);
+
             var menu1 = new Menu()
             {
                 Id = Guid.Parse("38f7dd0c-9210-4103-92ef-0a32a61e44ee"),
@@ -826,6 +835,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Monitor",
                 Action = string.Empty,
                 MenuLevel = 1,
+                PermissionId = menuPermission1.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -833,6 +843,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(menu1);
+
+            var submenuPermission1 = new Permission()
+            {
+                Id = Guid.Parse("7ce6e9d1-4a10-4f8f-bde0-49ac1d325c7f"),
+                PermissionName = "Map",
+                ParentPermissionId = menuPermission1.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission1);
 
             var submenu1 = new Menu()
             {
@@ -843,6 +863,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Monitor",
                 Action = "Map",
                 MenuLevel = 2,
+                PermissionId = submenuPermission1.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -850,6 +871,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(submenu1);
+
+            var submenuPermission2 = new Permission()
+            {
+                Id = Guid.Parse("20920372-3c41-4b94-9038-49a53fbd85bf"),
+                PermissionName = "Actual",
+                ParentPermissionId = menuPermission1.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission2);
 
             var submenu2 = new Menu()
             {
@@ -868,6 +899,15 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu2);
 
+            var menuPermission2 = new Permission()
+            {
+                Id = Guid.Parse("4272ff65-4393-4d8e-bdbe-3de87a4e2624"),
+                PermissionName = "Query",
+                Type = PermissionType.Controller
+            };
+
+            dbContext.Permissions.Add(menuPermission2);
+
             var menu2 = new Menu()
             {
                 Id = Guid.Parse("31c6b62e-c6b8-443a-a082-0f7f1fe3a8b4"),
@@ -883,6 +923,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(menu2);
+
+            var submenuPermission3 = new Permission()
+            {
+                Id = Guid.Parse("ac1ff757-38ab-4a85-9615-04623f1ae534"),
+                PermissionName = "CleanRate",
+                ParentPermissionId = menuPermission2.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission3);
 
             var submenu3 = new Menu()
             {
@@ -901,6 +951,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu3);
 
+            var submenuPermission4 = new Permission()
+            {
+                Id = Guid.Parse("d560a920-87b4-4bd0-b297-01271db1a6d7"),
+                PermissionName = "LinkageRate",
+                ParentPermissionId = menuPermission2.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission4);
+
             var submenu4 = new Menu()
             {
                 Id = Guid.Parse("8fb76e4d-6ef2-48cb-8a9b-690c420b4526"),
@@ -917,6 +977,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(submenu4);
+
+            var submenuPermission5 = new Permission()
+            {
+                Id = Guid.Parse("b14be3d9-df37-42a0-ba18-12c6ff073fa1"),
+                PermissionName = "RemovalRate",
+                ParentPermissionId = menuPermission2.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission5);
 
             var submenu5 = new Menu()
             {
@@ -935,6 +1005,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu5);
 
+            var submenuPermission6 = new Permission()
+            {
+                Id = Guid.Parse("532a61dd-7646-4da4-98c3-a99a5613f4b5"),
+                PermissionName = "Alarm",
+                ParentPermissionId = menuPermission2.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission6);
+
             var submenu6 = new Menu()
             {
                 Id = Guid.Parse("85a9b291-9a1d-4d83-afdf-553369b5594d"),
@@ -951,6 +1031,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(submenu6);
+
+            var submenuPermission7 = new Permission()
+            {
+                Id = Guid.Parse("31d560a1-377f-495a-8000-31e2bd8e41eb"),
+                PermissionName = "HistoryData",
+                ParentPermissionId = menuPermission2.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission7);
 
             var submenu7 = new Menu()
             {
@@ -969,6 +1059,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu7);
 
+            var submenuPermission8 = new Permission()
+            {
+                Id = Guid.Parse("4ca5c010-b3e9-40bb-91bb-5da47bf65e70"),
+                PermissionName = "RunningTime",
+                ParentPermissionId = menuPermission2.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission8);
+
             var submenu8 = new Menu()
             {
                 Id = Guid.Parse("d0bd6836-d0c3-4d63-b18b-95da6ffb1785"),
@@ -986,6 +1086,15 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu8);
 
+            var menuPermission3 = new Permission()
+            {
+                Id = Guid.Parse("6c6923eb-1b2b-4196-a102-1bb7512d96a7"),
+                PermissionName = "Analysis",
+                Type = PermissionType.Controller
+            };
+
+            dbContext.Permissions.Add(menuPermission3);
+
             var menu3 = new Menu()
             {
                 Id = Guid.Parse("4b1b7f18-3b4c-487c-b99a-f1119ab77c2d"),
@@ -1001,6 +1110,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(menu3);
+
+            var submenuPermission9 = new Permission()
+            {
+                Id = Guid.Parse("22ac589e-8355-42cd-bf71-3c119fbb3b9f"),
+                PermissionName = "ExcetionData",
+                ParentPermissionId = menuPermission3.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission9);
 
             var submenu9 = new Menu()
             {
@@ -1019,6 +1138,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu9);
 
+            var submenuPermission10 = new Permission()
+            {
+                Id = Guid.Parse("a4a36255-1b22-4068-850c-2bb16c574fc8"),
+                PermissionName = "RuningStatus",
+                ParentPermissionId = menuPermission3.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission10);
+
             var submenu10 = new Menu()
             {
                 Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
@@ -1035,6 +1164,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(submenu10);
+
+            var submenuPermission11 = new Permission()
+            {
+                Id = Guid.Parse("8de6c713-8686-4809-a061-36ddafbe30fe"),
+                PermissionName = "GeneralReport",
+                ParentPermissionId = menuPermission3.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission11);
 
             var submenu11 = new Menu()
             {
@@ -1053,6 +1192,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu11);
 
+            var submenuPermission12 = new Permission()
+            {
+                Id = Guid.Parse("0b144420-d539-4812-958a-79507dd50811"),
+                PermissionName = "GeneralComparison",
+                ParentPermissionId = menuPermission3.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission12);
+
             var submenu12 = new Menu()
             {
                 Id = Guid.Parse("59654562-ee10-466d-898d-62e02c139799"),
@@ -1069,6 +1218,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(submenu12);
+
+            var submenuPermission13 = new Permission()
+            {
+                Id = Guid.Parse("67b72c18-744d-4439-bcf4-f98b37b4ae03"),
+                PermissionName = "TrendAnalysis",
+                ParentPermissionId = menuPermission3.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission13);
 
             var submenu13 = new Menu()
             {
@@ -1087,6 +1246,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu13);
 
+            var submenuPermission14 = new Permission()
+            {
+                Id = Guid.Parse("1b716c90-bcd6-4fdb-8d5a-fd3e3419dba7"),
+                PermissionName = "CleanlinessStatistics",
+                ParentPermissionId = menuPermission3.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission14);
+
             var submenu14 = new Menu()
             {
                 Id = Guid.Parse("396604ce-53ec-4f91-a03b-15ec2282cbeb"),
@@ -1104,6 +1273,15 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Menus.Add(submenu14);
 
+            var menuPermission4 = new Permission()
+            {
+                Id = Guid.Parse("6a023746-295a-4e1a-b4b9-70899f23e00f"),
+                PermissionName = "Management",
+                Type = PermissionType.Controller
+            };
+
+            dbContext.Permissions.Add(menuPermission4);
+
             var menu4 = new Menu()
             {
                 Id = Guid.Parse("2e6a7a8d-aea2-42c2-b109-ab7dfd4c9b77"),
@@ -1119,6 +1297,16 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Menus.Add(menu4);
+
+            var submenuPermission15 = new Permission()
+            {
+                Id = Guid.Parse("fffc7ffb-8e8e-4911-b11a-c196e1a75eb5"),
+                PermissionName = "DeviceMaintenance",
+                ParentPermissionId = menuPermission4.Id,
+                Type = PermissionType.Action
+            };
+
+            dbContext.Permissions.Add(submenuPermission15);
 
             var submenu15 = new Menu()
             {

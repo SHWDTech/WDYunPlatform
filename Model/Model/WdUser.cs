@@ -54,6 +54,14 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "所属用户组")]
         public virtual ICollection<WdRole> Roles { get; set; }
 
+        [Display(Name = "用户拥有的权限")]
+        public virtual ICollection<Permission> Permissions { get; set; }
+
+        /// <summary>
+        /// 用户是否属于某个角色
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public virtual bool IsInRole(string role) => Roles.Any(item => item.RoleName == role);
 
         [NotMapped]

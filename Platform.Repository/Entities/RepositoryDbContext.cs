@@ -49,6 +49,17 @@ namespace SHWD.Platform.Repository.Entities
                     cs.ToTable("RolePermission");
                 });
 
+            modelBuilder.Entity<Permission>()
+                .HasMany(s => s.Users)
+                .WithMany(c => c.Permissions)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("PermissionId");
+                    cs.MapRightKey("UserId");
+                    cs.ToTable("UserPermission");
+                });
+
+
             modelBuilder.Entity<RestaurantDevice>()
                 .Map(m =>
                 {
