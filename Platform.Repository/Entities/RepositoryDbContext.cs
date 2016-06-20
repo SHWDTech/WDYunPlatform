@@ -12,7 +12,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 创建默认的DbContext
         /// </summary>
-        public RepositoryDbContext() : base("name=Wd_Cloud_Platfrom")
+        public RepositoryDbContext() : base($"name={DbRepository.ConnectionName}")
         {
         }
 

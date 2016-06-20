@@ -4,22 +4,34 @@ using Platform.Cache.Manager;
 
 namespace Platform.Cache
 {
+    /// <summary>
+    /// 云平台缓存
+    /// </summary>
     public static class PlatformCaches
     {
-        private static readonly CacheManager Instance = new CacheManager();
+        static PlatformCaches()
+        {
+            Instance = new CacheManager();
+        }
+
+        /// <summary>
+        /// 缓存管理器
+        /// </summary>
+        private static readonly CacheManager Instance;
 
         /// <summary>
         /// 添加缓存
         /// </summary>
         /// <param name="name"></param>
         /// <param name="cacheItem"></param>
-        public static void Add(string name, object cacheItem)
+        /// <param name="expires"></param>
+        public static void Add(string name, object cacheItem, bool expires = true)
         {
             var cache = new PlatformCache()
             {
                 CacheItem = cacheItem,
                 CacheAddDateTIme = DateTime.Now,
-                CacheExpireInterval = CacheExpireInterval.DefaultInterval
+                CacheExpireInterval = expires ? CacheExpireInterval.DefaultInterval : CacheExpireInterval.NonExpire
             };
 
             Instance.Add(name, cache);

@@ -12,6 +12,11 @@ namespace Platform.Cache.Manager
         /// </summary>
         private readonly Dictionary<string, IPlatformCache> _platformCaches = new Dictionary<string, IPlatformCache>(); 
 
+        /// <summary>
+        /// 添加缓存内容
+        /// </summary>
+        /// <param name="cacheName"></param>
+        /// <param name="cache"></param>
         public void Add(string cacheName, IPlatformCache cache)
         {
             if (_platformCaches.ContainsKey(cacheName))
@@ -22,6 +27,11 @@ namespace Platform.Cache.Manager
             _platformCaches.Add(cacheName, cache);
         }
 
+        /// <summary>
+        /// 更新缓存内容
+        /// </summary>
+        /// <param name="cacheName"></param>
+        /// <param name="cache"></param>
         public void Update(string cacheName, IPlatformCache cache)
         {
             if (!_platformCaches.ContainsKey(cacheName))

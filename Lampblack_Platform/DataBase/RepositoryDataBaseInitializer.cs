@@ -1,10 +1,11 @@
-﻿using SHWDTech.Platform.Model.Enums;
-using SHWDTech.Platform.Model.Model;
+﻿using SHWD.Platform.Repository.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
-namespace SHWD.Platform.Repository.Entities
+namespace Lampblack_Platform.DataBase
 {
     public class InitProjectInitializer : DropCreateDatabaseAlways<RepositoryDbContext>
     {
@@ -829,9 +830,6 @@ namespace SHWD.Platform.Repository.Entities
 
                 dbContext.Devices.Add(dev);
             }
-
-            //dbContext.BulkInsert(devices);
-
         }
     }
 

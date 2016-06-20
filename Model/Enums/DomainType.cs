@@ -8,6 +8,11 @@
         /// <summary>
         /// 系统根域
         /// </summary>
-        public const string RootDomain = "系统根域";
+        public const string RootDomain = "RootDomain";
+
+        /// <summary>
+        /// 用户域
+        /// </summary>
+        public const string UserDomain = "UserDomain";
     }
 }

@@ -1,24 +1,49 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿* {
+    -ms-border-radius: 0 !important;
+    border-radius: 0 !important;
 }
 
-/* Set padding to keep content from hitting the edges */
+body {
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"simsun";
+}
+
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    min-height: 660px;
+    overflow: auto;
+    display: flex;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.container {
+    width: 100%;
+    padding: 15px;
+    border-left: 1px solid #e7e7e7;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+ul {
+    list-style: none;
 }
+
+.topheadnav {
+    border: 0;
+    background-color: #1abc9c;
+    background-image: radial-gradient(circle farthest-side at center top, #55e7ca 0, #1abc9c 100%);
+    border-bottom: 3px solid rgb(255, 175, 0);
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.sidebar {
+    height: 100%;
+    width: 220px;
+}
+
+.footer {
+    border-top: 1px solid #e7e7e7;
+    padding: 15px 15px 0 15px;
+}
+
+    .footer p {
+        text-align: center;
+    }

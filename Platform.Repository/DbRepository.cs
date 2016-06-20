@@ -18,5 +18,10 @@ namespace SHWD.Platform.Repository
         /// 默认连接字符串
         /// </summary>
         public static string ConnectionString { get; set; }
+
+        /// <summary>
+        /// 默认连接字符串配置项名称
+        /// </summary>
+        public static string ConnectionName { get; set; }
     }
 }

@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Controller\WdContext.cs" />
     <Compile Include="Controller\WdControllerBase.cs" />
+    <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Platform.Model.csproj">
+      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
+      <Name>Platform.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -69,7 +69,6 @@
   <ItemGroup>
     <Compile Include="DbRepository.cs" />
     <Compile Include="Entities\RepositoryDbContext.cs" />
-    <Compile Include="Entities\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Exception\ModelVerificationException.cs" />
     <Compile Include="IRepository\ICommandDataRepository.cs" />
     <Compile Include="IRepository\ICommandDefinitionRepository.cs" />

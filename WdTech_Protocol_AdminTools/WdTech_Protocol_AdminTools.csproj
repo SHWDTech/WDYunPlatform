@@ -195,9 +195,17 @@
       <Project>{7924589d-fb3d-4496-8f48-c9dd58ff1574}</Project>
       <Name>Platform.ProtocolCoding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{3CAF3855-4870-4065-8755-5AF2897BD10A}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectDataInitializer\ProjectDataInitializer.csproj">
+      <Project>{d79f8c47-22e3-4b7d-b5f2-8d3ed747fd10}</Project>
+      <Name>ProjectDataInitializer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

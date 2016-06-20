@@ -11,5 +11,10 @@ namespace Platform.Cache.Enums
         /// 默认过期时间
         /// </summary>
         public static readonly TimeSpan DefaultInterval = new TimeSpan(0, 30, 0);
+
+        /// <summary>
+        /// 不过期
+        /// </summary>
+        public static readonly TimeSpan NonExpire = new TimeSpan(0);
     }
 }

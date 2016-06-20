@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Platform.Process;
 using Platform.Process.Process;
+using SHWD.Platform.Repository;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
@@ -18,6 +19,8 @@ namespace WdTech_Protocol_AdminTools
         {
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Current.DispatcherUnhandledException += AppUnhandleExceptionHandler;
+
+            DbRepository.ConnectionName = "Wd_Cloud_Platfrom";
 
             var serverUser = GeneralProcess.GetUserByLoginName(AppConfig.ServerAccount);
 

@@ -180,6 +180,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataBase\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -347,9 +348,41 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Model\Platform.Model.csproj">
+      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
+      <Name>Platform.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MvcWebComponents\MvcWebComponents.csproj">
       <Project>{e432923b-9c1e-46e9-b3ca-87550ffd4148}</Project>
       <Name>MvcWebComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Cache\Platform.Cache.csproj">
+      <Project>{5ee1e1c1-00a8-4d4c-a0ea-55cb528f7ed7}</Project>
+      <Name>Platform.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Common\Platform.Common.csproj">
+      <Project>{1328ee07-f6c6-4762-8d87-45d026f60dd8}</Project>
+      <Name>Platform.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Process\Platform.Process.csproj">
+      <Project>{9bb3c321-2f61-4efe-9315-b1a035470a57}</Project>
+      <Name>Platform.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{3CAF3855-4870-4065-8755-5AF2897BD10A}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
+      <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
+      <Name>Platform.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlatformService\PlatformService.csproj">
+      <Project>{d94908d6-ffc4-4598-ac77-d33acc3c2083}</Project>
+      <Name>PlatformService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProjectDataInitializer\ProjectDataInitializer.csproj">
+      <Project>{d79f8c47-22e3-4b7d-b5f2-8d3ed747fd10}</Project>
+      <Name>ProjectDataInitializer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

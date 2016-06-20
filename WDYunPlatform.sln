@@ -69,6 +69,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcWebComponents", "MvcWebComponents\MvcWebComponents.csproj", "{E432923B-9C1E-46E9-B3CA-87550FFD4148}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectDataInitializer", "ProjectDataInitializer", "{61D7C901-3319-4349-9DEB-28DE889C7179}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectDataInitializer", "ProjectDataInitializer\ProjectDataInitializer.csproj", "{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +155,10 @@ Global
 		{E432923B-9C1E-46E9-B3CA-87550FFD4148}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E432923B-9C1E-46E9-B3CA-87550FFD4148}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E432923B-9C1E-46E9-B3CA-87550FFD4148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,5 +187,6 @@ Global
 		{30C9F4EB-9BCF-4201-8C1D-9472B60F768B} = {9A830392-AC75-4AF0-80C8-ABE30CF0649B}
 		{CAA66364-5455-4121-A20B-48CBC5268149} = {80AEBD73-0D67-436A-9FBB-38092240A79A}
 		{E432923B-9C1E-46E9-B3CA-87550FFD4148} = {ADAD459B-F78F-4819-9B54-BDF3539F838F}
+		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10} = {61D7C901-3319-4349-9DEB-28DE889C7179}
 	EndGlobalSection
 EndGlobal
