@@ -1,5 +1,4 @@
 ﻿* {
-    -ms-border-radius: 0 !important;
     border-radius: 0 !important;
 }
 
@@ -16,7 +15,6 @@ body {
 .container {
     width: 100%;
     padding: 15px;
-    border-left: 1px solid #e7e7e7;
 }
 
 ul {

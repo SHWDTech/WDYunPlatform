@@ -1,3 +1,53 @@
 ﻿body {
-    background-image: url(/Resources/Images/Site/wood_pattern.png)
+    background-image: url(/Resources/Images/Site/swirl_pattern.png)
+}
+
+.login-form-section {
+    padding: 150px 0 0 0;
+}
+
+.login-from-content {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    background-color: #fff;
+    max-width: 360px;
+    margin: auto;
+}
+
+.section-title h3{
+    color: #449d44;
+    font-size: 20px;
+    text-align: center;
+}
+
+.textbox-wrap {
+    border-left: 5px solid #fff;
+    padding: 15px 20px 15px 15px;
+    background-color: transparent;
+    transition: background-color 0.5s ease, border-color 0.4s ease;
+}
+
+
+.textbox-wrap.focuesd {
+    border-left-color: #3498db;
+    background-color: #f0f0f0;
+}
+
+.form-control:focus {
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+.login-form-action {
+    padding: 10px 20px 15px 20px;
+    line-height: 16px;
+}
+
+.login-form-action button {
+    margin-left: 120px;
+}
+
+.login-spliter {
+    height: 1px;
+    background-color: #cccccc;
+    display: block;
 }

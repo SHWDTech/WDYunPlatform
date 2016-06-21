@@ -1,4 +1,5 @@
-﻿
+﻿@using Lampblack_Platform.Models.Account
+@model LoginViewModel
 @{
     Layout = null;
 }
@@ -8,11 +9,58 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link href="/Content/Base/Login.css" rel="stylesheet"/>
+    <title>欢迎登陆本系统</title>
+    <link href="/Content/Base/Login.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div> 
+    <div class="container">
+        <div class="login-form-section" style="display: flex;">
+            <div class="login-from-content">
+                @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", Id = "loginform", Class = "login-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="section-title">
+                        <h3>@ViewBag.LoginTitle</h3>
+                    </div>
+                    <span class="login-spliter"></span>
+                    <div>
+                        @Html.ValidationSummary(null, new { @class = "text-danger" })
+                    </div>
+                    <div class="textbox-wrap">
+                        <div class="input-group">
+                            <span class="input-group-addon" aria-hidden="true">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </span>
+                            @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control", placeholder = "请输入用户名" })
+                        </div>
+                    </div>
+                    <div class="textbox-wrap">
+                        <div class="input-group">
+                            <span class="input-group-addon" aria-hidden="true">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "请输入密码" })
+                        </div>
+                    </div>
+                    <div class="login-form-action">
+                        <div class="checkbox-inline">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="EncrypSubmit();">
+                            登录&nbsp;
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="/Scripts/Utility/sha.js"></script>
+    <script src="/Scripts/Page/Login.js"></script>
 </body>
 </html>

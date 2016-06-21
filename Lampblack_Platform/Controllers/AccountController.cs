@@ -11,11 +11,12 @@ namespace Lampblack_Platform.Controllers
     {
         private AccountProcess Process { get; } = new AccountProcess();
 
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.LoginTitle = "欢迎登陆本系统";
+            ViewBag.LoginTitle = "餐饮油烟在线监控平台";
             return View();
         }
 
@@ -33,7 +34,7 @@ namespace Lampblack_Platform.Controllers
 
             if (result.Status == SignInStatus.Failure)
             {
-                ViewBag.LoginTitle = "欢迎登陆本系统";
+                ViewBag.LoginTitle = "餐饮油烟在线监控平台";
                 ModelState.AddModelError(result.ErrorElement, result.ErrorMessage);
                 return View(model);
             }
