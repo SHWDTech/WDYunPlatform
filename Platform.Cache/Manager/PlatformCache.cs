@@ -2,6 +2,9 @@
 
 namespace Platform.Cache.Manager
 {
+    /// <summary>
+    /// 平台缓存
+    /// </summary>
     public class PlatformCache : IPlatformCache
     {
         public object CacheItem { get; set; }
@@ -10,6 +13,15 @@ namespace Platform.Cache.Manager
 
         public TimeSpan CacheExpireInterval { get; set; }
 
-        public bool IsExpired => DateTime.Now - CacheAddDateTIme > CacheExpireInterval;
+        public string CacheType { get; set; }
+
+        public bool IsExpired
+        {
+            get
+            {
+                if (CacheExpireInterval == Enums.CacheExpireInterval.NonExpire) return false;
+                return DateTime.Now - CacheAddDateTIme > CacheExpireInterval;
+            }
+        }
     }
 }

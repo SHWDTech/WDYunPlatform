@@ -15,7 +15,7 @@ namespace Platform.Process.IProcess
         /// <param name="rememberMe">前端是否记住用户</param>
         /// <param name="shouldLockout">是否触发账户锁</param>
         /// <returns>登陆结果</returns>
-        SignInStatus PasswordSignIn(string loginName, string password, bool rememberMe,
+        SignInResult PasswordSignIn(string loginName, string password, bool rememberMe,
             bool shouldLockout = false);
     }
 }

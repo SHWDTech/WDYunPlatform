@@ -26,11 +26,6 @@ namespace SHWDTech.Platform.Model.IModel
         Permission ParentPermission { get; set; }
 
         /// <summary>
-        /// 控制器类型
-        /// </summary>
-        PermissionType Type { get; set; }
-
-        /// <summary>
         /// 拥有权限的角色
         /// </summary>
         ICollection<WdRole> Roles { get; set; }

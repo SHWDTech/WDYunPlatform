@@ -78,7 +78,7 @@
     <Compile Include="IRepository\IDomainRepository.cs" />
     <Compile Include="IRepository\IFirmwareRepository.cs" />
     <Compile Include="IRepository\IFirmwareSetRepository.cs" />
-    <Compile Include="IRepository\IMenuRepository.cs" />
+    <Compile Include="IRepository\IModuleRepository.cs" />
     <Compile Include="IRepository\IAlarmRepository.cs" />
     <Compile Include="IRepository\ICameraRepository.cs" />
     <Compile Include="IRepository\IDataRepository.cs" />
@@ -111,7 +111,7 @@
     <Compile Include="Repository\DomainRepository.cs" />
     <Compile Include="Repository\FirmwareRepository.cs" />
     <Compile Include="Repository\FirmwareSetRepository.cs" />
-    <Compile Include="Repository\MenuRepository.cs" />
+    <Compile Include="Repository\ModuleRepository.cs" />
     <Compile Include="Repository\MonitorDataRepository.cs" />
     <Compile Include="Repository\PermissionRepository.cs" />
     <Compile Include="Repository\PhotoRepository.cs" />

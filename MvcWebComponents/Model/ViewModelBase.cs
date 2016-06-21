@@ -11,6 +11,6 @@ namespace MvcWebComponents.Model
         /// <summary>
         /// 菜单列表
         /// </summary>
-        public List<Menu> Menus { get; set; }
+        public List<Module> Menus { get; set; }
     }
 }

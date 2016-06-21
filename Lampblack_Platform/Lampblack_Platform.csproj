@@ -179,14 +179,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DataBase\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Base\Login.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -197,6 +200,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\Images\Site\congruent_pentagon.png" />
+    <Content Include="Resources\Images\Site\foggy_birds.png" />
+    <Content Include="Resources\Images\Site\food.png" />
+    <Content Include="Resources\Images\Site\old_map.png" />
+    <Content Include="Resources\Images\Site\paven.png" />
+    <Content Include="Resources\Images\Site\retina_wood.png" />
+    <Content Include="Resources\Images\Site\swirl_pattern.png" />
+    <Content Include="Resources\Images\Site\weather.png" />
+    <Content Include="Resources\Images\Site\wood_pattern.png" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -316,7 +328,9 @@
     <Content Include="Scripts\Utility\echarts.js" />
     <Content Include="Scripts\Utility\echarts.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -338,10 +352,11 @@
     <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\LogOff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

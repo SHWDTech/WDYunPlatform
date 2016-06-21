@@ -23,6 +23,11 @@ namespace Platform.Cache.Manager
         TimeSpan CacheExpireInterval { get; set; }
 
         /// <summary>
+        /// 缓存类型
+        /// </summary>
+        string CacheType { get; set; }
+
+        /// <summary>
         /// 是否已经过期
         /// </summary>
         bool IsExpired { get; }

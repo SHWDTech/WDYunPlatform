@@ -26,9 +26,6 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("ParentPermissionId")]
         public virtual Permission ParentPermission { get; set; }
 
-        [Display(Name = "权限类型")]
-        public virtual PermissionType Type { get; set; }
-
         [Display(Name = "拥有权限的角色")]
         public virtual ICollection<WdRole> Roles { get; set; } 
 

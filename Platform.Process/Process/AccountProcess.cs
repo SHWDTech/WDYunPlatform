@@ -1,9 +1,10 @@
-﻿using Platform.Process.IProcess;
-using SHWD.Platform.Repository.Repository;
+﻿using System;
+using System.Linq;
+using Platform.Process.IProcess;
 using System.Web.Security;
 using Platform.Process.Enums;
-using SHWD.Platform.Repository;
-using SHWDTech.Platform.Utility;
+using SHWD.Platform.Repository.Entities;
+using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
 {
@@ -12,55 +13,36 @@ namespace Platform.Process.Process
     /// </summary>
     public class AccountProcess : IAccountProcess
     {
-        /// <summary>
-        /// 账户数据仓库
-        /// </summary>
-        private readonly UserRepository _userRepository = DbRepository.Repo<UserRepository>();
-
         public void SignOut()
         {
 
         }
 
-        public SignInStatus PasswordSignIn(string loginName, string password, bool rememberMe,
+        public SignInResult PasswordSignIn(string loginName, string password, bool rememberMe,
             bool shouldLockout = false)
         {
 
-            SignInStatus signInStatus;
-
-            if (!_userRepository.IsExists(item => item.LoginName == loginName) || !CheckPassword(loginName, Globals.GetMd5(password)))
+            var result = new SignInResult();
+            using (var context = new RepositoryDbContext())
             {
-                signInStatus = SignInStatus.Failure;
+                var user = context.Set<WdUser>()
+                        .FirstOrDefault(obj => obj.LoginName == loginName && obj.Password == password && obj.IsDeleted);
+
+                if (user == null)
+                {
+                    result.Status = SignInStatus.Failure;
+                    result.ErrorMessage = "无效的用户名或登陆密码";
+                    return result;
+                }
+
+                FormsAuthentication.SetAuthCookie(loginName, false);
+
+                user.LastLoginDateTime = DateTime.Now;
+                context.SaveChanges();
             }
-            else
-            {
-                SetAuthCookie(loginName);
-                signInStatus = SignInStatus.Success;
-            }
+            result.Status = SignInStatus.Success;
 
-            return signInStatus;
-        }
-
-        /// <summary>
-        /// 检查用户输入的密码
-        /// </summary>
-        /// <param name="loginName">当前登录的用户</param>
-        /// <param name="password">用户输入的密码</param>
-        /// <returns></returns>
-        private bool CheckPassword(string loginName, string password)
-            => _userRepository.IsExists(user => user.LoginName == loginName
-            && user.Password == password
-            && user.IsEnabled);
-
-        /// <summary>
-        /// 设置登录用户Cookie缓存
-        /// </summary>
-        /// <param name="loginName"></param>
-        private void SetAuthCookie(string loginName)
-        {
-            FormsAuthentication.SetAuthCookie(loginName, false);
-
-            _userRepository.UpdateLoginInfo(loginName);
+            return result;
         }
     }
 }

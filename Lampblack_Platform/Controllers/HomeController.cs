@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using MvcWebComponents.Controller;
+using MvcWebComponents.Controllers;
 
 namespace Lampblack_Platform.Controllers
 {

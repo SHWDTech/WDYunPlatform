@@ -25,5 +25,11 @@
         /// <param name="cacheName"></param>
         /// <returns></returns>
         IPlatformCache GetPlatformCache(string cacheName);
+
+        /// <summary>
+        /// 删除指定类型的缓存
+        /// </summary>
+        /// <param name="type"></param>
+        void DeleteCacheByType(string type);
     }
 }

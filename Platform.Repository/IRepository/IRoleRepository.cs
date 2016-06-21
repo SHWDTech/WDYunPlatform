@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -7,5 +8,10 @@ namespace SHWD.Platform.Repository.IRepository
     /// </summary>
     public interface IRoleRepository : ISysDomainRepository<WdRole>
     {
+        /// <summary>
+        /// 获取所有用户组的权限信息
+        /// </summary>
+        /// <returns></returns>
+        List<WdRole> GetPermissions();
     }
 }

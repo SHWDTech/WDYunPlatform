@@ -65,7 +65,6 @@
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\CommandCategory.cs" />
     <Compile Include="Enums\HotelRestaurantStatus.cs" />
-    <Compile Include="Enums\PermissionType.cs" />
     <Compile Include="Enums\ProtocolCheckType.cs" />
     <Compile Include="Enums\ProtocolDataName.cs" />
     <Compile Include="Enums\ProtocolDataType.cs" />
@@ -89,7 +88,7 @@
     <Compile Include="IModel\IFirmware.cs" />
     <Compile Include="IModel\IFirmwareSet.cs" />
     <Compile Include="IModel\IHotelRestaurant.cs" />
-    <Compile Include="IModel\IMenu.cs" />
+    <Compile Include="IModel\IModule.cs" />
     <Compile Include="IModel\IModel.cs" />
     <Compile Include="IModel\IMonitorData.cs" />
     <Compile Include="IModel\IParticulateMatterProject.cs" />
@@ -125,7 +124,7 @@
     <Compile Include="Model\Firmware.cs" />
     <Compile Include="Model\FirmwareSet.cs" />
     <Compile Include="Model\HotelRestaurant.cs" />
-    <Compile Include="Model\Menu.cs" />
+    <Compile Include="Model\Module.cs" />
     <Compile Include="Model\MonitorData.cs" />
     <Compile Include="Model\Permission.cs" />
     <Compile Include="Model\Photo.cs" />

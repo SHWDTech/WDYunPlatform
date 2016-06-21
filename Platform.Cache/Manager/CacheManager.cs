@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Platform.Cache.Manager
 {
@@ -45,5 +46,14 @@ namespace Platform.Cache.Manager
         }
 
         public IPlatformCache GetPlatformCache(string cacheName) => _platformCaches.ContainsKey(cacheName) ? _platformCaches[cacheName] : null;
+
+        public void DeleteCacheByType(string type)
+        {
+            var caches = _platformCaches.Where(obj => obj.Value.CacheType == type);
+            foreach (var cach in caches)
+            {
+                _platformCaches.Remove(cach.Key);
+            }
+        }
     }
 }

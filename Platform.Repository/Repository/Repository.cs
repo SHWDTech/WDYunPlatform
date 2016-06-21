@@ -27,7 +27,7 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// 进行操作的数据实体
         /// </summary>
-        protected IEnumerable<T> EntitySet { get; set; }
+        protected IQueryable<T> EntitySet { get; set; }
 
         /// <summary>
         /// 数据检查条件
@@ -58,23 +58,23 @@ namespace SHWD.Platform.Repository.Repository
             DbContext = dbContext;
         }
 
-        public virtual IEnumerable<T> GetAllModels()
+        public virtual IQueryable<T> GetAllModels()
             => EntitySet;
 
         public virtual IList<T> GetAllModelList()
             => GetAllModels().ToList();
 
-        public virtual IEnumerable<T> GetModels(Expression<Func<T, bool>> exp)
-            => DbContext.Set<T>().Where(exp);
+        public virtual IQueryable<T> GetModels(Expression<Func<T, bool>> exp)
+            => EntitySet.Where(exp);
 
         public virtual IList<T> GetModelList(Expression<Func<T, bool>> exp)
             => GetModels(exp).ToList();
 
         public virtual T GetModel(Expression<Func<T, bool>> exp)
-            => DbContext.Set<T>().SingleOrDefault(exp);
+            => EntitySet.SingleOrDefault(exp);
 
         public virtual int GetCount(Expression<Func<T, bool>> exp)
-            => DbContext.Set<T>().Where(exp).Count();
+            => EntitySet.Where(exp).Count();
 
         public static T CreateDefaultModel()
         {

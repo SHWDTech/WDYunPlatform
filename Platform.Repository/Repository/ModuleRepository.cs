@@ -5,16 +5,16 @@ using SHWDTech.Platform.Model.Model;
 namespace SHWD.Platform.Repository.Repository
 {
     /// <summary>
-    /// 菜单数据仓库
+    /// 模块数据仓库
     /// </summary>
-    public class MenuRepository : SysDomainRepository<Menu>, IMenuRepository
+    public class ModuleRepository : SysDomainRepository<Module>, IModuleRepository
     {
-        public MenuRepository()
+        public ModuleRepository()
         {
             
         }
 
-        public MenuRepository(RepositoryDbContext dbContext) : base(dbContext)
+        public ModuleRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
             
         }

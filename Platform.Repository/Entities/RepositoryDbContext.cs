@@ -229,9 +229,9 @@ namespace SHWD.Platform.Repository.Entities
         public virtual DbSet<DeviceType> DeviceTypes { get; set; }
 
         /// <summary>
-        /// 菜单
+        /// 模块
         /// </summary>
-        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Module> Modules { get; set; }
 
         /// <summary>
         /// 监测数据

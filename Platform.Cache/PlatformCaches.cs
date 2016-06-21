@@ -25,39 +25,39 @@ namespace Platform.Cache
         /// <param name="name"></param>
         /// <param name="cacheItem"></param>
         /// <param name="expires"></param>
-        public static void Add(string name, object cacheItem, bool expires = true)
+        /// <param name="cacheType"></param>
+        public static void Add(string name, object cacheItem, bool expires = true, string cacheType = "default")
         {
-            var cache = new PlatformCache()
+            var cache = GetCache(name);
+            if (cache == null)
             {
-                CacheItem = cacheItem,
-                CacheAddDateTIme = DateTime.Now,
-                CacheExpireInterval = expires ? CacheExpireInterval.DefaultInterval : CacheExpireInterval.NonExpire
-            };
-
-            Instance.Add(name, cache);
-        }
-
-        /// <summary>
-        /// 更新缓存
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="cacheItem"></param>
-        public static void Update(string name, object cacheItem)
-        {
-            var cache = new PlatformCache()
+                cache = new PlatformCache()
+                {
+                    CacheItem = cacheItem,
+                    CacheAddDateTIme = DateTime.Now,
+                    CacheType = cacheType,
+                    CacheExpireInterval = expires ? CacheExpireInterval.DefaultInterval : CacheExpireInterval.NonExpire
+                };
+                Instance.Add(name, cache);
+            }
+            else
             {
-                CacheItem = cacheItem,
-                CacheAddDateTIme = DateTime.Now,
-                CacheExpireInterval = CacheExpireInterval.DefaultInterval
-            };
-
-            Instance.Update(name, cache);
+                cache.CacheAddDateTIme = DateTime.Now;
+            }
         }
 
         /// <summary>
         /// 获取指定名称的缓存
         /// </summary>
         /// <param name="name"></param>
-        public static IPlatformCache GetCache(string name) => Instance.GetPlatformCache(name);
+        public static IPlatformCache GetCache(string name) 
+            => Instance.GetPlatformCache(name);
+
+        /// <summary>
+        /// 删除指定类型的缓存
+        /// </summary>
+        /// <param name="type"></param>
+        public static void DeleteCaches(string type)
+            => Instance.DeleteCacheByType(type);
     }
 }

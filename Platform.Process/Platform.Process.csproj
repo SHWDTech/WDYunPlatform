@@ -35,7 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -47,11 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SignInStatus.cs" />
+    <Compile Include="Enums\SigninResult.cs" />
     <Compile Include="Enums\SystemCacheNames.cs" />
     <Compile Include="Enums\SystemConfigType.cs" />
     <Compile Include="IProcess\IAccountProcess.cs" />
     <Compile Include="IProcess\IControllerProcess.cs" />
     <Compile Include="IProcess\IDeviceProcess.cs" />
+    <Compile Include="IProcess\IPermissionProcess.cs" />
     <Compile Include="IProcess\IProtocolCodingProcess.cs" />
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ICommandTaskProcess.cs" />
@@ -60,6 +71,7 @@
     <Compile Include="Process\ControllerProcess.cs" />
     <Compile Include="Process\DeviceProcess.cs" />
     <Compile Include="Process\GeneralProcess.cs" />
+    <Compile Include="Process\PermissionProcess.cs" />
     <Compile Include="Process\ProtocolCodingProcess.cs" />
     <Compile Include="Process\ProtocolPackageProcess.cs" />
     <Compile Include="Process\SysConfigProcess.cs" />
@@ -83,6 +95,10 @@
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

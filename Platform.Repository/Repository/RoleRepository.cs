@@ -1,4 +1,6 @@
-﻿using SHWD.Platform.Repository.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
@@ -27,5 +29,8 @@ namespace SHWD.Platform.Repository.Repository
 
             return model;
         }
+
+        public List<WdRole> GetPermissions()
+            => DbContext.Set<WdRole>().Include("Permissions").ToList();
     }
 }

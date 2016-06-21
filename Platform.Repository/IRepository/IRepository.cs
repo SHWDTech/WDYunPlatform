@@ -1,6 +1,7 @@
 ﻿using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SHWD.Platform.Repository.IRepository
@@ -15,7 +16,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// 获取所有模型对象
         /// </summary>
         /// <returns>所有模型对象</returns>
-        IEnumerable<T> GetAllModels();
+        IQueryable<T> GetAllModels();
 
         /// <summary>
         /// 获取所有模型对象的列表
@@ -28,7 +29,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// </summary>
         /// <param name="exp">查询条件表达式</param>
         /// <returns>符合查询条件的对象</returns>
-        IEnumerable<T> GetModels(Expression<Func<T, bool>> exp);
+        IQueryable<T> GetModels(Expression<Func<T, bool>> exp);
 
         /// <summary>
         /// 获取指定模型对象的列表

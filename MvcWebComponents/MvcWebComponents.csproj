@@ -69,14 +69,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\WdContext.cs" />
-    <Compile Include="Controller\WdControllerBase.cs" />
+    <Compile Include="Controllers\WdContext.cs" />
+    <Compile Include="Controllers\WdControllerBase.cs" />
+    <Compile Include="Filters\BasicAuthAttribute.cs" />
     <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

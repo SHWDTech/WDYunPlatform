@@ -808,7 +808,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             var userdomain = new Domain
             {
-                Id = Guid.Parse("DB07AB5E-A23F-4238-94CE-D52411199C18"),
+                Id = Guid.Parse("20dd1e7b-0117-4bac-ac75-968e87145594"),
                 DomainName = "乾铎环科",
                 DomianType = DomainType.UserDomain,
                 CreateDateTime = DateTime.Now,
@@ -816,25 +816,47 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 IsEnabled = true
             };
 
+            var qd = new WdUser
+            {
+                Id = Guid.Parse("828ac8fb-5692-499b-b893-18d529740cb4"),
+                UserName = "Admin",
+                LoginName = "Admin",
+                Password = "b5ede2dc220e9c28362d5454d4f6bbd4",
+                Email = "shweidongtech@126.com",
+                Telephone = "18679361687",
+                Status = UserStatus.Enabled,
+                CreateDateTime = DateTime.Now,
+                DomainId = userdomain.Id,
+                Roles = new List<WdRole>(),
+                IsEnabled = true
+            };
+
+            adminRole.Users.Add(qd);
+
             dbContext.SysDomains.Add(userdomain);
+            dbContext.Users.Add(qd);
 
             var menuPermission1 = new Permission()
             {
                 Id = Guid.Parse("c3ac6551-2d34-445d-9bd0-89983518e1ac"),
                 PermissionName = "Monitor",
-                Type = PermissionType.Controller
+                DomainId = userdomain.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
             };
 
             dbContext.Permissions.Add(menuPermission1);
 
-            var menu1 = new Menu()
+            var menu1 = new Module()
             {
                 Id = Guid.Parse("38f7dd0c-9210-4103-92ef-0a32a61e44ee"),
                 DomainId = userdomain.Id,
-                MenuName = "在线监测",
+                ModuleName = "在线监测",
                 Controller = "Monitor",
                 Action = string.Empty,
-                MenuLevel = 1,
+                ModuleLevel = 1,
                 PermissionId = menuPermission1.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -842,27 +864,30 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(menu1);
+            dbContext.Modules.Add(menu1);
 
             var submenuPermission1 = new Permission()
             {
                 Id = Guid.Parse("7ce6e9d1-4a10-4f8f-bde0-49ac1d325c7f"),
                 PermissionName = "Map",
                 ParentPermissionId = menuPermission1.Id,
-                Type = PermissionType.Action
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
             };
 
             dbContext.Permissions.Add(submenuPermission1);
 
-            var submenu1 = new Menu()
+            var submenu1 = new Module()
             {
                 Id = Guid.Parse("7bd18c1a-c73c-4626-ab70-84ce8ac59673"),
                 DomainId = userdomain.Id,
-                ParentMenuId = menu1.Id,
-                MenuName = "地图监测",
+                ParentModuleId = menu1.Id,
+                ModuleName = "地图监测",
                 Controller = "Monitor",
                 Action = "Map",
-                MenuLevel = 2,
+                ModuleLevel = 2,
                 PermissionId = submenuPermission1.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -870,544 +895,666 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu1);
+            dbContext.Modules.Add(submenu1);
 
             var submenuPermission2 = new Permission()
             {
                 Id = Guid.Parse("20920372-3c41-4b94-9038-49a53fbd85bf"),
                 PermissionName = "Actual",
                 ParentPermissionId = menuPermission1.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission2);
-
-            var submenu2 = new Menu()
-            {
-                Id = Guid.Parse("fc7753a0-6ef0-45cf-98fd-81e209acca0f"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu1.Id,
-                MenuName = "实时数据监测",
-                Controller = "Monitor",
-                Action = "Actual",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu2);
+            dbContext.Permissions.Add(submenuPermission2);
+
+            var submenu2 = new Module()
+            {
+                Id = Guid.Parse("fc7753a0-6ef0-45cf-98fd-81e209acca0f"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu1.Id,
+                ModuleName = "实时数据监测",
+                Controller = "Monitor",
+                Action = "Actual",
+                PermissionId = submenuPermission2.Id,
+                ModuleLevel = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu2);
 
             var menuPermission2 = new Permission()
             {
                 Id = Guid.Parse("4272ff65-4393-4d8e-bdbe-3de87a4e2624"),
                 PermissionName = "Query",
-                Type = PermissionType.Controller
-            };
-
-            dbContext.Permissions.Add(menuPermission2);
-
-            var menu2 = new Menu()
-            {
-                Id = Guid.Parse("31c6b62e-c6b8-443a-a082-0f7f1fe3a8b4"),
-                DomainId = userdomain.Id,
-                MenuName = "数据查询",
-                Controller = "Query",
-                Action = string.Empty,
-                MenuLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(menu2);
+            dbContext.Permissions.Add(menuPermission2);
+
+            var menu2 = new Module()
+            {
+                Id = Guid.Parse("31c6b62e-c6b8-443a-a082-0f7f1fe3a8b4"),
+                DomainId = userdomain.Id,
+                ModuleName = "数据查询",
+                Controller = "Query",
+                Action = string.Empty,
+                PermissionId = menuPermission2.Id,
+                ModuleLevel = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(menu2);
 
             var submenuPermission3 = new Permission()
             {
                 Id = Guid.Parse("ac1ff757-38ab-4a85-9615-04623f1ae534"),
                 PermissionName = "CleanRate",
                 ParentPermissionId = menuPermission2.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission3);
-
-            var submenu3 = new Menu()
-            {
-                Id = Guid.Parse("aad53b14-45f3-49de-af05-542f9f7471fb"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu2.Id,
-                MenuName = "清洁度查询",
-                Controller = "Query",
-                Action = "CleanRate",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu3);
+            dbContext.Permissions.Add(submenuPermission3);
+
+            var submenu3 = new Module()
+            {
+                Id = Guid.Parse("aad53b14-45f3-49de-af05-542f9f7471fb"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu2.Id,
+                ModuleName = "清洁度查询",
+                Controller = "Query",
+                Action = "CleanRate",
+                PermissionId = submenuPermission3.Id,
+                ModuleLevel = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu3);
 
             var submenuPermission4 = new Permission()
             {
                 Id = Guid.Parse("d560a920-87b4-4bd0-b297-01271db1a6d7"),
                 PermissionName = "LinkageRate",
                 ParentPermissionId = menuPermission2.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission4);
-
-            var submenu4 = new Menu()
-            {
-                Id = Guid.Parse("8fb76e4d-6ef2-48cb-8a9b-690c420b4526"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu2.Id,
-                MenuName = "联动比查询",
-                Controller = "Query",
-                Action = "LinkageRate",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu4);
+            dbContext.Permissions.Add(submenuPermission4);
+
+            var submenu4 = new Module()
+            {
+                Id = Guid.Parse("8fb76e4d-6ef2-48cb-8a9b-690c420b4526"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu2.Id,
+                ModuleName = "联动比查询",
+                Controller = "Query",
+                Action = "LinkageRate",
+                PermissionId = submenuPermission4.Id,
+                ModuleLevel = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu4);
 
             var submenuPermission5 = new Permission()
             {
                 Id = Guid.Parse("b14be3d9-df37-42a0-ba18-12c6ff073fa1"),
                 PermissionName = "RemovalRate",
                 ParentPermissionId = menuPermission2.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission5);
-
-            var submenu5 = new Menu()
-            {
-                Id = Guid.Parse("36998c60-817b-489d-a3c1-bef5b5117a8a"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu2.Id,
-                MenuName = "去除率查询",
-                Controller = "Query",
-                Action = "RemovalRate",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu5);
+            dbContext.Permissions.Add(submenuPermission5);
+
+            var submenu5 = new Module()
+            {
+                Id = Guid.Parse("36998c60-817b-489d-a3c1-bef5b5117a8a"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu2.Id,
+                ModuleName = "去除率查询",
+                Controller = "Query",
+                Action = "RemovalRate",
+                PermissionId = submenuPermission5.Id,
+                ModuleLevel = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu5);
 
             var submenuPermission6 = new Permission()
             {
                 Id = Guid.Parse("532a61dd-7646-4da4-98c3-a99a5613f4b5"),
                 PermissionName = "Alarm",
                 ParentPermissionId = menuPermission2.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission6);
-
-            var submenu6 = new Menu()
-            {
-                Id = Guid.Parse("85a9b291-9a1d-4d83-afdf-553369b5594d"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu2.Id,
-                MenuName = "报警查询",
-                Controller = "Query",
-                Action = "Alarm",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu6);
+            dbContext.Permissions.Add(submenuPermission6);
+
+            var submenu6 = new Module()
+            {
+                Id = Guid.Parse("85a9b291-9a1d-4d83-afdf-553369b5594d"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu2.Id,
+                ModuleName = "报警查询",
+                Controller = "Query",
+                Action = "Alarm",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission6.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu6);
 
             var submenuPermission7 = new Permission()
             {
                 Id = Guid.Parse("31d560a1-377f-495a-8000-31e2bd8e41eb"),
                 PermissionName = "HistoryData",
                 ParentPermissionId = menuPermission2.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission7);
-
-            var submenu7 = new Menu()
-            {
-                Id = Guid.Parse("c8cfccf0-b872-4c4b-99b2-a6b871f1cf36"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu2.Id,
-                MenuName = "历史数据查询",
-                Controller = "Query",
-                Action = "HistoryData",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu7);
+            dbContext.Permissions.Add(submenuPermission7);
+
+            var submenu7 = new Module()
+            {
+                Id = Guid.Parse("c8cfccf0-b872-4c4b-99b2-a6b871f1cf36"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu2.Id,
+                ModuleName = "历史数据查询",
+                Controller = "Query",
+                Action = "HistoryData",
+                PermissionId = submenuPermission7.Id,
+                ModuleLevel = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu7);
 
             var submenuPermission8 = new Permission()
             {
                 Id = Guid.Parse("4ca5c010-b3e9-40bb-91bb-5da47bf65e70"),
                 PermissionName = "RunningTime",
                 ParentPermissionId = menuPermission2.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission8);
-
-            var submenu8 = new Menu()
-            {
-                Id = Guid.Parse("d0bd6836-d0c3-4d63-b18b-95da6ffb1785"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu2.Id,
-                MenuName = "运行时间",
-                Controller = "Query",
-                Action = "RunningTime",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu8);
+            dbContext.Permissions.Add(submenuPermission8);
+
+            var submenu8 = new Module()
+            {
+                Id = Guid.Parse("d0bd6836-d0c3-4d63-b18b-95da6ffb1785"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu2.Id,
+                ModuleName = "运行时间",
+                Controller = "Query",
+                Action = "RunningTime",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission8.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu8);
 
             var menuPermission3 = new Permission()
             {
                 Id = Guid.Parse("6c6923eb-1b2b-4196-a102-1bb7512d96a7"),
                 PermissionName = "Analysis",
-                Type = PermissionType.Controller
-            };
-
-            dbContext.Permissions.Add(menuPermission3);
-
-            var menu3 = new Menu()
-            {
-                Id = Guid.Parse("4b1b7f18-3b4c-487c-b99a-f1119ab77c2d"),
-                DomainId = userdomain.Id,
-                MenuName = "统计分析",
-                Controller = "Analysis",
-                Action = string.Empty,
-                MenuLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(menu3);
+            dbContext.Permissions.Add(menuPermission3);
+
+            var menu3 = new Module()
+            {
+                Id = Guid.Parse("4b1b7f18-3b4c-487c-b99a-f1119ab77c2d"),
+                DomainId = userdomain.Id,
+                ModuleName = "统计分析",
+                Controller = "Analysis",
+                Action = string.Empty,
+                ModuleLevel = 1,
+                PermissionId = menuPermission3.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(menu3);
 
             var submenuPermission9 = new Permission()
             {
                 Id = Guid.Parse("22ac589e-8355-42cd-bf71-3c119fbb3b9f"),
                 PermissionName = "ExcetionData",
                 ParentPermissionId = menuPermission3.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission9);
-
-            var submenu9 = new Menu()
-            {
-                Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu3.Id,
-                MenuName = "异常数据统计",
-                Controller = "Analysis",
-                Action = "ExcetionData",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu9);
+            dbContext.Permissions.Add(submenuPermission9);
+
+            var submenu9 = new Module()
+            {
+                Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu3.Id,
+                ModuleName = "异常数据统计",
+                Controller = "Analysis",
+                Action = "ExcetionData",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission9.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu9);
 
             var submenuPermission10 = new Permission()
             {
                 Id = Guid.Parse("a4a36255-1b22-4068-850c-2bb16c574fc8"),
                 PermissionName = "RuningStatus",
                 ParentPermissionId = menuPermission3.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission10);
-
-            var submenu10 = new Menu()
-            {
-                Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu3.Id,
-                MenuName = "运行状态统计",
-                Controller = "Analysis",
-                Action = "RuningStatus",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu10);
+            dbContext.Permissions.Add(submenuPermission10);
+
+            var submenu10 = new Module()
+            {
+                Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu3.Id,
+                ModuleName = "运行状态统计",
+                Controller = "Analysis",
+                Action = "RuningStatus",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission10.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu10);
 
             var submenuPermission11 = new Permission()
             {
                 Id = Guid.Parse("8de6c713-8686-4809-a061-36ddafbe30fe"),
                 PermissionName = "GeneralReport",
                 ParentPermissionId = menuPermission3.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission11);
-
-            var submenu11 = new Menu()
-            {
-                Id = Guid.Parse("aff54122-5f3d-4b82-b474-14c1f0be8798"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu3.Id,
-                MenuName = "综合报告",
-                Controller = "Analysis",
-                Action = "GeneralReport",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu11);
+            dbContext.Permissions.Add(submenuPermission11);
+
+            var submenu11 = new Module()
+            {
+                Id = Guid.Parse("aff54122-5f3d-4b82-b474-14c1f0be8798"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu3.Id,
+                ModuleName = "综合报告",
+                Controller = "Analysis",
+                Action = "GeneralReport",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission11.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu11);
 
             var submenuPermission12 = new Permission()
             {
                 Id = Guid.Parse("0b144420-d539-4812-958a-79507dd50811"),
                 PermissionName = "GeneralComparison",
                 ParentPermissionId = menuPermission3.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission12);
-
-            var submenu12 = new Menu()
-            {
-                Id = Guid.Parse("59654562-ee10-466d-898d-62e02c139799"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu3.Id,
-                MenuName = "综合对比",
-                Controller = "Analysis",
-                Action = "GeneralComparison",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu12);
+            dbContext.Permissions.Add(submenuPermission12);
+
+            var submenu12 = new Module()
+            {
+                Id = Guid.Parse("59654562-ee10-466d-898d-62e02c139799"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu3.Id,
+                ModuleName = "综合对比",
+                Controller = "Analysis",
+                Action = "GeneralComparison",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission12.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu12);
 
             var submenuPermission13 = new Permission()
             {
                 Id = Guid.Parse("67b72c18-744d-4439-bcf4-f98b37b4ae03"),
                 PermissionName = "TrendAnalysis",
                 ParentPermissionId = menuPermission3.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission13);
-
-            var submenu13 = new Menu()
-            {
-                Id = Guid.Parse("e1e0bdf8-4961-47fb-87e9-eb1b4dd4ed9e"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu3.Id,
-                MenuName = "趋势分析",
-                Controller = "Analysis",
-                Action = "TrendAnalysis",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu13);
+            dbContext.Permissions.Add(submenuPermission13);
+
+            var submenu13 = new Module()
+            {
+                Id = Guid.Parse("e1e0bdf8-4961-47fb-87e9-eb1b4dd4ed9e"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu3.Id,
+                ModuleName = "趋势分析",
+                Controller = "Analysis",
+                Action = "TrendAnalysis",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission13.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu13);
 
             var submenuPermission14 = new Permission()
             {
                 Id = Guid.Parse("1b716c90-bcd6-4fdb-8d5a-fd3e3419dba7"),
                 PermissionName = "CleanlinessStatistics",
                 ParentPermissionId = menuPermission3.Id,
-                Type = PermissionType.Action
-            };
-
-            dbContext.Permissions.Add(submenuPermission14);
-
-            var submenu14 = new Menu()
-            {
-                Id = Guid.Parse("396604ce-53ec-4f91-a03b-15ec2282cbeb"),
-                DomainId = userdomain.Id,
-                ParentMenuId = menu3.Id,
-                MenuName = "清洁度分类统计",
-                Controller = "Analysis",
-                Action = "CleanlinessStatistics",
-                MenuLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu14);
+            dbContext.Permissions.Add(submenuPermission14);
+
+            var submenu14 = new Module()
+            {
+                Id = Guid.Parse("396604ce-53ec-4f91-a03b-15ec2282cbeb"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu3.Id,
+                ModuleName = "清洁度分类统计",
+                Controller = "Analysis",
+                Action = "CleanlinessStatistics",
+                ModuleLevel = 2,
+                PermissionId = submenuPermission14.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu14);
 
             var menuPermission4 = new Permission()
             {
                 Id = Guid.Parse("6a023746-295a-4e1a-b4b9-70899f23e00f"),
                 PermissionName = "Management",
-                Type = PermissionType.Controller
-            };
-
-            dbContext.Permissions.Add(menuPermission4);
-
-            var menu4 = new Menu()
-            {
-                Id = Guid.Parse("2e6a7a8d-aea2-42c2-b109-ab7dfd4c9b77"),
-                DomainId = userdomain.Id,
-                MenuName = "设备维护",
-                Controller = "Management",
-                Action = string.Empty,
-                MenuLevel = 1,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(menu4);
+            dbContext.Permissions.Add(menuPermission4);
+
+            var menu4 = new Module()
+            {
+                Id = Guid.Parse("2e6a7a8d-aea2-42c2-b109-ab7dfd4c9b77"),
+                DomainId = userdomain.Id,
+                ModuleName = "设备维护",
+                Controller = "Management",
+                Action = string.Empty,
+                ModuleLevel = 1,
+                PermissionId = menuPermission4.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(menu4);
 
             var submenuPermission15 = new Permission()
             {
                 Id = Guid.Parse("fffc7ffb-8e8e-4911-b11a-c196e1a75eb5"),
                 PermissionName = "DeviceMaintenance",
                 ParentPermissionId = menuPermission4.Id,
-                Type = PermissionType.Action
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
             };
 
             dbContext.Permissions.Add(submenuPermission15);
 
-            var submenu15 = new Menu()
+            var submenu15 = new Module()
             {
                 Id = Guid.Parse("3be1c2ec-9651-47d3-8790-745ac0f50d3d"),
                 DomainId = userdomain.Id,
-                ParentMenuId = menu4.Id,
-                MenuName = "检修管理",
+                ParentModuleId = menu4.Id,
+                ModuleName = "检修管理",
                 Controller = "Management",
                 Action = "DeviceMaintenance",
-                MenuLevel = 2,
+                ModuleLevel = 2,
+                PermissionId = submenuPermission15.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu15);
+            dbContext.Modules.Add(submenu15);
 
-            var menu5 = new Menu()
+            var menu5 = new Module()
             {
                 Id = Guid.Parse("67d9a3a7-00f5-468d-9d3f-2cee2e610d3f"),
                 DomainId = userdomain.Id,
-                MenuName = "基础资料",
+                ModuleName = "基础资料",
                 Controller = "Management",
                 Action = string.Empty,
-                MenuLevel = 1,
+                ModuleLevel = 1,
+                PermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(menu5);
+            dbContext.Modules.Add(menu5);
 
-            var submenu16 = new Menu()
+            var submenuPermission16 = new Permission()
+            {
+                Id = Guid.Parse("f9660af0-a03d-4303-b174-2e5a35cfbe5e"),
+                PermissionName = "Area",
+                ParentPermissionId = menuPermission4.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission16);
+
+            var submenu16 = new Module()
             {
                 Id = Guid.Parse("01623cfa-9217-4965-a208-eaeeccb2ac9a"),
                 DomainId = userdomain.Id,
-                ParentMenuId = menu5.Id,
-                MenuName = "区域管理",
+                ParentModuleId = menu5.Id,
+                ModuleName = "区域管理",
                 Controller = "Management",
                 Action = "Area",
-                MenuLevel = 2,
+                ModuleLevel = 2,
+                PermissionId = submenuPermission16.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu16);
+            dbContext.Modules.Add(submenu16);
 
-            var submenu17 = new Menu()
+            var submenuPermission17 = new Permission()
+            {
+                Id = Guid.Parse("ff8745cc-c333-4444-925d-f896d2c1a5aa"),
+                PermissionName = "CateringEnterprise",
+                ParentPermissionId = menuPermission4.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission17);
+
+            var submenu17 = new Module()
             {
                 Id = Guid.Parse("3ac94c2b-0b3f-4322-b677-4055f1a7cd2b"),
                 DomainId = userdomain.Id,
-                ParentMenuId = menu5.Id,
-                MenuName = "餐饮企业管理",
+                ParentModuleId = menu5.Id,
+                ModuleName = "餐饮企业管理",
                 Controller = "Management",
                 Action = "CateringEnterprise",
-                MenuLevel = 2,
+                ModuleLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu17);
+            dbContext.Modules.Add(submenu17);
 
-            var submenu18 = new Menu()
+            var submenuPermission18 = new Permission()
+            {
+                Id = Guid.Parse("939534b1-e02e-40e8-9789-fab1931c17ff"),
+                PermissionName = "Hotel",
+                ParentPermissionId = menuPermission4.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission18);
+
+            var submenu18 = new Module()
             {
                 Id = Guid.Parse("11dc58a6-212f-4ec4-bb23-b3f64be3e4fb"),
                 DomainId = userdomain.Id,
-                ParentMenuId = menu5.Id,
-                MenuName = "酒店管理",
+                ParentModuleId = menu5.Id,
+                ModuleName = "酒店管理",
                 Controller = "Management",
                 Action = "Hotel",
-                MenuLevel = 2,
+                ModuleLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu18);
+            dbContext.Modules.Add(submenu18);
 
-            var submenu19 = new Menu()
+            var submenuPermission19 = new Permission()
+            {
+                Id = Guid.Parse("adcb5b6a-b9eb-42bc-8077-e998e785fa41"),
+                PermissionName = "Device",
+                ParentPermissionId = menuPermission4.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission19);
+
+            var submenu19 = new Module()
             {
                 Id = Guid.Parse("cf898c95-e226-4f18-84d9-4bde6bf9f88d"),
                 DomainId = userdomain.Id,
-                ParentMenuId = menu5.Id,
-                MenuName = "设备管理",
+                ParentModuleId = menu5.Id,
+                ModuleName = "设备管理",
                 Controller = "Management",
                 Action = "Device",
-                MenuLevel = 2,
+                ModuleLevel = 2,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now
             };
 
-            dbContext.Menus.Add(submenu19);
+            dbContext.Modules.Add(submenu19);
         }
     }
 

@@ -34,7 +34,8 @@ namespace SHWD.Platform.Repository.Repository
         public List<WdUser> GetUserByName(string userName) => GetModels(obj => obj.UserName == userName).ToList();
 
         //用户未登录状态时，获取用户的相关信息。
-        public WdUser GetUserByLoginName(string loginName) => DbContext.Set<WdUser>().FirstOrDefault(user => user.LoginName == loginName);
+        public WdUser GetUserByLoginName(string loginName) 
+            => DbContext.Set<WdUser>().FirstOrDefault(user => user.LoginName == loginName);
 
         public WdUser GetUserById(Guid id) => GetModels(obj => obj.Id == id).FirstOrDefault();
 
