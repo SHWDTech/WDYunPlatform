@@ -3,10 +3,16 @@
 @using System.Linq
 @using MvcSiteMapProvider.Web.Html.Models
 
-@foreach (var node in Model) { 
-    @Html.DisplayFor(m => node);
-    
-    if (node != Model.Last()) {
+@foreach (var node in Model)
+{
+
+    if (node != Model.Last())
+    {
+        @Html.ActionLink(node.Title, node.Action, node.Controller)
         <text> &gt; </text>
+    }
+    else
+    {
+        @Html.DisplayFor(m => node)
     }
 }

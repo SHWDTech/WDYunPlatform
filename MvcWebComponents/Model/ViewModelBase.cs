@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SHWDTech.Platform.Model.Model;
+﻿using MvcWebComponents.Controllers;
 
 namespace MvcWebComponents.Model
 {
@@ -11,6 +10,6 @@ namespace MvcWebComponents.Model
         /// <summary>
         /// 菜单列表
         /// </summary>
-        public List<Module> Menus { get; set; }
+        public WdContext Context { get; set; }
     }
 }

@@ -7,6 +7,7 @@ body {
 }
 
 .body-content {
+    width: 100%;
     overflow: auto;
     border-left: 1px solid #e7e7e7;
 }
@@ -42,6 +43,7 @@ ul {
 .nav-container {
     height: 30px;
     border-bottom: 1px solid #e7e7e7;
+    padding: 5px 15px;
 }
 
 .main-container {
@@ -50,7 +52,6 @@ ul {
 
 .sidebar {
     height: 100%;
-    width: 180px;
     min-width: 180px;
 }
 
@@ -70,15 +71,17 @@ ul {
     font-size: 16px;
     border-bottom: 1px solid #e7e7e7;
     background-color: #fff;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.1s ease;
 }
 
     .main-menu-item.active {
         background-color: #0cf;
+        color: #cf0;
     }
 
     .main-menu-item:hover {
         background-color: #0cf;
+        color: #cf0;
     }
 
     .main-menu-item.active .sub-menu {
@@ -101,16 +104,18 @@ ul {
 .sub-menu-item a {
     cursor: pointer;
     display: block;
-    padding: 12px 12px 12px 36px;
+    padding: 8px 12px 8px 30px;
     text-align: left;
     font-size: 14px;
     color: #000;
-    background-color: #e7e7e7;
-    transition: background-color 0.3s ease;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #e7e7e7;
+    transition: background-color 0.3s ease, color 0.1s ease;
 }
 
     .sub-menu-item a:hover {
         background-color: #0cf;
         color: #000;
         text-decoration: none;
+        color: #cf0;
     }

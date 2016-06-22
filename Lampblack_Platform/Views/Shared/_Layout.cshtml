@@ -5,9 +5,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@Html.MvcSiteMap().SiteMapTitle() - 餐饮油烟在线监控平台</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Css", false)
 </head>
 <body>
     <div class="navbar navbar-default topheadnav">
@@ -15,29 +16,14 @@
     <div class="wapper">
         <div class="sidebar">
             <div class="main-menu">
-                @{
-                    foreach (var menu in Model.Menus.Where(menu => menu.ModuleLevel == 1 && menu.IsMenu))
-                    {
-                        <div class="main-menu-item">
-                            <span class="@menu.IconString" aria-hidden="true"></span>
-                            <span>@menu.ModuleName</span>
-                        </div>
-                        <div class="sub-menu">
-                            @{
-                                foreach (var subMenu in Model.Menus.Where(subMenu => subMenu.ParentModuleId == menu.Id && subMenu.IsMenu))
-                                {
-                                    <div class="sub-menu-item">
-                                        @Html.ActionLink(subMenu.ModuleName, subMenu.Action, subMenu.Controller)
-                                    </div>
-                                }
-                            }
-                        </div>
-                                }
-                }
+                @Html.Partial("_menu", Model)
             </div>
         </div>
         <div class="body-content">
-            <div class="nav-container"></div>
+            <div class="nav-container">
+                <span class="glyphicon glyphicon-home"></span>
+                @Html.MvcSiteMap().SiteMapPath()
+            </div>
             <div class="main-container">
                 @RenderBody()
             </div>
@@ -45,13 +31,15 @@
     </div>
     <div class="footer">
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - 餐饮油烟在线监控平台</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/layout")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="/Scripts/Utility/jquery.validate.unobtrusive.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

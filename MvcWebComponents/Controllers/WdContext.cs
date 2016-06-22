@@ -17,7 +17,6 @@ namespace MvcWebComponents.Controllers
             WdUser = user;
             Roles = user.Roles.ToList();
             GetPermissions();
-            GetAuthorizedModules();
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace MvcWebComponents.Controllers
         /// <summary>
         /// 获取拥有授权的模块列表
         /// </summary>
-        private void GetAuthorizedModules()
+        public List<Module> GetAuthorizedModules()
         {
             var modules = PlatformCaches.GetCachesByType("Modules");
 
@@ -80,6 +79,8 @@ namespace MvcWebComponents.Controllers
                     .OrderBy(obj => obj.ModuleIndex)
                     .ToList();
             }
+
+            return Modules;
         }
     }
 }

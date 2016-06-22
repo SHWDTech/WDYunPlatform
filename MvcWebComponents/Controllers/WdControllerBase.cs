@@ -60,7 +60,7 @@ namespace MvcWebComponents.Controllers
         {
             var model = new ViewModelBase()
             {
-                Menus = WdContext.Modules
+                Context = WdContext
             };
             return View(model);
         }
