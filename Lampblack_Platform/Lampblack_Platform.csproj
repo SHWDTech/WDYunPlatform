@@ -336,7 +336,6 @@
     <Content Include="Views\Monitor\Map.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_SiteMap.cshtml" />
-    <Content Include="Views\Shared\_SiteMapLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

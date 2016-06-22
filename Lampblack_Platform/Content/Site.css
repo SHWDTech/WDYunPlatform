@@ -12,24 +12,28 @@ body {
     border-left: 1px solid #e7e7e7;
 }
 
-.container {
-    width: 100%;
-    padding: 15px;
-}
-
 ul {
     list-style: none;
 }
 
 .topheadnav {
     border: 0;
-    border-bottom: 1px solid #e7e7e7;
+    border-bottom: 1px solid #ff6f00;
 }
 
 .navbar {
     margin-bottom: 0;
+    background-color: #33CEC3 ;
 }
 
+.navbar-brand {
+    color: #fff !important;
+    font-size: 24px;
+}
+
+.logout-form a span{
+    color: #fff;
+}
 .wapper {
     width: 100%;
     height: 100%;
@@ -66,19 +70,20 @@ ul {
     padding: 12px;
     text-align: left;
     font-size: 16px;
+    color: #333;
     border-bottom: 1px solid #e7e7e7;
     background-color: #fff;
     transition: background-color 0.3s ease, color 0.1s ease;
 }
 
     .main-menu-item.active {
-        background-color: #0cf;
-        color: #ff0;
+        background-color: #33CEC3;
+        color: #fff;
     }
 
     .main-menu-item:hover {
-        background-color: #0cf;
-        color: #ff0;
+        background-color: #33CEC3;
+        color: #fff;
     }
 
     .main-menu-item.active .sub-menu {
@@ -104,17 +109,17 @@ ul {
     padding: 8px 12px 8px 30px;
     text-align: left;
     font-size: 14px;
-    color: #000;
+    color: #333;
     background-color: #f7f7f7;
     border-bottom: 1px solid #e7e7e7;
     transition: background-color 0.3s ease, color 0.1s ease;
 }
 
     .sub-menu-item a:hover {
-        background-color: #0cf;
+        background-color: #33CEC3;
         color: #000;
         text-decoration: none;
-        color: #ff0;
+        color: #fff;
     }
 
     .sub-menu-item a:link {
