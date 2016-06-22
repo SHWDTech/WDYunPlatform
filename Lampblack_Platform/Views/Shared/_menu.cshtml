@@ -1,4 +1,5 @@
-﻿@using MvcWebComponents.Model
+﻿@using MvcWebComponents.Extensions
+@using MvcWebComponents.Model
 @model ViewModelBase
 @{
     Layout = null;
@@ -17,12 +18,14 @@
                 foreach (var subMenu in modules.Where(subMenu => subMenu.ParentModuleId == menu.Id && subMenu.IsMenu))
                 {
                     <div class="sub-menu-item">
-                        @Ajax.ActionLink(subMenu.ModuleName, subMenu.Action, subMenu.Controller, null, new AjaxOptions()
-                   {
-                       UpdateTargetId = "main-container",
-                       InsertionMode = InsertionMode.Replace,
-                       HttpMethod = "GET"
-                   })
+                        @Ajax.InnerElementActionLink($"<span class='glyphicon glyphicon-play'></span>  <span>{subMenu.ModuleName}</span>",
+                       subMenu.Action, subMenu.Controller, null,
+                       new AjaxOptions()
+                       {
+                           UpdateTargetId = "body-content",
+                           InsertionMode = InsertionMode.Replace,
+                           HttpMethod = "GET"
+                       })
                     </div>
                 }
             }

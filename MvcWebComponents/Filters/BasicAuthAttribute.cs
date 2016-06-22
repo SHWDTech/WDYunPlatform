@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using MvcWebComponents.Controllers;
 
 namespace MvcWebComponents.Filters
 {
@@ -16,17 +18,11 @@ namespace MvcWebComponents.Filters
 
         public void OnAuthorization(AuthorizationContext filterContext)
         {
-            var user = filterContext.HttpContext.User.Identity.Name;
+            var wdContext = (WdContext)filterContext.HttpContext.Items["WdContext"];
 
-            var controllerModule =
-                filterContext.ActionDescriptor.ControllerDescriptor.GetFilterAttributes(true);
-            foreach (var attribute in controllerModule)
+            if (!wdContext.WdUser.IsInRole("Root") &&  !wdContext.WdUser.IsInRole("Admin") && wdContext.Permissions.All(obj => obj.PermissionName != Modules))
             {
-                if (attribute is BasicAuthAttribute)
-                {
-                    var attr = attribute as BasicAuthAttribute;
-                    var modules = attr.Modules;
-                }
+                filterContext.Result = new RedirectResult("");
             }
         }
     }

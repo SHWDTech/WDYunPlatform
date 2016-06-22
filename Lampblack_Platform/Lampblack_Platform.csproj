@@ -185,6 +185,8 @@
     <Content Include="Resources\Images\Site\tweed.png" />
     <Content Include="Resources\Images\Site\weather.png" />
     <Content Include="Resources\Images\Site\wood_pattern.png" />
+    <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\Page\Login.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.min.js" />
@@ -281,6 +283,7 @@
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\Lampblack_Platform.pubxml" />
     <None Include="Scripts\Utility\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\Utility\jquery-2.2.4.js" />
     <Content Include="Scripts\Utility\jquery-2.2.4.min.js" />
@@ -331,7 +334,9 @@
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\Monitor\Map.cshtml" />
-    <Content Include="Views\Shared\_menu.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_SiteMap.cshtml" />
+    <Content Include="Views\Shared\_SiteMapLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

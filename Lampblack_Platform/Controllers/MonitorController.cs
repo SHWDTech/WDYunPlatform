@@ -8,7 +8,7 @@ namespace Lampblack_Platform.Controllers
         [HttpGet]
         public ActionResult Map()
         {
-            return View();
+            return PartialView();
         }
     }
 }

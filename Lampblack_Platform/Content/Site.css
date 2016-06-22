@@ -23,9 +23,6 @@ ul {
 
 .topheadnav {
     border: 0;
-    /*background-color: #1abc9c;
-    background-image: radial-gradient(circle farthest-side at center top, #55e7ca 0, #1abc9c 100%);*/
-    /*border-bottom: 1px solid rgb(255, 175, 0);*/
     border-bottom: 1px solid #e7e7e7;
 }
 
@@ -76,12 +73,12 @@ ul {
 
     .main-menu-item.active {
         background-color: #0cf;
-        color: #cf0;
+        color: #ff0;
     }
 
     .main-menu-item:hover {
         background-color: #0cf;
-        color: #cf0;
+        color: #ff0;
     }
 
     .main-menu-item.active .sub-menu {
@@ -117,5 +114,9 @@ ul {
         background-color: #0cf;
         color: #000;
         text-decoration: none;
-        color: #cf0;
+        color: #ff0;
+    }
+
+    .sub-menu-item a:link {
+        text-decoration: none;
     }

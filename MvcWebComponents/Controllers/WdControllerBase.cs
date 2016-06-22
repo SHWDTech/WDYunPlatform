@@ -41,6 +41,7 @@ namespace MvcWebComponents.Controllers
         {
             var currentUser = _controllerProcess.GetCurrentUser(context);
             WdContext = new WdContext(currentUser);
+            context.Items.Add("WdContext", WdContext);
 
             RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>()
             {

@@ -49,7 +49,7 @@ namespace Web_Cloud_Platform.Controllers
 
             var signresult = _accountProcess.PasswordSignIn(model.LoginName, model.Password, false);
 
-            switch (signresult)
+            switch (signresult.Status)
             {
                     case SignInStatus.Success:
                     if (string.IsNullOrWhiteSpace(returnUrl)) return RedirectToAction("Index", "Home");

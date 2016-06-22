@@ -16,14 +16,11 @@
     <div class="wapper">
         <div class="sidebar">
             <div class="main-menu">
-                @Html.Partial("_menu", Model)
+                @Html.Partial("_Menu", Model)
             </div>
         </div>
-        <div class="body-content">
-            <div class="nav-container">
-                <span class="glyphicon glyphicon-home"></span>
-                @Html.MvcSiteMap().SiteMapPath()
-            </div>
+        <div class="body-content" id="body-content">
+            @Html.Partial("_SiteMap")
             <div class="main-container">
                 @RenderBody()
             </div>
@@ -38,8 +35,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/layout")
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="/Scripts/Utility/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/Utility/jquery.unobtrusive-ajax.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
