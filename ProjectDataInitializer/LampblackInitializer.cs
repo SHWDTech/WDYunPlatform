@@ -90,11 +90,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             user.CreateUserId = user.Id;
             user.LastUpdateUserId = user.Id;
             user.LastUpdateDateTime = DateTime.Now;
-            user.LastLoginDateTime = DateTime.Now;
             commUser.CreateUserId = user.Id;
             commUser.LastUpdateUserId = user.Id;
             commUser.LastUpdateDateTime = DateTime.Now;
-            commUser.LastLoginDateTime = DateTime.Now;
             domain.CreateUserId = user.Id;
             domain.LastUpdateUserId = user.Id;
             domain.LastUpdateDateTime = DateTime.Now;
@@ -821,11 +819,14 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("828ac8fb-5692-499b-b893-18d529740cb4"),
                 UserName = "Admin",
                 LoginName = "Admin",
-                Password = "b5ede2dc220e9c28362d5454d4f6bbd4",
+                Password = "bced6fd149cfcdb85741768da12e41c6", //admin
                 Email = "shweidongtech@126.com",
                 Telephone = "18679361687",
                 Status = UserStatus.Enabled,
                 CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
                 DomainId = userdomain.Id,
                 Roles = new List<WdRole>(),
                 IsEnabled = true
@@ -855,8 +856,11 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DomainId = userdomain.Id,
                 ModuleName = "在线监测",
                 Controller = "Monitor",
+                IconString = "glyphicon glyphicon-facetime-video",
                 Action = string.Empty,
                 ModuleLevel = 1,
+                ModuleIndex = 1000,
+                IsMenu = true,
                 PermissionId = menuPermission1.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -869,6 +873,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission1 = new Permission()
             {
                 Id = Guid.Parse("7ce6e9d1-4a10-4f8f-bde0-49ac1d325c7f"),
+                DomainId = userdomain.Id,
                 PermissionName = "Map",
                 ParentPermissionId = menuPermission1.Id,
                 CreateUserId = user.Id,
@@ -888,6 +893,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Monitor",
                 Action = "Map",
                 ModuleLevel = 2,
+                ModuleIndex = 2000,
+                IsMenu = true,
                 PermissionId = submenuPermission1.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -900,6 +907,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission2 = new Permission()
             {
                 Id = Guid.Parse("20920372-3c41-4b94-9038-49a53fbd85bf"),
+                DomainId = userdomain.Id,
                 PermissionName = "Actual",
                 ParentPermissionId = menuPermission1.Id,
                 CreateUserId = user.Id,
@@ -920,6 +928,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Action = "Actual",
                 PermissionId = submenuPermission2.Id,
                 ModuleLevel = 2,
+                ModuleIndex = 2001,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -931,6 +941,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var menuPermission2 = new Permission()
             {
                 Id = Guid.Parse("4272ff65-4393-4d8e-bdbe-3de87a4e2624"),
+                DomainId = userdomain.Id,
                 PermissionName = "Query",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -945,10 +956,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("31c6b62e-c6b8-443a-a082-0f7f1fe3a8b4"),
                 DomainId = userdomain.Id,
                 ModuleName = "数据查询",
+                IconString = "glyphicon glyphicon-search",
                 Controller = "Query",
                 Action = string.Empty,
                 PermissionId = menuPermission2.Id,
                 ModuleLevel = 1,
+                ModuleIndex = 1001,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -960,6 +974,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission3 = new Permission()
             {
                 Id = Guid.Parse("ac1ff757-38ab-4a85-9615-04623f1ae534"),
+                DomainId = userdomain.Id,
                 PermissionName = "CleanRate",
                 ParentPermissionId = menuPermission2.Id,
                 CreateUserId = user.Id,
@@ -980,6 +995,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Action = "CleanRate",
                 PermissionId = submenuPermission3.Id,
                 ModuleLevel = 2,
+                ModuleIndex = 2002,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -991,6 +1008,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission4 = new Permission()
             {
                 Id = Guid.Parse("d560a920-87b4-4bd0-b297-01271db1a6d7"),
+                DomainId = userdomain.Id,
                 PermissionName = "LinkageRate",
                 ParentPermissionId = menuPermission2.Id,
                 CreateUserId = user.Id,
@@ -1011,6 +1029,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Action = "LinkageRate",
                 PermissionId = submenuPermission4.Id,
                 ModuleLevel = 2,
+                ModuleIndex = 2003,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -1022,6 +1042,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission5 = new Permission()
             {
                 Id = Guid.Parse("b14be3d9-df37-42a0-ba18-12c6ff073fa1"),
+                DomainId = userdomain.Id,
                 PermissionName = "RemovalRate",
                 ParentPermissionId = menuPermission2.Id,
                 CreateUserId = user.Id,
@@ -1042,6 +1063,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Action = "RemovalRate",
                 PermissionId = submenuPermission5.Id,
                 ModuleLevel = 2,
+                ModuleIndex = 2004,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -1053,6 +1076,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission6 = new Permission()
             {
                 Id = Guid.Parse("532a61dd-7646-4da4-98c3-a99a5613f4b5"),
+                DomainId = userdomain.Id,
                 PermissionName = "Alarm",
                 ParentPermissionId = menuPermission2.Id,
                 CreateUserId = user.Id,
@@ -1072,6 +1096,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Query",
                 Action = "Alarm",
                 ModuleLevel = 2,
+                ModuleIndex = 2005,
+                IsMenu = true,
                 PermissionId = submenuPermission6.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1084,6 +1110,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission7 = new Permission()
             {
                 Id = Guid.Parse("31d560a1-377f-495a-8000-31e2bd8e41eb"),
+                DomainId = userdomain.Id,
                 PermissionName = "HistoryData",
                 ParentPermissionId = menuPermission2.Id,
                 CreateUserId = user.Id,
@@ -1104,6 +1131,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Action = "HistoryData",
                 PermissionId = submenuPermission7.Id,
                 ModuleLevel = 2,
+                ModuleIndex = 2006,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -1115,6 +1144,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission8 = new Permission()
             {
                 Id = Guid.Parse("4ca5c010-b3e9-40bb-91bb-5da47bf65e70"),
+                DomainId = userdomain.Id,
                 PermissionName = "RunningTime",
                 ParentPermissionId = menuPermission2.Id,
                 CreateUserId = user.Id,
@@ -1134,6 +1164,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Query",
                 Action = "RunningTime",
                 ModuleLevel = 2,
+                ModuleIndex = 2007,
+                IsMenu = true,
                 PermissionId = submenuPermission8.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1146,6 +1178,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var menuPermission3 = new Permission()
             {
                 Id = Guid.Parse("6c6923eb-1b2b-4196-a102-1bb7512d96a7"),
+                DomainId = userdomain.Id,
                 PermissionName = "Analysis",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1160,9 +1193,12 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("4b1b7f18-3b4c-487c-b99a-f1119ab77c2d"),
                 DomainId = userdomain.Id,
                 ModuleName = "统计分析",
+                IconString = "glyphicon glyphicon-picture",
                 Controller = "Analysis",
                 Action = string.Empty,
                 ModuleLevel = 1,
+                ModuleIndex = 1002,
+                IsMenu = true,
                 PermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1175,6 +1211,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission9 = new Permission()
             {
                 Id = Guid.Parse("22ac589e-8355-42cd-bf71-3c119fbb3b9f"),
+                DomainId = userdomain.Id,
                 PermissionName = "ExcetionData",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
@@ -1194,6 +1231,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Analysis",
                 Action = "ExcetionData",
                 ModuleLevel = 2,
+                ModuleIndex = 2008,
+                IsMenu = true,
                 PermissionId = submenuPermission9.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1206,6 +1245,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission10 = new Permission()
             {
                 Id = Guid.Parse("a4a36255-1b22-4068-850c-2bb16c574fc8"),
+                DomainId = userdomain.Id,
                 PermissionName = "RuningStatus",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
@@ -1218,13 +1258,15 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             var submenu10 = new Module()
             {
-                Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
+                Id = Guid.Parse("70a4d091-26c4-4edc-80ba-63708998513f"),
                 DomainId = userdomain.Id,
                 ParentModuleId = menu3.Id,
                 ModuleName = "运行状态统计",
                 Controller = "Analysis",
                 Action = "RuningStatus",
                 ModuleLevel = 2,
+                ModuleIndex = 2009,
+                IsMenu = true,
                 PermissionId = submenuPermission10.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1237,6 +1279,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission11 = new Permission()
             {
                 Id = Guid.Parse("8de6c713-8686-4809-a061-36ddafbe30fe"),
+                DomainId = userdomain.Id,
                 PermissionName = "GeneralReport",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
@@ -1256,6 +1299,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Analysis",
                 Action = "GeneralReport",
                 ModuleLevel = 2,
+                ModuleIndex = 2010,
+                IsMenu = true,
                 PermissionId = submenuPermission11.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1268,6 +1313,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission12 = new Permission()
             {
                 Id = Guid.Parse("0b144420-d539-4812-958a-79507dd50811"),
+                DomainId = userdomain.Id,
                 PermissionName = "GeneralComparison",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
@@ -1287,6 +1333,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Analysis",
                 Action = "GeneralComparison",
                 ModuleLevel = 2,
+                ModuleIndex = 2011,
+                IsMenu = true,
                 PermissionId = submenuPermission12.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1299,6 +1347,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission13 = new Permission()
             {
                 Id = Guid.Parse("67b72c18-744d-4439-bcf4-f98b37b4ae03"),
+                DomainId = userdomain.Id,
                 PermissionName = "TrendAnalysis",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
@@ -1318,6 +1367,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Analysis",
                 Action = "TrendAnalysis",
                 ModuleLevel = 2,
+                ModuleIndex = 2012,
+                IsMenu = true,
                 PermissionId = submenuPermission13.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1330,6 +1381,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission14 = new Permission()
             {
                 Id = Guid.Parse("1b716c90-bcd6-4fdb-8d5a-fd3e3419dba7"),
+                DomainId = userdomain.Id,
                 PermissionName = "CleanlinessStatistics",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
@@ -1349,6 +1401,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Analysis",
                 Action = "CleanlinessStatistics",
                 ModuleLevel = 2,
+                ModuleIndex = 2013,
+                IsMenu = true,
                 PermissionId = submenuPermission14.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1361,6 +1415,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var menuPermission4 = new Permission()
             {
                 Id = Guid.Parse("6a023746-295a-4e1a-b4b9-70899f23e00f"),
+                DomainId = userdomain.Id,
                 PermissionName = "Management",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1375,9 +1430,12 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("2e6a7a8d-aea2-42c2-b109-ab7dfd4c9b77"),
                 DomainId = userdomain.Id,
                 ModuleName = "设备维护",
+                IconString = "glyphicon glyphicon-wrench",
                 Controller = "Management",
                 Action = string.Empty,
                 ModuleLevel = 1,
+                ModuleIndex = 1003,
+                IsMenu = true,
                 PermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1390,6 +1448,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission15 = new Permission()
             {
                 Id = Guid.Parse("fffc7ffb-8e8e-4911-b11a-c196e1a75eb5"),
+                DomainId = userdomain.Id,
                 PermissionName = "DeviceMaintenance",
                 ParentPermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
@@ -1409,6 +1468,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Management",
                 Action = "DeviceMaintenance",
                 ModuleLevel = 2,
+                ModuleIndex = 2014,
+                IsMenu = true,
                 PermissionId = submenuPermission15.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1423,9 +1484,12 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("67d9a3a7-00f5-468d-9d3f-2cee2e610d3f"),
                 DomainId = userdomain.Id,
                 ModuleName = "基础资料",
+                IconString = "glyphicon glyphicon-file",
                 Controller = "Management",
                 Action = string.Empty,
                 ModuleLevel = 1,
+                ModuleIndex = 1004,
+                IsMenu = true,
                 PermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1438,6 +1502,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission16 = new Permission()
             {
                 Id = Guid.Parse("f9660af0-a03d-4303-b174-2e5a35cfbe5e"),
+                DomainId = userdomain.Id,
                 PermissionName = "Area",
                 ParentPermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
@@ -1457,6 +1522,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Management",
                 Action = "Area",
                 ModuleLevel = 2,
+                ModuleIndex = 2015,
+                IsMenu = true,
                 PermissionId = submenuPermission16.Id,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
@@ -1469,6 +1536,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission17 = new Permission()
             {
                 Id = Guid.Parse("ff8745cc-c333-4444-925d-f896d2c1a5aa"),
+                DomainId = userdomain.Id,
                 PermissionName = "CateringEnterprise",
                 ParentPermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
@@ -1488,6 +1556,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Management",
                 Action = "CateringEnterprise",
                 ModuleLevel = 2,
+                ModuleIndex = 2016,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -1499,6 +1569,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission18 = new Permission()
             {
                 Id = Guid.Parse("939534b1-e02e-40e8-9789-fab1931c17ff"),
+                DomainId = userdomain.Id,
                 PermissionName = "Hotel",
                 ParentPermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
@@ -1518,6 +1589,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Management",
                 Action = "Hotel",
                 ModuleLevel = 2,
+                ModuleIndex = 2017,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -1529,6 +1602,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             var submenuPermission19 = new Permission()
             {
                 Id = Guid.Parse("adcb5b6a-b9eb-42bc-8077-e998e785fa41"),
+                DomainId = userdomain.Id,
                 PermissionName = "Device",
                 ParentPermissionId = menuPermission4.Id,
                 CreateUserId = user.Id,
@@ -1548,6 +1622,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Controller = "Management",
                 Action = "Device",
                 ModuleLevel = 2,
+                ModuleIndex = 2018,
+                IsMenu = true,
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
@@ -1555,6 +1631,237 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.Modules.Add(submenu19);
+
+            var menuPermission5 = new Permission()
+            {
+                Id = Guid.Parse("66711a7a-5345-4f66-b5fd-d17fd309244d"),
+                DomainId = userdomain.Id,
+                PermissionName = "SystemManagement",
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(menuPermission5);
+
+            var menu6 = new Module()
+            {
+                Id = Guid.Parse("1eb7fb6c-d18a-4205-ae97-c65a0a84762d"),
+                DomainId = userdomain.Id,
+                ModuleName = "系统管理",
+                IconString = "glyphicon glyphicon-cog",
+                Controller = "SystemManagement",
+                Action = string.Empty,
+                ModuleLevel = 1,
+                ModuleIndex = 1005,
+                IsMenu = true,
+                PermissionId = menuPermission5.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(menu6);
+
+            var submenuPermission20 = new Permission()
+            {
+                Id = Guid.Parse("cd324a23-e2f4-4ccc-9649-0bebad01d724"),
+                DomainId = userdomain.Id,
+                PermissionName = "UsersManage",
+                ParentPermissionId = menuPermission5.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission20);
+
+            var submenu20 = new Module()
+            {
+                Id = Guid.Parse("acaf8062-2896-44db-b4df-00c71d267a14"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu6.Id,
+                ModuleName = "用户管理",
+                Controller = "SystemManagement",
+                Action = "UsersManage",
+                ModuleLevel = 2,
+                ModuleIndex = 2019,
+                IsMenu = true,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu20);
+
+            var submenuPermission21 = new Permission()
+            {
+                Id = Guid.Parse("6555fdd3-456f-4949-b33e-1705e9063d8c"),
+                DomainId = userdomain.Id,
+                PermissionName = "PermissionManage",
+                ParentPermissionId = menuPermission5.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission21);
+
+            var submenu21 = new Module()
+            {
+                Id = Guid.Parse("7773c894-7e39-47bf-859e-11ba96fc1a88"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu6.Id,
+                ModuleName = "权限管理",
+                Controller = "SystemManagement",
+                Action = "PermissionManage",
+                ModuleLevel = 2,
+                ModuleIndex = 2020,
+                IsMenu = true,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu21);
+
+            var submenuPermission22 = new Permission()
+            {
+                Id = Guid.Parse("36bdd32c-e4d0-41df-a211-12500dbff7e9"),
+                DomainId = userdomain.Id,
+                PermissionName = "DepartmentManage",
+                ParentPermissionId = menuPermission5.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission22);
+
+            var submenu22 = new Module()
+            {
+                Id = Guid.Parse("51e6e0d5-7499-415a-bc21-530cd2c60f38"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu6.Id,
+                ModuleName = "部门管理",
+                Controller = "SystemManagement",
+                Action = "DepartmentManage",
+                ModuleLevel = 2,
+                ModuleIndex = 2021,
+                IsMenu = true,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu22);
+
+            var submenuPermission23 = new Permission()
+            {
+                Id = Guid.Parse("6a1e5d80-b611-465c-89b5-d2019cd2510f"),
+                DomainId = userdomain.Id,
+                PermissionName = "RoleManage",
+                ParentPermissionId = menuPermission5.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission23);
+
+            var submenu23 = new Module()
+            {
+                Id = Guid.Parse("abe7305c-0112-4c78-9f32-045197cf4e4c"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu6.Id,
+                ModuleName = "角色管理",
+                Controller = "SystemManagement",
+                Action = "RoleManage",
+                ModuleLevel = 2,
+                ModuleIndex = 2022,
+                IsMenu = true,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu23);
+
+            var menuPermission6 = new Permission()
+            {
+                Id = Guid.Parse("4ebb5066-56e1-4ad5-933b-a86c7454cc0d"),
+                DomainId = userdomain.Id,
+                PermissionName = "Summary",
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(menuPermission6);
+
+            var menu7 = new Module()
+            {
+                Id = Guid.Parse("68919b20-56d4-4bc4-bed5-d5114061a6a5"),
+                DomainId = userdomain.Id,
+                ModuleName = "综合判断",
+                IconString = "glyphicon glyphicon-retweet",
+                Controller = "Summary",
+                Action = string.Empty,
+                ModuleLevel = 1,
+                ModuleIndex = 1006,
+                IsMenu = true,
+                PermissionId = menuPermission6.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(menu7);
+
+            var submenuPermission24 = new Permission()
+            {
+                Id = Guid.Parse("6d0e94dc-d3e9-404e-90a0-06f8bf95cc02"),
+                DomainId = userdomain.Id,
+                PermissionName = "GeneralSummary",
+                ParentPermissionId = menuPermission5.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Permissions.Add(submenuPermission24);
+
+            var submenu24 = new Module()
+            {
+                Id = Guid.Parse("5d0cef23-ecaf-46fc-bd5e-d36c07f4ef2d"),
+                DomainId = userdomain.Id,
+                ParentModuleId = menu7.Id,
+                ModuleName = "综合判断",
+                Controller = "Summary",
+                Action = "GeneralSummary",
+                ModuleLevel = 2,
+                ModuleIndex = 2023,
+                IsMenu = true,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now
+            };
+
+            dbContext.Modules.Add(submenu24);
         }
     }
 

@@ -86,6 +86,18 @@
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Platform.Cache\Platform.Cache.csproj">
+      <Project>{5EE1E1C1-00A8-4D4C-A0EA-55CB528F7ED7}</Project>
+      <Name>Platform.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Process\Platform.Process.csproj">
+      <Project>{9BB3C321-2F61-4EFE-9315-B1A035470A57}</Project>
+      <Name>Platform.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">
+      <Project>{3CAF3855-4870-4065-8755-5AF2897BD10A}</Project>
+      <Name>Platform.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

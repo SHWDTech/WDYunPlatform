@@ -17,7 +17,7 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.LoginTitle = "餐饮油烟在线监控平台";
-            return View();
+            return DefaultView();
         }
 
         [HttpPost]
@@ -27,7 +27,8 @@ namespace Lampblack_Platform.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                ViewBag.LoginTitle = "餐饮油烟在线监控平台";
+                return DefaultView(model);
             }
 
             var result = Process.PasswordSignIn(model.LoginName, model.Password, model.RememberMe);
@@ -36,7 +37,7 @@ namespace Lampblack_Platform.Controllers
             {
                 ViewBag.LoginTitle = "餐饮油烟在线监控平台";
                 ModelState.AddModelError(result.ErrorElement, result.ErrorMessage);
-                return View(model);
+                return DefaultView(model);
             }
 
             if (string.IsNullOrWhiteSpace(returnUrl))

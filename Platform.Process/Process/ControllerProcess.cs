@@ -31,6 +31,6 @@ namespace Platform.Process.Process
             PlatformCaches.Add($"{user.DomainId}-{SystemCacheNames.DomainCompany}", information);
 
             return information;
-        } 
+        }
     }
 }

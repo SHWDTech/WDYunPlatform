@@ -27,6 +27,12 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "模块层级")]
         public virtual int ModuleLevel { get; set; }
 
+        [Display(Name = "模块索引值")]
+        public virtual int ModuleIndex { get; set; }
+
+        [Display(Name = "菜单项图标字符串")]
+        public virtual string IconString { get; set; }
+
         [Required]
         [Display(Name = "模块名称")]
         [MaxLength(25)]

@@ -29,9 +29,19 @@ namespace SHWDTech.Platform.Model.IModel
         int ModuleLevel { get; set; }
 
         /// <summary>
+        /// 模块索引
+        /// </summary>
+        int ModuleIndex { get; set; }
+
+        /// <summary>
         /// 模块名称
         /// </summary>
         string ModuleName { get; set; }
+
+        /// <summary>
+        /// 菜单项图标字符串
+        /// </summary>
+        string IconString { get; set; }
 
         /// <summary>
         /// 模块所属控制器

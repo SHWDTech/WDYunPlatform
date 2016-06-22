@@ -25,9 +25,6 @@
                         <h3>@ViewBag.LoginTitle</h3>
                     </div>
                     <span class="login-spliter"></span>
-                    <div>
-                        @Html.ValidationSummary(null, new { @class = "text-danger" })
-                    </div>
                     <div class="textbox-wrap">
                         <div class="input-group">
                             <span class="input-group-addon" aria-hidden="true">
@@ -41,8 +38,11 @@
                             <span class="input-group-addon" aria-hidden="true">
                                 <span class="glyphicon glyphicon-lock"></span>
                             </span>
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "请输入密码" })
+                            @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = "请输入密码"})
                         </div>
+                    </div>
+                    <div>
+                        @Html.ValidationSummary(null, new { @class = "text-danger" })
                     </div>
                     <div class="login-form-action">
                         <div class="checkbox-inline">

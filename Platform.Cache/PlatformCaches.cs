@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Platform.Cache.Enums;
 using Platform.Cache.Manager;
 
@@ -52,6 +53,9 @@ namespace Platform.Cache
         /// <param name="name"></param>
         public static IPlatformCache GetCache(string name) 
             => Instance.GetPlatformCache(name);
+
+        public static List<IPlatformCache> GetCachesByType(string type)
+            => Instance.GetCachesByType(type);
 
         /// <summary>
         /// 删除指定类型的缓存

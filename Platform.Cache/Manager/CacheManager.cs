@@ -45,7 +45,11 @@ namespace Platform.Cache.Manager
             }
         }
 
-        public IPlatformCache GetPlatformCache(string cacheName) => _platformCaches.ContainsKey(cacheName) ? _platformCaches[cacheName] : null;
+        public IPlatformCache GetPlatformCache(string cacheName) 
+            => _platformCaches.ContainsKey(cacheName) ? _platformCaches[cacheName] : null;
+
+        public List<IPlatformCache> GetCachesByType(string type)
+            => _platformCaches.Where(cache => cache.Value.CacheType == type).Select(obj => obj.Value).ToList();
 
         public void DeleteCacheByType(string type)
         {

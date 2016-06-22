@@ -187,9 +187,6 @@
     <Content Include="Scripts\Page\Login.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -292,6 +289,7 @@
     <Content Include="Scripts\Utility\jquery.validate.min.js" />
     <Content Include="Scripts\Utility\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Utility\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Utility\layout.js" />
     <Content Include="Scripts\Utility\modernizr-2.8.3.js" />
     <Content Include="Scripts\Utility\moment-with-locales.js" />
     <Content Include="Scripts\Utility\moment-with-locales.min.js" />
@@ -337,7 +335,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Platform.Model.csproj">

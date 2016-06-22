@@ -5,6 +5,7 @@ using System.Web.Security;
 using Platform.Process.Enums;
 using SHWD.Platform.Repository.Entities;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Utility;
 
 namespace Platform.Process.Process
 {
@@ -25,12 +26,14 @@ namespace Platform.Process.Process
             var result = new SignInResult();
             using (var context = new RepositoryDbContext())
             {
+                var md5Password = Globals.GetMd5(password);
                 var user = context.Set<WdUser>()
-                        .FirstOrDefault(obj => obj.LoginName == loginName && obj.Password == password && obj.IsDeleted);
+                        .FirstOrDefault(obj => obj.LoginName == loginName && obj.Password == md5Password && obj.IsEnabled);
 
                 if (user == null)
                 {
                     result.Status = SignInStatus.Failure;
+                    result.ErrorElement = "Password";
                     result.ErrorMessage = "无效的用户名或登陆密码";
                     return result;
                 }

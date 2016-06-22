@@ -1,4 +1,6 @@
-﻿namespace Platform.Cache.Manager
+﻿using System.Collections.Generic;
+
+namespace Platform.Cache.Manager
 {
     /// <summary>
     /// 缓存管理器接口
@@ -25,6 +27,13 @@
         /// <param name="cacheName"></param>
         /// <returns></returns>
         IPlatformCache GetPlatformCache(string cacheName);
+
+        /// <summary>
+        /// 获取指定类型的缓存
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        List<IPlatformCache> GetCachesByType(string type);
 
         /// <summary>
         /// 删除指定类型的缓存

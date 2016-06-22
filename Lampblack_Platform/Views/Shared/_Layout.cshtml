@@ -10,23 +10,37 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-<div class="navbar navbar-default topheadnav">
-</div>
-    <div class="body-content">
+    <div class="navbar navbar-default topheadnav">
+    </div>
+    <div class="wapper">
         <div class="sidebar">
-            <ul>
+            <div class="main-menu">
                 @{
-                    foreach (var menu in Model.Menus)
+                    foreach (var menu in Model.Menus.Where(menu => menu.ModuleLevel == 1 && menu.IsMenu))
                     {
-                        <li>
-                            @menu.ModuleName
-                        </li>
-                    }
+                        <div class="main-menu-item">
+                            <span class="@menu.IconString" aria-hidden="true"></span>
+                            <span>@menu.ModuleName</span>
+                        </div>
+                        <div class="sub-menu">
+                            @{
+                                foreach (var subMenu in Model.Menus.Where(subMenu => subMenu.ParentModuleId == menu.Id && subMenu.IsMenu))
+                                {
+                                    <div class="sub-menu-item">
+                                        @Html.ActionLink(subMenu.ModuleName, subMenu.Action, subMenu.Controller)
+                                    </div>
+                                }
+                            }
+                        </div>
+                                }
                 }
-            </ul>
+            </div>
         </div>
-        <div class="container">
-            @RenderBody()
+        <div class="body-content">
+            <div class="nav-container"></div>
+            <div class="main-container">
+                @RenderBody()
+            </div>
         </div>
     </div>
     <div class="footer">
@@ -37,6 +51,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/layout")
     @RenderSection("scripts", required: false)
 </body>
 </html>
