@@ -196,3 +196,8 @@ label {
     color: #fff;
     background-color: #33cec3
 }
+
+.single-content {
+    display: flex;
+    height: 100%;
+}
