@@ -1,24 +1,49 @@
 ﻿@{
-    Layout = "~/Views/Shared/_SiteMapBar.cshtml";
+    Layout = null;
 }
 
 <div style="display: flex;">
-    <div id="mapContainer" class="float_card" style="width: 74%; height: 100%; min-height: 660px; margin-right: 1%;">
+    <div id="mapContainer" class="float_card" style="width: 74%; height: 100%; margin-right: 1%;">
 
     </div>
-    <div id="searchTable" class="panel panel-default float_card" style="width: 25%; min-height: 660px; margin: 0; padding: 5px;">
-        <div class="form-inline">
-            <label>区县：</label>
-            <select class="form-control"></select>
+    <div id="searchTable" class="panel panel-default float_card" style="width: 25%;">
+        <div class="panel-body" style="background-color: #33CEC3 ;">
+            <div class="horizontal-group">
+                <label class="lbl60 lbl-white">区县：</label>
+                <select class="form-control">
+                    <option value="" disabled selected>请选择区县</option>
+                </select>
+            </div>
+            <div class="horizontal-group">
+                <label class="lbl60 lbl-white">街道：</label>
+                <select class="form-control">
+                    <option value="" disabled selected>请选择街道</option>
+                </select>
+            </div>
+            <div class="horizontal-group">
+                <label class="lbl60 lbl-white">酒店：</label>
+                <input type="text" class="form-control" style="margin-right: 5px;"placeholder="输入酒店名称" />
+                <input type="button" class="form-control btn btn-main" value="查询" style="width: 50px;" />
+            </div>
         </div>
-        <div class="form-inline">
-            <label>街道：</label>
-            <select class="form-control"></select>
-        </div>
-        <div class="form-inline">
-            <label>酒店：</label>
-            <input type="text" class="form-control" />
-            <input type="button" class="form-control" value="查询" />
+        <div class="panel-body">
+            <table class="table table-bordered table-hover info">
+                <thead>
+                    <tr>
+                        <td class="text-center table-head">
+                            饭店列表
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td>某个饭店</td>
+                    </tr>
+                    <tr class="text-center">
+                        <td>另外一个饭店</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

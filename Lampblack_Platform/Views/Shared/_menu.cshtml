@@ -5,6 +5,10 @@
     Layout = null;
 }
 
+<div style="border-bottom: 1px solid #e7e7e7; padding: 12px; font-size: 16px; color: #ff6f00;">
+    <span class="glyphicon glyphicon-menu-hamburger"></span>
+    <span>系统菜单</span>
+</div>
 @{
     var modules = Model.Context.GetAuthorizedModules();
     foreach (var menu in modules.Where(menu => menu.ModuleLevel == 1 && menu.IsMenu))

@@ -12,23 +12,21 @@
 </head>
 <body>
     <div class="navbar navbar-default topheadnav">
-        <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("餐饮油烟在线监控平台", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right logout-form" }))
-            {
-                @Html.AntiForgeryToken()
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="javascript:document.getElementById('logoutForm').submit()">
-                            <span class="glyphicon glyphicon-log-out"></span>
-                            <span>退出</span>
-                        </a>
-                    </li>
-                </ul>
-            }
+        <div class="navbar-header">
+            @Html.ActionLink("餐饮油烟在线监控平台", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right logout-form" }))
+            {
+            @Html.AntiForgeryToken()
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                        <span>退出</span>
+                    </a>
+                </li>
+            </ul>
+        }
     </div>
     <div class="wapper">
         <div class="sidebar">
@@ -37,18 +35,13 @@
             </div>
         </div>
         <div class="body-content" id="body-content">
-            <div class="siteMap">
+            @*<div class="siteMap">
                 @Html.MvcSiteMap().SiteMapPath()
-            </div>
+            </div>*@
             <div class="main-container">
                 @RenderBody()
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <footer>
-            <p>&copy; @DateTime.Now.Year - 餐饮油烟在线监控平台</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

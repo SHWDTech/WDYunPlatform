@@ -3,9 +3,9 @@
             xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
-  <mvcSiteMapNode title="首页" controller="Home" action="Index">
-    <mvcSiteMapNode title="地图监测" controller="Monitor" action="Map" />
+  <mvcSiteMapNode title="首页" controller="Home" action="Index" clickable="true">
+    <mvcSiteMapNode title="地图监测" controller="Monitor" action="Map"/>
     <mvcSiteMapNode title="欢迎登录本系统" controller="Account" action="Login" />
+    <mvcSiteMapNode title="区域管理" controller="Management" action="Area" />
   </mvcSiteMapNode>
-
 </mvcSiteMap>

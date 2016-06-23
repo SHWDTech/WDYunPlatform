@@ -3,9 +3,9 @@
 @using System.Linq
 @using MvcSiteMapProvider.Web.Html.Models
 
+<span class="glyphicon glyphicon-home"></span>
 @foreach (var node in Model)
 {
-
     if (node != Model.Last())
     {
         @Html.ActionLink(node.Title, node.Action, node.Controller)
