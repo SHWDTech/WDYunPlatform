@@ -1,7 +1,27 @@
 ﻿@{
-    Layout = null;  
+    Layout = "~/Views/Shared/_SiteMapBar.cshtml";
 }
 
-<div id="mapContainer">
+<div style="display: flex;">
+    <div id="mapContainer" class="float_card" style="width: 74%; height: 100%; min-height: 660px; margin-right: 1%;">
 
+    </div>
+    <div id="searchTable" class="panel panel-default float_card" style="width: 25%; min-height: 660px; margin: 0; padding: 5px;">
+        <div class="form-inline">
+            <label>区县：</label>
+            <select class="form-control"></select>
+        </div>
+        <div class="form-inline">
+            <label>街道：</label>
+            <select class="form-control"></select>
+        </div>
+        <div class="form-inline">
+            <label>酒店：</label>
+            <input type="text" class="form-control" />
+            <input type="button" class="form-control" value="查询" />
+        </div>
+    </div>
 </div>
+
+<script src="/Scripts/Common/MapManipulation.js"></script>
+<script src="/Scripts/Page/Map.js"></script>

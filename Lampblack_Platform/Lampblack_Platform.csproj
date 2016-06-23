@@ -185,6 +185,8 @@
     <Content Include="Resources\Images\Site\tweed.png" />
     <Content Include="Resources\Images\Site\weather.png" />
     <Content Include="Resources\Images\Site\wood_pattern.png" />
+    <Content Include="Scripts\Common\MapManipulation.js" />
+    <Content Include="Scripts\Page\Map.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\Page\Login.js" />
@@ -336,6 +338,7 @@
     <Content Include="Views\Monitor\Map.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_SiteMap.cshtml" />
+    <Content Include="Views\Shared\_SiteMapBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
