@@ -1,10 +1,16 @@
 ﻿body {
-    background-image: url(/Resources/Images/Site/swirl_pattern.png)
+    background-image: url(/Resources/Images/Site/swirl_pattern.png);
 }
 
 .login-form-section {
-    padding: 150px 0 0 0;
+    opacity: 0;
+    transition:opacity 1s ease, padding 0.8s ease;
 }
+
+    .live {
+        opacity: 1;
+        padding: 175px 0 0 0;
+    }
 
 .login-from-content {
     box-shadow: 0 2px 6px #000000;
@@ -14,7 +20,7 @@
     margin: auto;
 }
 
-.section-title h3{
+.section-title h3 {
     color: #33CEC3;
     font-size: 20px;
     text-align: center;
@@ -28,10 +34,10 @@
 }
 
 
-.textbox-wrap.focuesd {
-    border-left-color: #3498db;
-    background-color: #f0f0f0;
-}
+    .textbox-wrap.focuesd {
+        border-left-color: #3498db;
+        background-color: #f0f0f0;
+    }
 
 .form-control:focus {
     border-color: #ccc;
@@ -43,9 +49,9 @@
     line-height: 16px;
 }
 
-.login-form-action button {
-    margin-left: 120px;
-}
+    .login-form-action button {
+        margin-left: 120px;
+    }
 
 .login-spliter {
     height: 1px;

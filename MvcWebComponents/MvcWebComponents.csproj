@@ -72,6 +72,7 @@
     <Compile Include="Controllers\WdContext.cs" />
     <Compile Include="Controllers\WdControllerBase.cs" />
     <Compile Include="Extensions\AjaxExtensions.cs" />
+    <Compile Include="Filters\AjaxGetAttribute.cs" />
     <Compile Include="Filters\BasicAuthAttribute.cs" />
     <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
