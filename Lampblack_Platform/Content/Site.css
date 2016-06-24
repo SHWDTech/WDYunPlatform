@@ -10,8 +10,6 @@ body {
     width: 100%;
     border-left: 1px solid #e7e7e7;
     background-color: #f0f0f0;
-    overflow: hidden;
-    overflow-y: auto;
     padding: 12px;
 }
 
@@ -21,7 +19,7 @@ body {
     border-bottom: 1px solid #fff;
     background-color: #fff;
     box-shadow: 1px 1px 1px #000000;
-    box-shadow: 1px 1px 1px rgba(0,0,0, 0.2)
+    box-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
 }
 
 ul {
@@ -30,16 +28,17 @@ ul {
 
 .topheadnav {
     border: 0;
-    border-bottom: 1px solid #ff6f00;
+    box-shadow: 1px 1px 1px #000000;
+    box-shadow: 1px 1px 1px rgba(0,0,0, 0.2);
 }
 
-.topheadnav ul.nav {
-    margin-right: 30px;
-}
+    .topheadnav ul.nav {
+        margin-right: 30px;
+    }
 
-.topheadnav .navbar-right {
-    margin: 0;
-}
+    .topheadnav .navbar-right {
+        margin: 0;
+    }
 
 .navbar {
     margin-bottom: 0;
@@ -91,15 +90,17 @@ ul {
     color: #333;
     border-bottom: 1px solid #e7e7e7;
     background-color: #fff;
-    transition: background-color 0.3s ease, color 0.1s ease;
+    transition: background-color 0.3s ease, color 0.1s ease, border-left 0.3s ease;
 }
 
     .main-menu-item.active {
+        border-left: 5px solid #ff6f00;
         background-color: #33CEC3;
         color: #fff;
     }
 
     .main-menu-item:hover {
+        border-left: 5px solid #ff6f00;
         background-color: #33CEC3;
         color: #fff;
     }
@@ -130,10 +131,11 @@ ul {
     color: #333;
     background-color: #f7f7f7;
     border-bottom: 1px solid #e7e7e7;
-    transition: background-color 0.3s ease, color 0.1s ease;
+    transition: background-color 0.3s ease, color 0.1s ease, border-left 0.3s ease;
 }
 
     .sub-menu-item a:hover {
+        border-left: 5px solid #ff6f00;
         background-color: #33CEC3;
         color: #000;
         text-decoration: none;
@@ -148,8 +150,22 @@ ul {
     box-shadow: 0 2px 6px #fafafa;
     box-shadow: 0 2px 6px rgba(250, 250, 250, 0.3);
     transition: box-shadow 0.3s ease;
-    margin: 0;
-    min-height: 720px;
+    margin: 0 10px 0 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+    .float_card .panel {
+        margin-bottom: 0;
+    }
+
+    .float_card .list-group {
+        overflow-y: auto;
+    }
+
+.float_card-default {
+    background-color: #fff;
 }
 
 label {
@@ -162,7 +178,7 @@ label {
 
 .float_card:hover {
     box-shadow: 0 2px 6px #000000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.40);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .lbl60 {
@@ -175,29 +191,124 @@ label {
     margin-bottom: 5px;
 }
 
-.horizontal-group label {
-    margin: auto;
-}
+    .horizontal-group label {
+        margin: auto;
+    }
 
 .btn-main {
     color: #fff;
     background-color: #ff6f00;
-    border-color: #d16e00
+    border-color: #d16e00;
 }
 
-.btn-main:hover {
-    color: #fff;
-    background-color: #dd6f00;
-    border-color: #d16e00
-}
+    .btn-main:hover {
+        color: #fff;
+        background-color: #dd6f00;
+        border-color: #d16e00;
+    }
+
+    .btn-main:focus {
+        color: #fff;
+        background-color: #ff6f00;
+        border-color: #d16e00;
+    }
 
 .table-head {
     font-weight: bold;
     color: #fff;
-    background-color: #33cec3
+    background-color: #33cec3;
 }
 
 .single-content {
     display: flex;
     height: 100%;
 }
+
+.area-group {
+    height: 100%;
+    max-height: 60em;    
+}
+
+.area-group .list-group-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.1s ease, border-left 0.3s ease;
+}
+
+.area-group .list-group-item:hover {
+    border-left: 5px solid #ff6f00;
+    background-color: #33CEC3;
+    color: #fff;
+}
+
+.area-group .list-group-item:active {
+    border-left: 5px solid #ff6f00;
+    background-color: #33CEC3;
+    color: #fff;
+}
+
+/*.tree {
+    min-height:20px;
+    padding-top: 20px;
+    margin-bottom:20px;
+    background-color:#fff;
+    height: 100%;
+    box-shadow:inset 0 1px 1px #000000;
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.05)
+}
+
+.tree li {
+    list-style-type:none;
+    margin:0;
+    padding:10px 5px 0 5px;
+    position:relative
+}
+
+.tree li::before, .tree li::after {
+    content:'';
+    left:-20px;
+    position:absolute;
+    right:auto
+}
+
+.tree li::before {
+    border-left:1px solid #999;
+    bottom:50px;
+    height:100%;
+    top:0;
+    width:1px
+}
+
+.tree li::after {
+    border-top:1px solid #999;
+    height:20px;
+    top:25px;
+    width:25px
+}
+
+.tree li span {
+    border:1px solid #999;
+    display:inline-block;
+    padding:3px 8px;
+    text-decoration:none
+}
+
+.tree span:hover {
+    cursor: pointer;
+    background:#33CEC3;
+    border:1px solid #94a0b4;
+    color:#fff
+}
+
+.tree>ul>li::before, .tree>ul>li::after {
+    border:0
+}
+
+.tree li:last-child::before {
+    height:30px
+}
+
+.tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+    background:#33CEC3;
+    border:1px solid #94a0b4;
+    color:#fff
+}*/
