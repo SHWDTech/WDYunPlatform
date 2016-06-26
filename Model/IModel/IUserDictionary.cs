@@ -36,6 +36,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 父级字典项
         /// </summary>
-        SysDictionary ParentDictionary { get; set; }
+        UserDictionary ParentDictionary { get; set; }
     }
 }

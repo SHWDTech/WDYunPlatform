@@ -149,11 +149,13 @@ ul {
 .float_card {
     box-shadow: 0 2px 6px #fafafa;
     box-shadow: 0 2px 6px rgba(250, 250, 250, 0.3);
-    transition: box-shadow 0.3s ease;
     margin: 0 10px 0 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    opacity: 1;
+    margin-left: 0;
+    transition: margin-left 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
     .float_card .panel {
@@ -163,6 +165,11 @@ ul {
     .float_card .list-group {
         overflow-y: auto;
     }
+
+.float_card_hide {
+    opacity: 0;
+    margin-left: -32%;
+}
 
 .float_card-default {
     background-color: #fff;
@@ -178,7 +185,7 @@ label {
 
 .float_card:hover {
     box-shadow: 0 2px 6px #000000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .lbl60 {
@@ -224,26 +231,83 @@ label {
     height: 100%;
 }
 
-.area-group {
-    height: 100%;
-    max-height: 60em;    
-}
-
 .area-group .list-group-item {
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.1s ease, border-left 0.3s ease;
 }
 
-.area-group .list-group-item:hover {
-    border-left: 5px solid #ff6f00;
-    background-color: #33CEC3;
+    .area-group .list-group-item:hover {
+        border-left: 5px solid #ff6f00;
+        background-color: #33CEC3;
+        color: #fff;
+    }
+
+        .area-group .list-group-item:hover .delete-mark {
+            color: #fff;
+        }
+
+        .area-group .list-group-item:hover .edit-mark {
+            color: #fff;
+        }
+
+    .area-group .list-group-item:active {
+        border-left: 5px solid #ff6f00;
+        background-color: #33CEC3;
+        color: #fff;
+    }
+
+.onCreate {
+    color: #fff;
+    background-color: #ff6f00;
+    transition: background-color 0.5s ease !important;
+}
+
+.onCreate .delete-mark {
     color: #fff;
 }
 
-.area-group .list-group-item:active {
-    border-left: 5px solid #ff6f00;
-    background-color: #33CEC3;
+.onCreate .edit-mark {
     color: #fff;
+}
+
+.active>.delete-mark {
+    color: #fff;
+}
+
+.active>.edit-mark {
+    color: #fff;
+}
+
+.delete-mark {
+    float: right;
+    margin-right: 10px;
+    color: #333;
+    display: block;
+    z-index: 9999;
+    transition: color 0.2s ease;
+}
+
+    .delete-mark:hover {
+        color: red !important;
+    }
+
+.edit-mark {
+    float: right;
+    margin-right: 25px;
+    color: #333;
+    display: block;
+    z-index: 9999;
+    transition: color 0.2s ease;
+}
+
+    .edit-mark:hover {
+        color: #ff6f00 !important;
+    }
+
+.removed {
+    background-color: #dd6f00;
+    opacity: 0;
+    transition: opacity 0.5s ease !important;
 }
 
 /*.tree {

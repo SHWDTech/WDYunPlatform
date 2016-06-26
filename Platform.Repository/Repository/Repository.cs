@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using EntityFramework.BulkInsert.Extensions;
 using System.Transactions;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Utility;
 
 namespace SHWD.Platform.Repository.Repository
@@ -78,7 +79,11 @@ namespace SHWD.Platform.Repository.Repository
 
         public static T CreateDefaultModel()
         {
-            var model = new T();
+            var model = new T
+            {
+                Id = Globals.NewCombId(),
+                ModelState = ModelState.Added
+            };
 
             return model;
         }
@@ -86,7 +91,7 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T ParseModel(string jsonString)
         {
             var model = JsonConvert.DeserializeObject<T>(jsonString);
-            //model.ModelState = ModelState.Added;
+            model.ModelState = ModelState.Added;
 
             return model;
         }

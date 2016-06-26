@@ -78,5 +78,67 @@ namespace MvcWebComponents.Controllers
         /// <param name="model">视图模型</param>
         /// <returns></returns>
         protected ViewResult DefaultView(object model) => base.View(model);
+
+        /// <summary>
+        /// 创建一个将指定对象序列化为 JavaScript 对象表示法 (JSON) 的对象。
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="requestBehavior"></param>
+        /// <returns></returns>
+        protected JsonResult Json(JsonStruct json, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet) 
+            => base.Json(json, requestBehavior);
+
+        /// <summary>
+        /// 创建一个将指定对象序列化为 JavaScript 对象表示法 (JSON) 的对象。
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="requestBehavior"></param>
+        /// <returns></returns>
+        protected JsonResult Json(string message, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
+        {
+            var json = new JsonStruct()
+            {
+                Success = true,
+                Message = message,
+            };
+
+            return Json(json, requestBehavior);
+        }
+
+        /// <summary>
+        /// 创建一个将指定对象序列化为 JavaScript 对象表示法 (JSON) 的对象。
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="data"></param>
+        /// <param name="requestBehavior"></param>
+        /// <returns></returns>
+        protected JsonResult Json(string message, object data, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
+        {
+            var json = new JsonStruct()
+            {
+                Success = true,
+                Message = message,
+                Result = data
+            };
+
+            return Json(json, requestBehavior);
+        }
+
+        /// <summary>
+        /// 创建一个将指定对象序列化为 JavaScript 对象表示法 (JSON) 的对象。
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="requestBehavior"></param>
+        /// <returns></returns>
+        protected new JsonResult Json(object data, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
+        {
+            var json = new JsonStruct()
+            {
+                Success = true,
+                Result = data
+            };
+
+            return base.Json(json, requestBehavior);
+        }
     }
 }

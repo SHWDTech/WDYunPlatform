@@ -4,22 +4,45 @@
 }
 
 <div class="single-content">
-    <div class="float_card float_card-default" style="width: 33%; margin-right: 1%;">
+    <div class="float_card float_card-default" style="width: 33%; margin-right: 1%; z-index: 3;" item-level="0">
         <div class="panel panel-default">
             <div class="panel-body">
                 <h3 class="text-center">区县列表</h3>
                 <div class="horizontal-group">
-                    <input type="text" id="district" class="form-control" style="margin-right: 5px;" placeholder="输入希望添加的区县名称">
-                    <input type="button" id="district-insert" class="form-control btn btn-main" value="添加" style="width: 50px;"/>
+                    <input type="text" class="form-control area-input" style="margin-right: 5px;" placeholder="输入希望添加的区县名称" data-placement="bottom"
+                           data-toggle="popover" data-trigger="manual" title="不符合要求的输入项内容" data-content="输入内容为空或区县已经存在" item-level="0">
+                    <input type="button" class="form-control btn btn-main area-insert-btn" value="添加" style="width: 50px;" item-level="0"/>
                 </div>
             </div>
         </div>
-        <ul class="list-group area-group" style="margin-bottom: 0;">
-            <li class="list-group-item">
-                <span>长宁区</span>
-            </li>
+        <ul class="list-group area-group" style="margin-bottom: 0;" item-level="0">
         </ul>
     </div>
-    <div class="float_card float_card-default" style="width: 33%; margin-right: 1%;"></div>
-    <div class="float_card float_card-default" style="width: 34%;"></div>
+    <div class="float_card float_card-default float_card_hide" style="width: 33%; margin-right: 1%; z-index: 2;" item-level="1">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="text-center">街道列表</h3>
+                <div class="horizontal-group">
+                    <input type="text" class="form-control area-input" style="margin-right: 5px;" placeholder="输入希望添加的街道名称" data-placement="bottom"
+                           data-toggle="popover" data-trigger="manual" title="不符合要求的输入项内容" data-content="输入内容为空或街道已经存在" item-level="1">
+                    <input type="button" class="form-control btn btn-main area-insert-btn" value="添加" style="width: 50px;" item-level="1"/>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group area-group" style="margin-bottom: 0;" item-level="1"></ul>
+    </div>
+    <div class="float_card float_card-default float_card_hide" style="width: 34%; z-index: 1;" item-level="2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="text-center">详细地址列表</h3>
+                <div class="horizontal-group">
+                    <input type="text" class="form-control  area-input" style="margin-right: 5px;" placeholder="输入希望添加的地址名称" data-placement="bottom"
+                           data-toggle="popover" data-trigger="manual" title="不符合要求的输入项内容" data-content="输入内容为空或地址已经存在" item-level="2">
+                    <input type="button" class="form-control btn btn-main area-insert-btn" value="添加" style="width: 50px;" item-level="2"/>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group area-group" style="margin-bottom: 0;" item-level="2"></ul>
+    </div>
 </div>
+<script src="/Scripts/Page/Area.js"></script>

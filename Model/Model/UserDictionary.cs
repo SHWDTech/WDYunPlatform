@@ -31,6 +31,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "父级字典项")]
         [ForeignKey("ParentDictionaryId")]
-        public virtual SysDictionary ParentDictionary { get; set; }
+        public virtual UserDictionary ParentDictionary { get; set; }
     }
 }

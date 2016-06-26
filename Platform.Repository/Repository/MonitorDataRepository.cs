@@ -1,4 +1,5 @@
-﻿using SHWD.Platform.Repository.Entities;
+﻿using System;
+using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Model;
 
@@ -17,6 +18,15 @@ namespace SHWD.Platform.Repository.Repository
         public MonitorDataRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
             
+        }
+
+        public new static MonitorData CreateDefaultModel()
+        {
+            var model = DataRepository<MonitorData>.CreateDefaultModel();
+
+            model.Id = Guid.Empty;
+
+            return model;
         }
     }
 }

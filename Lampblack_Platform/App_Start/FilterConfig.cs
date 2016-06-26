@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using MvcWebComponents.Filters;
 
 namespace Lampblack_Platform
 {
@@ -8,6 +9,7 @@ namespace Lampblack_Platform
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new AuthorizeAttribute());
+            filters.Add(new AjaxHandleErrorAttribute());
         }
     }
 }

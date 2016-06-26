@@ -59,6 +59,7 @@
     <Compile Include="Enums\SigninResult.cs" />
     <Compile Include="Enums\SystemCacheNames.cs" />
     <Compile Include="Enums\SystemConfigType.cs" />
+    <Compile Include="Enums\UserDictionaryType.cs" />
     <Compile Include="IProcess\IAccountProcess.cs" />
     <Compile Include="IProcess\IControllerProcess.cs" />
     <Compile Include="IProcess\IDeviceProcess.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="IProcess\IProtocolCodingProcess.cs" />
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ICommandTaskProcess.cs" />
+    <Compile Include="IProcess\IUserDictionaryProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
     <Compile Include="Process\AccountProcess.cs" />
     <Compile Include="Process\ControllerProcess.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Process\ProtocolPackageProcess.cs" />
     <Compile Include="Process\SysConfigProcess.cs" />
     <Compile Include="Process\CommandTaskProcess.cs" />
+    <Compile Include="Process\UserDictionaryProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
