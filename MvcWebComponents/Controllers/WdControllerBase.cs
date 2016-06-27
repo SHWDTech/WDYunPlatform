@@ -53,6 +53,11 @@ namespace MvcWebComponents.Controllers
             };
         }
 
+        //protected override void HandleUnknownAction(string actionName)
+        //{
+        //    base.HandleUnknownAction(actionName);
+        //}
+
         /// <summary>
         /// 创建一个将视图呈现给响应的ViewResult对象
         /// </summary>

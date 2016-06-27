@@ -21,6 +21,12 @@ $(function () {
         }
     });
 
+    $('.area-input').keydown(function (e) {
+        if (e.which === 13) {
+            $(this)[0].nextElementSibling.focus();
+        }
+    });
+
     //删除指定区域信息
     function removeArea(event) {
         event.stopPropagation();

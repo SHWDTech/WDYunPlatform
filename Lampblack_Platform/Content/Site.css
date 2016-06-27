@@ -193,19 +193,130 @@ label {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
+.horizontal-group .form-control{
+    margin-right: 10px;
+}
+
+.horizontal-group .btn{
+    margin-right: 10px;
+}
+
+.horizontal-group label {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.horizontal-group span {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.span60 {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.span80 {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
 .lbl60 {
     width: 60px;
     min-width: 60px;
+    max-width: 60px;
+}
+
+.lbl80 {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.lbl100 {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.lbl120 {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.control60 {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.control80 {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.control100 {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.control120 {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.control140 {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+}
+
+.control160 {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+}
+
+.control180 {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+}
+
+.control200 {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+.control220 {
+    width: 220px;
+    min-width: 220px;
+    max-width: 220px;
+}
+
+.control240 {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+}
+
+.control280 {
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
 }
 
 .horizontal-group {
     display: flex;
     margin-bottom: 5px;
 }
-
-    .horizontal-group label {
-        margin: auto;
-    }
 
 .btn-main {
     color: #fff;

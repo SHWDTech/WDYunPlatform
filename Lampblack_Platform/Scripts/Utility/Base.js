@@ -98,7 +98,7 @@ var Msg = function (msg, option) {
         baseModel.find('.btn-main').show().innerHTML = option.confirm;
     }
 
-    baseModel.modal({ show: true });
+    baseModel.modal({ show: true, keyboard: true });
 
     if (!IsNullOrEmpty(option.callback)) {
         $('#modal-confirm').on('click', function() {

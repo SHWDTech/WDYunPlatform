@@ -188,6 +188,7 @@
     <Content Include="Resources\Images\Site\wood_pattern.png" />
     <Content Include="Scripts\Common\MapManipulation.js" />
     <Content Include="Scripts\Page\Area.js" />
+    <Content Include="Scripts\Page\CateringEnterprise.js" />
     <Content Include="Scripts\Page\Map.js" />
     <Content Include="Scripts\Utility\Base.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.js" />

@@ -67,7 +67,8 @@ namespace Platform.Process.Process
                     obj.ItemValue,
                     obj.ParentNode,
                     Parent = areas.FirstOrDefault(item => item.ItemKey == obj.ParentNode)
-                });
+                })
+                .OrderBy(item => item.ItemKey);
 
                 return areaInfo;
             }

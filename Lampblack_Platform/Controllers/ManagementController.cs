@@ -55,16 +55,19 @@ namespace Lampblack_Platform.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
+        [AjaxGet]
         public ActionResult CateringEnterprise()
         {
             return View();
         }
 
+        [AjaxGet]
         public ActionResult Hotel()
         {
             return View();
         }
 
+        [AjaxGet]
         public ActionResult Device()
         {
             return View();
