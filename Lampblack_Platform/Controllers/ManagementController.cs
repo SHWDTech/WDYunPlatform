@@ -34,7 +34,7 @@ namespace Lampblack_Platform.Controllers
             var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
             return district == null 
-                ? Json(new JsonStruct() {Success = false, Message = "添加区县信息失败，请重新尝试。"}) 
+                ? Json(new JsonStruct() {Success = false, Message = "添加区县信息失败，请重新尝试。"}, JsonRequestBehavior.AllowGet) 
                 : Json("添加成功！", district, JsonRequestBehavior.AllowGet);
         }
 
@@ -45,12 +45,12 @@ namespace Lampblack_Platform.Controllers
 
             var success = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(itemKey);
 
-            var json = new JsonStruct()
+            var json = new JsonStruct
             {
-                Success = success
+                Success = success,
+                Message = !success ? "尝试删除区域信息失败，请刷新后重新尝试。" : "删除成功！"
             };
 
-            json.Message = !success ? "尝试删除区域信息失败，请刷新后重新尝试。" : "删除成功！";
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }

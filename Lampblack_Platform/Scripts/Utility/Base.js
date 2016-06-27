@@ -1,10 +1,14 @@
 ﻿var base = {};
 
-$(function() {
-    base.AjaxGet = function(ajaxUrl, params, callback) {
-        $.get(ajaxUrl, params, function(ret) {
+$(function () {
+    base.AjaxGet = function (ajaxUrl, params, callback) {
+        $.get(ajaxUrl, params, function (ret) {
             if (ret.Message !== null) {
-                alert(ret.Message);
+                var message = ret.Message;
+                if (ret.Exception !== null) {
+                    message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
+                }
+                Msg(message, { title: '提示！' });
             }
 
             if (!ret.Success) {
@@ -25,6 +29,9 @@ var trimStr = function (str) {
 
 var IsNullOrEmpty = function (obj) {
     try {
+        if (typeof obj == "function") {
+            return false;
+        }
         if (obj.length === 0) {
             return true;
         }
@@ -41,6 +48,8 @@ var IsNullOrEmpty = function (obj) {
 
         if (typeof obj == "number" && isNaN(obj))
             return true;
+
+
 
         return false;
     }
@@ -67,3 +76,33 @@ function isEmpty(obj) {
 
     return true;
 }
+
+var Msg = function (msg, option) {
+    var baseModel = $('#baseModal');
+    if (option.title !== null) {
+        baseModel.find('.modal-title').empty();
+        baseModel.find('.modal-title').append('<h3>' + option.title + '</h3>');
+    }
+
+    baseModel.find('.modal-body').empty();
+    baseModel.find('.modal-body').append(msg);
+
+    baseModel.find('.btn-default').empty();
+    if (!IsNullOrEmpty(option.cancel)) {
+        baseModel.find('.btn-default').append(option.cancel);
+    }
+    baseModel.find('.btn-default').append('关闭');
+
+    baseModel.find('.btn-main').hide();
+    if (!IsNullOrEmpty(option.confirm)) {
+        baseModel.find('.btn-main').show().innerHTML = option.confirm;
+    }
+
+    baseModel.modal({ show: true });
+
+    if (!IsNullOrEmpty(option.callback)) {
+        $('#modal-confirm').on('click', function() {
+             option.callback(option.param);
+        });
+    }
+};

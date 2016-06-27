@@ -1,8 +1,11 @@
-﻿namespace MvcWebComponents.Model
+﻿using System;
+
+namespace MvcWebComponents.Model
 {
     /// <summary>
     /// Ajax请求标准返回格式
     /// </summary>
+    [Serializable]
     public class JsonStruct
     {
         /// <summary>
@@ -23,6 +26,6 @@
         /// <summary>
         /// 请求的异常信息
         /// </summary>
-        public object Exception { get; set; }
+        public string Exception { get; set; }
     }
 }

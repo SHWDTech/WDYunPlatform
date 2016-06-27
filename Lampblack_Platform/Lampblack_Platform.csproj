@@ -341,6 +341,7 @@
     <Content Include="Views\Monitor\Map.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Management\Area.cshtml" />
+    <Content Include="Views\Management\CateringEnterprise.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

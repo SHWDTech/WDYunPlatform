@@ -146,7 +146,7 @@ ul {
         text-decoration: none;
     }
 
-.float_card {
+.float-card {
     box-shadow: 0 2px 6px #fafafa;
     box-shadow: 0 2px 6px rgba(250, 250, 250, 0.3);
     margin: 0 10px 0 0;
@@ -158,20 +158,25 @@ ul {
     transition: margin-left 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
-    .float_card .panel {
+.float-card-single {
+    margin: 0;
+    width: 100%;
+}
+
+    .float-card .panel {
         margin-bottom: 0;
     }
 
-    .float_card .list-group {
+    .float-card .list-group {
         overflow-y: auto;
     }
 
-.float_card_hide {
+.float-card-hide {
     opacity: 0;
     margin-left: -32%;
 }
 
-.float_card-default {
+.float-card-default {
     background-color: #fff;
 }
 
@@ -183,7 +188,7 @@ label {
     color: #fff;
 }
 
-.float_card:hover {
+.float-card:hover {
     box-shadow: 0 2px 6px #000000;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }

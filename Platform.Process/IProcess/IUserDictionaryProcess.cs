@@ -1,6 +1,4 @@
-﻿using SHWDTech.Platform.Model.Model;
-
-namespace Platform.Process.IProcess
+﻿namespace Platform.Process.IProcess
 {
     /// <summary>
     /// 用户词典处理程序接口
@@ -14,7 +12,7 @@ namespace Platform.Process.IProcess
         /// <param name="areaLevel">区域层级</param>
         /// <param name="parentNode">父级区域</param>
         /// <returns></returns>
-        UserDictionary AddArea(string areaName, int areaLevel, string parentNode);
+        object AddArea(string areaName, int areaLevel, string parentNode);
 
         /// <summary>
         /// 获取区域信息

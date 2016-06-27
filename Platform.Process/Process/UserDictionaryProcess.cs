@@ -13,30 +13,38 @@ namespace Platform.Process.Process
     /// </summary>
     public class UserDictionaryProcess : IUserDictionaryProcess
     {
-        public UserDictionary AddArea(string areaName, int areaLevel, string parentNode)
+        public object AddArea(string areaName, int areaLevel, string parentNode)
         {
             using (var repo = DbRepository.Repo<UserDictionaryRepository>())
             {
+                UserDictionary parentArea = null;
+                if (areaLevel != 0)
+                {
+                    parentArea = repo.GetModel(obj => obj.ItemKey == parentNode);
+                    if (parentArea == null) return null;
+                }
 
-                if (repo.IsExists(obj => obj.ItemValue == areaName && obj.ItemLevel == areaLevel))
+                if (repo.IsExists(obj => obj.ItemValue == areaName && obj.ItemLevel == areaLevel && obj.ParentDictionary.ItemKey == parentNode))
                 {
                     return null;
                 }
+
                 var dictItem = UserDictionaryRepository.CreateDefaultModel();
                 dictItem.ItemKey = Globals.NewIdentityCode();
                 dictItem.ItemLevel = areaLevel;
                 dictItem.ItemValue = areaName;
                 dictItem.ItemName = UserDictionaryType.Area;
+                dictItem.ParentDictionary = parentArea;
 
-                if (areaLevel != 0)
-                {
-                    var parentArea = repo.GetModel(obj => obj.ItemKey == parentNode);
-                    if (parentArea == null) return null;
-                    dictItem.ParentDictionary = parentArea;
-                }
                 repo.AddOrUpdate(dictItem);
 
-                return dictItem;
+                return new
+                {
+                    dictItem.ItemKey,
+                    dictItem.ItemLevel,
+                    dictItem.ItemValue,
+                    ParentNode = dictItem.ParentDictionary == null ? string.Empty : dictItem.ParentDictionary.ItemKey
+                };
             }
         }
 
@@ -44,14 +52,22 @@ namespace Platform.Process.Process
         {
             using (var repo = DbRepository.Repo<UserDictionaryRepository>())
             {
-                var areaInfo = repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area).Select(item => new
+                var areas = repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area).Select(item => new
                 {
                     item.ItemKey,
                     item.ItemLevel,
                     item.ItemValue,
-                    ParentNode = string.IsNullOrWhiteSpace(item.ParentDictionary.ItemKey) ? string.Empty : item.ParentDictionary.ItemKey
-                })
-                    .ToList();
+                    ParentNode = item.ParentDictionary == null ? string.Empty : item.ParentDictionary.ItemKey
+                }).ToList();
+
+                var areaInfo = areas.Select(obj => new
+                {
+                    obj.ItemKey,
+                    obj.ItemLevel,
+                    obj.ItemValue,
+                    obj.ParentNode,
+                    Parent = areas.FirstOrDefault(item => item.ItemKey == obj.ParentNode)
+                });
 
                 return areaInfo;
             }
@@ -64,7 +80,11 @@ namespace Platform.Process.Process
                 var item = repo.GetModel(obj => obj.ItemKey == itemKey);
                 if (item == null) return false;
 
-                return repo.Delete(item);
+                var children = repo.GetModels(obj => obj.ParentDictionaryId == item.Id || obj.ParentDictionary.ParentDictionaryId == item.Id).ToList();
+
+                children.Add(item);
+
+                return repo.Delete(children) > 0;
             }
         }
     }

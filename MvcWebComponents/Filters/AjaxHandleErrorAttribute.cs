@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using MvcWebComponents.Model;
+using SHWDTech.Platform.Utility;
 
 namespace MvcWebComponents.Filters
 {
@@ -29,15 +30,14 @@ namespace MvcWebComponents.Filters
                 };
 
                 #if DEBUG
-                json.Exception = filterContext.Exception; 
+                json.Exception = filterContext.Exception.ToString(); 
                 #endif
+
+                LogService.Instance.Error("异步请求错误。", filterContext.Exception);
                 filterContext.Result = new JsonResult()
                 {
-                    Data = new JsonStruct()
-                    {
-                        Success = false,
-                        Message = "请求失败，请重新尝试，若多次失败请联系管理员！"
-                    }
+                    Data = json,
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
                 filterContext.ExceptionHandled = true;
             }
