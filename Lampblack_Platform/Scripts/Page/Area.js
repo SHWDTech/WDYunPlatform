@@ -5,13 +5,13 @@ $(function () {
     base.AjaxGet('/Management/GetAreaInfo', null, function (obj) {
         AreaInfo = obj;
         $('input[type=text][item-level=0]').node = '';
+        $('ul[item-level=0]').attr('parentNode', '');
         if (AreaInfo.length > 0) {
             $(AreaInfo).each(function () {
                 if (this.ItemLevel !== 0) return;
                 var li = $('<li class="list-group-item"><span>' + this.ItemValue
                     + '</span><span class="glyphicon glyphicon-remove delete-mark"></span><span class="glyphicon glyphicon-pencil edit-mark"></span></li>');
                 $('ul[item-level=0]').append(li);
-                $('ul[item-level=0]').attr('parentNode', '');
                 var area = this;
                 li.on('click', '.edit-mark', { area: area, li: li }, editArea);
                 li.on('click', '.delete-mark', { area: area, li: li }, removeArea);

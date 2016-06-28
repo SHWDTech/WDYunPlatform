@@ -74,8 +74,8 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T GetModel(Expression<Func<T, bool>> exp)
             => EntitySet.SingleOrDefault(exp);
 
-        public virtual int GetCount(Expression<Func<T, bool>> exp)
-            => EntitySet.Where(exp).Count();
+        public virtual int GetCount(Expression<Func<T, bool>> exp) 
+            => exp == null ? EntitySet.Count() : EntitySet.Where(exp).Count();
 
         /// <summary>
         /// 创建默认数据模型

@@ -12,11 +12,18 @@ namespace Platform.Process.Process
     /// </summary>
     public class CateringEnterpriseProcess : ICateringEnterpriseProcess
     {
-        public List<CateringCompany> GetCateringCompanies()
+        public List<CateringCompany> GetPagedCateringCompanies(int offset, int limit, string queryName, out int count)
         {
             using (var repo = DbRepository.Repo<CateringCompanyRepository>())
             {
-                return repo.GetAllModels().OrderBy(obj => obj.CreateDateTime).ToList();
+                var query = repo.GetAllModels();
+                if (!string.IsNullOrWhiteSpace(queryName))
+                {
+                    query = query.Where(obj => obj.CompanyName.Contains(queryName));
+                }
+                count = query.Count();
+
+                return query.OrderBy(obj => obj.CreateDateTime).Skip(offset).Take(limit).ToList();
             }
         }
 

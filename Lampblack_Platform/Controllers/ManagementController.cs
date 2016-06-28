@@ -72,10 +72,26 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult CateringEnterprise()
         {
+            var offset = string.IsNullOrWhiteSpace(Request["offset"]) ? 0 : int.Parse(Request["offset"]);
+
+            var limit = string.IsNullOrWhiteSpace(Request["limit"]) ? 10 : int.Parse(Request["limit"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var companyList = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetPagedCateringCompanies(offset, limit, queryName, out count);
+
             var model = new CateringEnterpriseViewModel
             {
-                CateringCompanies = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetCateringCompanies()
+                Count = count,
+                Limit = limit,
+                QueryName = queryName,
+                PageCount = (count % limit) > 0 ? (count / limit) + 1 : (count / limit),
+                PageIndex = (offset / limit) + 1,
+                CateringCompanies = companyList
             };
+
             return View(model);
         }
 
