@@ -25,6 +25,10 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
+        /// <summary>
+        /// 创建默认数据模型
+        /// </summary>
+        /// <returns></returns>
         public new static T CreateDefaultModel()
         {
             var model = SysRepository<T>.CreateDefaultModel();

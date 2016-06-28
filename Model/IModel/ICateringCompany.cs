@@ -1,4 +1,6 @@
-﻿namespace SHWDTech.Platform.Model.IModel
+﻿using System;
+
+namespace SHWDTech.Platform.Model.IModel
 {
     /// <summary>
     /// 餐饮企业模型接口
@@ -34,5 +36,10 @@
         /// 详细地址
         /// </summary>
         string Address { get; set; }
+
+        /// <summary>
+        /// 注册时间
+        /// </summary>
+        DateTime RegisterDateTime { get; set; }
     }
 }

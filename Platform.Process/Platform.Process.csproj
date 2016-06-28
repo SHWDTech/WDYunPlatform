@@ -61,6 +61,7 @@
     <Compile Include="Enums\SystemConfigType.cs" />
     <Compile Include="Enums\UserDictionaryType.cs" />
     <Compile Include="IProcess\IAccountProcess.cs" />
+    <Compile Include="IProcess\ICateringEnterpriseProcess.cs" />
     <Compile Include="IProcess\IControllerProcess.cs" />
     <Compile Include="IProcess\IDeviceProcess.cs" />
     <Compile Include="IProcess\IPermissionProcess.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="IProcess\IUserDictionaryProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
     <Compile Include="Process\AccountProcess.cs" />
+    <Compile Include="Process\CateringEnterpriseProcess.cs" />
     <Compile Include="Process\ControllerProcess.cs" />
     <Compile Include="Process\DeviceProcess.cs" />
     <Compile Include="Process\GeneralProcess.cs" />

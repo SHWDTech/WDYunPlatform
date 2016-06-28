@@ -4,14 +4,14 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    public class RestaurantRepository : SysDomainRepository<CateringCompany>, IRestaurantRepository
+    public class HotelRestaurantRepository : SysDomainRepository<HotelRestaurant>, IHotelRestaurantRepository
     {
-        public RestaurantRepository()
+        public HotelRestaurantRepository()
         {
             
         }
 
-        public RestaurantRepository(RepositoryDbContext dbContext) : base(dbContext)
+        public HotelRestaurantRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
             
         }

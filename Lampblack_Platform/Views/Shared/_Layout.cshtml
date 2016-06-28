@@ -35,12 +35,7 @@
             </div>
         </div>
         <div class="body-content" id="body-content">
-            @*<div class="siteMap">
-                    @Html.MvcSiteMap().SiteMapPath()
-                </div>*@
-            <div class="main-container">
-                @RenderBody()
-            </div>
+            @RenderBody()
         </div>
     </div>
     <div class="modal fade" id="baseModal">
@@ -64,6 +59,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/layout")
+    @Styles.Render("~/Content/datetimepickercss")
+    @Scripts.Render("~/bundles/datetimepicker")
     <script src="/Scripts/Utility/Base.js"></script>
     <script src="/Scripts/Utility/jquery.unobtrusive-ajax.min.js"></script>
     @RenderSection("scripts", required: false)

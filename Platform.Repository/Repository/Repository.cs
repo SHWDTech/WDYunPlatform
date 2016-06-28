@@ -77,6 +77,10 @@ namespace SHWD.Platform.Repository.Repository
         public virtual int GetCount(Expression<Func<T, bool>> exp)
             => EntitySet.Where(exp).Count();
 
+        /// <summary>
+        /// 创建默认数据模型
+        /// </summary>
+        /// <returns></returns>
         public static T CreateDefaultModel()
         {
             var model = new T

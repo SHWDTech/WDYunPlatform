@@ -28,6 +28,13 @@ namespace Lampblack_Platform
 
             bundles.Add(new ScriptBundle("~/bundles/layout").Include(
                 "~/Scripts/Utility/layout.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
+                "~/Scripts/Utility/moment-with-locales.js",
+                "~/Scripts/Utility/bootstrap-datetimepicker.js"));
+
+            bundles.Add(new StyleBundle("~/Content/datetimepickercss").Include(
+                "~/Content/bootstrap-datetimepicker.css"));
         }
     }
 }

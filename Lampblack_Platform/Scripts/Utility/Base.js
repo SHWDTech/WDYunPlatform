@@ -101,6 +101,7 @@ var Msg = function (msg, option) {
     baseModel.modal({ show: true, keyboard: true });
 
     if (!IsNullOrEmpty(option.callback)) {
+        $('#modal-confirm').off();
         $('#modal-confirm').on('click', function() {
              option.callback(option.param);
         });

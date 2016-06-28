@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Platform.Process.Enums;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
@@ -13,18 +14,18 @@ namespace Platform.Process.Process
     /// </summary>
     public class UserDictionaryProcess : IUserDictionaryProcess
     {
-        public object AddArea(string areaName, int areaLevel, string parentNode)
+        public object AddArea(string areaName, int areaLevel, Guid parentNode)
         {
             using (var repo = DbRepository.Repo<UserDictionaryRepository>())
             {
                 UserDictionary parentArea = null;
                 if (areaLevel != 0)
                 {
-                    parentArea = repo.GetModel(obj => obj.ItemKey == parentNode);
+                    parentArea = repo.GetModel(obj => obj.Id == parentNode);
                     if (parentArea == null) return null;
                 }
 
-                if (repo.IsExists(obj => obj.ItemValue == areaName && obj.ItemLevel == areaLevel && obj.ParentDictionary.ItemKey == parentNode))
+                if (repo.IsExists(obj => obj.ItemValue == areaName && obj.ItemLevel == areaLevel && obj.ParentDictionary.Id == parentNode))
                 {
                     return null;
                 }
@@ -40,10 +41,35 @@ namespace Platform.Process.Process
 
                 return new
                 {
+                    dictItem.Id,
                     dictItem.ItemKey,
                     dictItem.ItemLevel,
                     dictItem.ItemValue,
-                    ParentNode = dictItem.ParentDictionary == null ? string.Empty : dictItem.ParentDictionary.ItemKey
+                    ParentNode = dictItem.ParentDictionary?.Id.ToString() ?? string.Empty
+                };
+            }
+        }
+
+        public object EditArea(Guid itemId, string itemValue)
+        {
+            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            {
+                var item = repo.GetModel(obj => obj.Id == itemId);
+                if (item == null)
+                {
+                    return false;
+                }
+
+                item.ItemValue = itemValue;
+
+                repo.AddOrUpdate(item);
+                return new
+                {
+                    item.Id,
+                    item.ItemKey,
+                    item.ItemLevel,
+                    item.ItemValue,
+                    ParentNode = item.ParentDictionary?.Id.ToString() ?? string.Empty
                 };
             }
         }
@@ -54,19 +80,21 @@ namespace Platform.Process.Process
             {
                 var areas = repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area).Select(item => new
                 {
+                    item.Id,
                     item.ItemKey,
                     item.ItemLevel,
                     item.ItemValue,
-                    ParentNode = item.ParentDictionary == null ? string.Empty : item.ParentDictionary.ItemKey
+                    ParentNode = item.ParentDictionary == null ? string.Empty : item.ParentDictionary.Id.ToString()
                 }).ToList();
 
                 var areaInfo = areas.Select(obj => new
                 {
+                    obj.Id,
                     obj.ItemKey,
                     obj.ItemLevel,
                     obj.ItemValue,
                     obj.ParentNode,
-                    Parent = areas.FirstOrDefault(item => item.ItemKey == obj.ParentNode)
+                    Parent = areas.FirstOrDefault(item => item.Id.ToString() == obj.ParentNode)
                 })
                 .OrderBy(item => item.ItemKey);
 
@@ -74,11 +102,11 @@ namespace Platform.Process.Process
             }
         }
 
-        public bool DeleteArea(string itemKey)
+        public bool DeleteArea(Guid itemId)
         {
             using (var repo = DbRepository.Repo<UserDictionaryRepository>())
             {
-                var item = repo.GetModel(obj => obj.ItemKey == itemKey);
+                var item = repo.GetModel(obj => obj.Id == itemId);
                 if (item == null) return false;
 
                 var children = repo.GetModels(obj => obj.ParentDictionaryId == item.Id || obj.ParentDictionary.ParentDictionaryId == item.Id).ToList();

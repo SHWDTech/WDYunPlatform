@@ -1,4 +1,5 @@
-﻿
+﻿@using Lampblack_Platform.Models.Management
+@model CateringEnterpriseViewModel
 @{
     Layout = null;
 }
@@ -9,48 +10,112 @@
             <div class="panel-body">
                 <div class="control-layer horizontal-group">
                     <span class="span80">企业查询：</span>
-                    <input type="text" class="form-control control280"/>
-                    <input type="button" class="btn btn-main" value="查询"/>
-                    <input type="button" class="btn btn-main" value="增加"/>
-                    <input type="button" class="btn btn-main" value="导出"/>
+                    <input type="text" class="form-control control280" />
+                    <input type="button" class="btn btn-main" value="查询" id="query" />
+                    <input type="button" class="btn btn-main" value="新增" id="add" />
+                    <input type="button" class="btn btn-main" value="导出" id="export" />
                 </div>
                 <div class="table-layer">
-                    <table class="table table-bordered table-striped text-center">
+                    <table class="table table-bordered table-striped table-hover text-center">
                         <thead>
-                        <tr>
-                            <td style="width: 2%;">
-                                <input type="radio"/>
-                            </td>
-                            <td style="width: 35%;">
-                                餐饮企业名称
-                            </td>
-                            <td style="width: 8%;">
-                                企业编号
-                            </td>
-                            <td style="width: 5%;">
-                                负责人
-                            </td>
-                            <td style="width: 8%;">
-                                电话号码
-                            </td>
-                            <td style="width: 8%">
-                                邮箱地址
-                            </td>
-                            <td style="width: 18%;">
-                                详细地址
-                            </td>
-                            <td style="width: 8%;">
-                                注册时间
-                            </td>
-                            <td style="width: 8%;">
-                                操作
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="width: 2%;">
+                                    <input type="checkbox" />
+                                </td>
+                                <td style="width: 35%;">
+                                    餐饮企业名称
+                                </td>
+                                <td style="width: 8%;">
+                                    企业编号
+                                </td>
+                                <td style="width: 5%;">
+                                    负责人
+                                </td>
+                                <td style="width: 8%;">
+                                    电话号码
+                                </td>
+                                <td style="width: 8%">
+                                    邮箱地址
+                                </td>
+                                <td style="width: 18%;">
+                                    详细地址
+                                </td>
+                                <td style="width: 8%;">
+                                    注册时间
+                                </td>
+                                <td style="width: 8%;">
+                                    操作
+                                </td>
+                            </tr>
                         </thead>
+                        <tbody>
+                        @{
+                            foreach (var company in Model.CateringCompanies)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" /></td>
+                                    <td>@company.CompanyName</td>
+                                    <td>@company.CompanyCode</td>
+                                    <td>@company.ChargeMan</td>
+                                    <td>@company.Telephone</td>
+                                    <td>@company.Email</td>
+                                    <td>@company.Address</td>
+                                    <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
+                                    <td>编辑 删除</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@using (Ajax.BeginForm("EditCateringEnterprise", null, new AjaxOptions()
+{
+    UpdateTargetId = "body-content",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new {id = "cateringEdit", style = "display: none;" }))
+{
+    <input type="hidden" name="Id"/>
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td><label class="lbl120">餐饮企业名称：</label></td>
+                <td><input type="text" class="form-control" name="CompanyName" /></td>
+                <td><label class="lbl120">企业编号：</label></td>
+                <td><input type="text" class="form-control" name="CompanyCode" /></td>
+            </tr>
+            <tr>
+                <td><label class="lbl120">负责人：</label></td>
+                <td><input type="text" class="form-control" name="ChargeMan" /></td>
+                <td><label class="lbl120">电话号码：</label></td>
+                <td><input type="text" class="form-control" name="Telephone" /></td>
+            </tr>
+            <tr>
+                <td><label class="lbl120">邮箱地址：</label></td>
+                <td><input type="text" class="form-control" name="Email" /></td>
+                <td><label class="lbl120">注册时间：</label></td>
+                <td><input type="text" class="form-control" id="RegisterDateTime" name="RegisterDateTime" /></td>
+            </tr>
+            <tr>
+                <td><label class="lbl120">详细地址：</label></td>
+                <td colspan="3"><input type="text" class="form-control" name="Address" /></td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+@Html.Partial("SlideUp")
+
 <script src="/Scripts/Page/CateringEnterprise.js"></script>

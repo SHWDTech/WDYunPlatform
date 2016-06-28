@@ -45,4 +45,18 @@
         <ul class="list-group area-group" style="margin-bottom: 0;" item-level="2"></ul>
     </div>
 </div>
+<div id="areaEdit" style="display: none;">
+    <div class="panel-body">
+        <div class="horizontal-group">
+            <label class="lbl120">新的区域名称：</label>
+            <input type="text" class="form-control" style="margin: 0;" />
+        </div>
+        <div class="text-right">
+            <input type="button" class="btn btn-default" value="取消" id="cancel" />
+            <input type="button" class="btn btn-main" value="确认" id="confirm"/>
+        </div>
+    </div>
+</div>
+    
+@Html.Partial("SlideUp")
 <script src="/Scripts/Page/Area.js"></script>

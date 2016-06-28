@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using Lampblack_Platform.Models.Management;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
@@ -29,7 +31,9 @@ namespace Lampblack_Platform.Controllers
 
             var itemLevel = int.Parse(Request["itemLevel"]);
 
-            var parentNode = Request["parentNode"];
+            Guid parentNode;
+
+            Guid.TryParse(Request["parentNode"], out parentNode);
 
             var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
@@ -39,9 +43,19 @@ namespace Lampblack_Platform.Controllers
         }
 
         [AjaxGet]
+        public ActionResult EditAreaInfo()
+        {
+            var id = Guid.Parse(Request["itemId"]);
+            var editName = Request["editName"];
+            var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().EditArea(id, editName);
+            
+            return Json("修改成功！", district, JsonRequestBehavior.AllowGet);
+        }
+
+        [AjaxGet]
         public ActionResult DeleteArea()
         {
-            var itemKey = Request["ItemKey"];
+            var itemKey = Guid.Parse(Request["Id"]);
 
             var success = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(itemKey);
 
@@ -58,7 +72,19 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult CateringEnterprise()
         {
-            return View();
+            var model = new CateringEnterpriseViewModel
+            {
+                CateringCompanies = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetCateringCompanies()
+            };
+            return View(model);
+        }
+
+        [AjaxGet]
+        [HttpPost]
+        public ActionResult EditCateringEnterprise(EditCateringEnterpriseViewModel model)
+        {
+            ProcessInvoke.GetInstance<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model);
+            return RedirectToAction("CateringEnterprise");
         }
 
         [AjaxGet]
