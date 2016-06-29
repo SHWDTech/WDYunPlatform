@@ -16,10 +16,12 @@ $(function () {
         $('#mask').show();
     };
 
-    slideUp.hide = function() {
+    slideUp.hide = function(clear) {
         slideUp.addClass('slide-up-hide');
         $('#mask').hide();
-        slideUp.content.html('');
+        if (clear) {
+            slideUp.content.html('');
+        }
     }
 
     slideUp.Set = function (options) {

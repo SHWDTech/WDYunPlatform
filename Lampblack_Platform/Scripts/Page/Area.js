@@ -25,7 +25,7 @@ $(function () {
     slideUp.Set({ 'width': '40%', 'left': '30%' });
     slideUp.append($('#areaEdit'));
     $('#areaEdit').show();
-    $('#cancel').on('click', function () { slideUp.hide(); });
+    $('#cancel').on('click', function () { slideUp.hide(false); });
 
     $('.area-input').keydown(function (e) {
         if (e.which === 13) {
@@ -75,7 +75,7 @@ $(function () {
         slideUp.show();
         $('#confirm').off();
         $('#confirm').on('click', function () {
-            slideUp.hide();
+            slideUp.hide(false);
             base.AjaxGet('/Management/EditAreaInfo', { itemId: area.Id, editName: $('#areaEdit').find('input[type=text]').val() }, function (obj) {
                 var item = AreaInfo.filter(function (item) { return item.Id === obj.Id });
                 item[0].ItemValue = obj.ItemValue;
