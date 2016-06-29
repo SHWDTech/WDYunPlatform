@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using PagedList;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
@@ -12,7 +12,7 @@ namespace Platform.Process.Process
     /// </summary>
     public class CateringEnterpriseProcess : ICateringEnterpriseProcess
     {
-        public List<CateringCompany> GetPagedCateringCompanies(int offset, int limit, string queryName, out int count)
+        public IPagedList<CateringCompany> GetPagedCateringCompanies(int page, int pageSize, string queryName, out int count)
         {
             using (var repo = DbRepository.Repo<CateringCompanyRepository>())
             {
@@ -23,7 +23,7 @@ namespace Platform.Process.Process
                 }
                 count = query.Count();
 
-                return query.OrderBy(obj => obj.CreateDateTime).Skip(offset).Take(limit).ToList();
+                return query.OrderBy(obj => obj.CreateDateTime).ToPagedList(page, pageSize);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿@using Lampblack_Platform.Models.Management
+@using PagedList.Mvc
 @model CateringEnterpriseViewModel
 @{
     Layout = null;
@@ -11,76 +12,93 @@
             UpdateTargetId = "body-content",
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "POST"
-        }, new {Id = "catering"}))
+        }, new { Id = "catering" }))
         {
             <div class="panel">
                 <div class="panel-body">
                     <div class="control-layer horizontal-group">
                         <span class="span80">企业查询：</span>
-                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName"/>
-                        <input type="submit" class="btn btn-main" value="查询" id="query"/>
-                        <input type="button" class="btn btn-main" value="新增" id="add"/>
-                        <input type="button" class="btn btn-main" value="导出" id="export"/>
+                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName" />
+                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="新增" id="add" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
                     </div>
                     <div class="table-layer">
                         <table class="table table-bordered table-striped table-hover text-center">
                             <thead>
-                            <tr>
-                                <td style="width: 2%;">
-                                    <input type="checkbox"/>
-                                </td>
-                                <td style="width: 35%;">
-                                    餐饮企业名称
-                                </td>
-                                <td style="width: 8%;">
-                                    企业编号
-                                </td>
-                                <td style="width: 5%;">
-                                    负责人
-                                </td>
-                                <td style="width: 8%;">
-                                    电话号码
-                                </td>
-                                <td style="width: 8%">
-                                    邮箱地址
-                                </td>
-                                <td style="width: 18%;">
-                                    详细地址
-                                </td>
-                                <td style="width: 8%;">
-                                    注册时间
-                                </td>
-                                <td style="width: 8%;">
-                                    操作
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td style="width: 2%;">
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td style="width: 35%;">
+                                        餐饮企业名称
+                                    </td>
+                                    <td style="width: 8%;">
+                                        企业编号
+                                    </td>
+                                    <td style="width: 5%;">
+                                        负责人
+                                    </td>
+                                    <td style="width: 8%;">
+                                        电话号码
+                                    </td>
+                                    <td style="width: 8%">
+                                        邮箱地址
+                                    </td>
+                                    <td style="width: 18%;">
+                                        详细地址
+                                    </td>
+                                    <td style="width: 8%;">
+                                        注册时间
+                                    </td>
+                                    <td style="width: 8%;">
+                                        操作
+                                    </td>
+                                </tr>
                             </thead>
                             <tbody>
-                            @{
-                                foreach (var company in Model.CateringCompanies)
-                                {
-                                    <tr>
-                                        <td><input type="checkbox"/></td>
-                                        <td>@company.CompanyName</td>
-                                        <td>@company.CompanyCode</td>
-                                        <td>@company.ChargeMan</td>
-                                        <td>@company.Telephone</td>
-                                        <td>@company.Email</td>
-                                        <td>@company.Address</td>
-                                        <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
-                                        <td>编辑  删除</td>
-                                    </tr>
+                                @{
+                                    foreach (var company in Model.CateringCompanies)
+                                    {
+                                        <tr>
+                                            <td><input type="checkbox" /></td>
+                                            <td>@company.CompanyName</td>
+                                            <td>@company.CompanyCode</td>
+                                            <td>@company.ChargeMan</td>
+                                            <td>@company.Telephone</td>
+                                            <td>@company.Email</td>
+                                            <td>@company.Address</td>
+                                            <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
+                                            <td>编辑  删除</td>
+                                        </tr>
+                                    }
                                 }
-                            }
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="panel panel-body" style="margin-top: -30px;">
-                    <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
+                    <div class="horizontal-group">
+                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
+                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
+                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
+                            @{
+                                for (var i = 5; i < 25; i += 5)
+                                {
+                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
+                                    <option @selected>@i</option>
+                                }
+                            }
+                        </select>
+                        <label>条记录</label>
+                    </div>
+                    <div>
+                        @Html.PagedListPager(Model.CateringCompanies, page => Url.Action("CateringEnterprise", new {page, queryName = Model.QueryName, pageSize = Model.PageSize}),
+                       PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }))
+                    </div>
                 </div>
             </div>
-                                    }
+                                }
     </div>
 </div>
 @using (Ajax.BeginForm("EditCateringEnterprise", null, new AjaxOptions()

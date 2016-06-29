@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using PagedList;
 using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Models.Management
@@ -19,7 +19,7 @@ namespace Lampblack_Platform.Models.Management
         /// <summary>
         /// 餐饮企业列表
         /// </summary>
-        public List<CateringCompany> CateringCompanies { get; set; }
+        public IPagedList<CateringCompany> CateringCompanies { get; set; }
 
         /// <summary>
         /// 记录总数
@@ -29,7 +29,7 @@ namespace Lampblack_Platform.Models.Management
         /// <summary>
         /// 每页数量
         /// </summary>
-        public int Limit { get; set; }
+        public int PageSize { get; set; }
 
         /// <summary>
         /// 页数总数
