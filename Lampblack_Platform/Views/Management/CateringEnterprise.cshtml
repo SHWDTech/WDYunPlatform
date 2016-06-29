@@ -78,6 +78,14 @@
                     </div>
                 </div>
                 <div class="panel panel-body" style="margin-top: -30px;">
+                    <div style="float: right;">
+                        @{
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace });
+                            option.UlElementClasses = new[] { "no-margin pagination" };
+                        }
+                        @Html.PagedListPager(Model.CateringCompanies,
+                       page => Url.Action("CateringEnterprise", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                    </div>
                     <div class="horizontal-group">
                         <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
                         <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
@@ -92,59 +100,15 @@
                         </select>
                         <label>条记录</label>
                     </div>
-                    <div>
-                        @Html.PagedListPager(Model.CateringCompanies, page => Url.Action("CateringEnterprise", new {page, queryName = Model.QueryName, pageSize = Model.PageSize}),
-                       PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }))
-                    </div>
                 </div>
             </div>
                                 }
     </div>
 </div>
-@using (Ajax.BeginForm("EditCateringEnterprise", null, new AjaxOptions()
-{
-    UpdateTargetId = "body-content",
-    InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST"
-}, new { id = "cateringEdit", style = "display: none;" }))
-{
-    <input type="hidden" name="Id" />
-    <table class="table table-bordered table-striped text-right">
-        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
-        <colgroup style="width: 35%"></colgroup>
-        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
-        <colgroup style="width: 35%"></colgroup>
-        <tbody>
-            <tr>
-                <td><label class="lbl120">餐饮企业名称：</label></td>
-                <td><input type="text" class="form-control" name="CompanyName" /></td>
-                <td><label class="lbl120">企业编号：</label></td>
-                <td><input type="text" class="form-control" name="CompanyCode" /></td>
-            </tr>
-            <tr>
-                <td><label class="lbl120">负责人：</label></td>
-                <td><input type="text" class="form-control" name="ChargeMan" /></td>
-                <td><label class="lbl120">电话号码：</label></td>
-                <td><input type="text" class="form-control" name="Telephone" /></td>
-            </tr>
-            <tr>
-                <td><label class="lbl120">邮箱地址：</label></td>
-                <td><input type="text" class="form-control" name="Email" /></td>
-                <td><label class="lbl120">注册时间：</label></td>
-                <td><input type="text" class="form-control" id="RegisterDateTime" name="RegisterDateTime" /></td>
-            </tr>
-            <tr>
-                <td><label class="lbl120">详细地址：</label></td>
-                <td colspan="3"><input type="text" class="form-control" name="Address" /></td>
-            </tr>
-            <tr class="text-center">
-                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
-                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" /></td>
-            </tr>
-        </tbody>
-    </table>
-}
 
+<div id="edit-container" style="display: none;">
+    @Html.Partial("EditCateringEnterprise", new EditCateringEnterpriseViewModel() {RegisterDateTime = DateTime.Now})
+</div>
 @Html.Partial("SlideUp")
 
 <script src="/Scripts/Page/CateringEnterprise.js"></script>

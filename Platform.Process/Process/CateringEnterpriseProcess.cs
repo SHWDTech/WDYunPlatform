@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity.Validation;
+using System.Linq;
 using PagedList;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
@@ -27,20 +28,29 @@ namespace Platform.Process.Process
             }
         }
 
-        public void AddOrUpdateCateringEnterprise(CateringCompany model)
+        public DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model)
         {
             using (var repo = DbRepository.Repo<CateringCompanyRepository>())
             {
-                var company = CateringCompanyRepository.CreateDefaultModel();
-                company.CompanyName = model.CompanyName;
-                company.CompanyCode = model.CompanyCode;
-                company.ChargeMan = model.ChargeMan;
-                company.Telephone = model.Telephone;
-                company.Address = model.Address;
-                company.Email = model.Email;
-                company.RegisterDateTime = model.RegisterDateTime;
-                repo.AddOrUpdate(company);
+                try
+                {
+                    var company = CateringCompanyRepository.CreateDefaultModel();
+                    company.CompanyName = model.CompanyName;
+                    company.CompanyCode = model.CompanyCode;
+                    company.ChargeMan = model.ChargeMan;
+                    company.Telephone = model.Telephone;
+                    company.Address = model.Address;
+                    company.Email = model.Email;
+                    company.RegisterDateTime = model.RegisterDateTime;
+                    repo.AddOrUpdate(company);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    return ex;
+                }
             }
+
+            return null;
         }
     }
 }

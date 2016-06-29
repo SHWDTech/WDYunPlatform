@@ -37,8 +37,8 @@ namespace Lampblack_Platform.Controllers
 
             var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
-            return district == null 
-                ? Json(new JsonStruct() {Success = false, Message = "添加区县信息失败，请重新尝试。"}, JsonRequestBehavior.AllowGet) 
+            return district == null
+                ? Json(new JsonStruct() { Success = false, Message = "添加区县信息失败，请重新尝试。" }, JsonRequestBehavior.AllowGet)
                 : Json("添加成功！", district, JsonRequestBehavior.AllowGet);
         }
 
@@ -48,7 +48,7 @@ namespace Lampblack_Platform.Controllers
             var id = Guid.Parse(Request["itemId"]);
             var editName = Request["editName"];
             var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().EditArea(id, editName);
-            
+
             return Json("修改成功！", district, JsonRequestBehavior.AllowGet);
         }
 
@@ -95,12 +95,24 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult EditCateringEnterprise()
+        {
+            return DefaultView();
+        }
+
         [AjaxGet]
         [HttpPost]
         public ActionResult EditCateringEnterprise(EditCateringEnterpriseViewModel model)
         {
-            ProcessInvoke.GetInstance<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model);
-            return RedirectToAction("CateringEnterprise");
+            var exception = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model);
+
+            if (exception != null)
+            {
+                return View(model);
+            }
+
+            return RedirectToAction("SubmitSuccess", "Common", new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "edit-container" });
         }
 
         [AjaxGet]

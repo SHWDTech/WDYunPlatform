@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div>
+    <h2><span class="label label-success">保存成功</span></h2>
+</div>
+<div class="actbar">
+    <a href="#" id="closesubmit">关闭</a>
+    @Ajax.ActionLink("继续添加", (string)ViewBag.TargetAction, (string)ViewBag.TargetController, null, new AjaxOptions()
+{
+    UpdateTargetId = ViewBag.Target,
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "GET"
+})
+</div>
+
+<script type="text/javascript">
+    $('#closesubmit').on('click', function() {
+        slideUp.hide();
+    });
+</script>

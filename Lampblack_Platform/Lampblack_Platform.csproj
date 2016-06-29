@@ -152,6 +152,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
@@ -350,6 +351,8 @@
     <Content Include="Views\Management\Area.cshtml" />
     <Content Include="Views\Management\CateringEnterprise.cshtml" />
     <Content Include="Views\Shared\SlideUp.cshtml" />
+    <Content Include="Views\Management\EditCateringEnterprise.cshtml" />
+    <Content Include="Views\Common\SubmitSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

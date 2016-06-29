@@ -1,0 +1,78 @@
+﻿@model Lampblack_Platform.Models.Management.EditCateringEnterpriseViewModel
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditCateringEnterprise", null, new AjaxOptions()
+{
+    UpdateTargetId = "edit-container",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "cateringEdit" }))
+{
+    <input type="hidden" name="Id" />
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.CompanyName)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.CompanyName, new {@class = "form-control", placeholder = "请输入企业名称"})
+                    @Html.ValidationMessageFor(m => m.CompanyName, null, new {@class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.CompanyCode)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.CompanyCode, new {@class = "form-control", placeholder = "请输入企业编码"})
+                    @Html.ValidationMessageFor(m => m.CompanyCode, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.ChargeMan)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ChargeMan, new {@class = "form-control", placeholder = "请输入负责人"})
+                    @Html.ValidationMessageFor(m => m.ChargeMan, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.Telephone)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Telephone, new {@class = "form-control", placeholder = "请输入联系电话"})
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = "请输入邮箱地址"})
+                </td>
+                <td>@Html.LabelFor(m => m.RegisterDateTime)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.RegisterDateTime, new {@class = "form-control", placeholder = "请输入注册时间"})
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Address)</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.Address, new {@class = "form-control", placeholder = "请输入详细地址"})
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset"/></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript">
+    $('#RegisterDateTime').datetimepicker({
+        locale: 'zh-cn',
+        format: 'L'
+    });
+
+    $('#reset').on('click', function() {
+        resetValidation();
+        $('#cateringEdit').find('input[type=text]').val('');
+    });
+</script>

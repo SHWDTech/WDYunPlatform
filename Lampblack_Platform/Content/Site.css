@@ -495,3 +495,15 @@ label {
     background-color: #009D91   ;
     color: #fff;
 }
+
+.no-margin {
+    margin: 0;
+}
+
+.actbar {
+    margin-top: 20px;
+}
+
+.actbar a {
+    margin-right: 10px;
+}

@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using System.Data.Entity.Validation;
+using PagedList;
 using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
@@ -22,6 +23,7 @@ namespace Platform.Process.IProcess
         /// 添加或更新餐饮企业
         /// </summary>
         /// <param name="model"></param>
-        void AddOrUpdateCateringEnterprise(CateringCompany model);
+        /// <returns></returns>
+        DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model);
     }
 }
