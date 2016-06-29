@@ -19,6 +19,7 @@ $(function () {
     slideUp.hide = function() {
         slideUp.addClass('slide-up-hide');
         $('#mask').hide();
+        slideUp.content.html('');
     }
 
     slideUp.Set = function (options) {

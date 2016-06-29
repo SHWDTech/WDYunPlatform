@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\WdAuthorizeAttribute.cs" />
     <Compile Include="Controllers\WdContext.cs" />
     <Compile Include="Controllers\WdControllerBase.cs" />
     <Compile Include="Extensions\AjaxExtensions.cs" />
@@ -79,9 +80,7 @@
     <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

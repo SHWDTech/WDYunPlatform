@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using MvcWebComponents.Attributes;
 using MvcWebComponents.Filters;
 
 namespace Lampblack_Platform
@@ -8,7 +9,7 @@ namespace Lampblack_Platform
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new AuthorizeAttribute());
+            filters.Add(new WdAuthorizeAttribute());
             filters.Add(new AjaxHandleErrorAttribute());
         }
     }

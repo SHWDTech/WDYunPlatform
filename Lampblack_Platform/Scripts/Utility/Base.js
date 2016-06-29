@@ -121,3 +121,13 @@ function resetValidation() {
     $('.validation-summary-errors').removeClass('validation-summary-errors');
 
 }
+
+function ajaxSuccess(ret) {
+    if (!IsNullOrEmpty(ret.Message)) {
+        var message = ret.Message;
+        if (ret.Exception !== null) {
+            message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
+        }
+        Msg(message, { title: '提示！' });
+    }
+}

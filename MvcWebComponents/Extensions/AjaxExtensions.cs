@@ -8,6 +8,12 @@ namespace MvcWebComponents.Extensions
 {
     public static class AjaxExtensions
     {
+        public static AjaxOptions GeneralOptions(this AjaxOptions ajaxOptions)
+        {
+            ajaxOptions.OnSuccess = "ajaxSuccess";
+            return ajaxOptions;
+        }
+
         public static IHtmlString InnerElementActionLink(
             this AjaxHelper ajaxHelper,
             string linkText,

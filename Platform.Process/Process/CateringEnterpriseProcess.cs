@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.Validation;
+﻿using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
 using Platform.Process.IProcess;
@@ -51,6 +52,17 @@ namespace Platform.Process.Process
             }
 
             return null;
+        }
+
+        public bool DeleteCateringEnterprise(Guid componyId)
+        {
+            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
+            {
+                var item = repo.GetModel(obj => obj.Id == componyId);
+                if (item == null) return false;
+
+                return repo.Delete(item);
+            }
         }
     }
 }

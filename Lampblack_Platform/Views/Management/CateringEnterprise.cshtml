@@ -6,7 +6,7 @@
 }
 
 <div class="single-content">
-    <div class="float-card float-card-default float-card-single">
+    <div class="float-card float-card-default float-card-single scroll-y">
         @using (Ajax.BeginForm("CateringEnterprise", null, new AjaxOptions()
         {
             UpdateTargetId = "body-content",
@@ -60,7 +60,7 @@
                                 @{
                                     foreach (var company in Model.CateringCompanies)
                                     {
-                                        <tr>
+                                        <tr data-company-id="@company.Id">
                                             <td><input type="checkbox" /></td>
                                             <td>@company.CompanyName</td>
                                             <td>@company.CompanyCode</td>
@@ -69,7 +69,7 @@
                                             <td>@company.Email</td>
                                             <td>@company.Address</td>
                                             <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
-                                            <td>编辑  删除</td>
+                                            <td><a href="#" class="link link-edit">编辑</a>  <a href="#" class="link link-delete">删除</a></td>
                                         </tr>
                                     }
                                 }
@@ -80,11 +80,11 @@
                 <div class="panel panel-body" style="margin-top: -30px;">
                     <div style="float: right;">
                         @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace });
-                            option.UlElementClasses = new[] { "no-margin pagination" };
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace});
+                            option.UlElementClasses = new[] {"no-margin pagination"};
                         }
                         @Html.PagedListPager(Model.CateringCompanies,
-                       page => Url.Action("CateringEnterprise", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                            page => Url.Action("CateringEnterprise", new {page, queryName = Model.QueryName, pageSize = Model.PageSize}), option)
                     </div>
                     <div class="horizontal-group">
                         <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
@@ -106,9 +106,6 @@
     </div>
 </div>
 
-<div id="edit-container" style="display: none;">
-    @Html.Partial("EditCateringEnterprise", new EditCateringEnterpriseViewModel() {RegisterDateTime = DateTime.Now})
-</div>
 @Html.Partial("SlideUp")
 
 <script src="/Scripts/Page/CateringEnterprise.js"></script>

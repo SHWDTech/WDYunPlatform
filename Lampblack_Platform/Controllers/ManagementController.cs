@@ -112,7 +112,24 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common", new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "edit-container" });
+            return RedirectToAction("SubmitSuccess", "Common", 
+                new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "slide-up-content" });
+        }
+
+        [AjaxGet]
+        public ActionResult DeleteCateringEnterprise()
+        {
+            var companyId = Guid.Parse(Request["id"]);
+
+            var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(companyId);
+
+            var json = new JsonStruct
+            {
+                Success = success,
+                Message = !success ? "尝试删除餐饮企业信息失败，请刷新后重新尝试。" : "删除成功！"
+            };
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         [AjaxGet]

@@ -3,15 +3,12 @@
 var getTable = function () {
     $('#edit-container').html('');
     $.get("/Management/EditCateringEnterprise", function (obj) {
-        $('#edit-container').html(obj);
+        slideUp.append(obj);
         slideUp.show();
     });
 }
 
 $(function () {
-    slideUp.append($('#edit-container'));
-    $('#edit-container').show();
-
     $('#add').on('click', function () {
         getTable();
     });
