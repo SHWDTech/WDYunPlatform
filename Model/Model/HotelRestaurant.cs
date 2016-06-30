@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual CateringCompany RaletedCompany { get; set; }
 
         [Required]
-        [Display(Name = "所属餐饮企业ID")]
+        [Display(Name = "所属餐饮企业")]
         public virtual Guid RaletedCompanyId {get; set; }
 
         [Required]
@@ -37,7 +37,7 @@ namespace SHWDTech.Platform.Model.Model
         [DataType(DataType.EmailAddress)]
         public virtual string Email { get; set; }
 
-        [Display(Name = "区县ID")]
+        [Display(Name = "区县")]
         [Required]
         public virtual Guid DistrictId { get; set; }
 
@@ -46,7 +46,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual UserDictionary District { get; set; }
 
         [Required]
-        [Display(Name = "街道ID")]
+        [Display(Name = "街道")]
         public virtual Guid StreetId { get; set; }
 
         [Display(Name = "街道")]
@@ -54,7 +54,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual UserDictionary Street { get; set; }
 
         [Required]
-        [Display(Name = "地址ID")]
+        [Display(Name = "地址")]
         public virtual Guid AddressId { get; set; }
 
         [Display(Name = "地址")]

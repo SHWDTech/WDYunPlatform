@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
@@ -36,5 +37,12 @@ namespace Platform.Process.IProcess
         /// <param name="itemId"></param>
         /// <returns></returns>
         bool DeleteArea(Guid itemId);
+
+        /// <summary>
+        /// 获取某区域的子节点信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Dictionary<string, string> GetChildDistrict(Guid id);
     }
 }

@@ -55,7 +55,7 @@ body {
 
 .slide-up-hide {
     opacity: 0;
-    top: 0;
+    top: 0!important;
     z-index: -999;
 }
 
@@ -275,6 +275,12 @@ label {
     width: 80px;
     min-width: 80px;
     max-width: 80px;
+}
+
+.lbl40 {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
 }
 
 .lbl60 {

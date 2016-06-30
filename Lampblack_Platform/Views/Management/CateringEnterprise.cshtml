@@ -28,13 +28,10 @@
                         <table class="table table-bordered table-striped table-hover text-center">
                             <thead>
                             <tr>
-                                <td style="width: 2%;">
-                                    <input type="checkbox"/>
-                                </td>
                                 <td style="width: 35%;">
                                     餐饮企业名称
                                 </td>
-                                <td style="width: 8%;">
+                                <td style="width: 10%;">
                                     企业编号
                                 </td>
                                 <td style="width: 5%;">
@@ -62,7 +59,6 @@
                                 foreach (var company in Model.CateringCompanies)
                                 {
                                     <tr data-company-id="@company.Id">
-                                        <td><input type="checkbox"/></td>
                                         <td>@company.CompanyName</td>
                                         <td>@company.CompanyCode</td>
                                         <td>@company.ChargeMan</td>

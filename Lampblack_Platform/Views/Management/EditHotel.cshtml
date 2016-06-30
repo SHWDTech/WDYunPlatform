@@ -1,0 +1,143 @@
+﻿@model SHWDTech.Platform.Model.Model.HotelRestaurant
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditHotel", null, new AjaxOptions()
+{
+    UpdateTargetId = "slide-up-content",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "hotelEdit" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.ProjectCode)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ProjectCode, new { @class = "form-control", placeholder = "请输入酒店编码" })
+                    @Html.ValidationMessageFor(m => m.ProjectCode, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.RaletedCompany)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.RaletedCompanyId, (List<SelectListItem>)ViewBag.CateringCompany, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.RaletedCompanyId, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.ProjectName)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control", placeholder = "请输入酒店（饭店）名称" })
+                    @Html.ValidationMessageFor(m => m.ProjectName, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.RegisterDateTime)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.RegisterDateTime, new { @class = "form-control", placeholder = "请输入注册时间" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>区域位置</label>
+                </td>
+                <td colspan="3">
+                    <div class="horizontal-group">
+                        @Html.LabelFor(m => m.DistrictId, new { @class= "lbl40 text-left" } )
+                        @Html.DropDownListFor(m => m.DistrictId, (List<SelectListItem>)ViewBag.District, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.StreetId, new { @class = "lbl40 text-left" })
+                        @Html.DropDownListFor(m => m.StreetId, (List<SelectListItem>)ViewBag.Street, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.AddressId, new { @class = "lbl40 text-left" })
+                        @Html.DropDownListFor(m => m.AddressId, (List<SelectListItem>)ViewBag.Address, new { @class = "form-control" })
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.ChargeMan)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ChargeMan, new { @class = "form-control", placeholder = "请输入负责人名称" })
+                </td>
+                <td>@Html.LabelFor(m => m.Telephone)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control", placeholder = "请输入联系电话" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Longitude)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control", placeholder = "请输入坐标经度" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.Latitude)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control", placeholder = "请输入坐标纬度" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Status)
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.Status, (List<SelectListItem>)ViewBag.Status, new { @class = "form-control" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.Email)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "请输入邮箱地址" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.OpeningDateTime)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.OpeningDateTime, "yyyy-MM-dd hh:mm", new { @class = "form-control", placeholder = "请输入营业开始时间" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.StopDateTIme)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.StopDateTIme, "yyyy-MM-dd hh:mm", new { @class = "form-control", placeholder = "请输入营业截止时间" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.CookStoveNumber)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CookStoveNumber, new { @class = "form-control", placeholder = "请输入灶头数" })
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.AddressDetail)
+                </td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.AddressDetail, new { @class = "form-control", placeholder = "请输入详细地址" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Comment)</td>
+                <td colspan="3">
+                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "请输入备注" })
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript" src="/Scripts/Page/EditHotel.js"></script>

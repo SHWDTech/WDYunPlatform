@@ -1,5 +1,5 @@
 ﻿var getTable = function () {
-    $.get("/Management/EditCateringEnterprise", function (obj) {
+    $.get("/Management/EditHotel", function (obj) {
         slideUp.append(obj);
         slideUp.show();
     });
@@ -11,6 +11,8 @@ $(function () {
     });
 
     $('#pageSize').on("change", function () {
-        $('#catering').submit();
+        $('#hotel').submit();
     });
+
+    slideUp.Set({ 'top': '5%' });
 });

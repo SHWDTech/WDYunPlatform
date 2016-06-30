@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Platform.Process.Enums;
 using Platform.Process.IProcess;
@@ -114,6 +115,24 @@ namespace Platform.Process.Process
                 children.Add(item);
 
                 return repo.Delete(children) > 0;
+            }
+        }
+
+        public Dictionary<string, string> GetDistrictSelectList()
+        {
+            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
+                    .ToDictionary(key => key.Id.ToString(), value => value.ItemValue);
+            }
+        }
+
+        public Dictionary<string, string> GetChildDistrict(Guid id)
+        {
+            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModels(obj => obj.ParentDictionary != null && obj.ParentDictionary.Id == id)
+                    .ToDictionary(key => key.Id.ToString(), value => value.ItemValue);
             }
         }
     }

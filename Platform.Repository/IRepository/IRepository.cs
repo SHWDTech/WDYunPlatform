@@ -53,6 +53,22 @@ namespace SHWD.Platform.Repository.IRepository
         T GetModelById(Guid guid);
 
         /// <summary>
+        /// 获取包含指定导航属性的模型
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <param name="includes"></param>
+        /// <returns></returns>
+        T GetModelInclude(Expression<Func<T, bool>> exp, List<string> includes);
+
+        /// <summary>
+        /// 获取包含指定导航属性的指定ID的模型
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="includes"></param>
+        /// <returns></returns>
+        T GetModelIncludeById(Guid guid, List<string> includes);
+
+        /// <summary>
         /// 获取符合条件的对象的数量
         /// </summary>
         /// <param name="exp">查询条件</param>

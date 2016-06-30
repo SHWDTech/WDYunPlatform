@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.Management;
@@ -24,6 +25,19 @@ namespace Lampblack_Platform.Controllers
         {
             var areaInfo = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetAreaInfo();
             return Json(areaInfo, JsonRequestBehavior.AllowGet);
+        }
+
+        [AjaxGet]
+        public ActionResult GetAreaList()
+        {
+            var parent = Guid.Parse(Request["id"]);
+
+            var list = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetChildDistrict(parent);
+
+            return Json(new JsonStruct() {
+                Success = true,
+                Result = list.Select(obj => new {Id = obj.Key, ItemValue = obj.Value})}, 
+                JsonRequestBehavior.AllowGet);
         }
 
         [AjaxGet]
@@ -97,6 +111,7 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
+        [AjaxGet]
         [HttpGet]
         public ActionResult EditCateringEnterprise(string guid)
         {
@@ -106,7 +121,7 @@ namespace Lampblack_Platform.Controllers
             }
 
             var model = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetCateringEnterprise(Guid.Parse(guid));
-            return DefaultView(model);
+            return View(model);
         }
 
         [AjaxGet]
@@ -127,6 +142,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [AjaxGet]
+        [HttpGet]
         public ActionResult DeleteCateringEnterprise(Guid guid)
         {
             var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
@@ -144,13 +160,106 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult Hotel()
         {
-            return View();
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var hotels = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetPagedHotelRestaurant(page, pageSize, queryName, out count);
+
+            var model = new HotelViewModel()
+            {
+                Count = count,
+                PageSize = pageSize,
+                QueryName = queryName,
+                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
+                PageIndex = page,
+                HtoHotelRestaurants = hotels
+            };
+
+            return View(model);
+        }
+
+        [AjaxGet]
+        [HttpGet]
+        public ActionResult EditHotel(string guid)
+        {
+            GetHotelRelatedItems();
+
+            if (string.IsNullOrWhiteSpace(guid))
+            {
+                return DefaultView();
+            }
+
+            var model = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelRestaurant(Guid.Parse(guid));
+            return View(model);
+        }
+
+        [AjaxGet]
+        [HttpPost]
+        public ActionResult EditHotel(HotelRestaurant model)
+        {
+            var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
+
+            var exception = ProcessInvoke.GetInstance<HotelRestaurantProcess>().AddOrUpdateHotelRestaurant(model, propertyNames);
+
+            if (exception != null)
+            {
+                GetHotelRelatedItems();
+                return View(model);
+            }
+
+            return RedirectToAction("SubmitSuccess", "Common",
+                new { targetAction = "EditHotel", targetcontroller = "Management", target = "slide-up-content", postform = "hotel" });
+        }
+
+        [AjaxGet]
+        [HttpGet]
+        public ActionResult DeleteHotel(Guid guid)
+        {
+            var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
+
+            var json = new JsonStruct
+            {
+                Success = success,
+                Message = !success ? "尝试删除餐饮企业信息失败，请刷新后重新尝试。" : "删除成功！",
+                PostForm = "catering"
+            };
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         [AjaxGet]
         public ActionResult Device()
         {
             return View();
+        }
+
+        private void GetHotelRelatedItems()
+        {
+            ViewBag.CateringCompany = ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
+                .GetCateringCompanySelectList()
+                .Select(obj => new SelectListItem() {Text = obj.Key, Value = obj.Value})
+                .ToList();
+
+            ViewBag.District = ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                .GetDistrictSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key })
+                .ToList();
+
+            ViewBag.Street = new List<SelectListItem>();
+
+            ViewBag.Address = new List<SelectListItem>();
+
+            ViewBag.Status = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text = "营业中", Value = "0"},
+                new SelectListItem() {Text = "装修中", Value = "1"},
+                new SelectListItem() {Text = "停业中", Value = "2"}
+            };
         }
     }
 }

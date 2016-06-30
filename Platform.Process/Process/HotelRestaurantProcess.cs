@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
@@ -10,19 +11,16 @@ using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
 {
-    /// <summary>
-    /// 餐饮企业、饭店处理程序
-    /// </summary>
-    public class CateringEnterpriseProcess : ICateringEnterpriseProcess
+    public class HotelRestaurantProcess : IHotelRestaurantProcess
     {
-        public IPagedList<CateringCompany> GetPagedCateringCompanies(int page, int pageSize, string queryName, out int count)
+        public IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count)
         {
-            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
+            using (var repo = DbRepository.Repo<HotelRestaurantRepository>())
             {
-                var query = repo.GetAllModels();
+                var query = repo.GetAllModels().Include("District").Include("Street").Include("Address");
                 if (!string.IsNullOrWhiteSpace(queryName))
                 {
-                    query = query.Where(obj => obj.CompanyName.Contains(queryName));
+                    query = query.Where(obj => obj.ProjectName.Contains(queryName));
                 }
                 count = query.Count();
 
@@ -30,23 +28,24 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<string,  string> GetCateringCompanySelectList()
+        public HotelRestaurant GetHotelRestaurant(Guid guid)
         {
-            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
+            using (var repo = DbRepository.Repo<HotelRestaurantRepository>())
             {
-                return repo.GetAllModels().ToDictionary(obj => obj.CompanyName, item => item.Id.ToString());
+                var includes = new List<string> { "RaletedCompany", "District", "Street", "Address" };
+                return repo.GetModelIncludeById(guid, includes);
             }
         }
 
-        public DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model, List<string> propertyNames)
+        public DbEntityValidationException AddOrUpdateHotelRestaurant(HotelRestaurant model, List<string> propertyNames)
         {
-            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
+            using (var repo = DbRepository.Repo<HotelRestaurantRepository>())
             {
                 try
                 {
                     if (model.Id == Guid.Empty)
                     {
-                        var dbModel = CateringCompanyRepository.CreateDefaultModel();
+                        var dbModel = HotelRestaurantRepository.CreateDefaultModel();
                         foreach (var propertyName in propertyNames)
                         {
                             dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
@@ -69,7 +68,7 @@ namespace Platform.Process.Process
 
         public bool DeleteCateringEnterprise(Guid componyId)
         {
-            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
+            using (var repo = DbRepository.Repo<HotelRestaurantRepository>())
             {
                 var item = repo.GetModel(obj => obj.Id == componyId);
                 if (item == null) return false;
@@ -77,16 +76,5 @@ namespace Platform.Process.Process
                 return repo.Delete(item);
             }
         }
-
-        public CateringCompany GetCateringEnterprise(Guid guid)
-        {
-            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
-            {
-                return repo.GetModelById(guid);
-            }
-        }
     }
 }
-
-
-

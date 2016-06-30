@@ -75,6 +75,20 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T GetModel(Expression<Func<T, bool>> exp)
             => EntitySet.SingleOrDefault(exp);
 
+        public virtual T GetModelIncludeById(Guid guid, List<string> includes)
+        {
+            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
+
+            return query.SingleOrDefault(obj => obj.Id == guid);
+        }
+
+        public virtual T GetModelInclude(Expression<Func<T, bool>> exp, List<string> includes)
+        {
+            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
+
+            return query.SingleOrDefault(exp);
+        }
+
         public virtual T GetModelById(Guid guid)
             => EntitySet.SingleOrDefault(obj => obj.Id == guid);
 
