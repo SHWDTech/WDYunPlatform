@@ -8,7 +8,7 @@ $(function () {
     });
 
     slideUp.append = function(target) {
-        slideUp.content.append(target);
+        slideUp.content.empty().append(target);
     };
 
     slideUp.show = function() {

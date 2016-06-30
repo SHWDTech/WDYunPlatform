@@ -11,6 +11,7 @@ namespace Lampblack_Platform.Controllers
             ViewBag.TargetAction = Request["targetAction"];
             ViewBag.TargetController = Request["targetcontroller"];
             ViewBag.Target = Request["target"];
+            ViewBag.PostForm = Request["postform"];
 
             return View();
         }

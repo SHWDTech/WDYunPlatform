@@ -46,6 +46,13 @@ namespace SHWD.Platform.Repository.IRepository
         T GetModel(Expression<Func<T, bool>> exp);
 
         /// <summary>
+        /// 获取指定ID的模型
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        T GetModelById(Guid guid);
+
+        /// <summary>
         /// 获取符合条件的对象的数量
         /// </summary>
         /// <param name="exp">查询条件</param>
@@ -78,6 +85,22 @@ namespace SHWD.Platform.Repository.IRepository
         /// <param name="models">被添加或修改的对象列表</param>
         /// <returns>成功添加或修改的对象数量</returns>
         int AddOrUpdate(IEnumerable<T> models);
+
+        /// <summary>
+        /// 更新指定模型属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="propertyNames"></param>
+        /// <returns></returns>
+        Guid PartialUpdate(T model, List<string> propertyNames);
+
+        /// <summary>
+        /// 批量更新制定模型属性
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="propertyNames"></param>
+        /// <returns></returns>
+        int PartialUpdate(IEnumerable<T> models, List<string> propertyNames);
 
         /// <summary>
         /// 大量添加数据

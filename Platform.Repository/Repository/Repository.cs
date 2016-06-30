@@ -4,6 +4,7 @@ using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -74,6 +75,9 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T GetModel(Expression<Func<T, bool>> exp)
             => EntitySet.SingleOrDefault(exp);
 
+        public virtual T GetModelById(Guid guid)
+            => EntitySet.SingleOrDefault(obj => obj.Id == guid);
+
         public virtual int GetCount(Expression<Func<T, bool>> exp) 
             => exp == null ? EntitySet.Count() : EntitySet.Where(exp).Count();
 
@@ -108,6 +112,11 @@ namespace SHWD.Platform.Repository.Repository
             {
                 DbContext.Set<T>().Add(model);
             }
+            else
+            {
+                DbContext.Set<T>().Attach(model);
+                DbContext.Entry(model).State = EntityState.Modified;
+            }
 
             return DbContext.SaveChanges() != 1 ? Guid.Empty : model.Id;
         }
@@ -119,6 +128,31 @@ namespace SHWD.Platform.Repository.Repository
             foreach (var model in models.Where(model => model.IsNew))
             {
                 DbContext.Set<T>().Add(model);
+            }
+
+            return DbContext.SaveChanges();
+        }
+
+        public virtual Guid PartialUpdate(T model, List<string> propertyNames)
+        {
+            DbContext.Set<T>().Attach(model);
+            foreach (var propertyName in propertyNames)
+            {
+                DbContext.Entry(model).Property(propertyName).IsModified = true;
+            }
+
+            return DbContext.SaveChanges() != 1 ? Guid.Empty : model.Id;
+        }
+
+        public virtual int PartialUpdate(IEnumerable<T> models, List<string> propertyNames)
+        {
+            foreach (var model in models)
+            {
+                DbContext.Set<T>().Attach(model);
+                foreach (var propertyName in propertyNames)
+                {
+                    DbContext.Entry(model).Property(propertyName).IsModified = true;
+                }
             }
 
             return DbContext.SaveChanges();

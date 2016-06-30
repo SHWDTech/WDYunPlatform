@@ -1,4 +1,6 @@
-﻿using System.Data.Entity.Validation;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using PagedList;
 using SHWDTech.Platform.Model.Model;
 
@@ -23,7 +25,22 @@ namespace Platform.Process.IProcess
         /// 添加或更新餐饮企业
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="propertyNames"></param>
         /// <returns></returns>
-        DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model);
+        DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model, List<string> propertyNames);
+
+        /// <summary>
+        /// 删除指定的餐饮企业
+        /// </summary>
+        /// <param name="componyId"></param>
+        /// <returns></returns>
+        bool DeleteCateringEnterprise(Guid componyId);
+
+        /// <summary>
+        /// 获取指定的餐饮企业
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        CateringCompany GetCateringEnterprise(Guid guid);
     }
 }

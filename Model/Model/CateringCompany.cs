@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 

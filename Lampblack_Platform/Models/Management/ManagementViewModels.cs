@@ -4,14 +4,6 @@ using SHWDTech.Platform.Model.Model;
 namespace Lampblack_Platform.Models.Management
 {
     /// <summary>
-    /// 餐饮企业编辑模型
-    /// </summary>
-    public class EditCateringEnterpriseViewModel : CateringCompany
-    {
-
-    }
-
-    /// <summary>
     /// 餐饮企业列表模型
     /// </summary>
     public class CateringEnterpriseViewModel

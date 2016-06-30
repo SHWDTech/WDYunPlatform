@@ -1,4 +1,5 @@
 ﻿@using Lampblack_Platform.Models.Management
+@using MvcWebComponents.Extensions
 @using PagedList.Mvc
 @model CateringEnterpriseViewModel
 @{
@@ -26,53 +27,67 @@
                     <div class="table-layer">
                         <table class="table table-bordered table-striped table-hover text-center">
                             <thead>
-                                <tr>
-                                    <td style="width: 2%;">
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td style="width: 35%;">
-                                        餐饮企业名称
-                                    </td>
-                                    <td style="width: 8%;">
-                                        企业编号
-                                    </td>
-                                    <td style="width: 5%;">
-                                        负责人
-                                    </td>
-                                    <td style="width: 8%;">
-                                        电话号码
-                                    </td>
-                                    <td style="width: 8%">
-                                        邮箱地址
-                                    </td>
-                                    <td style="width: 18%;">
-                                        详细地址
-                                    </td>
-                                    <td style="width: 8%;">
-                                        注册时间
-                                    </td>
-                                    <td style="width: 8%;">
-                                        操作
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td style="width: 2%;">
+                                    <input type="checkbox"/>
+                                </td>
+                                <td style="width: 35%;">
+                                    餐饮企业名称
+                                </td>
+                                <td style="width: 8%;">
+                                    企业编号
+                                </td>
+                                <td style="width: 5%;">
+                                    负责人
+                                </td>
+                                <td style="width: 8%;">
+                                    电话号码
+                                </td>
+                                <td style="width: 8%">
+                                    邮箱地址
+                                </td>
+                                <td style="width: 18%;">
+                                    详细地址
+                                </td>
+                                <td style="width: 8%;">
+                                    注册时间
+                                </td>
+                                <td style="width: 8%;">
+                                    操作
+                                </td>
+                            </tr>
                             </thead>
                             <tbody>
-                                @{
-                                    foreach (var company in Model.CateringCompanies)
-                                    {
-                                        <tr data-company-id="@company.Id">
-                                            <td><input type="checkbox" /></td>
-                                            <td>@company.CompanyName</td>
-                                            <td>@company.CompanyCode</td>
-                                            <td>@company.ChargeMan</td>
-                                            <td>@company.Telephone</td>
-                                            <td>@company.Email</td>
-                                            <td>@company.Address</td>
-                                            <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
-                                            <td><a href="#" class="link link-edit">编辑</a>  <a href="#" class="link link-delete">删除</a></td>
-                                        </tr>
-                                    }
+                            @{
+                                foreach (var company in Model.CateringCompanies)
+                                {
+                                    <tr data-company-id="@company.Id">
+                                        <td><input type="checkbox"/></td>
+                                        <td>@company.CompanyName</td>
+                                        <td>@company.CompanyCode</td>
+                                        <td>@company.ChargeMan</td>
+                                        <td>@company.Telephone</td>
+                                        <td>@company.Email</td>
+                                        <td>@company.Address</td>
+                                        <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            @Ajax.ActionLink("编辑", "EditCateringEnterprise", new {guid = company.Id},
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "GET",
+                                                    OnSuccess = "slideUp.show",
+                                                    UpdateTargetId = "slide-up-content"
+                                                })
+                                            @Ajax.ActionLink("删除", "DeleteCateringEnterprise", new {guid = company.Id},
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "GET",
+                                                    Confirm = "确定删除吗？"
+                                                }.GeneralOptions())
+                                        </td>
+                                    </tr>
                                 }
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -80,11 +95,11 @@
                 <div class="panel panel-body" style="margin-top: -30px;">
                     <div style="float: right;">
                         @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() {HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace});
-                            option.UlElementClasses = new[] {"no-margin pagination"};
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace });
+                            option.UlElementClasses = new[] { "no-margin pagination" };
                         }
                         @Html.PagedListPager(Model.CateringCompanies,
-                            page => Url.Action("CateringEnterprise", new {page, queryName = Model.QueryName, pageSize = Model.PageSize}), option)
+                            page => Url.Action("CateringEnterprise", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
                     </div>
                     <div class="horizontal-group">
                         <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>

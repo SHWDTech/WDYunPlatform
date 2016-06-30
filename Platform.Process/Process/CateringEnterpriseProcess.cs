@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Reflection;
 using PagedList;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
@@ -29,21 +31,25 @@ namespace Platform.Process.Process
             }
         }
 
-        public DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model)
+        public DbEntityValidationException AddOrUpdateCateringEnterprise(CateringCompany model, List<string> propertyNames)
         {
             using (var repo = DbRepository.Repo<CateringCompanyRepository>())
             {
                 try
                 {
-                    var company = CateringCompanyRepository.CreateDefaultModel();
-                    company.CompanyName = model.CompanyName;
-                    company.CompanyCode = model.CompanyCode;
-                    company.ChargeMan = model.ChargeMan;
-                    company.Telephone = model.Telephone;
-                    company.Address = model.Address;
-                    company.Email = model.Email;
-                    company.RegisterDateTime = model.RegisterDateTime;
-                    repo.AddOrUpdate(company);
+                    if (model.Id == Guid.Empty)
+                    {
+                        var dbModel = CateringCompanyRepository.CreateDefaultModel();
+                        foreach (var propertyName in propertyNames)
+                        {
+                            dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
+                        }
+                        repo.AddOrUpdate(dbModel);
+                    }
+                    else
+                    {
+                        repo.PartialUpdate(model, propertyNames);
+                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -62,6 +68,14 @@ namespace Platform.Process.Process
                 if (item == null) return false;
 
                 return repo.Delete(item);
+            }
+        }
+
+        public CateringCompany GetCateringEnterprise(Guid guid)
+        {
+            using (var repo = DbRepository.Repo<CateringCompanyRepository>())
+            {
+                return repo.GetModelById(guid);
             }
         }
     }

@@ -90,8 +90,9 @@ var Msg = function (msg, option) {
     baseModel.find('.btn-default').empty();
     if (!IsNullOrEmpty(option.cancel)) {
         baseModel.find('.btn-default').append(option.cancel);
+    } else {
+        baseModel.find('.btn-default').append('关闭');
     }
-    baseModel.find('.btn-default').append('关闭');
 
     baseModel.find('.btn-main').hide();
     if (!IsNullOrEmpty(option.confirm)) {
@@ -129,5 +130,9 @@ function ajaxSuccess(ret) {
             message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
         }
         Msg(message, { title: '提示！' });
+    }
+
+    if (!IsNullOrEmpty(ret.PostForm)) {
+        $('#' + ret.PostForm).submit();
     }
 }

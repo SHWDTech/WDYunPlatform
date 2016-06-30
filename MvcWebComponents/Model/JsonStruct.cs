@@ -24,6 +24,11 @@ namespace MvcWebComponents.Model
         public string Message { get; set; }
 
         /// <summary>
+        /// 需要执行POST请求的form名称
+        /// </summary>
+        public string PostForm { get; set; }
+
+        /// <summary>
         /// 请求的异常信息
         /// </summary>
         public string Exception { get; set; }

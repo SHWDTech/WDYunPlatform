@@ -70,6 +70,29 @@ namespace SHWD.Platform.Repository.Repository
             return base.AddOrUpdate(enumerable);
         }
 
+        public override Guid PartialUpdate(T model, List<string> propertyNames)
+        {
+            model.LastUpdateDateTime = DateTime.Now;
+            model.LastUpdateUserId = CurrentUser.Id;
+            propertyNames.Add("LastUpdateDateTime");
+            propertyNames.Add("LastUpdateUserId");
+
+            return base.PartialUpdate(model, propertyNames);
+        }
+
+        public override int PartialUpdate(IEnumerable<T> models, List<string> propertyNames)
+        {
+            foreach (var model in models)
+            {
+                model.LastUpdateDateTime = DateTime.Now;
+                model.LastUpdateUserId = CurrentUser.Id;
+            }
+            propertyNames.Add("LastUpdateDateTime");
+            propertyNames.Add("LastUpdateUserId");
+
+            return base.PartialUpdate(models, propertyNames);
+        }
+
         public virtual void MarkDelete(T model)
         {
             model.IsDeleted = true;

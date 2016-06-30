@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.Management;
 using MvcWebComponents.Controllers;
@@ -6,6 +7,7 @@ using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
 using Platform.Process;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -96,37 +98,44 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditCateringEnterprise()
+        public ActionResult EditCateringEnterprise(string guid)
         {
-            return DefaultView();
+            if (string.IsNullOrWhiteSpace(guid))
+            {
+                return DefaultView();
+            }
+
+            var model = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetCateringEnterprise(Guid.Parse(guid));
+            return DefaultView(model);
         }
 
         [AjaxGet]
         [HttpPost]
-        public ActionResult EditCateringEnterprise(EditCateringEnterpriseViewModel model)
+        public ActionResult EditCateringEnterprise(CateringCompany model)
         {
-            var exception = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model);
+            var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
+
+            var exception = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model, propertyNames);
 
             if (exception != null)
             {
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common", 
-                new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "slide-up-content" });
+            return RedirectToAction("SubmitSuccess", "Common",
+                new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "slide-up-content", postform = "catering" });
         }
 
         [AjaxGet]
-        public ActionResult DeleteCateringEnterprise()
+        public ActionResult DeleteCateringEnterprise(Guid guid)
         {
-            var companyId = Guid.Parse(Request["id"]);
-
-            var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(companyId);
+            var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
 
             var json = new JsonStruct
             {
                 Success = success,
-                Message = !success ? "尝试删除餐饮企业信息失败，请刷新后重新尝试。" : "删除成功！"
+                Message = !success ? "尝试删除餐饮企业信息失败，请刷新后重新尝试。" : "删除成功！",
+                PostForm = "catering"
             };
 
             return Json(json, JsonRequestBehavior.AllowGet);
