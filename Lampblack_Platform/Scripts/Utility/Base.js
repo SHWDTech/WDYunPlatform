@@ -6,17 +6,17 @@ $(function () {
             if (IsNullOrEmpty(ret)) return;
             if (!IsNullOrEmpty(ret.Message)) {
                 var message = ret.Message;
-                if (IsNullOrEmpty(ret.Exception)) {
+                if (!IsNullOrEmpty(ret.Exception)) {
                     message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
                 }
                 Msg(message, { title: '提示！' });
             }
 
-            if (IsNullOrEmpty(ret.Message) || !ret.Success) {
+            if (IsNullOrEmpty(ret.Success) || !ret.Success) {
                 return;
             }
 
-            if (IsNullOrEmpty(callback)) {
+            if (!IsNullOrEmpty(callback)) {
                 callback(ret.Result);
             }
         });
