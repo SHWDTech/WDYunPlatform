@@ -26,16 +26,20 @@
             $(ret).each(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
-            $(select).val(ret[0].Id);
+            if (ret.length > 0) {
+                $(select).val(ret[0].Id).change();
+            }
         });
     }
 
     $('#DistrictId').on('change', function () {
+        $('#AddressId').empty();
         getDistricts($(this).val(), $('#StreetId'));
-        $('#AddressId').empty().val('');
     });
 
     $('#StreetId').on('change', function () {
         getDistricts($(this).val(), $('#AddressId'));
     });
+
+    $('#DistrictId').change();
 })

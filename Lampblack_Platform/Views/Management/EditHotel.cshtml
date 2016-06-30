@@ -99,13 +99,13 @@
                     @Html.LabelFor(m => m.OpeningDateTime)
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.OpeningDateTime, "yyyy-MM-dd hh:mm", new { @class = "form-control", placeholder = "请输入营业开始时间" })
+                    @Html.TextBoxFor(m => m.OpeningDateTime, "{0:HH:mm}", new {@class = "form-control", placeholder = "请输入营业开始时间"})
                 </td>
                 <td>
                     @Html.LabelFor(m => m.StopDateTIme)
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.StopDateTIme, "yyyy-MM-dd hh:mm", new { @class = "form-control", placeholder = "请输入营业截止时间" })
+                    @Html.TextBoxFor(m => m.StopDateTIme, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入营业截止时间"})
                 </td>
             </tr>
             <tr>

@@ -247,7 +247,7 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.District = ProcessInvoke.GetInstance<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key })
+                .Select(obj => new SelectListItem() {Text = obj.Value, Value = obj.Key})
                 .ToList();
 
             ViewBag.Street = new List<SelectListItem>();

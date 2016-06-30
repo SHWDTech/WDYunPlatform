@@ -107,6 +107,8 @@ var Msg = function (msg, option) {
              option.callback(option.param);
         });
     }
+
+    setTimeout(function() {$('#modal-cancel').focus()}, 200);
 };
 
 function resetValidation() {

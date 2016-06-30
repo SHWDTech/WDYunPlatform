@@ -1,5 +1,6 @@
 ﻿@using MvcWebComponents.Extensions
 @using PagedList.Mvc
+@using SHWDTech.Platform.Model.Enums
 @model Lampblack_Platform.Models.Management.HotelViewModel
 
 @{
@@ -76,7 +77,10 @@
                                             <td>@hotel.ChargeMan</td>
                                             <td>@hotel.Telephone</td>
                                             <td>[@hotel.OpeningDateTime.ToString("hh:mm")---@hotel.StopDateTIme.ToString("HH:mm")]</td>
-                                            <td>@hotel.Status</td>
+                                            @{
+                                                var status = EnumHelper<HotelRestaurantStatus>.GetDisplayValue(hotel.Status);
+                                            }
+                                            <td>@status</td>
                                             <td>@hotel.RegisterDateTime.ToString("yyyy-MM-dd")</td>
                                             <td>
                                                 @Ajax.ActionLink("编辑", "EditHotel", new { guid = hotel.Id },
