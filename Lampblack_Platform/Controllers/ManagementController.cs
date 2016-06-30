@@ -229,7 +229,7 @@ namespace Lampblack_Platform.Controllers
         [HttpGet]
         public ActionResult DeleteHotel(Guid guid)
         {
-            var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
+            var success = ProcessInvoke.GetInstance<HotelRestaurantProcess>().DeleteHotelRestaurant(guid);
 
             var json = new JsonStruct
             {

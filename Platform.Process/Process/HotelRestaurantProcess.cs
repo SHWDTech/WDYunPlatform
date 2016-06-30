@@ -66,7 +66,7 @@ namespace Platform.Process.Process
             return null;
         }
 
-        public bool DeleteCateringEnterprise(Guid componyId)
+        public bool DeleteHotelRestaurant(Guid componyId)
         {
             using (var repo = DbRepository.Repo<HotelRestaurantRepository>())
             {

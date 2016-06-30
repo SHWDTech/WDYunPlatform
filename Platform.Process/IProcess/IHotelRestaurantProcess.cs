@@ -38,6 +38,6 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <param name="componyId"></param>
         /// <returns></returns>
-        bool DeleteCateringEnterprise(Guid componyId);
+        bool DeleteHotelRestaurant(Guid componyId);
     }
 }

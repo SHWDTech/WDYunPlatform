@@ -3,19 +3,20 @@
 $(function () {
     base.AjaxGet = function (ajaxUrl, params, callback) {
         $.get(ajaxUrl, params, function (ret) {
-            if (ret.Message !== null) {
+            if (IsNullOrEmpty(ret)) return;
+            if (!IsNullOrEmpty(ret.Message)) {
                 var message = ret.Message;
-                if (ret.Exception !== null) {
+                if (IsNullOrEmpty(ret.Exception)) {
                     message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
                 }
                 Msg(message, { title: '提示！' });
             }
 
-            if (!ret.Success) {
+            if (IsNullOrEmpty(ret.Message) || !ret.Success) {
                 return;
             }
 
-            if (callback !== null) {
+            if (IsNullOrEmpty(callback)) {
                 callback(ret.Result);
             }
         });
