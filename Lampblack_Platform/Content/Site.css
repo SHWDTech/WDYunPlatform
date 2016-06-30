@@ -523,3 +523,11 @@ label {
 .link:hover {
     color: red;
 }
+
+a {
+    outline: none;
+}
+
+a:active {
+    outline: none;
+}

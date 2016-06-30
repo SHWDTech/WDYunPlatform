@@ -2,6 +2,7 @@
 
 $(function () {
     base.AjaxGet = function (ajaxUrl, params, callback) {
+        params.t = new Date();
         $.get(ajaxUrl, params, function (ret) {
             if (IsNullOrEmpty(ret)) return;
             if (!IsNullOrEmpty(ret.Message)) {
