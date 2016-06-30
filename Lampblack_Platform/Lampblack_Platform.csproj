@@ -401,6 +401,10 @@
       <Project>{d79f8c47-22e3-4b7d-b5f2-8d3ed747fd10}</Project>
       <Name>ProjectDataInitializer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SqlComponents\SqlComponents.csproj">
+      <Project>{a54688dc-6d07-4b0c-8778-51e2b7eae03d}</Project>
+      <Name>SqlComponents</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -97,7 +97,7 @@
       <Name>Platform.Cache</Name>
     </ProjectReference>
     <ProjectReference Include="..\Platform.Process\Platform.Process.csproj">
-      <Project>{9BB3C321-2F61-4EFE-9315-B1A035470A57}</Project>
+      <Project>{9bb3c321-2f61-4efe-9315-b1a035470a57}</Project>
       <Name>Platform.Process</Name>
     </ProjectReference>
     <ProjectReference Include="..\Platform.Repository\Platform.Repository.csproj">

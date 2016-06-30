@@ -110,6 +110,10 @@
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SqlComponents\SqlComponents.csproj">
+      <Project>{a54688dc-6d07-4b0c-8778-51e2b7eae03d}</Project>
+      <Name>SqlComponents</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -12,7 +12,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 创建默认的DbContext
         /// </summary>
-        public RepositoryDbContext() : base($"name={DbRepository.ConnectionName}")
+        public RepositoryDbContext() : base($"name=Lampblack_Platform")
         {
         }
 

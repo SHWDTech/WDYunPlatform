@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlComponents.SqlExcute;
+using System;
 using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
@@ -36,7 +37,7 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        bool DeleteArea(Guid itemId);
+        SqlExcuteResult DeleteArea(Guid itemId);
 
         /// <summary>
         /// 获取某区域的子节点信息

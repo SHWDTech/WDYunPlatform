@@ -19,20 +19,14 @@ namespace MvcWebComponents.Extensions
             return enumValues;
         }
 
-        public static T Parse(string value)
-        {
-            return (T)Enum.Parse(typeof(T), value, true);
-        }
+        public static T Parse(string value) 
+            => (T)Enum.Parse(typeof(T), value, true);
 
-        public static IList<string> GetNames(Enum value)
-        {
-            return value.GetType().GetFields(BindingFlags.Static | BindingFlags.Public).Select(fi => fi.Name).ToList();
-        }
+        public static IList<string> GetNames(Enum value) 
+            => value.GetType().GetFields(BindingFlags.Static | BindingFlags.Public).Select(fi => fi.Name).ToList();
 
-        public static IList<string> GetDisplayValues(Enum value)
-        {
-            return GetNames(value).Select(obj => GetDisplayValue(Parse(obj))).ToList();
-        }
+        public static IList<string> GetDisplayValues(Enum value) 
+            => GetNames(value).Select(obj => GetDisplayValue(Parse(obj))).ToList();
 
         public static string GetDisplayValue(T value)
         {

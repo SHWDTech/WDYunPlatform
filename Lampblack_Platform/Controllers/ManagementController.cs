@@ -15,10 +15,8 @@ namespace Lampblack_Platform.Controllers
     public class ManagementController : WdControllerBase
     {
         [AjaxGet]
-        public ActionResult Area()
-        {
-            return View();
-        }
+        public ActionResult Area() 
+            => View();
 
         [AjaxGet]
         public ActionResult GetAreaInfo()
@@ -30,7 +28,9 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult GetAreaList()
         {
-            var parent = Guid.Parse(Request["id"]);
+            var areaId = Request["id"];
+            if (string.IsNullOrWhiteSpace(areaId)) return null;
+            var parent = Guid.Parse(areaId);
 
             var list = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetChildDistrict(parent);
 
@@ -73,12 +73,21 @@ namespace Lampblack_Platform.Controllers
         {
             var itemKey = Guid.Parse(Request["Id"]);
 
-            var success = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(itemKey);
+            var sqlResult = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(itemKey);
+
+            if (sqlResult.ErrorNumber == 547)
+            {
+                sqlResult.Message = "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。";
+            }
+            else
+            {
+                sqlResult.Message = "删除成功！";
+            }
 
             var json = new JsonStruct
             {
-                Success = success,
-                Message = !success ? "尝试删除区域信息失败，请刷新后重新尝试。" : "删除成功！"
+                Success = sqlResult.Success,
+                Message = sqlResult.Message
             };
 
 
@@ -233,10 +242,8 @@ namespace Lampblack_Platform.Controllers
         }
 
         [AjaxGet]
-        public ActionResult Device()
-        {
-            return View();
-        }
+        public ActionResult Device() 
+            => View();
 
         private void GetHotelRelatedItems()
         {

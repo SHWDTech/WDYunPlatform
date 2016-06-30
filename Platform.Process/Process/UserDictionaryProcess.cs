@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using Platform.Process.Enums;
 using Platform.Process.IProcess;
@@ -7,6 +8,7 @@ using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
+using SqlComponents.SqlExcute;
 
 namespace Platform.Process.Process
 {
@@ -103,18 +105,44 @@ namespace Platform.Process.Process
             }
         }
 
-        public bool DeleteArea(Guid itemId)
+        public SqlExcuteResult DeleteArea(Guid itemId)
         {
             using (var repo = DbRepository.Repo<UserDictionaryRepository>())
             {
+                var sqlResult = new SqlExcuteResult() {Success = false};
                 var item = repo.GetModel(obj => obj.Id == itemId);
-                if (item == null) return false;
+                if (item == null) return sqlResult;
 
                 var children = repo.GetModels(obj => obj.ParentDictionaryId == item.Id || obj.ParentDictionary.ParentDictionaryId == item.Id).ToList();
 
                 children.Add(item);
 
-                return repo.Delete(children) > 0;
+                try
+                {
+                    repo.Delete(children);
+                }
+                catch (Exception ex)
+                {
+                    var innerEx = ex;
+                    while (innerEx != null)
+                    {
+                        var sqlEx = innerEx as SqlException;
+                        if (sqlEx != null)
+                        {
+                            sqlResult.Exception = sqlEx;
+                            sqlResult.ErrorNumber = sqlEx.Number;
+
+                            return sqlResult;
+                        }
+
+                        innerEx = innerEx.InnerException;
+                    }
+
+                    throw;
+                }
+
+                sqlResult.Success = true;
+                return sqlResult;
             }
         }
 
