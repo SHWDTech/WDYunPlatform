@@ -1,0 +1,182 @@
+﻿@model SHWDTech.Platform.Model.Model.RestaurantDevice
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditDevice", null, new AjaxOptions()
+{
+    UpdateTargetId = "slide-up-content",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "deviceEdit" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.DeviceTerminalCode)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.DeviceTerminalCode, new { @class = "form-control", placeholder = "请输入设备终端号" })
+                    @Html.ValidationMessageFor(m => m.DeviceTerminalCode, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.DeviceName)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.DeviceName, new { @class = "form-control", placeholder = "请输入设备名称" })
+                    @Html.ValidationMessageFor(m => m.DeviceName, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.DeviceCode)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.DeviceCode, new { @class = "form-control", placeholder = "请输入设备编号" })
+                    @Html.ValidationMessageFor(m => m.DeviceCode, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.ProductionDateTime)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ProductionDateTime, new { @class = "form-control", placeholder = "请输入出厂日期" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Telephone)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control", placeholder = "请输入出场联系电话" })
+                    @Html.ValidationMessageFor(m => m.DeviceCode, null, new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.Status)
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.Status, (List<SelectListItem>)ViewBag.Status, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.IpAddress)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.IpAddress, new { @class = "form-control", placeholder = "请输入设备IP地址" })
+                </td>
+                <td>@Html.LabelFor(m => m.CollectFrequency)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.CollectFrequency, new { @class = "form-control", placeholder = "请输入采集频率" })
+                    @Html.ValidationMessageFor(m => m.CollectFrequency, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.CleanerName)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerName, new { @class = "form-control", placeholder = "请输入净化器名称" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.CleanerType)
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.CleanerType, (List<SelectListItem>)ViewBag.CleanerType, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.CleanerModel)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerModel, new { @class = "form-control", placeholder = "请输入净化器型号" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.CleanerManufacturer)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerManufacturer, new { @class = "form-control", placeholder = "请输入净化器厂家" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.CleanerRatedVoltage)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerRatedVoltage, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入净化器额定电压" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.CleanerMaxCurrent)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerMaxCurrent, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入净化器最大电流" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.CleanerRatedCurrent)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerRatedCurrent, new { @class = "form-control", placeholder = "请输入净化器额定电流" })
+                </td>
+                <td>
+                    @Html.LabelFor(m => m.CleanerMinCurrent)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.CleanerMinCurrent, new { @class = "form-control", placeholder = "请输入净化器最小电流" })
+                </td>
+            </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.FanType)</td>
+            <td>
+                @Html.TextBoxFor(m => m.FanType, new { @class = "form-control", placeholder = "风机型号" })
+            </td>
+            <td>@Html.LabelFor(m => m.FanRatedVoltage)</td>
+            <td>
+                @Html.TextBoxFor(m => m.FanRatedVoltage, new {@class = "form-control", placeholder = "风机额定电压"})
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.FanRatedCurrent)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.FanRatedCurrent, new {@class = "form-control", placeholder = "风机额定电流"})
+            </td>
+            <td>@Html.LabelFor(m => m.FanManufacturer)</td>
+            <td>
+                @Html.TextBoxFor(m => m.FanManufacturer, new {@class = "form-control", placeholder = "风机厂家"})
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.FanMaxCurrent)
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.FanMaxCurrent, new {@class = "form-control", placeholder = "风机最大电流"})
+            </td>
+            <td>@Html.LabelFor(m => m.FanDeliveryRate)</td>
+            <td>
+                @Html.TextBoxFor(m => m.FanDeliveryRate, new {@class = "form-control", placeholder = "排风量"})
+            </td>
+        </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.FanMinCurrent)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.FanMinCurrent, new { @class = "form-control", placeholder = "风机最小电流" })
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Comment)</td>
+                <td colspan="3">
+                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "请输入备注" })
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript" src="/Scripts/Page/EditDevice.js"></script>

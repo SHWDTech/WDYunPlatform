@@ -196,9 +196,11 @@
     <Content Include="Scripts\Component\SlideUp.js" />
     <Content Include="Scripts\Page\Area.js" />
     <Content Include="Scripts\Page\CateringEnterprise.js" />
+    <Content Include="Scripts\Page\EditDevice.js" />
     <Content Include="Scripts\Page\EditHotel.js" />
     <Content Include="Scripts\Page\Hotel.js" />
     <Content Include="Scripts\Page\Map.js" />
+    <Content Include="Scripts\Page\RestaurantDevice.js" />
     <Content Include="Scripts\Utility\Base.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.min.js" />
@@ -357,6 +359,8 @@
     <Content Include="Views\Common\SubmitSuccess.cshtml" />
     <Content Include="Views\Management\Hotel.cshtml" />
     <Content Include="Views\Management\EditHotel.cshtml" />
+    <Content Include="Views\Management\Device.cshtml" />
+    <Content Include="Views\Management\EditDevice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -242,8 +242,63 @@ namespace Lampblack_Platform.Controllers
         }
 
         [AjaxGet]
-        public ActionResult Device() 
-            => View();
+        public ActionResult Device()
+        {
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var deviceList = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().GetPagedRestaurantDevice(page, pageSize, queryName, out count);
+
+            var model = new DeviceViewModel
+            {
+                Count = count,
+                PageSize = pageSize,
+                QueryName = queryName,
+                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
+                PageIndex = page,
+                RestaurantDevices = deviceList
+            };
+
+            return View(model);
+        }
+
+        [AjaxGet]
+        [HttpGet]
+        public ActionResult EditDevice(string guid)
+        {
+            GetDeviceRelatedItems();
+
+            if (string.IsNullOrWhiteSpace(guid))
+            {
+                return DefaultView();
+            }
+
+            var model = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().GetRestaurantDevice(Guid.Parse(guid));
+            return View(model);
+        }
+
+        [AjaxGet]
+        [HttpPost]
+        public ActionResult EditDevice(RestaurantDevice model)
+        {
+            var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
+
+            var exception = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().AddOrUpdateRestaurantDevice(model, propertyNames);
+
+            if (exception != null)
+            {
+                GetDeviceRelatedItems();
+                return View(model);
+            }
+
+            return RedirectToAction("SubmitSuccess", "Common",
+                new { targetAction = "EditDevice", targetcontroller = "Management", target = "slide-up-content", postform = "device" });
+        }
 
         private void GetHotelRelatedItems()
         {
@@ -266,6 +321,24 @@ namespace Lampblack_Platform.Controllers
                 new SelectListItem() {Text = "营业中", Value = "0"},
                 new SelectListItem() {Text = "装修中", Value = "1"},
                 new SelectListItem() {Text = "停业中", Value = "2"}
+            };
+        }
+
+        private void GetDeviceRelatedItems()
+        {
+            ViewBag.Status = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text = "使用中", Value = "0"},
+                new SelectListItem() {Text = "停用中", Value = "1"},
+                new SelectListItem() {Text = "维修中", Value = "2"}
+            };
+
+            ViewBag.CleanerType = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text = "静电式", Value = "0"},
+                new SelectListItem() {Text = "过滤式", Value = "1"},
+                new SelectListItem() {Text = "负离子", Value = "2"},
+                new SelectListItem() {Text = "光电式", Value = "3"}
             };
         }
     }

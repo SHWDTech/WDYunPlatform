@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 
 namespace SHWDTech.Platform.Model.Model
@@ -11,6 +11,11 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class RestaurantDevice : Device, IRestaurantDevice
     {
+        [Required]
+        [Display(Name = "设备编号")]
+        [MaxLength(25)]
+        public override string DeviceCode { get; set; }
+
         [Display(Name = "出厂日期")]
         [Required]
         public virtual DateTime ProductionDateTime { get; set; }
@@ -29,11 +34,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string CleanerName { get; set; }
 
         [Display(Name ="净化器类型")]
-        [ForeignKey("CleanerTypeId")]
-        public virtual UserDictionary CleanerType { get; set; }
-
-        [Display(Name = "净化器类型ID")]
-        public virtual Guid? CleanerTypeId { get; set; }
+        public virtual ClearnerType CleanerType { get; set; }
 
         [Display(Name = "净化器型号")]
         [MaxLength(200)]
@@ -79,5 +80,21 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "备注")]
         [MaxLength(2000)]
         public virtual string Comment { get; set; }
+
+        [Required]
+        [Display(Name = "设备名称")]
+        [MaxLength(50)]
+        public virtual string DeviceName { get; set; }
+
+        [Required]
+        [Display(Name = "设备终端号")]
+        [MaxLength(50)]
+        public virtual string DeviceTerminalCode { get; set; }
+
+        [Display(Name = "设备照片")]
+        public virtual string Photo { get; set; }
+
+        [Display(Name = "IP地址")]
+        public virtual string IpAddress { get; set; }
     }
 }

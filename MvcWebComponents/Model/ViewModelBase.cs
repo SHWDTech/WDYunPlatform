@@ -5,11 +5,8 @@ namespace MvcWebComponents.Model
     /// <summary>
     /// 视图模型基类
     /// </summary>
-    public class ViewModelBase
+    public class ViewModelBase : IBaseViewModel
     {
-        /// <summary>
-        /// 菜单列表
-        /// </summary>
-        public WdContext Context { get; set; }
+        public virtual WdContext Context { get; set; }
     }
 }

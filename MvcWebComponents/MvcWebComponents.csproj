@@ -78,7 +78,10 @@
     <Compile Include="Filters\AjaxGetAttribute.cs" />
     <Compile Include="Filters\AjaxHandleErrorAttribute.cs" />
     <Compile Include="Filters\BasicAuthAttribute.cs" />
+    <Compile Include="Model\IPagedListViewModel.cs" />
+    <Compile Include="Model\IBaseViewModel.cs" />
     <Compile Include="Model\JsonStruct.cs" />
+    <Compile Include="Model\PagedListViewModelBase.cs" />
     <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

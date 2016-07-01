@@ -1,5 +1,5 @@
 ﻿using System;
-using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -31,7 +31,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 净化器类型
         /// </summary>
-        UserDictionary CleanerType { get; set; }
+        ClearnerType CleanerType { get; set; }
 
         /// <summary>
         /// 净化器型号
@@ -102,5 +102,25 @@ namespace SHWDTech.Platform.Model.IModel
         /// 备注
         /// </summary>
         string Comment { get; set; }
+
+        /// <summary>
+        /// 设备名称
+        /// </summary>
+        string DeviceName { get; set; }
+
+        /// <summary>
+        /// 设备终端号
+        /// </summary>
+        string DeviceTerminalCode { get; set; }
+
+        /// <summary>
+        /// 设备照片
+        /// </summary>
+        string Photo { get; set; }
+
+        /// <summary>
+        /// IP地址
+        /// </summary>
+        string IpAddress { get; set; }
     }
 }

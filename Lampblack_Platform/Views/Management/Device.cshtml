@@ -1,0 +1,142 @@
+﻿@using Lampblack_Platform.Models.Management
+@using MvcWebComponents.Extensions
+@using PagedList.Mvc
+@using SHWDTech.Platform.Model.Enums
+@model DeviceViewModel
+@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @using (Ajax.BeginForm("Device", null, new AjaxOptions()
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }, new { Id = "device" }))
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="control-layer horizontal-group">
+                        <span>设备查询：</span>
+                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName" />
+                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="新增" id="add" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
+                    </div>
+                    <div class="table-layer">
+                        <table class="table table-bordered table-striped table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        设备终端号
+                                    </td>
+                                    <td>
+                                        设备名称
+                                    </td>
+                                    <td>
+                                        设备编号
+                                    </td>
+                                    <td>
+                                        手机号
+                                    </td>
+                                    <td>
+                                        出厂日期
+                                    </td>
+                                    <td>
+                                        状态
+                                    </td>
+                                    <td>
+                                        创建时间
+                                    </td>
+                                    <td>
+                                        设备照片
+                                    </td>
+                                    <td>
+                                        IP地址
+                                    </td>
+                                    <td>
+                                        采集频率
+                                    </td>
+                                    <td>
+                                        说明
+                                    </td>
+                                    <td>
+                                        操作
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var device in Model.RestaurantDevices)
+                                    {
+                                        <tr data-company-id="@device.Id">
+                                            <td>@device.DeviceTerminalCode</td>
+                                            <td>@device.DeviceName</td>
+                                            <td>@device.DeviceCode</td>
+                                            <td>@device.Telephone</td>
+                                            <td>@device.ProductionDateTime</td>
+                                            @{
+                                                var status = EnumHelper<DeviceStatus>.GetDisplayValue(device.Status);
+                                            }
+                                            <td>@status</td>
+                                            <td>@device.CreateDateTime</td>
+                                            <td>@device.Photo</td>
+                                            <td>@device.IpAddress</td>
+                                            <td>@device.CollectFrequency</td>
+                                            <td>@device.Comment</td>
+                                            <td>
+                                                @Ajax.ActionLink("编辑", "EditHotel", new { guid = device.Id },
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "GET",
+                                                    OnSuccess = "slideUp.show",
+                                                    UpdateTargetId = "slide-up-content"
+                                                })
+                                                @Ajax.ActionLink("删除", "DeleteHotel", new { guid = device.Id },
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "GET",
+                                                    Confirm = "确定删除吗？"
+                                                }.GeneralOptions())
+                                            </td>
+                                        </tr>
+                                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-body" style="margin-top: -30px;">
+                    <div style="float: right;">
+                        @{
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace });
+                            option.UlElementClasses = new[] { "no-margin pagination" };
+                        }
+                        @Html.PagedListPager(Model.RestaurantDevices,
+                            page => Url.Action("Hotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                    </div>
+                    <div class="horizontal-group">
+                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
+                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
+                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
+                            @{
+                                for (var i = 5; i < 25; i += 5)
+                                {
+                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
+                                    <option @selected>@i</option>
+                                }
+                            }
+                        </select>
+                        <label>条记录</label>
+                    </div>
+                </div>
+            </div>
+                                }
+    </div>
+</div>
+
+@Html.Partial("SlideUp")
+
+<script src="/Scripts/Page/RestaurantDevice.js"></script>

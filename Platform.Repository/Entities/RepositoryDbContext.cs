@@ -96,7 +96,6 @@ namespace SHWD.Platform.Repository.Entities
                         p.Telephone,
                         p.CollectFrequency,
                         p.CleanerName,
-                        p.CleanerTypeId,
                         p.CleanerModel,
                         p.CleanerManufacturer,
                         p.CleanerRatedVoltage,

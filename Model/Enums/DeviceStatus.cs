@@ -1,15 +1,25 @@
-﻿namespace SHWDTech.Platform.Model.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SHWDTech.Platform.Model.Enums
 {
     public enum DeviceStatus : byte
     {
         /// <summary>
         /// 已经启用
         /// </summary>
+        [Display(Name = "使用中")]
         Enabled = 0x00,
 
         /// <summary>
         /// 未启用
         /// </summary>
-        Disabled = 0x01
+        [Display(Name = "停用中")]
+        Disabled = 0x01,
+
+        /// <summary>
+        /// 维护中
+        /// </summary>
+        [Display(Name = "维护中")]
+        Maintenance = 0x02
     }
 }

@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\CameraStatus.cs" />
+    <Compile Include="Enums\ClearnerType.cs" />
     <Compile Include="Enums\CommandCategory.cs" />
     <Compile Include="Enums\HotelRestaurantStatus.cs" />
     <Compile Include="Enums\ProtocolCheckType.cs" />
