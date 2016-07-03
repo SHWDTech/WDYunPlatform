@@ -116,7 +116,7 @@ namespace SHWD.Platform.Repository.IRepository
         /// <param name="models"></param>
         /// <param name="propertyNames"></param>
         /// <returns></returns>
-        int PartialUpdate(IEnumerable<T> models, List<string> propertyNames);
+        int PartialUpdate(List<T> models, List<string> propertyNames);
 
         /// <summary>
         /// 大量添加数据

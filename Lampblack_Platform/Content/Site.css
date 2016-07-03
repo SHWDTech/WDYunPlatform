@@ -307,6 +307,18 @@ label {
     max-width: 120px;
 }
 
+.lbl140 {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+}
+
+.lbl160 {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+}
+
 .control60 {
     width: 60px;
     min-width: 60px;

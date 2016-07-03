@@ -26,8 +26,9 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <param name="model"></param>
         /// <param name="propertyNames"></param>
+        /// <param name="roleList"></param>
         /// <returns></returns>
-        DbEntityValidationException AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames);
+        DbEntityValidationException AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames, List<string> roleList);
 
         /// <summary>
         /// 删除油烟系统用户

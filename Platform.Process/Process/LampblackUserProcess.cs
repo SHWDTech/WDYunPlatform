@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
@@ -7,6 +8,7 @@ using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
+using System.Transactions;
 
 namespace Platform.Process.Process
 {
@@ -26,37 +28,51 @@ namespace Platform.Process.Process
                 }
                 count = query.Count();
 
-                return query.OrderBy(obj => obj.CreateDateTime).ToPagedList(page, pageSize);
+                return query.Include("Department").Include("CateringCompany").OrderBy(obj => obj.CreateDateTime).ToPagedList(page, pageSize);
             }
         }
 
-        public DbEntityValidationException AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames)
+        public DbEntityValidationException AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames, List<string> roleList)
         {
-            using (var repo = DbRepository.Repo<LampblackUserRepository>())
+            using (var scope = new TransactionScope())
             {
-                try
+                using (var repo = DbRepository.Repo<LampblackUserRepository>())
                 {
-                    if (model.Id == Guid.Empty)
+                    try
                     {
-                        var dbModel = LampblackUserRepository.CreateDefaultModel();
-                        foreach (var propertyName in propertyNames)
-                        {
-                            dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
-                        }
-                        repo.AddOrUpdate(dbModel);
-                    }
-                    else
-                    {
-                        repo.PartialUpdate(model, propertyNames);
-                    }
-                }
-                catch (DbEntityValidationException ex)
-                {
-                    return ex;
-                }
-            }
+                        Guid userId;
 
-            return null;
+                        if (model.Id == Guid.Empty)
+                        {
+                            var dbModel = LampblackUserRepository.CreateDefaultModel();
+                            foreach (var propertyName in propertyNames)
+                            {
+                                if (dbModel.GetType().GetProperties().Any(obj => obj.Name == propertyName))
+                                {
+                                    dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
+                                }
+                            }
+                            userId = repo.AddOrUpdate(dbModel);
+                        }
+                        else
+                        {
+                            userId = repo.PartialUpdate(model, propertyNames);
+                        }
+
+                        var user = repo.GetModel(obj => obj.Id == userId);
+                        UpdateUserRoles(user, roleList);
+                        repo.AddOrUpdate(model);
+
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        return ex;
+                    }
+                }
+
+                scope.Complete();
+                return null;
+            }
         }
 
         public bool DeleteLampblackUser(Guid userId)
@@ -75,6 +91,19 @@ namespace Platform.Process.Process
             using (var repo = DbRepository.Repo<LampblackUserRepository>())
             {
                 return repo.GetModelById(guid);
+            }
+        }
+
+        public void UpdateUserRoles(LampblackUser user, List<string> roleList)
+        {
+            using (var roleRepo = DbRepository.Repo<RoleRepository>())
+            {
+                user.Roles = new List<WdRole>();
+                foreach (var role in roleList)
+                {
+                    var roleId = Guid.Parse(role);
+                    user.Roles.Add(roleRepo.GetModel(obj => obj.Id == roleId));
+                }
             }
         }
     }

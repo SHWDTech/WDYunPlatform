@@ -80,7 +80,7 @@ namespace SHWD.Platform.Repository.Repository
             return base.PartialUpdate(model, propertyNames);
         }
 
-        public override int PartialUpdate(IEnumerable<T> models, List<string> propertyNames)
+        public override int PartialUpdate(List<T> models, List<string> propertyNames)
         {
             foreach (var model in models)
             {

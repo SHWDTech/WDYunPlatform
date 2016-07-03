@@ -30,7 +30,6 @@ namespace MvcWebComponents.Controllers
             if (ctx.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
                 || ctx.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
             {
-                base.OnActionExecuting(ctx);
                 return;
             }
 

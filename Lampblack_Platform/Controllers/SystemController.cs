@@ -9,6 +9,7 @@ using MvcWebComponents.Model;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Utility;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -58,9 +59,16 @@ namespace Lampblack_Platform.Controllers
         [HttpPost]
         public ActionResult EditUser(LampblackUser model)
         {
-            var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
+            var propertyNames = Request.Form.AllKeys.Where(field => field != "Id").ToList();
+            propertyNames.Add("UserName");
 
-            var exception = ProcessInvoke.GetInstance<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames);
+            model.Password = Globals.GetMd5(model.Password);
+
+            model.UserName = model.LoginName;
+
+            var roleList = Request["Roles"].Split(',').ToList();
+
+            var exception = ProcessInvoke.GetInstance<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames, roleList);
 
             GetUserRelatedItems();
 
@@ -270,6 +278,9 @@ namespace Lampblack_Platform.Controllers
                 .GetDepartmentSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
                 .ToList();
+
+            ViewBag.Roles = ProcessInvoke.GetInstance<WdRoleProcess>()
+                .GetRoleSelectList();
         }
 
         private void GetRoleRelatedItems()

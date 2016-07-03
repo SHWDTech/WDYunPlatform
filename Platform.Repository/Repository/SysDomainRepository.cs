@@ -62,10 +62,9 @@ namespace SHWD.Platform.Repository.Repository
             return base.PartialUpdate(model, propertyNames);
         }
 
-        public override int PartialUpdate(IEnumerable<T> models, List<string> propertyNames)
+        public override int PartialUpdate(List<T> models, List<string> propertyNames)
         {
-            var enumerable = models.ToList();
-            foreach (var model in enumerable)
+            foreach (var model in models)
             {
                 if (model.DomainId == Guid.Empty)
                 {
@@ -74,7 +73,7 @@ namespace SHWD.Platform.Repository.Repository
             }
             propertyNames.Add("DomainId");
 
-            return base.PartialUpdate(enumerable, propertyNames);
+            return base.PartialUpdate(models, propertyNames);
         }
 
         /// <summary>

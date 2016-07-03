@@ -8,7 +8,8 @@
 {
     UpdateTargetId = "slide-up-content",
     InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST"
+    HttpMethod = "POST",
+    OnBegin = "EncrypPassword"
 }, new { id = "userEdit" }))
 {
     @Html.HiddenFor(m => m.Id)
@@ -36,9 +37,9 @@
                     @Html.TextBoxFor(m => m.UserIdentityName, new { @class = "form-control", placeholder = "请输入真实姓名" })
                     @Html.ValidationMessageFor(m => m.UserIdentityName, null, new { @class = "text-danger" })
                 </td>
-                <td>@Html.LabelFor(m => m.CateringCompany)</td>
+                <td>@Html.LabelFor(m => m.CateringCompanyId)</td>
                 <td>
-                    @Html.DropDownListFor(m => m.CateringCompany, (List<SelectListItem>)ViewBag.CateringCompany, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.CateringCompanyId, (List<SelectListItem>)ViewBag.CateringCompany, new { @class = "form-control" })
                 </td>
             </tr>
             <tr>
@@ -53,9 +54,9 @@
                 </td>
             </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.Department)</td>
+                <td>@Html.LabelFor(m => m.DepartmentId)</td>
                 <td>
-                    @Html.DropDownListFor(m => m.Department, (List<SelectListItem>)ViewBag.Department, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.DepartmentId, (List<SelectListItem>)ViewBag.Department, new { @class = "form-control" })
                 </td>
                 <td>@Html.LabelFor(m => m.Email)</td>
                 <td>
@@ -64,10 +65,15 @@
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Roles)</td>
-                <td colspan="3">
-                    <div>
-                        
-                    </div>
+                <td colspan="3" class="text-left">
+                    @{
+                        var roles = (Dictionary<string, string>)ViewBag.Roles;
+                        foreach (var role in roles)
+                        {
+                            <input type="checkbox" name="Roles" value="@role.Value" id="@role.Value"/>
+                            <label class="lbl160" for="@role.Value">@role.Key</label>
+                        }
+                    }
                 </td>
             </tr>
             <tr class="text-center">
@@ -76,6 +82,7 @@
             </tr>
         </tbody>
     </table>
-}
+                        }
 
+<script src="/Scripts/Utility/sha.js"></script>
 <script type="text/javascript" src="/Scripts/Page/EditUser.js"></script>

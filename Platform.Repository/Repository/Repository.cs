@@ -150,20 +150,26 @@ namespace SHWD.Platform.Repository.Repository
         public virtual Guid PartialUpdate(T model, List<string> propertyNames)
         {
             DbContext.Set<T>().Attach(model);
+            var modelType = model.GetType();
             foreach (var propertyName in propertyNames)
             {
+                if (!IsPrimitive(modelType.GetProperty(propertyName).PropertyType)) continue;
+
                 DbContext.Entry(model).Property(propertyName).IsModified = true;
             }
 
             return DbContext.SaveChanges() != 1 ? Guid.Empty : model.Id;
         }
 
-        public virtual int PartialUpdate(IEnumerable<T> models, List<string> propertyNames)
+        public virtual int PartialUpdate(List<T> models, List<string> propertyNames)
         {
-            foreach (var model in models)
+            var modelList = models.ToList();
+            var modelType = modelList.First().GetType();
+            foreach (var propertyName in propertyNames)
             {
-                DbContext.Set<T>().Attach(model);
-                foreach (var propertyName in propertyNames)
+                if (!IsPrimitive(modelType.GetProperty(propertyName).PropertyType)) continue;
+
+                foreach (var model in modelList)
                 {
                     DbContext.Entry(model).Property(propertyName).IsModified = true;
                 }
@@ -211,6 +217,9 @@ namespace SHWD.Platform.Repository.Repository
 
             return DbContext.SaveChanges();
         }
+
+        private bool IsPrimitive(Type type)
+            => type.IsPrimitive || type == typeof(decimal) || type == typeof(string);
 
         public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
 

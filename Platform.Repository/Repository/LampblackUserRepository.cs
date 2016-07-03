@@ -1,4 +1,7 @@
-﻿using SHWD.Platform.Repository.Entities;
+﻿using System;
+using System.Collections.Generic;
+using SHWD.Platform.Repository.Entities;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
@@ -16,6 +19,14 @@ namespace SHWD.Platform.Repository.Repository
         public LampblackUserRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
 
+        }
+
+        public new static LampblackUser CreateDefaultModel()
+        {
+            var model = SysRepository<LampblackUser>.CreateDefaultModel();
+            model.Status = UserStatus.Enabled;
+
+            return model;
         }
     }
 }

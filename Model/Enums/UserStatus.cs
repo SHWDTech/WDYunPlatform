@@ -1,4 +1,6 @@
-﻿namespace SHWDTech.Platform.Model.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SHWDTech.Platform.Model.Enums
 {
     /// <summary>
     /// 用户状态
@@ -8,21 +10,25 @@
         /// <summary>
         /// 已启用
         /// </summary>
-        Enabled = 0x01,
+        [Display(Name = "已启用")]
+        Enabled = 0x00,
 
         /// <summary>
         /// 已禁用
         /// </summary>
-        Disabled = 0x02,
+        [Display(Name = "已禁用")]
+        Disabled = 0x01,
 
         /// <summary>
         /// 已停用
         /// </summary>
-        Stopped = 0x03,
+        [Display(Name = "已停用")]
+        Stopped = 0x02,
 
         /// <summary>
         /// 已锁定
         /// </summary>
-        Locked = 0x04
+        [Display(Name = "已锁定")]
+        Locked = 0x03
     }
 }
