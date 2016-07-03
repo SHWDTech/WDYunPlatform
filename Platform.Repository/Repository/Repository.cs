@@ -116,7 +116,11 @@ namespace SHWD.Platform.Repository.Repository
             return model;
         }
 
-        public virtual void AddOrUpdate(T model)
+        /// <summary>
+        /// 执行添加或更新
+        /// </summary>
+        /// <param name="model"></param>
+        protected void DoAddOrUpdate(T model)
         {
             CheckModel(model);
 
@@ -131,7 +135,11 @@ namespace SHWD.Platform.Repository.Repository
             }
         }
 
-        public virtual void AddOrUpdate(IEnumerable<T> models)
+        /// <summary>
+        /// 执行批量添加或更新
+        /// </summary>
+        /// <param name="models"></param>
+        protected void DoAddOrUpdate(IEnumerable<T> models)
         {
             CheckModel(models);
 
@@ -141,21 +149,36 @@ namespace SHWD.Platform.Repository.Repository
             }
         }
 
+        public virtual void AddOrUpdate(T model)
+        {
+            DoAddOrUpdate(model);
+        }
+
+        public virtual void AddOrUpdate(IEnumerable<T> models)
+        {
+            DoAddOrUpdate(models);
+        }
+
         public virtual Guid AddOrUpdateDoCommit(T model)
         {
-            AddOrUpdate(model);
+            DoAddOrUpdate(model);
 
             return Submit() != 1 ? Guid.Empty : model.Id;
         }
 
         public virtual int AddOrUpdateDoCommit(IEnumerable<T> models)
         {
-            AddOrUpdate(models);
+            DoAddOrUpdate(models);
 
             return Submit();
         }
 
-        public virtual void PartialUpdate(T model, List<string> propertyNames)
+        /// <summary>
+        /// 执行部分更新
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="propertyNames"></param>
+        protected void DoPartialUpdate(T model, List<string> propertyNames)
         {
             DbContext.Set<T>().Attach(model);
             var modelType = model.GetType();
@@ -167,7 +190,12 @@ namespace SHWD.Platform.Repository.Repository
             }
         }
 
-        public virtual void PartialUpdate(List<T> models, List<string> propertyNames)
+        /// <summary>
+        /// 批量执行部分更新
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="propertyNames"></param>
+        protected void DoPartialUpdate(List<T> models, List<string> propertyNames)
         {
             var modelType = models.First().GetType();
             foreach (var propertyName in propertyNames)
@@ -181,16 +209,26 @@ namespace SHWD.Platform.Repository.Repository
             }
         }
 
+        public virtual void PartialUpdate(T model, List<string> propertyNames)
+        {
+            DoPartialUpdate(model, propertyNames);
+        }
+
+        public virtual void PartialUpdate(List<T> models, List<string> propertyNames)
+        {
+            DoPartialUpdate(models, propertyNames);
+        }
+
         public virtual Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
         {
-            PartialUpdate(model, propertyNames);
+            DoPartialUpdate(model, propertyNames);
 
             return Submit() != 1 ? Guid.Empty : model.Id;
         }
 
         public virtual int PartialUpdateDoCommit(List<T> models, List<string> propertyNames)
         {
-            PartialUpdate(models, propertyNames);
+            DoPartialUpdate(models, propertyNames);
 
             return Submit();
         }
@@ -214,14 +252,22 @@ namespace SHWD.Platform.Repository.Repository
             }
         }
 
-        public virtual void Delete(T model)
+        /// <summary>
+        /// 执行删除
+        /// </summary>
+        /// <param name="model"></param>
+        protected void DoDelete(T model)
         {
             CheckModel(model);
 
             DbContext.Set<T>().Remove(model);
         }
 
-        public virtual void Delete(IEnumerable<T> models)
+        /// <summary>
+        /// 执行批量删除
+        /// </summary>
+        /// <param name="models"></param>
+        protected void DoDelete(IEnumerable<T> models)
         {
             CheckModel(models);
 
@@ -231,22 +277,32 @@ namespace SHWD.Platform.Repository.Repository
             }
         }
 
+        public virtual void Delete(T model)
+        {
+            DoDelete(model);
+        }
+
+        public virtual void Delete(IEnumerable<T> models)
+        {
+            DoDelete(models);
+        }
+
         public virtual bool DeleteDoCommit(T model)
         {
-            Delete(model);
+            DoDelete(model);
 
             return Submit() == 1;
         }
 
         public virtual int DeleteDoCommit(IEnumerable<T> models)
         {
-            Delete(models);
+            DoDelete(models);
 
             return Submit();
         }
 
         private bool IsPrimitive(Type type)
-            => type.IsPrimitive || type == typeof(decimal) || type == typeof(string);
+            => type.IsPrimitive || type == typeof(decimal) || type == typeof(string) || type == typeof(DateTime);
 
         public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
 

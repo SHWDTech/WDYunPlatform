@@ -58,7 +58,7 @@ namespace Platform.Process.Process
                             userId = repo.PartialUpdateDoCommit(model, propertyNames);
                         }
 
-                        var user = repo.GetModel(obj => obj.Id == userId);
+                        var user = repo.GetModelIncludeById(userId, new List<string>() { "Roles" });
                         UpdateUserRoles(user, roleList);
                         Submit();
 
@@ -89,19 +89,25 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<LampblackUserRepository>())
             {
-                return repo.GetModelById(guid);
+                return repo.GetModelIncludeById(guid, new List<string>() { "Roles" });
             }
         }
 
         public void UpdateUserRoles(LampblackUser user, List<string> roleList)
         {
-            using (var roleRepo = Repo<RoleRepository>())
+            var roleRepo = Repo<RoleRepository>();
+
+            var roles = roleRepo.GetAllModels().Include("Users").ToList();
+
+            foreach (var wdRole in roles)
             {
-                user.Roles = new List<WdRole>();
-                foreach (var role in roleList)
+                if (roleList.Any(obj => obj == wdRole.Id.ToString()) && !wdRole.Users.Contains(user))
                 {
-                    var roleId = Guid.Parse(role);
-                    user.Roles.Add(roleRepo.GetModel(obj => obj.Id == roleId));
+                    wdRole.Users.Add(user);
+                }
+                else if(roleList.All(obj => obj == wdRole.Id.ToString()) && wdRole.Users.Contains(user))
+                {
+                    wdRole.Users.Remove(user);
                 }
             }
         }

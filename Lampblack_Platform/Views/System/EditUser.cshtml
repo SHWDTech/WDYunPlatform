@@ -70,11 +70,13 @@
                         var roles = (Dictionary<string, string>)ViewBag.Roles;
                         foreach (var role in roles)
                         {
-                            <input type="checkbox" name="Roles" value="@role.Value" id="@role.Value"/>
-                            <label class="lbl160" for="@role.Value">@role.Key</label>
+                            var chked = Model.IsInRole(role.Key) ? "checked" : "";
+                            <input type="checkbox" name="Roles" value="@role.Value" id="@role.Value"  @chked />
+                                <label class="lbl160" for="@role.Value">@role.Key</label>
                         }
                     }
                 </td>
+
             </tr>
             <tr class="text-center">
                 <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
