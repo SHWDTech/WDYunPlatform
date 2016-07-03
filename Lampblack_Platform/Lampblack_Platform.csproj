@@ -196,6 +196,8 @@
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\Common\MapManipulation.js" />
     <Content Include="Scripts\Component\SlideUp.js" />
+    <Content Include="Scripts\Page\EditRole.js" />
+    <Content Include="Scripts\Page\EditUser.js" />
     <Content Include="Scripts\Page\Area.js" />
     <Content Include="Scripts\Page\CateringEnterprise.js" />
     <Content Include="Scripts\Page\DepartmentManage.js" />
@@ -205,6 +207,7 @@
     <Content Include="Scripts\Page\Hotel.js" />
     <Content Include="Scripts\Page\Map.js" />
     <Content Include="Scripts\Page\RestaurantDevice.js" />
+    <Content Include="Scripts\Page\RoleManage.js" />
     <Content Include="Scripts\Page\UserManage.js" />
     <Content Include="Scripts\Utility\Base.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.js" />
@@ -369,6 +372,9 @@
     <Content Include="Views\System\UsersManage.cshtml" />
     <Content Include="Views\System\DepartmentManage.cshtml" />
     <Content Include="Views\System\EditDepartment.cshtml" />
+    <Content Include="Views\System\EditUser.cshtml" />
+    <Content Include="Views\System\RoleManage.cshtml" />
+    <Content Include="Views\System\EditRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

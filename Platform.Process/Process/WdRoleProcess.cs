@@ -12,16 +12,16 @@ using SqlComponents.SqlExcute;
 
 namespace Platform.Process.Process
 {
-    public class DepartmentProcess : IDepartmentProcess
+    public class WdRoleProcess : IWdRoleProcess
     {
-        public IPagedList<Department> GetPagedDepartments(int page, int pageSize, string queryName, out int count)
+        public IPagedList<WdRole> GetPagedRoles(int page, int pageSize, string queryName, out int count)
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = DbRepository.Repo<RoleRepository>())
             {
                 var query = repo.GetAllModels();
                 if (!string.IsNullOrWhiteSpace(queryName))
                 {
-                    query = query.Where(obj => obj.Name.Contains(queryName));
+                    query = query.Where(obj => obj.RoleName.Contains(queryName));
                 }
                 count = query.Count();
 
@@ -29,15 +29,15 @@ namespace Platform.Process.Process
             }
         }
 
-        public DbEntityValidationException AddOrUpdateDepartmentr(Department model, List<string> propertyNames)
+        public DbEntityValidationException AddOrUpdateRole(WdRole model, List<string> propertyNames)
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = DbRepository.Repo<RoleRepository>())
             {
                 try
                 {
                     if (model.Id == Guid.Empty)
                     {
-                        var dbModel = DepartmentRepository.CreateDefaultModel();
+                        var dbModel = RoleRepository.CreateDefaultModel();
                         foreach (var propertyName in propertyNames)
                         {
                             dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
@@ -58,20 +58,20 @@ namespace Platform.Process.Process
             return null;
         }
 
-        public Dictionary<string, string> GetDepartmentSelectList()
+        public Dictionary<string, string> GetRoleSelectList()
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = DbRepository.Repo<RoleRepository>())
             {
-                return repo.GetAllModels().ToDictionary(obj => obj.Name, item => item.Id.ToString());
+                return repo.GetAllModels().ToDictionary(obj => obj.RoleName, item => item.Id.ToString());
             }
         }
 
-        public SqlExcuteResult DeleteDepartment(Guid departmentId)
+        public SqlExcuteResult DeleteRole(Guid roleId)
         {
             using (var repo = DbRepository.Repo<RoleRepository>())
             {
                 var sqlResult = new SqlExcuteResult() { Success = false };
-                var role = repo.GetModel(obj => obj.Id == departmentId);
+                var role = repo.GetModel(obj => obj.Id == roleId);
                 if (role == null) return sqlResult;
 
                 try
@@ -103,9 +103,9 @@ namespace Platform.Process.Process
             }
         }
 
-        public Department GetDepartment(Guid guid)
+        public WdRole GetRole(Guid guid)
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = DbRepository.Repo<RoleRepository>())
             {
                 return repo.GetModelById(guid);
             }

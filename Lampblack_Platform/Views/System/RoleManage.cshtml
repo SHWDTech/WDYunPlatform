@@ -1,0 +1,102 @@
+﻿@using MvcWebComponents.Extensions
+@using PagedList.Mvc
+@model Lampblack_Platform.Models.System.RoleViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @using (Ajax.BeginForm("RoleManage", null, new AjaxOptions()
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }, new { Id = "role" }))
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="control-layer horizontal-group">
+                        <span>用户查询：</span>
+                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName" />
+                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="新增" id="add" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
+                    </div>
+                    <div class="table-layer">
+                        <table class="table table-bordered table-striped table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <td style="width: 10%;">
+                                        角色名称
+                                    </td>
+                                    <td style="width: 10%;">
+                                        角色描述
+                                    </td>
+                                    <td style="width: 10%;">
+                                        操作
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var role in Model.Roles)
+                                    {
+                                        <tr data-company-id="@role.Id">
+                                            <td>@role.RoleName</td>
+                                            <td>@role.Comments</td>
+                                            <td>
+                                                @Ajax.ActionLink("编辑", "EditRole", new { guid = role.Id },
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "GET",
+                                                    OnSuccess = "slideUp.show",
+                                                    UpdateTargetId = "slide-up-content"
+                                                })
+                                                @Ajax.ActionLink("删除", "DeleteRole", new { guid = role.Id },
+                                                new AjaxOptions()
+                                                {
+                                                    HttpMethod = "GET",
+                                                    Confirm = "确定删除吗？"
+                                                }.GeneralOptions())
+                                            </td>
+                                        </tr>
+                                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-body" style="margin-top: -30px;">
+                    <div style="float: right;">
+                        @{
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace });
+                            option.UlElementClasses = new[] { "no-margin pagination" };
+                        }
+                        @Html.PagedListPager(Model.Roles,
+                            page => Url.Action("UsersManage", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                    </div>
+                    <div class="horizontal-group">
+                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
+                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
+                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
+                            @{
+                                for (var i = 5; i < 25; i += 5)
+                                {
+                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
+                                    <option @selected>@i</option>
+                                }
+                            }
+                        </select>
+                        <label>条记录</label>
+                    </div>
+                </div>
+            </div>
+                                }
+    </div>
+</div>
+
+@Html.Partial("SlideUp")
+
+<script src="/Scripts/Page/RoleManage.js"></script>

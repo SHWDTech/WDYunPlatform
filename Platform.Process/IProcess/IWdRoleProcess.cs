@@ -7,44 +7,44 @@ using SqlComponents.SqlExcute;
 
 namespace Platform.Process.IProcess
 {
-    public interface IDepartmentProcess
+    public interface IWdRoleProcess
     {
         /// <summary>
-        /// 获取用户部门数据
+        /// 获取角色分页数据
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <param name="queryName"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        IPagedList<Department> GetPagedDepartments(int page, int pageSize, string queryName, out int count);
+        IPagedList<WdRole> GetPagedRoles(int page, int pageSize, string queryName, out int count);
 
         /// <summary>
-        /// 更新部门信息
+        /// 更新角色信息
         /// </summary>
         /// <param name="model"></param>
         /// <param name="propertyNames"></param>
         /// <returns></returns>
-        DbEntityValidationException AddOrUpdateDepartmentr(Department model, List<string> propertyNames);
+        DbEntityValidationException AddOrUpdateRole(WdRole model, List<string> propertyNames);
 
         /// <summary>
-        /// 获取部门列表
+        /// 获取角色列表
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, string> GetDepartmentSelectList();
+        Dictionary<string, string> GetRoleSelectList();
 
         /// <summary>
-        /// 删除系统部门
+        /// 删除角色
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        SqlExcuteResult DeleteDepartment(Guid userId);
+        SqlExcuteResult DeleteRole(Guid userId);
 
         /// <summary>
-        /// 获取指定ID的部门
+        /// 获取指定ID的角色信息
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        Department GetDepartment(Guid guid);
+        WdRole GetRole(Guid guid);
     }
 }

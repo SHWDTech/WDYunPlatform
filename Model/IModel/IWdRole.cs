@@ -36,6 +36,11 @@ namespace SHWDTech.Platform.Model.IModel
         RoleStatus Status { get; set; }
 
         /// <summary>
+        /// 角色描述
+        /// </summary>
+        string Comments { get; set; }
+
+        /// <summary>
         /// 角色拥有的权限
         /// </summary>
         ICollection<Permission> Permissions { get; set; }

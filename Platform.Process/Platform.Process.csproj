@@ -81,6 +81,7 @@
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ICommandTaskProcess.cs" />
     <Compile Include="IProcess\IUserDictionaryProcess.cs" />
+    <Compile Include="IProcess\IWdRoleProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
     <Compile Include="Process\AccountProcess.cs" />
     <Compile Include="Process\CateringEnterpriseProcess.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Process\CommandTaskProcess.cs" />
     <Compile Include="Process\UserDictionaryProcess.cs" />
     <Compile Include="Process\LampblackUserProcess.cs" />
+    <Compile Include="Process\WdRoleProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

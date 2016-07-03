@@ -25,4 +25,15 @@ namespace Lampblack_Platform.Models.System
         /// </summary>
         public IPagedList<Department> Departments { get; set; }
     }
+
+    /// <summary>
+    /// 角色视图模型
+    /// </summary>
+    public class RoleViewModel : PagedListViewModelBase
+    {
+        /// <summary>
+        /// 角色列表
+        /// </summary>
+        public IPagedList<WdRole> Roles { get; set; }
+    }
 }

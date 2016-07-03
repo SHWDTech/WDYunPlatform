@@ -1,0 +1,81 @@
+﻿@model SHWDTech.Platform.Model.Model.LampblackUser
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditUser", null, new AjaxOptions()
+{
+    UpdateTargetId = "slide-up-content",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "userEdit" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.LoginName)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control", placeholder = "请输入用户登录名" })
+                    @Html.ValidationMessageFor(m => m.LoginName, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.Password)</td>
+                <td>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "请输入登陆密码" })
+                    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.UserIdentityName)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.UserIdentityName, new { @class = "form-control", placeholder = "请输入真实姓名" })
+                    @Html.ValidationMessageFor(m => m.UserIdentityName, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.CateringCompany)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.CateringCompany, (List<SelectListItem>)ViewBag.CateringCompany, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Telephone)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control", placeholder = "请输入联系电话" })
+                    @Html.ValidationMessageFor(m => m.Telephone, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.IsEnabled)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.IsEnabled, (List<SelectListItem>)ViewBag.Enable, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Department)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.Department, (List<SelectListItem>)ViewBag.Department, new { @class = "form-control" })
+                </td>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "请输入邮箱地址" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Roles)</td>
+                <td colspan="3">
+                    <div>
+                        
+                    </div>
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript" src="/Scripts/Page/EditUser.js"></script>

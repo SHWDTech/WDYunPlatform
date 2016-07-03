@@ -298,12 +298,12 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.CateringCompany = ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
                 .GetCateringCompanySelectList()
-                .Select(obj => new SelectListItem() {Text = obj.Key, Value = obj.Value})
+                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
                 .ToList();
 
             ViewBag.District = ProcessInvoke.GetInstance<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() {Text = obj.Value, Value = obj.Key})
+                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
                 .ToList();
 
             ViewBag.Street = new List<SelectListItem>();

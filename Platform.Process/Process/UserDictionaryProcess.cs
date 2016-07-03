@@ -151,7 +151,7 @@ namespace Platform.Process.Process
             using (var repo = DbRepository.Repo<UserDictionaryRepository>())
             {
                 return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
-                    .ToDictionary(key => key.Id.ToString(), value => value.ItemValue);
+                    .ToDictionary(key => key.ItemValue, value => value.Id.ToString());
             }
         }
 

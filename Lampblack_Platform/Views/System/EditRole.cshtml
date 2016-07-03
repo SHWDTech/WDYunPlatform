@@ -1,0 +1,43 @@
+﻿@model SHWDTech.Platform.Model.Model.WdRole
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditRole", null, new AjaxOptions()
+{
+    UpdateTargetId = "slide-up-content",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { id = "roleEdit" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.RoleName)</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", placeholder = "请输入角色名称" })
+                    @Html.ValidationMessageFor(m => m.RoleName, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Comments)</td>
+                <td colspan="3">
+                    @Html.TextBoxFor(m => m.Comments, new { @class = "form-control", placeholder = "请输入角色描述" })
+                    @Html.ValidationMessageFor(m => m.Comments, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript" src="/Scripts/Page/EditRole.js"></script>
