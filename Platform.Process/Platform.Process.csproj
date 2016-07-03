@@ -71,8 +71,10 @@
     <Compile Include="IProcess\IAccountProcess.cs" />
     <Compile Include="IProcess\ICateringEnterpriseProcess.cs" />
     <Compile Include="IProcess\IControllerProcess.cs" />
+    <Compile Include="IProcess\IDepartmentProcess.cs" />
     <Compile Include="IProcess\IDeviceProcess.cs" />
     <Compile Include="IProcess\IHotelRestaurantProcess.cs" />
+    <Compile Include="IProcess\ILampblackUserProcess.cs" />
     <Compile Include="IProcess\IPermissionProcess.cs" />
     <Compile Include="IProcess\IProtocolCodingProcess.cs" />
     <Compile Include="IProcess\IRestaurantDeviceProcess.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Process\AccountProcess.cs" />
     <Compile Include="Process\CateringEnterpriseProcess.cs" />
     <Compile Include="Process\ControllerProcess.cs" />
+    <Compile Include="Process\DepartmentProcess.cs" />
     <Compile Include="Process\DeviceProcess.cs" />
     <Compile Include="Process\GeneralProcess.cs" />
     <Compile Include="Process\HotelRestaurantProcess.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Process\SysConfigProcess.cs" />
     <Compile Include="Process\CommandTaskProcess.cs" />
     <Compile Include="Process\UserDictionaryProcess.cs" />
+    <Compile Include="Process\LampblackUserProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,7 @@ namespace SHWDTech.Platform.Model.ModelBase
         [JsonIgnore]
         public virtual bool IsDeleted { get; set; }
 
+        [Display(Name = "是否启用")]
         public virtual bool IsEnabled { get; set; }
     }
 }

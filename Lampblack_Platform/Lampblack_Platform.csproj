@@ -156,12 +156,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="DataBase\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Management\ManagementViewModels.cs" />
+    <Compile Include="Models\System\SystemViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,11 +198,14 @@
     <Content Include="Scripts\Component\SlideUp.js" />
     <Content Include="Scripts\Page\Area.js" />
     <Content Include="Scripts\Page\CateringEnterprise.js" />
+    <Content Include="Scripts\Page\DepartmentManage.js" />
+    <Content Include="Scripts\Page\EditDepartment.js" />
     <Content Include="Scripts\Page\EditDevice.js" />
     <Content Include="Scripts\Page\EditHotel.js" />
     <Content Include="Scripts\Page\Hotel.js" />
     <Content Include="Scripts\Page\Map.js" />
     <Content Include="Scripts\Page\RestaurantDevice.js" />
+    <Content Include="Scripts\Page\UserManage.js" />
     <Content Include="Scripts\Utility\Base.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\Utility\jquery.unobtrusive-ajax.min.js" />
@@ -361,6 +366,9 @@
     <Content Include="Views\Management\EditHotel.cshtml" />
     <Content Include="Views\Management\Device.cshtml" />
     <Content Include="Views\Management\EditDevice.cshtml" />
+    <Content Include="Views\System\UsersManage.cshtml" />
+    <Content Include="Views\System\DepartmentManage.cshtml" />
+    <Content Include="Views\System\EditDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

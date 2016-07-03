@@ -27,6 +27,10 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "用户登录名")]
         public virtual string LoginName { get; set; }
 
+        [MaxLength(25)]
+        [Display(Name = "用户真实姓名")]
+        public virtual string UserIdentityName { get; set; }
+
         [Display(Name = "密码")]
         [MaxLength(50)]
         [Required]

@@ -84,11 +84,13 @@
     <Compile Include="IModel\ICamera.cs" />
     <Compile Include="IModel\ICommandDefinition.cs" />
     <Compile Include="IModel\IDataModel.cs" />
+    <Compile Include="IModel\IDepartment.cs" />
     <Compile Include="IModel\IDevice.cs" />
     <Compile Include="IModel\IDeviceType.cs" />
     <Compile Include="IModel\IFirmware.cs" />
     <Compile Include="IModel\IFirmwareSet.cs" />
     <Compile Include="IModel\IHotelRestaurant.cs" />
+    <Compile Include="IModel\ILampblackUser.cs" />
     <Compile Include="IModel\IModule.cs" />
     <Compile Include="IModel\IModel.cs" />
     <Compile Include="IModel\IMonitorData.cs" />
@@ -120,11 +122,13 @@
     <Compile Include="Model\Camera.cs" />
     <Compile Include="Model\CommandData.cs" />
     <Compile Include="Model\CommandDefinition.cs" />
+    <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Device.cs" />
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />
     <Compile Include="Model\FirmwareSet.cs" />
     <Compile Include="Model\HotelRestaurant.cs" />
+    <Compile Include="Model\LampblackUser.cs" />
     <Compile Include="Model\Module.cs" />
     <Compile Include="Model\MonitorData.cs" />
     <Compile Include="Model\Permission.cs" />

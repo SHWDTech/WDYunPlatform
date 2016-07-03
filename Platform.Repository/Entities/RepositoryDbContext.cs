@@ -12,7 +12,7 @@ namespace SHWD.Platform.Repository.Entities
         /// <summary>
         /// 创建默认的DbContext
         /// </summary>
-        public RepositoryDbContext() : base($"name=Lampblack_Platform")
+        public RepositoryDbContext() : base(DbRepository.ConnectionName)
         {
         }
 
@@ -204,6 +204,40 @@ namespace SHWD.Platform.Repository.Entities
                    m.ToTable("HotelRestaurant");
                });
 
+            modelBuilder.Entity<LampblackUser>()
+               .Map(m =>
+               {
+                   m.Properties(p => new
+                   {
+                       p.CreateDateTime,
+                       p.CreateUserId,
+                       p.LastUpdateDateTime,
+                       p.LastUpdateUserId,
+                       p.IsDeleted,
+                       p.IsEnabled,
+                       p.DomainId,
+                       p.UserName,
+                       p.LoginName,
+                       p.UserIdentityName,
+                       p.Password,
+                       p.Email,
+                       p.Telephone,
+                       p.LastLoginDateTime,
+                       p.Status
+                   });
+                   m.ToTable("WdUser");
+               })
+               .Map(m =>
+               {
+                   m.Properties(p => new
+                   {
+                       p.DepartmentId,
+                       p.CateringCompanyId
+                   });
+
+                   m.ToTable("LampblackUser");
+               });
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -346,5 +380,15 @@ namespace SHWD.Platform.Repository.Entities
         /// 餐饮企业设备
         /// </summary>
         public virtual DbSet<RestaurantDevice> RestaurantDevices { get; set; }
+
+        /// <summary>
+        /// 油烟系统用户
+        /// </summary>
+        public virtual DbSet<LampblackUser> LampblackUsers { get; set; }
+
+        /// <summary>
+        /// 公司部门
+        /// </summary>
+        public virtual DbSet<Department> Departments { get; set; }
     }
 }

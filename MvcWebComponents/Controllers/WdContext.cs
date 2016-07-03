@@ -72,7 +72,7 @@ namespace MvcWebComponents.Controllers
                     .OrderBy(obj => obj.ModuleIndex)
                     .ToList();
 
-            if (!WdUser.IsInRole("Root") && !WdUser.IsInRole("Admin"))
+            if (!WdUser.IsInRole("Root") && !WdUser.IsInRole("SuperAdmin"))
             {
                 Modules = Modules
                     .Where(item => Permissions.Any(per => per.Id == item.PermissionId))

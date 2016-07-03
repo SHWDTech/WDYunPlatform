@@ -42,7 +42,7 @@ body {
     opacity: 1;
     background-color: #fff;
     z-index: 9999;
-    border: 1px solid #33CEC3;
+    border: 1px solid #009D91;
     box-shadow: 1px 1px 1px #000000;
     box-shadow: 1px 1px 1px rgba(0,0,0, 0.3);
     transition: top 0.2s ease, opacity 0.2s ease, z-index 0.3s ease;
@@ -50,7 +50,7 @@ body {
 
 .slide-up-title {
     height: 30px;
-    background-color: #33CEC3;
+    background-color: #009D91;
 }
 
 .slide-up-hide {
@@ -504,7 +504,7 @@ label {
 }
 
 .table-layer > table > thead {
-    background-color: #009D91   ;
+    background-color: #009D91;
     color: #fff;
 }
 

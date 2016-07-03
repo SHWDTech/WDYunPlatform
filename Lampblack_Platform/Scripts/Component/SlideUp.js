@@ -4,7 +4,7 @@ $(function () {
     slideUp = $('#slide-up');
     slideUp.content = slideUp.find('.slide-up-content');
     $('.close-span').on('click', function() {
-        slideUp.hide();
+        slideUp.hide(true);
     });
 
     slideUp.append = function(target) {
@@ -20,7 +20,7 @@ $(function () {
         slideUp.addClass('slide-up-hide');
         $('#mask').hide();
         if (clear) {
-            slideUp.content.html('');
+            setTimeout(function () { slideUp.content.html('') }, 300);
         }
     }
 

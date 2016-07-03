@@ -71,25 +71,19 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult DeleteArea()
         {
-            var itemKey = Guid.Parse(Request["Id"]);
+            var areaId = Guid.Parse(Request["Id"]);
 
-            var sqlResult = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(itemKey);
+            var sqlResult = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(areaId);
 
-            if (sqlResult.ErrorNumber == 547)
-            {
-                sqlResult.Message = "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。";
-            }
-            else
-            {
-                sqlResult.Message = "删除成功！";
-            }
+            sqlResult.Message = sqlResult.ErrorNumber == 547 
+                ? "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。" 
+                : "删除成功！";
 
             var json = new JsonStruct
             {
                 Success = sqlResult.Success,
                 Message = sqlResult.Message
             };
-
 
             return Json(json, JsonRequestBehavior.AllowGet);
         }

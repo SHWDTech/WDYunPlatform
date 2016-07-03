@@ -73,6 +73,8 @@
     <Compile Include="IRepository\ICateringCompanyRepository.cs" />
     <Compile Include="IRepository\ICommandDataRepository.cs" />
     <Compile Include="IRepository\ICommandDefinitionRepository.cs" />
+    <Compile Include="IRepository\IDepartmentRepository.cs" />
+    <Compile Include="IRepository\ILampblackUserRepository.cs" />
     <Compile Include="IRepository\IProtocolCommandRepository.cs" />
     <Compile Include="IRepository\IProtocolRepository.cs" />
     <Compile Include="IRepository\IDeviceTypeRepository.cs" />
@@ -109,11 +111,13 @@
     <Compile Include="Repository\CommandDataRepository.cs" />
     <Compile Include="Repository\CommandDefinitionRepository.cs" />
     <Compile Include="Repository\DataRepository.cs" />
+    <Compile Include="Repository\DepartmentRepository.cs" />
     <Compile Include="Repository\DeviceRepository.cs" />
     <Compile Include="Repository\DeviceTypeRepository.cs" />
     <Compile Include="Repository\DomainRepository.cs" />
     <Compile Include="Repository\FirmwareRepository.cs" />
     <Compile Include="Repository\FirmwareSetRepository.cs" />
+    <Compile Include="Repository\LampblackUserRepository.cs" />
     <Compile Include="Repository\ModuleRepository.cs" />
     <Compile Include="Repository\MonitorDataRepository.cs" />
     <Compile Include="Repository\PermissionRepository.cs" />

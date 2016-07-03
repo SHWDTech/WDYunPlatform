@@ -11,6 +11,7 @@ namespace Lampblack_Platform
             filters.Add(new HandleErrorAttribute());
             filters.Add(new WdAuthorizeAttribute());
             filters.Add(new AjaxHandleErrorAttribute());
+            filters.Add(new WdAuthorizeActionFilter());
         }
     }
 }

@@ -3,9 +3,9 @@
 namespace SHWD.Platform.Repository.IRepository
 {
     /// <summary>
-    /// 餐饮企业数据仓库接口
+    /// 油烟系统用户数据仓库接口
     /// </summary>
-    public interface ICateringCompanyRepository : ISysDomainRepository<CateringCompany>
+    public interface ILampblackUserRepository : ISysDomainRepository<LampblackUser>
     {
     }
 }

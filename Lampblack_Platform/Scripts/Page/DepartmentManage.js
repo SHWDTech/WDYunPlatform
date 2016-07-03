@@ -1,5 +1,5 @@
 ﻿var getTable = function () {
-    $.get("/Management/EditDevice", function (obj) {
+    $.get("/System/EditDepartment", function (obj) {
         slideUp.append(obj);
         slideUp.show();
     });
@@ -11,8 +11,8 @@ $(function () {
     });
 
     $('#pageSize').on("change", function () {
-        $('#device').submit();
+        $('#department').submit();
     });
 
-    slideUp.Set({ 'top': '-5%' });
+    slideUp.Set({ 'top': '5%' });
 });

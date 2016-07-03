@@ -59,6 +59,8 @@ namespace MvcWebComponents.Controllers
         /// <returns></returns>
         protected new ViewResult View()
         {
+            if (Request.IsAjaxRequest()) return base.View();
+
             var model = new ViewModelBase()
             {
                 Context = WdContext
