@@ -50,37 +50,57 @@ namespace SHWD.Platform.Repository.Repository
             return model;
         }
 
-        public override Guid AddOrUpdate(T model)
+        public override void AddOrUpdate(T model)
         {
             model.LastUpdateDateTime = DateTime.Now;
             model.LastUpdateUserId = CurrentUser.Id;
 
-            return base.AddOrUpdate(model);
+            base.AddOrUpdate(model);
         }
 
-        public override int AddOrUpdate(IEnumerable<T> models)
+        public override void AddOrUpdate(IEnumerable<T> models)
         {
-            var enumerable = models.ToList();
-            foreach (var model in enumerable)
+            var modelList = models.ToList();
+            foreach (var model in modelList)
             {
                 model.LastUpdateDateTime = DateTime.Now;
                 model.LastUpdateUserId = CurrentUser.Id;
             }
 
-            return base.AddOrUpdate(enumerable);
+            base.AddOrUpdate(modelList);
         }
 
-        public override Guid PartialUpdate(T model, List<string> propertyNames)
+        public override Guid AddOrUpdateDoCommit(T model)
+        {
+            model.LastUpdateDateTime = DateTime.Now;
+            model.LastUpdateUserId = CurrentUser.Id;
+
+            return base.AddOrUpdateDoCommit(model);
+        }
+
+        public override int AddOrUpdateDoCommit(IEnumerable<T> models)
+        {
+            var modelList = models.ToList();
+            foreach (var model in modelList)
+            {
+                model.LastUpdateDateTime = DateTime.Now;
+                model.LastUpdateUserId = CurrentUser.Id;
+            }
+
+            return base.AddOrUpdateDoCommit(modelList);
+        }
+
+        public override void PartialUpdate(T model, List<string> propertyNames)
         {
             model.LastUpdateDateTime = DateTime.Now;
             model.LastUpdateUserId = CurrentUser.Id;
             propertyNames.Add("LastUpdateDateTime");
             propertyNames.Add("LastUpdateUserId");
 
-            return base.PartialUpdate(model, propertyNames);
+            base.PartialUpdate(model, propertyNames);
         }
 
-        public override int PartialUpdate(List<T> models, List<string> propertyNames)
+        public override void PartialUpdate(List<T> models, List<string> propertyNames)
         {
             foreach (var model in models)
             {
@@ -90,13 +110,36 @@ namespace SHWD.Platform.Repository.Repository
             propertyNames.Add("LastUpdateDateTime");
             propertyNames.Add("LastUpdateUserId");
 
-            return base.PartialUpdate(models, propertyNames);
+            base.PartialUpdate(models, propertyNames);
+        }
+
+        public override Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
+        {
+            model.LastUpdateDateTime = DateTime.Now;
+            model.LastUpdateUserId = CurrentUser.Id;
+            propertyNames.Add("LastUpdateDateTime");
+            propertyNames.Add("LastUpdateUserId");
+
+            return base.PartialUpdateDoCommit(model, propertyNames);
+        }
+
+        public override int PartialUpdateDoCommit(List<T> models, List<string> propertyNames)
+        {
+            foreach (var model in models)
+            {
+                model.LastUpdateDateTime = DateTime.Now;
+                model.LastUpdateUserId = CurrentUser.Id;
+            }
+            propertyNames.Add("LastUpdateDateTime");
+            propertyNames.Add("LastUpdateUserId");
+
+            return base.PartialUpdateDoCommit(models, propertyNames);
         }
 
         public virtual void MarkDelete(T model)
         {
             model.IsDeleted = true;
-            AddOrUpdate(model);
+            AddOrUpdateDoCommit(model);
         }
 
         public virtual void MarkDelete(IEnumerable<T> models)
@@ -110,7 +153,7 @@ namespace SHWD.Platform.Repository.Repository
         public void SetEnableStatus(T model, bool enableStatus)
         {
             model.IsDeleted = enableStatus;
-            AddOrUpdate(model);
+            AddOrUpdateDoCommit(model);
         }
 
         public void SetEnableStatus(IEnumerable<T> models, bool enableStatus)

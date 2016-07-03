@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using Platform.Process.Enums;
 using Platform.Process.IProcess;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
@@ -15,11 +14,11 @@ namespace Platform.Process.Process
     /// <summary>
     /// 用户词典处理程序
     /// </summary>
-    public class UserDictionaryProcess : IUserDictionaryProcess
+    public class UserDictionaryProcess : ProcessBase, IUserDictionaryProcess
     {
         public object AddArea(string areaName, int areaLevel, Guid parentNode)
         {
-            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            using (var repo = Repo<UserDictionaryRepository>())
             {
                 UserDictionary parentArea = null;
                 if (areaLevel != 0)
@@ -40,7 +39,7 @@ namespace Platform.Process.Process
                 dictItem.ItemName = UserDictionaryType.Area;
                 dictItem.ParentDictionary = parentArea;
 
-                repo.AddOrUpdate(dictItem);
+                repo.AddOrUpdateDoCommit(dictItem);
 
                 return new
                 {
@@ -55,7 +54,7 @@ namespace Platform.Process.Process
 
         public object EditArea(Guid itemId, string itemValue)
         {
-            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            using (var repo = Repo<UserDictionaryRepository>())
             {
                 var item = repo.GetModel(obj => obj.Id == itemId);
                 if (item == null)
@@ -65,7 +64,7 @@ namespace Platform.Process.Process
 
                 item.ItemValue = itemValue;
 
-                repo.AddOrUpdate(item);
+                repo.AddOrUpdateDoCommit(item);
                 return new
                 {
                     item.Id,
@@ -79,7 +78,7 @@ namespace Platform.Process.Process
 
         public object GetAreaInfo()
         {
-            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            using (var repo = Repo<UserDictionaryRepository>())
             {
                 var areas = repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area).Select(item => new
                 {
@@ -107,7 +106,7 @@ namespace Platform.Process.Process
 
         public SqlExcuteResult DeleteArea(Guid itemId)
         {
-            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            using (var repo = Repo<UserDictionaryRepository>())
             {
                 var sqlResult = new SqlExcuteResult() {Success = false};
                 var item = repo.GetModel(obj => obj.Id == itemId);
@@ -119,7 +118,7 @@ namespace Platform.Process.Process
 
                 try
                 {
-                    repo.Delete(children);
+                    repo.DeleteDoCommit(children);
                 }
                 catch (Exception ex)
                 {
@@ -148,7 +147,7 @@ namespace Platform.Process.Process
 
         public Dictionary<string, string> GetDistrictSelectList()
         {
-            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            using (var repo = Repo<UserDictionaryRepository>())
             {
                 return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
                     .ToDictionary(key => key.ItemValue, value => value.Id.ToString());
@@ -157,7 +156,7 @@ namespace Platform.Process.Process
 
         public Dictionary<string, string> GetChildDistrict(Guid id)
         {
-            using (var repo = DbRepository.Repo<UserDictionaryRepository>())
+            using (var repo = Repo<UserDictionaryRepository>())
             {
                 return repo.GetModels(obj => obj.ParentDictionary != null && obj.ParentDictionary.Id == id)
                     .ToDictionary(key => key.Id.ToString(), value => value.ItemValue);

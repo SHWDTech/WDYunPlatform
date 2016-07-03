@@ -7,7 +7,7 @@ using SqlComponents.SqlExcute;
 
 namespace Platform.Process.IProcess
 {
-    public interface IWdRoleProcess
+    public interface IWdRoleProcess : IProcessBase
     {
         /// <summary>
         /// 获取角色分页数据

@@ -7,7 +7,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 任务处理接口
     /// </summary>
-    public interface ICommandTaskProcess
+    public interface ICommandTaskProcess : IProcessBase
     {
         /// <summary>
         /// 获取指定ID的任务信息

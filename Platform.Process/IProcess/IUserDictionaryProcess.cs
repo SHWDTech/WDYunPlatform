@@ -7,7 +7,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 用户词典处理程序接口
     /// </summary>
-    public interface IUserDictionaryProcess
+    public interface IUserDictionaryProcess : IProcessBase
     {
         /// <summary>
         /// 添加区域信息

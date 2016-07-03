@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Platform.Process.IProcess;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.IModel;
 
@@ -9,18 +8,10 @@ namespace Platform.Process.Process
     /// <summary>
     /// 设备处理程序
     /// </summary>
-    public class DeviceProcess : IDeviceProcess
+    public class DeviceProcess : ProcessBase, IDeviceProcess
     {
-        /// <summary>
-        /// 设备数据仓库
-        /// </summary>
-        //private readonly DeviceRepository _repository = DbRepository.Repo<DeviceRepository>();
 
-        public IDevice GetDeviceByNodeId(string nodeId)
-        {
-            var repo = DbRepository.Repo<DeviceRepository>();
-
-            return repo.GetDeviceByNodeId(nodeId).FirstOrDefault();
-        }
+        public IDevice GetDeviceByNodeId(string nodeId) 
+            => Repo<DeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
     }
 }

@@ -12,7 +12,7 @@ namespace Platform.Process.Process
     /// <summary>
     /// 账户相关处理程序
     /// </summary>
-    public class AccountProcess : IAccountProcess
+    public class AccountProcess : ProcessBase, IAccountProcess
     {
         public void SignOut()
         {

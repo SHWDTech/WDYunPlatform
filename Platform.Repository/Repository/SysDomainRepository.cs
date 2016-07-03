@@ -18,29 +18,34 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected SysDomainRepository()
         {
-            EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
             CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
         protected SysDomainRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
-            
+
         }
 
-        public override Guid AddOrUpdate(T model)
+        public override void InitEntitySet()
+        {
+            EntitySet = EntitySet?.Where(model => model.DomainId == CurrentDomain.Id);
+            base.InitEntitySet();
+        }
+
+        public override void AddOrUpdate(T model)
         {
             if (model.DomainId == Guid.Empty)
             {
                 model.DomainId = CurrentDomain.Id;
             }
 
-            return base.AddOrUpdate(model);
+            base.AddOrUpdate(model);
         }
 
-        public override int AddOrUpdate(IEnumerable<T> models)
+        public override void AddOrUpdate(IEnumerable<T> models)
         {
-            var enumerable = models.ToList();
-            foreach (var model in enumerable)
+            var modelList = models.ToList();
+            foreach (var model in modelList)
             {
                 if (model.DomainId == Guid.Empty)
                 {
@@ -48,10 +53,34 @@ namespace SHWD.Platform.Repository.Repository
                 }
             }
 
-            return base.AddOrUpdate(enumerable);
+            base.AddOrUpdate(modelList);
         }
 
-        public override Guid PartialUpdate(T model, List<string> propertyNames)
+        public override Guid AddOrUpdateDoCommit(T model)
+        {
+            if (model.DomainId == Guid.Empty)
+            {
+                model.DomainId = CurrentDomain.Id;
+            }
+
+            return base.AddOrUpdateDoCommit(model);
+        }
+
+        public override int AddOrUpdateDoCommit(IEnumerable<T> models)
+        {
+            var modelList = models.ToList();
+            foreach (var model in modelList)
+            {
+                if (model.DomainId == Guid.Empty)
+                {
+                    model.DomainId = CurrentDomain.Id;
+                }
+            }
+
+            return base.AddOrUpdateDoCommit(modelList);
+        }
+
+        public override void PartialUpdate(T model, List<string> propertyNames)
         {
             if (model.DomainId == Guid.Empty)
             {
@@ -59,10 +88,10 @@ namespace SHWD.Platform.Repository.Repository
                 propertyNames.Add("DomainId");
             }
 
-            return base.PartialUpdate(model, propertyNames);
+            base.PartialUpdate(model, propertyNames);
         }
 
-        public override int PartialUpdate(List<T> models, List<string> propertyNames)
+        public override void PartialUpdate(List<T> models, List<string> propertyNames)
         {
             foreach (var model in models)
             {
@@ -73,7 +102,32 @@ namespace SHWD.Platform.Repository.Repository
             }
             propertyNames.Add("DomainId");
 
-            return base.PartialUpdate(models, propertyNames);
+            base.PartialUpdate(models, propertyNames);
+        }
+
+        public override Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
+        {
+            if (model.DomainId == Guid.Empty)
+            {
+                model.DomainId = CurrentDomain.Id;
+                propertyNames.Add("DomainId");
+            }
+
+            return base.PartialUpdateDoCommit(model, propertyNames);
+        }
+
+        public override int PartialUpdateDoCommit(List<T> models, List<string> propertyNames)
+        {
+            foreach (var model in models)
+            {
+                if (model.DomainId == Guid.Empty)
+                {
+                    model.DomainId = CurrentDomain.Id;
+                }
+            }
+            propertyNames.Add("DomainId");
+
+            return base.PartialUpdateDoCommit(models, propertyNames);
         }
 
         /// <summary>

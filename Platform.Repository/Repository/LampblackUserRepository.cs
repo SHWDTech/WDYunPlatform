@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SHWD.Platform.Repository.Entities;
+﻿using SHWD.Platform.Repository.Entities;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 

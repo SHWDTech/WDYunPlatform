@@ -6,7 +6,10 @@ using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
 {
-    public interface IRestaurantDeviceProcess
+    /// <summary>
+    /// 油烟设备处理接口
+    /// </summary>
+    public interface IRestaurantDeviceProcess : IProcessBase
     {
         IPagedList<RestaurantDevice> GetPagedRestaurantDevice(int page, int pageSize, string queryName, out int count);
 

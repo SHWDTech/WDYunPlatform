@@ -5,7 +5,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 账户相关处理程序接口
     /// </summary>
-    public interface IAccountProcess
+    public interface IAccountProcess : IProcessBase
     {
         /// <summary>
         /// 使用密码登陆

@@ -4,17 +4,19 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
 using Platform.Process.IProcess;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
 {
-    public class RestaurantDeviceProcess : IRestaurantDeviceProcess
+    /// <summary>
+    /// 油烟设备处理类
+    /// </summary>
+    public class RestaurantDeviceProcess : ProcessBase, IRestaurantDeviceProcess
     {
         public IPagedList<RestaurantDevice> GetPagedRestaurantDevice(int page, int pageSize, string queryName, out int count)
         {
-            using (var repo = DbRepository.Repo<RestaurantDeviceRepository>())
+            using (var repo = Repo<RestaurantDeviceRepository>())
             {
                 var query = repo.GetAllModels();
                 if (!string.IsNullOrWhiteSpace(queryName))
@@ -29,7 +31,7 @@ namespace Platform.Process.Process
 
         public Dictionary<string, string> GetRestaurantDeviceSelectList()
         {
-            using (var repo = DbRepository.Repo<RestaurantDeviceRepository>())
+            using (var repo = Repo<RestaurantDeviceRepository>())
             {
                 return repo.GetAllModels().ToDictionary(obj => obj.DeviceName, item => item.Id.ToString());
             }
@@ -37,7 +39,7 @@ namespace Platform.Process.Process
 
         public DbEntityValidationException AddOrUpdateRestaurantDevice(RestaurantDevice model, List<string> propertyNames)
         {
-            using (var repo = DbRepository.Repo<RestaurantDeviceRepository>())
+            using (var repo = Repo<RestaurantDeviceRepository>())
             {
                 try
                 {
@@ -48,11 +50,11 @@ namespace Platform.Process.Process
                         {
                             dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
                         }
-                        repo.AddOrUpdate(dbModel);
+                        repo.AddOrUpdateDoCommit(dbModel);
                     }
                     else
                     {
-                        repo.PartialUpdate(model, propertyNames);
+                        repo.PartialUpdateDoCommit(model, propertyNames);
                     }
                 }
                 catch (DbEntityValidationException ex)
@@ -66,18 +68,18 @@ namespace Platform.Process.Process
 
         public bool DeleteRestaurantDevice(Guid componyId)
         {
-            using (var repo = DbRepository.Repo<RestaurantDeviceRepository>())
+            using (var repo = Repo<RestaurantDeviceRepository>())
             {
                 var item = repo.GetModel(obj => obj.Id == componyId);
                 if (item == null) return false;
 
-                return repo.Delete(item);
+                return repo.DeleteDoCommit(item);
             }
         }
 
         public RestaurantDevice GetRestaurantDevice(Guid guid)
         {
-            using (var repo = DbRepository.Repo<RestaurantDeviceRepository>())
+            using (var repo = Repo<RestaurantDeviceRepository>())
             {
                 return repo.GetModelById(guid);
             }

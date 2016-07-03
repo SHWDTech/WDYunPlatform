@@ -5,7 +5,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 设备处理接口
     /// </summary>
-    public interface IDeviceProcess
+    public interface IDeviceProcess : IProcessBase
     {
         /// <summary>
         /// 通过NodeId获取设备

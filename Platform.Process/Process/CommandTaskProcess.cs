@@ -10,20 +10,30 @@ namespace Platform.Process.Process
     /// <summary>
     /// 任务处理程序
     /// </summary>
-    public class CommandTaskProcess : ICommandTaskProcess
+    public class CommandTaskProcess : ProcessBase, ICommandTaskProcess
     {
-        /// <summary>
-        /// 任务数据仓库
-        /// </summary>
-        private readonly CommandTaskRepository _commandTaskRepository = new CommandTaskRepository();
-
         public CommandTask GetTaskByGuid(Guid taskId)
-            => _commandTaskRepository.GetModels(task => task.Id == taskId).FirstOrDefault();
+        {
+            using (var repo = Repo<CommandTaskRepository>())
+            {
+                return repo.GetModels(task => task.Id == taskId).FirstOrDefault();
+            }
+        }
 
         public bool UPdateTaskStatus(CommandTask commandTask, TaskStatus status)
-            => _commandTaskRepository.UpdateTaskStatus(commandTask, status);
+        {
+            using (var repo = Repo<CommandTaskRepository>())
+            {
+                return repo.UpdateTaskStatus(commandTask, status);
+            }
+        }
 
         public bool UpdateExecuteStatus(CommandTask commandTask, TaskExceteStatus exceteStatus)
-            => _commandTaskRepository.UpdateExecuteStatus(commandTask, exceteStatus);
+        {
+            using (var repo = Repo<CommandTaskRepository>())
+            {
+                return repo.UpdateExecuteStatus(commandTask, exceteStatus);
+            }
+        }
     }
 }

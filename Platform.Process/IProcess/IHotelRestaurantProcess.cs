@@ -6,7 +6,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
 {
-    public interface IHotelRestaurantProcess
+    public interface IHotelRestaurantProcess : IProcessBase
     {
         /// <summary>
         /// 获取分页后的酒店信息

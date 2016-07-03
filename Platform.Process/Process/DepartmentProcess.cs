@@ -5,18 +5,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using PagedList;
 using Platform.Process.IProcess;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 using SqlComponents.SqlExcute;
 
 namespace Platform.Process.Process
 {
-    public class DepartmentProcess : IDepartmentProcess
+    public class DepartmentProcess : ProcessBase, IDepartmentProcess
     {
         public IPagedList<Department> GetPagedDepartments(int page, int pageSize, string queryName, out int count)
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = Repo<DepartmentRepository>())
             {
                 var query = repo.GetAllModels();
                 if (!string.IsNullOrWhiteSpace(queryName))
@@ -31,7 +30,7 @@ namespace Platform.Process.Process
 
         public DbEntityValidationException AddOrUpdateDepartmentr(Department model, List<string> propertyNames)
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = Repo<DepartmentRepository>())
             {
                 try
                 {
@@ -42,11 +41,11 @@ namespace Platform.Process.Process
                         {
                             dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
                         }
-                        repo.AddOrUpdate(dbModel);
+                        repo.AddOrUpdateDoCommit(dbModel);
                     }
                     else
                     {
-                        repo.PartialUpdate(model, propertyNames);
+                        repo.PartialUpdateDoCommit(model, propertyNames);
                     }
                 }
                 catch (DbEntityValidationException ex)
@@ -60,7 +59,7 @@ namespace Platform.Process.Process
 
         public Dictionary<string, string> GetDepartmentSelectList()
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = Repo<DepartmentRepository>())
             {
                 return repo.GetAllModels().ToDictionary(obj => obj.Name, item => item.Id.ToString());
             }
@@ -68,7 +67,7 @@ namespace Platform.Process.Process
 
         public SqlExcuteResult DeleteDepartment(Guid departmentId)
         {
-            using (var repo = DbRepository.Repo<RoleRepository>())
+            using (var repo = Repo<RoleRepository>())
             {
                 var sqlResult = new SqlExcuteResult() { Success = false };
                 var role = repo.GetModel(obj => obj.Id == departmentId);
@@ -76,7 +75,7 @@ namespace Platform.Process.Process
 
                 try
                 {
-                    repo.Delete(role);
+                    repo.DeleteDoCommit(role);
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +104,7 @@ namespace Platform.Process.Process
 
         public Department GetDepartment(Guid guid)
         {
-            using (var repo = DbRepository.Repo<DepartmentRepository>())
+            using (var repo = Repo<DepartmentRepository>())
             {
                 return repo.GetModelById(guid);
             }

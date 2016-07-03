@@ -7,7 +7,7 @@ using SqlComponents.SqlExcute;
 
 namespace Platform.Process.IProcess
 {
-    public interface IDepartmentProcess
+    public interface IDepartmentProcess : IProcessBase
     {
         /// <summary>
         /// 获取用户部门数据

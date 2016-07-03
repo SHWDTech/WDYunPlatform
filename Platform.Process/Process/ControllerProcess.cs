@@ -5,12 +5,11 @@ using SHWDTech.Platform.Model.Model;
 using System.Web;
 using Platform.Cache;
 using Platform.Process.Enums;
-using SHWD.Platform.Repository;
 using SHWDTech.Platform.Model.IModel;
 
 namespace Platform.Process.Process
 {
-    public class ControllerProcess : IControllerProcess
+    public class ControllerProcess : ProcessBase, IControllerProcess
     {
         public WdUser GetCurrentUser(HttpContext context) 
             => GeneralProcess.GetUserByLoginName(context.User.Identity.Name);
@@ -24,7 +23,7 @@ namespace Platform.Process.Process
                 return (Dictionary<string, string>) cache.CacheItem;
             }
 
-            var repo = DbRepository.Repo<SysConfigRepository>();
+            var repo = Repo<SysConfigRepository>();
 
             var information = repo.GetSysConfigDictionary(config => config.SysConfigType == SystemConfigType.DomainCompanyConfig);
 

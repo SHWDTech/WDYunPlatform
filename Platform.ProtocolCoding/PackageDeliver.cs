@@ -142,7 +142,7 @@ namespace SHWDTech.Platform.ProtocolCoding
             protocolData.Length = protocolData.ProtocolContent.Length;
 
             package.ProtocolData = protocolData;
-            DbRepository.Repo<ProtocolDataRepository>().AddOrUpdate(protocolData);
+            DbRepository.Repo<ProtocolDataRepository>().AddOrUpdateDoCommit(protocolData);
         }
 
         /// <summary>

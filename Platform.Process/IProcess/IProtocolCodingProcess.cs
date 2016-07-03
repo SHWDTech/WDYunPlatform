@@ -6,7 +6,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 协议信息处理器接口
     /// </summary>
-    public interface IProtocolCodingProcess
+    public interface IProtocolCodingProcess : IProcessBase
     {
         /// <summary>
         /// （同步）读取协议信息及协议结构

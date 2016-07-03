@@ -19,12 +19,12 @@ namespace SHWD.Platform.Repository.Repository
     /// 数据仓库泛型基类
     /// </summary>
     /// <typeparam name="T">数据仓库对应的模型类型，必须继承自IModel</typeparam>
-    public class Repository<T> : RepositoryBase, IDisposable, IRepository<T> where T : class, IModel, new()
+    public class Repository<T> : RepositoryBase, IDisposable, IRepository.IRepository, IRepository<T> where T : class, IModel, new()
     {
         /// <summary>
         /// 数据库上下文
         /// </summary>
-        protected RepositoryDbContext DbContext { get; }
+        public RepositoryDbContext DbContext { get; set; }
 
         /// <summary>
         /// 进行操作的数据实体
@@ -41,13 +41,6 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         protected Repository()
         {
-            if (DbContext == null)
-            {
-                DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
-                    ? new RepositoryDbContext()
-                    : new RepositoryDbContext(DbRepository.ConnectionString);
-            }
-            EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
         protected Repository(string connString) : this()
@@ -58,6 +51,11 @@ namespace SHWD.Platform.Repository.Repository
         protected Repository(RepositoryDbContext dbContext)
         {
             DbContext = dbContext;
+        }
+
+        public virtual void InitEntitySet()
+        {
+            EntitySet = CheckFunc == null ? DbContext.Set<T>() : DbContext.Set<T>().Where(CheckFunc);
         }
 
         public virtual IQueryable<T> GetAllModels()
@@ -118,7 +116,7 @@ namespace SHWD.Platform.Repository.Repository
             return model;
         }
 
-        public virtual Guid AddOrUpdate(T model)
+        public virtual void AddOrUpdate(T model)
         {
             CheckModel(model);
 
@@ -131,11 +129,9 @@ namespace SHWD.Platform.Repository.Repository
                 DbContext.Set<T>().Attach(model);
                 DbContext.Entry(model).State = EntityState.Modified;
             }
-
-            return DbContext.SaveChanges() != 1 ? Guid.Empty : model.Id;
         }
 
-        public virtual int AddOrUpdate(IEnumerable<T> models)
+        public virtual void AddOrUpdate(IEnumerable<T> models)
         {
             CheckModel(models);
 
@@ -143,11 +139,23 @@ namespace SHWD.Platform.Repository.Repository
             {
                 DbContext.Set<T>().Add(model);
             }
-
-            return DbContext.SaveChanges();
         }
 
-        public virtual Guid PartialUpdate(T model, List<string> propertyNames)
+        public virtual Guid AddOrUpdateDoCommit(T model)
+        {
+            AddOrUpdate(model);
+
+            return Submit() != 1 ? Guid.Empty : model.Id;
+        }
+
+        public virtual int AddOrUpdateDoCommit(IEnumerable<T> models)
+        {
+            AddOrUpdate(models);
+
+            return Submit();
+        }
+
+        public virtual void PartialUpdate(T model, List<string> propertyNames)
         {
             DbContext.Set<T>().Attach(model);
             var modelType = model.GetType();
@@ -157,25 +165,34 @@ namespace SHWD.Platform.Repository.Repository
 
                 DbContext.Entry(model).Property(propertyName).IsModified = true;
             }
-
-            return DbContext.SaveChanges() != 1 ? Guid.Empty : model.Id;
         }
 
-        public virtual int PartialUpdate(List<T> models, List<string> propertyNames)
+        public virtual void PartialUpdate(List<T> models, List<string> propertyNames)
         {
-            var modelList = models.ToList();
-            var modelType = modelList.First().GetType();
+            var modelType = models.First().GetType();
             foreach (var propertyName in propertyNames)
             {
                 if (!IsPrimitive(modelType.GetProperty(propertyName).PropertyType)) continue;
 
-                foreach (var model in modelList)
+                foreach (var model in models)
                 {
                     DbContext.Entry(model).Property(propertyName).IsModified = true;
                 }
             }
+        }
 
-            return DbContext.SaveChanges();
+        public virtual Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
+        {
+            PartialUpdate(model, propertyNames);
+
+            return Submit() != 1 ? Guid.Empty : model.Id;
+        }
+
+        public virtual int PartialUpdateDoCommit(List<T> models, List<string> propertyNames)
+        {
+            PartialUpdate(models, propertyNames);
+
+            return Submit();
         }
 
         public virtual void BulkInsert(IEnumerable<T> models)
@@ -192,21 +209,19 @@ namespace SHWD.Platform.Repository.Repository
                     LogService.Instance.Debug("", ex);
                     return;
                 }
-                DbContext.SaveChanges();
+                Submit();
                 scope.Complete();
             }
         }
 
-        public virtual bool Delete(T model)
+        public virtual void Delete(T model)
         {
             CheckModel(model);
 
             DbContext.Set<T>().Remove(model);
-
-            return DbContext.SaveChanges() == 1;
         }
 
-        public virtual int Delete(IEnumerable<T> models)
+        public virtual void Delete(IEnumerable<T> models)
         {
             CheckModel(models);
 
@@ -214,8 +229,20 @@ namespace SHWD.Platform.Repository.Repository
             {
                 DbContext.Set<T>().Remove(model);
             }
+        }
 
-            return DbContext.SaveChanges();
+        public virtual bool DeleteDoCommit(T model)
+        {
+            Delete(model);
+
+            return Submit() == 1;
+        }
+
+        public virtual int DeleteDoCommit(IEnumerable<T> models)
+        {
+            Delete(models);
+
+            return Submit();
         }
 
         private bool IsPrimitive(Type type)
@@ -245,9 +272,15 @@ namespace SHWD.Platform.Repository.Repository
             if (!checkList.Any(CheckFunc.Compile())) throw new ArgumentException("参数不符合要求");
         }
 
+        /// <summary>
+        /// 提交更改
+        /// </summary>
+        /// <returns></returns>
+        private int Submit()
+            =>DbContext.SaveChanges();
+
         public void Dispose()
         {
-            DbContext.Dispose();
         }
     }
 

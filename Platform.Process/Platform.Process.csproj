@@ -77,7 +77,9 @@
     <Compile Include="IProcess\IHotelRestaurantProcess.cs" />
     <Compile Include="IProcess\ILampblackUserProcess.cs" />
     <Compile Include="IProcess\IPermissionProcess.cs" />
+    <Compile Include="IProcess\IProcessBase.cs" />
     <Compile Include="IProcess\IProtocolCodingProcess.cs" />
+    <Compile Include="IProcess\IProtocolPackageProcess.cs" />
     <Compile Include="IProcess\IRestaurantDeviceProcess.cs" />
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ICommandTaskProcess.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Process\GeneralProcess.cs" />
     <Compile Include="Process\HotelRestaurantProcess.cs" />
     <Compile Include="Process\PermissionProcess.cs" />
+    <Compile Include="Process\ProcessBase.cs" />
     <Compile Include="Process\ProtocolCodingProcess.cs" />
     <Compile Include="Process\ProtocolPackageProcess.cs" />
     <Compile Include="Process\RestaurantDeviceProcess.cs" />

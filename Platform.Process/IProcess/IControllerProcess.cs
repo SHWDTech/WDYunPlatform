@@ -8,7 +8,7 @@ namespace Platform.Process.IProcess
     /// <summary>
     /// 控制器处理接口
     /// </summary>
-    public interface IControllerProcess
+    public interface IControllerProcess : IProcessBase
     {
         /// <summary>
         /// 获取当前登录用户信息

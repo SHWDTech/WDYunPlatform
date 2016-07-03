@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using SHWD.Platform.Repository.Entities;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -91,16 +92,42 @@ namespace SHWD.Platform.Repository.IRepository
         /// <summary>
         /// 添加或修改对象
         /// </summary>
+        /// <param name="model"></param>
+        void AddOrUpdate(T model);
+
+        /// <summary>
+        /// 批量添加对象
+        /// </summary>
+        /// <param name="models"></param>
+        void AddOrUpdate(IEnumerable<T> models);
+
+        /// <summary>
+        /// 添加或修改对象
+        /// </summary>
         /// <param name="model">被添加或修改的对象</param>
         /// <returns>操作成功返回True，失败返回False</returns>
-        Guid AddOrUpdate(T model);
+        Guid AddOrUpdateDoCommit(T model);
 
         /// <summary>
         /// 批量添加对象
         /// </summary>
         /// <param name="models">被添加或修改的对象列表</param>
         /// <returns>成功添加或修改的对象数量</returns>
-        int AddOrUpdate(IEnumerable<T> models);
+        int AddOrUpdateDoCommit(IEnumerable<T> models);
+
+        /// <summary>
+        /// 更新指定模型属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="propertyNames"></param>
+        void PartialUpdate(T model, List<string> propertyNames);
+
+        /// <summary>
+        /// 批量更新指定模型属性
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="propertyNames"></param>
+        void PartialUpdate(List<T> models, List<string> propertyNames);
 
         /// <summary>
         /// 更新指定模型属性
@@ -108,15 +135,15 @@ namespace SHWD.Platform.Repository.IRepository
         /// <param name="model"></param>
         /// <param name="propertyNames"></param>
         /// <returns></returns>
-        Guid PartialUpdate(T model, List<string> propertyNames);
+        Guid PartialUpdateDoCommit(T model, List<string> propertyNames);
 
         /// <summary>
-        /// 批量更新制定模型属性
+        /// 批量更新指定模型属性
         /// </summary>
         /// <param name="models"></param>
         /// <param name="propertyNames"></param>
         /// <returns></returns>
-        int PartialUpdate(List<T> models, List<string> propertyNames);
+        int PartialUpdateDoCommit(List<T> models, List<string> propertyNames);
 
         /// <summary>
         /// 大量添加数据
@@ -127,15 +154,27 @@ namespace SHWD.Platform.Repository.IRepository
         /// <summary>
         /// 删除对象
         /// </summary>
+        /// <param name="model"></param>
+        void Delete(T model);
+
+        /// <summary>
+        /// 批量删除对象
+        /// </summary>
+        /// <param name="models"></param>
+        void Delete(IEnumerable<T> models);
+
+        /// <summary>
+        /// 删除对象
+        /// </summary>
         /// <param name="model">被删除的对象</param>
-        bool Delete(T model);
+        bool DeleteDoCommit(T model);
 
         /// <summary>
         /// 批量删除对象
         /// </summary>
         /// <param name="models">被删除的对象列表</param>
         /// <returns>成功删除的对象数量</returns>
-        int Delete(IEnumerable<T> models);
+        int DeleteDoCommit(IEnumerable<T> models);
 
         /// <summary>
         /// 判断对象是否存在
@@ -150,5 +189,18 @@ namespace SHWD.Platform.Repository.IRepository
         /// <param name="exp">判断条件</param>
         /// <returns>存在返回True，不存在返回False</returns>
         bool IsExists(Func<T, bool> exp);
+    }
+
+    public interface IRepository
+    {
+        /// <summary>
+        /// 数据仓库上下文
+        /// </summary>
+        RepositoryDbContext DbContext { get; set; }
+
+        /// <summary>
+        /// 初始化数据实体对象
+        /// </summary>
+        void InitEntitySet();
     }
 }

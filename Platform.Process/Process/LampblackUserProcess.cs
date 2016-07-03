@@ -5,7 +5,6 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
 using Platform.Process.IProcess;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 using System.Transactions;
@@ -15,11 +14,11 @@ namespace Platform.Process.Process
     /// <summary>
     /// 油烟系统用户处理程序
     /// </summary>
-    public class LampblackUserProcess : ILampblackUserProcess
+    public class LampblackUserProcess : ProcessBase, ILampblackUserProcess
     {
         public IPagedList<LampblackUser> GetPagedLampblackUsers(int page, int pageSize, string queryName, out int count)
         {
-            using (var repo = DbRepository.Repo<LampblackUserRepository>())
+            using (var repo = Repo<LampblackUserRepository>())
             {
                 var query = repo.GetAllModels();
                 if (!string.IsNullOrWhiteSpace(queryName))
@@ -36,7 +35,7 @@ namespace Platform.Process.Process
         {
             using (var scope = new TransactionScope())
             {
-                using (var repo = DbRepository.Repo<LampblackUserRepository>())
+                using (var repo = Repo<LampblackUserRepository>())
                 {
                     try
                     {
@@ -52,16 +51,16 @@ namespace Platform.Process.Process
                                     dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
                                 }
                             }
-                            userId = repo.AddOrUpdate(dbModel);
+                            userId = repo.AddOrUpdateDoCommit(dbModel);
                         }
                         else
                         {
-                            userId = repo.PartialUpdate(model, propertyNames);
+                            userId = repo.PartialUpdateDoCommit(model, propertyNames);
                         }
 
                         var user = repo.GetModel(obj => obj.Id == userId);
                         UpdateUserRoles(user, roleList);
-                        repo.AddOrUpdate(model);
+                        Submit();
 
                     }
                     catch (DbEntityValidationException ex)
@@ -77,18 +76,18 @@ namespace Platform.Process.Process
 
         public bool DeleteLampblackUser(Guid userId)
         {
-            using (var repo = DbRepository.Repo<LampblackUserRepository>())
+            using (var repo = Repo<LampblackUserRepository>())
             {
                 var item = repo.GetModel(obj => obj.Id == userId);
                 if (item == null) return false;
 
-                return repo.Delete(item);
+                return repo.DeleteDoCommit(item);
             }
         }
 
         public LampblackUser GetLampblackUser(Guid guid)
         {
-            using (var repo = DbRepository.Repo<LampblackUserRepository>())
+            using (var repo = Repo<LampblackUserRepository>())
             {
                 return repo.GetModelById(guid);
             }
@@ -96,7 +95,7 @@ namespace Platform.Process.Process
 
         public void UpdateUserRoles(LampblackUser user, List<string> roleList)
         {
-            using (var roleRepo = DbRepository.Repo<RoleRepository>())
+            using (var roleRepo = Repo<RoleRepository>())
             {
                 user.Roles = new List<WdRole>();
                 foreach (var role in roleList)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
@@ -14,13 +13,18 @@ namespace SHWD.Platform.Repository.Repository
     {
         public DataRepository()
         {
-            EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
             CheckFunc = (obj => obj.DomainId == CurrentDomain.Id);
         }
 
         public DataRepository(RepositoryDbContext dbContext) : base(dbContext)
         {
             
+        }
+
+        public override void InitEntitySet()
+        {
+            EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
+            base.InitEntitySet();
         }
 
         public new static T CreateDefaultModel()

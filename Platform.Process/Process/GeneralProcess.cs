@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Platform.Cache;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
@@ -10,15 +9,20 @@ namespace Platform.Process.Process
     /// <summary>
     /// 通用处理程序
     /// </summary>
-    public static class GeneralProcess
+    public class GeneralProcess : ProcessBase
     {
+        private static GeneralProcess Process 
+            => _process ?? (_process = new GeneralProcess());
+
+        private static GeneralProcess _process;
+
         /// <summary>
         /// 通过登录名获取用户信息
         /// </summary>
         /// <param name="loginName"></param>
         /// <returns></returns>
         public static WdUser GetUserByLoginName(string loginName)
-            => DbRepository.Repo<UserRepository>().GetUserByLoginName(loginName);
+            => Process.Repo<UserRepository>().GetUserByLoginName(loginName);
 
         /// <summary>
         /// 读取权限信息
