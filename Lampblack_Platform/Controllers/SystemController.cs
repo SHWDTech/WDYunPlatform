@@ -287,15 +287,9 @@ namespace Lampblack_Platform.Controllers
 
             var permissions = Request["Permissions"]?.Split(',').ToList();
 
-            var role = ProcessInvoke.GetInstance<WdRoleProcess>().UpdatePermissions(roleId, permissions);
+            ProcessInvoke.GetInstance<WdRoleProcess>().UpdatePermissions(roleId, permissions);
 
-            var model = new AuthorityViewModel()
-            {
-                Role = role,
-                Permissions = GeneralProcess.GetSysPeremissions()
-            };
-
-            return View(model);
+            return RedirectToAction("RoleManage");
         }
 
         private void GetDepartmentRelatedItems()

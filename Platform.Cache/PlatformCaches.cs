@@ -43,6 +43,7 @@ namespace Platform.Cache
             }
             else
             {
+                cache.CacheItem = cacheItem;
                 cache.CacheAddDateTIme = DateTime.Now;
             }
         }
