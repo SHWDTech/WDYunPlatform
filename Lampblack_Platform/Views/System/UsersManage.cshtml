@@ -78,11 +78,11 @@
                                                 var status = EnumHelper<UserStatus>.GetDisplayValue(user.Status);
                                             }
                                             <td>@status</td>
-                                            <td>@user.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                                            <td>@user.CreateDateTime.ToString("yyyy-MM-dd hh:mm:ss")</td>
                                             <td>
                                                 @if (user.LastLoginDateTime != null)
                                                 {
-                                                    @user.LastLoginDateTime.Value.ToString("yyyy-MM-dd")
+                                                    @user.LastLoginDateTime.Value.ToString("yyyy-MM-dd hh:mm:ss")
                                                 }
                                             </td>
                                             <td>
