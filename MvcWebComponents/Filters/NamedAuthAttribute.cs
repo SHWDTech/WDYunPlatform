@@ -13,5 +13,10 @@ namespace MvcWebComponents.Filters
         /// 模块名称
         /// </summary>
         public string Modules { get; set; }
+
+        /// <summary>
+        /// 是否需要特定权限
+        /// </summary>
+        public bool Required { get; set; } = true;
     }
 }

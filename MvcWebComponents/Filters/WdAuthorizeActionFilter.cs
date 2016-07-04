@@ -25,6 +25,8 @@ namespace MvcWebComponents.Filters
                 WdContext = (WdContext)filterContext.HttpContext.Items["WdContext"];
                 var modules = GetAuthModules(filterContext);
 
+                if (!(modules.ActionRequired && modules.ControllerRequired)) return;
+
                 if (WdContext.WdUser.IsInRole("Root")
                     || WdContext.WdUser.IsInRole("SuperAdmin")
                     || modules.ControllerModule == "Home"
@@ -62,12 +64,12 @@ namespace MvcWebComponents.Filters
                 filterContext.ActionDescriptor.GetCustomAttributes((typeof(NamedAuthAttribute)), true);
 
             var controllerModule = controllerAuth.Length > 0
-                ? ((NamedAuthAttribute)controllerAuth[0]).Modules
-                : filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+                ? ((NamedAuthAttribute)controllerAuth[0])
+                : null;
 
             var actionModule = actionAuth.Length > 0
-                ? ((NamedAuthAttribute)actionAuth[0]).Modules
-                : filterContext.ActionDescriptor.ActionName;
+                ? ((NamedAuthAttribute) actionAuth[0])
+                : null;
 
             return new AuthModules(controllerModule, actionModule);
         }
