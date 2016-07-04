@@ -12,20 +12,20 @@ using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Controllers
 {
+    [AjaxGet]
     public class ManagementController : WdControllerBase
     {
-        [AjaxGet]
         public ActionResult Area() 
             => View();
 
-        [AjaxGet]
+        [NamedAuth(Modules = "Area")]
         public ActionResult GetAreaInfo()
         {
             var areaInfo = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetAreaInfo();
             return Json(areaInfo, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
+        [NamedAuth(Modules = "Area")]
         public ActionResult GetAreaList()
         {
             var areaId = Request["id"];
@@ -40,7 +40,7 @@ namespace Lampblack_Platform.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
+        [NamedAuth(Modules = "Area")]
         public ActionResult AddAreaInfo()
         {
             var areaName = Request["areaName"];
@@ -58,7 +58,7 @@ namespace Lampblack_Platform.Controllers
                 : Json("添加成功！", district, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
+        [NamedAuth(Modules = "Area")]
         public ActionResult EditAreaInfo()
         {
             var id = Guid.Parse(Request["itemId"]);
@@ -68,7 +68,7 @@ namespace Lampblack_Platform.Controllers
             return Json("修改成功！", district, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
+        [NamedAuth(Modules = "Area")]
         public ActionResult DeleteArea()
         {
             var areaId = Guid.Parse(Request["Id"]);
@@ -88,7 +88,6 @@ namespace Lampblack_Platform.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
         public ActionResult CateringEnterprise()
         {
             var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
@@ -114,8 +113,8 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [AjaxGet]
         [HttpGet]
+        [NamedAuth(Modules = "CateringEnterprise")]
         public ActionResult EditCateringEnterprise(string guid)
         {
             if (string.IsNullOrWhiteSpace(guid))
@@ -127,8 +126,8 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [AjaxGet]
         [HttpPost]
+        [NamedAuth(Modules = "CateringEnterprise")]
         public ActionResult EditCateringEnterprise(CateringCompany model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -144,8 +143,8 @@ namespace Lampblack_Platform.Controllers
                 new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "slide-up-content", postform = "catering" });
         }
 
-        [AjaxGet]
         [HttpGet]
+        [NamedAuth(Modules = "CateringEnterprise")]
         public ActionResult DeleteCateringEnterprise(Guid guid)
         {
             var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
@@ -160,7 +159,6 @@ namespace Lampblack_Platform.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
         public ActionResult Hotel()
         {
             var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
@@ -186,8 +184,8 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [AjaxGet]
         [HttpGet]
+        [NamedAuth(Modules = "Hotel")]
         public ActionResult EditHotel(string guid)
         {
             GetHotelRelatedItems();
@@ -201,8 +199,8 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [AjaxGet]
         [HttpPost]
+        [NamedAuth(Modules = "Hotel")]
         public ActionResult EditHotel(HotelRestaurant model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -219,8 +217,8 @@ namespace Lampblack_Platform.Controllers
                 new { targetAction = "EditHotel", targetcontroller = "Management", target = "slide-up-content", postform = "hotel" });
         }
 
-        [AjaxGet]
         [HttpGet]
+        [NamedAuth(Modules = "Hotel")]
         public ActionResult DeleteHotel(Guid guid)
         {
             var success = ProcessInvoke.GetInstance<HotelRestaurantProcess>().DeleteHotelRestaurant(guid);
@@ -235,7 +233,6 @@ namespace Lampblack_Platform.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        [AjaxGet]
         public ActionResult Device()
         {
             var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
@@ -261,8 +258,8 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [AjaxGet]
         [HttpGet]
+        [NamedAuth(Modules = "Device")]
         public ActionResult EditDevice(string guid)
         {
             GetDeviceRelatedItems();
@@ -276,8 +273,8 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [AjaxGet]
         [HttpPost]
+        [NamedAuth(Modules = "Device")]
         public ActionResult EditDevice(RestaurantDevice model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();

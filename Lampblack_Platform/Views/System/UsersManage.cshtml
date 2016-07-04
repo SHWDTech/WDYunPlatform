@@ -65,11 +65,13 @@
                                 @{
                                     foreach (var user in Model.LampblackUsers)
                                     {
+                                        var company = user.CateringCompany?.CompanyName;
+                                        var department = user.Department?.Name;
                                         <tr data-company-id="@user.Id">
                                             <td>@user.LoginName</td>
                                             <td>@user.UserIdentityName</td>
-                                            <td>@user.CateringCompany.CompanyName</td>
-                                            <td>@user.Department.Name</td>
+                                            <td>@company</td>
+                                            <td>@department</td>
                                             <td>@user.Telephone</td>
                                             <td>@user.Email</td>
                                             @{

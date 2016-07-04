@@ -16,8 +16,13 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "权限名称")]
-        [MaxLength(25)]
+        [MaxLength(50)]
         public virtual string PermissionName { get; set; }
+
+        [Required]
+        [Display(Name = "权限显示名称")]
+        [MaxLength(50)]
+        public virtual string PermissionDisplayName { get; set; }
 
         [Display(Name = "父级权限ID")]
         public virtual Guid? ParentPermissionId { get; set; }

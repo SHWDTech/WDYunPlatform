@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Platform.Cache;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.Repository;
@@ -48,7 +49,33 @@ namespace Platform.Process.Process
                 {
                     PlatformCaches.Add($"Module[{module.Id}]", module, false, "Modules");
                 }
+
+                var permissions = context.Set<Permission>().ToList();
+                PlatformCaches.Add("Permissions", permissions, false, "System");
             }
+        }
+
+        /// <summary>
+        /// 获取系统权限列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<Permission> GetSysPeremissions()
+        {
+            var cache = PlatformCaches.GetCache("Permissions");
+
+            if (cache == null)
+            {
+                using (var context = new RepositoryDbContext())
+                {
+                    var sysPeremissions = context.Set<Permission>().ToList();
+                    PlatformCaches.Add("Permissions", sysPeremissions, false, "System");
+                    return sysPeremissions;
+                }
+            }
+
+            var permissions = cache.CacheItem as List<Permission>;
+
+            return permissions;
         }
     }
 }

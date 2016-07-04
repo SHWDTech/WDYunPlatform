@@ -1,0 +1,63 @@
+﻿@using Lampblack_Platform.Models.System
+@model AuthorityViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @{using (Ajax.BeginForm("Authority", null, new AjaxOptions()
+            {
+                UpdateTargetId = "body-content",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "POST"
+            }, new { Id = "Authority" }))
+            {
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">
+                        <input type="hidden" name="RoleId" id="RoleId" value="@Model.Role.Id" />
+                        <h3>
+                            设置【<label class="text-main">@Model.Role.RoleName</label>】权限
+                        </h3>
+                    </div>
+                    <ul class="list-group" style="margin-bottom: 0;">
+                        @{
+                            foreach (var permission in Model.Permissions.Where(obj => obj.ParentPermissionId == null))
+                            {
+                                <li class="list-group-item">
+                                    <div>
+                                        <h4>
+                                            @{
+                                                var enabled = Model.Role.Permissions.Any(obj => obj.Id == permission.Id);
+                                                var chked = enabled ? "checked" : "";
+                                            }
+                                            <input type="checkbox" name="Permissions" class="parent-permission" id="@permission.Id" value="@permission.Id" @chked />
+                                            <label for="@permission.Id" class="lbl160 text-main-reverse font-20">@permission.PermissionDisplayName</label>
+                                        </h4>
+                                        @{
+                                            foreach (var subPermission in Model.Permissions.Where(item => item.ParentPermissionId != null && item.ParentPermissionId.Value == permission.Id))
+                                            {
+                                                var subchked = Model.Role.Permissions.Any(obj => obj.Id == subPermission.Id) ? "checked" : "";
+                                                var subEnabled = enabled ? "" : "disabled";
+                                                <input type="checkbox" name="Permissions" class="child-permission" id="@subPermission.Id" value="@subPermission.Id" data-parent="@permission.Id" @subchked @subEnabled />
+                                                <label for="@subPermission.Id" class="lbl160">@subPermission.PermissionDisplayName</label>
+                                            }
+                                        }
+                                    </div>
+
+                                </li>
+                                            }
+                        }
+                    </ul>
+                    <div class="panel panel-body text-right">
+                        <input type="submit" value="确认修改" class="btn btn-main" />
+                    </div>
+                </div>
+                                            }
+        }
+
+    </div>
+</div>
+
+<script type="text/javascript" src="/Scripts/Page/Authority.js"></script>

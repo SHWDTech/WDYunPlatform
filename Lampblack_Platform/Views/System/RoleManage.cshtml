@@ -60,6 +60,12 @@
                                                     HttpMethod = "GET",
                                                     Confirm = "确定删除吗？"
                                                 }.GeneralOptions())
+                                                @Ajax.ActionLink("权限管理", "Authority", new { guid = role.Id },
+                                               new AjaxOptions()
+                                               {
+                                                   HttpMethod = "GET",
+                                                   UpdateTargetId = "body-content"
+                                               }.GeneralOptions())
                                             </td>
                                         </tr>
                                                 }

@@ -16,7 +16,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户部门ID
         /// </summary>
-        Guid DepartmentId { get; set; }
+        Guid? DepartmentId { get; set; }
 
         /// <summary>
         /// 用户机构
@@ -26,6 +26,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 用户机构ID
         /// </summary>
-        Guid CateringCompanyId { get; set; }
+        Guid? CateringCompanyId { get; set; }
     }
 }

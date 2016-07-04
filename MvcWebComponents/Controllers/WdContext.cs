@@ -6,6 +6,9 @@ using Platform.Cache;
 
 namespace MvcWebComponents.Controllers
 {
+    /// <summary>
+    /// HTTP请求自定义上下文
+    /// </summary>
     public class WdContext
     {
         private WdContext()

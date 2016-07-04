@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using PagedList;
 using SHWDTech.Platform.Model.Model;
 
@@ -28,7 +27,7 @@ namespace Platform.Process.IProcess
         /// <param name="propertyNames"></param>
         /// <param name="roleList"></param>
         /// <returns></returns>
-        DbEntityValidationException AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames, List<string> roleList);
+        Exception AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames, List<string> roleList);
 
         /// <summary>
         /// 删除油烟系统用户

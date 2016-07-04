@@ -196,6 +196,7 @@
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\Common\MapManipulation.js" />
     <Content Include="Scripts\Component\SlideUp.js" />
+    <Content Include="Scripts\Page\Authority.js" />
     <Content Include="Scripts\Page\EditRole.js" />
     <Content Include="Scripts\Page\EditUser.js" />
     <Content Include="Scripts\Page\Area.js" />
@@ -375,6 +376,7 @@
     <Content Include="Views\System\EditUser.cshtml" />
     <Content Include="Views\System\RoleManage.cshtml" />
     <Content Include="Views\System\EditRole.cshtml" />
+    <Content Include="Views\System\Authority.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

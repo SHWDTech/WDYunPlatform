@@ -14,14 +14,14 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
 
-        [Display(Name = "用户部门ID")]
-        public Guid DepartmentId { get; set; }
+        [Display(Name = "用户部门")]
+        public Guid? DepartmentId { get; set; }
 
         [Display(Name = "用户机构")]
         [ForeignKey("CateringCompanyId")]
         public CateringCompany CateringCompany { get; set; }
 
-        [Display(Name = "用户机构ID")]
-        public Guid CateringCompanyId { get; set; }
+        [Display(Name = "用户机构")]
+        public Guid? CateringCompanyId { get; set; }
     }
 }

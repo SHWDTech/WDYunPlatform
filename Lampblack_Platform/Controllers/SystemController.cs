@@ -43,6 +43,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
+        [NamedAuth(Modules = "UsersManage")]
         public ActionResult EditUser(string guid)
         {
             GetUserRelatedItems();
@@ -57,6 +58,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
+        [NamedAuth(Modules = "UsersManage")]
         public ActionResult EditUser(LampblackUser model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id").ToList();
@@ -82,6 +84,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
+        [NamedAuth(Modules = "UsersManage")]
         public ActionResult DeleteUser(Guid guid)
         {
             var areaId = Guid.Parse(Request["Id"]);
@@ -124,6 +127,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
+        [NamedAuth(Modules = "DepartmentManage")]
         public ActionResult EditDepartment(string guid)
         {
             GetDepartmentRelatedItems();
@@ -138,6 +142,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
+        [NamedAuth(Modules = "DepartmentManage")]
         public ActionResult EditDepartment(Department model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -156,6 +161,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
+        [NamedAuth(Modules = "DepartmentManage")]
         public ActionResult DeleteDepartment(Guid guid)
         {
             var areaId = Guid.Parse(Request["Id"]);
@@ -201,6 +207,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
+        [NamedAuth(Modules = "RoleManage")]
         public ActionResult EditRole(string guid)
         {
             GetRoleRelatedItems();
@@ -215,6 +222,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
+        [NamedAuth(Modules = "RoleManage")]
         public ActionResult EditRole(WdRole model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -233,6 +241,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
+        [NamedAuth(Modules = "RoleManage")]
         public ActionResult DeleteRole(Guid guid)
         {
             var areaId = Guid.Parse(Request["Id"]);
@@ -250,6 +259,43 @@ namespace Lampblack_Platform.Controllers
             };
 
             return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Authority(Guid guid)
+        {
+            var role = ProcessInvoke.GetInstance<WdRoleProcess>().GetRole(guid);
+            if (role == null)
+            {
+                return Json(new JsonStruct() {Success = false, Message = "没有找到指定系统角色，请重新尝试！"},
+                    JsonRequestBehavior.AllowGet);
+            }
+
+            var model = new AuthorityViewModel()
+            {
+                Role = role,
+                Permissions = GeneralProcess.GetSysPeremissions()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Authority()
+        {
+            var roleId = Guid.Parse(Request["RoleId"]);
+
+            var permissions = Request["Permissions"]?.Split(',').ToList();
+
+            var role = ProcessInvoke.GetInstance<WdRoleProcess>().UpdatePermissions(roleId, permissions);
+
+            var model = new AuthorityViewModel()
+            {
+                Role = role,
+                Permissions = GeneralProcess.GetSysPeremissions()
+            };
+
+            return View(model);
         }
 
         private void GetDepartmentRelatedItems()

@@ -8,7 +8,7 @@ $(function () {
             if (!IsNullOrEmpty(ret.Message)) {
                 var message = ret.Message;
                 if (!IsNullOrEmpty(ret.Exception)) {
-                    message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
+                    message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
                 }
                 Msg(message, { title: '提示！' });
             }
@@ -131,7 +131,7 @@ function ajaxSuccess(ret) {
     if (!IsNullOrEmpty(ret.Message)) {
         var message = ret.Message;
         if (ret.Exception !== null) {
-            message += ('\r\nExceptionInfo:\r\n' + ret.Exception);
+            message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
         }
         Msg(message, { title: '提示！' });
     }

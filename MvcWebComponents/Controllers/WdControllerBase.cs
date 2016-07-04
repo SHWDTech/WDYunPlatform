@@ -2,6 +2,7 @@
 using SHWD.Platform.Repository.Repository;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using MvcWebComponents.Model;
 using SHWD.Platform.Repository.IRepository;
 using Platform.Process.Process;
@@ -33,12 +34,19 @@ namespace MvcWebComponents.Controllers
                 return;
             }
 
-            SetActionContext(System.Web.HttpContext.Current);
+            SetActionContext(ctx, System.Web.HttpContext.Current);
         }
 
-        private void SetActionContext(HttpContext context)
+        private void SetActionContext(ActionExecutingContext ctx, HttpContext context)
         {
             var currentUser = _controllerProcess.GetCurrentUser(context);
+
+            if (currentUser == null)
+            {
+                FormsAuthentication.SignOut();
+                ctx.Result = RedirectToAction("Login", "Account");
+                return;
+            }
             WdContext = new WdContext(currentUser);
             context.Items.Add("WdContext", WdContext);
 
@@ -56,9 +64,9 @@ namespace MvcWebComponents.Controllers
         /// 创建一个将视图呈现给响应的ViewResult对象
         /// </summary>
         /// <returns></returns>
-        protected new ViewResult View()
+        protected new ActionResult View()
         {
-            if (Request.IsAjaxRequest()) return base.View();
+            if (Request.IsAjaxRequest()) return PartialView();
 
             var model = new ViewModelBase()
             {

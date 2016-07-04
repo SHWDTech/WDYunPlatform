@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
@@ -31,7 +32,7 @@ namespace Platform.Process.Process
             }
         }
 
-        public DbEntityValidationException AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames, List<string> roleList)
+        public Exception AddOrUpdateLampblackUser(LampblackUser model, List<string> propertyNames, List<string> roleList)
         {
             using (var scope = new TransactionScope())
             {
@@ -63,7 +64,7 @@ namespace Platform.Process.Process
                         Submit();
 
                     }
-                    catch (DbEntityValidationException ex)
+                    catch (Exception ex) when (ex is DbUpdateException || ex is DbEntityValidationException)
                     {
                         return ex;
                     }

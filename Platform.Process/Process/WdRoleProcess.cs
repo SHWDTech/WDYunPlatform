@@ -109,5 +109,32 @@ namespace Platform.Process.Process
                 return repo.GetModelById(guid);
             }
         }
+
+        public WdRole UpdatePermissions(Guid roleId, List<string> permissions)
+        {
+            using (var repo = Repo<RoleRepository>())
+            {
+                var role = repo.GetModelById(roleId);
+
+                role.Permissions.Clear();
+
+                if (permissions == null || permissions.Count <= 0) return role;
+                var permissionList = Repo<PermissionRepository>().GetAllModelList();
+
+                foreach (var permission in permissionList)
+                {
+                    if (permissions.Any(obj => obj == permission.Id.ToString()))
+                    {
+                        role.Permissions.Add(permission);
+                    }
+                }
+
+                Submit();
+
+                GeneralProcess.LoadBaseInfomations();
+
+                return role;
+            }
+        }
     }
 }

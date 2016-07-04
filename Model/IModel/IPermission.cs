@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -14,6 +13,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 权限名称
         /// </summary>
         string PermissionName { get; set; }
+
+        /// <summary>
+        /// 权限显示名称
+        /// </summary>
+        string PermissionDisplayName { get; set; }
 
         /// <summary>
         /// 所属父级权限ID

@@ -543,3 +543,19 @@ a {
 a:active {
     outline: none;
 }
+
+.text-main {
+    color: #33CEC3;
+}
+
+.text-main-reverse {
+    color: #ff6f00;
+}
+
+.font-18 {
+    font-size: 18px;
+}
+
+.font-20 {
+    font-size: 20px;   
+}

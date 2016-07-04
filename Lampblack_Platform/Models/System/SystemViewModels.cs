@@ -1,4 +1,6 @@
-﻿using MvcWebComponents.Model;
+﻿using System;
+using System.Collections.Generic;
+using MvcWebComponents.Model;
 using PagedList;
 using SHWDTech.Platform.Model.Model;
 
@@ -35,5 +37,21 @@ namespace Lampblack_Platform.Models.System
         /// 角色列表
         /// </summary>
         public IPagedList<WdRole> Roles { get; set; }
+    }
+
+    /// <summary>
+    /// 授权管理视图模型
+    /// </summary>
+    public class AuthorityViewModel
+    {
+        /// <summary>
+        /// 当前角色
+        /// </summary>
+        public WdRole Role { get; set; }
+
+        /// <summary>
+        /// 权限集合
+        /// </summary>
+        public List<Permission> Permissions { get; set; }
     }
 }
