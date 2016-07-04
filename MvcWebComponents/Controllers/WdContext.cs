@@ -15,6 +15,10 @@ namespace MvcWebComponents.Controllers
         {
         }
 
+        /// <summary>
+        /// 创建新的HTTP请求自定义上下文对象
+        /// </summary>
+        /// <param name="user"></param>
         public WdContext(WdUser user) : this()
         {
             WdUser = user;

@@ -70,19 +70,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\WdAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\WdUnauthorizedAttribute.cs" />
     <Compile Include="Controllers\WdContext.cs" />
     <Compile Include="Controllers\WdControllerBase.cs" />
     <Compile Include="Extensions\AjaxExtensions.cs" />
     <Compile Include="Extensions\EnumHelpercs.cs" />
     <Compile Include="Filters\AjaxGetAttribute.cs" />
     <Compile Include="Filters\AjaxHandleErrorAttribute.cs" />
-    <Compile Include="Filters\NamedAuthAttribute.cs" />
+    <Compile Include="Attributes\NamedAuthAttribute.cs" />
     <Compile Include="Filters\WdAuthorizeActionFilter.cs" />
-    <Compile Include="Model\AuthModules.cs" />
     <Compile Include="Model\IPagedListViewModel.cs" />
     <Compile Include="Model\IBaseViewModel.cs" />
     <Compile Include="Model\JsonStruct.cs" />
+    <Compile Include="Model\NamedAuthorizeExecuter.cs" />
     <Compile Include="Model\PagedListViewModelBase.cs" />
     <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

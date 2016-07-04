@@ -23,21 +23,23 @@ namespace MvcWebComponents.Filters
                 }
 
                 WdContext = (WdContext)filterContext.HttpContext.Items["WdContext"];
-                var modules = GetAuthModules(filterContext);
-
-                if (!(modules.ActionRequired && modules.ControllerRequired)) return;
-
                 if (WdContext.WdUser.IsInRole("Root")
-                    || WdContext.WdUser.IsInRole("SuperAdmin")
-                    || modules.ControllerModule == "Home"
-                    || modules.ControllerModule == "Account")
+                    || WdContext.WdUser.IsInRole("SuperAdmin"))
                 {
                     return;
                 }
 
-                var actionPermission = WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == modules.ActionModule);
+                var executer = new NamedAuthorizeExecuter(filterContext);
+
+                if (!(executer.ActionRequired && executer.ControllerRequired)
+                    || executer.ActionModule == "Ignore"
+                    || (executer.ActionModule == string.Empty && executer.ControllerModule == "Ignore")) return;
+
+                executer.AdjustModule(filterContext);
+
+                var actionPermission = WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ActionModule);
                 var controllerPermission =
-                    WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == modules.ControllerModule);
+                    WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ControllerModule);
 
                 if (actionPermission == null || (actionPermission.ParentPermissionId != null && controllerPermission == null))
                 {
@@ -48,30 +50,6 @@ namespace MvcWebComponents.Filters
 
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
-        }
-
-        /// <summary>
-        /// 获取当前执行方法的模块信息
-        /// </summary>
-        /// <param name="filterContext"></param>
-        /// <returns></returns>
-        private AuthModules GetAuthModules(ActionExecutingContext filterContext)
-        {
-            var controllerAuth =
-                    filterContext.ActionDescriptor.ControllerDescriptor.GetCustomAttributes(typeof(NamedAuthAttribute),
-                        true);
-            var actionAuth =
-                filterContext.ActionDescriptor.GetCustomAttributes((typeof(NamedAuthAttribute)), true);
-
-            var controllerModule = controllerAuth.Length > 0
-                ? ((NamedAuthAttribute)controllerAuth[0])
-                : null;
-
-            var actionModule = actionAuth.Length > 0
-                ? ((NamedAuthAttribute) actionAuth[0])
-                : null;
-
-            return new AuthModules(controllerModule, actionModule);
         }
     }
 }

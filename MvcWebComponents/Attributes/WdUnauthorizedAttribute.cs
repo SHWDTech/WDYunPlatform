@@ -3,7 +3,7 @@ using MvcWebComponents.Model;
 
 namespace MvcWebComponents.Attributes
 {
-    public class WdAuthorizeAttribute : AuthorizeAttribute
+    public class WdUnauthorizedAttribute : AuthorizeAttribute
     {
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {

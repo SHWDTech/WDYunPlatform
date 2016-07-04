@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Web.Mvc;
 
-namespace MvcWebComponents.Filters
+namespace MvcWebComponents.Attributes
 {
     /// <summary>
-    /// 命名授权模块
+    /// 命名授权特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class NamedAuthAttribute : ActionFilterAttribute
+    public class NamedAuthAttribute : Attribute
     {
         /// <summary>
         /// 模块名称

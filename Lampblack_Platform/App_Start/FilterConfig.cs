@@ -9,9 +9,9 @@ namespace Lampblack_Platform
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new WdAuthorizeAttribute());
-            filters.Add(new AjaxHandleErrorAttribute());
+            filters.Add(new WdUnauthorizedAttribute());
             filters.Add(new WdAuthorizeActionFilter());
+            filters.Add(new AjaxHandleErrorAttribute());
         }
     }
 }
