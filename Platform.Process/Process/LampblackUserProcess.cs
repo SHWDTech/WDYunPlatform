@@ -60,9 +60,9 @@ namespace Platform.Process.Process
                         }
 
                         var user = repo.GetModelIncludeById(userId, new List<string>() { "Roles" });
-                        UpdateUserRoles(user, roleList);
-                        Submit();
 
+                        UpdateUserRoles(user, roleList, repo);
+                        Submit();
                     }
                     catch (Exception ex) when (ex is DbUpdateException || ex is DbEntityValidationException)
                     {
@@ -94,22 +94,36 @@ namespace Platform.Process.Process
             }
         }
 
-        public void UpdateUserRoles(LampblackUser user, List<string> roleList)
+        //public void UpdateUserRoles(LampblackUser user, List<string> roleList)
+        //{
+        //    var roleRepo = Repo<RoleRepository>();
+
+        //    var roles = roleRepo.GetAllModels().Include("Users").ToList();
+
+        //    foreach (var wdRole in roles)
+        //    {
+        //        if (roleList.Any(obj => obj == wdRole.Id.ToString()) && !wdRole.Users.Contains(user))
+        //        {
+        //            wdRole.Users.Add(user);
+        //        }
+        //        else if (roleList.All(obj => obj == wdRole.Id.ToString()) && wdRole.Users.Contains(user))
+        //        {
+        //            wdRole.Users.Remove(user);
+        //        }
+        //    }
+        //}
+
+        public void UpdateUserRoles(LampblackUser user, List<string> roleList, LampblackUserRepository repo)
         {
+            user.Roles.Clear();
+
+            if (roleList == null) return;
+
             var roleRepo = Repo<RoleRepository>();
-
-            var roles = roleRepo.GetAllModels().Include("Users").ToList();
-
-            foreach (var wdRole in roles)
+            user.Roles.Clear();
+            foreach (var roleId in roleList)
             {
-                if (roleList.Any(obj => obj == wdRole.Id.ToString()) && !wdRole.Users.Contains(user))
-                {
-                    wdRole.Users.Add(user);
-                }
-                else if(roleList.All(obj => obj == wdRole.Id.ToString()) && wdRole.Users.Contains(user))
-                {
-                    wdRole.Users.Remove(user);
-                }
+                user.Roles.Add(roleRepo.GetModelById(Guid.Parse(roleId)));
             }
         }
     }

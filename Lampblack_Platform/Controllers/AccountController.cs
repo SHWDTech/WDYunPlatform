@@ -1,12 +1,14 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
 using Lampblack_Platform.Models.Account;
+using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using Platform.Process.Enums;
 using Platform.Process.Process;
 
 namespace Lampblack_Platform.Controllers
 {
+    [NamedAuth(Modules = "Ignore")]
     public class AccountController : WdControllerBase
     {
         private AccountProcess Process { get; } = new AccountProcess();

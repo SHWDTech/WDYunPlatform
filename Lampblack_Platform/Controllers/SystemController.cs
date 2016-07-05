@@ -69,7 +69,7 @@ namespace Lampblack_Platform.Controllers
 
             model.UserName = model.LoginName;
 
-            var roleList = Request["Roles"].Split(',').ToList();
+            var roleList = string.IsNullOrWhiteSpace(Request["Roles"]) ? null : Request["Roles"].Split(',').ToList();
 
             var exception = ProcessInvoke.GetInstance<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames, roleList);
 
