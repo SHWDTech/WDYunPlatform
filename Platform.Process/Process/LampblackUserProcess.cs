@@ -61,7 +61,7 @@ namespace Platform.Process.Process
 
                         var user = repo.GetModelIncludeById(userId, new List<string>() { "Roles" });
 
-                        UpdateUserRoles(user, roleList, repo);
+                        UpdateUserRoles(user, roleList);
                         Submit();
                     }
                     catch (Exception ex) when (ex is DbUpdateException || ex is DbEntityValidationException)
@@ -94,26 +94,12 @@ namespace Platform.Process.Process
             }
         }
 
-        //public void UpdateUserRoles(LampblackUser user, List<string> roleList)
-        //{
-        //    var roleRepo = Repo<RoleRepository>();
-
-        //    var roles = roleRepo.GetAllModels().Include("Users").ToList();
-
-        //    foreach (var wdRole in roles)
-        //    {
-        //        if (roleList.Any(obj => obj == wdRole.Id.ToString()) && !wdRole.Users.Contains(user))
-        //        {
-        //            wdRole.Users.Add(user);
-        //        }
-        //        else if (roleList.All(obj => obj == wdRole.Id.ToString()) && wdRole.Users.Contains(user))
-        //        {
-        //            wdRole.Users.Remove(user);
-        //        }
-        //    }
-        //}
-
-        public void UpdateUserRoles(LampblackUser user, List<string> roleList, LampblackUserRepository repo)
+        /// <summary>
+        /// 更新用户角色信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="roleList"></param>
+        private void UpdateUserRoles(LampblackUser user, List<string> roleList)
         {
             user.Roles.Clear();
 
