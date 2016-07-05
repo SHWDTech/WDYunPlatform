@@ -63,6 +63,7 @@ namespace Platform.Process.Process
 
                         UpdateUserRoles(user, roleList);
                         Submit();
+                        GeneralProcess.RefreashUserPermissionsCache();
                     }
                     catch (Exception ex) when (ex is DbUpdateException || ex is DbEntityValidationException)
                     {
@@ -81,6 +82,8 @@ namespace Platform.Process.Process
             {
                 var item = repo.GetModel(obj => obj.Id == userId);
                 if (item == null) return false;
+
+                GeneralProcess.RefreashUserPermissionsCache();
 
                 return repo.DeleteDoCommit(item);
             }

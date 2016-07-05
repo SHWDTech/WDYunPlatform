@@ -53,7 +53,9 @@ namespace MvcWebComponents.Controllers
 
         private void GetPermissions()
         {
-            Permissions = (List<Permission>)PlatformCaches.GetCache($"User[{WdUser.Id}]-Permissions").CacheItem;
+            var permissionCache = (List<Permission>) PlatformCaches.GetCache($"User[{WdUser.Id}]-Permissions").CacheItem;
+            Permissions = new List<Permission>();
+            Permissions.AddRange(permissionCache);
             foreach (var wdRole in Roles)
             {
                 var rolePermissions = (List<Permission>)PlatformCaches.GetCache($"Role[{wdRole.Id}]-Permissions").CacheItem;

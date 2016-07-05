@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
+﻿using System.Threading;
 using SHWD.Platform.Repository.Repository;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using MvcWebComponents.Model;
-using Platform.Cache;
 using SHWD.Platform.Repository.IRepository;
 using Platform.Process.Process;
-using SHWDTech.Platform.Model.Model;
 
 namespace MvcWebComponents.Controllers
 {
@@ -32,12 +28,6 @@ namespace MvcWebComponents.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext ctx)
         {
-            var cache = PlatformCaches.GetCache("User[13013aa6-f250-b2cd-1311-1557f94b95d8]-Permissions");
-            if (cache != null)
-            {
-                var count = ((List<Permission>) cache.CacheItem).Count;
-                Debug.WriteLine($"P-Count{count}");
-            }
             if (ctx.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
                 || ctx.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
             {

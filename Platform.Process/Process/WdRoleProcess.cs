@@ -48,7 +48,7 @@ namespace Platform.Process.Process
                         repo.PartialUpdateDoCommit(model, propertyNames);
                     }
 
-                    GeneralProcess.LoadBaseInfomations();
+                    GeneralProcess.RefreashRolePermissionsCache();
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -79,7 +79,7 @@ namespace Platform.Process.Process
                 {
                     repo.DeleteDoCommit(role);
 
-                    GeneralProcess.LoadBaseInfomations();
+                    GeneralProcess.RefreashRolePermissionsCache();
                 }
                 catch (Exception ex)
                 {
@@ -137,7 +137,7 @@ namespace Platform.Process.Process
 
                 Submit();
 
-                GeneralProcess.LoadBaseInfomations();
+                GeneralProcess.RefreashRolePermissionsCache();
 
                 return role;
             }

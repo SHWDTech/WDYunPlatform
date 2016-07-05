@@ -28,6 +28,20 @@ namespace Platform.Process.Process
         /// </summary>
         public static void LoadBaseInfomations()
         {
+            RefreashUserPermissionsCache();
+
+            RefreashRolePermissionsCache();
+
+            RefreashModules();
+
+            RefreashPermissions();
+        }
+
+        /// <summary>
+        /// 刷新用户权限缓存
+        /// </summary>
+        public static void RefreashUserPermissionsCache()
+        {
             using (var context = new RepositoryDbContext())
             {
                 var users = context.Set<WdUser>().Include("Permissions").ToList();
@@ -35,19 +49,46 @@ namespace Platform.Process.Process
                 {
                     PlatformCaches.Add($"User[{wdUser.Id}]-Permissions", wdUser.Permissions.ToList(), false, "Permissions");
                 }
+            }
+        }
 
+        /// <summary>
+        /// 刷新角色权限缓存
+        /// </summary>
+        public static void RefreashRolePermissionsCache()
+        {
+            using (var context = new RepositoryDbContext())
+            {
                 var roles = context.Set<WdRole>().Include("Permissions").ToList();
                 foreach (var wdRole in roles)
                 {
                     PlatformCaches.Add($"Role[{wdRole.Id}]-Permissions", wdRole.Permissions.ToList(), false, "Permissions");
                 }
+            }
+        }
 
+        /// <summary>
+        /// 刷新系功能单缓存
+        /// </summary>
+        public static void RefreashModules()
+        {
+            using (var context = new RepositoryDbContext())
+            {
                 var modules = context.Set<Module>().ToList();
                 foreach (var module in modules)
                 {
                     PlatformCaches.Add($"Module[{module.Id}]", module, false, "Modules");
                 }
+            }
+        }
 
+        /// <summary>
+        /// 刷新权限信息缓存
+        /// </summary>
+        public static void RefreashPermissions()
+        {
+            using (var context = new RepositoryDbContext())
+            {
                 var permissions = context.Set<Permission>().ToList();
                 PlatformCaches.Add("Permissions", permissions, false, "System");
             }
