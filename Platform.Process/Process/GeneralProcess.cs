@@ -13,9 +13,7 @@ namespace Platform.Process.Process
     public class GeneralProcess : ProcessBase
     {
         private static GeneralProcess Process 
-            => _process ?? (_process = new GeneralProcess());
-
-        private static GeneralProcess _process;
+            => new GeneralProcess();
 
         /// <summary>
         /// 通过登录名获取用户信息

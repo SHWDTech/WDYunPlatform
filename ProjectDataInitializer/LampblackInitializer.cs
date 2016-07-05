@@ -810,6 +810,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DomainName = "乾铎环科",
                 DomianType = DomainType.UserDomain,
                 CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
                 DomainStatus = DomainStatus.Enabled,
                 IsEnabled = true
             };

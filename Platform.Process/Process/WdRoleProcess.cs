@@ -47,6 +47,8 @@ namespace Platform.Process.Process
                     {
                         repo.PartialUpdateDoCommit(model, propertyNames);
                     }
+
+                    GeneralProcess.LoadBaseInfomations();
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -76,6 +78,8 @@ namespace Platform.Process.Process
                 try
                 {
                     repo.DeleteDoCommit(role);
+
+                    GeneralProcess.LoadBaseInfomations();
                 }
                 catch (Exception ex)
                 {
@@ -118,14 +122,16 @@ namespace Platform.Process.Process
 
                 role.Permissions.Clear();
 
-                if (permissions == null || permissions.Count <= 0) return role;
-                var permissionList = Repo<PermissionRepository>().GetAllModelList();
-
-                foreach (var permission in permissionList)
+                if (permissions != null && permissions.Count > 0)
                 {
-                    if (permissions.Any(obj => obj == permission.Id.ToString()))
+                    var permissionList = Repo<PermissionRepository>().GetAllModelList();
+
+                    foreach (var permission in permissionList)
                     {
-                        role.Permissions.Add(permission);
+                        if (permissions.Any(obj => obj == permission.Id.ToString()))
+                        {
+                            role.Permissions.Add(permission);
+                        }
                     }
                 }
 
