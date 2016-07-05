@@ -59,7 +59,7 @@ namespace Platform.Process.Process
                             userId = repo.PartialUpdateDoCommit(model, propertyNames);
                         }
 
-                        var user = repo.GetModelIncludeById(userId, new List<string>() { "Roles" });
+                        var user = repo.GetModelIncludeById(userId, new List<string> { "Roles" });
 
                         UpdateUserRoles(user, roleList);
                         Submit();

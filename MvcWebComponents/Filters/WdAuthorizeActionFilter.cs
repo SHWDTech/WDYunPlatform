@@ -43,7 +43,7 @@ namespace MvcWebComponents.Filters
 
                 if (actionPermission == null || (actionPermission.ParentPermissionId != null && controllerPermission == null))
                 {
-                    filterContext.Result = new RedirectResult("/");
+                    filterContext.Result = new RedirectResult("/Error/UnAuthorized");
                 }
             }
         }
