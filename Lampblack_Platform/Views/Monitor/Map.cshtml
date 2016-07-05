@@ -7,44 +7,7 @@
 
     </div>
     <div id="searchTable" class="panel panel-default float-card" style="width: 25%;">
-        <div class="panel-body" style="background-color: #33CEC3 ;">
-            <div class="horizontal-group">
-                <label class="lbl60 lbl-white">区县：</label>
-                <select class="form-control">
-                    <option value="" disabled selected>请选择区县</option>
-                </select>
-            </div>
-            <div class="horizontal-group">
-                <label class="lbl60 lbl-white">街道：</label>
-                <select class="form-control">
-                    <option value="" disabled selected>请选择街道</option>
-                </select>
-            </div>
-            <div class="horizontal-group">
-                <label class="lbl60 lbl-white">酒店：</label>
-                <input type="text" class="form-control" style="margin-right: 5px;"placeholder="输入酒店名称" />
-                <input type="button" class="form-control btn btn-main" value="查询" style="width: 50px;" />
-            </div>
-        </div>
-        <div class="panel-body">
-            <table class="table table-bordered table-hover info">
-                <thead>
-                    <tr>
-                        <td class="text-center table-head">
-                            饭店列表
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="text-center">
-                        <td>某个饭店</td>
-                    </tr>
-                    <tr class="text-center">
-                        <td>另外一个饭店</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{ Html.RenderAction("MapHotel");}
     </div>
 </div>
 

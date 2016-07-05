@@ -164,6 +164,7 @@
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Management\ManagementViewModels.cs" />
+    <Compile Include="Models\Monitor\MonitorViewModels.cs" />
     <Compile Include="Models\System\SystemViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -379,6 +380,7 @@
     <Content Include="Views\System\EditRole.cshtml" />
     <Content Include="Views\System\Authority.cshtml" />
     <Content Include="Views\Error\UnAuthorized.cshtml" />
+    <Content Include="Views\Monitor\MapHotel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

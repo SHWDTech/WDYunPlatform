@@ -48,7 +48,10 @@ namespace MvcWebComponents.Controllers
                 return;
             }
             WdContext = new WdContext(currentUser);
-            context.Items.Add("WdContext", WdContext);
+            if (!context.Items.Contains("WdContext"))
+            {
+                context.Items.Add("WdContext", WdContext);
+            }
 
             RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>()
             {
@@ -94,7 +97,7 @@ namespace MvcWebComponents.Controllers
         /// <param name="json"></param>
         /// <param name="requestBehavior"></param>
         /// <returns></returns>
-        protected JsonResult Json(JsonStruct json, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet) 
+        protected JsonResult Json(JsonStruct json, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
             => base.Json(json, requestBehavior);
 
         /// <summary>

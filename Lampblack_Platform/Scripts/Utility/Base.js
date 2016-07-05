@@ -140,3 +140,17 @@ function ajaxSuccess(ret) {
         $('#' + ret.PostForm).submit();
     }
 }
+
+function ajaxComplete(ret) {
+    if (!IsNullOrEmpty(ret.Message)) {
+        var message = ret.Message;
+        if (ret.Exception !== null) {
+            message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
+        }
+        Msg(message, { title: '提示！' });
+    }
+
+    if (!IsNullOrEmpty(ret.PostForm)) {
+        $('#' + ret.PostForm).submit();
+    }
+}
