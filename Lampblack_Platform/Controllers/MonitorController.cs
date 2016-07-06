@@ -16,6 +16,7 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult Map() => DefaultView();
 
+        [NamedAuth(Modules = "Map")]
         public ActionResult MapHotel()
         {
             var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
@@ -45,15 +46,6 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        [NamedAuth(Modules = "Map")]
-        public ActionResult MapHotel(MapHotelViewModel model)
-        {
-           
-
-            return View(model);
-        }
-
         private void GetMapHotelRelatedItems()
         {
             ViewBag.AreaListItems = new List<SelectListItem>
@@ -63,7 +55,7 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.AreaListItems.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() {Text = obj.Key, Value = obj.Value})
                 .ToList());
         }
     }

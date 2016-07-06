@@ -37,7 +37,7 @@ namespace Platform.Process.Process
             return repo;
         }
 
-        protected int Submit()
+        protected int Commit()
             => DbContext.SaveChanges();
     }
 }

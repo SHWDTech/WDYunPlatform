@@ -62,7 +62,7 @@ namespace Platform.Process.Process
                         var user = repo.GetModelIncludeById(userId, new List<string> { "Roles" });
 
                         UpdateUserRoles(user, roleList);
-                        Submit();
+                        Commit();
                         GeneralProcess.RefreashUserPermissionsCache();
                     }
                     catch (Exception ex) when (ex is DbUpdateException || ex is DbEntityValidationException)

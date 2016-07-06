@@ -209,6 +209,7 @@
     <Content Include="Scripts\Page\EditHotel.js" />
     <Content Include="Scripts\Page\Hotel.js" />
     <Content Include="Scripts\Page\Map.js" />
+    <Content Include="Scripts\Page\MapHotel.js" />
     <Content Include="Scripts\Page\RestaurantDevice.js" />
     <Content Include="Scripts\Page\RoleManage.js" />
     <Content Include="Scripts\Page\UserManage.js" />

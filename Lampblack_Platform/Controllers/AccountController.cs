@@ -56,5 +56,10 @@ namespace Lampblack_Platform.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");
         }
+
+        public ActionResult SetUp()
+        {
+            return null;
+        }
     }
 }

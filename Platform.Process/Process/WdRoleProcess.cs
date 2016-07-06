@@ -135,7 +135,7 @@ namespace Platform.Process.Process
                     }
                 }
 
-                Submit();
+                Commit();
 
                 GeneralProcess.RefreashRolePermissionsCache();
 

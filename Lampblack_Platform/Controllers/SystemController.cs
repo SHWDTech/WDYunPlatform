@@ -88,9 +88,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "UsersManage")]
         public ActionResult DeleteUser(Guid guid)
         {
-            var areaId = Guid.Parse(Request["Id"]);
-
-            var success = ProcessInvoke.GetInstance<LampblackUserProcess>().DeleteLampblackUser(areaId);
+            var success = ProcessInvoke.GetInstance<LampblackUserProcess>().DeleteLampblackUser(guid);
 
             var json = new JsonStruct
             {

@@ -1,4 +1,5 @@
-﻿@using MvcWebComponents.Model
+﻿@using MvcWebComponents.Extensions
+@using MvcWebComponents.Model
 @model ViewModelBase
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,14 @@
             {
             @Html.AntiForgeryToken()
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Ajax.ActionLink("设置", "SetUp", "Account", null, new AjaxOptions()
+                   {
+                       UpdateTargetId = "body-content",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }.GeneralOptions())
+                </li>
                 <li>
                     <a href="javascript:document.getElementById('logoutForm').submit()">
                         <span class="glyphicon glyphicon-log-out"></span>

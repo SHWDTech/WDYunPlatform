@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
 using PagedList;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
@@ -12,11 +13,16 @@ namespace Platform.Process.Process
 {
     public class HotelRestaurantProcess : ProcessBase, IHotelRestaurantProcess
     {
-        public IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count)
+        public IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count, Expression<Func<HotelRestaurant, bool>> condition = null)
         {
             using (var repo = Repo<HotelRestaurantRepository>())
             {
                 var query = repo.GetAllModels().Include("District").Include("Street").Include("Address");
+                if (condition != null)
+                {
+                    query = query.Where(condition);
+                }
+
                 if (!string.IsNullOrWhiteSpace(queryName))
                 {
                     query = query.Where(obj => obj.ProjectName.Contains(queryName));

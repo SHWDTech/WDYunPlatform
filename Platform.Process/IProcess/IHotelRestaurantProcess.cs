@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.Linq.Expressions;
 using PagedList;
 using SHWDTech.Platform.Model.Model;
 
@@ -15,8 +16,9 @@ namespace Platform.Process.IProcess
         /// <param name="pageSize"></param>
         /// <param name="queryName"></param>
         /// <param name="count"></param>
+        /// <param name="condition"></param>
         /// <returns></returns>
-        IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count);
+        IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count, Expression<Func<HotelRestaurant, bool>> condition = null);
 
         /// <summary>
         /// 获取指定ID的酒店信息

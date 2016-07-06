@@ -112,7 +112,7 @@ $(function () {
         target.find('ul').attr('parentNode', area.Id).empty();
 
         var areas = AreaInfo.filter(function (obj) {
-            return obj.ItemLevel === (itemLevel + 1) && obj.ParentNode === area.Id
+            return obj.ItemLevel === (itemLevel + 1) && obj.ParentNode === area.Id;
         });
         setTimeout(function () {
             target.removeClass('float-card-hide');
@@ -155,7 +155,7 @@ $(function () {
 
                 //判断当前输入的区域是否已经存在
                 var currentAreas = AreaInfo.filter(function (obj) {
-                    return obj.ItemLevel === itemLevel && obj.ParentNode === parentNode
+                    return obj.ItemLevel === itemLevel && obj.ParentNode === parentNode;
                 });
                 if (IsNullOrEmpty(areaName) || !currentAreas.every(obj => obj.ItemValue !== areaName)) {
                     relatedInput.parent().addClass('has-error');
