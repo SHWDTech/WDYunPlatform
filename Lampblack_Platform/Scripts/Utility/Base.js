@@ -148,9 +148,13 @@ function ajaxComplete(ret) {
             message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
         }
         Msg(message, { title: '提示！' });
+
+        return false;
     }
 
     if (!IsNullOrEmpty(ret.PostForm)) {
         $('#' + ret.PostForm).submit();
     }
+
+    return true;
 }

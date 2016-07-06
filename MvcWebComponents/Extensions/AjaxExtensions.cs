@@ -10,7 +10,8 @@ namespace MvcWebComponents.Extensions
     {
         public static AjaxOptions GeneralOptions(this AjaxOptions ajaxOptions)
         {
-            ajaxOptions.OnSuccess = "ajaxSuccess";
+            ajaxOptions.OnComplete = "ajaxComplete";
+            //ajaxOptions.OnSuccess = "ajaxSuccess";
             return ajaxOptions;
         }
 
@@ -25,7 +26,6 @@ namespace MvcWebComponents.Extensions
             var targetUrl = UrlHelper.GenerateUrl(null, actionName, controllerName, null, ajaxHelper.RouteCollection, ajaxHelper.ViewContext.RequestContext, true);
             return MvcHtmlString.Create(GenerateLink(linkText, targetUrl, ajaxOptions ?? new AjaxOptions(), null));
         }
-
 
 
         private static string GenerateLink(string linkText,
