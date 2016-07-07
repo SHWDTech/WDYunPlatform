@@ -138,7 +138,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 if (structure.StructureName == StructureNames.Data)
                 {
                     commandCoder.DetectCommand(package, matchedProtocol);
-                    componentDataLength = package.Command.CommandBytesLength;
+                    componentDataLength = package.Command.ReceiveBytesLength;
                 }
 
                 var component = new PackageComponent

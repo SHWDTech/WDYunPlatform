@@ -160,7 +160,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 (_structureComponents.Count + 1 != Protocol.ProtocolStructures.Count)
                 || !ProtocolChecker.CheckProtocol(this)
                 || DataComponent == null
-                || DataComponent.ComponentBytes.Length != Command.CommandBytesLength
+                || DataComponent.ComponentBytes.Length != Command.ReceiveBytesLength
                 )
             {
                 Status = PackageStatus.InvalidPackage;

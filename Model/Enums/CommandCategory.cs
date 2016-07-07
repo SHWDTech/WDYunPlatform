@@ -24,5 +24,15 @@
         /// 设备控制
         /// </summary>
         public const string DeviceControl = "DeviceControl";
+
+        /// <summary>
+        /// 时间校准
+        /// </summary>
+        public const string SystemCommunication = "SystemCommunication";
+
+        /// <summary>
+        /// 设备设置
+        /// </summary>
+        public const string ModuleConfig = "ModuleConfig";
     }
 }

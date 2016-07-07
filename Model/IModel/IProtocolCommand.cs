@@ -20,9 +20,14 @@ namespace SHWDTech.Platform.Model.IModel
         byte[] CommandCode { get; set; }
 
         /// <summary>
-        /// 指令数据长度
+        /// 指令数据发送长度
         /// </summary>
-        int CommandBytesLength { get; set; }
+        int SendBytesLength { get; set; }
+
+        /// <summary>
+        /// 指令数据接收长度
+        /// </summary>
+        int ReceiveBytesLength { get; set; }
 
         /// <summary>
         /// 指令分类

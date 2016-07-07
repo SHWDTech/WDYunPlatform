@@ -22,8 +22,12 @@ namespace SHWDTech.Platform.Model.Model
         public virtual byte[] CommandCode { get; set; }
 
         [Required]
-        [Display(Name = "指令数据长度")]
-        public virtual int CommandBytesLength { get; set; }
+        [Display(Name = "指令发送数据长度")]
+        public virtual int SendBytesLength { get; set; }
+
+        [Required]
+        [Display(Name = "指令数据接收长度")]
+        public virtual int ReceiveBytesLength { get; set; }
 
         [Required]
         [Display(Name = "指令类型")]

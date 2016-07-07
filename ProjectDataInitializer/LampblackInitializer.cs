@@ -888,7 +888,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("d2ccf8b0-ed68-48ef-b185-f94b504944ca"),
                 CommandTypeCode = new byte[] { 0xF9 },
                 CommandCode = new byte[] { 0x1F },
-                CommandBytesLength = 0,
+                SendBytesLength = 0,
+                ReceiveBytesLength = 0,
                 CommandCategory = CommandCategory.HeartBeat,
                 ProtocolId = classic.Id,
                 CommandDeliverParamConfigs = new List<SysConfig> { commandReply },
@@ -903,7 +904,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("29b2f9c1-a79b-4598-bc33-2b4c20488159"),
                 CommandTypeCode = new byte[] { 0xFD },
                 CommandCode = new byte[] { 0x27 },
-                CommandBytesLength = 30,
+                SendBytesLength = 0,
+                ReceiveBytesLength = 30,
                 CommandCategory = CommandCategory.TimingAutoReport,
                 ProtocolId = classic.Id,
                 CommandDeliverParamConfigs = new List<SysConfig> { commandReplyA },
@@ -919,7 +921,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("52FD2857-1607-4AD6-86C9-AC6B2B75BBB6"),
                 CommandTypeCode = new byte[] { 0xFC },
                 CommandCode = new byte[] { 0x1F },
-                CommandBytesLength = 0,
+                SendBytesLength = 0,
+                ReceiveBytesLength = 0,
                 CommandCategory = CommandCategory.DeviceControl,
                 ProtocolId = classic.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1086,6 +1089,226 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.ProtocolStructures.Add(lbAscTime);
             dbContext.ProtocolStructures.Add(lbLrc);
             dbContext.ProtocolStructures.Add(lbTail);
+
+            var lbHreatBeat = new ProtocolCommand
+            {
+                Id = Guid.Parse("b1bfa04d-531a-40ee-a14c-098977a17f23"),
+                CommandTypeCode = new byte[] { 0xF1 },
+                CommandCode = new byte[] { 0x01 },
+                SendBytesLength = 0,
+                ReceiveBytesLength = 0,
+                CommandCategory = CommandCategory.SystemCommunication,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig> { commandReply },
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lbReadVersion = new ProtocolCommand
+            {
+                Id = Guid.Parse("5835a807-c425-4332-aae4-94243b6dbe87"),
+                CommandTypeCode = new byte[] { 0xF1 },
+                CommandCode = new byte[] { 0x02 },
+                SendBytesLength = 0,
+                ReceiveBytesLength = 8,
+                CommandCategory = CommandCategory.SystemCommunication,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadNode = new ProtocolCommand
+            {
+                Id = Guid.Parse("5875a293-202c-4cd6-9796-d3528588625f"),
+                CommandTypeCode = new byte[] { 0xF1 },
+                CommandCode = new byte[] { 0x03 },
+                SendBytesLength = 0,
+                ReceiveBytesLength = 10,
+                CommandCategory = CommandCategory.SystemCommunication,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReset = new ProtocolCommand
+            {
+                Id = Guid.Parse("7e2ab3fb-e1b9-4d6f-b482-87b341ab8d46"),
+                CommandTypeCode = new byte[] { 0xF1 },
+                CommandCode = new byte[] { 0x04 },
+                SendBytesLength = 10,
+                ReceiveBytesLength = 0,
+                CommandCategory = CommandCategory.SystemCommunication,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbTimeAdjust = new ProtocolCommand
+            {
+                Id = Guid.Parse("aa5538eb-860a-4d99-aae7-38691a2f77a0"),
+                CommandTypeCode = new byte[] { 0xF1 },
+                CommandCode = new byte[] { 0x05 },
+                SendBytesLength = 8,
+                ReceiveBytesLength = 8,
+                CommandCategory = CommandCategory.SystemCommunication,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbSetDescribe = new ProtocolCommand
+            {
+                Id = Guid.Parse("7437661f-7866-449a-9163-599fea928425"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x01 },
+                SendBytesLength = 20,
+                ReceiveBytesLength = 20,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadDescribe = new ProtocolCommand
+            {
+                Id = Guid.Parse("6ef01e11-d8c7-418b-8be7-9acd9831f2e7"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x02 },
+                SendBytesLength = 20,
+                ReceiveBytesLength = 20,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbSetNodeId = new ProtocolCommand
+            {
+                Id = Guid.Parse("631fe519-26aa-4f1e-b305-8409f028e3d7"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x03 },
+                SendBytesLength = 8,
+                ReceiveBytesLength = 8,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadNodeId = new ProtocolCommand
+            {
+                Id = Guid.Parse("d6116b59-966f-4e10-8989-3e09347b49a2"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x04 },
+                SendBytesLength = 8,
+                ReceiveBytesLength = 8,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbSetConnAddr = new ProtocolCommand
+            {
+                Id = Guid.Parse("4ff1a46e-4367-46f2-b563-19de7f34bac7"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x05 },
+                SendBytesLength = 131,
+                ReceiveBytesLength = 0,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadConnAddr = new ProtocolCommand
+            {
+                Id = Guid.Parse("d3bfd547-42c3-42eb-b725-690659e42cc0"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x06 },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 131,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbSetAutoReport = new ProtocolCommand
+            {
+                Id = Guid.Parse("03d26500-a746-43eb-99d0-2a2caf7420c7"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x07 },
+                SendBytesLength = 4,
+                ReceiveBytesLength = 4,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadAutoReport = new ProtocolCommand
+            {
+                Id = Guid.Parse("5ca75e4e-b0d8-484d-8ca1-2ea4c7c8ede6"),
+                CommandTypeCode = new byte[] { 0xF2 },
+                CommandCode = new byte[] { 0x08 },
+                SendBytesLength = 0,
+                ReceiveBytesLength = 4,
+                CommandCategory = CommandCategory.ModuleConfig,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
 
             var userdomain = new Domain
             {
