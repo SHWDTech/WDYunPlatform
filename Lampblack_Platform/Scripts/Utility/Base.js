@@ -124,7 +124,17 @@ function resetValidation() {
     //Removes validation summary 
     $('.validation-summary-errors').addClass('validation-summary-valid');
     $('.validation-summary-errors').removeClass('validation-summary-errors');
+}
 
+function ajaxFailure(ret) {
+    var res = ret.responseJSON;
+    if (!IsNullOrEmpty(res.Message)) {
+        var message = res.Message;
+        if (res.Exception !== null) {
+            message += ('<br/>ExceptionInfo:<br/>' + res.Exception);
+        }
+        Msg(message, { title: '提示！' });
+    }
 }
 
 function ajaxSuccess(ret) {
@@ -139,22 +149,4 @@ function ajaxSuccess(ret) {
     if (!IsNullOrEmpty(ret.PostForm)) {
         $('#' + ret.PostForm).submit();
     }
-}
-
-function ajaxComplete(ret) {
-    if (!IsNullOrEmpty(ret.Message)) {
-        var message = ret.Message;
-        if (ret.Exception !== null) {
-            message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
-        }
-        Msg(message, { title: '提示！' });
-
-        return false;
-    }
-
-    if (!IsNullOrEmpty(ret.PostForm)) {
-        $('#' + ret.PostForm).submit();
-    }
-
-    return true;
 }

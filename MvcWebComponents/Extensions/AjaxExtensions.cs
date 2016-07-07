@@ -10,8 +10,8 @@ namespace MvcWebComponents.Extensions
     {
         public static AjaxOptions GeneralOptions(this AjaxOptions ajaxOptions)
         {
-            ajaxOptions.OnComplete = "ajaxComplete";
-            //ajaxOptions.OnSuccess = "ajaxSuccess";
+            ajaxOptions.OnFailure = "ajaxFailure";
+            ajaxOptions.OnSuccess = "ajaxSuccess";
             return ajaxOptions;
         }
 

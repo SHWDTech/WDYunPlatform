@@ -23,6 +23,7 @@ namespace MvcWebComponents.Filters
         {
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
+                filterContext.HttpContext.Response.StatusCode = 500;
                 var json = new JsonStruct()
                 {
                     Success = false,

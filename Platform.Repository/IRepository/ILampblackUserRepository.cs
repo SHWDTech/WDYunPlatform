@@ -1,4 +1,5 @@
-﻿using SHWDTech.Platform.Model.Model;
+﻿using System;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.IRepository
 {
@@ -7,5 +8,11 @@ namespace SHWD.Platform.Repository.IRepository
     /// </summary>
     public interface ILampblackUserRepository : ISysDomainRepository<LampblackUser>
     {
+        /// <summary>
+        /// 获取指定ID的油烟系统用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        LampblackUser GetUserById(Guid id);
     }
 }

@@ -18,23 +18,25 @@
         </div>
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right logout-form" }))
             {
-            @Html.AntiForgeryToken()
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    @Ajax.ActionLink("设置", "SetUp", "Account", null, new AjaxOptions()
-                   {
-                       UpdateTargetId = "body-content",
-                       InsertionMode = InsertionMode.Replace,
-                       HttpMethod = "GET"
-                   }.GeneralOptions())
-                </li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()">
-                        <span class="glyphicon glyphicon-log-out"></span>
-                        <span>退出</span>
-                    </a>
-                </li>
-            </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a><span>当前用户：@Model.Context.WdUser.UserIdentityName</span></a>
+                    </li>
+                    <li>
+                        @Ajax.InnerElementActionLink("<span class='glyphicon glyphicon-user'></span><span>设置</span>", "SetUp", "Account", null, new AjaxOptions()
+                        {
+                            UpdateTargetId = "body-content",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "GET"
+                        }.GeneralOptions())
+                    </li>
+                    <li>
+                        <a href="javascript:document.getElementById('logoutForm').submit()">
+                            <span class="glyphicon glyphicon-log-out"></span>
+                            <span>退出</span>
+                        </a>
+                    </li>
+                </ul>
         }
     </div>
     <div class="wapper">

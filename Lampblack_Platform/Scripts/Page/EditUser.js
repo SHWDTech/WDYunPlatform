@@ -3,6 +3,7 @@
         resetValidation();
         $('#userEdit').find('input[type=text]').val('');
         $('#userEdit').find('select').val('');
+        $('#userEdit').find('input[type=checkbox]').prop('checked', false);
     });
 });
 

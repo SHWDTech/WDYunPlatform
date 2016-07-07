@@ -9,6 +9,7 @@ namespace MvcWebComponents.Attributes
         {
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
+                filterContext.HttpContext.Response.StatusCode = 500;
                 filterContext.Result = new JsonResult()
                 {
                     Data = new JsonStruct()

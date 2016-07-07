@@ -3,6 +3,7 @@ using System.Web.Security;
 using Lampblack_Platform.Models.Account;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
+using Platform.Process;
 using Platform.Process.Enums;
 using Platform.Process.Process;
 
@@ -50,16 +51,18 @@ namespace Lampblack_Platform.Controllers
             return Redirect(returnUrl);
         }
 
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");
         }
 
+        [NamedAuth(Modules = "Ignore")]
         public ActionResult SetUp()
         {
-            return null;
+            var model = ProcessInvoke.GetInstance<LampblackUserProcess>().GetLampblackUser(WdContext.WdUser.Id);
+
+            return View(model);
         }
     }
 }

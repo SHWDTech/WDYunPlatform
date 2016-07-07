@@ -94,7 +94,7 @@ namespace Lampblack_Platform.Controllers
             {
                 Success = success,
                 Message = !success ? "尝试删除用户信息失败，请刷新后重新尝试。" : "删除成功！",
-                PostForm = "user"
+                PostForm = success ? "user" : ""
             };
 
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -174,7 +174,8 @@ namespace Lampblack_Platform.Controllers
             var json = new JsonStruct
             {
                 Success = sqlResult.Success,
-                Message = sqlResult.Message
+                Message = sqlResult.Message,
+                PostForm = sqlResult.Success ? "department" : ""
             };
 
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -243,18 +244,17 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "RoleManage")]
         public ActionResult DeleteRole(Guid guid)
         {
-            var areaId = Guid.Parse(Request["Id"]);
-
-            var sqlResult = ProcessInvoke.GetInstance<WdRoleProcess>().DeleteRole(areaId);
+            var sqlResult = ProcessInvoke.GetInstance<WdRoleProcess>().DeleteRole(guid);
 
             sqlResult.Message = sqlResult.ErrorNumber == 547
-                ? "选中部门已经存在关联用户，请先删除用户后再删除此角色。"
+                ? "选中角色已经存在关联用户，请先删除用户后再删除此角色。"
                 : "删除成功！";
 
             var json = new JsonStruct
             {
                 Success = sqlResult.Success,
-                Message = sqlResult.Message
+                Message = sqlResult.Message,
+                PostForm = sqlResult.Success ? "role" : ""
             };
 
             return Json(json, JsonRequestBehavior.AllowGet);

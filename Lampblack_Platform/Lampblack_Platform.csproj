@@ -382,6 +382,7 @@
     <Content Include="Views\System\Authority.cshtml" />
     <Content Include="Views\Error\UnAuthorized.cshtml" />
     <Content Include="Views\Monitor\MapHotel.cshtml" />
+    <Content Include="Views\Account\SetUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
