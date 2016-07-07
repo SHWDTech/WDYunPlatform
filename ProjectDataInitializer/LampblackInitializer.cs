@@ -146,12 +146,43 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 IsEnabled = true
             };
 
+            var subfieldLampblack = new SysDictionary
+            {
+                Id = Guid.Parse("cc5729db-167d-4915-bf3c-af4868ea7864"),
+                ParentDictionaryId = field.Id,
+                ItemName = "Subield",
+                ItemKey = "7E0384B37CFM",
+                ItemValue = "Lampblack",
+                ItemLevel = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true
+            };
+
             dbContext.SysDictionaries.Add(field);
             dbContext.SysDictionaries.Add(subfield);
+            dbContext.SysDictionaries.Add(subfieldLampblack);
 
             var deviceType = new DeviceType
             {
                 Id = Guid.Parse("31b9ae77-6f5b-4c70-b180-d80ecb7df12b"),
+                Field = field,
+                SubField = subfield,
+                Version = "2016-03-17",
+                ReleaseDateTime = DateTime.Now,
+                DeviceTypeCode = "WD_YC_Classic",
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true
+            };
+
+            var lampblackDevicetype = new DeviceType
+            {
+                Id = Guid.Parse("67c410a8-dfab-477e-9988-c9ff0167ceea"),
                 Field = field,
                 SubField = subfield,
                 Version = "2016-03-17",
@@ -175,7 +206,19 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Protocols = new List<Protocol>()
             };
 
+            var firmlampblack = new Firmware
+            {
+                Id = Guid.Parse("6cd93a64-c033-44a9-828d-f0f0699b8f12"),
+                FirmwareName = "Lampblack_Frim_Version_1.0",
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                Protocols = new List<Protocol>()
+            };
+
             dbContext.Firmwares.Add(firma);
+            dbContext.Firmwares.Add(firmlampblack);
 
             var firmSet = new FirmwareSet
             {
@@ -188,10 +231,23 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 IsEnabled = true
             };
 
+            var lampblackfirmset = new FirmwareSet
+            {
+                Id = Guid.Parse("234730b6-4c32-467a-9a82-f60e9546c3da"),
+                FirmwareSetName = "油烟协议第一版",
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true
+            };
+
             firmSet.Firmwares.Add(firma);
             dbContext.FirmwareSets.Add(firmSet);
+            dbContext.FirmwareSets.Add(lampblackfirmset);
 
             dbContext.DeviceTypes.Add(deviceType);
+            dbContext.DeviceTypes.Add(lampblackDevicetype);
 
             var classic = new Protocol
             {
@@ -419,6 +475,233 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.ProtocolStructures.Add(data);
             dbContext.ProtocolStructures.Add(crc);
             dbContext.ProtocolStructures.Add(tail);
+
+            var lampblackProtocol = new Protocol
+            {
+                Id = Guid.Parse("969a4897-265c-4d86-b000-e70987817524"),
+                FieldId = field.Id,
+                SubFieldId = subfieldLampblack.Id,
+                CustomerInfo = "1",
+                ProtocolName = "Lampblack",
+                ProtocolModule = "Lampblack",
+                Version = "Lampblack_Protocol_V1.0.0.0",
+                ReleaseDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                CheckType = ProtocolCheckType.Crc16,
+                Head = new byte[] {0xAC},
+                Tail = new byte[] {0xB1}
+            };
+
+            firmlampblack.Protocols.Add(lampblackProtocol);
+
+            var lbhead = new ProtocolStructure
+            {
+                Id = Guid.Parse("9c547924-c395-4da8-be07-2535b44fb1e2"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "Head",
+                StructureIndex = 0,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[] { 0xAC }
+            };
+
+            var lbcmdtype = new ProtocolStructure
+            {
+                Id = Guid.Parse("9118bb81-3316-4127-9d91-4d4e37134c6f"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "CmdType",
+                StructureIndex = 1,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbcmdbyte = new ProtocolStructure
+            {
+                Id = Guid.Parse("2fb764f2-d088-41f0-b8c5-10d6086d02be"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "CmdByte",
+                StructureIndex = 2,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbpassword = new ProtocolStructure()
+            {
+                Id = Guid.Parse("417b4fdd-2130-4739-b751-077b0eb040b1"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "Password",
+                StructureIndex = 3,
+                StructureDataLength = 8,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.NumPassword,
+                DefaultBytes = new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 }
+            };
+
+            var lbnodeid = new ProtocolStructure()
+            {
+                Id = Guid.Parse("7304e821-3e9b-402c-8e1b-75bdbb51b95a"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "NodeId",
+                StructureIndex = 4,
+                StructureDataLength = 4,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.NodeId,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbdescrip = new ProtocolStructure()
+            {
+                Id = Guid.Parse("021ba57c-8987-4a4b-8e1a-376cad575ef8"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "Description",
+                StructureIndex = 5,
+                StructureDataLength = 12,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Description,
+                DefaultBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+            };
+
+            var lbdatasource = new ProtocolStructure()
+            {
+                Id = Guid.Parse("6b829782-8602-4464-a4ad-1ea53d45426f"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "DataSource",
+                StructureIndex = 6,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.DataSource,
+                DefaultBytes = new byte[] { 0x01 }
+            };
+
+            var reserved = new ProtocolStructure()
+            {
+                Id = Guid.Parse("28af7dfb-72aa-4f39-b8e2-60f8d7e75532"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "Reserved",
+                StructureIndex = 7,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Destination,
+                DefaultBytes = new byte[] { 0x01 }
+            };
+
+            var lbdatalength = new ProtocolStructure()
+            {
+                Id = Guid.Parse("4181699e-5106-4cf8-a32b-947b72b60197"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "PayloadLength",
+                StructureIndex = 8,
+                StructureDataLength = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.DataLength,
+                DefaultBytes = new byte[] { 0x00, 0x00 }
+            };
+
+            var lbdata = new ProtocolStructure()
+            {
+                Id = Guid.Parse("afcc3ffc-db70-4841-aa91-ac28aa4b701a"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "Data",
+                StructureIndex = 9,
+                StructureDataLength = 0,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.Data,
+                DefaultBytes = new byte[0]
+            };
+
+            var lbcrc = new ProtocolStructure()
+            {
+                Id = Guid.Parse("dee88fe7-0285-4e36-96c2-4c17ce007a6f"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "CRCValue",
+                StructureIndex = 10,
+                StructureDataLength = 2,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.CRC,
+                DefaultBytes = new byte[] { 0x00, 0x00 }
+            };
+
+            var lbtail = new ProtocolStructure()
+            {
+                Id = Guid.Parse("c2478dc2-5736-4bbc-8f51-d396fab81454"),
+                ProtocolId = lampblackProtocol.Id,
+                StructureName = "Tail",
+                StructureIndex = 11,
+                StructureDataLength = 1,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                IsEnabled = true,
+                DataType = ProtocolDataType.SingleByte,
+                DefaultBytes = new byte[] { 0xB1 }
+            };
+
+            dbContext.ProtocolStructures.Add(lbhead);
+            dbContext.ProtocolStructures.Add(lbcmdtype);
+            dbContext.ProtocolStructures.Add(lbcmdbyte);
+            dbContext.ProtocolStructures.Add(lbpassword);
+            dbContext.ProtocolStructures.Add(lbnodeid);
+            dbContext.ProtocolStructures.Add(lbdescrip);
+            dbContext.ProtocolStructures.Add(lbdatasource);
+            dbContext.ProtocolStructures.Add(reserved);
+            dbContext.ProtocolStructures.Add(lbdatalength);
+            dbContext.ProtocolStructures.Add(lbdata);
+            dbContext.ProtocolStructures.Add(lbcrc);
+            dbContext.ProtocolStructures.Add(lbtail);
 
             var commandReply = new SysConfig()
             {

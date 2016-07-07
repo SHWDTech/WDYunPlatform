@@ -107,5 +107,15 @@
         /// 四个字节存储两个无符号短整型。
         /// </summary>
         public const string FourBytesToTwoUShortSeparate = "FourBytesToTwoUShortSeparate";
+
+        /// <summary>
+        /// 数据来源
+        /// </summary>
+        public const string DataSource = "DataSource";
+
+        /// <summary>
+        /// 保留数据段
+        /// </summary>
+        public const string Reserved = "Reserved";
     }
 }
