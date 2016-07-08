@@ -85,11 +85,44 @@ namespace SHWDTech.Platform.ProtocolCoding
 
                 var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
 
-                monitorData.MonitorDataValue = Convert.ToDouble(temp);
+                monitorData.DoubleValue = Convert.ToDouble(temp);
                 monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
-                monitorData.DataName = commandData.DataName;
+                monitorData.ProjectId = package.Device.ProjectId;
+
+                monitorDataList.Add(monitorData);
+            }
+
+            if (package[ProtocolDataName.DataValidFlag] != null)
+            {
+                ProcessDataValidFlag(package, monitorDataList);
+            }
+
+            lock (TempMonitorDatas)
+            {
+                TempMonitorDatas.AddRange(monitorDataList);
+            }
+
+            OnMonitorDataReceived();
+        }
+
+        public static void Lampbalck(IProtocolPackage package, IPackageSource source)
+        {
+            var monitorDataList = new List<MonitorData>();
+
+            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            {
+                var monitorData = MonitorDataRepository.CreateDefaultModel();
+
+                var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+
+                var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
+
+                monitorData.DoubleValue = Convert.ToDouble(temp);
+                monitorData.ProtocolDataId = package.ProtocolData.Id;
+                monitorData.UpdateTime = DateTime.Now;
+                monitorData.CommandDataId = commandData.Id;
                 monitorData.ProjectId = package.Device.ProjectId;
 
                 monitorDataList.Add(monitorData);

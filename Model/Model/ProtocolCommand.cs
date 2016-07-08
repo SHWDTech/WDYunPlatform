@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.Model
 {
@@ -30,6 +31,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual int ReceiveBytesLength { get; set; }
 
         [Required]
+        [Display(Name = "指令数据接收最大长度")]
+        public virtual int ReceiceMaxBytesLength { get; set; }
+
+        [Required]
         [Display(Name = "指令类型")]
         [MaxLength(50)]
         public virtual string CommandCategory { get; set; }
@@ -41,6 +46,9 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "所属协议")]
         [ForeignKey("ProtocolId")]
         public virtual Protocol Protocol { get; set; }
+
+        [Display(Name = "数据段组合方式")]
+        public virtual DataOrderType DataOrderType { get; set; }
 
         [Display(Name = "指令包含数据")]
         public virtual ICollection<CommandData> CommandDatas { get; set; }

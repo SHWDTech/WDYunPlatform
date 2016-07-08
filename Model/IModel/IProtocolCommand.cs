@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -30,6 +31,11 @@ namespace SHWDTech.Platform.Model.IModel
         int ReceiveBytesLength { get; set; }
 
         /// <summary>
+        /// 指令数据接收最大长度
+        /// </summary>
+        int ReceiceMaxBytesLength { get; set; }
+
+        /// <summary>
         /// 指令分类
         /// </summary>
         string CommandCategory { get; set; }
@@ -43,6 +49,11 @@ namespace SHWDTech.Platform.Model.IModel
         /// 所属协议
         /// </summary>
         Protocol Protocol { get; set; }
+
+        /// <summary>
+        /// 数据段组合方式
+        /// </summary>
+        DataOrderType DataOrderType { get; set; }
 
         /// <summary>
         /// 指令数据

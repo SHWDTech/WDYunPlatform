@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 
@@ -26,8 +27,12 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string DataName { get; set; }
 
         [Required]
-        [Display(Name = "数据类型值")]
-        public virtual string DataType { get; set; }
+        [Display(Name = "数据转换类型")]
+        public virtual string DataConvertType { get; set; }
+
+        [Required]
+        [Display(Name = "数据值执行")]
+        public virtual DataValueType DataValueType { get; set;}
 
         [Required]
         [Display(Name = "所属指令")]

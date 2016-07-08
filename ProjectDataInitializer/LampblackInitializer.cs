@@ -728,6 +728,18 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
+            var commandReplyLampblack = new SysConfig()
+            {
+                Id = Guid.Parse("80918814-68f6-4c4e-932a-69277eb8ce9e"),
+                SysConfigName = ProtocolDeliveryParam.Lampblack,
+                SysConfigType = SysConfigType.ProtocolDeliveryParam,
+                SysConfigValue = ProtocolDeliveryParam.Lampblack,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
             var messageSource = new SysConfig
             {
                 Id = Guid.Parse("34EDC4EC-F046-418E-A9DC-9EA3EA284F84"),
@@ -743,6 +755,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.SysConfigs.Add(commandReply);
             dbContext.SysConfigs.Add(commandReplyA);
             dbContext.SysConfigs.Add(messageSource);
+            dbContext.SysConfigs.Add(commandReplyLampblack);
 
             var commandDataA = new CommandData()
             {
@@ -750,7 +763,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.DataValidFlag,
-                DataType = ProtocolDataType.TwoBytesToUShort,
+                DataConvertType = ProtocolDataType.TwoBytesToUShort,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
                 LastUpdateDateTime = DateTime.Now,
@@ -762,8 +775,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("489287c6-e179-4864-bd02-7f8962d5e81c"),
                 DataIndex = 1,
                 DataLength = 4,
-                DataName = "PM2.5",
-                DataType = ProtocolDataType.FourBytesToUInt32,
+                DataName = ProtocolDataName.Pm25,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 1,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -776,8 +790,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("b69c75a5-c813-42a6-a3a6-5eeef561c068"),
                 DataIndex = 2,
                 DataLength = 4,
-                DataName = "PM10",
-                DataType = ProtocolDataType.FourBytesToUInt32,
+                DataName = ProtocolDataName.Pm100,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 1,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -790,8 +805,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("36b4d5eb-b141-4cfd-9df5-d4508103fbbf"),
                 DataIndex = 3,
                 DataLength = 4,
-                DataName = "CPM",
-                DataType = ProtocolDataType.FourBytesToUInt32,
+                DataName = ProtocolDataName.Cpm,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 2,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -804,8 +820,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("57874a4a-9a91-42dd-86de-e8940ad92c10"),
                 DataIndex = 4,
                 DataLength = 2,
-                DataName = "噪音值",
-                DataType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                DataName = ProtocolDataName.Noise,
+                DataConvertType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 3,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -818,8 +835,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("7e175d64-be72-48ed-baf2-549f80c27319"),
                 DataIndex = 5,
                 DataLength = 3,
-                DataName = "风向",
-                DataType = ProtocolDataType.ThreeBytesToUShort,
+                DataName = ProtocolDataName.WindDirection,
+                DataConvertType = ProtocolDataType.ThreeBytesToUShort,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 4,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -832,8 +850,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("0c9124b1-168d-4510-bd8b-1acd183895a3"),
                 DataIndex = 6,
                 DataLength = 3,
-                DataName = "风速",
-                DataType = ProtocolDataType.ThreeBytesToUShort,
+                DataName = ProtocolDataName.WindSpeed,
+                DataConvertType = ProtocolDataType.ThreeBytesToUShort,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 5,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -846,8 +865,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("dc8815aa-0203-4c82-a09a-73521bcf208b"),
                 DataIndex = 7,
                 DataLength = 2,
-                DataName = "温度",
-                DataType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                DataName = ProtocolDataName.Temperature,
+                DataConvertType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 6,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -860,8 +880,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("1ff2c99a-e0af-4419-80f6-53e69574d2c4"),
                 DataIndex = 8,
                 DataLength = 2,
-                DataName = "湿度",
-                DataType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                DataName = ProtocolDataName.Humidity,
+                DataConvertType = ProtocolDataType.TwoBytesToDoubleSeparate,
+                DataValueType = DataValueType.Double,
                 ValidFlagIndex = 6,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -874,8 +895,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("d24a7c0b-05f1-4a3f-b82c-6a5615ccdfc5"),
                 DataIndex = 9,
                 DataLength = 4,
-                DataName = "挥发性有机物",
-                DataType = ProtocolDataType.FourBytesToUInt32,
+                DataName = ProtocolDataName.Voc,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 ValidFlagIndex = 7,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -890,6 +911,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x1F },
                 SendBytesLength = 0,
                 ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 0,
                 CommandCategory = CommandCategory.HeartBeat,
                 ProtocolId = classic.Id,
                 CommandDeliverParamConfigs = new List<SysConfig> { commandReply },
@@ -906,6 +928,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x27 },
                 SendBytesLength = 0,
                 ReceiveBytesLength = 30,
+                ReceiceMaxBytesLength = 30,
                 CommandCategory = CommandCategory.TimingAutoReport,
                 ProtocolId = classic.Id,
                 CommandDeliverParamConfigs = new List<SysConfig> { commandReplyA },
@@ -923,6 +946,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x1F },
                 SendBytesLength = 0,
                 ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 0,
                 CommandCategory = CommandCategory.DeviceControl,
                 ProtocolId = classic.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1097,6 +1121,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x01 },
                 SendBytesLength = 0,
                 ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 0,
                 CommandCategory = CommandCategory.SystemCommunication,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig> { commandReply },
@@ -1113,6 +1138,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x02 },
                 SendBytesLength = 0,
                 ReceiveBytesLength = 8,
+                ReceiceMaxBytesLength = 8,
                 CommandCategory = CommandCategory.SystemCommunication,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1129,7 +1155,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandTypeCode = new byte[] { 0xF1 },
                 CommandCode = new byte[] { 0x03 },
                 SendBytesLength = 0,
-                ReceiveBytesLength = 10,
+                ReceiveBytesLength = 16,
+                ReceiceMaxBytesLength = 16,
                 CommandCategory = CommandCategory.SystemCommunication,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1145,8 +1172,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("7e2ab3fb-e1b9-4d6f-b482-87b341ab8d46"),
                 CommandTypeCode = new byte[] { 0xF1 },
                 CommandCode = new byte[] { 0x04 },
-                SendBytesLength = 10,
+                SendBytesLength = 16,
                 ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 0,
                 CommandCategory = CommandCategory.SystemCommunication,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1164,6 +1192,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x05 },
                 SendBytesLength = 8,
                 ReceiveBytesLength = 8,
+                ReceiceMaxBytesLength = 8,
                 CommandCategory = CommandCategory.SystemCommunication,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1179,8 +1208,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("7437661f-7866-449a-9163-599fea928425"),
                 CommandTypeCode = new byte[] { 0xF2 },
                 CommandCode = new byte[] { 0x01 },
-                SendBytesLength = 20,
-                ReceiveBytesLength = 20,
+                SendBytesLength = 32,
+                ReceiveBytesLength = 32,
+                ReceiceMaxBytesLength = 32,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1196,8 +1226,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("6ef01e11-d8c7-418b-8be7-9acd9831f2e7"),
                 CommandTypeCode = new byte[] { 0xF2 },
                 CommandCode = new byte[] { 0x02 },
-                SendBytesLength = 20,
-                ReceiveBytesLength = 20,
+                SendBytesLength = 32,
+                ReceiveBytesLength = 32,
+                ReceiceMaxBytesLength = 32,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1215,6 +1246,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x03 },
                 SendBytesLength = 8,
                 ReceiveBytesLength = 8,
+                ReceiceMaxBytesLength = 8,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1232,6 +1264,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x04 },
                 SendBytesLength = 8,
                 ReceiveBytesLength = 8,
+                ReceiceMaxBytesLength = 8,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1247,8 +1280,9 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 Id = Guid.Parse("4ff1a46e-4367-46f2-b563-19de7f34bac7"),
                 CommandTypeCode = new byte[] { 0xF2 },
                 CommandCode = new byte[] { 0x05 },
-                SendBytesLength = 131,
+                SendBytesLength = 0,
                 ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 0,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1265,7 +1299,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandTypeCode = new byte[] { 0xF2 },
                 CommandCode = new byte[] { 0x06 },
                 SendBytesLength = 1,
-                ReceiveBytesLength = 131,
+                ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 131,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1283,6 +1318,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x07 },
                 SendBytesLength = 4,
                 ReceiveBytesLength = 4,
+                ReceiceMaxBytesLength = 4,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1300,6 +1336,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCode = new byte[] { 0x08 },
                 SendBytesLength = 0,
                 ReceiveBytesLength = 4,
+                ReceiceMaxBytesLength = 4,
                 CommandCategory = CommandCategory.ModuleConfig,
                 ProtocolId = lampblack.Id,
                 CommandDeliverParamConfigs = new List<SysConfig>(),
@@ -1309,6 +1346,312 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id,
                 CommandDatas = new List<CommandData>()
             };
+
+            var lbReadCleanerStatus = new ProtocolCommand
+            {
+                Id = Guid.Parse("bbf23570-3df9-4e3d-9b1b-dacfdce13d78"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x02 },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 2,
+                ReceiceMaxBytesLength = 2,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadCleanerCurrent = new ProtocolCommand
+            {
+                Id = Guid.Parse("c40e2ccf-5db4-433a-a63c-1bdcdb5533c9"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x04 },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 5,
+                ReceiceMaxBytesLength = 5,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadFanStatus = new ProtocolCommand
+            {
+                Id = Guid.Parse("c40e2ccf-5db4-433a-a63c-1bdcdb5533c9"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x06 },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 2,
+                ReceiceMaxBytesLength = 2,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadFanCurrent = new ProtocolCommand
+            {
+                Id = Guid.Parse("c16ae7dd-0c46-4364-9a51-6b06cf00d396"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x08 },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 5,
+                ReceiceMaxBytesLength = 5,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadInLampblack = new ProtocolCommand
+            {
+                Id = Guid.Parse("ef12e6e2-1305-4160-88fe-629474b9bbe6"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x0A },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 5,
+                ReceiceMaxBytesLength = 5,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadOutLampblack = new ProtocolCommand
+            {
+                Id = Guid.Parse("64183d55-9c5a-4036-8c01-3245a4c6330e"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x0C },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 5,
+                ReceiceMaxBytesLength = 5,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadAlarm = new ProtocolCommand
+            {
+                Id = Guid.Parse("7fb4417b-829e-45df-bf27-3a62446b59bb"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x0E },
+                SendBytesLength = 1,
+                ReceiveBytesLength = 3,
+                ReceiceMaxBytesLength = 3,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbReadDeviceStatus = new ProtocolCommand
+            {
+                Id = Guid.Parse("5797e815-cf6a-4fc0-b9c8-3eaf53422827"),
+                CommandTypeCode = new byte[] { 0xF3 },
+                CommandCode = new byte[] { 0x0E },
+                SendBytesLength = 0,
+                ReceiveBytesLength = 2,
+                ReceiceMaxBytesLength = 2,
+                CommandCategory = CommandCategory.DeviceControl,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>(),
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            var lbAutoReport = new ProtocolCommand
+            {
+                Id = Guid.Parse("320fc79d-ff52-4076-a121-e0c71fcff471"),
+                CommandTypeCode = new byte[] { 0xF4 },
+                CommandCode = new byte[] { 0x02 },
+                SendBytesLength = 0,
+                ReceiveBytesLength = 0,
+                ReceiceMaxBytesLength = 1024,
+                CommandCategory = CommandCategory.TimingAutoReport,
+                ProtocolId = lampblack.Id,
+                CommandDeliverParamConfigs = new List<SysConfig>() { commandReplyLampblack },
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
+            dbContext.ProtocolCommands.Add(lbHreatBeat);
+            dbContext.ProtocolCommands.Add(lbReadVersion);
+            dbContext.ProtocolCommands.Add(lbReadNode);
+            dbContext.ProtocolCommands.Add(lbReset);
+            dbContext.ProtocolCommands.Add(lbTimeAdjust);
+            dbContext.ProtocolCommands.Add(lbSetDescribe);
+            dbContext.ProtocolCommands.Add(lbReadDescribe);
+            dbContext.ProtocolCommands.Add(lbSetNodeId);
+            dbContext.ProtocolCommands.Add(lbReadNodeId);
+            dbContext.ProtocolCommands.Add(lbSetConnAddr);
+            dbContext.ProtocolCommands.Add(lbReadConnAddr);
+            dbContext.ProtocolCommands.Add(lbSetAutoReport);
+            dbContext.ProtocolCommands.Add(lbReadAutoReport);
+            dbContext.ProtocolCommands.Add(lbReadCleanerStatus);
+            dbContext.ProtocolCommands.Add(lbReadCleanerCurrent);
+            dbContext.ProtocolCommands.Add(lbReadFanStatus);
+            dbContext.ProtocolCommands.Add(lbReadFanCurrent);
+            dbContext.ProtocolCommands.Add(lbReadInLampblack);
+            dbContext.ProtocolCommands.Add(lbReadOutLampblack);
+            dbContext.ProtocolCommands.Add(lbReadAlarm);
+            dbContext.ProtocolCommands.Add(lbReadDeviceStatus);
+            dbContext.ProtocolCommands.Add(lbAutoReport);
+
+            var lmCommandA = new CommandData()
+            {
+                Id = Guid.Parse("15802959-d25b-42ad-be50-5b48dce4039a"),
+                DataIndex = 0,
+                DataLength = 1,
+                DataName = ProtocolDataName.CleanerSwitch,
+                DataConvertType = ProtocolDataType.ByteToBoolean,
+                DataValueType = DataValueType.Boolean,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandB = new CommandData()
+            {
+                Id = Guid.Parse("eee9ec55-7e84-4176-bb90-c13962352bc2"),
+                DataIndex = 0,
+                DataLength = 4,
+                DataName = ProtocolDataName.CleanerCurrent,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandC = new CommandData()
+            {
+                Id = Guid.Parse("adce87e7-aef2-4548-aa1e-fb435b72834f"),
+                DataIndex = 0,
+                DataLength = 1,
+                DataName = ProtocolDataName.FanSwitch,
+                DataConvertType = ProtocolDataType.ByteToBoolean,
+                DataValueType = DataValueType.Boolean,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandD = new CommandData()
+            {
+                Id = Guid.Parse("f15b955e-af42-44a5-a547-e1e2e7cdac1d"),
+                DataIndex = 0,
+                DataLength = 4,
+                DataName = ProtocolDataName.LampblackInCon,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandE = new CommandData()
+            {
+                Id = Guid.Parse("d0e478ae-836a-45eb-ba93-32fdf1cbee61"),
+                DataIndex = 0,
+                DataLength = 4,
+                DataName = ProtocolDataName.LampblackOutCon,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandF = new CommandData()
+            {
+                Id = Guid.Parse("01323f2c-70c9-4073-a58c-77f10c819f9c"),
+                DataIndex = 0,
+                DataLength = 4,
+                DataName = ProtocolDataName.FanCurrent,
+                DataConvertType = ProtocolDataType.FourBytesToUInt32,
+                DataValueType = DataValueType.Double,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandG = new CommandData()
+            {
+                Id = Guid.Parse("4b2d3a2e-6392-4503-bec2-f60f2457135c"),
+                DataIndex = 0,
+                DataLength = 2,
+                DataName = ProtocolDataName.LampblackException,
+                DataConvertType = ProtocolDataType.None,
+                DataValueType = DataValueType.Double,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            var lmCommandH = new CommandData()
+            {
+                Id = Guid.Parse("b80862b9-e70a-4d00-aaa7-abd27651566a"),
+                DataIndex = 0,
+                DataLength = 2,
+                DataName = ProtocolDataName.LampblackException,
+                DataConvertType = ProtocolDataType.None,
+                DataValueType = DataValueType.Double,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
+            lbAutoReport.CommandDatas.Add(lmCommandA);
+            lbAutoReport.CommandDatas.Add(lmCommandB);
+            lbAutoReport.CommandDatas.Add(lmCommandC);
+            lbAutoReport.CommandDatas.Add(lmCommandD);
+            lbAutoReport.CommandDatas.Add(lmCommandE);
+            lbAutoReport.CommandDatas.Add(lmCommandF);
+            lbAutoReport.CommandDatas.Add(lmCommandG);
+            lbAutoReport.CommandDatas.Add(lmCommandH);
 
             var userdomain = new Domain
             {

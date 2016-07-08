@@ -29,6 +29,11 @@ namespace SHWDTech.Platform.Model.IModel
         CommandData CommandData { get; set; }
 
         /// <summary>
+        /// 数据来源通道号
+        /// </summary>
+        ushort DataChannel { get; set; }
+
+        /// <summary>
         /// 来源工地ID
         /// </summary>
         Guid? ProjectId { get; set; }
@@ -41,12 +46,22 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 数据名称类型
         /// </summary>
-        string DataName { get; set; }
+        string DataName { get; }
 
         /// <summary>
-        /// 数据值
+        /// 浮点数据值
         /// </summary>
-        double MonitorDataValue { get; set; }
+        double? DoubleValue { get; set; }
+
+        /// <summary>
+        /// 布尔数据值
+        /// </summary>
+        bool? BooleanValue { get; set; }
+
+        /// <summary>
+        /// 整型数据值
+        /// </summary>
+        int? IntegerValue { get; set; }
 
         /// <summary>
         /// 数据上传时间

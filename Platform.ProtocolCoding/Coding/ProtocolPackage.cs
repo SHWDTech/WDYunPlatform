@@ -41,7 +41,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 var component = new PackageComponent()
                 {
                     ComponentName = commandData.DataName,
-                    DataType = commandData.DataType,
+                    DataType = commandData.DataConvertType,
                     ComponentIndex = commandData.DataIndex
                 };
 

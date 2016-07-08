@@ -14,5 +14,10 @@
         /// 存储数据
         /// </summary>
         public const string StoreData = "StoreData";
+
+        /// <summary>
+        /// 存储油烟数据
+        /// </summary>
+        public const string Lampblack = "Lampblack";
     }
 }

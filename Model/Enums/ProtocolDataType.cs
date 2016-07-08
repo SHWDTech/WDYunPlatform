@@ -117,5 +117,15 @@
         /// 保留数据段
         /// </summary>
         public const string Reserved = "Reserved";
+
+        /// <summary>
+        /// 单个字节存储的布尔值
+        /// </summary>
+        public const string ByteToBoolean = "ByteToBoolean";
+
+        /// <summary>
+        /// 无
+        /// </summary>
+        public const string None = "None";
     }
 }

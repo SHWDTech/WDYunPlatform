@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.Utility;
 // ReSharper disable UnusedMember.Local
@@ -47,7 +48,8 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="nodeIdBytes"></param>
         /// <returns></returns>
-        public static string NodeIdDecode(byte[] nodeIdBytes) => Globals.ByteArrayToHexString(nodeIdBytes, false).Trim();
+        public static string NodeIdDecode(byte[] nodeIdBytes) 
+            => Globals.ByteArrayToHexString(nodeIdBytes, false).Trim();
 
         /// <summary>
         /// 解码数据有效性验证位
@@ -133,6 +135,69 @@ namespace SHWDTech.Platform.ProtocolCoding
             intArray[1] = Globals.BytesToUint16(intsBytes, 2, false);
 
             return intArray;
+        }
+
+        /// <summary>
+        /// 解码存储在八个字节中的版本号信息
+        /// </summary>
+        /// <param name="versionBytes"></param>
+        /// <returns></returns>
+        public static string BytesToVersionNumber(byte[] versionBytes)
+            => $"Firm:{versionBytes[0]}.{versionBytes[1]}.{versionBytes[2]}.{versionBytes[3]}。" +
+               $"Software:{versionBytes[4]}.{versionBytes[5]}.{versionBytes[6]}.{versionBytes[7]}。";
+
+        /// <summary>
+        /// 解码存储在16个字节中的GUID
+        /// </summary>
+        /// <param name="guidBytes"></param>
+        /// <returns></returns>
+        public static Guid BytesToGuid(byte[] guidBytes)
+            => new Guid(guidBytes);
+
+        /// <summary>
+        /// 解码存储在8个字节中的时间
+        /// </summary>
+        /// <param name="dateBytes"></param>
+        /// <returns></returns>
+        public static string BytesToDateString(byte[] dateBytes)
+            => $"{2000 + dateBytes[0]}年{dateBytes[1]}月{dateBytes[2]}日{dateBytes[3]}时{dateBytes[4]}分{dateBytes[5]}秒";
+
+        /// <summary>
+        /// 解码存储在任意个字节中的GBK字符串
+        /// </summary>
+        /// <param name="gbkBytes"></param>
+        /// <returns></returns>
+        public static string BytesToGbkString(byte[] gbkBytes)
+            => Encoding.GetEncoding("GBK").GetString(gbkBytes);
+
+        /// <summary>
+        /// 家吗存储在8个字节里的扩展NODEID
+        /// </summary>
+        /// <param name="nodeIdBytes"></param>
+        /// <returns></returns>
+        public static string BytesToExtendNodeId(byte[] nodeIdBytes)
+            => $"ExtendNodeId:{Globals.ByteArrayToHexString(nodeIdBytes.SubBytes(0, 3), false).Trim()}。" +
+               $"NodeId:{Globals.ByteArrayToHexString(nodeIdBytes.SubBytes(4, 7), false).Trim()}。";
+
+        /// <summary>
+        /// 解码存储在四个字节里的浮点数
+        /// </summary>
+        /// <param name="doubleBytes"></param>
+        /// <returns></returns>
+        public static double FourBytesToDouble(byte[] doubleBytes)
+            => Globals.BytesToInt32(doubleBytes, 0, false) / 100.0;
+
+        /// <summary>
+        /// 解码存储在一个字节里的布尔值
+        /// </summary>
+        /// <param name="booleanByte"></param>
+        /// <returns></returns>
+        public static bool ByteToBoolean(byte booleanByte)
+            => booleanByte != 0;
+
+        public static byte[] BytesToAlarmFlag(byte[] flagBytes)
+        {
+            return null;
         }
     }
 }

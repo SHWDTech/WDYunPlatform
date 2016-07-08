@@ -20,5 +20,11 @@ namespace Platform.Process.IProcess
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T Repo<T>() where T : RepositoryBase, IRepository, new();
+
+        /// <summary>
+        /// 刷新DbContext
+        /// </summary>
+        /// <returns></returns>
+        void RenewDbContext();
     }
 }

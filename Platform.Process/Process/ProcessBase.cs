@@ -11,7 +11,7 @@ namespace Platform.Process.Process
     /// </summary>
     public class ProcessBase : IProcessBase
     {
-        public RepositoryDbContext DbContext { get; }
+        public RepositoryDbContext DbContext { get; private set; }
 
         public ProcessBase()
         {
@@ -39,5 +39,12 @@ namespace Platform.Process.Process
 
         protected int Commit()
             => DbContext.SaveChanges();
+
+        public void RenewDbContext()
+        {
+            DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
+                    ? new RepositoryDbContext()
+                    : new RepositoryDbContext(DbRepository.ConnectionString);
+        }
     }
 }

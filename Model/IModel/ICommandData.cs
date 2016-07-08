@@ -26,7 +26,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 数据类型
         /// </summary>
-        string DataType { get; set; }
+        string DataConvertType { get; set; }
 
         /// <summary>
         /// 所属指令

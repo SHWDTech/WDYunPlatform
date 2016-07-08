@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectDataInitializer", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlComponents", "SqlComponents\SqlComponents.csproj", "{A54688DC-6D07-4B0C-8778-51E2B7EAE03D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LampblackCommandCoding", "LampblackCommandCoding\LampblackCommandCoding.csproj", "{14641D52-2470-43CB-9BC1-99C601B35E5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,10 @@ Global
 		{A54688DC-6D07-4B0C-8778-51E2B7EAE03D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A54688DC-6D07-4B0C-8778-51E2B7EAE03D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A54688DC-6D07-4B0C-8778-51E2B7EAE03D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,5 +201,6 @@ Global
 		{E432923B-9C1E-46E9-B3CA-87550FFD4148} = {ADAD459B-F78F-4819-9B54-BDF3539F838F}
 		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10} = {61D7C901-3319-4349-9DEB-28DE889C7179}
 		{A54688DC-6D07-4B0C-8778-51E2B7EAE03D} = {ADAD459B-F78F-4819-9B54-BDF3539F838F}
+		{14641D52-2470-43CB-9BC1-99C601B35E5A} = {9A830392-AC75-4AF0-80C8-ABE30CF0649B}
 	EndGlobalSection
 EndGlobal

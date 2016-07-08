@@ -32,19 +32,28 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("CommandDataId")]
         public virtual CommandData CommandData { get; set; }
 
+        [Display(Name = "数据来源通道号")]
+        public virtual ushort DataChannel { get; set; } = 0;
+
         [Display(Name = "来源工地ID")]
-        public Guid? ProjectId { get; set; }
+        public virtual Guid? ProjectId { get; set; }
 
         [Display(Name = "来源工地")]
         [ForeignKey("ProjectId")]
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
+        [NotMapped]
         [Display(Name = "数据名称")]
-        public virtual string DataName { get; set; }
+        public virtual string DataName => CommandData.DataName;
 
-        [Required]
-        [Display(Name = "数据值")]
-        public virtual double MonitorDataValue { get; set; }
+        [Display(Name = "浮点数据值")]
+        public virtual double? DoubleValue { get; set; }
+
+        [Display(Name = "布尔数据值")]
+        public virtual bool? BooleanValue { get; set; }
+
+        [Display(Name = "整型数据值")]
+        public virtual int? IntegerValue { get; set; }
 
         [Required]
         [Display(Name = "数据上传时间")]

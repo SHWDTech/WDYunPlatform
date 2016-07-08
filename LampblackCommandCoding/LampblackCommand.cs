@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using SHWDTech.Platform.ProtocolCoding.Command;
+using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
-using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 
-namespace SHWDTech.Platform.ClassicCommandCoding
+namespace LampblackCommandCoding
 {
-    /// <summary>
-    /// 经典协议解析模块
-    /// </summary>
-    public class ClassicCommand : ICommandCoding
+    public class LampblackCommand : ICommandCoding
     {
         public void DecodeCommand(IProtocolPackage package)
         {
