@@ -20,7 +20,7 @@ namespace WdTech_Protocol_AdminTools
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Current.DispatcherUnhandledException += AppUnhandleExceptionHandler;
 
-            DbRepository.ConnectionName = "Wd_Cloud_Platfrom";
+            DbRepository.ConnectionName = "Lampblack_Platform";
 
             var serverUser = GeneralProcess.GetUserByLoginName(AppConfig.ServerAccount);
 

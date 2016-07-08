@@ -1,4 +1,7 @@
-﻿using Platform.Process.IProcess;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
@@ -42,9 +45,20 @@ namespace Platform.Process.Process
 
         public void RenewDbContext()
         {
+            if(HasUnsaedChanges()) throw new InvalidOperationException("数据库上下文存在未提交的操作！");
+
             DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
                     ? new RepositoryDbContext()
                     : new RepositoryDbContext(DbRepository.ConnectionString);
         }
+
+        /// <summary>
+        /// 当前数据上下文是否有未提交的操作
+        /// </summary>
+        /// <returns></returns>
+        private bool HasUnsaedChanges()
+            => DbContext.ChangeTracker.Entries().Any(obj => obj.State == EntityState.Added
+                                                         || obj.State == EntityState.Modified
+                                                         || obj.State == EntityState.Deleted);
     }
 }
