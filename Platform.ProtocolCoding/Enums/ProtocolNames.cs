@@ -9,5 +9,10 @@
         /// 经典协议
         /// </summary>
         public const string Classic = "Classic";
+
+        /// <summary>
+        /// 油烟协议
+        /// </summary>
+        public const string Lampblack = "Lampblack";
     }
 }

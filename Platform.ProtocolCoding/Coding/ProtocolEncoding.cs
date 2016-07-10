@@ -133,7 +133,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     return package;
                 }
 
-                var componentDataLength = structure.StructureDataLength;
+                var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
+                    ? Globals.BytesToInt32(package["DataLength"].ComponentBytes, 0, false)
+                    : structure.StructureDataLength;
 
                 if (structure.StructureName == StructureNames.Data)
                 {

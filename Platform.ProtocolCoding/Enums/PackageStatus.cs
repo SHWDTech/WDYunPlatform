@@ -16,7 +16,7 @@
         InvalidHead,
 
         /// <summary>
-        /// 没有足够的缓存
+        /// 缓存字节不足一个协议包
         /// </summary>
         NoEnoughBuffer,
 

@@ -20,6 +20,11 @@ namespace SHWDTech.Platform.ProtocolCoding
         #endregion
 
         /// <summary>
+        /// 获取当前系统所有协议
+        /// </summary>
+        public static List<Protocol> AllProtocols => ProtocolsCache.Select(obj => obj.Value).ToList();
+
+        /// <summary>
         /// 初始化协议信息
         /// </summary>
         public static void InitManager()
