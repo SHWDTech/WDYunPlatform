@@ -22,9 +22,9 @@ namespace SHWD.Platform.Repository.Repository
 
         }
 
-        public new static LampblackUser CreateDefaultModel()
+        public static LampblackUser CreateDefaultModel()
         {
-            var model = SysRepository<LampblackUser>.CreateDefaultModel();
+            var model = SysDomainRepository<LampblackUser>.CreateDefaultModel();
             model.Status = UserStatus.Enabled;
 
             return model;

@@ -75,6 +75,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public List<string> DeliverParams => Command.CommandDeliverParams;
 
+        public int DataComponentCount => _dataComponents.Count;
+
         /// <summary>
         /// 协议包组件字典
         /// </summary>

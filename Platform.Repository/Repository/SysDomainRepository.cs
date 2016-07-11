@@ -28,8 +28,8 @@ namespace SHWD.Platform.Repository.Repository
 
         public override void InitEntitySet()
         {
-            EntitySet = EntitySet?.Where(model => model.DomainId == CurrentDomain.Id);
             base.InitEntitySet();
+            EntitySet = EntitySet?.Where(model => model.DomainId == CurrentDomain.Id);
         }
 
         public override void AddOrUpdate(T model)
@@ -134,9 +134,9 @@ namespace SHWD.Platform.Repository.Repository
         /// 创建默认数据模型
         /// </summary>
         /// <returns></returns>
-        public new static T CreateDefaultModel()
+        public new static T CreateDefaultModel(bool generateId = true)
         {
-            var model = SysRepository<T>.CreateDefaultModel();
+            var model = SysRepository<T>.CreateDefaultModel(generateId);
             model.DomainId = CurrentDomain.Id;
 
             return model;

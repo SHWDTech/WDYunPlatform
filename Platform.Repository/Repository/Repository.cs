@@ -96,14 +96,19 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// 创建默认数据模型
         /// </summary>
+        /// <param name="generateId">是否生成ID</param>
         /// <returns></returns>
-        public static T CreateDefaultModel()
+        public static T CreateDefaultModel(bool generateId)
         {
             var model = new T
             {
-                Id = Globals.NewCombId(),
                 ModelState = ModelState.Added
             };
+
+            if (generateId)
+            {
+                model.Id = Globals.NewCombId();
+            }
 
             return model;
         }

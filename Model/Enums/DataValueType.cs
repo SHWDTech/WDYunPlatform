@@ -1,7 +1,7 @@
 ﻿namespace SHWDTech.Platform.Model.Enums
 {
     /// <summary>
-    /// 数据
+    /// 数据值类型
     /// </summary>
     public enum DataValueType : byte
     {

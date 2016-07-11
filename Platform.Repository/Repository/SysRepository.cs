@@ -29,9 +29,9 @@ namespace SHWD.Platform.Repository.Repository
         /// 创建默认数据模型
         /// </summary>
         /// <returns></returns>
-        public new static T CreateDefaultModel()
+        public new static T CreateDefaultModel(bool genereteId = true)
         {
-            var model = Repository<T>.CreateDefaultModel();
+            var model = Repository<T>.CreateDefaultModel(genereteId);
 
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;

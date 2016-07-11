@@ -22,7 +22,7 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
-        public new static WdRole CreateDefaultModel()
+        public static WdRole CreateDefaultModel()
         {
             var model = SysDomainRepository<WdRole>.CreateDefaultModel();
             model.Status = RoleStatus.Enabled;

@@ -20,7 +20,7 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
-        public new static ProtocolData CreateDefaultModel()
+        public static ProtocolData CreateDefaultModel()
         {
             var model = DataRepository<ProtocolData>.CreateDefaultModel();
 

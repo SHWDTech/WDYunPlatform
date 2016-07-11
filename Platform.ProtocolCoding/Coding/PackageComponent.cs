@@ -1,4 +1,6 @@
-﻿namespace SHWDTech.Platform.ProtocolCoding.Coding
+﻿using SHWDTech.Platform.Model.Enums;
+
+namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
     /// <summary>
     /// 协议结果组件
@@ -12,5 +14,9 @@
         public int ComponentIndex { get; set; }
 
         public byte[] ComponentBytes { get; set; }
+
+        public DataValueType DataValueType { get; set; }
+
+        public byte ValidFlag { get; set; }
     }
 }

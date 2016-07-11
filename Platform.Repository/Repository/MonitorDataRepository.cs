@@ -20,9 +20,9 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
-        public new static MonitorData CreateDefaultModel()
+        public static MonitorData CreateDefaultModel()
         {
-            var model = DataRepository<MonitorData>.CreateDefaultModel();
+            var model = CreateDefaultModel(false);
 
             model.Id = Guid.Empty;
 

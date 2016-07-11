@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Platform.Process;
 using Platform.Process.Process;
-using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
@@ -107,30 +106,37 @@ namespace SHWDTech.Platform.ProtocolCoding
             OnMonitorDataReceived();
         }
 
-        public static void Lampbalck(IProtocolPackage package, IPackageSource source)
+        public static void Lampblack(IProtocolPackage package, IPackageSource source)
         {
             var monitorDataList = new List<MonitorData>();
 
-            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            foreach (var commandData in package.Command.CommandDatas)
             {
+                if (package[commandData.DataName] == null || package[commandData.DataName].DataType == ProtocolDataType.None) continue;
+
+                var data = DataConvert.DecodeComponentData(package[commandData.DataName]);
+
                 var monitorData = MonitorDataRepository.CreateDefaultModel();
 
-                var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+                switch (commandData.DataValueType)
+                {
+                    case DataValueType.Double:
+                        monitorData.DoubleValue = Convert.ToDouble(data);
+                        break;
+                    case DataValueType.Integer:
+                        monitorData.IntegerValue = Convert.ToInt32(data);
+                        break;
+                    case DataValueType.Boolean:
+                        monitorData.BooleanValue = Convert.ToBoolean(data);
+                        break;
+                }
 
-                var temp = DataConvert.DecodeComponentData(package[commandData.DataName]);
-
-                monitorData.DoubleValue = Convert.ToDouble(temp);
                 monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
                 monitorData.ProjectId = package.Device.ProjectId;
 
                 monitorDataList.Add(monitorData);
-            }
-
-            if (package[ProtocolDataName.DataValidFlag] != null)
-            {
-                ProcessDataValidFlag(package, monitorDataList);
             }
 
             lock (TempMonitorDatas)

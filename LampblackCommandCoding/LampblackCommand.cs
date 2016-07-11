@@ -111,7 +111,11 @@ namespace SHWDTech.Platform.LampblackCommandCoding
 
             while (currentIndex < container.Length)
             {
-                var dataFlag = container[currentIndex + 1] & 0x7F; //0x7F = 0111 1111
+                var dataIndex = currentIndex + 2;
+
+                var flagIndex = currentIndex + 1;
+
+                var dataFlag = container[flagIndex] & 0x7F; //0x7F = 0111 1111
 
                 var data = package.Command.CommandDatas.First(obj => obj.DataFlag == dataFlag);
 
@@ -124,12 +128,14 @@ namespace SHWDTech.Platform.LampblackCommandCoding
                 var component = new PackageComponent
                 {
                     ComponentName = data.DataName,
+                    DataValueType = data.DataValueType,
                     DataType = data.DataConvertType,
                     ComponentIndex = data.DataIndex,
-                    ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength + 2)
+                    ValidFlag = container[flagIndex],
+                    ComponentBytes = container.SubBytes(dataIndex, dataIndex + data.DataLength)
                 };
 
-                currentIndex += data.DataLength + 2;
+                currentIndex = data.DataLength + dataIndex;
 
                 package.AppendData(component);
             }
