@@ -175,6 +175,10 @@
       <Project>{30c9f4eb-9bcf-4201-8c1d-9472b60f768b}</Project>
       <Name>ClassicCommandCoding</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LampblackCommandCoding\LampblackCommandCoding.csproj">
+      <Project>{14641d52-2470-43cb-9bc1-99c601b35e5a}</Project>
+      <Name>LampblackCommandCoding</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>

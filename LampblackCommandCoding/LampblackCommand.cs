@@ -1,42 +1,28 @@
-﻿using SHWDTech.Platform.ProtocolCoding.Command;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
+using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 
-namespace LampblackCommandCoding
+namespace SHWDTech.Platform.LampblackCommandCoding
 {
     public class LampblackCommand : ICommandCoding
     {
         public void DecodeCommand(IProtocolPackage package)
         {
-            var currentIndex = 0;
-
             var container = package[StructureNames.Data].ComponentBytes;
 
-            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            switch (package.Command.DataOrderType)
             {
-                var data = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
-
-                if (currentIndex + data.DataLength > container.Length)
-                {
-                    package.Status = PackageStatus.NoEnoughBuffer;
-                    return;
-                }
-
-                var component = new PackageComponent
-                {
-                    ComponentName = data.DataName,
-                    DataType = data.DataConvertType,
-                    ComponentIndex = data.DataIndex,
-                    ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength)
-                };
-
-                currentIndex += data.DataLength;
-
-                package.AppendData(component);
+                case DataOrderType.Order:
+                    DecodeOrderedData(package, container);
+                    break;
+                case DataOrderType.Random:
+                    DecodeRandomData(package, container);
+                    break;
             }
 
             package.Finalization();
@@ -78,6 +64,74 @@ namespace LampblackCommandCoding
             && (package[StructureNames.CmdByte].ComponentBytes.SequenceEqual(command.CommandCode))))
             {
                 package.Command = command;
+            }
+        }
+
+        /// <summary>
+        /// 解码固定顺序数据段
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="container"></param>
+        private void DecodeOrderedData(IProtocolPackage package, byte[] container)
+        {
+            var currentIndex = 0;
+
+            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            {
+                var data = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+
+                if (currentIndex + data.DataLength > container.Length)
+                {
+                    package.Status = PackageStatus.NoEnoughBuffer;
+                    return;
+                }
+
+                var component = new PackageComponent
+                {
+                    ComponentName = data.DataName,
+                    DataType = data.DataConvertType,
+                    ComponentIndex = data.DataIndex,
+                    ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength)
+                };
+
+                currentIndex += data.DataLength;
+
+                package.AppendData(component);
+            }
+        }
+
+        /// <summary>
+        /// 解码自由组合数据段
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="container"></param>
+        private void DecodeRandomData(IProtocolPackage package, byte[] container)
+        {
+            var currentIndex = 0;
+
+            while (currentIndex < container.Length)
+            {
+                var dataFlag = container[currentIndex + 1] & 0x7F; //0x7F = 0111 1111
+
+                var data = package.Command.CommandDatas.First(obj => obj.DataFlag == dataFlag);
+
+                if (currentIndex + data.DataLength > container.Length)
+                {
+                    package.Status = PackageStatus.NoEnoughBuffer;
+                    return;
+                }
+
+                var component = new PackageComponent
+                {
+                    ComponentName = data.DataName,
+                    DataType = data.DataConvertType,
+                    ComponentIndex = data.DataIndex,
+                    ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength + 2)
+                };
+
+                currentIndex += data.DataLength + 2;
+
+                package.AppendData(component);
             }
         }
     }

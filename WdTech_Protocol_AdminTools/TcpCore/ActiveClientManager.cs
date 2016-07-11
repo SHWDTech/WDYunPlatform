@@ -40,13 +40,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 客户端断开连接事件
         /// </summary>
         /// <param name="tcpClient">客户端连接</param>
-        private static void ClientDisconnected(TcpClientManager tcpClient)
+        private void ClientDisconnected(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
             CommunicationServices.AliveConnection -= 1;
         }
 
-        private static void ClientAuthenticationed(TcpClientManager tcpClient)
+        private void ClientAuthenticationed(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端授权通过，客户端设备NODEID：{tcpClient.ClientDevice.DeviceNodeId}");
         }

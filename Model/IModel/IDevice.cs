@@ -47,7 +47,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备唯一标识符
         /// </summary>
-        Guid DeviceModuleGuid { get; set; }
+        Guid? DeviceModuleGuid { get; set; }
 
         /// <summary>
         /// 设备NODE编码

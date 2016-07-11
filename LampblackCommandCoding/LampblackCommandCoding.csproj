@@ -7,8 +7,8 @@
     <ProjectGuid>{14641D52-2470-43CB-9BC1-99C601B35E5A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LampblackCommandCoding</RootNamespace>
-    <AssemblyName>LampblackCommandCoding</AssemblyName>
+    <RootNamespace>SHWDTech.Platform.LampblackCommandCoding</RootNamespace>
+    <AssemblyName>SHWDTech.Platform.LampblackCommandCoding</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

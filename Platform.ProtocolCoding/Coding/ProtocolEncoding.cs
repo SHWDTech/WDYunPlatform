@@ -115,7 +115,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <returns>协议解析结果</returns>
         public static IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
         {
-            var package = new ProtocolPackage() {Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now};
+            var package = new ProtocolPackage() { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
 
@@ -127,20 +127,21 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             {
                 var structure = structures.First(obj => obj.StructureIndex == i);
 
-                if (currentIndex + structure.StructureDataLength > bufferBytes.Length)
+                //协议中，数据段如果是自由组织的形式，那么数据库中设置数据段长度为零。解码时，按照协议中的DataLength段的值解码数据段。
+                var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
+                    ? Globals.BytesToInt16(package["DataLength"].ComponentBytes, 0, false)
+                    : structure.StructureDataLength;
+
+                if (currentIndex + componentDataLength > bufferBytes.Length)
                 {
                     package.Status = PackageStatus.NoEnoughBuffer;
                     return package;
                 }
 
-                var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
-                    ? Globals.BytesToInt32(package["DataLength"].ComponentBytes, 0, false)
-                    : structure.StructureDataLength;
-
                 if (structure.StructureName == StructureNames.Data)
                 {
                     commandCoder.DetectCommand(package, matchedProtocol);
-                    componentDataLength = package.Command.ReceiveBytesLength;
+                    componentDataLength = package.Command.ReceiveBytesLength == 0 ? componentDataLength : package.Command.ReceiveBytesLength;
                 }
 
                 var component = new PackageComponent

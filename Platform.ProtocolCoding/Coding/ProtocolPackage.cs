@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -160,7 +161,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 (_structureComponents.Count + 1 != Protocol.ProtocolStructures.Count)
                 || !ProtocolChecker.CheckProtocol(this)
                 || DataComponent == null
-                || DataComponent.ComponentBytes.Length != Command.ReceiveBytesLength
+                || (Command.DataOrderType == DataOrderType.Order  && DataComponent.ComponentBytes.Length != Command.ReceiveBytesLength)
                 )
             {
                 Status = PackageStatus.InvalidPackage;

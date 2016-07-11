@@ -40,9 +40,8 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "设备访问密码")]
         public virtual string DevicePassword { get; set; }
 
-        [Required]
         [Display(Name = "设备唯一标识符")]
-        public virtual Guid DeviceModuleGuid { get; set; }
+        public virtual Guid? DeviceModuleGuid { get; set; }
 
         [Display(Name = "设备NODE编码")]
         [MaxLength(16)]

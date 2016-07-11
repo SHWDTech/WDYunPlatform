@@ -17,5 +17,8 @@ namespace Platform.Process.Process
                 repo.BulkInsert(monitorDatas);
             }
         }
+
+        public void AddOrUpdateProtocolData(ProtocolData protocolData)
+            => Repo<ProtocolDataRepository>().AddOrUpdateDoCommit(protocolData);
     }
 }

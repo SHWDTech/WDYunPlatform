@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
@@ -27,6 +28,16 @@ namespace SHWDTech.Platform.Model.IModel
         /// 数据类型
         /// </summary>
         string DataConvertType { get; set; }
+
+        /// <summary>
+        /// 数据值类型
+        /// </summary>
+        DataValueType DataValueType { get; set; }
+
+        /// <summary>
+        /// 数据标识
+        /// </summary>
+        byte DataFlag { get; set; }
 
         /// <summary>
         /// 所属指令

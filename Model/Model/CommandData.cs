@@ -31,8 +31,11 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string DataConvertType { get; set; }
 
         [Required]
-        [Display(Name = "数据值执行")]
+        [Display(Name = "数据值类型")]
         public virtual DataValueType DataValueType { get; set;}
+
+        [Display(Name = "数据标识")]
+        public virtual byte DataFlag { get; set; }
 
         [Required]
         [Display(Name = "所属指令")]

@@ -40,6 +40,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private bool _processing;
 
         /// <summary>
+        /// 尝试解码失败次数
+        /// </summary>
+        private byte _decodeErrorTimes;
+
+        /// <summary>
         /// 客户端数据接收事件
         /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
@@ -185,6 +190,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     catch (Exception ex)
                     {
                         LogService.Instance.Warn("协议解码错误！", ex);
+                        _decodeErrorTimes++;
+                        if (_decodeErrorTimes == 5)
+                        {
+                            _processBuffer.RemoveAt(0);
+                            _decodeErrorTimes = 0;
+                        }
                     }
                 }
 
