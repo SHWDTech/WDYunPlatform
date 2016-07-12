@@ -13,7 +13,6 @@ namespace Lampblack_Platform.Controllers
     [AjaxGet]
     public class MonitorController : WdControllerBase
     {
-        [AjaxGet]
         public ActionResult Map() => DefaultView();
 
         [NamedAuth(Modules = "Map")]
@@ -43,6 +42,11 @@ namespace Lampblack_Platform.Controllers
             GetMapHotelRelatedItems();
 
             return View(model);
+        }
+
+        public ActionResult Actual()
+        {
+            return View();
         }
 
         private void GetMapHotelRelatedItems()

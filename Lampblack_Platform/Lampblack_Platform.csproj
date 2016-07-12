@@ -152,11 +152,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
+    <Compile Include="Controllers\QueryController.cs" />
+    <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="DataBase\RepositoryDataBaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -187,6 +190,9 @@
     <Content Include="Resources\Images\Site\congruent_pentagon.png" />
     <Content Include="Resources\Images\Site\foggy_birds.png" />
     <Content Include="Resources\Images\Site\food.png" />
+    <Content Include="Resources\Images\Site\marker_gray_sprite1.png" />
+    <Content Include="Resources\Images\Site\marker_red.png" />
+    <Content Include="Resources\Images\Site\marker_red_sprite2.png" />
     <Content Include="Resources\Images\Site\old_map.png" />
     <Content Include="Resources\Images\Site\paven.png" />
     <Content Include="Resources\Images\Site\retina_wood.png" />
@@ -196,6 +202,7 @@
     <Content Include="Resources\Images\Site\wood_pattern.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\Common\Const.js" />
     <Content Include="Scripts\Common\MapManipulation.js" />
     <Content Include="Scripts\Component\SlideUp.js" />
     <Content Include="Scripts\Page\Authority.js" />
@@ -384,6 +391,21 @@
     <Content Include="Views\Monitor\MapHotel.cshtml" />
     <Content Include="Views\Account\SetUp.cshtml" />
     <Content Include="Views\Shared\_SiteMap.cshtml" />
+    <Content Include="Views\Monitor\Actual.cshtml" />
+    <Content Include="Views\Summary\GeneralSummary.cshtml" />
+    <Content Include="Views\Management\DeviceMaintenance.cshtml" />
+    <Content Include="Views\Analysis\ExceptionData.cshtml" />
+    <Content Include="Views\Analysis\RunningStatus.cshtml" />
+    <Content Include="Views\Analysis\GeneralReport.cshtml" />
+    <Content Include="Views\Analysis\GeneralComparison.cshtml" />
+    <Content Include="Views\Analysis\TrendAnalysis.cshtml" />
+    <Content Include="Views\Analysis\CleanlinessStatistics.cshtml" />
+    <Content Include="Views\Query\CleanRate.cshtml" />
+    <Content Include="Views\Query\LinkageRate.cshtml" />
+    <Content Include="Views\Query\RemovalRate.cshtml" />
+    <Content Include="Views\Query\Alarm.cshtml" />
+    <Content Include="Views\Query\HistoryData.cshtml" />
+    <Content Include="Views\Query\RunningTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

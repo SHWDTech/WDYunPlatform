@@ -292,6 +292,11 @@ namespace Lampblack_Platform.Controllers
                 new { targetAction = "EditDevice", targetcontroller = "Management", target = "slide-up-content", postform = "device" });
         }
 
+        public ActionResult DeviceMaintenance()
+        {
+            return View();
+        }
+
         private void GetHotelRelatedItems()
         {
             ViewBag.CateringCompany = ProcessInvoke.GetInstance<CateringEnterpriseProcess>()

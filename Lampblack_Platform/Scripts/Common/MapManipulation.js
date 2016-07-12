@@ -17,16 +17,16 @@ function map_init(func) {
     }
 };
 
-var add_MapPoint = function (point, polluteType, extroInfo) {
+var add_MapPoint = function (point, status, extroInfo) {
     var iconAddr = '';
-    switch (polluteType) {
-        case PolluteStatus.NotOverRange:
+    switch (status) {
+        case LampblackStatus.dirty:
             iconAddr = '/Images/Site/marker_red_sprite2.png';
             break;
-        case PolluteStatus.OverRange:
+        case LampblackStatus.clean:
             iconAddr = '/Images/Site/marker_red.png';
             break;
-        case PolluteStatus.NoData:
+        case LampblackStatus.unknow:
             iconAddr = '/Images/Site/marker_gray_sprite1.png';
             break;
     }

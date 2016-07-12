@@ -2135,7 +2135,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 ParentModuleId = menu3.Id,
                 ModuleName = "异常数据统计",
                 Controller = "Analysis",
-                Action = "ExcetionData",
+                Action = "ExceptionData",
                 ModuleLevel = 2,
                 ModuleIndex = 2008,
                 IsMenu = true,
