@@ -49,6 +49,7 @@
                 <td>@Html.LabelFor(m => m.RegisterDateTime)</td>
                 <td>
                     @Html.TextBoxFor(m => m.RegisterDateTime, new {@class = "form-control", placeholder = "请输入注册时间"})
+                    @Html.ValidationMessageFor(m => m.RegisterDateTime, null, new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>

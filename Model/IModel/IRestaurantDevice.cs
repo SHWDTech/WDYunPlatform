@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 出厂日期
         /// </summary>
-        DateTime ProductionDateTime { get; set; }
+        DateTime? ProductionDateTime { get; set; }
 
         /// <summary>
         /// 联系电话

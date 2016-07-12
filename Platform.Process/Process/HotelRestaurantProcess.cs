@@ -81,5 +81,14 @@ namespace Platform.Process.Process
                 return repo.DeleteDoCommit(item);
             }
         }
+
+        public Dictionary<string, string> GetHotelRestaurantSelectList()
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                return repo.GetAllModels()
+                    .ToDictionary(key => key.ProjectName, value => value.Id.ToString());
+            }
+        }
     }
 }

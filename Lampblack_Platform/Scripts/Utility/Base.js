@@ -127,6 +127,11 @@ function resetValidation() {
 }
 
 function ajaxFailure(ret) {
+    if (ret.status === 404) {
+        Msg("未找到您选择的页面，请重试", { title: '提示！' });
+        return;
+    }
+
     var res = ret.responseJSON;
     if (!IsNullOrEmpty(res.Message)) {
         var message = res.Message;

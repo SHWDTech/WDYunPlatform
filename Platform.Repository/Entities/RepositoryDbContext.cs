@@ -201,7 +201,7 @@ namespace SHWD.Platform.Repository.Entities
                        p.AddressId,
                        p.Status,
                        p.OpeningDateTime,
-                       p.StopDateTIme,
+                       p.StopDateTime,
                        p.CookStoveNumber,
                        p.AddressDetail
                    });

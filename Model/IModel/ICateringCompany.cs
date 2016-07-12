@@ -40,6 +40,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 注册时间
         /// </summary>
-        DateTime RegisterDateTime { get; set; }
+        DateTime? RegisterDateTime { get; set; }
     }
 }

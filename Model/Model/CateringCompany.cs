@@ -37,7 +37,8 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "详细地址")]
         public virtual string Address { get; set; }
 
+        [Required]
         [Display(Name = "注册时间")]
-        public virtual DateTime RegisterDateTime { get; set; }
+        public virtual DateTime? RegisterDateTime { get; set; }
     }
 }

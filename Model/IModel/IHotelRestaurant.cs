@@ -17,7 +17,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 注册时间
         /// </summary>
-        DateTime RegisterDateTime { get; set; }
+        DateTime? RegisterDateTime { get; set; }
 
         /// <summary>
         /// 电子邮件地址
@@ -62,12 +62,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 营业开始时间
         /// </summary>
-        DateTime OpeningDateTime { get; set; }
+        DateTime? OpeningDateTime { get; set; }
 
         /// <summary>
         /// 营业截止时间
         /// </summary>
-        DateTime StopDateTIme { get; set; }
+        DateTime? StopDateTime { get; set; }
 
         /// <summary>
         /// 灶头数

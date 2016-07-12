@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 
@@ -18,7 +19,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "出厂日期")]
         [Required]
-        public virtual DateTime ProductionDateTime { get; set; }
+        public virtual DateTime? ProductionDateTime { get; set; }
 
         [Display(Name = "联系电话")]
         [Required]
@@ -96,5 +97,12 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "IP地址")]
         public virtual string IpAddress { get; set; }
+
+        [Display(Name = "设备所属酒店")]
+        public override Guid? ProjectId { get; set; }
+
+        [Display(Name = "设备所属酒店")]
+        [ForeignKey("ProjectId")]
+        public override Project Project { get; set; }
     }
 }

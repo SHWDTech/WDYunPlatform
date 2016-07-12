@@ -65,7 +65,10 @@
                                         <td>@company.Telephone</td>
                                         <td>@company.Email</td>
                                         <td>@company.Address</td>
-                                        <td>@company.RegisterDateTime.ToString("yyyy-MM-dd")</td>
+                                        @{
+                                            var registerDate = company.RegisterDateTime?.ToString("yyyy-MM-dd") ?? "";
+                                        }
+                                        <td>@registerDate</td>
                                         <td>
                                             @Ajax.ActionLink("编辑", "EditCateringEnterprise", new {guid = company.Id},
                                                 new AjaxOptions()

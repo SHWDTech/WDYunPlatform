@@ -17,4 +17,9 @@
             $(this)[0].actived = true;
         }
     });
+
+    $('.sub-menu-item').on('click', function() {
+        $('.sub-menu-item').removeClass('active');
+        $(this).addClass('active');
+    });
 });

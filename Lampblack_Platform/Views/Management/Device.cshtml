@@ -72,14 +72,15 @@
                                     foreach (var device in Model.RestaurantDevices)
                                     {
                                         <tr data-company-id="@device.Id">
+                                            @{
+                                                var status = EnumHelper<DeviceStatus>.GetDisplayValue(device.Status);
+                                                var productionDate = device.ProductionDateTime?.ToString("yyyy-MM-dd") ?? "";
+                                            }
                                             <td>@device.DeviceTerminalCode</td>
                                             <td>@device.DeviceName</td>
                                             <td>@device.DeviceCode</td>
                                             <td>@device.Telephone</td>
-                                            <td>@device.ProductionDateTime</td>
-                                            @{
-                                                var status = EnumHelper<DeviceStatus>.GetDisplayValue(device.Status);
-                                            }
+                                            <td>@productionDate</td>
                                             <td>@status</td>
                                             <td>@device.CreateDateTime</td>
                                             <td>@device.Photo</td>
@@ -87,19 +88,19 @@
                                             <td>@device.CollectFrequency</td>
                                             <td>@device.Comment</td>
                                             <td>
-                                                @Ajax.ActionLink("编辑", "EditHotel", new { guid = device.Id },
-                                                new AjaxOptions()
-                                                {
-                                                    HttpMethod = "GET",
-                                                    OnSuccess = "slideUp.show",
-                                                    UpdateTargetId = "slide-up-content"
-                                                })
-                                                @Ajax.ActionLink("删除", "DeleteHotel", new { guid = device.Id },
-                                                new AjaxOptions()
-                                                {
-                                                    HttpMethod = "GET",
-                                                    Confirm = "确定删除吗？"
-                                                }.GeneralOptions())
+                                                @Ajax.ActionLink("编辑", "EditHotel", new {guid = device.Id},
+                                                    new AjaxOptions()
+                                                    {
+                                                        HttpMethod = "GET",
+                                                        OnSuccess = "slideUp.show",
+                                                        UpdateTargetId = "slide-up-content"
+                                                    })
+                                                @Ajax.ActionLink("删除", "DeleteHotel", new {guid = device.Id},
+                                                    new AjaxOptions()
+                                                    {
+                                                        HttpMethod = "GET",
+                                                        Confirm = "确定删除吗？"
+                                                    }.GeneralOptions())
                                             </td>
                                         </tr>
                                                 }

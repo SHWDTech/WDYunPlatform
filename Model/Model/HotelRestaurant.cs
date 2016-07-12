@@ -25,13 +25,17 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "所属餐饮企业")]
         public virtual Guid RaletedCompanyId {get; set; }
 
+        /// <summary>
+        /// 饭店（酒店）名称
+        /// </summary>
         [Required]
         [MaxLength(200)]
         [Display(Name = "饭店（酒店）名称")]
         public override string ProjectName { get; set; }
 
+        [Required]
         [Display(Name = "注册时间")]
-        public virtual DateTime RegisterDateTime { get; set; }
+        public virtual DateTime? RegisterDateTime { get; set; }
 
         [Display(Name = "电子邮件")]
         [DataType(DataType.EmailAddress)]
@@ -65,10 +69,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual HotelRestaurantStatus Status { get; set; }
 
         [Display(Name = "营业开始时间")]
-        public virtual DateTime OpeningDateTime { get; set; }
+        public virtual DateTime? OpeningDateTime { get; set; }
 
         [Display(Name = "营业截止时间")]
-        public virtual DateTime StopDateTIme { get; set; }
+        public virtual DateTime? StopDateTime { get; set; }
 
         [Display(Name = "灶头数")]
         public virtual int CookStoveNumber { get; set; }

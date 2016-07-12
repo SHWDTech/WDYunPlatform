@@ -39,6 +39,7 @@
                 <td>@Html.LabelFor(m => m.ProductionDateTime)</td>
                 <td>
                     @Html.TextBoxFor(m => m.ProductionDateTime, new { @class = "form-control", placeholder = "请输入出厂日期" })
+                    @Html.ValidationMessageFor(m => m.ProductionDateTime, null, new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>
@@ -162,13 +163,15 @@
                 <td>
                     @Html.TextBoxFor(m => m.FanMinCurrent, new { @class = "form-control", placeholder = "风机最小电流" })
                 </td>
-                <td></td>
-                <td></td>
+                <td>@Html.LabelFor(m => m.Project)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.ProjectId, (List<SelectListItem>)ViewBag.Hotel, new { @class = "form-control" })
+                </td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Comment)</td>
                 <td colspan="3">
-                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "请输入备注" })
+                    @Html.TextAreaFor(m => m.Comment, new {@class = "form-control", placeholder = "请输入备注"})
                 </td>
             </tr>
             <tr class="text-center">

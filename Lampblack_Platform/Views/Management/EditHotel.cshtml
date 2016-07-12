@@ -39,6 +39,7 @@
                 <td>@Html.LabelFor(m => m.RegisterDateTime)</td>
                 <td>
                     @Html.TextBoxFor(m => m.RegisterDateTime, new { @class = "form-control", placeholder = "请输入注册时间" })
+                    @Html.ValidationMessageFor(m => m.RegisterDateTime, null, new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>
@@ -102,10 +103,10 @@
                     @Html.TextBoxFor(m => m.OpeningDateTime, "{0:HH:mm}", new {@class = "form-control", placeholder = "请输入营业开始时间"})
                 </td>
                 <td>
-                    @Html.LabelFor(m => m.StopDateTIme)
+                    @Html.LabelFor(m => m.StopDateTime)
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.StopDateTIme, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入营业截止时间"})
+                    @Html.TextBoxFor(m => m.StopDateTime, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入营业截止时间"})
                 </td>
             </tr>
             <tr>

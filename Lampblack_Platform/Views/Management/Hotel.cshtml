@@ -76,12 +76,17 @@
                                             <td>@hotel.Address.ItemValue</td>
                                             <td>@hotel.ChargeMan</td>
                                             <td>@hotel.Telephone</td>
-                                            <td>[@hotel.OpeningDateTime.ToString("hh:mm")---@hotel.StopDateTIme.ToString("HH:mm")]</td>
+                                            @{
+                                                var openDate = hotel.OpeningDateTime?.ToString("hh:mm") ?? "";
+                                                var stopDate = hotel.StopDateTime?.ToString("HH:mm") ?? "";
+                                                var registerDate = hotel.RegisterDateTime?.ToString("yyyy-MM-dd") ?? "<->";
+                                            }
+                                            <td>[@openDate --- @stopDate]</td>
                                             @{
                                                 var status = EnumHelper<HotelRestaurantStatus>.GetDisplayValue(hotel.Status);
                                             }
                                             <td>@status</td>
-                                            <td>@hotel.RegisterDateTime.ToString("yyyy-MM-dd")</td>
+                                            <td>@registerDate</td>
                                             <td>
                                                 @Ajax.ActionLink("编辑", "EditHotel", new { guid = hotel.Id },
                                                 new AjaxOptions()

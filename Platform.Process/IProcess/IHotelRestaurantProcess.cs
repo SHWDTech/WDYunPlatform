@@ -41,5 +41,11 @@ namespace Platform.Process.IProcess
         /// <param name="componyId"></param>
         /// <returns></returns>
         bool DeleteHotelRestaurant(Guid componyId);
+
+        /// <summary>
+        /// 获取酒店下拉菜单列表
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, string> GetHotelRestaurantSelectList();
     }
 }

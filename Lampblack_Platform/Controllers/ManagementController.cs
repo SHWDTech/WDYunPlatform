@@ -332,6 +332,11 @@ namespace Lampblack_Platform.Controllers
                 new SelectListItem() {Text = "负离子", Value = "2"},
                 new SelectListItem() {Text = "光电式", Value = "3"}
             };
+
+            ViewBag.Hotel = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+                .GetHotelRestaurantSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .ToList();
         }
     }
 }

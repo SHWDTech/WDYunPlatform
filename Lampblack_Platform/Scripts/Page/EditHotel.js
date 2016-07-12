@@ -9,7 +9,7 @@
         format: 'HH:mm'
     });
 
-    $('#StopDateTIme').datetimepicker({
+    $('#StopDateTime').datetimepicker({
         locale: 'zh-cn',
         format: 'HH:mm'
     });
