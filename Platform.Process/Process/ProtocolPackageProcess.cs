@@ -20,5 +20,8 @@ namespace Platform.Process.Process
 
         public void AddOrUpdateProtocolData(ProtocolData protocolData)
             => Repo<ProtocolDataRepository>().AddOrUpdateDoCommit(protocolData);
+
+        public void AddOrUpdateAlarm(List<Alarm> alarmList)
+            => Repo<AlarmRepository>().AddOrUpdateDoCommit(alarmList);
     }
 }

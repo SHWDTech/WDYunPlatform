@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\AlarmType.cs" />
     <Compile Include="Enums\CameraStatus.cs" />
     <Compile Include="Enums\ClearnerType.cs" />
     <Compile Include="Enums\CommandCategory.cs" />

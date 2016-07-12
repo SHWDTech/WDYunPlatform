@@ -741,6 +741,18 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
+            var lampblackAlarm = new SysConfig()
+            {
+                Id = Guid.Parse("a6f21730-45c7-49d5-8757-b36e972a7b5c"),
+                SysConfigName = ProtocolDeliveryParam.LampblackAlram,
+                SysConfigType = SysConfigType.ProtocolDeliveryParam,
+                SysConfigValue = ProtocolDeliveryParam.LampblackAlram,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id
+            };
+
             var messageSource = new SysConfig
             {
                 Id = Guid.Parse("34EDC4EC-F046-418E-A9DC-9EA3EA284F84"),
@@ -757,6 +769,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.SysConfigs.Add(commandReplyA);
             dbContext.SysConfigs.Add(messageSource);
             dbContext.SysConfigs.Add(commandReplyLampblack);
+            dbContext.SysConfigs.Add(lampblackAlarm);
 
             var commandDataA = new CommandData()
             {
@@ -1524,7 +1537,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCategory = CommandCategory.TimingAutoReport,
                 ProtocolId = lampblackProtocol.Id,
                 DataOrderType = DataOrderType.Random,
-                CommandDeliverParamConfigs = new List<SysConfig>() { commandReplyLampblack },
+                CommandDeliverParamConfigs = new List<SysConfig>() { commandReplyLampblack, lampblackAlarm },
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
@@ -1651,8 +1664,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.LampblackException,
-                DataConvertType = ProtocolDataType.None,
-                DataValueType = DataValueType.Double,
+                DataConvertType = ProtocolDataType.TwoBytesToUShort,
+                DataValueType = DataValueType.Integer,
                 CreateDateTime = DateTime.Now,
                 DataFlag = 0x07,
                 CreateUserId = user.Id,
@@ -1666,8 +1679,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.DeviceStatus,
-                DataConvertType = ProtocolDataType.None,
-                DataValueType = DataValueType.Double,
+                DataConvertType = ProtocolDataType.TwoBytesToUShort,
+                DataValueType = DataValueType.Integer,
                 DataFlag = 0x08,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,

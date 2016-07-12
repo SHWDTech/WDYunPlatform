@@ -1,5 +1,6 @@
 ﻿using SHWDTech.Platform.Model.Model;
 using System;
+using SHWDTech.Platform.Model.Enums;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -24,14 +25,14 @@ namespace SHWDTech.Platform.Model.IModel
         double AlarmValue { get; set; }
 
         /// <summary>
-        /// 报警类别ID
+        /// 报警类型
         /// </summary>
-        Guid AlarmTypeId { get; set; }
+        AlarmType AlarmType { get; set; }
 
         /// <summary>
-        /// 报警类别
+        /// 报警码
         /// </summary>
-        SysDictionary AlarmType { get; set; }
+        int AlarmCode { get; set; }
 
         /// <summary>
         /// 数据更新时间

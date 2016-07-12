@@ -8,6 +8,7 @@ using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
+using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
@@ -135,6 +136,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
                 monitorData.ProjectId = package.Device.ProjectId;
+                monitorData.DataIsValid = (package[commandData.DataName].ValidFlag & 0x80) == 0;
 
                 monitorDataList.Add(monitorData);
             }
@@ -145,6 +147,41 @@ namespace SHWDTech.Platform.ProtocolCoding
             }
 
             OnMonitorDataReceived();
+        }
+
+        /// <summary>
+        /// 油烟系统报警信息处理
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="source"></param>
+        public static void LampblackAlarm(IProtocolPackage package, IPackageSource source)
+        {
+            var exception = package[ProtocolDataName.LampblackException];
+
+            if (exception == null) return;
+
+            var alarmList = new List<Alarm>();
+
+            var flag = Globals.BytesToUint16(exception.ComponentBytes, 0, false);
+            for (var i = 0; i < 8; i++)
+            {
+                var error = (1 << i);
+
+                if ((flag & error) != 0)
+                {
+                    var record = AlarmRepository.CreateDefaultModel();
+                    record.AlarmType = AlarmType.Lampblack;
+                    record.AlarmCode = error;
+                    record.AlarmDeviceId = package.Device.Id;
+                    record.UpdateTime = package.ReceiveDateTime;
+                    alarmList.Add(record);
+                }
+            }
+
+            if (alarmList.Count > 0)
+            {
+                ProcessInvoke.GetInstance<ProtocolPackageProcess>().AddOrUpdateAlarm(alarmList);
+            }
         }
 
         /// <summary>

@@ -19,5 +19,11 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <param name="protocolData"></param>
         void AddOrUpdateProtocolData(ProtocolData protocolData);
+
+        /// <summary>
+        /// 更新报警数据
+        /// </summary>
+        /// <param name="alarmList"></param>
+        void AddOrUpdateAlarm(List<Alarm> alarmList);
     }
 }

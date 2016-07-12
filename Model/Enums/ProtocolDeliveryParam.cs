@@ -19,5 +19,10 @@
         /// 存储油烟数据
         /// </summary>
         public const string Lampblack = "Lampblack";
+
+        /// <summary>
+        /// 油烟系统报警
+        /// </summary>
+        public const string LampblackAlram = "LampblackAlarm";
     }
 }

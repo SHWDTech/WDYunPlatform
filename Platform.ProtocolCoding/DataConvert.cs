@@ -142,7 +142,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="versionBytes"></param>
         /// <returns></returns>
-        public static string BytesToVersionNumber(byte[] versionBytes)
+        public static string BytesToVersionNumberDecode(byte[] versionBytes)
             => $"Firm:{versionBytes[0]}.{versionBytes[1]}.{versionBytes[2]}.{versionBytes[3]}。" +
                $"Software:{versionBytes[4]}.{versionBytes[5]}.{versionBytes[6]}.{versionBytes[7]}。";
 
@@ -151,7 +151,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="guidBytes"></param>
         /// <returns></returns>
-        public static Guid BytesToGuid(byte[] guidBytes)
+        public static Guid BytesToGuidDecode(byte[] guidBytes)
             => new Guid(guidBytes);
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="dateBytes"></param>
         /// <returns></returns>
-        public static string BytesToDateString(byte[] dateBytes)
+        public static string BytesToDateStringDecode(byte[] dateBytes)
             => $"{2000 + dateBytes[0]}年{dateBytes[1]}月{dateBytes[2]}日{dateBytes[3]}时{dateBytes[4]}分{dateBytes[5]}秒";
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="gbkBytes"></param>
         /// <returns></returns>
-        public static string BytesToGbkString(byte[] gbkBytes)
+        public static string BytesToGbkStringDecode(byte[] gbkBytes)
             => Encoding.GetEncoding("GBK").GetString(gbkBytes);
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="nodeIdBytes"></param>
         /// <returns></returns>
-        public static string BytesToExtendNodeId(byte[] nodeIdBytes)
+        public static string BytesToExtendNodeIdDecode(byte[] nodeIdBytes)
             => $"ExtendNodeId:{Globals.ByteArrayToHexString(nodeIdBytes.SubBytes(0, 3), false).Trim()}。" +
                $"NodeId:{Globals.ByteArrayToHexString(nodeIdBytes.SubBytes(4, 7), false).Trim()}。";
 
@@ -184,18 +184,18 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="doubleBytes"></param>
         /// <returns></returns>
-        public static double FourBytesToDouble(byte[] doubleBytes)
+        public static double FourBytesToDoubleDecode(byte[] doubleBytes)
             => Globals.BytesToInt32(doubleBytes, 0, false) / 100.0;
 
         /// <summary>
         /// 解码存储在一个字节里的布尔值
         /// </summary>
-        /// <param name="booleanByte"></param>
+        /// <param name="booleanBytes"></param>
         /// <returns></returns>
-        public static bool ByteToBoolean(byte booleanByte)
-            => booleanByte != 0;
+        public static bool ByteToBooleanDecode(byte[] booleanBytes)
+            => booleanBytes[0] != 0;
 
-        public static byte[] BytesToAlarmFlag(byte[] flagBytes)
+        public static byte[] BytesToAlarmFlagDecode(byte[] flagBytes)
         {
             return null;
         }
