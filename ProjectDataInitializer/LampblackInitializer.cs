@@ -2152,7 +2152,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             {
                 Id = Guid.Parse("a4a36255-1b22-4068-850c-2bb16c574fc8"),
                 DomainId = userdomain.Id,
-                PermissionName = "RuningStatus",
+                PermissionName = "RunningStatus",
                 PermissionDisplayName = "运行状态统计",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,
