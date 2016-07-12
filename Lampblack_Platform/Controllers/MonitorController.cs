@@ -21,15 +21,14 @@ namespace Lampblack_Platform.Controllers
         {
             var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
 
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 15 : int.Parse(Request["pageSize"]);
 
             var queryName = Request["queryName"];
 
             int count;
 
             var hotelList = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
-                .GetPagedHotelRestaurant(page, pageSize, queryName, out count)
-                .ToDictionary(obj => obj.Id, item => item.ProjectName);
+                .GetPagedHotelRestaurant(page, pageSize, queryName, out count);
 
             var model = new MapHotelViewModel
             {

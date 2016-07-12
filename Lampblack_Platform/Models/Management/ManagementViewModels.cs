@@ -23,7 +23,7 @@ namespace Lampblack_Platform.Models.Management
         /// <summary>
         /// 酒店（饭店）列表
         /// </summary>
-        public IPagedList<HotelRestaurant> HtoHotelRestaurants { get; set; }
+        public IPagedList<HotelRestaurant> HotelRestaurants { get; set; }
     }
 
     /// <summary>

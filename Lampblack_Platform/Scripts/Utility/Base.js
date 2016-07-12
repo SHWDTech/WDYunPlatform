@@ -105,12 +105,12 @@ var Msg = function (msg, option) {
 
     if (!IsNullOrEmpty(option.callback)) {
         $('#modal-confirm').off();
-        $('#modal-confirm').on('click', function() {
-             option.callback(option.param);
+        $('#modal-confirm').on('click', function () {
+            option.callback(option.param);
         });
     }
 
-    setTimeout(function() {$('#modal-cancel').focus()}, 200);
+    setTimeout(function () { $('#modal-cancel').focus() }, 200);
 };
 
 function resetValidation() {
@@ -118,7 +118,7 @@ function resetValidation() {
     $('.input-validation-error').addClass('input-validation-valid');
     $('.input-validation-error').removeClass('input-validation-error');
     //Removes validation message after input-fields
-    $('.field-validation-error').each(function() {this.innerHTML = ""});
+    $('.field-validation-error').each(function () { this.innerHTML = "" });
     $('.field-validation-error').addClass('field-validation-valid');
     $('.field-validation-error').removeClass('field-validation-error');
     //Removes validation summary 
@@ -127,9 +127,13 @@ function resetValidation() {
 }
 
 function ajaxFailure(ret) {
-    if (ret.status === 404) {
-        Msg("未找到您选择的页面，请重试", { title: '提示！' });
-        return;
+    switch (ret.status) {
+        case 404:
+            Msg("未找到您选择的页面，请重试！", { title: '提示！' });
+            return;
+        case 0:
+            Msg("请求错误，请检查网络连接！", { title: '提示！'});
+            return;
     }
 
     var res = ret.responseJSON;

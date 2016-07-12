@@ -1,5 +1,6 @@
 ﻿@using MvcWebComponents.Extensions
 @using Lampblack_Platform.Models.Monitor
+@using PagedList.Mvc
 @model MapHotelViewModel
 
 @{
@@ -15,7 +16,7 @@
 {
     <div class="panel-body" style="background-color: #33CEC3 ;">
         <div class="horizontal-group">
-            @Html.LabelFor(m => m.AreaGuid, new { @class = "lbl60 lbl-white"})
+            @Html.LabelFor(m => m.AreaGuid, new { @class = "lbl60 lbl-white" })
             @Html.DropDownListFor(m => m.AreaGuid, (List<SelectListItem>)ViewBag.AreaListItems, null, new { @class = "form-control" })
         </div>
         <div class="horizontal-group">
@@ -26,31 +27,46 @@
         </div>
         <div class="horizontal-group">
             <label class="lbl60 lbl-white">酒店：</label>
-            <input type="text" class="form-control" style="margin-right: 5px;" placeholder="输入酒店名称" name="queryName"/>
+            <input type="text" class="form-control" style="margin-right: 5px;" placeholder="输入酒店名称" name="queryName" />
             <input type="submit" class="form-control btn btn-main" value="查询" style="width: 50px;" />
         </div>
     </div>
-        <div class="panel-body">
-            <table class="table table-bordered table-hover info text-center">
-                <thead>
-                    <tr>
-                        <td class="text-center table-head">
-                            饭店列表
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var hotel in Model.Hotels)
-                        {
-                            <tr>
-                                <td id="@hotel.Key">@hotel.Value</td>
-                            </tr>
-                        }
+    <div class="panel-body">
+        <table class="table table-bordered table-hover info text-center">
+            <thead>
+                <tr>
+                    <td class="text-center table-head">
+                        饭店列表
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var hotel in Model.Hotels)
+                    {
+                        <tr>
+                            <td id="@hotel.Id">@hotel.ProjectName</td>
+                        </tr>
                     }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel panel-body" style="margin-top: -30px;">
+        <div style="float: right;">
+            @{
+                var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "searchTable",
+                    InsertionMode = InsertionMode.Replace
+                });
+                option.UlElementClasses = new[] { "no-margin pagination" };
+            }
+            @Html.PagedListPager(Model.Hotels,
+                            page => Url.Action("MapHotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
         </div>
-                        }
+    </div>
+                    }
 
 <script type="text/javascript" src="/Scripts/Page/MapHotel.js"></script>

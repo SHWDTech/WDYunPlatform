@@ -24,7 +24,7 @@
                     @Html.TextBoxFor(m => m.ProjectCode, new { @class = "form-control", placeholder = "请输入酒店编码" })
                     @Html.ValidationMessageFor(m => m.ProjectCode, null, new { @class = "text-danger" })
                 </td>
-                <td>@Html.LabelFor(m => m.RaletedCompany)</td>
+                <td>@Html.LabelFor(m => m.RaletedCompanyId)</td>
                 <td>
                     @Html.DropDownListFor(m => m.RaletedCompanyId, (List<SelectListItem>)ViewBag.CateringCompany, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.RaletedCompanyId, null, new { @class = "text-danger" })
@@ -134,8 +134,9 @@
                 </td>
             </tr>
             <tr class="text-center">
-                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
-                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" /></td>
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" /></td>
+                <td><input type="button" class="btn btn-main" value="重置"id="reset"/></td>
+                <td><input type="button" class="btn btn-main" id="getLocation" value="获取经纬度信息"/></td>
             </tr>
         </tbody>
     </table>

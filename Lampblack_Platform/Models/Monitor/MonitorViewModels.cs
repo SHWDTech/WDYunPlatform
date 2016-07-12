@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using MvcWebComponents.Model;
+using PagedList;
+using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Models.Monitor
 {
@@ -22,7 +24,7 @@ namespace Lampblack_Platform.Models.Monitor
         /// <summary>
         /// 酒店列表
         /// </summary>
-        public Dictionary<Guid, string> Hotels { get; set; }
+        public IPagedList<HotelRestaurant> Hotels { get; set; }
 
         public override int PageIndex { get; set; } = 1;
 

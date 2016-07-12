@@ -23,7 +23,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "所属餐饮企业")]
-        public virtual Guid RaletedCompanyId {get; set; }
+        public virtual Guid? RaletedCompanyId {get; set; }
 
         /// <summary>
         /// 饭店（酒店）名称

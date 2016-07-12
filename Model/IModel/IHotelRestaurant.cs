@@ -15,6 +15,11 @@ namespace SHWDTech.Platform.Model.IModel
         CateringCompany RaletedCompany { get; set; }
 
         /// <summary>
+        /// 所属餐饮企业ID
+        /// </summary>
+        Guid? RaletedCompanyId { get; set; }
+
+        /// <summary>
         /// 注册时间
         /// </summary>
         DateTime? RegisterDateTime { get; set; }

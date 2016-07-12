@@ -66,7 +66,7 @@
                             </thead>
                             <tbody>
                                 @{
-                                    foreach (var hotel in Model.HtoHotelRestaurants)
+                                    foreach (var hotel in Model.HotelRestaurants)
                                     {
                                         <tr data-company-id="@hotel.Id">
                                             <td>@hotel.ProjectCode</td>
@@ -81,7 +81,7 @@
                                                 var stopDate = hotel.StopDateTime?.ToString("HH:mm") ?? "";
                                                 var registerDate = hotel.RegisterDateTime?.ToString("yyyy-MM-dd") ?? "<->";
                                             }
-                                            <td>[@openDate --- @stopDate]</td>
+                                            <td>[@openDate--@stopDate]</td>
                                             @{
                                                 var status = EnumHelper<HotelRestaurantStatus>.GetDisplayValue(hotel.Status);
                                             }
@@ -115,7 +115,7 @@
                             var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace });
                             option.UlElementClasses = new[] { "no-margin pagination" };
                         }
-                        @Html.PagedListPager(Model.HtoHotelRestaurants,
+                        @Html.PagedListPager(Model.HotelRestaurants,
                             page => Url.Action("Hotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
                     </div>
                     <div class="horizontal-group">

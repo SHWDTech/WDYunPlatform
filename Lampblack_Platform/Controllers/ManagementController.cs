@@ -179,7 +179,7 @@ namespace Lampblack_Platform.Controllers
                 QueryName = queryName,
                 PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
                 PageIndex = page,
-                HtoHotelRestaurants = hotels
+                HotelRestaurants = hotels
             };
 
             return View(model);
