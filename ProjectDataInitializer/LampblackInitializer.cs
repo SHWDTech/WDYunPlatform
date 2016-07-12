@@ -2170,7 +2170,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 ParentModuleId = menu3.Id,
                 ModuleName = "运行状态统计",
                 Controller = "Analysis",
-                Action = "RuningStatus",
+                Action = "RunningStatus",
                 ModuleLevel = 2,
                 ModuleIndex = 2009,
                 IsMenu = true,

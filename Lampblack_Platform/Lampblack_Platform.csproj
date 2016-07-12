@@ -406,6 +406,7 @@
     <Content Include="Views\Query\Alarm.cshtml" />
     <Content Include="Views\Query\HistoryData.cshtml" />
     <Content Include="Views\Query\RunningTime.cshtml" />
+    <Content Include="Views\Shared\_unComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
