@@ -159,7 +159,7 @@ namespace Platform.Process.Process
             using (var repo = Repo<UserDictionaryRepository>())
             {
                 return repo.GetModels(obj => obj.ParentDictionary != null && obj.ParentDictionary.Id == id)
-                    .ToDictionary(key => key.Id.ToString(), value => value.ItemValue);
+                    .ToDictionary(key => key.ItemValue, value => value.Id.ToString());
             }
         }
     }

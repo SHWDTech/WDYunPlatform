@@ -12,6 +12,7 @@ namespace MvcWebComponents.Extensions
         {
             ajaxOptions.OnFailure = "ajaxFailure";
             ajaxOptions.OnSuccess = "ajaxSuccess";
+            ajaxOptions.OnComplete = "ajaxComplete";
             return ajaxOptions;
         }
 

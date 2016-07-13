@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.Monitor;
 using MvcWebComponents.Attributes;
@@ -7,6 +9,7 @@ using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using Platform.Process;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -26,8 +29,29 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
+            var area = string.IsNullOrWhiteSpace(Request["AreaGuid"]) ? Guid.Empty : Guid.Parse(Request["AreaGuid"]);
+
+            var street = string.IsNullOrWhiteSpace(Request["StreetGuid"]) ? Guid.Empty : Guid.Parse(Request["StreetGuid"]);
+
+            var conditions = new List<Expression<Func<HotelRestaurant, bool>>>();
+            var paramsObjects = new Dictionary<string, string>();
+
+            if (area != Guid.Empty)
+            {
+                Expression<Func<HotelRestaurant, bool>> condition = ex => ex.DistrictId == area;
+                conditions.Add(condition);
+                paramsObjects.Add("area", area.ToString());
+            }
+
+            if (street != Guid.Empty)
+            {
+                Expression<Func<HotelRestaurant, bool>> condition = ex => ex.StreetId == street;
+                conditions.Add(condition);
+                paramsObjects.Add("street", street.ToString());
+            }
+
             var hotelList = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
-                .GetPagedHotelRestaurant(page, pageSize, queryName, out count);
+                .GetPagedHotelRestaurant(page, pageSize, queryName, out count, conditions);
 
             var model = new MapHotelViewModel
             {
@@ -39,7 +63,7 @@ namespace Lampblack_Platform.Controllers
                 Hotels = hotelList
             };
 
-            GetMapHotelRelatedItems();
+            GetMapHotelRelatedItems(paramsObjects, model);
 
             return View(model);
         }
@@ -49,17 +73,43 @@ namespace Lampblack_Platform.Controllers
             return View();
         }
 
-        private void GetMapHotelRelatedItems()
+        private void GetMapHotelRelatedItems(Dictionary<string, string> paramsObjects, MapHotelViewModel model)
         {
-            ViewBag.AreaListItems = new List<SelectListItem>
-            {
-                new SelectListItem() {Text = "全部", Value = "" }
-            };
+            var areaList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = "" }
+                };
 
-            ViewBag.AreaListItems.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            var streetList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = ""}
+                };
+
+            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() {Text = obj.Key, Value = obj.Value})
+                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
                 .ToList());
+
+            if (paramsObjects.ContainsKey("area"))
+            {
+                var selectArea = paramsObjects["area"];
+
+                model.AreaGuid = Guid.Parse(selectArea);
+
+                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    .GetChildDistrict(Guid.Parse(selectArea))
+                    .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                    .ToList());
+
+                if (paramsObjects.ContainsKey("street"))
+                {
+                    var selectStreet = paramsObjects["street"];
+                    model.StreetGuid = Guid.Parse(selectStreet);
+                }
+            }
+
+            ViewBag.AreaListItems = areaList;
+            ViewBag.StreetListItems = streetList;
         }
     }
 }

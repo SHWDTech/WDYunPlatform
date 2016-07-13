@@ -12,7 +12,7 @@
     UpdateTargetId = "searchTable",
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST"
-}.GeneralOptions(), new { id = "maphotel" }))
+}.GeneralOptions(), new { id = "maphotel", @class = "flex-column" }))
 {
     <div class="panel-body" style="background-color: #33CEC3 ;">
         <div class="horizontal-group">
@@ -20,10 +20,8 @@
             @Html.DropDownListFor(m => m.AreaGuid, (List<SelectListItem>)ViewBag.AreaListItems, null, new { @class = "form-control" })
         </div>
         <div class="horizontal-group">
-            <label class="lbl60 lbl-white">街道：</label>
-            <select class="form-control" id="street">
-                <option value="" selected>全部</option>
-            </select>
+            @Html.LabelFor(m => m.StreetGuid, new { @class = "lbl60 lbl-white" })
+            @Html.DropDownListFor(m => m.StreetGuid, (List<SelectListItem>)ViewBag.StreetListItems, null, new { @class = "form-control" })
         </div>
         <div class="horizontal-group">
             <label class="lbl60 lbl-white">酒店：</label>
@@ -31,7 +29,7 @@
             <input type="submit" class="form-control btn btn-main" value="查询" style="width: 50px;" />
         </div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="overflow-y: auto;">
         <table class="table table-bordered table-hover info text-center">
             <thead>
                 <tr>
@@ -51,8 +49,6 @@
                 }
             </tbody>
         </table>
-    </div>
-    <div class="panel panel-body" style="margin-top: -30px;">
         <div style="float: right;">
             @{
                 var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
@@ -63,10 +59,12 @@
                 });
                 option.UlElementClasses = new[] { "no-margin pagination" };
             }
+
             @Html.PagedListPager(Model.Hotels,
-                            page => Url.Action("MapHotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                    page => Url.Action("MapHotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+
         </div>
     </div>
-                    }
+                }
 
 <script type="text/javascript" src="/Scripts/Page/MapHotel.js"></script>

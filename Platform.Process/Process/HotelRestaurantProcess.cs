@@ -13,14 +13,14 @@ namespace Platform.Process.Process
 {
     public class HotelRestaurantProcess : ProcessBase, IHotelRestaurantProcess
     {
-        public IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count, Expression<Func<HotelRestaurant, bool>> condition = null)
+        public IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count, List<Expression<Func<HotelRestaurant, bool>>> conditions = null)
         {
             using (var repo = Repo<HotelRestaurantRepository>())
             {
                 var query = repo.GetAllModels().Include("District").Include("Street").Include("Address");
-                if (condition != null)
+                if (conditions != null)
                 {
-                    query = query.Where(condition);
+                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
                 }
 
                 if (!string.IsNullOrWhiteSpace(queryName))

@@ -132,30 +132,27 @@ function ajaxFailure(ret) {
             Msg("未找到您选择的页面，请重试！", { title: '提示！' });
             return;
         case 0:
-            Msg("请求错误，请检查网络连接！", { title: '提示！'});
+            Msg("请求错误，请检查网络连接！", { title: '提示！' });
             return;
-    }
-
-    var res = ret.responseJSON;
-    if (!IsNullOrEmpty(res.Message)) {
-        var message = res.Message;
-        if (res.Exception !== null) {
-            message += ('<br/>ExceptionInfo:<br/>' + res.Exception);
-        }
-        Msg(message, { title: '提示！' });
     }
 }
 
 function ajaxSuccess(ret) {
-    if (!IsNullOrEmpty(ret.Message)) {
-        var message = ret.Message;
-        if (ret.Exception !== null) {
-            message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
-        }
-        Msg(message, { title: '提示！' });
-    }
-
     if (!IsNullOrEmpty(ret.PostForm)) {
         $('#' + ret.PostForm).submit();
     }
+}
+
+function ajaxComplete(ret) {
+    if (ret.responseJSON) {
+        var res = ret.responseJSON;
+        if (!IsNullOrEmpty(res.Message)) {
+            var message = res.Message;
+            if (res.Exception !== null) {
+                message += ('<br/>ExceptionInfo:<br/>' + res.Exception);
+            }
+            Msg(message, { title: '提示！' });
+        }
+    }
+
 }

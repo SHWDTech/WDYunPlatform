@@ -527,7 +527,7 @@ label {
     }
 
 .table-layer > .table-hover > tbody > tr:hover {
-    background-color: #cbfcf8;
+    background-color: #ffc;
     color: #333;
 }
 
@@ -582,4 +582,9 @@ a:active {
 
 .font-48 {
     font-size: 48px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
 }

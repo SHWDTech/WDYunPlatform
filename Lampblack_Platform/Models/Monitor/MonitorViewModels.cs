@@ -22,6 +22,12 @@ namespace Lampblack_Platform.Models.Monitor
         public Guid AreaGuid { get; set; }
 
         /// <summary>
+        /// 街道ID
+        /// </summary>
+        [Display(Name = "街道")]
+        public Guid StreetGuid { get; set; }
+
+        /// <summary>
         /// 酒店列表
         /// </summary>
         public IPagedList<HotelRestaurant> Hotels { get; set; }

@@ -16,9 +16,9 @@ namespace Platform.Process.IProcess
         /// <param name="pageSize"></param>
         /// <param name="queryName"></param>
         /// <param name="count"></param>
-        /// <param name="condition"></param>
+        /// <param name="conditions"></param>
         /// <returns></returns>
-        IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count, Expression<Func<HotelRestaurant, bool>> condition = null);
+        IPagedList<HotelRestaurant> GetPagedHotelRestaurant(int page, int pageSize, string queryName, out int count, List<Expression<Func<HotelRestaurant, bool>>> conditions = null);
 
         /// <summary>
         /// 获取指定ID的酒店信息
