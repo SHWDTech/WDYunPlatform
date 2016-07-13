@@ -527,13 +527,13 @@ label {
     }
 
 .table-layer > .table-hover > tbody > tr:hover {
-    background-color: #33CEC3;
-    color: #fff;
+    background-color: #cbfcf8;
+    color: #333;
 }
 
 .table-layer > table > thead {
-    background-color: #009D91;
-    color: #fff;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 .no-margin {
