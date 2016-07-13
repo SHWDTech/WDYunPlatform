@@ -29,7 +29,7 @@
             <input type="submit" class="form-control btn btn-main" value="查询" style="width: 50px;" />
         </div>
     </div>
-    <div class="panel-body" style="overflow-y: auto;">
+    <div class="panel-body table-layer" style="overflow-y: auto;">
         <table class="table table-bordered table-hover info text-center">
             <thead>
                 <tr>
@@ -62,7 +62,6 @@
 
             @Html.PagedListPager(Model.Hotels,
                     page => Url.Action("MapHotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
-
         </div>
     </div>
                 }
