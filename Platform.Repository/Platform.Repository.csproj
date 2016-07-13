@@ -105,6 +105,11 @@
     <Compile Include="IRepository\IUserConfigRepository.cs" />
     <Compile Include="IRepository\IUserDictionaryRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
+    <Compile Include="Migrations\201607130517523_InitialCreate.cs" />
+    <Compile Include="Migrations\201607130517523_InitialCreate.Designer.cs">
+      <DependentUpon>201607130517523_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
     <Compile Include="Repository\CateringCompanyRepository.cs" />
@@ -155,6 +160,11 @@
       <Project>{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607130517523_InitialCreate.resx">
+      <DependentUpon>201607130517523_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
