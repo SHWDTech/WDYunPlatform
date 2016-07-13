@@ -165,7 +165,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account\AccountViewModels.cs" />
     <Compile Include="Models\Management\ManagementViewModels.cs" />
     <Compile Include="Models\Monitor\MonitorViewModels.cs" />
