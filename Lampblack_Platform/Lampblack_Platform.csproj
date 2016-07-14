@@ -166,14 +166,17 @@
     <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="DataBase\RepositoryDataBaseInitializer.cs" />
+    <Compile Include="Enums\CleanessRateResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
+    <Compile Include="Models\Lampblack\CleanessRate.cs" />
     <Compile Include="Models\Management\ManagementViewModels.cs" />
     <Compile Include="Models\Monitor\MonitorViewModels.cs" />
     <Compile Include="Models\System\SystemViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Lampblack.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Base\Login.css" />
@@ -360,8 +363,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\LogOff.cshtml" />
