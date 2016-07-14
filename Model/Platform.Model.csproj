@@ -78,10 +78,12 @@
     <Compile Include="Enums\ModelState.cs" />
     <Compile Include="Enums\ProtocolDeliveryParam.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
+    <Compile Include="Enums\StatisticsType.cs" />
     <Compile Include="Enums\SysConfigType.cs" />
     <Compile Include="Enums\TaskExceteStatus.cs" />
     <Compile Include="Enums\TaskStatus.cs" />
     <Compile Include="Enums\UserStatus.cs" />
+    <Compile Include="IModel\IDataStatistics.cs" />
     <Compile Include="IModel\ICommandData.cs" />
     <Compile Include="IModel\IAlarm.cs" />
     <Compile Include="IModel\ICamera.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDepartment.cs" />
     <Compile Include="IModel\IDevice.cs" />
+    <Compile Include="IModel\IDeviceModel.cs" />
     <Compile Include="IModel\IDeviceType.cs" />
     <Compile Include="IModel\IFirmware.cs" />
     <Compile Include="IModel\IFirmwareSet.cs" />
@@ -127,10 +130,12 @@
     <Compile Include="Model\CommandDefinition.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Device.cs" />
+    <Compile Include="Model\DeviceModel.cs" />
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />
     <Compile Include="Model\FirmwareSet.cs" />
     <Compile Include="Model\HotelRestaurant.cs" />
+    <Compile Include="Model\DataStatistics.cs" />
     <Compile Include="Model\LampblackUser.cs" />
     <Compile Include="Model\Module.cs" />
     <Compile Include="Model\MonitorData.cs" />

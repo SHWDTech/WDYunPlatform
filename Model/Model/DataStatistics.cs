@@ -1,28 +1,20 @@
-﻿using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.ModelBase;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.ModelBase;
 
 namespace SHWDTech.Platform.Model.Model
 {
     /// <summary>
-    /// 监测数据
+    /// 监测数据小时统计值模型
     /// </summary>
-    [Serializable]
-    public class MonitorData : DataModelBase, IMonitorData
+    public class DataStatistics : DataModelBase, IDataStatistics
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public override Guid Id { get; set; }
-
-        [Required]
-        [Display(Name = "数据来源协议包ID")]
-        public virtual Guid ProtocolDataId { get; set; }
-
-        [Display(Name = "数据来源协议包")]
-        [ForeignKey("ProtocolDataId")]
-        public virtual ProtocolData ProtocolData { get; set; }
 
         [Required]
         [Display(Name = "数据类型ID")]
@@ -47,10 +39,12 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string DataName => CommandData.DataName;
 
         [NotMapped]
-        public virtual Device Device => ProtocolData.Device;
+        [Display(Name = "数据来源设备")]
+        public virtual Device Device { get; set; }
 
         [NotMapped]
-        public virtual Guid DeviceId => Device.Id;
+        [Display(Name = "数据来源设备ID")]
+        public virtual Guid DeviceId { get; set; }
 
         [Display(Name = "浮点数据值")]
         public virtual double? DoubleValue { get; set; }
@@ -62,10 +56,11 @@ namespace SHWDTech.Platform.Model.Model
         public virtual int? IntegerValue { get; set; }
 
         [Required]
-        [Display(Name = "数据上传时间")]
+        [Display(Name = "数据更新时间")]
         public virtual DateTime UpdateTime { get; set; }
 
-        [Display(Name = "是否有效数据")]
-        public virtual bool DataIsValid { get; set; }
+        [Required]
+        [Display(Name = "统计类型")]
+        public StatisticsType Type { get; set; }
     }
 }

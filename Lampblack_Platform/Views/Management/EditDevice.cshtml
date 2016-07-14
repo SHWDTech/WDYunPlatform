@@ -56,6 +56,16 @@
                 </td>
             </tr>
             <tr>
+                <td>@Html.LabelFor(m => m.DeviceModel)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.DeviceModel, (List<SelectListItem>)ViewBag.DeviceModels, new { @class = "form-control" })
+                </td>
+                <td>@Html.LabelFor(m => m.Project)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.ProjectId, (List<SelectListItem>)ViewBag.Hotel, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
                 <td>@Html.LabelFor(m => m.IpAddress)</td>
                 <td>
                     @Html.TextBoxFor(m => m.IpAddress, new { @class = "form-control", placeholder = "请输入设备IP地址" })
@@ -122,56 +132,16 @@
                     @Html.TextBoxFor(m => m.CleanerMinCurrent, new { @class = "form-control", placeholder = "请输入净化器最小电流" })
                 </td>
             </tr>
-        <tr>
-            <td>@Html.LabelFor(m => m.FanType)</td>
-            <td>
-                @Html.TextBoxFor(m => m.FanType, new { @class = "form-control", placeholder = "风机型号" })
-            </td>
-            <td>@Html.LabelFor(m => m.FanRatedVoltage)</td>
-            <td>
-                @Html.TextBoxFor(m => m.FanRatedVoltage, new {@class = "form-control", placeholder = "风机额定电压"})
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(m => m.FanRatedCurrent)
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.FanRatedCurrent, new {@class = "form-control", placeholder = "风机额定电流"})
-            </td>
-            <td>@Html.LabelFor(m => m.FanManufacturer)</td>
-            <td>
-                @Html.TextBoxFor(m => m.FanManufacturer, new {@class = "form-control", placeholder = "风机厂家"})
-            </td>
-        </tr>
-        <tr>
-            <td>
-                @Html.LabelFor(m => m.FanMaxCurrent)
-            </td>
-            <td>
-                @Html.TextBoxFor(m => m.FanMaxCurrent, new {@class = "form-control", placeholder = "风机最大电流"})
-            </td>
-            <td>@Html.LabelFor(m => m.FanDeliveryRate)</td>
-            <td>
-                @Html.TextBoxFor(m => m.FanDeliveryRate, new {@class = "form-control", placeholder = "排风量"})
-            </td>
-        </tr>
             <tr>
+                <td>@Html.LabelFor(m => m.FanDeliveryRate)</td>
                 <td>
-                    @Html.LabelFor(m => m.FanMinCurrent)
-                </td>
-                <td>
-                    @Html.TextBoxFor(m => m.FanMinCurrent, new { @class = "form-control", placeholder = "风机最小电流" })
-                </td>
-                <td>@Html.LabelFor(m => m.Project)</td>
-                <td>
-                    @Html.DropDownListFor(m => m.ProjectId, (List<SelectListItem>)ViewBag.Hotel, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.FanDeliveryRate, new { @class = "form-control", placeholder = "排风量" })
                 </td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Comment)</td>
                 <td colspan="3">
-                    @Html.TextAreaFor(m => m.Comment, new {@class = "form-control", placeholder = "请输入备注"})
+                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "请输入备注" })
                 </td>
             </tr>
             <tr class="text-center">

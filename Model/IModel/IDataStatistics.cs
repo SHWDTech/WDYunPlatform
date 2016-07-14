@@ -1,23 +1,14 @@
-﻿using SHWDTech.Platform.Model.Model;
-using System;
+﻿using System;
+using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
     /// <summary>
-    /// 监测数据模型接口
+    /// 数据统计模型接口
     /// </summary>
-    public interface IMonitorData : IDataModel
+    public interface IDataStatistics : IDataModel
     {
-        /// <summary>
-        /// 数据所属协议包ID
-        /// </summary>
-        Guid ProtocolDataId { get; set; }
-
-        /// <summary>
-        /// 数据所属协议包
-        /// </summary>
-        ProtocolData ProtocolData { get; set; }
-
         /// <summary>
         /// 数据类型ID
         /// </summary>
@@ -34,29 +25,24 @@ namespace SHWDTech.Platform.Model.IModel
         ushort DataChannel { get; set; }
 
         /// <summary>
-        /// 来源工地ID
+        /// 数据来源工地ID
         /// </summary>
         Guid? ProjectId { get; set; }
 
         /// <summary>
-        /// 来源工地
+        /// 数据来源工地
         /// </summary>
         Project Project { get; set; }
 
         /// <summary>
-        /// 来源设备
-        /// </summary>
-        Device Device { get; }
-
-        /// <summary>
-        /// 来源设备
-        /// </summary>
-        Guid DeviceId { get; }
-
-        /// <summary>
-        /// 数据名称类型
+        /// 数据名称
         /// </summary>
         string DataName { get; }
+
+        /// <summary>
+        /// 数据来源设备
+        /// </summary>
+        Device Device { get; set; }
 
         /// <summary>
         /// 浮点数据值
@@ -74,13 +60,13 @@ namespace SHWDTech.Platform.Model.IModel
         int? IntegerValue { get; set; }
 
         /// <summary>
-        /// 数据上传时间
+        /// 数据更新时间
         /// </summary>
         DateTime UpdateTime { get; set; }
 
         /// <summary>
-        /// 数据是否有效值
+        /// 统计数据类型
         /// </summary>
-        bool DataIsValid { get; set; }
+        StatisticsType Type { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -122,5 +123,15 @@ namespace SHWDTech.Platform.Model.IModel
         /// IP地址
         /// </summary>
         string IpAddress { get; set; }
+
+        /// <summary>
+        /// 设备类型
+        /// </summary>
+        DeviceModel DeviceModel { get; set; }
+
+        /// <summary>
+        /// 设备类型ID
+        /// </summary>
+        Guid? DeviceModelId { get; set; }
     }
 }

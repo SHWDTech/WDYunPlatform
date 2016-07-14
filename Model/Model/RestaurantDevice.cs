@@ -104,5 +104,13 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "设备所属酒店")]
         [ForeignKey("ProjectId")]
         public override Project Project { get; set; }
+
+        [Display(Name = "设备型号")]
+        [ForeignKey("DeviceModelId")]
+        public virtual DeviceModel DeviceModel { get; set; }
+
+        [Required]
+        [Display(Name = "设备型号ID")]
+        public virtual Guid? DeviceModelId { get; set; }
     }
 }

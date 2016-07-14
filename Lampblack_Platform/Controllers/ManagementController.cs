@@ -342,6 +342,11 @@ namespace Lampblack_Platform.Controllers
                 .GetHotelRestaurantSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
                 .ToList();
+
+            ViewBag.DeviceModels = ProcessInvoke.GetInstance<DeviceModelProcess>()
+                .GetDeviceModelSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .ToList();
         }
     }
 }

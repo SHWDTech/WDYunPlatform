@@ -73,7 +73,9 @@
     <Compile Include="IRepository\ICateringCompanyRepository.cs" />
     <Compile Include="IRepository\ICommandDataRepository.cs" />
     <Compile Include="IRepository\ICommandDefinitionRepository.cs" />
+    <Compile Include="IRepository\IDataStatisticsRepository.cs" />
     <Compile Include="IRepository\IDepartmentRepository.cs" />
+    <Compile Include="IRepository\IDeviceModelRepository.cs" />
     <Compile Include="IRepository\ILampblackUserRepository.cs" />
     <Compile Include="IRepository\IProtocolCommandRepository.cs" />
     <Compile Include="IRepository\IProtocolRepository.cs" />
@@ -109,6 +111,14 @@
     <Compile Include="Migrations\201607130517523_InitialCreate.Designer.cs">
       <DependentUpon>201607130517523_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607140744454_AddStatistics.cs" />
+    <Compile Include="Migrations\201607140744454_AddStatistics.Designer.cs">
+      <DependentUpon>201607140744454_AddStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607141000028_AddDeviceModel.cs" />
+    <Compile Include="Migrations\201607141000028_AddDeviceModel.Designer.cs">
+      <DependentUpon>201607141000028_AddDeviceModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -116,7 +126,9 @@
     <Compile Include="Repository\CommandDataRepository.cs" />
     <Compile Include="Repository\CommandDefinitionRepository.cs" />
     <Compile Include="Repository\DataRepository.cs" />
+    <Compile Include="Repository\DataStatisticsRepository.cs" />
     <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\DeviceModelRepository.cs" />
     <Compile Include="Repository\DeviceRepository.cs" />
     <Compile Include="Repository\DeviceTypeRepository.cs" />
     <Compile Include="Repository\DomainRepository.cs" />
@@ -132,6 +144,7 @@
     <Compile Include="Repository\ProtocolDataRepository.cs" />
     <Compile Include="Repository\ProtocolRepository.cs" />
     <Compile Include="Repository\ProtocolStructureRepository.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\RepositoryContext.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\HotelRestaurantRepository.cs" />
@@ -164,6 +177,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201607130517523_InitialCreate.resx">
       <DependentUpon>201607130517523_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607140744454_AddStatistics.resx">
+      <DependentUpon>201607140744454_AddStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607141000028_AddDeviceModel.resx">
+      <DependentUpon>201607141000028_AddDeviceModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

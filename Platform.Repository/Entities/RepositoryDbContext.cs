@@ -395,5 +395,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 公司部门
         /// </summary>
         public virtual DbSet<Department> Departments { get; set; }
+
+        /// <summary>
+        /// 统计数据
+        /// </summary>
+        public virtual DbSet<DataStatistics> DataStatisticses { get; set; }
     }
 }
