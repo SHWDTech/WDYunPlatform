@@ -78,6 +78,16 @@ namespace MvcWebComponents.Controllers
             return View(model);
         }
 
+        protected new ActionResult View(object model)
+        {
+            if (Request.IsAjaxRequest()) return PartialView();
+
+            var baseModel = (ViewModelBase) model;
+            baseModel.Context = WdContext;
+
+            return base.View(baseModel);
+        }
+
         /// <summary>
         /// 创建一个将视图呈现给响应的ViewResult对象（使用默认视图方法）
         /// </summary>

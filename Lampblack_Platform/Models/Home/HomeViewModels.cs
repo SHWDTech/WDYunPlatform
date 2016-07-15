@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using MvcWebComponents.Model;
 
 namespace Lampblack_Platform.Models.Home
 {
     /// <summary>
     /// 主页视图模型
     /// </summary>
-    public class IndexViewModel
+    public class IndexViewModel : ViewModelBase
     {
         /// <summary>
         /// 酒店清洁度查询
