@@ -90,5 +90,12 @@ namespace Platform.Process.Process
                     .ToDictionary(key => key.ProjectName, value => value.Id.ToString());
             }
         }
+
+        public Dictionary<string, string> GetHotelCleanessList()
+        {
+
+
+            return null;
+        }
     }
 }

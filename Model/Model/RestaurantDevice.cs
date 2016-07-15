@@ -107,10 +107,13 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "设备型号")]
         [ForeignKey("DeviceModelId")]
-        public virtual DeviceModel DeviceModel { get; set; }
+        public virtual LampblackDeviceModel LampblackDeviceModel { get; set; }
 
         [Required]
         [Display(Name = "设备型号ID")]
         public virtual Guid? DeviceModelId { get; set; }
+
+        [Display(Name = "启用通道数")]
+        public virtual int ChannelCount { get; set; } = 1;
     }
 }

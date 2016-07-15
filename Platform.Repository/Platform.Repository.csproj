@@ -119,6 +119,18 @@
     <Compile Include="Migrations\201607141000028_AddDeviceModel.Designer.cs">
       <DependentUpon>201607141000028_AddDeviceModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607150803154_DeviceAddChannelCount.cs" />
+    <Compile Include="Migrations\201607150803154_DeviceAddChannelCount.Designer.cs">
+      <DependentUpon>201607150803154_DeviceAddChannelCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607150908111_ModifyDeviceModel.cs" />
+    <Compile Include="Migrations\201607150908111_ModifyDeviceModel.Designer.cs">
+      <DependentUpon>201607150908111_ModifyDeviceModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607150910545_ReMapRestaurantDevice.cs" />
+    <Compile Include="Migrations\201607150910545_ReMapRestaurantDevice.Designer.cs">
+      <DependentUpon>201607150910545_ReMapRestaurantDevice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -183,6 +195,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607141000028_AddDeviceModel.resx">
       <DependentUpon>201607141000028_AddDeviceModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607150803154_DeviceAddChannelCount.resx">
+      <DependentUpon>201607150803154_DeviceAddChannelCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607150908111_ModifyDeviceModel.resx">
+      <DependentUpon>201607150908111_ModifyDeviceModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607150910545_ReMapRestaurantDevice.resx">
+      <DependentUpon>201607150910545_ReMapRestaurantDevice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

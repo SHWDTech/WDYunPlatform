@@ -3,7 +3,7 @@
     /// <summary>
     /// 设备型号模型接口
     /// </summary>
-    public interface IDeviceModel : ISysDomainModel
+    public interface ILampblackDeviceModel : ISysDomainModel
     {
         /// <summary>
         /// 设备型号名称

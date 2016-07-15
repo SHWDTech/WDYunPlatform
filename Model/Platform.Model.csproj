@@ -78,6 +78,7 @@
     <Compile Include="Enums\SysConfigType.cs" />
     <Compile Include="Enums\TaskExceteStatus.cs" />
     <Compile Include="Enums\TaskStatus.cs" />
+    <Compile Include="Enums\UserDictionaryNames.cs" />
     <Compile Include="Enums\UserStatus.cs" />
     <Compile Include="IModel\IDataStatistics.cs" />
     <Compile Include="IModel\ICommandData.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDepartment.cs" />
     <Compile Include="IModel\IDevice.cs" />
-    <Compile Include="IModel\IDeviceModel.cs" />
+    <Compile Include="IModel\ILampblackDeviceModel.cs" />
     <Compile Include="IModel\IDeviceType.cs" />
     <Compile Include="IModel\IFirmware.cs" />
     <Compile Include="IModel\IFirmwareSet.cs" />
@@ -126,7 +127,7 @@
     <Compile Include="Model\CommandDefinition.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Device.cs" />
-    <Compile Include="Model\DeviceModel.cs" />
+    <Compile Include="Model\LampblackDeviceModel.cs" />
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />
     <Compile Include="Model\FirmwareSet.cs" />

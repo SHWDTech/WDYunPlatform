@@ -1,4 +1,6 @@
-﻿namespace Lampblack_Platform.Models.Lampblack
+﻿using SHWDTech.Platform.Model.Model;
+
+namespace Lampblack_Platform.Models.Lampblack
 {
     /// <summary>
     /// 清洁度
@@ -8,34 +10,37 @@
         /// <summary>
         /// 失效
         /// </summary>
-        public readonly int Fail;
+        public int Fail { get; set; }
 
         /// <summary>
         /// 较差
         /// </summary>
-        public readonly int Worse;
+        public int Worse { get; set; }
 
         /// <summary>
         /// 合格
         /// </summary>
-        public readonly int Qualified;
+        public int Qualified { get; set; }
 
         /// <summary>
         /// 良好
         /// </summary>
-        public readonly int Good;
+        public int Good { get; set; }
 
         private CleanessRate()
         {
             
         }
 
-        public CleanessRate(int[] rate) : this()
+        public CleanessRate(LampblackDeviceModel rate) : this()
         {
-            Fail = rate[0];
-            Worse = rate[1];
-            Qualified = rate[2];
-            Good = rate[3];
+            Fail = rate.Fail;
+
+            Worse = rate.Worse;
+
+            Qualified = rate.Qualified;
+
+            Good = rate.Good;
         }
     }
 }

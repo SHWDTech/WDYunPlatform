@@ -12,7 +12,7 @@ namespace Platform.Process.Process
     /// </summary>
     public class GeneralProcess : ProcessBase
     {
-        private static GeneralProcess Process 
+        private static GeneralProcess Process
             => new GeneralProcess();
 
         /// <summary>
@@ -115,6 +115,18 @@ namespace Platform.Process.Process
             var permissions = cache.CacheItem as List<Permission>;
 
             return permissions;
+        }
+
+        /// <summary>
+        /// 获取油烟设备型号信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<LampblackDeviceModel> GetDeviceModels()
+        {
+            using (var context = new RepositoryDbContext())
+            {
+                return context.Set<LampblackDeviceModel>().ToList();
+            }
         }
     }
 }

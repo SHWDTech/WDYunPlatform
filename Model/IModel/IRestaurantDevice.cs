@@ -127,11 +127,16 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备类型
         /// </summary>
-        DeviceModel DeviceModel { get; set; }
+        LampblackDeviceModel LampblackDeviceModel { get; set; }
 
         /// <summary>
         /// 设备类型ID
         /// </summary>
         Guid? DeviceModelId { get; set; }
-    }
+
+        /// <summary>
+        /// 启用通道数
+        /// </summary>
+        int ChannelCount { get; set; }
+}
 }

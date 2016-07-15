@@ -171,6 +171,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
+    <Compile Include="Models\Home\HomeViewModels.cs" />
     <Compile Include="Models\Lampblack\CleanessRate.cs" />
     <Compile Include="Models\Management\ManagementViewModels.cs" />
     <Compile Include="Models\Monitor\MonitorViewModels.cs" />

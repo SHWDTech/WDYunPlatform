@@ -90,7 +90,9 @@ namespace SHWD.Platform.Repository.Entities
                         p.PreEndTime,
                         p.EndTime,
                         p.Status,
-                        p.CameraId
+                        p.CameraId,
+                        p.DeviceModelId,
+                        p.ChannelCount
                     });
                     m.ToTable("Device");
                 }).Map(m =>

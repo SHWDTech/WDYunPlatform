@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    public class DeviceModelRepository : SysDomainRepository<DeviceModel>, IDeviceModelRepository
+    public class DeviceModelRepository : SysDomainRepository<LampblackDeviceModel>, IDeviceModelRepository
     {
         public DeviceModelRepository()
         {
