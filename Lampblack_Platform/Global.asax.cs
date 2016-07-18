@@ -2,10 +2,10 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Lampblack_Platform.Models.Lampblack;
 using Platform.Cache;
 using Platform.Process.Process;
 using SHWD.Platform.Repository;
+using SHWDTech.Platform.Model.Business;
 
 namespace Lampblack_Platform
 {
@@ -33,7 +33,7 @@ namespace Lampblack_Platform
             foreach (var model in deviceModels)
             {
                 var rate = new CleanessRate(model);
-                PlatformCaches.Add($"{model.Name}-Rate", rate, false, "deviceModels"); 
+                PlatformCaches.Add($"CleanessRate-{model.Id}", rate, false, "deviceModels"); 
             }
         }
     }

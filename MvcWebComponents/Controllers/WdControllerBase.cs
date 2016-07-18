@@ -80,7 +80,7 @@ namespace MvcWebComponents.Controllers
 
         protected new ActionResult View(object model)
         {
-            if (Request.IsAjaxRequest()) return PartialView();
+            if (Request.IsAjaxRequest()) return PartialView(model);
 
             var baseModel = (ViewModelBase) model;
             baseModel.Context = WdContext;

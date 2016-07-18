@@ -292,6 +292,21 @@ namespace Lampblack_Platform.Controllers
                 new { targetAction = "EditDevice", targetcontroller = "Management", target = "slide-up-content", postform = "device" });
         }
 
+        [NamedAuth(Modules = "Device")]
+        public ActionResult DeleteDevice(Guid guid)
+        {
+            var success = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().DeleteRestaurantDevice(guid);
+
+            var json = new JsonStruct
+            {
+                Success = success,
+                Message = !success ? "尝试删除油烟设备信息失败，请刷新后重新尝试。" : "删除成功！",
+                PostForm = "device"
+            };
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult DeviceMaintenance()
         {
             return View();

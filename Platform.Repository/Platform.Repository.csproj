@@ -131,6 +131,10 @@
     <Compile Include="Migrations\201607150910545_ReMapRestaurantDevice.Designer.cs">
       <DependentUpon>201607150910545_ReMapRestaurantDevice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607180212558_ReMapDevice.cs" />
+    <Compile Include="Migrations\201607180212558_ReMapDevice.Designer.cs">
+      <DependentUpon>201607180212558_ReMapDevice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -204,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607150910545_ReMapRestaurantDevice.resx">
       <DependentUpon>201607150910545_ReMapRestaurantDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607180212558_ReMapDevice.resx">
+      <DependentUpon>201607180212558_ReMapDevice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

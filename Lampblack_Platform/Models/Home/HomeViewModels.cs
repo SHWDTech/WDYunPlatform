@@ -11,7 +11,32 @@ namespace Lampblack_Platform.Models.Home
         /// <summary>
         /// 酒店清洁度查询
         /// </summary>
-        public List<HotelCleaness> HotelCleanessList { get; set; }
+        public List<HotelCleaness> HotelCleanessList { get; set; } = new List<HotelCleaness>();
+
+        /// <summary>
+        /// 无数据酒店数量
+        /// </summary>
+        public int NoData { get; set; }
+
+        /// <summary>
+        /// 不合格酒店数量
+        /// </summary>
+        public int Faild { get; set; }
+
+        /// <summary>
+        /// 较差酒店数量
+        /// </summary>
+        public int Worse { get; set; }
+
+        /// <summary>
+        /// 合格酒店数量
+        /// </summary>
+        public int Qualified { get; set; }
+
+        /// <summary>
+        /// 良好酒店数量
+        /// </summary>
+        public int Good { get; set; }
     }
 
     /// <summary>

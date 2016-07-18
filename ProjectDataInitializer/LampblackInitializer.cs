@@ -2117,7 +2117,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             {
                 Id = Guid.Parse("22ac589e-8355-42cd-bf71-3c119fbb3b9f"),
                 DomainId = userdomain.Id,
-                PermissionName = "ExcetionData",
+                PermissionName = "ExceptionData",
                 PermissionDisplayName = "异常数据统计",
                 ParentPermissionId = menuPermission3.Id,
                 CreateUserId = user.Id,

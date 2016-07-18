@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\Lampblack.cs" />
+    <Compile Include="Enums\CleanessRateResult.cs" />
     <Compile Include="Enums\SignInStatus.cs" />
     <Compile Include="Enums\SigninResult.cs" />
     <Compile Include="Enums\SystemCacheNames.cs" />

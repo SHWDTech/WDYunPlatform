@@ -1,7 +1,7 @@
-﻿using Lampblack_Platform.Enums;
-using Lampblack_Platform.Models.Lampblack;
+﻿using Platform.Process.Enums;
+using SHWDTech.Platform.Model.Business;
 
-namespace Lampblack_Platform.Utility
+namespace Platform.Process.Business
 {
     /// <summary>
     /// 油烟相关业务算法
@@ -14,9 +14,9 @@ namespace Lampblack_Platform.Utility
         /// <param name="current"></param>
         /// <param name="rate"></param>
         /// <returns></returns>
-        public static string GetCleanessRate(double current, CleanessRate rate)
+        public static string GetCleanessRate(double? current, CleanessRate rate)
         {
-            if (current < rate.Fail)
+            if (current == null || current < rate.Fail)
             {
                 return CleanessRateResult.Fail;
             }

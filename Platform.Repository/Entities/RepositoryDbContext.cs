@@ -90,9 +90,7 @@ namespace SHWD.Platform.Repository.Entities
                         p.PreEndTime,
                         p.EndTime,
                         p.Status,
-                        p.CameraId,
-                        p.DeviceModelId,
-                        p.ChannelCount
+                        p.CameraId
                     });
                     m.ToTable("Device");
                 }).Map(m =>
@@ -116,7 +114,9 @@ namespace SHWD.Platform.Repository.Entities
                         p.FanMaxCurrent,
                         p.FanRatedCurrent,
                         p.FanMinCurrent,
-                        p.Comment
+                        p.Comment,
+                        p.DeviceModelId,
+                        p.ChannelCount
                     });
                     m.ToTable("RestaurantDevice");
                 });

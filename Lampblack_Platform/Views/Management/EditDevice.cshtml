@@ -58,7 +58,7 @@
             <tr>
                 <td>@Html.LabelFor(m => m.LampblackDeviceModel)</td>
                 <td>
-                    @Html.DropDownListFor(m => m.LampblackDeviceModel, (List<SelectListItem>)ViewBag.DeviceModels, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.DeviceModelId, (List<SelectListItem>)ViewBag.DeviceModels, new { @class = "form-control" })
                 </td>
                 <td>@Html.LabelFor(m => m.Project)</td>
                 <td>
@@ -109,13 +109,13 @@
                     @Html.LabelFor(m => m.CleanerRatedVoltage)
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.CleanerRatedVoltage, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入净化器额定电压" })
+                    @Html.TextBoxFor(m => m.CleanerRatedVoltage, new { @class = "form-control", placeholder = "请输入净化器额定电压" })
                 </td>
                 <td>
                     @Html.LabelFor(m => m.CleanerMaxCurrent)
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.CleanerMaxCurrent, "{0:HH:mm}", new { @class = "form-control", placeholder = "请输入净化器最大电流" })
+                    @Html.TextBoxFor(m => m.CleanerMaxCurrent, new { @class = "form-control", placeholder = "请输入净化器最大电流" })
                 </td>
             </tr>
             <tr>
@@ -136,6 +136,10 @@
                 <td>@Html.LabelFor(m => m.FanDeliveryRate)</td>
                 <td>
                     @Html.TextBoxFor(m => m.FanDeliveryRate, new { @class = "form-control", placeholder = "排风量" })
+                </td>
+                <td>@Html.LabelFor(m => m.ChannelCount)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ChannelCount, new { @class = "form-control", placeholder = "启用通道数" })
                 </td>
             </tr>
             <tr>

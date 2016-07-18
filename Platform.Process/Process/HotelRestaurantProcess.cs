@@ -5,8 +5,12 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
 using PagedList;
+using Platform.Cache;
+using Platform.Process.Business;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Business;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
@@ -93,9 +97,42 @@ namespace Platform.Process.Process
 
         public Dictionary<string, string> GetHotelCleanessList()
         {
+            var repo = Repo<HotelRestaurantRepository>();
 
+            var cleanNess = new Dictionary<string, string>();
 
-            return null;
+            var checkDate = DateTime.Now.AddMinutes(-3);
+            foreach (var hotelRestaurant in repo.GetAllModelList())
+            {
+                using (var dataRepo = Repo<MonitorDataRepository>())
+                {
+                    var records = dataRepo.GetModels(data =>
+                        data.ProjectId == hotelRestaurant.Id
+                        && data.UpdateTime > checkDate)
+                        .AsEnumerable();
+
+                    var current = records.Where(data => data.DataName == ProtocolDataName.CleanerCurrent).ToList();
+                    var mindata = current.OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+
+                    if (mindata != null)
+                    {
+                        var model = Repo<RestaurantDeviceRepository>()
+                       .GetModelIncludeById(mindata.DeviceId, new List<string> { "LampblackDeviceModel" })
+                       .LampblackDeviceModel;
+
+                        var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
+
+                        cleanNess.Add(hotelRestaurant.ProjectName, Lampblack.GetCleanessRate(mindata.DoubleValue, rater));
+                    }
+                    else
+                    {
+                        cleanNess.Add(hotelRestaurant.ProjectName, "无数据");
+                    }
+
+                }
+            }
+
+            return cleanNess;
         }
     }
 }

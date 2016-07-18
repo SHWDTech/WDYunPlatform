@@ -1,4 +1,5 @@
 ﻿@using Lampblack_Platform.Models.Home
+@using Platform.Process.Enums
 @model IndexViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,8 +11,97 @@
             <div class="panel-heading">
                 <h5 class="text-center text-main-reverse">实时清洁度分布</h5>
             </div>
-            <div class="panel-body"></div>
+            <div class="panel-body">
+                <input type="hidden" data-nodata="@Model.NoData" data-faild="@Model.Faild" data-worse="@Model.Worse" data-qualified="@Model.Qualified" data-good="@Model.Good" />
+                <div id="cleannessMap" style="height: 250px;"></div>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs" id="tab-nav">
+                    <li role="presentation" class="active">
+                        <a href="#" data-target="nodata">无数据</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-target="faild">失效</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-target="worse">较差</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-target="qualified">合格</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-target="good">良好</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <ul class="list-group clean-list" style="margin-bottom: 0;" id="nodata">
+            @{
+                foreach (var source in Model.HotelCleanessList.Where(obj => obj.CleanessRate == CleanessRateResult.NoData))
+                {
+                    <li class="list-group-item">
+                        <span>
+                            @source.HotelName
+                        </span>
+                    </li>
+                }
+            }
+        </ul>
+        <ul class="list-group clean-list" style="margin-bottom: 0; display: none;" id="faild">
+            @{
+                foreach (var source in Model.HotelCleanessList.Where(obj => obj.CleanessRate == CleanessRateResult.Fail))
+                {
+                    <li class="list-group-item">
+                        <span>
+                            @source.HotelName
+                        </span>
+                    </li>
+                }
+            }
+        </ul>
+        <ul class="list-group clean-list" style="margin-bottom: 0; display: none;" id="worse">
+            @{
+                foreach (var source in Model.HotelCleanessList.Where(obj => obj.CleanessRate == CleanessRateResult.Worse))
+                {
+                    <li class="list-group-item">
+                        <span>
+                            @source.HotelName
+                        </span>
+                    </li>
+                }
+            }
+        </ul>
+        <ul class="list-group clean-list" style="margin-bottom: 0; display: none;" id="qualified">
+            @{
+                foreach (var source in Model.HotelCleanessList.Where(obj => obj.CleanessRate == CleanessRateResult.Qualified))
+                {
+                    <li class="list-group-item">
+                        <span>
+                            @source.HotelName
+                        </span>
+                    </li>
+                }
+            }
+        </ul>
+        <ul class="list-group clean-list" style="margin-bottom: 0; display: none;" id="good">
+            @{
+                foreach (var source in Model.HotelCleanessList.Where(obj => obj.CleanessRate == CleanessRateResult.Good))
+                {
+                    <li class="list-group-item">
+                        <span>
+                            @source.HotelName
+                        </span>
+                    </li>
+                }
+            }
+        </ul>
     </div>
-    <div class="float-card float-card-default" style="width: 60%;"></div>
+    <div class="float-card float-card-default" style="width: 60%;">
+
+    </div>
 </div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/echart");
+    <script src="~/Scripts/Page/Index.js"></script>
+}

@@ -266,7 +266,7 @@ namespace Lampblack_Platform.Controllers
             var role = ProcessInvoke.GetInstance<WdRoleProcess>().GetRole(guid);
             if (role == null)
             {
-                return Json(new JsonStruct() {Success = false, Message = "没有找到指定系统角色，请重新尝试！"},
+                return Json(new JsonStruct() { Success = false, Message = "没有找到指定系统角色，请重新尝试！" },
                     JsonRequestBehavior.AllowGet);
             }
 
@@ -308,10 +308,21 @@ namespace Lampblack_Platform.Controllers
                 new SelectListItem() {Text = "停用", Value = "false"}
             };
 
-            ViewBag.CateringCompany = ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
-                .GetCateringCompanySelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
-                .ToList();
+            var cateringCompany = new List<SelectListItem>()
+            {
+                new SelectListItem()
+                {
+                    Text = "",
+                    Value = ""
+                }
+            };
+
+            cateringCompany.AddRange(ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
+            .GetCateringCompanySelectList()
+            .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+            .ToList());
+
+            ViewBag.CateringCompany = cateringCompany;
 
             ViewBag.Department = ProcessInvoke.GetInstance<DepartmentProcess>()
                 .GetDepartmentSelectList()

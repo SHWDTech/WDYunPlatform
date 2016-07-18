@@ -80,6 +80,7 @@ namespace SHWDTech.Platform.ProtocolCoding
             for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
                 var monitorData = MonitorDataRepository.CreateDefaultModel();
+                monitorData.DomainId = package.Device.DomainId;
 
                 var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
 
@@ -118,6 +119,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                 var data = DataConvert.DecodeComponentData(package[commandData.DataName]);
 
                 var monitorData = MonitorDataRepository.CreateDefaultModel();
+                monitorData.DomainId = package.Device.DomainId;
 
                 switch (commandData.DataValueType)
                 {

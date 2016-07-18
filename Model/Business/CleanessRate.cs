@@ -1,6 +1,6 @@
 ﻿using SHWDTech.Platform.Model.Model;
 
-namespace Lampblack_Platform.Models.Lampblack
+namespace SHWDTech.Platform.Model.Business
 {
     /// <summary>
     /// 清洁度

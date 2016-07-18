@@ -89,7 +89,7 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T GetModelById(Guid guid)
             => EntitySet.SingleOrDefault(obj => obj.Id == guid);
 
-        public virtual int GetCount(Expression<Func<T, bool>> exp) 
+        public virtual int GetCount(Expression<Func<T, bool>> exp)
             => exp == null ? EntitySet.Count() : EntitySet.Where(exp).Count();
 
         /// <summary>
@@ -305,8 +305,17 @@ namespace SHWD.Platform.Repository.Repository
             return Submit();
         }
 
-        private bool IsPrimitive(Type type)
-            => type.IsPrimitive || type == typeof(decimal) || type == typeof(string) || type == typeof(DateTime);
+        private static bool IsPrimitive(Type type)
+        {
+            return type.IsPrimitive
+            || type == typeof(decimal)
+            || type == typeof(string)
+            || type == typeof(DateTime)
+            || type == typeof(Guid)
+            || (type.IsGenericType
+                && type.GetGenericTypeDefinition() == typeof(Nullable<>)
+                && type.GetGenericArguments().Any(t => t.IsValueType && IsPrimitive(t)));
+        }
 
         public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
 
@@ -337,7 +346,7 @@ namespace SHWD.Platform.Repository.Repository
         /// </summary>
         /// <returns></returns>
         private int Submit()
-            =>DbContext.SaveChanges();
+            => DbContext.SaveChanges();
 
         public void Dispose()
         {

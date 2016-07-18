@@ -1,10 +1,15 @@
-﻿namespace Lampblack_Platform.Enums
+﻿namespace Platform.Process.Enums
 {
     /// <summary>
     /// 清洁度计算结果
     /// </summary>
     public static class CleanessRateResult
     {
+        /// <summary>
+        /// 无数据
+        /// </summary>
+        public const string NoData = "无数据";
+
         /// <summary>
         /// 失效
         /// </summary>
