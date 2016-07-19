@@ -19,13 +19,6 @@ namespace Lampblack_Platform.Controllers
         public ActionResult Map() => DefaultView();
 
         [NamedAuth(Modules = "Map")]
-        public ActionResult GetHotelInfo()
-        {
-
-            return null;
-        }
-
-        [NamedAuth(Modules = "Map")]
         public ActionResult MapHotel()
         {
             var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
