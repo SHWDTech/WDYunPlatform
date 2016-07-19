@@ -8,7 +8,7 @@
             $('#StreetGuid').empty();
             $('#StreetGuid').append('<option value="">全部</option>');
             $(ret).each(function () {
-                $('#StreetGuid').append('<option value=' + this.ItemValue + '>' + this.Id + '</option>');
+                $('#StreetGuid').append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
         });
     });

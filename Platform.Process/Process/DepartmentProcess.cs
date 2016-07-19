@@ -57,11 +57,11 @@ namespace Platform.Process.Process
             return null;
         }
 
-        public Dictionary<string, string> GetDepartmentSelectList()
+        public Dictionary<Guid, string> GetDepartmentSelectList()
         {
             using (var repo = Repo<DepartmentRepository>())
             {
-                return repo.GetAllModels().ToDictionary(obj => obj.Name, item => item.Id.ToString());
+                return repo.GetAllModels().ToDictionary(obj => obj.Id, item => item.Name);
             }
         }
 

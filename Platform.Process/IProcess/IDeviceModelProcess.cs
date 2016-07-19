@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Platform.Process.IProcess
 {
@@ -8,6 +9,6 @@ namespace Platform.Process.IProcess
         /// 获取设备型号选单列表
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, string> GetDeviceModelSelectList();
+        Dictionary<Guid, string> GetDeviceModelSelectList();
     }
 }

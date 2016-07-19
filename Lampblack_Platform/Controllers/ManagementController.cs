@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Lampblack_Platform.Common;
 using Lampblack_Platform.Models.Management;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
@@ -280,6 +281,11 @@ namespace Lampblack_Platform.Controllers
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
+            if (model.Id == Guid.Empty)
+            {
+                InitDeviceModel(model, propertyNames);
+            }
+
             var exception = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().AddOrUpdateRestaurantDevice(model, propertyNames);
 
             if (exception != null)
@@ -316,12 +322,12 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.CateringCompany = ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
                 .GetCateringCompanySelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.District = ProcessInvoke.GetInstance<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.Street = new List<SelectListItem>();
@@ -355,13 +361,26 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.Hotel = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
                 .GetHotelRestaurantSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.DeviceModels = ProcessInvoke.GetInstance<DeviceModelProcess>()
                 .GetDeviceModelSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
+        }
+
+        /// <summary>
+        /// 初始化设备相关信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="properties"></param>
+        private void InitDeviceModel(RestaurantDevice model, List<string> properties)
+        {
+            model.DeviceTypeId = LampblackConfig.DeviceTypeGuid;
+            properties.Add("DeviceTypeId");
+            model.FirmwareSetId = LampblackConfig.FirmwareSetGuid;
+            properties.Add("FirmwareSetId");
         }
     }
 }

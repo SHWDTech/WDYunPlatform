@@ -86,12 +86,12 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<string, string> GetHotelRestaurantSelectList()
+        public Dictionary<Guid, string> GetHotelRestaurantSelectList()
         {
             using (var repo = Repo<HotelRestaurantRepository>())
             {
                 return repo.GetAllModels()
-                    .ToDictionary(key => key.ProjectName, value => value.Id.ToString());
+                    .ToDictionary(key => key.Id, value => value.ProjectName);
             }
         }
 
@@ -100,39 +100,165 @@ namespace Platform.Process.Process
             var repo = Repo<HotelRestaurantRepository>();
 
             var cleanNess = new Dictionary<string, string>();
-
-            var checkDate = DateTime.Now.AddMinutes(-3);
             foreach (var hotelRestaurant in repo.GetAllModelList())
             {
-                using (var dataRepo = Repo<MonitorDataRepository>())
-                {
-                    var records = dataRepo.GetModels(data =>
-                        data.ProjectId == hotelRestaurant.Id
-                        && data.UpdateTime > checkDate)
-                        .AsEnumerable();
+                var recentDatas = GetLastMonitorData(hotelRestaurant.Id);
 
-                    var current = records.Where(data => data.DataName == ProtocolDataName.CleanerCurrent).ToList();
-                    var mindata = current.OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+                var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                    .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
 
-                    if (mindata != null)
-                    {
-                        var model = Repo<RestaurantDeviceRepository>()
-                       .GetModelIncludeById(mindata.DeviceId, new List<string> { "LampblackDeviceModel" })
-                       .LampblackDeviceModel;
-
-                        var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
-
-                        cleanNess.Add(hotelRestaurant.ProjectName, Lampblack.GetCleanessRate(mindata.DoubleValue, rater));
-                    }
-                    else
-                    {
-                        cleanNess.Add(hotelRestaurant.ProjectName, "无数据");
-                    }
-
-                }
+                cleanNess.Add(hotelRestaurant.ProjectName,
+                    cleanerCurrent != null ? GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId) : "无数据");
             }
 
             return cleanNess;
+        }
+
+        public Dictionary<string, object> GetHotelCurrentStatus(Guid hotelGuid)
+        {
+            var retDictionary = new Dictionary<string, object>();
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                var hotel = repo.GetModelById(hotelGuid);
+
+                var recentDatas = GetLastMonitorData(hotel.Id);
+
+                if (recentDatas.Any())
+                {
+                    retDictionary.Add("Current", GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue);
+                    retDictionary.Add("CleanerStatus", GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue);
+                    retDictionary.Add("FanStatus", GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue);
+                    retDictionary.Add("LampblackIn", GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue);
+                    retDictionary.Add("LampblackOut", GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue);
+
+                    var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                    .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+                    retDictionary.Add("CleanRate",
+                        cleanerCurrent != null
+                            ? GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId) : "无数据");
+                }
+
+                retDictionary.Add("CleanerRunTime", GetCleanerRunTime(hotel.Id));
+                retDictionary.Add("FanRunTime", GetFanRunTime(hotel.Id));
+            }
+
+            return retDictionary;
+        }
+
+        public List<HotelRestaurant> GetHotels(Guid districtGuid)
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                return repo.GetModels(obj => obj.DistrictId == districtGuid 
+                || obj.StreetId == districtGuid 
+                || obj.AddressId == districtGuid).ToList();
+            }
+        }
+
+        /// <summary>
+        /// 获取酒店最新数据
+        /// </summary>
+        /// <param name="hotelGuid"></param>
+        /// <returns></returns>
+        private List<MonitorData> GetLastMonitorData(Guid hotelGuid)
+        {
+            var checkDate = DateTime.Now.AddMinutes(-3);
+
+            using (var dataRepo = Repo<MonitorDataRepository>())
+            {
+                var datas = dataRepo.GetModels(data =>
+                    data.ProjectId == hotelGuid
+                    && data.UpdateTime > checkDate)
+                    .ToList();
+
+                return datas;
+            }
+        }
+
+        /// <summary>
+        /// 获取清洁度值
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="deviceId"></param>
+        /// <returns></returns>
+        private string GetCleanRate(double? current, Guid deviceId)
+        {
+            var model = Repo<RestaurantDeviceRepository>()
+                       .GetModelIncludeById(deviceId, new List<string> { "LampblackDeviceModel" })
+                       .LampblackDeviceModel;
+
+            var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
+
+            return Lampblack.GetCleanessRate(current, rater);
+        }
+
+        /// <summary>
+        /// 获取指定数据名称的监测数据
+        /// </summary>
+        /// <param name="dataName"></param>
+        /// <param name="monitorDatas"></param>
+        /// <returns></returns>
+        private MonitorData GetMonitorDataValue(string dataName, List<MonitorData> monitorDatas)
+            => monitorDatas.FirstOrDefault(obj => obj.DataName == dataName);
+
+        /// <summary>
+        /// 获取净化器运行时间
+        /// </summary>
+        /// <param name="hotelGuid"></param>
+        /// <returns></returns>
+        private string GetCleanerRunTime(Guid hotelGuid)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.CleanerSwitch && obj.BooleanValue == true)
+                    .OrderByDescending(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.CleanerSwitch && obj.BooleanValue == true)
+                    .OrderBy(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                if (start == null)
+                {
+                    return "00小时:00分:00秒";
+                }
+                if (end == null)
+                {
+                    return (DateTime.Now - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+                }
+
+                return (end.UpdateTime - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+            }
+        }
+
+        /// <summary>
+        /// 获取风扇运行时间
+        /// </summary>
+        /// <param name="hotelGuid"></param>
+        /// <returns></returns>
+        private string GetFanRunTime(Guid hotelGuid)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.FanSwitch && obj.BooleanValue == true)
+                    .OrderByDescending(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.FanSwitch && obj.BooleanValue == true)
+                    .OrderBy(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                if (start == null)
+                {
+                    return "00小时:00分:00秒";
+                }
+                if (end == null)
+                {
+                    return (DateTime.Now - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+                }
+
+                return (end.UpdateTime - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+            }
         }
     }
 }

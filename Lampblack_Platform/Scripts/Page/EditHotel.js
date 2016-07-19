@@ -28,7 +28,7 @@
         base.AjaxGet('/Management/GetAreaList', { id: id }, function (ret) {
             $(select).empty();
             $(ret).each(function () {
-                $(select).append('<option value=' + this.ItemValue + '>' + this.Id + '</option>');
+                $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
             if (ret.length > 0) {
                 $(select).val(ret[0].Id).change();

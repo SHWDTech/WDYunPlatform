@@ -1,4 +1,5 @@
-﻿@model SHWDTech.Platform.Model.Model.RestaurantDevice
+﻿@using MvcWebComponents.Extensions
+@model SHWDTech.Platform.Model.Model.RestaurantDevice
 
 @{
     Layout = null;
@@ -9,7 +10,7 @@
     UpdateTargetId = "slide-up-content",
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST"
-}, new { id = "deviceEdit" }))
+}.GeneralOptions(), new { id = "deviceEdit" }))
 {
     @Html.HiddenFor(m => m.Id)
     <table class="table table-bordered table-striped text-right">
@@ -30,29 +31,40 @@
                     @Html.ValidationMessageFor(m => m.DeviceName, null, new { @class = "text-danger" })
                 </td>
             </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.DeviceCode)</td>
+            <td>
+                @Html.TextBoxFor(m => m.DeviceCode, new {@class = "form-control", placeholder = "请输入设备编号"})
+                @Html.ValidationMessageFor(m => m.DeviceCode, null, new {@class = "text-danger"})
+            </td>
+            <td>@Html.LabelFor(m => m.ProductionDateTime)</td>
+            <td>
+                @Html.TextBoxFor(m => m.ProductionDateTime, new {@class = "form-control", placeholder = "请输入出厂日期"})
+                @Html.ValidationMessageFor(m => m.ProductionDateTime, null, new {@class = "text-danger"})
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.DeviceNodeId)</td>
+            <td>
+                @Html.TextBoxFor(m => m.DeviceNodeId, new {@class = "form-control", placeholder = "请输入设备NODEID"})
+                @Html.ValidationMessageFor(m => m.DeviceNodeId, null, new {@class = "text-danger"})
+            </td>
+            <td>@Html.LabelFor(m => m.Telephone)</td>
+            <td>
+                @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control", placeholder = "请输入联系电话" })
+                @Html.ValidationMessageFor(m => m.DeviceCode, null, new { @class = "text-danger" })
+            </td>
+        </tr>
             <tr>
-                <td>@Html.LabelFor(m => m.DeviceCode)</td>
-                <td>
-                    @Html.TextBoxFor(m => m.DeviceCode, new { @class = "form-control", placeholder = "请输入设备编号" })
-                    @Html.ValidationMessageFor(m => m.DeviceCode, null, new { @class = "text-danger" })
-                </td>
-                <td>@Html.LabelFor(m => m.ProductionDateTime)</td>
-                <td>
-                    @Html.TextBoxFor(m => m.ProductionDateTime, new { @class = "form-control", placeholder = "请输入出厂日期" })
-                    @Html.ValidationMessageFor(m => m.ProductionDateTime, null, new { @class = "text-danger" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(m => m.Telephone)</td>
-                <td>
-                    @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control", placeholder = "请输入联系电话" })
-                    @Html.ValidationMessageFor(m => m.DeviceCode, null, new { @class = "text-danger" })
-                </td>
                 <td>
                     @Html.LabelFor(m => m.Status)
                 </td>
                 <td>
-                    @Html.DropDownListFor(m => m.Status, (List<SelectListItem>)ViewBag.Status, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Status, (List<SelectListItem>) ViewBag.Status, new {@class = "form-control"})
+                </td>
+                <td>@Html.LabelFor(m => m.ChannelCount)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.ChannelCount, new { @class = "form-control", placeholder = "启用通道数" })
                 </td>
             </tr>
             <tr>
@@ -137,10 +149,8 @@
                 <td>
                     @Html.TextBoxFor(m => m.FanDeliveryRate, new { @class = "form-control", placeholder = "排风量" })
                 </td>
-                <td>@Html.LabelFor(m => m.ChannelCount)</td>
-                <td>
-                    @Html.TextBoxFor(m => m.ChannelCount, new { @class = "form-control", placeholder = "启用通道数" })
-                </td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td>@Html.LabelFor(m => m.Comment)</td>

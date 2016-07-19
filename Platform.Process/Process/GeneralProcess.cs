@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Platform.Cache;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.Repository;
@@ -126,6 +128,14 @@ namespace Platform.Process.Process
             using (var context = new RepositoryDbContext())
             {
                 return context.Set<LampblackDeviceModel>().ToList();
+            }
+        }
+
+        public static object GetConfig<T>(Expression<Func<T, bool>> exp) where T : class
+        {
+            using (var context = new RepositoryDbContext())
+            {
+                return context.Set<T>().Where(exp).ToList();
             }
         }
     }

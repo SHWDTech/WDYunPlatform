@@ -94,7 +94,7 @@ namespace Lampblack_Platform.Controllers
 
             areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (paramsObjects.ContainsKey("area"))
@@ -105,7 +105,7 @@ namespace Lampblack_Platform.Controllers
 
                 streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
                     .GetChildDistrict(Guid.Parse(selectArea))
-                    .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (paramsObjects.ContainsKey("street"))

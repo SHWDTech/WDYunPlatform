@@ -187,7 +187,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 SubField = subfield,
                 Version = "2016-03-17",
                 ReleaseDateTime = DateTime.Now,
-                DeviceTypeCode = "WD_YC_Classic",
+                DeviceTypeCode = "WD_Lampblack",
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,

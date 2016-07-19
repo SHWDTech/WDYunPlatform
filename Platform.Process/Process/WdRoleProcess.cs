@@ -59,11 +59,11 @@ namespace Platform.Process.Process
             return null;
         }
 
-        public Dictionary<string, string> GetRoleSelectList()
+        public Dictionary<Guid, string> GetRoleSelectList()
         {
             using (var repo = Repo<RoleRepository>())
             {
-                return repo.GetAllModels().ToDictionary(obj => obj.RoleName, item => item.Id.ToString());
+                return repo.GetAllModels().ToDictionary(obj => obj.Id, item => item.RoleName);
             }
         }
 

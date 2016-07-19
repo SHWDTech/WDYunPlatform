@@ -9,7 +9,7 @@
     <div class="float-card float-card-default" style="width: 39%; margin-right: 1%;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5 class="text-center text-main-reverse">实时清洁度分布</h5>
+                <h4 class="text-center text-main-reverse">实时清洁度分布</h4>
             </div>
             <div class="panel-body">
                 <input type="hidden" data-nodata="@Model.NoData" data-faild="@Model.Faild" data-worse="@Model.Worse" data-qualified="@Model.Qualified" data-good="@Model.Good" />
@@ -97,7 +97,63 @@
         </ul>
     </div>
     <div class="float-card float-card-default" style="width: 60%;">
-
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-main-reverse text-center">当前状态值</h4>
+            </div>
+            <div class="panel-body">
+                <div style="display: flex;">
+                    <div id="currentStatus" style="height: 200px; width: 50%;"></div>
+                    <div>
+                        <div class="input-row">
+                            <label class="lbl120">当前电流值：</label><span id="current" class="span60"></span>
+                        </div>
+                        <div class="input-row">
+                            <label class="lbl120">净化器状态：</label><span id="cleanerStatus" class="span60"></span>
+                            <label class="lbl120">风机状态：</label><span id="fanStatus" class="span60"></span>
+                        </div>
+                        <div class="input-row">
+                            <label class="lbl120">当前进烟浓度：</label><span id="lampblackIn" class="span60"></span>
+                            <label class="lbl120">当前出烟浓度：</label><span id="lampblackOut" class="span60"></span>
+                        </div>
+                        <div class="input-row">
+                            <label class="lbl120">当前清洁度：</label><span id="cleanerness" class="span60"></span>
+                            <label class="lbl120">当前去除率：</label><span id="removeRate" class="span60"></span>
+                        </div>
+                        <div class="input-row">
+                            <label class="lbl160">净化器今天运行时间：</label><span id="cleanerRunTime" class="span60"></span>
+                        </div>
+                        <div class="input-row">
+                            <label class="lbl160">风机今天运行时间：</label><span id="fanRunTime" class="span60"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="display: flex;">
+                <div style="width: 32%; margin-right: 1%; display: flex;">
+                    <label class="lbl40">区县</label>
+                    <select id="areas" class="form-control">
+                        @{
+                            foreach (var area in (Dictionary<Guid, string>) ViewBag.Areas)
+                            {
+                                <option value="@area.Key">@area.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div style="width: 32%; margin-right: 1%; display: flex;">
+                    <label class="lbl40">街道</label>
+                    <select id="street" class="form-control"></select>
+                </div>
+                <div style="width: 32%; display: flex;">
+                    <label class="lbl40">地址</label>
+                    <select id="address" class="form-control"></select>
+                </div>
+            </div>
+            <div id="hotels">
+                
+            </div>
+        </div>
     </div>
 </div>
 

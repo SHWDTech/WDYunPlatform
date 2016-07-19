@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.Home;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
+using MvcWebComponents.Filters;
+using MvcWebComponents.Model;
 using Platform.Process;
 using Platform.Process.Enums;
 using Platform.Process.Process;
@@ -33,7 +36,20 @@ namespace Lampblack_Platform.Controllers
 
             model.Good = rates.Count(obj => obj.Value == CleanessRateResult.Good);
 
+            ViewBag.Areas = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetDistrictSelectList();
+
             return View(model);
+        }
+
+        [AjaxGet]
+        public ActionResult HotelCurrentStatus(Guid hotelGuid)
+        {
+            var currentStatus = new IndexHotelCurrentViewModel(ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelCurrentStatus(hotelGuid));
+
+            return Json(new JsonStruct()
+            {
+                Result = currentStatus
+            });
         }
     }
 }

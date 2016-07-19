@@ -1,11 +1,15 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Lampblack_Platform.Common;
 using Platform.Cache;
 using Platform.Process.Process;
 using SHWD.Platform.Repository;
 using SHWDTech.Platform.Model.Business;
+using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform
 {
@@ -33,8 +37,26 @@ namespace Lampblack_Platform
             foreach (var model in deviceModels)
             {
                 var rate = new CleanessRate(model);
-                PlatformCaches.Add($"CleanessRate-{model.Id}", rate, false, "deviceModels"); 
+                PlatformCaches.Add($"CleanessRate-{model.Id}", rate, false, "deviceModels");
             }
+
+            var configDictionary = new Dictionary<string, object>
+            {
+                {
+                    "deviceTypeGuid",
+                    ((IList<DeviceType>)
+                        GeneralProcess.GetConfig<DeviceType>(obj => obj.DeviceTypeCode == "WD_Lampblack"))
+                        .FirstOrDefault()?.Id
+                },
+                {
+                    "firmwareSetGuid",
+                    ((IList<FirmwareSet>)
+                        GeneralProcess.GetConfig<FirmwareSet>(obj => obj.FirmwareSetName == "油烟协议第一版"))
+                        .FirstOrDefault()?.Id
+                }
+            };
+
+            LampblackConfig.InitConfig(configDictionary);
         }
     }
 }

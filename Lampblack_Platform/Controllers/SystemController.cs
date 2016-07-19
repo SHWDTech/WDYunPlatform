@@ -319,14 +319,14 @@ namespace Lampblack_Platform.Controllers
 
             cateringCompany.AddRange(ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
             .GetCateringCompanySelectList()
-            .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+            .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
             .ToList());
 
             ViewBag.CateringCompany = cateringCompany;
 
             ViewBag.Department = ProcessInvoke.GetInstance<DepartmentProcess>()
                 .GetDepartmentSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key, Value = obj.Value })
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.Roles = ProcessInvoke.GetInstance<WdRoleProcess>()

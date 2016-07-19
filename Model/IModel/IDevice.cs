@@ -77,7 +77,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 设备启用时间
         /// </summary>
-        DateTime StartTime { get; set; }
+        DateTime? StartTime { get; set; }
 
         /// <summary>
         /// 设备预结束时间

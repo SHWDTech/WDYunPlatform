@@ -1,6 +1,7 @@
 ﻿using SqlComponents.SqlExcute;
 using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
 {
@@ -44,6 +45,13 @@ namespace Platform.Process.IProcess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Dictionary<string, string> GetChildDistrict(Guid id);
+        Dictionary<Guid, string> GetChildDistrict(Guid id);
+
+        /// <summary>
+        /// 获取指定ID的区域信息
+        /// </summary>
+        /// <param name="districtGuid"></param>
+        /// <returns></returns>
+        UserDictionary GetDistrict(Guid districtGuid);
     }
 }

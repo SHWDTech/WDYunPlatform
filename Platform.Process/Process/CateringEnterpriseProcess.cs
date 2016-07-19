@@ -29,11 +29,11 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<string,  string> GetCateringCompanySelectList()
+        public Dictionary<Guid,  string> GetCateringCompanySelectList()
         {
             using (var repo = Repo<CateringCompanyRepository>())
             {
-                return repo.GetAllModels().ToDictionary(obj => obj.CompanyName, item => item.Id.ToString());
+                return repo.GetAllModels().ToDictionary(obj => obj.Id, item => item.CompanyName);
             }
         }
 

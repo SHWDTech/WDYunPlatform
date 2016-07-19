@@ -31,7 +31,7 @@ namespace Platform.Process.IProcess
         /// 获取部门列表
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, string> GetDepartmentSelectList();
+        Dictionary<Guid, string> GetDepartmentSelectList();
 
         /// <summary>
         /// 删除系统部门

@@ -63,7 +63,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual Project Project { get; set; }
 
         [Display(Name = "设备启用时间")]
-        public virtual DateTime StartTime { get; set; }
+        public virtual DateTime? StartTime { get; set; }
 
         [Display(Name = "设备预定启用时间")]
         public virtual DateTime? PreEndTime { get; set; }

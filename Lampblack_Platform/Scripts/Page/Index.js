@@ -1,8 +1,11 @@
 ﻿//清洁度饼图
 var pieChart = null;
+//当前状态值
+var currentGauge = null;
 
 $(function () {
     pieChart = echarts.init(document.getElementById('cleannessMap'));
+    currentGauge = echarts.init(document.getElementById('currentStatus'));
     setChart();
 
     $('#tab-nav a').on('click', function () {
@@ -11,6 +14,45 @@ $(function () {
         $('#' + $(this).attr('data-target')).show();
         $(this).parent().addClass('active');
     });
+
+    var getHotels = function () {
+        base.AjaxGet('/CommonAJax/Hotels', { area: $('#areas').val(), street: $('#street').val(), address: $('#address').val() }, function (ret) {
+            $('#hotels').empty();
+            if (!IsNullOrEmpty(ret)) {
+                $(ret).each(function(index, hotel) {
+                    $('#hotels').append('<span class="wd-card" value=' + hotel.Id + '>' + hotel.Name + '</span>');
+                });
+            }
+        });
+    }
+
+    var getDistricts = function (id, select) {
+        base.AjaxGet('/CommonAJax/GetAreaList', { id: id }, function (ret) {
+            $(select).empty().append('<option value="none">全部</option>');
+            $(ret).each(function () {
+                $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
+            });
+
+            getHotels();
+        });
+    }
+
+    $('#areas').on('change', function () {
+        $('#address').empty();
+        getDistricts($(this).val(), $('#street'));
+    });
+
+    $('#street').on('change', function () {
+        getDistricts($(this).val(), $('#address'));
+    });
+
+    $('#address').on('change', function() {
+        getHotels();
+    });
+
+    $('#areas').change();
+
+
 });
 
 var setChart = function () {

@@ -145,21 +145,29 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<string, string> GetDistrictSelectList()
+        public Dictionary<Guid, string> GetDistrictSelectList()
         {
             using (var repo = Repo<UserDictionaryRepository>())
             {
                 return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
-                    .ToDictionary(key => key.ItemValue, value => value.Id.ToString());
+                    .ToDictionary(key => key.Id, value => value.ItemValue);
             }
         }
 
-        public Dictionary<string, string> GetChildDistrict(Guid id)
+        public Dictionary<Guid, string> GetChildDistrict(Guid id)
         {
             using (var repo = Repo<UserDictionaryRepository>())
             {
                 return repo.GetModels(obj => obj.ParentDictionary != null && obj.ParentDictionary.Id == id)
-                    .ToDictionary(key => key.ItemValue, value => value.Id.ToString());
+                    .ToDictionary(key => key.Id, value => value.ItemValue);
+            }
+        }
+
+        public UserDictionary GetDistrict(Guid districtGuid)
+        {
+            using (var repo = Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModelById(districtGuid);
             }
         }
     }

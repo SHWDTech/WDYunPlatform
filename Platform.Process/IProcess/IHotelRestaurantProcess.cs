@@ -46,6 +46,19 @@ namespace Platform.Process.IProcess
         /// 获取酒店下拉菜单列表
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, string> GetHotelRestaurantSelectList();
+        Dictionary<Guid, string> GetHotelRestaurantSelectList();
+
+        /// <summary>
+        /// 获取酒店清洁度情况列表
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, string> GetHotelCleanessList();
+
+        /// <summary>
+        /// 根据区域信息获取酒店列表
+        /// </summary>
+        /// <param name="districtGuid"></param>
+        /// <returns></returns>
+        List<HotelRestaurant> GetHotels(Guid districtGuid);
     }
 }

@@ -31,7 +31,7 @@ namespace Platform.Process.IProcess
         /// 获取角色列表
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, string> GetRoleSelectList();
+        Dictionary<Guid, string> GetRoleSelectList();
 
         /// <summary>
         /// 删除角色

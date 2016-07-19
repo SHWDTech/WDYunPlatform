@@ -67,16 +67,16 @@
                 <td>@Html.LabelFor(m => m.Roles)</td>
                 <td colspan="3" class="text-left">
                     @{
-                        var roles = (Dictionary<string, string>)ViewBag.Roles;
+                        var roles = (Dictionary<Guid, string>)ViewBag.Roles;
                         foreach (var role in roles)
                         {
                             var chked = string.Empty;
                             if (Model != null)
                             {
-                                chked = Model.IsInRole(role.Key) ? "checked" : "";
+                                chked = Model.IsInRole(role.Value) ? "checked" : "";
                             }
-                            <input type="checkbox" name="Roles" value="@role.Value" id="@role.Value"  @chked />
-                                <label class="lbl160" for="@role.Value">@role.Key</label>
+                            <input type="checkbox" name="Roles" value="@role.Key" id="@role.Key"  @chked />
+                                <label class="lbl160" for="@role.Key">@role.Value</label>
                         }
                     }
                 </td>
