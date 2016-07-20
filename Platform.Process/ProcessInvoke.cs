@@ -1,4 +1,5 @@
-﻿using SHWD.Platform.Repository.IRepository;
+﻿using Platform.Process.Process;
+using SHWD.Platform.Repository.IRepository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 
@@ -40,6 +41,6 @@ namespace Platform.Process
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T GetInstance<T>() where T : class, new() => new T();
+        public static T GetInstance<T>() where T : ProcessBase, new() => new T();
     }
 }

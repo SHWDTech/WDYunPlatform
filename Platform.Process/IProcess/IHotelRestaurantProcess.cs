@@ -55,10 +55,23 @@ namespace Platform.Process.IProcess
         Dictionary<string, string> GetHotelCleanessList();
 
         /// <summary>
+        /// 获取地图上的酒店清洁度列表
+        /// </summary>
+        /// <param name="hotelGuid"></param>
+        /// <returns></returns>
+        object GetMapHotelCurrentStatus(Guid hotelGuid);
+
+        /// <summary>
         /// 根据区域信息获取酒店列表
         /// </summary>
         /// <param name="districtGuid"></param>
         /// <returns></returns>
         List<HotelRestaurant> GetHotels(Guid districtGuid);
+
+        /// <summary>
+        /// 获取酒店位置信息
+        /// </summary>
+        /// <returns></returns>
+        List<object> GetHotelLocations();
     }
 }

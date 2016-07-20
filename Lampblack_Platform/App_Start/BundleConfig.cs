@@ -27,7 +27,8 @@ namespace Lampblack_Platform
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/layout").Include(
-                "~/Scripts/Utility/layout.js"));
+                "~/Scripts/Utility/layout.js",
+                "~/Scripts/Common/Const.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/echart").Include(
                 "~/Scripts/Utility/echarts.min.js",

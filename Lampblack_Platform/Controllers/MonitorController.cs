@@ -7,6 +7,7 @@ using Lampblack_Platform.Models.Monitor;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
+using MvcWebComponents.Model;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
@@ -17,6 +18,28 @@ namespace Lampblack_Platform.Controllers
     public class MonitorController : WdControllerBase
     {
         public ActionResult Map() => DefaultView();
+
+        [NamedAuth(Modules = "Map")]
+        public ActionResult GetHotelInfo()
+        {
+            var hotelLocation = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelLocations();
+            return Json(new JsonStruct()
+            {
+                Success = true,
+                Result = hotelLocation
+            },JsonRequestBehavior.AllowGet);
+        }
+
+        [NamedAuth(Modules = "Map")]
+        public ActionResult GetMapHotelInfo(Guid hotelGuid)
+        {
+            var hotelLocation = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetMapHotelCurrentStatus(hotelGuid);
+            return Json(new JsonStruct()
+            {
+                Success = true,
+                Result = hotelLocation
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         [NamedAuth(Modules = "Map")]
         public ActionResult MapHotel()

@@ -22,12 +22,12 @@
         /// <summary>
         /// 项目坐标经度
         /// </summary>
-        float Longitude { get; set; }
+        float? Longitude { get; set; }
 
         /// <summary>
         /// 项目坐标纬度
         /// </summary>
-        float Latitude { get; set; }
+        float? Latitude { get; set; }
 
         /// <summary>
         /// 备注

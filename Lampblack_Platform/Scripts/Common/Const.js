@@ -1,5 +1,5 @@
 ﻿var LampblackStatus = {
-    clean,
-    unknow,
-    dirty
+    clean : 'clean',
+    noData : 'noData',
+    dirty : 'dirty'
 }

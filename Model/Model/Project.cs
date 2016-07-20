@@ -32,10 +32,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string Telephone { get; set; }
 
         [Display(Name = "经度")]
-        public virtual float Longitude { get; set; }
+        public virtual float? Longitude { get; set; }
 
         [Display(Name = "纬度")]
-        public virtual float Latitude { get; set; }
+        public virtual float? Latitude { get; set; }
 
         [Display(Name = "备注")]
         [MaxLength(2000)]

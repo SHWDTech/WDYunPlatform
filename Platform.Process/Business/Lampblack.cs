@@ -16,7 +16,11 @@ namespace Platform.Process.Business
         /// <returns></returns>
         public static string GetCleanessRate(double? current, CleanessRate rate)
         {
-            if (current == null || current < rate.Fail)
+            if (current == null)
+            {
+                return CleanessRateResult.NoData;
+            }
+            if (current < rate.Fail)
             {
                 return CleanessRateResult.Fail;
             }

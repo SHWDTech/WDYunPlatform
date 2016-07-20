@@ -3,13 +3,60 @@
 }
 
 <div class="single-content">
-    <div id="mapContainer" class="float-card" style="width: 74%; height: 100%; margin-right: 1%;">
+    <div id="mapContainer" class="float-card" style="width: 74%; height: 100%; margin-right: 1%; position: relative;">
 
     </div>
     <div id="searchTable" class="panel panel-default float-card" style="width: 25%;">
         @{ Html.RenderAction("MapHotel");}
     </div>
 </div>
+<div id="map-Marker">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span style="float: right;"></span>
+            <label id="name"></label>
+        </div>
+        <div class="panel-body">
+            <div>
+                <span class="span100">联系人：</span>
+                <span id="chargeMan"></span>
+            </div>
+            <div>
+                <span class="span100">地址：</span>
+                <span id="address"></span>
+            </div>
+            <div>
+                <span class="span100">电话：</span>
+                <span id="telephone"></span>
+            </div>
+            <div>
+                <span class="span100">净化器电流：</span>
+                <span id="current"></span>
+            </div>
+            <div>
+                <span class="span100">净化器状态：</span>
+                <span id="cleanerStatus"></span>
+            </div>
+            <div>
+                <span class="span100">风机状态：</span>
+                <span id="fanStatus"></span>
+            </div>
+            <div>
+                <span class="span100">进烟浓度：</span>
+                <span id="lampblackIn"></span>
+            </div>
+            <div>
+                <span class="span100">出烟浓度：</span>
+                <span id="lampblackOut"></span>
+            </div>
+            <div>
+                <span class="span100">清洁度：</span>
+                <span id="cleanRate"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="/Scripts/Common/MapManipulation.js"></script>
 <script src="/Scripts/Page/Map.js"></script>

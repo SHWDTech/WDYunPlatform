@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using PagedList;
 using Platform.Cache;
 using Platform.Process.Business;
+using Platform.Process.Enums;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
@@ -131,13 +132,44 @@ namespace Platform.Process.Process
 
                 var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
                 .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
-                retDictionary.Add("CleanRate", cleanerCurrent != null ? GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId) : "无数据");
+
+                retDictionary.Add("CleanRate",
+                    cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId));
 
                 retDictionary.Add("CleanerRunTime", GetCleanerRunTime(hotel.Id));
                 retDictionary.Add("FanRunTime", GetFanRunTime(hotel.Id));
             }
 
             return retDictionary;
+        }
+
+        public object GetMapHotelCurrentStatus(Guid hotelGuid)
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                var hotel = repo.GetModelById(hotelGuid);
+
+                var recentDatas = GetLastMonitorData(hotel.Id);
+
+                var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+
+                var status = new
+                {
+                    Current = GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue ?? 0.0,
+                    CleanerStatus = GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue ?? false,
+                    FanStatus = GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue ?? false,
+                    LampblackIn = GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue ?? 0.0,
+                    LampblackOut = GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue ?? 0.0,
+                    Name = hotel.ProjectName,
+                    hotel.ChargeMan,
+                    Address = hotel.AddressDetail,
+                    Phone = hotel.Telephone,
+                    CleanRate = cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId)
+                };
+
+                return status;
+            }
         }
 
         public List<HotelRestaurant> GetHotels(Guid districtGuid)
@@ -147,6 +179,45 @@ namespace Platform.Process.Process
                 return repo.GetModels(obj => obj.DistrictId == districtGuid
                 || obj.StreetId == districtGuid
                 || obj.AddressId == districtGuid).ToList();
+            }
+        }
+
+        public List<object> GetHotelLocations()
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                var hotels = repo.GetAllModelList();
+
+                var hotelLocations = new List<object>();
+                foreach (var hotel in hotels)
+                {
+                    var current = GetLastMonitorData(hotel.Id)
+                        .Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                        .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+
+                    var cleanRate = current == null ? "无数据" : GetCleanRate(current.DoubleValue, current.DeviceId);
+
+                    switch (cleanRate)
+                    {
+                        case CleanessRateResult.NoData:
+                            cleanRate = "noData";
+                            break;
+                        case CleanessRateResult.Qualified:
+                            cleanRate = "clean";
+                            break;
+                        case CleanessRateResult.Good:
+                            cleanRate = "clean";
+                            break;
+                        default:
+                            cleanRate = "dirty";
+                            break;
+                    }
+
+                    var info = new { Name = hotel.ProjectName, hotel.Id, Point = new { hotel.Latitude, hotel.Longitude }, status = cleanRate };
+                    hotelLocations.Add(info);
+                }
+
+                return hotelLocations;
             }
         }
 

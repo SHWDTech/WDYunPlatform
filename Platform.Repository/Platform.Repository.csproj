@@ -139,6 +139,10 @@
     <Compile Include="Migrations\201607190233254_ModigyDeviceStartDate.Designer.cs">
       <DependentUpon>201607190233254_ModigyDeviceStartDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607200740016_ModifyProject.cs" />
+    <Compile Include="Migrations\201607200740016_ModifyProject.Designer.cs">
+      <DependentUpon>201607200740016_ModifyProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -218,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607190233254_ModigyDeviceStartDate.resx">
       <DependentUpon>201607190233254_ModigyDeviceStartDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607200740016_ModifyProject.resx">
+      <DependentUpon>201607200740016_ModifyProject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

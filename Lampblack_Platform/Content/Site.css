@@ -304,6 +304,13 @@ label {
     display: inline-block;
 }
 
+.span100 {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    display: inline-block;
+}
+
 .span160 {
     width: 160px;
     min-width: 160px;
@@ -644,4 +651,18 @@ a {
 
 .input-row span {
     text-align: left;
+}
+
+#map-Marker {
+    position: absolute;
+    display: none;
+    width: 400px;
+}
+
+#map-Marker #name {
+    color: #fff;
+}
+
+.td-nav {
+    cursor: pointer;
 }
