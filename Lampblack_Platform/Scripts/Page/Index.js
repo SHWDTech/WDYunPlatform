@@ -2,10 +2,18 @@
 var pieChart = null;
 //当前状态值
 var currentGauge = null;
+//当前状态值图表选项
+var gaugeOption = null;
+//就点名
+var hotel = null;
 
 $(function () {
     pieChart = echarts.init(document.getElementById('cleannessMap'));
     currentGauge = echarts.init(document.getElementById('currentStatus'));
+    gaugeOption = Echart_Tools.getGaugeOption();
+    gaugeOption.title.text = '当前电流值';
+    gaugeOption.series[0].min = 0;
+    gaugeOption.series[0].max = 10;
     setChart();
 
     $('#tab-nav a').on('click', function () {
@@ -16,18 +24,37 @@ $(function () {
     });
 
     var getHotels = function () {
-        base.AjaxGet('/CommonAJax/Hotels', { area: $('#areas').val(), street: $('#street').val(), address: $('#address').val() }, function (ret) {
+        base.AjaxGet('/CommonAjax/Hotels', { area: $('#areas').val(), street: $('#street').val(), address: $('#address').val() }, function (ret) {
             $('#hotels').empty();
             if (!IsNullOrEmpty(ret)) {
                 $(ret).each(function(index, hotel) {
                     $('#hotels').append('<span class="wd-card" value=' + hotel.Id + '>' + hotel.Name + '</span>');
                 });
             }
+            $('.wd-card').on('click', function () {
+                hotel = $(this).html();
+                currentGauge.showLoading();
+                base.AjaxGet('/Home/HotelCurrentStatus', { hotelGuid: $(this).attr('value') }, function (ret) {
+                    currentGauge.hideLoading();
+                    $('#current').html(ret.Current / 100 + 'mA');
+                    $('#cleanerStatus').html(ret.CleanerStatus);
+                    $('#fanStatus').html(ret.FanStatus);
+                    $('#lampblackIn').html(ret.LampblackIn + 'mg/m³');
+                    $('#lampblackOut').html(ret.LampblackOut + 'mg/m³');
+                    $('#cleanRate').html(ret.CleanRate);
+                    $('#removeRate').html();
+                    $('#cleanerRunTime').html(ret.CleanerRunTime);
+                    $('#fanRunTime').html(ret.FanRunTime);
+
+                    gaugeOption.series[0].data = { name: hotel, value: ret.Current / 100 };
+                    currentGauge.setOption(gaugeOption);
+                });
+            });
         });
     }
 
     var getDistricts = function (id, select) {
-        base.AjaxGet('/CommonAJax/GetAreaList', { id: id }, function (ret) {
+        base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty().append('<option value="none">全部</option>');
             $(ret).each(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');

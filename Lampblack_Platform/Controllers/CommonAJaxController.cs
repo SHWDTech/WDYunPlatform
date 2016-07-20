@@ -10,7 +10,7 @@ using Platform.Process.Process;
 namespace Lampblack_Platform.Controllers
 {
     [NamedAuth(Modules = "Ignore")]
-    public class CommonAJaxController : WdControllerBase
+    public class CommonAjaxController : WdControllerBase
     {
         public ActionResult GetAreaList()
         {

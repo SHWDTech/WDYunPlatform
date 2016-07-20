@@ -301,6 +301,14 @@ label {
     width: 80px;
     min-width: 80px;
     max-width: 80px;
+    display: inline-block;
+}
+
+.span160 {
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    display: inline-block;
 }
 
 .lbl40 {
@@ -628,4 +636,12 @@ a {
 
 .wd-card.active a {
     color: #fff;
+}
+
+.input-row label {
+    text-align: left;
+}
+
+.input-row span {
+    text-align: left;
 }

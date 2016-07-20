@@ -158,7 +158,7 @@
     <Compile Include="Common\LampblackConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
-    <Compile Include="Controllers\CommonAJaxController.cs" />
+    <Compile Include="Controllers\CommonAjaxController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

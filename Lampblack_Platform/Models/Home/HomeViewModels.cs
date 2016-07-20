@@ -79,6 +79,11 @@ namespace Lampblack_Platform.Models.Home
         /// </summary>
         public string FanRunTime { get; set; }
 
+        /// <summary>
+        /// 清洁度
+        /// </summary>
+        public string CleanRate { get; set; }
+
         public IndexHotelCurrentViewModel(Dictionary<string, object> source)
         {
             Current = (double) source["Current"];
@@ -88,6 +93,7 @@ namespace Lampblack_Platform.Models.Home
             LampblackOut = (double) source["LampblackOut"];
             CleanerRunTime = source["CleanerRunTime"].ToString();
             FanRunTime = source["FanRunTime"].ToString();
+            CleanRate = source["CleanRate"].ToString();
         }
     }
 

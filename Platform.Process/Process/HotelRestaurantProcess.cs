@@ -123,20 +123,15 @@ namespace Platform.Process.Process
 
                 var recentDatas = GetLastMonitorData(hotel.Id);
 
-                if (recentDatas.Any())
-                {
-                    retDictionary.Add("Current", GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue);
-                    retDictionary.Add("CleanerStatus", GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue);
-                    retDictionary.Add("FanStatus", GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue);
-                    retDictionary.Add("LampblackIn", GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue);
-                    retDictionary.Add("LampblackOut", GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue);
+                retDictionary.Add("Current", GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue ?? 0.0);
+                retDictionary.Add("CleanerStatus", GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue ?? false);
+                retDictionary.Add("FanStatus", GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue ?? false);
+                retDictionary.Add("LampblackIn", GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue ?? 0.0);
+                retDictionary.Add("LampblackOut", GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue ?? 0.0);
 
-                    var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
-                    .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
-                    retDictionary.Add("CleanRate",
-                        cleanerCurrent != null
-                            ? GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId) : "无数据");
-                }
+                var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+                retDictionary.Add("CleanRate", cleanerCurrent != null ? GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId) : "无数据");
 
                 retDictionary.Add("CleanerRunTime", GetCleanerRunTime(hotel.Id));
                 retDictionary.Add("FanRunTime", GetFanRunTime(hotel.Id));
@@ -149,8 +144,8 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<HotelRestaurantRepository>())
             {
-                return repo.GetModels(obj => obj.DistrictId == districtGuid 
-                || obj.StreetId == districtGuid 
+                return repo.GetModels(obj => obj.DistrictId == districtGuid
+                || obj.StreetId == districtGuid
                 || obj.AddressId == districtGuid).ToList();
             }
         }
@@ -210,24 +205,29 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.CleanerSwitch && obj.BooleanValue == true)
-                    .OrderByDescending(item => item.UpdateTime)
-                    .FirstOrDefault();
-
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.CleanerSwitch && obj.BooleanValue == true)
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch)
+                    .OrderByDescending(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                TimeSpan timeSpan;
                 if (start == null)
                 {
-                    return "00小时:00分:00秒";
+                    return "00小时00分00秒";
                 }
                 if (end == null)
                 {
-                    return (DateTime.Now - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+                    timeSpan = DateTime.Now - start.UpdateTime;
+                }
+                else
+                {
+                    timeSpan = end.UpdateTime - start.UpdateTime;
                 }
 
-                return (end.UpdateTime - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+                return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
 
@@ -240,24 +240,29 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.FanSwitch && obj.BooleanValue == true)
-                    .OrderByDescending(item => item.UpdateTime)
-                    .FirstOrDefault();
-
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.DataName == ProtocolDataName.FanSwitch && obj.BooleanValue == true)
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.FanSwitch)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.FanSwitch)
+                    .OrderByDescending(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                TimeSpan timeSpan;
                 if (start == null)
                 {
-                    return "00小时:00分:00秒";
+                    return "00小时00分00秒";
                 }
                 if (end == null)
                 {
-                    return (DateTime.Now - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+                    timeSpan = DateTime.Now - start.UpdateTime;
+                }
+                else
+                {
+                    timeSpan = end.UpdateTime - start.UpdateTime;
                 }
 
-                return (end.UpdateTime - start.UpdateTime).ToString("hh小时:mm分:ss秒");
+                return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
     }
