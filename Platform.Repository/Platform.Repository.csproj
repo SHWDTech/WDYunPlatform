@@ -143,6 +143,10 @@
     <Compile Include="Migrations\201607200740016_ModifyProject.Designer.cs">
       <DependentUpon>201607200740016_ModifyProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607211051099_AddDataChannel.cs" />
+    <Compile Include="Migrations\201607211051099_AddDataChannel.Designer.cs">
+      <DependentUpon>201607211051099_AddDataChannel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -225,6 +229,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607200740016_ModifyProject.resx">
       <DependentUpon>201607200740016_ModifyProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607211051099_AddDataChannel.resx">
+      <DependentUpon>201607211051099_AddDataChannel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

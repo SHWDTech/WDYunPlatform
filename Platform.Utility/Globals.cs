@@ -1149,5 +1149,26 @@ namespace SHWDTech.Platform.Utility
 
             return productName.StartsWith("Windows 10");
         }
+
+        /// <summary>
+        /// 获取可空类型浮点数值字符串
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double GetNullableNumber(double? value)
+        {
+            if (value == null) return 0.0;
+
+            return value.Value;
+        }
+
+        /// <summary>
+        /// 获取可空类型时间字符串
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string GetNullableDateTimeString(DateTime? value, string format)
+            => value?.ToString(format) ?? "N/A";
     }
 }

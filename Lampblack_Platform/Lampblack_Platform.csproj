@@ -192,6 +192,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Resources\Images\Site\binding_dark.png" />
+    <Content Include="Resources\Images\Site\CleanRate\F_3232.png" />
+    <Content Include="Resources\Images\Site\CleanRate\G_3232.png" />
+    <Content Include="Resources\Images\Site\CleanRate\N_3232.png" />
+    <Content Include="Resources\Images\Site\CleanRate\Q_3232.png" />
+    <Content Include="Resources\Images\Site\CleanRate\RUN.png" />
+    <Content Include="Resources\Images\Site\CleanRate\STOP.png" />
+    <Content Include="Resources\Images\Site\CleanRate\WARNING.png" />
+    <Content Include="Resources\Images\Site\CleanRate\W_3232.png" />
     <Content Include="Resources\Images\Site\congruent_outline.png" />
     <Content Include="Resources\Images\Site\congruent_pentagon.png" />
     <Content Include="Resources\Images\Site\foggy_birds.png" />
@@ -209,6 +217,7 @@
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\Common\SetUpCharts.js" />
+    <Content Include="Scripts\Page\Actual.js" />
     <Content Include="Scripts\Page\Index.js" />
     <Content Include="Scripts\Utility\bootstrap.js" />
     <Content Include="Scripts\Utility\bootstrap.min.js" />

@@ -14,6 +14,6 @@
     });
 
     $('.td-nav').on('click', function () {
-        window.markerShowView(null, $(this).attr('id'));
+        window.markerShowView($(this).attr('id'));
     });
 })

@@ -93,7 +93,58 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult Actual()
         {
-            return View();
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 15 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var area = string.IsNullOrWhiteSpace(Request["AreaGuid"]) ? Guid.Empty : Guid.Parse(Request["AreaGuid"]);
+
+            var street = string.IsNullOrWhiteSpace(Request["StreetGuid"]) ? Guid.Empty : Guid.Parse(Request["StreetGuid"]);
+
+            var address = string.IsNullOrWhiteSpace(Request["AddressGuid"]) ? Guid.Empty : Guid.Parse(Request["AddressGuid"]);
+
+            var conditions = new List<Expression<Func<HotelRestaurant, bool>>>();
+            //var paramsObjects = new Dictionary<string, string>();
+
+            if (area != Guid.Empty)
+            {
+                Expression<Func<HotelRestaurant, bool>> condition = ex => ex.DistrictId == area;
+                conditions.Add(condition);
+                //paramsObjects.Add("area", area.ToString());
+            }
+
+            if (street != Guid.Empty)
+            {
+                Expression<Func<HotelRestaurant, bool>> condition = ex => ex.StreetId == street;
+                conditions.Add(condition);
+                //paramsObjects.Add("street", street.ToString());
+            }
+
+            if (address != Guid.Empty)
+            {
+                Expression<Func<HotelRestaurant, bool>> condition = ex => ex.AddressId == address;
+                conditions.Add(condition);
+                //paramsObjects.Add("address", street.ToString());
+            }
+
+            var hotelList = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+                .GetPagedHotelStatus(page, pageSize, queryName, out count, conditions);
+
+            var model = new ActualViewModel()
+            {
+                Count = count,
+                PageSize = pageSize,
+                QueryName = queryName,
+                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
+                PageIndex = page,
+                HotelsStatus = hotelList
+            };
+
+            return View(model);
         }
 
         private void GetMapHotelRelatedItems(Dictionary<string, string> paramsObjects, MapHotelViewModel model)

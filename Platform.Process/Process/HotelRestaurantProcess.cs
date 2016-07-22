@@ -13,6 +13,7 @@ using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Utility;
 
 namespace Platform.Process.Process
 {
@@ -221,6 +222,69 @@ namespace Platform.Process.Process
             }
         }
 
+        public IPagedList<HotelActualStatus> GetPagedHotelStatus(int page, int pageSize, string queryName, out int count, List<Expression<Func<HotelRestaurant, bool>>> conditions = null)
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                var status = new List<HotelActualStatus>();
+
+                var query = repo.GetAllModels().Include("District").Include("Street").Include("Address");
+                if (conditions != null)
+                {
+                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
+                }
+
+                if (!string.IsNullOrWhiteSpace(queryName))
+                {
+                    query = query.Where(obj => obj.ProjectName.Contains(queryName));
+                }
+                count = query.Count();
+
+                var hotels = query.ToList();
+
+                foreach (var hotel in hotels)
+                {
+                    var hotelStatus = new HotelActualStatus
+                    {
+                        Name = hotel.ProjectName,
+                        HotelGuid = hotel.Id,
+                        ChannelStatus = new List<ChannelStatus>()
+                    };
+
+                    var monitorDatas = GetLastMonitorData(hotel.Id);
+                    var dataGroup = monitorDatas.GroupBy(obj => obj.DataChannel);
+                    foreach (var group in dataGroup)
+                    {
+                        var recentDatas = group.ToList();
+                        var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                                                  .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
+                        var cleanRate = cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId);
+                        var channel = new ChannelStatus
+                        {
+                            CleanRate = TranslateCleanRateUrl(cleanRate),
+                            CleanerSwitch = TranslateSwitchUrl(GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue),
+                            FanSwitch = TranslateSwitchUrl(GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue),
+                            LampblackOut = Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue).ToString("F2"),
+                            CleanerCurrent = (Globals.GetNullableNumber(cleanerCurrent?.DoubleValue) / 100.0).ToString("F2"),
+                            FanCurrent = (Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.FanCurrent, recentDatas)?.DoubleValue) / 100.0).ToString("F2"),
+                            UpdateTime = recentDatas.Count > 0 ? recentDatas[0].UpdateTime.ToString("yyyy-MM-dd hh:mm:ss") : "N/A"
+                        };
+
+                        hotelStatus.ChannelStatus.Add(channel);
+                    }
+
+                    if (hotelStatus.ChannelStatus.Count == 0)
+                    {
+                        hotelStatus.ChannelStatus.Add(new ChannelStatus());
+                    }
+
+                    status.Add(hotelStatus);
+                }
+
+                return status.ToPagedList(page, pageSize);
+            }
+        }
+
         /// <summary>
         /// 获取酒店最新数据
         /// </summary>
@@ -276,11 +340,19 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch)
+                var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
+
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.BooleanValue == true
+                        && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
+                        && obj.UpdateTime > today)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch)
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.BooleanValue == true
+                        && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
+                        && obj.UpdateTime > today)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();
 
@@ -311,11 +383,19 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.FanSwitch)
+                var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
+
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.BooleanValue == true
+                        && obj.CommandData.DataName == ProtocolDataName.FanSwitch
+                        && obj.UpdateTime > today)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.BooleanValue == true && obj.CommandData.DataName == ProtocolDataName.FanSwitch)
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.BooleanValue == true
+                        && obj.CommandData.DataName == ProtocolDataName.FanSwitch
+                        && obj.UpdateTime > today)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();
 
@@ -335,6 +415,34 @@ namespace Platform.Process.Process
 
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
+        }
+
+        private string TranslateSwitchUrl(bool? value)
+        {
+            if (value == null) return "/Resources/Images/Site/CleanRate/WARNING.png";
+
+            if (value == false) return "/Resources/Images/Site/CleanRate/STOP.png";
+
+            return "/Resources/Images/Site/CleanRate/RUN.png";
+        }
+
+        private string TranslateCleanRateUrl(string value)
+        {
+            switch (value)
+            {
+                case CleanessRateResult.Good:
+                    return "/Resources/Images/Site/CleanRate/G_3232.png";
+                case CleanessRateResult.Qualified:
+                    return "/Resources/Images/Site/CleanRate/Q_3232.png";
+                case CleanessRateResult.Worse:
+                    return "/Resources/Images/Site/CleanRate/W_3232.png";
+                case CleanessRateResult.Fail:
+                    return "/Resources/Images/Site/CleanRate/F_3232.png";
+                case CleanessRateResult.NoData:
+                    return "/Resources/Images/Site/CleanRate/N_3232.png";
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ChannelStatus.cs" />
+    <Compile Include="Business\HotelActualStatus.cs" />
     <Compile Include="Business\Lampblack.cs" />
     <Compile Include="Enums\CleanessRateResult.cs" />
     <Compile Include="Enums\SignInStatus.cs" />
