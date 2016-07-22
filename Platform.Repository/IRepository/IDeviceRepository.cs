@@ -21,7 +21,8 @@ namespace SHWD.Platform.Repository.IRepository
         /// 通过设备短ID号获取设备信息
         /// </summary>
         /// <param name="nodeId"></param>
+        /// <param name="isEnabled"></param>
         /// <returns></returns>
-        IList<Device> GetDeviceByNodeId(string nodeId);
+        IList<Device> GetDeviceByNodeId(string nodeId, bool isEnabled);
     }
 }

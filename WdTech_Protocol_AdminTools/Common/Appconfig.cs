@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using Platform.Process;
@@ -60,6 +61,16 @@ namespace WdTech_Protocol_AdminTools.Common
         /// </summary>
         public static readonly string CommandMessageQueueCategory;
 
+        /// <summary>
+        /// 设备连接检查时间间隔
+        /// </summary>
+        public static readonly double DeviceConnectionChevkInterval;
+
+        /// <summary>
+        /// 设备超时连接周期
+        /// </summary>
+        public static readonly TimeSpan DeviceDisconnectInterval;
+
         static AppConfig()
         {
             TcpBufferSize = int.Parse(ConfigurationManager.AppSettings["TcpBufferSize"]);
@@ -75,6 +86,10 @@ namespace WdTech_Protocol_AdminTools.Common
             CommandQueue = configs.FirstOrDefault(obj => obj.SysConfigName == "CommandMessageQueueName")?.SysConfigValue;
 
             CommandMessageQueueCategory = ConfigurationManager.AppSettings["CommandMessageQueueCategory"];
+
+            DeviceConnectionChevkInterval = double.Parse(ConfigurationManager.AppSettings["DeviceConnectionChevkInterval"]);
+
+            DeviceDisconnectInterval = new TimeSpan(0, 0, int.Parse(ConfigurationManager.AppSettings["DeviceDisconnectInterval"]));
         }
     }
 }

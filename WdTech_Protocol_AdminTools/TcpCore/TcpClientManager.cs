@@ -90,6 +90,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 接收器名称
         /// </summary>
         public string ReceiverName { get; set; }
+        
+        /// <summary>
+        /// 最后通信时间
+        /// </summary>
+        public DateTime LastAliveDateTime { get; private set; }
 
         /// <summary>
         /// 初始化新的TCP客户端接收器实例
@@ -124,6 +129,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             _processBuffer.Add(array[i]);
                         }
                     }
+
+                    LastAliveDateTime = DateTime.Now;
 
                     client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
                 }
@@ -300,6 +307,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             try
             {
                 _clientSocket.Send(protocolBytes);
+                LastAliveDateTime = DateTime.Now;
             }
             catch (ObjectDisposedException ex)
             {

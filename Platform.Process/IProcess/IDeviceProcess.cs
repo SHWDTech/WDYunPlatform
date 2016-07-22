@@ -11,7 +11,8 @@ namespace Platform.Process.IProcess
         /// 通过NodeId获取设备
         /// </summary>
         /// <param name="nodeId"></param>
+        /// <param name="isEnabled"></param>
         /// <returns></returns>
-        IDevice GetDeviceByNodeId(string nodeId);
+        IDevice GetDeviceByNodeId(string nodeId, bool isEnabled);
     }
 }

@@ -64,6 +64,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 _serverListener.LingerState = new LingerOption(false, 1);
                 _serverListener.Listen(2048);
                 _serverListener.BeginAccept(AcceptClient, _serverListener);
+                Manager.Start();
 
                 StartDateTime = DateTime.Now;
                 IsStart = true;
@@ -99,7 +100,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     _serverListener.Disconnect(false);
                 }
 
+                Manager.Stop();
                 _serverListener.Close(0);
+
 
                 IsStart = false;
 

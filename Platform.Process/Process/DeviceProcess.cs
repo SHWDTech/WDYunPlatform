@@ -10,7 +10,7 @@ namespace Platform.Process.Process
     /// </summary>
     public class DeviceProcess : ProcessBase, IDeviceProcess
     {
-        public IDevice GetDeviceByNodeId(string nodeId) 
-            => Repo<DeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
+        public IDevice GetDeviceByNodeId(string nodeId, bool isEnabled) 
+            => Repo<DeviceRepository>().GetDeviceByNodeId(nodeId, isEnabled).FirstOrDefault();
     }
 }

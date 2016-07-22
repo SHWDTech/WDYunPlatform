@@ -25,10 +25,10 @@ namespace SHWD.Platform.Repository.Repository
 
         public IDevice GetDeviceById(Guid deviceGuid) => GetAllModels().First(device => device.Id == deviceGuid);
 
-        public IList<Device> GetDeviceByNodeId(string nodeId)
+        public IList<Device> GetDeviceByNodeId(string nodeId, bool isEnabled)
             => DbContext.Devices.Include("FirmwareSet")
                     .Include("FirmwareSet.Firmwares")
-                    .Where(device => device.DeviceNodeId == nodeId)
+                    .Where(device => device.DeviceNodeId == nodeId && device.IsEnabled == isEnabled)
                     .ToList();
     }
 }

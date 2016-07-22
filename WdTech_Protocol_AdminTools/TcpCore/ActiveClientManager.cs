@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using WdTech_Protocol_AdminTools.Services;
+using System.Timers;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -20,7 +22,27 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             = new List<TcpClientManager>();
 
         /// <summary>
-        /// 
+        /// 连接检查定时器
+        /// </summary>
+        private readonly Timer _connectionCheckTimer;
+
+        /// <summary>
+        /// 连接超时断开周期
+        /// </summary>
+        private static TimeSpan _disconnectInterval;
+
+        /// <summary>
+        /// 是否已经初始化
+        /// </summary>
+        private static bool _inited;
+
+        /// <summary>
+        /// 连接检查时间间隔
+        /// </summary>
+        private static double _checkInterval;
+
+        /// <summary>
+        /// 有效设备连接
         /// </summary>
         public int AliveConnection
         {
@@ -31,6 +53,38 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     return _clientSockets.Count;
                 }
             }
+        }
+
+        public ActiveClientManager()
+        {
+            if (!_inited) throw new InvalidOperationException("必须先初始化才能创建管理器！");
+            _connectionCheckTimer = new Timer();
+            _connectionCheckTimer.Elapsed += ConnectionCheck;
+            _connectionCheckTimer.Enabled = true;
+            _connectionCheckTimer.Interval = _checkInterval;
+        }
+
+        public static void Init(double interval, TimeSpan timeSpan)
+        {
+            _checkInterval = interval;
+            _disconnectInterval = timeSpan;
+            _inited = true;
+        }
+
+        /// <summary>
+        /// 启动管理器
+        /// </summary>
+        public void Start()
+        {
+            _connectionCheckTimer.Start();
+        }
+
+        /// <summary>
+        /// 停止管理器
+        /// </summary>
+        public void Stop()
+        {
+            _connectionCheckTimer.Stop();
         }
 
         /// <summary>
@@ -98,6 +152,22 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             if (command == null) return;
 
             device.Send(command, message.Params);
+        }
+
+        private void ConnectionCheck(object sender, ElapsedEventArgs e)
+        {
+            lock (_clientSockets)
+            {
+                var checkTime = DateTime.Now;
+                foreach (var tcpClientManager in _clientSockets)
+                {
+                    if (checkTime - tcpClientManager.LastAliveDateTime > _disconnectInterval)
+                    {
+                        tcpClientManager.Close();
+                        _clientSockets.Remove(tcpClientManager);
+                    }
+                }
+            }
         }
     }
 }

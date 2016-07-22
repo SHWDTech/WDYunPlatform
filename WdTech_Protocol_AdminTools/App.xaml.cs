@@ -7,6 +7,7 @@ using SHWD.Platform.Repository;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;
+using WdTech_Protocol_AdminTools.TcpCore;
 
 namespace WdTech_Protocol_AdminTools
 {
@@ -31,6 +32,8 @@ namespace WdTech_Protocol_AdminTools
             }
 
             ProcessInvoke.SetupGlobalRepositoryContext(serverUser, serverUser.Domain);
+
+            ActiveClientManager.Init(AppConfig.DeviceConnectionChevkInterval, AppConfig.DeviceDisconnectInterval);
 
             base.OnStartup(e);
         }
