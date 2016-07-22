@@ -163,9 +163,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "DepartmentManage")]
         public ActionResult DeleteDepartment(Guid guid)
         {
-            var areaId = Guid.Parse(Request["Id"]);
-
-            var sqlResult = ProcessInvoke.GetInstance<DepartmentProcess>().DeleteDepartment(areaId);
+            var sqlResult = ProcessInvoke.GetInstance<DepartmentProcess>().DeleteDepartment(guid);
 
             sqlResult.Message = sqlResult.ErrorNumber == 547
                 ? "选中部门已经存在关联用户，请先删除用户后再删除此部门。"

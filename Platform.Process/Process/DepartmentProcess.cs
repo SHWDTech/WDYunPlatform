@@ -67,7 +67,7 @@ namespace Platform.Process.Process
 
         public SqlExcuteResult DeleteDepartment(Guid departmentId)
         {
-            using (var repo = Repo<RoleRepository>())
+            using (var repo = Repo<DepartmentRepository>())
             {
                 var sqlResult = new SqlExcuteResult() { Success = false };
                 var role = repo.GetModel(obj => obj.Id == departmentId);

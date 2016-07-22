@@ -46,6 +46,16 @@ namespace Lampblack_Platform.Models.Monitor
         public List<SelectListItem> AreaListItems { get; set; }
 
         /// <summary>
+        /// 街道集合
+        /// </summary>
+        public List<SelectListItem> StreetListItems { get; set; }
+
+        /// <summary>
+        /// 地址集合
+        /// </summary>
+        public List<SelectListItem> AddressListItems { get; set; }
+
+        /// <summary>
         /// 区域ID
         /// </summary>
         [Display(Name = "区域")]

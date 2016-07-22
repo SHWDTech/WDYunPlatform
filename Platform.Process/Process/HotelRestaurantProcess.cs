@@ -267,7 +267,7 @@ namespace Platform.Process.Process
                             LampblackOut = Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue).ToString("F2"),
                             CleanerCurrent = (Globals.GetNullableNumber(cleanerCurrent?.DoubleValue) / 100.0).ToString("F2"),
                             FanCurrent = (Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.FanCurrent, recentDatas)?.DoubleValue) / 100.0).ToString("F2"),
-                            UpdateTime = recentDatas.Count > 0 ? recentDatas[0].UpdateTime.ToString("yyyy-MM-dd hh:mm:ss") : "N/A"
+                            UpdateTime = recentDatas.Count > 0 ? recentDatas[0].UpdateTime.ToString("yyyy-MM-dd HH:mm:ss") : "N/A"
                         };
 
                         hotelStatus.ChannelStatus.Add(channel);

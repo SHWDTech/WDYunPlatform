@@ -108,27 +108,27 @@ namespace Lampblack_Platform.Controllers
             var address = string.IsNullOrWhiteSpace(Request["AddressGuid"]) ? Guid.Empty : Guid.Parse(Request["AddressGuid"]);
 
             var conditions = new List<Expression<Func<HotelRestaurant, bool>>>();
-            //var paramsObjects = new Dictionary<string, string>();
+            var paramsObjects = new Dictionary<string, string>();
 
             if (area != Guid.Empty)
             {
                 Expression<Func<HotelRestaurant, bool>> condition = ex => ex.DistrictId == area;
                 conditions.Add(condition);
-                //paramsObjects.Add("area", area.ToString());
+                paramsObjects.Add("area", area.ToString());
             }
 
             if (street != Guid.Empty)
             {
                 Expression<Func<HotelRestaurant, bool>> condition = ex => ex.StreetId == street;
                 conditions.Add(condition);
-                //paramsObjects.Add("street", street.ToString());
+                paramsObjects.Add("street", street.ToString());
             }
 
             if (address != Guid.Empty)
             {
                 Expression<Func<HotelRestaurant, bool>> condition = ex => ex.AddressId == address;
                 conditions.Add(condition);
-                //paramsObjects.Add("address", street.ToString());
+                paramsObjects.Add("address", street.ToString());
             }
 
             var hotelList = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
@@ -143,6 +143,8 @@ namespace Lampblack_Platform.Controllers
                 PageIndex = page,
                 HotelsStatus = hotelList
             };
+
+            GetActualRelatedItems(paramsObjects, model);
 
             return View(model);
         }
@@ -184,6 +186,62 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.AreaListItems = areaList;
             ViewBag.StreetListItems = streetList;
+        }
+
+        private void GetActualRelatedItems(Dictionary<string, string> paramsObjects, ActualViewModel model)
+        {
+            var areaList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = "" }
+                };
+
+            var streetList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = ""}
+                };
+
+            var addressList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = ""}
+                };
+
+            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                .GetDistrictSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .ToList());
+
+            if (paramsObjects.ContainsKey("area"))
+            {
+                var selectArea = paramsObjects["area"];
+
+                model.AreaGuid = Guid.Parse(selectArea);
+
+                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    .GetChildDistrict(Guid.Parse(selectArea))
+                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .ToList());
+
+                if (paramsObjects.ContainsKey("street"))
+                {
+                    var selectStreet = paramsObjects["street"];
+                    model.StreetGuid = Guid.Parse(selectStreet);
+                    addressList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    .GetChildDistrict(Guid.Parse(selectArea))
+                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .ToList());
+
+                }
+
+                if (paramsObjects.ContainsKey("address"))
+                {
+                    var selectAddress = paramsObjects["address"];
+                    model.AddressGuid = Guid.Parse(selectAddress);
+                }
+            }
+
+            model.AreaListItems = areaList;
+            model.StreetListItems = streetList;
+            model.AddressListItems = addressList;
         }
     }
 }

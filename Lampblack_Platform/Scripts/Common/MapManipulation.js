@@ -8,8 +8,6 @@ var zoom = null;
 var map = null;
 //地图标记对象
 var markers = [];
-//提示框
-var infoWindow = null;
 //提示框内元素
 var infoPanel = {};
 
@@ -19,6 +17,7 @@ function map_init(func) {
     map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
     map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
 
+    infoPanel.body = $('#map-Marker');
     infoPanel.name = $('#name');
     infoPanel.chargeMan = $('#chargeMan');
     infoPanel.address = $('#address');
@@ -29,8 +28,6 @@ function map_init(func) {
     infoPanel.lampblackIn = $('#lampblackIn');
     infoPanel.lampblackOut = $('#lampblackOut');
     infoPanel.cleanRate = $('#cleanRate');
-    infoWindow = new BMap.InfoWindow($('#map-Marker')[0], { width: 400, height: 300, title: '<h4 class="text-center text-main-reverse">酒店当前状况</h4>' });
-    $('#map-Marker').show();
 
     if (func != null) {
         func();
@@ -82,6 +79,7 @@ var markerShowView = function (id) {
         $(infoPanel.cleanRate).html(ret.CleanRate);
 
         var point = $.grep(markers, function (e) { return e.id === id })[0].point;
+        var infoWindow = new BMap.InfoWindow(infoPanel.body[0], { width: 400, height: 320, title: '<h4 class="text-center text-main-reverse">酒店当前状况</h4>' });
         map.openInfoWindow(infoWindow, point);
     });
 }

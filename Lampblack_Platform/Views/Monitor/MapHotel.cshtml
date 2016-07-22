@@ -12,7 +12,7 @@
     UpdateTargetId = "searchTable",
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST"
-}.GeneralOptions(), new { id = "maphotel", @class = "flex-column" }))
+}.GeneralOptions(), new { id = "maphotel", @class = "flex-column", style = "max-height: 100%;" }))
 {
     <div class="panel-body" style="background-color: #33CEC3 ;">
         <div class="horizontal-group">
@@ -26,7 +26,7 @@
         <div class="horizontal-group">
             <label class="lbl60 lbl-white">酒店：</label>
             <input type="text" class="form-control" style="margin-right: 5px;" placeholder="输入酒店名称" name="queryName" />
-            <input type="submit" class="form-control btn btn-main" value="查询" style="width: 50px;" />
+            <input type="submit" class="form-control btn btn-main" value="查询" style="width: 70px;" />
         </div>
     </div>
     <div class="panel-body table-layer" style="overflow-y: auto;">

@@ -18,11 +18,15 @@
             <div class="panel">
                 <div class="panel-body">
                     <div class="control-layer horizontal-group">
-                        <span class="glyphicon glyphicon-user" style="font-size: 20px;"></span>
-                        <span style="margin-left: 10px;">酒店查询：</span>
-                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName" />
+                        <span class="span60">区县：</span>
+                        @Html.DropDownListFor(m => m.AreaGuid, Model.AreaListItems, new { @class = "form-control"})
+                        <span class="span60">街道：</span>
+                        @Html.DropDownListFor(m => m.StreetGuid, Model.StreetListItems, new { @class = "form-control" })
+                        <span class="span60">地址：</span>
+                        @Html.DropDownListFor(m => m.AddressGuid, Model.AddressListItems, new { @class = "form-control" })
+                        <span class="span80">酒店名称：</span>
+                        <input type="text" class="form-control" name="queryName" value="@Model.QueryName" />
                         <input type="submit" class="btn btn-main" value="查询" id="query" />
-                        <input type="button" class="btn btn-main" value="新增" id="add" />
                         <input type="button" class="btn btn-main" value="导出" id="export" />
                     </div>
                     <div class="table-layer">
