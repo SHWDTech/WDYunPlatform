@@ -20,6 +20,20 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             = new List<TcpClientManager>();
 
         /// <summary>
+        /// 
+        /// </summary>
+        public int AliveConnection
+        {
+            get
+            {
+                lock (_clientSockets)
+                {
+                    return _clientSockets.Count;
+                }
+            }
+        }
+
+        /// <summary>
         /// 添加一个客户端
         /// </summary>
         /// <param name="client"></param>
@@ -43,11 +57,25 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private void ClientDisconnected(TcpClientManager tcpClient)
         {
             AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
-            CommunicationServices.AliveConnection -= 1;
         }
 
         private void ClientAuthenticationed(TcpClientManager tcpClient)
         {
+            lock (_clientSockets)
+            {
+                if (_clientSockets.Count(obj => obj.DeviceGuid == tcpClient.DeviceGuid) > 1)
+                {
+                    foreach (var source in _clientSockets.Where(obj => obj.DeviceGuid == tcpClient.DeviceGuid))
+                    {
+                        if (source != tcpClient)
+                        {
+                            source.Close();
+                            _clientSockets.Remove(source);
+                        }
+                    }
+                }
+            }
+
             AdminReportService.Instance.Info($"客户端授权通过，客户端设备NODEID：{tcpClient.ClientDevice.DeviceNodeId}");
         }
 

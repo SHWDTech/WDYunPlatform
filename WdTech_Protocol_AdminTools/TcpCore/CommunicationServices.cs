@@ -28,7 +28,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private static readonly ActiveClientManager Manager;
 
-        public static int AliveConnection { get; set; }
+        public static int AliveConnection => Manager.AliveConnection;
 
         /// <summary>
         /// 服务监听器
@@ -137,7 +137,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 Manager.AddClient(client);
 
                 AdminReportService.Instance.Info($"客户端连接建立，IP地址：{client.RemoteEndPoint}。");
-                AliveConnection += 1;
             }
             catch (ObjectDisposedException ex)
             {

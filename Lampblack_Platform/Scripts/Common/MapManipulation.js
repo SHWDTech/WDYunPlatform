@@ -65,7 +65,7 @@ var add_MapPoint = function (item) {
     markers.push({id: item.Id, marker: marker, point: point});
 };
 
-var markerShowView = function (id) {
+var markerShowView = function (id, zoom) {
     base.AjaxGet("/Monitor/GetMapHotelInfo", { hotelGuid: id }, function (ret) {
         $(infoPanel.name).html(ret.Name);
         $(infoPanel.chargeMan).html(ret.ChargeMan);
@@ -80,6 +80,9 @@ var markerShowView = function (id) {
 
         var point = $.grep(markers, function (e) { return e.id === id })[0].point;
         var infoWindow = new BMap.InfoWindow(infoPanel.body[0], { width: 400, height: 320, title: '<h4 class="text-center text-main-reverse">酒店当前状况</h4>' });
+        if (zoom) {
+            map.centerAndZoom(point, zoom);
+        }
         map.openInfoWindow(infoWindow, point);
     });
 }

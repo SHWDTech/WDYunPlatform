@@ -1,4 +1,5 @@
-﻿$(function() {
+﻿$(function () {
+    $('#maphotel').height($('#searchTable').height());
     $('#AreaGuid').on('change', function () {
         if (IsNullOrEmpty($('#AreaGuid').val())) {
             $('#StreetGuid').empty();
@@ -14,6 +15,6 @@
     });
 
     $('.td-nav').on('click', function () {
-        window.markerShowView($(this).attr('id'));
+        window.markerShowView($(this).attr('id'), 16);
     });
 })

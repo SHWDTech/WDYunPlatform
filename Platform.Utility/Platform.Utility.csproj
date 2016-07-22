@@ -79,6 +79,7 @@
     <Compile Include="Enum\WindDirection.cs" />
     <Compile Include="Enum\WindSpeed.cs" />
     <Compile Include="Enum\WindSpeedType.cs" />
+    <Compile Include="ExtensionMethod\DateTimeExtensionMethod.cs" />
     <Compile Include="ExtensionMethod\RichTextBoxExtensionMethod.cs" />
     <Compile Include="ExtensionMethod\WpfWindowExtrensionMethod.cs" />
     <Compile Include="Globals.cs" />

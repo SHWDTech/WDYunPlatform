@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlComponents", "SqlCompone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LampblackCommandCoding", "LampblackCommandCoding\LampblackCommandCoding.csproj", "{14641D52-2470-43CB-9BC1-99C601B35E5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoDataStaticService", "AutoDataStaticService\AutoDataStaticService.csproj", "{399FA8CD-3370-4856-9588-F6B1E3777B22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,10 @@ Global
 		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14641D52-2470-43CB-9BC1-99C601B35E5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{399FA8CD-3370-4856-9588-F6B1E3777B22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399FA8CD-3370-4856-9588-F6B1E3777B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399FA8CD-3370-4856-9588-F6B1E3777B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{399FA8CD-3370-4856-9588-F6B1E3777B22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,5 +208,6 @@ Global
 		{D79F8C47-22E3-4B7D-B5F2-8D3ED747FD10} = {61D7C901-3319-4349-9DEB-28DE889C7179}
 		{A54688DC-6D07-4B0C-8778-51E2B7EAE03D} = {ADAD459B-F78F-4819-9B54-BDF3539F838F}
 		{14641D52-2470-43CB-9BC1-99C601B35E5A} = {9A830392-AC75-4AF0-80C8-ABE30CF0649B}
+		{399FA8CD-3370-4856-9588-F6B1E3777B22} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 	EndGlobalSection
 EndGlobal

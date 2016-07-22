@@ -14,6 +14,7 @@ using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
+using SHWDTech.Platform.Utility.ExtensionMethod;
 
 namespace Platform.Process.Process
 {
@@ -264,11 +265,13 @@ namespace Platform.Process.Process
                             CleanRate = TranslateCleanRateUrl(cleanRate),
                             CleanerSwitch = TranslateSwitchUrl(GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue),
                             FanSwitch = TranslateSwitchUrl(GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue),
-                            LampblackOut = Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue).ToString("F2"),
                             CleanerCurrent = (Globals.GetNullableNumber(cleanerCurrent?.DoubleValue) / 100.0).ToString("F2"),
                             FanCurrent = (Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.FanCurrent, recentDatas)?.DoubleValue) / 100.0).ToString("F2"),
                             UpdateTime = recentDatas.Count > 0 ? recentDatas[0].UpdateTime.ToString("yyyy-MM-dd HH:mm:ss") : "N/A"
                         };
+
+                        var lampblackOut = GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas);
+                        channel.LampblackOut = lampblackOut == null ? "N/A" : Globals.GetNullableNumber(lampblackOut.DoubleValue).ToString("F2");
 
                         hotelStatus.ChannelStatus.Add(channel);
                     }
@@ -292,7 +295,7 @@ namespace Platform.Process.Process
         /// <returns></returns>
         private List<MonitorData> GetLastMonitorData(Guid hotelGuid)
         {
-            var checkDate = DateTime.Now.AddMinutes(-3);
+            var checkDate = DateTime.Now.Trim(TimeSpan.TicksPerSecond).AddMinutes(-2);
 
             using (var dataRepo = Repo<MonitorDataRepository>())
             {
