@@ -106,7 +106,7 @@ var Msg = function (msg, option) {
     if (!IsNullOrEmpty(option.callback)) {
         $('#modal-confirm').off();
         $('#modal-confirm').on('click', function () {
-            option.callback(option.param);
+            option.call(option.param);
         });
     }
 
