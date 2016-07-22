@@ -7,63 +7,65 @@
     Layout = null;
 }
 
-@using (Ajax.BeginForm("MapHotel", null, new AjaxOptions()
-{
-    UpdateTargetId = "searchTable",
-    InsertionMode = InsertionMode.Replace,
-    HttpMethod = "POST"
-}.GeneralOptions(), new { id = "maphotel", @class = "flex-column", style = "max-height: 100%; height: 100%;" }))
-{
-    <div class="panel-body" style="background-color: #33CEC3 ;">
-        <div class="horizontal-group">
-            @Html.LabelFor(m => m.AreaGuid, new { @class = "lbl60 lbl-white" })
-            @Html.DropDownListFor(m => m.AreaGuid, (List<SelectListItem>)ViewBag.AreaListItems, null, new { @class = "form-control" })
+<div>
+    @using (Ajax.BeginForm("MapHotel", null, new AjaxOptions()
+    {
+        UpdateTargetId = "searchTable",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "POST"
+    }.GeneralOptions(), new { id = "maphotel", @class = "flex-column", style = "position: absolute; bottom: 0; top: 0;" }))
+    {
+        <div class="panel-body" style="background-color: #33CEC3 ;">
+            <div class="horizontal-group">
+                @Html.LabelFor(m => m.AreaGuid, new { @class = "lbl60 lbl-white" })
+                @Html.DropDownListFor(m => m.AreaGuid, (List<SelectListItem>)ViewBag.AreaListItems, null, new { @class = "form-control" })
+            </div>
+            <div class="horizontal-group">
+                @Html.LabelFor(m => m.StreetGuid, new { @class = "lbl60 lbl-white" })
+                @Html.DropDownListFor(m => m.StreetGuid, (List<SelectListItem>)ViewBag.StreetListItems, null, new { @class = "form-control" })
+            </div>
+            <div class="horizontal-group">
+                <label class="lbl60 lbl-white">酒店：</label>
+                <input type="text" class="form-control" style="margin-right: 5px;" placeholder="输入酒店名称" name="queryName" />
+                <input type="submit" class="form-control btn btn-main" value="查询" style="width: 80px;" />
+            </div>
         </div>
-        <div class="horizontal-group">
-            @Html.LabelFor(m => m.StreetGuid, new { @class = "lbl60 lbl-white" })
-            @Html.DropDownListFor(m => m.StreetGuid, (List<SelectListItem>)ViewBag.StreetListItems, null, new { @class = "form-control" })
-        </div>
-        <div class="horizontal-group">
-            <label class="lbl60 lbl-white">酒店：</label>
-            <input type="text" class="form-control" style="margin-right: 5px;" placeholder="输入酒店名称" name="queryName" />
-            <input type="submit" class="form-control btn btn-main" value="查询" style="width: 80px;" />
-        </div>
-    </div>
-    <div class="panel-body table-layer" style="overflow-y: auto;">
-        <table class="table table-bordered table-hover info text-center">
-            <thead>
-                <tr>
-                    <td class="text-center table-head">
-                        饭店列表
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var hotel in Model.Hotels)
-                    {
-                        <tr>
-                            <td id="@hotel.Id" class="td-nav">@hotel.ProjectName</td>
-                        </tr>
+        <div class="panel-body table-layer" style="overflow-y: auto;">
+            <table class="table table-bordered table-hover info text-center">
+                <thead>
+                    <tr>
+                        <td class="text-center table-head">
+                            饭店列表
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var hotel in Model.Hotels)
+                        {
+                            <tr>
+                                <td id="@hotel.Id" class="td-nav">@hotel.ProjectName</td>
+                            </tr>
+                        }
                     }
+                </tbody>
+            </table>
+            <div style="float: right;">
+                @{
+                    var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+                    {
+                        HttpMethod = "POST",
+                        UpdateTargetId = "searchTable",
+                        InsertionMode = InsertionMode.Replace
+                    });
+                    option.UlElementClasses = new[] { "no-margin pagination" };
                 }
-            </tbody>
-        </table>
-        <div style="float: right;">
-            @{
-                var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
-                {
-                    HttpMethod = "POST",
-                    UpdateTargetId = "searchTable",
-                    InsertionMode = InsertionMode.Replace
-                });
-                option.UlElementClasses = new[] { "no-margin pagination" };
-            }
 
-            @Html.PagedListPager(Model.Hotels,
+                @Html.PagedListPager(Model.Hotels,
                     page => Url.Action("MapHotel", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+            </div>
         </div>
-    </div>
-                }
+                    }
+</div>
 
 <script type="text/javascript" src="/Scripts/Page/MapHotel.js"></script>

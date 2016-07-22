@@ -1,5 +1,4 @@
 ﻿$(function () {
-    $('#maphotel').height($('#searchTable').height());
     $('#AreaGuid').on('change', function () {
         if (IsNullOrEmpty($('#AreaGuid').val())) {
             $('#StreetGuid').empty();
