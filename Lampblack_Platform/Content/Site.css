@@ -12,6 +12,13 @@ body {
 
         body a:focus {
             -moz-outline: none;
+            -ms-outline: none;
+            outline: none;
+        }
+
+        body input:focus {
+            -moz-outline: none;
+            -ms-outline: none;
             outline: none;
         }
 
@@ -429,6 +436,10 @@ label {
 .horizontal-group {
     display: flex;
     margin-bottom: 5px;
+}
+
+.btn {
+    min-width: 50px;
 }
 
 .btn-main {
