@@ -46,10 +46,11 @@ namespace Platform.Process.Process
         {
             using (var context = new RepositoryDbContext())
             {
-                var users = context.Set<WdUser>().Include("Permissions").ToList();
+                PlatformCaches.DeleteCachesByType("UserPermissions");
+                var users = context.Set<WdUser>().Include("Permissions").Where(obj => obj.IsEnabled).ToList();
                 foreach (var wdUser in users)
                 {
-                    PlatformCaches.Add($"User[{wdUser.Id}]-Permissions", wdUser.Permissions.ToList(), false, "Permissions");
+                    PlatformCaches.Add($"User[{wdUser.Id}]-Permissions", wdUser.Permissions.ToList(), false, "UserPermissions");
                 }
             }
         }
@@ -61,10 +62,11 @@ namespace Platform.Process.Process
         {
             using (var context = new RepositoryDbContext())
             {
-                var roles = context.Set<WdRole>().Include("Permissions").ToList();
+                PlatformCaches.DeleteCachesByType("RolePermissions");
+                var roles = context.Set<WdRole>().Include("Permissions").Where(obj => obj.IsEnabled).ToList();
                 foreach (var wdRole in roles)
                 {
-                    PlatformCaches.Add($"Role[{wdRole.Id}]-Permissions", wdRole.Permissions.ToList(), false, "Permissions");
+                    PlatformCaches.Add($"Role[{wdRole.Id}]-Permissions", wdRole.Permissions.ToList(), false, "RolePermissions");
                 }
             }
         }
@@ -76,6 +78,7 @@ namespace Platform.Process.Process
         {
             using (var context = new RepositoryDbContext())
             {
+                PlatformCaches.DeleteCachesByType("Modules");
                 var modules = context.Set<Module>().ToList();
                 foreach (var module in modules)
                 {
@@ -91,6 +94,7 @@ namespace Platform.Process.Process
         {
             using (var context = new RepositoryDbContext())
             {
+                PlatformCaches.DeleteCachesByName("Permissions");
                 var permissions = context.Set<Permission>().ToList();
                 PlatformCaches.Add("Permissions", permissions, false, "System");
             }
@@ -131,6 +135,12 @@ namespace Platform.Process.Process
             }
         }
 
+        /// <summary>
+        /// 获取系统配置信息
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="exp"></param>
+        /// <returns></returns>
         public static object GetConfig<T>(Expression<Func<T, bool>> exp) where T : class
         {
             using (var context = new RepositoryDbContext())

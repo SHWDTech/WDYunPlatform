@@ -33,6 +33,9 @@
                                         角色名称
                                     </td>
                                     <td style="width: 10%;">
+                                        是否启用
+                                    </td>
+                                    <td style="width: 10%;">
                                         角色描述
                                     </td>
                                     <td style="width: 10%;">
@@ -46,6 +49,10 @@
                                     {
                                         <tr data-company-id="@role.Id">
                                             <td>@role.RoleName</td>
+                                            @{
+                                                var enable = role.IsEnabled ? "是" : "否";
+                                            }
+                                            <td>@enable</td>
                                             <td>@role.Comments</td>
                                             <td>
                                                 @Ajax.ActionLink("编辑", "EditRole", new { guid = role.Id },

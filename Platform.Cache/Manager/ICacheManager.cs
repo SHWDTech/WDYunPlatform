@@ -40,5 +40,11 @@ namespace Platform.Cache.Manager
         /// </summary>
         /// <param name="type"></param>
         void DeleteCacheByType(string type);
+
+        /// <summary>
+        /// 删除指定名称的缓存
+        /// </summary>
+        /// <param name="name"></param>
+        void DeleteCacheByName(string name);
     }
 }

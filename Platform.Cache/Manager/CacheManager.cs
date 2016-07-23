@@ -59,5 +59,14 @@ namespace Platform.Cache.Manager
                 _platformCaches.Remove(cach.Key);
             }
         }
+
+        public void DeleteCacheByName(string name)
+        {
+            var caches = _platformCaches.Where(obj => obj.Key == name);
+            foreach (var cach in caches)
+            {
+                _platformCaches.Remove(cach.Key);
+            }
+        }
     }
 }

@@ -20,9 +20,14 @@
         <tbody>
             <tr>
                 <td>@Html.LabelFor(m => m.RoleName)</td>
-                <td colspan="3">
-                    @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", placeholder = "请输入角色名称" })
-                    @Html.ValidationMessageFor(m => m.RoleName, null, new { @class = "text-danger" })
+                <td>
+                    @Html.TextBoxFor(m => m.RoleName, new {@class = "form-control", placeholder = "请输入角色名称"})
+                    @Html.ValidationMessageFor(m => m.RoleName, null, new {@class = "text-danger"})
+                </td>
+                <td>@Html.LabelFor(m => m.IsEnabled)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.IsEnabled, (List<SelectListItem>)ViewBag.Enable, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.IsEnabled, null, new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>

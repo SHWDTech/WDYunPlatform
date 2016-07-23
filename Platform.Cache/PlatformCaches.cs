@@ -62,7 +62,14 @@ namespace Platform.Cache
         /// 删除指定类型的缓存
         /// </summary>
         /// <param name="type"></param>
-        public static void DeleteCaches(string type)
+        public static void DeleteCachesByType(string type)
             => Instance.DeleteCacheByType(type);
+
+        /// <summary>
+        /// 删除指定名称的缓存
+        /// </summary>
+        /// <param name="name"></param>
+        public static void DeleteCachesByName(string name)
+            => Instance.DeleteCacheByName(name);
     }
 }

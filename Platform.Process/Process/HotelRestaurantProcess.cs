@@ -98,6 +98,14 @@ namespace Platform.Process.Process
             }
         }
 
+        public List<Guid> GetAllHotelGuids()
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                return repo.GetAllModels().Select(obj => obj.Id).ToList();
+            }
+        }
+
         public Dictionary<string, string> GetHotelCleanessList()
         {
             var repo = Repo<HotelRestaurantRepository>();
