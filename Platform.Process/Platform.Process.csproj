@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\ChannelStatus.cs" />
+    <Compile Include="Business\CleanRateView.cs" />
     <Compile Include="Business\HotelActualStatus.cs" />
     <Compile Include="Business\Lampblack.cs" />
     <Compile Include="Enums\CleanessRateResult.cs" />

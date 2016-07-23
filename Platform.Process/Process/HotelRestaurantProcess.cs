@@ -296,6 +296,57 @@ namespace Platform.Process.Process
             }
         }
 
+        public IPagedList<CleanRateView> GetPagedCleanRateView(int page, int pageSize, string queryName, out int count, List<Expression<Func<DataStatistics, bool>>> conditions = null)
+        {
+            var viewList = new List<CleanRateView>();
+
+            var commandDataId = Repo<CommandDataRepository>()
+                .GetModel(obj => obj.DataName == ProtocolDataName.CleanerCurrent)
+                .Id;
+
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                var hotels = repo.GetAllModels().Select(obj => new { obj.Id, obj.ProjectName });
+                foreach (var hotel in hotels)
+                {
+                    var view = new CleanRateView()
+                    {
+                        HotelName = hotel.ProjectName,
+                        HotelId = hotel.Id
+                    };
+
+                    var hotelDevice = Repo<RestaurantDeviceRepository>().GetModels(device => device.ProjectId == hotel.Id);
+
+                    foreach (var device in hotelDevice)
+                    {
+                        var dayStatics = Repo<DataStatisticsRepository>().GetModels(obj => 
+                        obj.DeviceId == device.Id 
+                        && obj.Type == StatisticsType.Day
+                        && obj.CommandDataId == commandDataId);
+                        if (conditions != null)
+                        {
+                            dayStatics = conditions.Aggregate(dayStatics, (current, condition) => current.Where(condition));
+                        }
+
+                        var model = Repo<RestaurantDeviceRepository>()
+                       .GetModelIncludeById(device.Id, new List<string> { "LampblackDeviceModel" })
+                       .LampblackDeviceModel;
+
+                        var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
+
+                        view.Failed += dayStatics.Count(item => item.DoubleValue <= rater.Fail);
+                        view.Worse += dayStatics.Count(item => item.DoubleValue > rater.Fail && item.DoubleValue <= rater.Worse);
+                        view.Qualified += dayStatics.Count(item => item.DoubleValue > rater.Worse && item.DoubleValue <= rater.Qualified);
+                        view.Good += dayStatics.Count(item => item.DoubleValue > rater.Good);
+                    }
+
+                    viewList.Add(view);
+                }
+                count = viewList.Count;
+                return viewList.ToPagedList(page, pageSize);
+            }
+        }
+
         /// <summary>
         /// 获取酒店最新数据
         /// </summary>

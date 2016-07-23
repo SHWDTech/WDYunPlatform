@@ -38,11 +38,10 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "数据名称")]
         public virtual string DataName => CommandData.DataName;
 
-        [NotMapped]
         [Display(Name = "数据来源设备")]
+        [ForeignKey("DeviceId")]
         public virtual Device Device { get; set; }
 
-        [NotMapped]
         [Display(Name = "数据来源设备ID")]
         public virtual Guid DeviceId { get; set; }
 
