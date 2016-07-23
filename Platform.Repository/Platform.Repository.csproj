@@ -147,6 +147,10 @@
     <Compile Include="Migrations\201607211051099_AddDataChannel.Designer.cs">
       <DependentUpon>201607211051099_AddDataChannel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607230749280_ModiryDataStatistic.cs" />
+    <Compile Include="Migrations\201607230749280_ModiryDataStatistic.Designer.cs">
+      <DependentUpon>201607230749280_ModiryDataStatistic.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -232,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607211051099_AddDataChannel.resx">
       <DependentUpon>201607211051099_AddDataChannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607230749280_ModiryDataStatistic.resx">
+      <DependentUpon>201607230749280_ModiryDataStatistic.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

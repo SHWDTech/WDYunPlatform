@@ -25,7 +25,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual CommandData CommandData { get; set; }
 
         [Display(Name = "数据来源通道号")]
-        public virtual ushort DataChannel { get; set; } = 0;
+        public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
         public virtual Guid? ProjectId { get; set; }

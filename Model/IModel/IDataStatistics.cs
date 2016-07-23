@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 数据来源通道号
         /// </summary>
-        ushort DataChannel { get; set; }
+        short DataChannel { get; set; }
 
         /// <summary>
         /// 数据来源工地ID

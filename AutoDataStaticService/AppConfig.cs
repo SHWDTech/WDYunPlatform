@@ -15,11 +15,18 @@ namespace AutoDataStaticService
         /// </summary>
         public static readonly DateTime DefaultStartDate;
 
+        /// <summary>
+        /// 协议数据名称
+        /// </summary>
+        public static readonly string[] CommandDatas;
+
         static AppConfig()
         {
             ServerAccount = ConfigurationManager.AppSettings["ServerAccount"];
 
             DefaultStartDate = DateTime.Parse(ConfigurationManager.AppSettings["DefaultStartDate"]);
+
+            CommandDatas = ConfigurationManager.AppSettings["CommandDatas"].Split(',');
         }
     }
 }
