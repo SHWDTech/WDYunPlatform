@@ -146,8 +146,8 @@ namespace Platform.Process.Process
                 retDictionary.Add("CleanRate",
                     cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId));
 
-                retDictionary.Add("CleanerRunTime", GetCleanerRunTime(hotel.Id));
-                retDictionary.Add("FanRunTime", GetFanRunTime(hotel.Id));
+                retDictionary.Add("CleanerRunTime", GetCleanerRunTimeString(hotel.Id));
+                retDictionary.Add("FanRunTime", GetFanRunTimeString(hotel.Id));
             }
 
             return retDictionary;
@@ -393,12 +393,51 @@ namespace Platform.Process.Process
         private MonitorData GetMonitorDataValue(string dataName, List<MonitorData> monitorDatas)
             => monitorDatas.FirstOrDefault(obj => obj.DataName == dataName);
 
+
+        public TimeSpan GetRunTime(Guid hotelGuid, DateTime startDate, string dataName)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var today = startDate.GetToday();
+
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.BooleanValue == true
+                        && obj.CommandData.DataName == dataName
+                        && obj.UpdateTime > today)
+                    .OrderBy(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.BooleanValue == true
+                        && obj.CommandData.DataName == dataName
+                        && obj.UpdateTime > today)
+                    .OrderByDescending(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                TimeSpan timeSpan;
+                if (start == null)
+                {
+                    return new TimeSpan(0);
+                }
+                if (end == null)
+                {
+                    timeSpan = DateTime.Now - start.UpdateTime;
+                }
+                else
+                {
+                    timeSpan = end.UpdateTime - start.UpdateTime;
+                }
+
+                return timeSpan;
+            }
+        }
+
         /// <summary>
         /// 获取净化器运行时间
         /// </summary>
         /// <param name="hotelGuid"></param>
         /// <returns></returns>
-        private string GetCleanerRunTime(Guid hotelGuid)
+        private string GetCleanerRunTimeString(Guid hotelGuid)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
@@ -441,7 +480,7 @@ namespace Platform.Process.Process
         /// </summary>
         /// <param name="hotelGuid"></param>
         /// <returns></returns>
-        private string GetFanRunTime(Guid hotelGuid)
+        private string GetFanRunTimeString(Guid hotelGuid)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
@@ -476,6 +515,41 @@ namespace Platform.Process.Process
                 }
 
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
+            }
+        }
+
+
+        public TimeSpan GetDeviceRunTime(Guid hotelGuid, DateTime startDate)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var today = startDate.GetToday();
+
+                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.UpdateTime > today)
+                    .OrderBy(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                        && obj.UpdateTime > today)
+                    .OrderByDescending(item => item.UpdateTime)
+                    .FirstOrDefault();
+
+                TimeSpan timeSpan;
+                if (start == null)
+                {
+                    return new TimeSpan(0);
+                }
+                if (end == null)
+                {
+                    timeSpan = DateTime.Now - start.UpdateTime;
+                }
+                else
+                {
+                    timeSpan = end.UpdateTime - start.UpdateTime;
+                }
+
+                return timeSpan;
             }
         }
 

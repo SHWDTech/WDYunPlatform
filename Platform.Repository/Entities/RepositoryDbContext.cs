@@ -402,5 +402,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 统计数据
         /// </summary>
         public virtual DbSet<DataStatistics> DataStatisticses { get; set; }
+
+        /// <summary>
+        /// 运行时间
+        /// </summary>
+        public virtual DbSet<RunningTime> RunningTimes { get; set; }
     }
 }

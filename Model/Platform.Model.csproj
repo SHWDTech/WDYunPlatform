@@ -75,6 +75,7 @@
     <Compile Include="Enums\ModelState.cs" />
     <Compile Include="Enums\ProtocolDeliveryParam.cs" />
     <Compile Include="Enums\RoleStatus.cs" />
+    <Compile Include="Enums\RunningTimeType.cs" />
     <Compile Include="Enums\StatisticsType.cs" />
     <Compile Include="Enums\SysConfigType.cs" />
     <Compile Include="Enums\TaskExceteStatus.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="IModel\IProtocolData.cs" />
     <Compile Include="IModel\IProtocolStructure.cs" />
     <Compile Include="IModel\ICateringCompany.cs" />
+    <Compile Include="IModel\IRunningTime.cs" />
     <Compile Include="IModel\IWdRole.cs" />
     <Compile Include="IModel\ISysConfig.cs" />
     <Compile Include="IModel\ISysDictionary.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="Model\ProtocolStructure.cs" />
     <Compile Include="Model\CateringCompany.cs" />
     <Compile Include="Model\RestaurantDevice.cs" />
+    <Compile Include="Model\RunningTime.cs" />
     <Compile Include="Model\WdRole.cs" />
     <Compile Include="Model\SysConfig.cs" />
     <Compile Include="Model\SysDictionary.cs" />

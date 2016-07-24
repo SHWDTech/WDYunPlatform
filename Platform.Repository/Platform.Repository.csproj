@@ -99,6 +99,7 @@
     <Compile Include="IRepository\IHotelRestaurantRepository.cs" />
     <Compile Include="IRepository\IRestaurantDeviceRepository.cs" />
     <Compile Include="IRepository\IRoleRepository.cs" />
+    <Compile Include="IRepository\IRunningTimeRepository.cs" />
     <Compile Include="IRepository\ISysConfigRepository.cs" />
     <Compile Include="IRepository\ISysDictionaryRepository.cs" />
     <Compile Include="IRepository\ISysDomainRepository.cs" />
@@ -155,6 +156,10 @@
     <Compile Include="Migrations\201607231505471_ModifyDataStatistics.Designer.cs">
       <DependentUpon>201607231505471_ModifyDataStatistics.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607240417413_AddRunningTIme.cs" />
+    <Compile Include="Migrations\201607240417413_AddRunningTIme.Designer.cs">
+      <DependentUpon>201607240417413_AddRunningTIme.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="Repository\HotelRestaurantRepository.cs" />
     <Compile Include="Repository\RestaurantDeviceRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\RunningTimeRepository.cs" />
     <Compile Include="Repository\SysConfigRepository.cs" />
     <Compile Include="Repository\SysDictionaryRepository.cs" />
     <Compile Include="Repository\SysDomainRepository.cs" />
@@ -246,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607231505471_ModifyDataStatistics.resx">
       <DependentUpon>201607231505471_ModifyDataStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607240417413_AddRunningTIme.resx">
+      <DependentUpon>201607240417413_AddRunningTIme.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

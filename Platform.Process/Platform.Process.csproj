@@ -76,6 +76,7 @@
     <Compile Include="Business\CleanRateView.cs" />
     <Compile Include="Business\HotelActualStatus.cs" />
     <Compile Include="Business\Lampblack.cs" />
+    <Compile Include="Business\RunningTimeView.cs" />
     <Compile Include="Enums\CleanessRateResult.cs" />
     <Compile Include="Enums\SignInStatus.cs" />
     <Compile Include="Enums\SigninResult.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="IProcess\IProtocolCodingProcess.cs" />
     <Compile Include="IProcess\IProtocolPackageProcess.cs" />
     <Compile Include="IProcess\IRestaurantDeviceProcess.cs" />
+    <Compile Include="IProcess\IRunningTimeProcess.cs" />
     <Compile Include="IProcess\ISysConfigProcess.cs" />
     <Compile Include="IProcess\ICommandTaskProcess.cs" />
     <Compile Include="IProcess\IUserDictionaryProcess.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="Process\ProtocolCodingProcess.cs" />
     <Compile Include="Process\ProtocolPackageProcess.cs" />
     <Compile Include="Process\RestaurantDeviceProcess.cs" />
+    <Compile Include="Process\RunningTimeProcess.cs" />
     <Compile Include="Process\SysConfigProcess.cs" />
     <Compile Include="Process\CommandTaskProcess.cs" />
     <Compile Include="Process\UserDictionaryProcess.cs" />

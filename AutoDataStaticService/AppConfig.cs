@@ -20,6 +20,11 @@ namespace AutoDataStaticService
         /// </summary>
         public static readonly string[] CommandDatas;
 
+        /// <summary>
+        /// 运行时间指令数据
+        /// </summary>
+        public static readonly string[] RunningTimeDatas;
+
         static AppConfig()
         {
             ServerAccount = ConfigurationManager.AppSettings["ServerAccount"];
@@ -27,6 +32,8 @@ namespace AutoDataStaticService
             DefaultStartDate = DateTime.Parse(ConfigurationManager.AppSettings["DefaultStartDate"]);
 
             CommandDatas = ConfigurationManager.AppSettings["CommandDatas"].Split(',');
+
+            RunningTimeDatas = ConfigurationManager.AppSettings["RunningTimeDatas"].Split(',');
         }
     }
 }
