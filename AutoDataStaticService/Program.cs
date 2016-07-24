@@ -198,9 +198,9 @@ namespace AutoDataStaticService
                 var firstMonitorData = ProcessInvoke.GetInstance<MonitorDataProcess>().GetFirst(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid);
                 var startDate = lastDate == DateTime.MinValue
                         ? firstMonitorData.UpdateTime
-                        : lastDate;
+                        : lastDate.AddDays(1);
 
-                while (startDate < _produceEndDay)
+                while (startDate <= _produceEndDay)
                 {
                     var date = startDate;
                     var runTime = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
@@ -233,9 +233,9 @@ namespace AutoDataStaticService
             var firstMonitorData = ProcessInvoke.GetInstance<MonitorDataProcess>().GetFirst(obj => obj.ProjectId == hotelGuid);
             var startDate = lastDate == DateTime.MinValue
                     ? firstMonitorData.UpdateTime
-                    : lastDate;
+                    : lastDate.AddDays(1);
 
-            while (startDate < _produceEndDay)
+            while (startDate <= _produceEndDay)
             {
                 var date = startDate;
                 var runTime = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
@@ -321,7 +321,6 @@ namespace AutoDataStaticService
 
             _produceEndDayHour = DateTime.Now.AddHours(-1).GetCurrentHour();
             _produceEndDay = DateTime.Now.AddDays(-1).GetToday();
-
 
             Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】系统初始化完成。");
             return true;
