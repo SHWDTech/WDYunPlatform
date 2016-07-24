@@ -2,6 +2,7 @@
 using System.Linq;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
@@ -11,11 +12,11 @@ namespace Platform.Process.Process
     /// </summary>
     public class RunningTimeProcess : ProcessBase, IRunningTimeProcess
     {
-        public DateTime LastRecordDateTime(Guid hotelGuid)
+        public DateTime LastRecordDateTime(Guid hotelGuid, RunningTimeType type)
         {
             using (var repo = Repo<RunningTimeRepository>())
             {
-                var lastRecord = repo.GetModels(obj => obj.ProjectId == hotelGuid)
+                var lastRecord = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.Type == type)
                     .OrderByDescending(item => item.UpdateTime).FirstOrDefault();
 
                 return lastRecord?.UpdateTime ?? DateTime.MinValue;

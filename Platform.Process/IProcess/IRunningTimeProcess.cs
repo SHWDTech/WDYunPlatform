@@ -1,4 +1,5 @@
 ﻿using System;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
@@ -12,8 +13,9 @@ namespace Platform.Process.IProcess
         /// 最后记录时间
         /// </summary>
         /// <param name="hotelGuid"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
-        DateTime LastRecordDateTime(Guid hotelGuid);
+        DateTime LastRecordDateTime(Guid hotelGuid, RunningTimeType type);
 
         /// <summary>
         /// 存储运行时间数据

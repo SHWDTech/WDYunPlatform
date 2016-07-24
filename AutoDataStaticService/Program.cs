@@ -194,7 +194,8 @@ namespace AutoDataStaticService
                 Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理每日运行时间数据，数据名称：{data.DataName}");
                 var process = ProcessInvoke.GetInstance<RunningTimeProcess>();
 
-                var lastDate = process.LastRecordDateTime(hotelGuid);
+                var type = GetRunningType(data.DataName);
+                var lastDate = process.LastRecordDateTime(hotelGuid, type);
                 var firstMonitorData = ProcessInvoke.GetInstance<MonitorDataProcess>().GetFirst(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid);
                 var startDate = lastDate == DateTime.MinValue
                         ? firstMonitorData.UpdateTime
@@ -211,7 +212,7 @@ namespace AutoDataStaticService
                     runningTime.ProjectId = hotelGuid;
                     runningTime.RunningTimeSpan = runTime;
                     runningTime.DeviceId = firstMonitorData.DeviceId;
-                    runningTime.Type = GetRunningType(data.DataName);
+                    runningTime.Type = type;
 
                     ProcessInvoke.GetInstance<RunningTimeProcess>().StoreRunningTime(runningTime);
 
@@ -229,7 +230,7 @@ namespace AutoDataStaticService
             Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理每日设备运行时间数据。");
             var process = ProcessInvoke.GetInstance<RunningTimeProcess>();
 
-            var lastDate = process.LastRecordDateTime(hotelGuid);
+            var lastDate = process.LastRecordDateTime(hotelGuid, RunningTimeType.Device);
             var firstMonitorData = ProcessInvoke.GetInstance<MonitorDataProcess>().GetFirst(obj => obj.ProjectId == hotelGuid);
             var startDate = lastDate == DateTime.MinValue
                     ? firstMonitorData.UpdateTime
@@ -246,7 +247,7 @@ namespace AutoDataStaticService
                 runningTime.ProjectId = hotelGuid;
                 runningTime.RunningTimeSpan = runTime;
                 runningTime.DeviceId = firstMonitorData.DeviceId;
-                runningTime.Type = GetRunningType("");
+                runningTime.Type = RunningTimeType.Device;
                 ProcessInvoke.GetInstance<RunningTimeProcess>().StoreRunningTime(runningTime);
 
                 startDate = startDate.AddDays(1);
@@ -260,7 +261,7 @@ namespace AutoDataStaticService
                 case ProtocolDataName.CleanerSwitch:
                     return RunningTimeType.Cleaner;
                 case ProtocolDataName.FanSwitch:
-                    return RunningTimeType.Cleaner;
+                    return RunningTimeType.Fan;
                 default:
                     return RunningTimeType.Device;
             }
