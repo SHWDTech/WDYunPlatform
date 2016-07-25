@@ -72,10 +72,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\AlarmView.cs" />
     <Compile Include="Business\ChannelStatus.cs" />
     <Compile Include="Business\CleanRateView.cs" />
+    <Compile Include="Business\HistoryData.cs" />
     <Compile Include="Business\HotelActualStatus.cs" />
     <Compile Include="Business\Lampblack.cs" />
+    <Compile Include="Business\LinkAgeView.cs" />
     <Compile Include="Business\RunningTimeView.cs" />
     <Compile Include="Enums\CleanessRateResult.cs" />
     <Compile Include="Enums\SignInStatus.cs" />

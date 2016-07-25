@@ -219,8 +219,12 @@
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\Common\SetUpCharts.js" />
     <Content Include="Scripts\Page\Actual.js" />
+    <Content Include="Scripts\Page\Alarm.js" />
     <Content Include="Scripts\Page\CleanRate.js" />
+    <Content Include="Scripts\Page\HistoryData.js" />
     <Content Include="Scripts\Page\Index.js" />
+    <Content Include="Scripts\Page\LinkageRate.js" />
+    <Content Include="Scripts\Page\RunningTime.js" />
     <Content Include="Scripts\Utility\bootstrap.js" />
     <Content Include="Scripts\Utility\bootstrap.min.js" />
     <Content Include="Scripts\Common\Const.js" />

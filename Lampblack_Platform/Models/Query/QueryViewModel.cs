@@ -56,4 +56,76 @@ namespace Lampblack_Platform.Models.Query
         /// </summary>
         public IPagedList<RunningTimeView> RunningTimeView { get; set; }
     }
+
+    public class LinkageViewModel : PagedListViewModelBase
+    {
+        /// <summary>
+        /// 查询开始时间
+        /// </summary>
+        [Display(Name = "查询开始时间")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDateTime { get; set; }
+
+        /// <summary>
+        /// 查询结束时间
+        /// </summary>
+        [Display(Name = "查询结束时间")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EndDateTime { get; set; }
+
+        /// <summary>
+        /// 清洁度视图
+        /// </summary>
+        public IPagedList<LinkageView> LinkageView { get; set; }
+    }
+
+    public class AlarmViewModel : PagedListViewModelBase
+    {
+        /// <summary>
+        /// 查询开始时间
+        /// </summary>
+        [Display(Name = "查询开始时间")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDateTime { get; set; }
+
+        /// <summary>
+        /// 查询结束时间
+        /// </summary>
+        [Display(Name = "查询结束时间")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EndDateTime { get; set; }
+
+        /// <summary>
+        /// 清洁度视图
+        /// </summary>
+        public IPagedList<AlarmView> AlarmView { get; set; }
+    }
+
+    public class HistoryDataViewModel : PagedListViewModelBase
+    {
+        /// <summary>
+        /// 查询开始时间
+        /// </summary>
+        [Display(Name = "查询开始时间")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDateTime { get; set; }
+
+        /// <summary>
+        /// 查询结束时间
+        /// </summary>
+        [Display(Name = "查询结束时间")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EndDateTime { get; set; }
+
+        /// <summary>
+        /// 清洁度视图
+        /// </summary>
+        public IPagedList<HistoryData> HistoryData { get; set; }
+    }
 }

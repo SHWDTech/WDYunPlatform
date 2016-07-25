@@ -176,6 +176,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                     record.AlarmCode = error;
                     record.AlarmDeviceId = package.Device.Id;
                     record.UpdateTime = package.ReceiveDateTime;
+                    record.DomainId = package.Device.DomainId;
                     alarmList.Add(record);
                 }
             }

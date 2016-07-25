@@ -56,9 +56,45 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        public ActionResult LinkageRate()
+        public ActionResult LinkageRate(LinkageViewModel model)
         {
-            return View();
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var conditions = new List<Expression<Func<RunningTime, bool>>>();
+
+            if (model.StartDateTime == DateTime.MinValue)
+            {
+                model.StartDateTime = DateTime.Now.AddDays(-7);
+            }
+
+            Expression<Func<RunningTime, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
+            conditions.Add(startCondition);
+
+            if (model.EndDateTime == DateTime.MinValue)
+            {
+                model.EndDateTime = DateTime.Now;
+            }
+
+            Expression<Func<RunningTime, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
+            conditions.Add(endCondition);
+
+            var linkageView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+                .GetPagedLinkage(page, pageSize, queryName, out count, conditions);
+
+            model.PageIndex = page;
+            model.PageSize = pageSize;
+            model.QueryName = queryName;
+            model.Count = count;
+            model.LinkageView = linkageView;
+            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
+
+            return View(model);
         }
 
         public ActionResult RemovalRate()
@@ -66,14 +102,86 @@ namespace Lampblack_Platform.Controllers
             return View();
         }
 
-        public ActionResult Alarm()
+        public ActionResult Alarm(AlarmViewModel model)
         {
-            return View();
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var conditions = new List<Expression<Func<Alarm, bool>>>();
+
+            if (model.StartDateTime == DateTime.MinValue)
+            {
+                model.StartDateTime = DateTime.Now.AddDays(-7);
+            }
+
+            Expression<Func<Alarm, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
+            conditions.Add(startCondition);
+
+            if (model.EndDateTime == DateTime.MinValue)
+            {
+                model.EndDateTime = DateTime.Now;
+            }
+
+            Expression<Func<Alarm, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
+            conditions.Add(endCondition);
+
+            var alarmView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+                .GetPagedAlarm(page, pageSize, queryName, out count, conditions);
+
+            model.PageIndex = page;
+            model.PageSize = pageSize;
+            model.QueryName = queryName;
+            model.Count = count;
+            model.AlarmView = alarmView;
+            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
+
+            return View(model);
         }
 
-        public ActionResult HistoryData()
+        public ActionResult HistoryData(HistoryDataViewModel model)
         {
-            return View();
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var conditions = new List<Expression<Func<MonitorData, bool>>>();
+
+            if (model.StartDateTime == DateTime.MinValue)
+            {
+                model.StartDateTime = DateTime.Now.AddDays(-7);
+            }
+
+            Expression<Func<MonitorData, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
+            conditions.Add(startCondition);
+
+            if (model.EndDateTime == DateTime.MinValue)
+            {
+                model.EndDateTime = DateTime.Now;
+            }
+
+            Expression<Func<MonitorData, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
+            conditions.Add(endCondition);
+
+            var historyData = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+                .GetPagedHistoryData(page, pageSize, queryName, out count, conditions);
+
+            model.PageIndex = page;
+            model.PageSize = pageSize;
+            model.QueryName = queryName;
+            model.Count = count;
+            model.HistoryData = historyData;
+            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
+
+            return View(model);
         }
 
         public ActionResult RunningTime(RunningTimeViewModel model)

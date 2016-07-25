@@ -396,6 +396,128 @@ namespace Platform.Process.Process
             }
         }
 
+        public IPagedList<HistoryData> GetPagedHistoryData(int page, int pageSize, string queryName, out int count, List<Expression<Func<MonitorData, bool>>> conditions = null)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var query = repo.GetAllModels();
+                if (conditions != null)
+                {
+                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
+                }
+
+                var projectQuery = query.GroupBy(obj => new { obj.ProjectId, obj.ProtocolDataId })
+                    .Select(item => item.FirstOrDefault())
+                    .Select(run => new { run.ProjectId, run.CommandDataId, run.ProtocolDataId, run.UpdateTime });
+
+                var models = repo.GetAllModels();
+
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+
+                var ret = from q in projectQuery
+                          select
+                              new HistoryData()
+                              {
+                                  HotelId = q.ProjectId.Value,
+                                  HotelName = hotels.FirstOrDefault(obj => obj.Id == q.ProjectId.Value).ProjectName,
+                                  CleanerCurrent = 
+                                      models.FirstOrDefault(
+                                          obj =>
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.CleanerCurrent).DoubleValue,
+                                  CleanerSwitch = 
+                                      models.FirstOrDefault(
+                                          obj =>
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch).BooleanValue,
+                                  FanCurrent =
+                                      models.FirstOrDefault(
+                                          obj =>
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.FanCurrent).DoubleValue,
+                                  FanSwitch =
+                                      models.FirstOrDefault(
+                                          obj =>
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.FanSwitch).BooleanValue,
+                                  UpdateTime = q.UpdateTime
+
+                              };
+
+                count = ret.Count();
+
+                return ret.OrderBy(obj => new { obj.UpdateTime, obj.HotelId }).ToPagedList(page, pageSize);
+            }
+        }
+
+        public IPagedList<AlarmView> GetPagedAlarm(int page, int pageSize, string queryName, out int count, List<Expression<Func<Alarm, bool>>> conditions = null)
+        {
+            using (var repo = Repo<AlarmRepository>())
+            {
+                var query = repo.GetAllModels();
+                if (conditions != null)
+                {
+                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
+                }
+
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+
+                var models = query.Select(a => new {a.AlarmDevice.ProjectId, UpdateTime = DbFunctions.TruncateTime(a.UpdateTime) }).GroupBy(
+                    item => new {item.ProjectId, item.UpdateTime})
+                    .Select(record => new AlarmView()
+                    {
+                        HotelId = record.Key.ProjectId.Value,
+                        HotelName = hotels.FirstOrDefault(obj => obj.Id == record.Key.ProjectId.Value).ProjectName,
+                        AlarmCount = record.Count(),
+                        UpdateTime = record.Key.UpdateTime.Value
+                    });
+
+                count = models.Count();
+
+                return models.OrderBy(obj => new { obj.UpdateTime, obj.HotelId }).ToPagedList(page, pageSize);
+            }
+        }
+
+        public IPagedList<LinkageView> GetPagedLinkage(int page, int pageSize, string queryName, out int count, List<Expression<Func<RunningTime, bool>>> conditions = null)
+        {
+            using (var repo = Repo<RunningTimeRepository>())
+            {
+                var query = repo.GetAllModels();
+                if (conditions != null)
+                {
+                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
+                }
+
+                var projectQuery = query.GroupBy(obj => new { obj.ProjectId, obj.UpdateTime })
+                    .Select(item => item.FirstOrDefault())
+                    .Select(run => new { run.ProjectId, run.UpdateTime });
+
+                var models = repo.GetAllModels();
+
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+
+                var ret = from q in projectQuery
+                          select
+                              new LinkageView
+                              {
+                                  HotelId = q.ProjectId,
+                                  HotelName = hotels.FirstOrDefault(obj => obj.Id == q.ProjectId).ProjectName,
+                                  CleannerRunningTimeTicks =
+                                      models.FirstOrDefault(
+                                          obj =>
+                                              obj.ProjectId == q.ProjectId && obj.UpdateTime == q.UpdateTime &&
+                                              obj.Type == RunningTimeType.Cleaner).RunningTimeTicks,
+                                  FanRunningTimeTicks =
+                                      models.FirstOrDefault(
+                                          obj =>
+                                              obj.ProjectId == q.ProjectId && obj.UpdateTime == q.UpdateTime &&
+                                              obj.Type == RunningTimeType.Fan).RunningTimeTicks,
+                                  UpdateTime = q.UpdateTime
+
+                              };
+
+                count = projectQuery.Count();
+
+                return ret.OrderBy(obj => new { obj.UpdateTime, obj.HotelId }).ToPagedList(page, pageSize);
+            }
+        }
+
         /// <summary>
         /// 获取酒店最新数据
         /// </summary>
