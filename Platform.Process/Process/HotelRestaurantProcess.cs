@@ -449,6 +449,8 @@ namespace Platform.Process.Process
             {
                 var today = startDate.GetToday();
 
+                var endDay = today.AddDays(1);
+
                 var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
                         && obj.BooleanValue == true
                         && obj.CommandData.DataName == dataName
@@ -459,7 +461,7 @@ namespace Platform.Process.Process
                 var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
                         && obj.BooleanValue == true
                         && obj.CommandData.DataName == dataName
-                        && obj.UpdateTime > today)
+                        && obj.UpdateTime > today && obj.UpdateTime < endDay)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();
 
@@ -574,13 +576,15 @@ namespace Platform.Process.Process
             {
                 var today = startDate.GetToday();
 
+                var endDay = today.AddDays(1);
+
                 var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
                         && obj.UpdateTime > today)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
                 var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.UpdateTime > today)
+                        && obj.UpdateTime > today && obj.UpdateTime < endDay)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();
 
