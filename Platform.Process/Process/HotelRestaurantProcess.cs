@@ -319,8 +319,8 @@ namespace Platform.Process.Process
 
                     foreach (var device in hotelDevice)
                     {
-                        var dayStatics = Repo<DataStatisticsRepository>().GetModels(obj => 
-                        obj.DeviceId == device.Id 
+                        var dayStatics = Repo<DataStatisticsRepository>().GetModels(obj =>
+                        obj.DeviceId == device.Id
                         && obj.Type == StatisticsType.Day
                         && obj.CommandDataId == commandDataId);
                         if (conditions != null)
@@ -344,6 +344,55 @@ namespace Platform.Process.Process
                 }
                 count = viewList.Count;
                 return viewList.ToPagedList(page, pageSize);
+            }
+        }
+
+        public IPagedList<RunningTimeView> GetPagedRunningTime(int page, int pageSize, string queryName, out int count, List<Expression<Func<RunningTime, bool>>> conditions = null)
+        {
+            using (var repo = Repo<RunningTimeRepository>())
+            {
+                var query = repo.GetAllModels();
+                if (conditions != null)
+                {
+                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
+                }
+
+                var projectQuery = query.GroupBy(obj => new { obj.ProjectId, obj.UpdateTime })
+                    .Select(item => item.FirstOrDefault())
+                    .Select(run => new { run.ProjectId, run.UpdateTime});
+
+                var models = repo.GetAllModels();
+
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+
+                var ret = from q in projectQuery
+                    select
+                        new RunningTimeView
+                        {
+                            HotelId = q.ProjectId,
+                            HotelName = hotels.FirstOrDefault(obj => obj.Id == q.ProjectId).ProjectName,
+                            CleannerRunningTimeTicks =
+                                models.FirstOrDefault(
+                                    obj =>
+                                        obj.ProjectId == q.ProjectId && obj.UpdateTime == q.UpdateTime &&
+                                        obj.Type == RunningTimeType.Cleaner).RunningTimeTicks,
+                            FanRunningTimeTicks =
+                                models.FirstOrDefault(
+                                    obj =>
+                                        obj.ProjectId == q.ProjectId && obj.UpdateTime == q.UpdateTime &&
+                                        obj.Type == RunningTimeType.Fan).RunningTimeTicks,
+                            DeviceRunningTimeTicks =
+                                models.FirstOrDefault(
+                                    obj =>
+                                        obj.ProjectId == q.ProjectId && obj.UpdateTime == q.UpdateTime &&
+                                        obj.Type == RunningTimeType.Device).RunningTimeTicks,
+                            UpdateTime = q.UpdateTime
+                            
+                        };
+
+                count = projectQuery.Count();
+
+                return ret.OrderBy(obj => new { obj.UpdateTime, obj.HotelId}).ToPagedList(page, pageSize);
             }
         }
 

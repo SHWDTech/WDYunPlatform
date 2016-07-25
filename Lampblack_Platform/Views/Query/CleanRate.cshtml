@@ -21,9 +21,9 @@
                         <span class="glyphicon glyphicon-user" style="font-size: 20px;"></span>
                         <span style="margin-left: 10px;" class="span100">清洁度查询：</span>
                         @Html.LabelFor(m => m.StartDateTime, new { @class = "lbl100" })
-                        @Html.TextBoxFor(m => m.StartDateTime, new { @class = "form-control control120" })
+                        <input type="text" id="StartDateTime" name="StartDateTime" value="@Model.StartDateTime.ToString("yyyy-MM-dd")" class="form-control control120"/>
                         @Html.LabelFor(m => m.EndDateTime, new { @class = "lbl100" })
-                        @Html.TextBoxFor(m => m.EndDateTime, new { @class = "form-control control120" })
+                        <input type="text" id="EndDateTime" name="EndDateTime" value="@Model.EndDateTime.ToString("yyyy-MM-dd")" class="form-control control120" />
                         <input type="submit" class="btn btn-main" value="查询" id="query" />
                         <input type="button" class="btn btn-main" value="导出" id="export" />
                     </div>
@@ -72,7 +72,7 @@
                             option.UlElementClasses = new[] { "no-margin pagination" };
                         }
                         @Html.PagedListPager(Model.CleanRateView,
-                            page => Url.Action("CleanRate", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                            page => Url.Action("CleanRate", new { page, Model.StartDateTime, Model.EndDateTime, pageSize = Model.PageSize }), option)
                     </div>
                     <div class="horizontal-group">
                         <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>

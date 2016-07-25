@@ -76,9 +76,45 @@ namespace Lampblack_Platform.Controllers
             return View();
         }
 
-        public ActionResult RunningTime()
+        public ActionResult RunningTime(RunningTimeViewModel model)
         {
-            return View();
+            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+
+            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+
+            var queryName = Request["queryName"];
+
+            int count;
+
+            var conditions = new List<Expression<Func<RunningTime, bool>>>();
+
+            if (model.StartDateTime == DateTime.MinValue)
+            {
+                model.StartDateTime = DateTime.Now.AddDays(-7);
+            }
+
+            Expression<Func<RunningTime, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
+            conditions.Add(startCondition);
+
+            if (model.EndDateTime == DateTime.MinValue)
+            {
+                model.EndDateTime = DateTime.Now;
+            }
+
+            Expression<Func<RunningTime, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
+            conditions.Add(endCondition);
+
+            var runningTimeView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+                .GetPagedRunningTime(page, pageSize, queryName, out count, conditions);
+
+            model.PageIndex = page;
+            model.PageSize = pageSize;
+            model.QueryName = queryName;
+            model.Count = count;
+            model.RunningTimeView = runningTimeView;
+            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
+
+            return View(model);
         }
     }
 }

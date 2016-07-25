@@ -79,7 +79,7 @@ namespace Platform.Process.Process
             using (var context = new RepositoryDbContext())
             {
                 PlatformCaches.DeleteCachesByType("Modules");
-                var modules = context.Set<Module>().ToList();
+                var modules = context.Set<Module>().Where(obj => obj.IsEnabled).ToList();
                 foreach (var module in modules)
                 {
                     PlatformCaches.Add($"Module[{module.Id}]", module, false, "Modules");
