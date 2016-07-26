@@ -221,6 +221,7 @@
     <Content Include="Scripts\Page\Actual.js" />
     <Content Include="Scripts\Page\Alarm.js" />
     <Content Include="Scripts\Page\CleanRate.js" />
+    <Content Include="Scripts\Page\GeneralReport.js" />
     <Content Include="Scripts\Page\HistoryData.js" />
     <Content Include="Scripts\Page\Index.js" />
     <Content Include="Scripts\Page\LinkageRate.js" />
@@ -431,6 +432,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Analysis\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -475,6 +477,10 @@
     <ProjectReference Include="..\SqlComponents\SqlComponents.csproj">
       <Project>{a54688dc-6d07-4b0c-8778-51e2b7eae03d}</Project>
       <Name>SqlComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebViewModels\WebViewModels.csproj">
+      <Project>{c598c73c-2888-41de-b2e1-ace502cd57c0}</Project>
+      <Name>WebViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

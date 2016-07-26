@@ -26,6 +26,12 @@ body {
     width: 100%;
 }
 
+input[type=radio] {
+    margin: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .body-content {
     width: 100%;
     border-left: 1px solid #e7e7e7;
