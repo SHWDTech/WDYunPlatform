@@ -104,6 +104,14 @@ namespace Platform.Process.Process
             }
         }
 
+        public List<UserDictionary> GetDictionaries(string name, int level)
+        {
+            using (var repo = Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModels(obj => obj.ItemName == name && obj.ItemLevel == level).ToList();
+            }
+        }
+
         public SqlExcuteResult DeleteArea(Guid itemId)
         {
             using (var repo = Repo<UserDictionaryRepository>())

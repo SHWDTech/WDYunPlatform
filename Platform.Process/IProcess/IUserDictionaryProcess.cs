@@ -53,5 +53,12 @@ namespace Platform.Process.IProcess
         /// <param name="districtGuid"></param>
         /// <returns></returns>
         UserDictionary GetDistrict(Guid districtGuid);
+
+        /// <summary>
+        /// 根据ITEMNAME获取用户字典列表
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        List<UserDictionary> GetDictionaries(string name, int level);
     }
 }

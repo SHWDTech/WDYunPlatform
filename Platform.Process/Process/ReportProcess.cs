@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Platform.Process.Enums;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
 using WebViewModels.ViewDataModel;
@@ -62,7 +64,50 @@ namespace Platform.Process.Process
                     model.GeneralReports.Add(report);
                 }
             }
-                
+
+        }
+
+        public void GetGeneralComparisonViewModel(GeneralComparisonViewModel model)
+        {
+            var hotels = Repo<HotelRestaurantRepository>().GetAllModels()
+                .AddEqual(obj => obj.DistrictId == model.AreaGuid, model.AreaGuid)
+                .AddEqual(item => item.StreetId == model.StreetGuid, model.StreetGuid)
+                .AddEqual(hotel => hotel.AddressId == model.AddressGuid, model.AddressGuid);
+
+            var areas = ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                .GetDictionaries(UserDictionaryType.Area, 0);
+
+            var repo = Repo<RunningTimeRepository>();
+            foreach (var userDictionary in areas)
+            {
+                var record = new GeneralCompasion()
+                {
+                    AreaGuid = userDictionary.Id,
+                    AreaName = userDictionary.ItemValue
+                };
+                var areaHotels = hotels.Where(obj => obj.DistrictId == userDictionary.Id).Select(item => item.Id).ToList();
+                var hotelRunningTimes = repo.GetModels(obj => areaHotels.Contains(obj.ProjectId));
+                record.CurrentLinkage = GetLinkage(hotelRunningTimes, model.DueDateTime, model.ReportType);
+
+                var lastdueDateTime = ReportStartDate(model.DueDateTime, model.ReportType);
+
+                record.LinkedLinkage = GetLinkage(hotelRunningTimes, lastdueDateTime, model.ReportType);
+
+                record.LastLinkage = GetLinkage(hotelRunningTimes, model.DueDateTime.AddYears(-1), model.ReportType);
+
+                model.GeneralReports.Add(record);
+            }
+        }
+
+        private double GetLinkage(IQueryable<RunningTime> queryable, DateTime dueDateTime, ReportType reportType)
+        {
+            var fan = GetRunTimeTicks(queryable, dueDateTime, reportType, RunningTimeType.Fan);
+
+            if (fan == 0) return 0.0;
+
+            var cleaner = GetRunTimeTicks(queryable, dueDateTime, reportType, RunningTimeType.Cleaner);
+
+            return fan * 1.0/cleaner;
         }
 
         private DateTime ReportStartDate(DateTime dueDateTime, ReportType reportType)
@@ -84,6 +129,22 @@ namespace Platform.Process.Process
             }
 
             return DateTime.Now;
+        }
+
+        private long GetRunTimeTicks(IQueryable<RunningTime> queryable, DateTime dueDateTime, ReportType reportType, RunningTimeType runTimeType)
+        {
+            var startDate = ReportStartDate(dueDateTime, reportType);
+
+            var runningTime = queryable.Where(obj =>
+                    obj.UpdateTime >= startDate
+                    && obj.UpdateTime < dueDateTime
+                    && obj.Type == runTimeType);
+            if (runningTime.Count() != 0)
+            {
+                return runningTime.Sum(item => item.RunningTimeTicks);
+            }
+
+            return 0;
         }
     }
 }

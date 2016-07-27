@@ -1,4 +1,91 @@
-﻿
+﻿@using MvcWebComponents.Extensions
+@using WebViewModels.Enums
+@using WebViewModels.ViewModel;
+@model GeneralComparisonViewModel
 @{
-    Layout = "~/Views/Shared/_unComplete.cshtml";
+    Layout = null;
 }
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @using (Ajax.BeginForm("GeneralComparison", null, new AjaxOptions
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }.GeneralOptions(), new { Id = "generalComparison" }))
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="control-layer horizontal-group">
+                        <span class="glyphicon glyphicon-print" style="font-size: 20px;"></span>
+                        <span class="span100" style="margin-left: 10px;">综合对比查询：</span>
+                        <span class="span60">区县：</span>
+                        @Html.DropDownListFor(m => m.AreaGuid, Model.AreaListItems, new { @class = "form-control" })
+                        <span class="span60">街道：</span>
+                        @Html.DropDownListFor(m => m.StreetGuid, Model.StreetListItems, new { @class = "form-control" })
+                        <span class="span60">地址：</span>
+                        @Html.DropDownListFor(m => m.AddressGuid, Model.AddressListItems, new { @class = "form-control" })
+                        <span class="span80">酒店名称：</span>
+                        <input type="text" class="form-control" name="queryName" value="@Model.QueryName" />
+                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
+                    </div>
+                    <div class="control-layer horizontal-group">
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Week, new { Id = "Week" })
+                        @Html.Label("", "周报表", new { @for = "Week", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Month, new { Id = "Month" })
+                        @Html.Label("", "月报表", new { @for = "Month", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Season, new { Id = "Season" })
+                        @Html.Label("", "季度报表", new { @for = "Season", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Halfyear, new { Id = "Halfyear" })
+                        @Html.Label("", "半年度报表", new { @for = "Halfyear", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Year, new { Id = "Year" })
+                        @Html.Label("", "年度报表", new { @for = "Year", @class = "lbl80" })
+                        @Html.LabelFor(m => m.DueDateTime)
+                        @Html.TextBoxFor(m => m.DueDateTime, new { @class = "form-control control160" })
+                    </div>
+                    <div class="table-layer">
+                        <table class="table table-bordered table-hover text-center">
+                            <thead>
+                            <tr>
+                                <td style="width: 20%;" rowspan="2">
+                                    区县
+                                </td>
+                                <td style="width: 80%;" colspan="3">
+                                    联动比（%）
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>当前</td>
+                                <td>同比</td>
+                                <td>环比</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var area in Model.GeneralReports)
+                                    {
+                                        <tr data-hotel-id="@area.AreaGuid">
+                                            @{
+                                                var current = (area.CurrentLinkage * 100).ToString("F2") + "%";
+                                                var last = (area.LastLinkage * 100).ToString("F2") + "%";
+                                                var linked = (area.LinkedLinkage * 100).ToString("F2") + "%";
+                                            }
+                                            <td>@area.AreaName</td>
+                                            <td>@current</td>
+                                            <td>@last</td>
+                                            <td>@linked</td>
+                                        </tr>
+                                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                                                }
+    </div>
+</div>
+
+<script src="/Scripts/Page/GeneralReport.js"></script>

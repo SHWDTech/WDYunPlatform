@@ -7,10 +7,7 @@ using WebViewModels.ViewDataModel;
 
 namespace WebViewModels.ViewModel
 {
-    /// <summary>
-    /// 通用报表模型
-    /// </summary>
-    public class GeneralReportViewModel
+    public class GeneralComparisonViewModel
     {
         /// <summary>
         /// 区域集合
@@ -35,7 +32,7 @@ namespace WebViewModels.ViewModel
         /// <summary>
         /// 报表类型
         /// </summary>
-        public ReportType ReportType { get; set; }
+        public ReportType ReportType { get; set; } = ReportType.Month;
 
         /// <summary>
         /// 截止日期
@@ -61,6 +58,6 @@ namespace WebViewModels.ViewModel
         /// <summary>
         /// 通用报表数据
         /// </summary>
-        public List<GeneralReport> GeneralReports { get; set; } = new List<GeneralReport>();
+        public List<GeneralCompasion> GeneralReports { get; set; } = new List<GeneralCompasion>();
     }
 }
