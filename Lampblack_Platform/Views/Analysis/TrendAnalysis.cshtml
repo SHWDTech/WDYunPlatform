@@ -1,4 +1,77 @@
-﻿
+﻿@using MvcWebComponents.Extensions
+@using WebViewModels.Enums
+@using WebViewModels.ViewModel;
+@model TrendAnalisysViewModel
 @{
-    Layout = "~/Views/Shared/_unComplete.cshtml";
+    Layout = null;
 }
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @using (Ajax.BeginForm("TrendAnalysis", null, new AjaxOptions
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }.GeneralOptions(), new { Id = "trendAnalysis" }))
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="control-layer horizontal-group">
+                        <span class="glyphicon glyphicon-print" style="font-size: 20px;"></span>
+                        <span class="span100" style="margin-left: 10px;">综合对比查询：</span>
+                        <span class="span60">区县：</span>
+                        @Html.DropDownListFor(m => m.AreaGuid, Model.AreaListItems, new { @class = "form-control" })
+                        <span class="span60">街道：</span>
+                        @Html.DropDownListFor(m => m.StreetGuid, Model.StreetListItems, new { @class = "form-control" })
+                        <span class="span60">地址：</span>
+                        @Html.DropDownListFor(m => m.AddressGuid, Model.AddressListItems, new { @class = "form-control" })
+                        <span class="span80">酒店名称：</span>
+                        <input type="text" class="form-control" name="queryName" value="@Model.QueryName" />
+                        <input type="button" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
+                    </div>
+                    <div class="control-layer horizontal-group">
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Month, new { Id = "Month" })
+                        @Html.Label("", "月报表", new { @for = "Month", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Season, new { Id = "Season" })
+                        @Html.Label("", "季度报表", new { @for = "Season", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Halfyear, new { Id = "Halfyear" })
+                        @Html.Label("", "半年度报表", new { @for = "Halfyear", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Year, new { Id = "Year" })
+                        @Html.Label("", "年度报表", new { @for = "Year", @class = "lbl80" })
+                        @Html.LabelFor(m => m.StartDateTime)
+                        @Html.TextBoxFor(m => m.StartDateTime, new { @class = "form-control control160" })
+                        <select id="StartSeason" name="StartSeason" class="form-control control120 extraSelect" style="display: none;">
+                            <option value="0">第一季度</option>
+                            <option value="1">第二季度</option>
+                            <option value="2">第三季度</option>
+                            <option value="3">第四季度</option>
+                        </select>
+                        <select id="StartHalfYear" name="StartHalfYear" class="form-control control120 extraSelect" style="display: none;">
+                            <option value="0">上半年</option>
+                            <option value="1">下半年</option>
+                        </select>
+                        @Html.LabelFor(m => m.DueDateTime)
+                        @Html.TextBoxFor(m => m.DueDateTime, new { @class = "form-control control160" })
+                        <select id="EndSeason" name="EndSeason" class="form-control control120 extraSelect" style="display: none;">
+                            <option value="0">第一季度</option>
+                            <option value="1">第二季度</option>
+                            <option value="2">第三季度</option>
+                            <option value="3">第四季度</option>
+                        </select>
+                        <select id="EndHalfYear" name="EndHalfYear" class="form-control control120 extraSelect" style="display: none;">
+                            <option value="0">上半年</option>
+                            <option value="1">下半年</option>
+                        </select>
+                    </div>
+                    <div class="table-layer">
+                        
+                    </div>
+                </div>
+            </div>
+                                                }
+    </div>
+</div>
+
+<script src="/Scripts/Page/TrendAnalysis.js"></script>

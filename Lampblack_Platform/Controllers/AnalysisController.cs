@@ -39,9 +39,32 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        public ActionResult TrendAnalysis()
+        public ActionResult TrendAnalysis(TrendAnalisysViewModel model)
         {
-            return View();
+            var areaList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = "" }
+                };
+
+            var streetList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = ""}
+                };
+
+            var addressList = new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "全部", Value = ""}
+                };
+
+            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                .GetDistrictSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .ToList());
+
+            model.AreaListItems = areaList;
+            model.StreetListItems = streetList;
+            model.AddressListItems = addressList;
+            return View(model);
         }
 
         public ActionResult CleanlinessStatistics()

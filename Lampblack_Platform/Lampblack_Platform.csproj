@@ -226,6 +226,7 @@
     <Content Include="Scripts\Page\Index.js" />
     <Content Include="Scripts\Page\LinkageRate.js" />
     <Content Include="Scripts\Page\RunningTime.js" />
+    <Content Include="Scripts\Page\TrendAnalysis.js" />
     <Content Include="Scripts\Utility\bootstrap.js" />
     <Content Include="Scripts\Utility\bootstrap.min.js" />
     <Content Include="Scripts\Common\Const.js" />

@@ -6,6 +6,7 @@ using MvcWebComponents.Controllers;
 using MvcWebComponents.Model;
 using Platform.Process;
 using Platform.Process.Process;
+using WebViewModels.ViewModel;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -68,6 +69,17 @@ namespace Lampblack_Platform.Controllers
             {
                 Success = true,
                 Result = hotels.Select(obj => new { obj.Id, Name = obj.ProjectName })
+            },
+                JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetTrendAnalysis(TrendAnalisysViewModel model)
+        {
+            var result = ProcessInvoke.GetInstance<RunningTimeProcess>().GetRunningTimeReport(model);
+            return Json(new JsonStruct()
+            {
+                Success = true,
+                Result = result
             },
                 JsonRequestBehavior.AllowGet);
         }

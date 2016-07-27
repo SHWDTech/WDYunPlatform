@@ -8,6 +8,11 @@ namespace SHWDTech.Platform.Utility.ExtensionMethod
     {
         public static IQueryable<T> AddEqual<T>(this IQueryable<T> queryable, Expression<Func<T, bool>> exp, object value)
         {
+            if(value == null)
+            {
+                return queryable;
+            }
+
             if (value is Guid && (Guid) value == Guid.Empty)
             {
                 return queryable;
