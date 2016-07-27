@@ -30,7 +30,7 @@ namespace Platform.Process.Process
         public void StoreRunningTime(RunningTime runningTime)
             => Repo<RunningTimeRepository>().AddOrUpdateDoCommit(runningTime);
 
-        public List<double> GetRunningTimeReport(TrendAnalisysViewModel model)
+        public Dictionary<string, double> GetRunningTimeReport(TrendAnalisysViewModel model)
         {
             var hotels = Repo<HotelRestaurantRepository>().GetAllModels()
                 .AddEqual(obj => obj.DistrictId == model.AreaGuid, model.AreaGuid)
@@ -43,13 +43,13 @@ namespace Platform.Process.Process
 
             var dateList = GetProcessDateTimes(model);
 
-            var linageList = new List<double>();
+            var linageList = new Dictionary<string, double>();
             using (var repo = Repo<RunningTimeRepository>())
             {
                 var runTimes = repo.GetModels(obj => hotels.Contains(obj.ProjectId));
                 foreach (var date in dateList)
                 {
-                    linageList.Add(GetLinkage(runTimes, date, model.ReportType));
+                    linageList.Add(date.ToString("yyyy-MM"), GetLinkage(runTimes, date, model.ReportType));
                 }
             }
 
@@ -75,11 +75,12 @@ namespace Platform.Process.Process
             var months = model.DueDateTime.MonthDifference(model.StartDateTime);
 
             var monthDates = new List<DateTime>();
-            for (var i = 0; i < months; i++)
+            var current = 0;
+            while (current <= months)
             {
-                var date = model.StartDateTime.AddMonths(i + 1);
-
-                monthDates.Add(date);
+                monthDates.Add(model.StartDateTime);
+                model.StartDateTime = model.StartDateTime.AddMonths(1);
+                current++;
             }
 
             return monthDates;
@@ -87,19 +88,37 @@ namespace Platform.Process.Process
 
         private List<DateTime> GetSeasonDateRange(TrendAnalisysViewModel model)
         {
-            var rounds = (new DateTime(model.StartDateTime.Year, (int)model.StartSeason * 3 + 1, 0)
-                .MonthDifference(new DateTime(model.DueDateTime.Year, (int)model.EndSeason * 3 + 1, 0)))
-                / 3;
+            var startDate = new DateTime(model.StartDateTime.Year, GetSeamonMonth(model.StartSeason), DateTime.DaysInMonth(model.StartDateTime.Year, GetSeamonMonth(model.StartSeason)));
+            var endDate = new DateTime(model.DueDateTime.Year, GetSeamonMonth(model.EndSeason), DateTime.DaysInMonth(model.DueDateTime.Year, GetSeamonMonth(model.EndSeason)));
+            var rounds = endDate.MonthDifference(startDate) / 3;
 
             var monthDates = new List<DateTime>();
-            for (var i = 0; i < rounds; i++)
+            var current = 0;
+            while (current <= rounds)
             {
-                var date = model.StartDateTime.AddMonths(i + 3);
-
-                monthDates.Add(date);
+                monthDates.Add(startDate);
+                startDate = startDate.AddMonths(3);
+                current++;
             }
 
             return monthDates;
+        }
+
+        private int GetSeamonMonth(ReportSeason season)
+        {
+            switch (season)
+            {
+                case ReportSeason.FirstSeason:
+                    return 3;
+                case ReportSeason.SecondSeason:
+                    return 6;
+                case ReportSeason.ThridSeason:
+                    return 9;
+                case ReportSeason.FourthSeason:
+                    return 12;
+            }
+
+            return 0;
         }
 
         private double GetLinkage(IQueryable<RunningTime> queryable, DateTime dueDateTime, ReportType reportType)
@@ -110,7 +129,7 @@ namespace Platform.Process.Process
 
             var cleaner = GetRunTimeTicks(queryable, dueDateTime, reportType, RunningTimeType.Cleaner);
 
-            return fan * 1.0 / cleaner;
+            return Math.Round(fan * 1.0 / cleaner, 2);
         }
 
         private DateTime ReportStartDate(DateTime dueDateTime, ReportType reportType)

@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿var trendChart = null;
+
+$(function () {
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty().append('<option value="none">全部</option>');
@@ -69,10 +71,27 @@
         }
     });
 
+    trendChart = echarts.init(document.getElementById('trendChart'));
+
     $('#query').on('click', function () {
+        debugger;
         base.AjaxGet('/CommonAjax/GetTrendAnalysis', $('form').serialize(), function (ret) {
-            debugger;
-            alert(ret);
+            var option = Echart_Tools.getOption();
+            option.title.text = "趋势分析";
+            option.legend.data = ["趋势分析"];
+            option.series[0].name = "趋势分析";
+            var xAxisData = [];
+            var seriesData = [];
+            $.each(ret, function () {
+                xAxisData.push($(this)[0].Date);
+                seriesData.push($(this)[0].Linkage);
+            });
+
+            option.xAxis.data = xAxisData;
+            option.series[0].data = seriesData;
+
+            trendChart.clear();
+            trendChart.setOption(option);
         });
     });
 });

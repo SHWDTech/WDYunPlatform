@@ -79,7 +79,7 @@ namespace Lampblack_Platform.Controllers
             return Json(new JsonStruct()
             {
                 Success = true,
-                Result = result
+                Result = result.Select(obj => new { Date = obj.Key, Linkage = obj.Value })
             },
                 JsonRequestBehavior.AllowGet);
         }
