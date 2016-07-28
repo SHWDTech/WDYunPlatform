@@ -28,4 +28,21 @@ namespace Lampblack_Platform.Models.Account
         [Display(Name = "记住我的账号？")]
         public bool RememberMe { get; set; }
     }
+
+    /// <summary>
+    /// 用户设置视图模型
+    /// </summary>
+    public class SetUpViewModel
+    {
+        [Display(Name = "用户登录名")]
+        public string LoginName { get; set; }
+
+        [Display(Name = "输入新密码")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name = "确认新密码")]
+        [DataType(DataType.Password)]
+        public string CheckPassword { get; set; }
+    }
 }

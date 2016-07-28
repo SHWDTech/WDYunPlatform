@@ -110,7 +110,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="tcpClient">客户端连接</param>
         private void ClientDisconnected(TcpClientManager tcpClient)
         {
-            AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
+            lock (_clientSockets)
+            {
+                _clientSockets.Remove(tcpClient);
+            }
+            if (tcpClient.IsConnected)
+            {
+                AdminReportService.Instance.Info($"客户端连接断开，客户端信息：{tcpClient.ReceiverName}");
+            }
         }
 
         private void ClientAuthenticationed(TcpClientManager tcpClient)

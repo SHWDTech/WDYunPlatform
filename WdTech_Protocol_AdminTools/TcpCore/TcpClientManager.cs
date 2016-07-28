@@ -104,6 +104,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             _clientSocket = clientSocket;
             ReceiveBuffer.Add(new ArraySegment<byte>(new byte[AppConfig.TcpBufferSize]));
+            IsConnected = true;
         }
 
         /// <summary>
@@ -232,7 +233,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         public void Close()
         {
             _clientSocket.Close();
-
             OnClientDisconnect();
         }
 
