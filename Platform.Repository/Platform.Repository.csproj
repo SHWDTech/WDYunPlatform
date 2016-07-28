@@ -76,6 +76,7 @@
     <Compile Include="IRepository\IDataStatisticsRepository.cs" />
     <Compile Include="IRepository\IDepartmentRepository.cs" />
     <Compile Include="IRepository\IDeviceModelRepository.cs" />
+    <Compile Include="IRepository\ILampblackDeviceModelRepository.cs" />
     <Compile Include="IRepository\ILampblackUserRepository.cs" />
     <Compile Include="IRepository\IProtocolCommandRepository.cs" />
     <Compile Include="IRepository\IProtocolRepository.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Repository\DomainRepository.cs" />
     <Compile Include="Repository\FirmwareRepository.cs" />
     <Compile Include="Repository\FirmwareSetRepository.cs" />
+    <Compile Include="Repository\LampblackDeviceModelRepository.cs" />
     <Compile Include="Repository\LampblackUserRepository.cs" />
     <Compile Include="Repository\ModuleRepository.cs" />
     <Compile Include="Repository\MonitorDataRepository.cs" />

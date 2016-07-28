@@ -1,4 +1,112 @@
-﻿
+﻿@using MvcWebComponents.Extensions
+@using WebViewModels.Enums
+@using WebViewModels.ViewModel;
+@model CleannessStatisticsViewModel
 @{
-    Layout = "~/Views/Shared/_unComplete.cshtml";
+    Layout = null;
 }
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @using (Ajax.BeginForm("CleanlinessStatistics", null, new AjaxOptions
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }.GeneralOptions(), new { Id = "cleanessStatistics" }))
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="control-layer horizontal-group">
+                        <span class="glyphicon glyphicon-print" style="font-size: 20px;"></span>
+                        <span class="span100" style="margin-left: 10px;">综合对比查询：</span>
+                        <span class="span60">区县：</span>
+                        @Html.DropDownListFor(m => m.AreaGuid, Model.AreaListItems, new { @class = "form-control" })
+                        <span class="span60">街道：</span>
+                        @Html.DropDownListFor(m => m.StreetGuid, Model.StreetListItems, new { @class = "form-control" })
+                        <span class="span60">地址：</span>
+                        @Html.DropDownListFor(m => m.AddressGuid, Model.AddressListItems, new { @class = "form-control" })
+                        <span class="span80">酒店名称：</span>
+                        <input type="text" class="form-control" name="queryName" value="@Model.QueryName" />
+                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
+                    </div>
+                    <div class="control-layer horizontal-group">
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Month, new { Id = "Month" })
+                        @Html.Label("", "月报表", new { @for = "Month", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Season, new { Id = "Season" })
+                        @Html.Label("", "季度报表", new { @for = "Season", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Halfyear, new { Id = "Halfyear" })
+                        @Html.Label("", "半年度报表", new { @for = "Halfyear", @class = "lbl80" })
+                        @Html.RadioButtonFor(m => m.ReportType, ReportType.Year, new { Id = "Year" })
+                        @Html.Label("", "年度报表", new { @for = "Year", @class = "lbl80" })
+                        @Html.LabelFor(m => m.DueDateTime)
+                        @Html.TextBoxFor(m => m.DueDateTime, new { @class = "form-control control160" })
+                        <select id="EndSeason" name="EndSeason" class="form-control control120 extraSelect" style="display: none;">
+                            <option value="0">第一季度</option>
+                            <option value="1">第二季度</option>
+                            <option value="2">第三季度</option>
+                            <option value="3">第四季度</option>
+                        </select>
+                        <select id="EndHalfYear" name="EndHalfYear" class="form-control control120 extraSelect" style="display: none;">
+                            <option value="0">上半年</option>
+                            <option value="1">下半年</option>
+                        </select>
+                    </div>
+                    <div class="table-layer">
+                        <table class="table table-bordered table-hover text-center">
+                            <thead>
+                            <tr>
+                                <td style="width: 12.5%;" rowspan="2">
+                                    区县
+                                </td>
+                                <td colspan="5">
+                                    清洁度
+                                </td>
+                                <td style="width: 12.5%;" rowspan="2">
+                                    风机运行时间
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 12.5%;">无效</td>
+                                <td style="width: 12.5%;">较差</td>
+                                <td style="width: 12.5%;">合格</td>
+                                <td style="width: 12.5%;">良好</td>
+                                <td style="width: 12.5%;">超标率（%）</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @{
+                                foreach (var area in Model.CleanessStatics)
+                                {
+                                    <tr data-hotel-id="@area.AreaGuid">
+                                        @{
+                                            var fail = $"{area.FaildRunningTime.Days}天{area.FaildRunningTime.Hours}小时{area.FaildRunningTime.Minutes}分钟";
+                                            var worse = $"{area.WorseRunningTime.Days}天{area.WorseRunningTime.Hours}小时{area.WorseRunningTime.Minutes}分钟";
+                                            var qualified = $"{area.QualifiedRunningTime.Days}天{area.QualifiedRunningTime.Hours}小时{area.QualifiedRunningTime.Minutes}分钟";
+                                            var good = $"{area.GoodRunningTime.Days}天{area.GoodRunningTime.Hours}小时{area.GoodRunningTime.Minutes}分钟";
+                                            var fan = $"{area.FanRunningTime.Days}天{area.FanRunningTime.Hours}小时{area.FanRunningTime.Minutes}分钟";
+                                        }
+                                        <td>@area.AreaName</td>
+                                        <td>@fail</td>
+                                        <td>@worse</td>
+                                        <td>@qualified</td>
+                                        <td>@good</td>
+                                        <td>@area.OverRate</td>
+                                        <td>@fan</td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="cleanessChart" style="width: 100%; height: 300px;">
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="/Scripts/Page/CleanessStatistics.js"></script>

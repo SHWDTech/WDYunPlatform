@@ -220,6 +220,7 @@
     <Content Include="Scripts\Common\SetUpCharts.js" />
     <Content Include="Scripts\Page\Actual.js" />
     <Content Include="Scripts\Page\Alarm.js" />
+    <Content Include="Scripts\Page\CleanessStatistics.js" />
     <Content Include="Scripts\Page\CleanRate.js" />
     <Content Include="Scripts\Page\GeneralReport.js" />
     <Content Include="Scripts\Page\HistoryData.js" />

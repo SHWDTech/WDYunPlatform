@@ -63,7 +63,7 @@ namespace SHWDTech.Platform.Utility.ExtensionMethod
 
 
         public static DateTime GetCurrentMonth(this DateTime date)
-            => GetToday(date).Trim(TimeSpan.TicksPerDay);
+            => GetToday(date).Trim(TimeSpan.TicksPerDay * DateTime.DaysInMonth(date.Year, date.Month));
 
         public static int MonthDifference(this DateTime lValue, DateTime rValue) 
             => Math.Abs((lValue.Month - rValue.Month) + 12 * (lValue.Year - rValue.Year));

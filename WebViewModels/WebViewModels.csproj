@@ -73,8 +73,10 @@
     <Compile Include="Enums\ReportSeason.cs" />
     <Compile Include="Enums\ReportType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewDataModel\CleanessStatics.cs" />
     <Compile Include="ViewDataModel\GeneralCompasion.cs" />
     <Compile Include="ViewDataModel\GeneralReport.cs" />
+    <Compile Include="ViewModel\CleannessStatisticsViewModel.cs" />
     <Compile Include="ViewModel\GeneralComparisonViewModel.cs" />
     <Compile Include="ViewModel\GeneralReportViewModel.cs" />
     <Compile Include="ViewModel\TrendAnalisysViewModel.cs" />
