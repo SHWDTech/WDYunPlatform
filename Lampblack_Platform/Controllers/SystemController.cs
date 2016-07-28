@@ -71,9 +71,15 @@ namespace Lampblack_Platform.Controllers
 
             var roleList = string.IsNullOrWhiteSpace(Request["Roles"]) ? null : Request["Roles"].Split(',').ToList();
 
-            var exception = ProcessInvoke.GetInstance<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames, roleList);
-
             GetUserRelatedItems();
+
+            if (ProcessInvoke.GetInstance<LampblackUserProcess>().HasLoginName(model))
+            {
+                ModelState.AddModelError("LoginName", "登录名已经存在！");
+                return View(model);
+            }
+
+            var exception = ProcessInvoke.GetInstance<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames, roleList);
 
             if (exception != null)
             {

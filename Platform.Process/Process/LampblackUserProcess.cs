@@ -115,5 +115,8 @@ namespace Platform.Process.Process
                 user.Roles.Add(roleRepo.GetModelById(Guid.Parse(roleId)));
             }
         }
+
+        public bool HasLoginName(LampblackUser user)
+            => Repo<LampblackUserRepository>().IsExists(obj => obj.LoginName == user.LoginName);
     }
 }

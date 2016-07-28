@@ -56,7 +56,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual UserStatus Status { get; set; }
 
         [Display(Name = "所属用户组")]
-        public virtual ICollection<WdRole> Roles { get; set; }
+        public virtual ICollection<WdRole> Roles { get; set; } = new List<WdRole>();
 
         [Display(Name = "用户拥有的权限")]
         public virtual ICollection<Permission> Permissions { get; set; }

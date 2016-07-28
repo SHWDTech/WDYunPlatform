@@ -53,19 +53,21 @@ namespace Platform.Cache.Manager
 
         public void DeleteCacheByType(string type)
         {
-            var caches = _platformCaches.Where(obj => obj.Value.CacheType == type);
+            var caches = _platformCaches.Where(obj => obj.Value.CacheType == type)
+                .Select(item => item.Key).ToList();
             foreach (var cach in caches)
             {
-                _platformCaches.Remove(cach.Key);
+                _platformCaches.Remove(cach);
             }
         }
 
         public void DeleteCacheByName(string name)
         {
-            var caches = _platformCaches.Where(obj => obj.Key == name);
+            var caches = _platformCaches.Where(obj => obj.Key == name)
+                .Select(item => item.Key).ToList();
             foreach (var cach in caches)
             {
-                _platformCaches.Remove(cach.Key);
+                _platformCaches.Remove(cach);
             }
         }
     }
