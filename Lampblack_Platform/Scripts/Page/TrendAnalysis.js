@@ -75,7 +75,10 @@ $(function () {
 
     $('#query').on('click', function () {
         debugger;
-        base.AjaxGet('/CommonAjax/GetTrendAnalysis', $('form').serialize(), function (ret) {
+        var form = $('form').serialize();
+        form.StartDateTime = $('#StartDateTime').val();
+        form.DueDateTime = $('#DueDateTime').val();
+        base.AjaxGet('/CommonAjax/GetTrendAnalysis', form, function (ret) {
             var option = Echart_Tools.getOption();
             option.title.text = "趋势分析";
             option.legend.data = ["趋势分析"];

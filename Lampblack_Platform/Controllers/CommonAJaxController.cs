@@ -6,6 +6,7 @@ using MvcWebComponents.Controllers;
 using MvcWebComponents.Model;
 using Platform.Process;
 using Platform.Process.Process;
+using WebViewModels.Enums;
 using WebViewModels.ViewModel;
 
 namespace Lampblack_Platform.Controllers
@@ -75,6 +76,11 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult GetTrendAnalysis(TrendAnalisysViewModel model)
         {
+            if (model.ReportType != ReportType.Month)
+            {
+                model.StartDateTime = DateTime.Parse($"{Request["StartDateTime"]}-1-1");
+                model.DueDateTime = DateTime.Parse($"{Request["DueDateTime"]}-1-1");
+            }
             var result = ProcessInvoke.GetInstance<RunningTimeProcess>().GetRunningTimeReport(model);
             return Json(new JsonStruct()
             {

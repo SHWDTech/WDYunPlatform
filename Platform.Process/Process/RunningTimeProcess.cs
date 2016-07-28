@@ -64,7 +64,10 @@ namespace Platform.Process.Process
                     return GetMonthDateRange(model);
                 case ReportType.Season:
                     return GetSeasonDateRange(model);
-
+                case ReportType.Halfyear:
+                    return GetHalfYearDateRange(model);
+                case ReportType.Year:
+                    return GetYearDateRange(model);
             }
 
             return null;
@@ -98,6 +101,42 @@ namespace Platform.Process.Process
             {
                 monthDates.Add(startDate);
                 startDate = startDate.AddMonths(3);
+                current++;
+            }
+
+            return monthDates;
+        }
+
+        private List<DateTime> GetHalfYearDateRange(TrendAnalisysViewModel model)
+        {
+            var startDate = new DateTime(model.StartDateTime.Year, ((int)model.StartHalfYear + 1) * 6, DateTime.DaysInMonth(model.StartDateTime.Year, ((int)model.StartHalfYear + 1) * 6));
+            var endDate = new DateTime(model.DueDateTime.Year, ((int)model.EndHalfYear + 1) * 6, DateTime.DaysInMonth(model.DueDateTime.Year, ((int)model.EndHalfYear + 1) * 6));
+            var rounds = endDate.MonthDifference(startDate) / 6;
+
+            var monthDates = new List<DateTime>();
+            var current = 0;
+            while (current <= rounds)
+            {
+                monthDates.Add(startDate);
+                startDate = startDate.AddMonths(6);
+                current++;
+            }
+
+            return monthDates;
+        }
+
+        private List<DateTime> GetYearDateRange(TrendAnalisysViewModel model)
+        {
+            var startDate = new DateTime(model.StartDateTime.Year, 12, 31);
+            var endDate = new DateTime(model.DueDateTime.Year, 12, 31);
+            var rounds = endDate.MonthDifference(startDate) / 12;
+
+            var monthDates = new List<DateTime>();
+            var current = 0;
+            while (current <= rounds)
+            {
+                monthDates.Add(startDate);
+                startDate = startDate.AddMonths(12);
                 current++;
             }
 
