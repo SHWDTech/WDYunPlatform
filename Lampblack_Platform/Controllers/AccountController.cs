@@ -69,7 +69,6 @@ namespace Lampblack_Platform.Controllers
                 LoginName = user.LoginName,
                 UserIdentityName = user.UserIdentityName
             };
-            
 
             return View(model);
         }
