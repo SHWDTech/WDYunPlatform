@@ -9,6 +9,7 @@ using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Model;
 using System.Transactions;
+using SHWDTech.Platform.Utility;
 
 namespace Platform.Process.Process
 {
@@ -118,5 +119,35 @@ namespace Platform.Process.Process
 
         public bool HasLoginName(LampblackUser user)
             => Repo<LampblackUserRepository>().IsExists(obj => obj.LoginName == user.LoginName);
+
+        public bool UpdateUserInfo(Dictionary<string, string> userPropertys)
+        {
+            using (var repo = Repo<LampblackUserRepository>())
+            {
+
+                try
+                {
+                    var id = Guid.Parse(userPropertys["UserId"]);
+
+                    var user = repo.GetModelById(id);
+
+                    user.UserIdentityName = userPropertys["UserIdentityName"];
+
+                    if (!string.IsNullOrWhiteSpace(userPropertys["Password"]))
+                    {
+                        user.Password = Globals.GetMd5(userPropertys["Password"]);
+                    }
+
+                    repo.AddOrUpdateDoCommit(user);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("更新用户信息错误", ex);
+                    return false;
+                }
+
+                return true;
+            }
+        }
     }
 }

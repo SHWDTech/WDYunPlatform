@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lampblack_Platform.Models.Account
 {
@@ -34,8 +35,13 @@ namespace Lampblack_Platform.Models.Account
     /// </summary>
     public class SetUpViewModel
     {
+        public Guid UserId { get; set; }
+
         [Display(Name = "用户登录名")]
         public string LoginName { get; set; }
+
+        [Display(Name = "用户真实姓名")]
+        public string UserIdentityName { get; set; }
 
         [Display(Name = "输入新密码")]
         [DataType(DataType.Password)]
@@ -44,5 +50,7 @@ namespace Lampblack_Platform.Models.Account
         [Display(Name = "确认新密码")]
         [DataType(DataType.Password)]
         public string CheckPassword { get; set; }
+
+        public bool? UpdateSuccessed { get; set; }
     }
 }

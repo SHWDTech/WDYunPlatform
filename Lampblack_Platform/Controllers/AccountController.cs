@@ -1,8 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using System.Web.Security;
 using Lampblack_Platform.Models.Account;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
+using MvcWebComponents.Filters;
 using Platform.Process;
 using Platform.Process.Enums;
 using Platform.Process.Process;
@@ -60,7 +62,30 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Ignore")]
         public ActionResult SetUp()
         {
-            var model = ProcessInvoke.GetInstance<LampblackUserProcess>().GetLampblackUser(WdContext.WdUser.Id);
+            var user = ProcessInvoke.GetInstance<LampblackUserProcess>().GetLampblackUser(WdContext.WdUser.Id);
+            var model = new SetUpViewModel
+            {
+                UserId = user.Id,
+                LoginName = user.LoginName,
+                UserIdentityName = user.UserIdentityName
+            };
+            
+
+            return View(model);
+        }
+
+        [NamedAuth(Modules = "Ignore")]
+        [HttpPost]
+        [AjaxGet]
+        public ActionResult SetUp(SetUpViewModel model)
+        {
+            var propertys = new Dictionary<string, string>()
+            {
+                {"UserId", model.UserId.ToString() },
+                {"UserIdentityName", model.UserIdentityName},
+                {"Password", model.Password }
+            };
+            model.UpdateSuccessed = ProcessInvoke.GetInstance<LampblackUserProcess>().UpdateUserInfo(propertys);
 
             return View(model);
         }

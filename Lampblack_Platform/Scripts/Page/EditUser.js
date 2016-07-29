@@ -8,13 +8,16 @@
 });
 
 var EncrypPassword = function (jqXhr, settings) {
-    // ReSharper disable once InconsistentNaming
-    var hashObj = new jsSHA('SHA-256', 'TEXT', 1);
-    hashObj.update($('#Password').val());
-    $('#Password').val(hashObj.getHash('HEX'));
+    if ($('#Password').val() !== "") {
+        // ReSharper disable once InconsistentNaming
+        var hashObj = new jsSHA('SHA-256', 'TEXT', 1);
+        hashObj.update($('#Password').val());
+        $('#Password').val(hashObj.getHash('HEX'));
 
-    var form = $('#userEdit');
-    settings.data = form.serialize();
+        var form = $('#userEdit');
+        settings.data = form.serialize();
 
+        return true;
+    }
     return true;
 };

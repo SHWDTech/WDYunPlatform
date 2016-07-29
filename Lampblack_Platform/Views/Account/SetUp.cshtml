@@ -2,9 +2,68 @@
 @{
     Layout = null;
 }
-
 <div class="single-content">
     <div class="float-card float-card-default float-card-single">
-        
+        @using (Ajax.BeginForm("SetUp", null, new AjaxOptions()
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            OnBegin = "EncrypPassword",
+            OnSuccess = "AlertResult"
+        }, new { id = "setup" }))
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="text-center text-main-reverse">用户个人设置</h4>
+                </div>
+                <div class="panel-body">
+                    @{
+                        var success = Model.UpdateSuccessed?.ToString() ?? "";
+                    }
+                    <input id="UpdateSuccessed" name="UpdateSuccessed" type="hidden" value="@success">
+                    <div id="alertSuccess" class="alert alert-success alert-dismissible" role="alert" style="display: none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>通知!</strong> 更新成功！
+                    </div>
+                    <div class="horizontal-group input-row">
+                        @Html.HiddenFor(m => m.UserId)
+                        @Html.HiddenFor(m => m.LoginName)
+                        @Html.LabelFor(m => m.LoginName, new { @class = "lbl100" })
+                        @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control control280", disabled = "disabled" })
+                        @Html.ValidationMessageFor(m => m.LoginName)
+                    </div>
+                    <div class="horizontal-group input-row">
+                        @Html.LabelFor(m => m.UserIdentityName, new { @class = "lbl100" })
+                        @Html.TextBoxFor(m => m.UserIdentityName, new { @class = "form-control control280" })
+                        @Html.ValidationMessageFor(m => m.UserIdentityName)
+                    </div>
+                    <div class="horizontal-group input-row">
+                        @Html.LabelFor(m => m.Password, new { @class = "lbl100" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control control280" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                    <div class="horizontal-group input-row">
+                        @Html.LabelFor(m => m.CheckPassword, new { @class = "lbl100" })
+                        @Html.PasswordFor(m => m.CheckPassword, new Dictionary<string, object>
+                        {
+                            {"class", "form-control control280"},
+                            {"data-placement", "bottom"},
+                            {"data-toggle", "popover"},
+                            {"data-grigger", "manual"},
+                            {"title", "密码校验错误"},
+                            {"data-content", "两次输入的密码不一致"}
+                        })
+                        @Html.ValidationMessageFor(m => m.CheckPassword)
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <input type="submit" class="btn btn-main" style="float: right; margin-right: 20px;" value="确认修改" />
+                </div>
+            </div>
+                        }
     </div>
 </div>
+
+<script src="/Scripts/Utility/sha.js"></script>
+<script type="text/javascript" src="/Scripts/Page/Setup.js"></script>
