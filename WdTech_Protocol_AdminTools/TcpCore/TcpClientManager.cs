@@ -64,6 +64,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public bool IsConnected { get; private set; }
 
+        public Guid ClientGuid { get; }
+
         public PackageSourceType Type { get; } = PackageSourceType.CommunicationServer;
 
         /// <summary>
@@ -102,6 +104,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="clientSocket">客户端Socket</param>
         public TcpClientManager(Socket clientSocket)
         {
+            ClientGuid = new Guid();
             _clientSocket = clientSocket;
             ReceiveBuffer.Add(new ArraySegment<byte>(new byte[AppConfig.TcpBufferSize]));
             IsConnected = true;

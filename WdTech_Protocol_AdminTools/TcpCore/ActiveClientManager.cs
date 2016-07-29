@@ -126,13 +126,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 if (_clientSockets.Count(obj => obj.DeviceGuid == tcpClient.DeviceGuid) > 1)
                 {
-                    foreach (var source in _clientSockets.Where(obj => obj.DeviceGuid == tcpClient.DeviceGuid))
+                    var existClients =
+                        _clientSockets.Where(obj => obj.DeviceGuid == tcpClient.DeviceGuid)
+                            .Select(item => item.ClientGuid)
+                            .ToList();
+
+                    foreach (var client in existClients)
                     {
-                        if (source != tcpClient)
-                        {
-                            source.Close();
-                            _clientSockets.Remove(source);
-                        }
+                        var unUsedCLient = _clientSockets.First(obj => obj.ClientGuid == client);
+                        _clientSockets.Remove(unUsedCLient);
                     }
                 }
             }
