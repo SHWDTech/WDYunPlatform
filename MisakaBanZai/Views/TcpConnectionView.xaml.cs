@@ -800,6 +800,10 @@ namespace MisakaBanZai.Views
                 {
                     ChkShowDate.IsChecked = true;
                 }
+                if (checkBox.Name == "ChkShowDate" && ChkShowDate.IsChecked == false)
+                {
+                    ChkFullDateMode.IsChecked = false;
+                }
             }
         }
 
@@ -865,13 +869,11 @@ namespace MisakaBanZai.Views
 
             while (true)
             {
-                if (conn == null)
+                if (conn == null || conn.Send(sendBytes) == -1)
                 {
                     Dispatcher.Invoke(RestoreAutoSendControls);
                     continue;
                 }
-
-                conn.Send(sendBytes);
 
                 Thread.Sleep(sendInterver);
             }

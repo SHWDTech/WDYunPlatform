@@ -162,19 +162,27 @@ namespace MisakaBanZai.Services
         public int Send(byte[] bytes)
         {
             var count = 0;
-            if (!_broadcast)
+            try
             {
-                count = _currenTcpClient.Send(bytes);
-            }
-            else
-            {
-                foreach (var tcpClient in _tcpClients)
+                if (!_broadcast)
                 {
-                    count = tcpClient.Value.Send(bytes);
+                    count = _currenTcpClient.Send(bytes);
                 }
-            }
+                else
+                {
+                    foreach (var tcpClient in _tcpClients)
+                    {
+                        count = tcpClient.Value.Send(bytes);
+                    }
+                }
 
-            OnDataSend(count);
+                OnDataSend(count);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error(ReportMessageEnum.DataSendFailed, ex);
+                return -1;
+            }
 
             return count;
         }
