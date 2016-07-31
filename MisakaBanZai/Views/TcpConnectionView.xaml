@@ -84,6 +84,8 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid Row="0">
                                     <CheckBox x:Name="ChkHexSend" Margin="5,10,0,0"></CheckBox>
@@ -115,6 +117,14 @@
                                     <CheckBox x:Name="ChkAddBlankToReceive" Margin="5, 10, 0, 0" IsChecked="True"></CheckBox>
                                     <Label Content="接收数据自动添加空行" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Tag="ChkAddBlankToReceive" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
                                 </Grid>
+                                <Grid Row="7">
+                                    <CheckBox x:Name="ChkAutoReply" Margin="5, 10, 0, 0" IsChecked="False"></CheckBox>
+                                    <Label Content="郑爷爷的自动回复" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Tag="ChkAutoReply" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                                </Grid>
+                                <Grid Row="8">
+                                    <CheckBox x:Name="ChkRegularSend" Margin="5, 10, 0, 0" IsChecked="False"></CheckBox>
+                                    <Label Content="郑爷爷的定时发送" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Tag="ChkRegularSend" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
+                                </Grid>
                             </Grid>
                         </GroupBox>
                     </Grid>
@@ -126,13 +136,15 @@
                     </Grid.RowDefinitions>
                     <Grid Row="0">
                         <GroupBox Header="数据接收显示">
-                            <TextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" TextChanged="ReceiveTextBoxTextChanged"></TextBox>
+                            <TextBox x:Name="TxtReceiveViewer" VerticalScrollBarVisibility="Auto" IsReadOnly="True" TextWrapping="Wrap" 
+                                     TextChanged="ReceiveTextBoxTextChanged"></TextBox>
                         </GroupBox>
                     </Grid>
                     <Grid Row="1">
                         <GroupBox Header="数据发送">
                             <Grid>
-                                <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
+                                <TextBox x:Name="TxtDataSend" Margin="0, 0, 0, 40" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                                         AcceptsReturn="True"></TextBox>
 
                                 <Button Content="清空接收框" x:Name="ClearReceive" HorizontalAlignment="Left" Margin="0, 0, 0, 0" VerticalAlignment="Bottom"
                                     Width="100" Height="35" Click="ClearTextBox"></Button>

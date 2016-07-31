@@ -77,6 +77,9 @@
     </ApplicationDefinition>
     <Compile Include="Common\Appconfig.cs" />
     <Compile Include="Models\IMisakaConnectionManagerWindow.cs" />
+    <Compile Include="Views\AutoReply.xaml.cs">
+      <DependentUpon>AutoReply.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CommonlyUsed.xaml.cs">
       <DependentUpon>CommonlyUsed.xaml</DependentUpon>
     </Compile>
@@ -89,6 +92,10 @@
     <Compile Include="Views\TcpConnectionView.xaml.cs">
       <DependentUpon>TcpConnectionView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AutoReply.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CommonlyUsed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

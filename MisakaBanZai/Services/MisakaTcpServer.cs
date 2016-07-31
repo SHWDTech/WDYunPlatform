@@ -181,7 +181,7 @@ namespace MisakaBanZai.Services
             catch (Exception ex)
             {
                 LogService.Instance.Error(ReportMessageEnum.DataSendFailed, ex);
-                return -1;
+                return 0;
             }
 
             return count;

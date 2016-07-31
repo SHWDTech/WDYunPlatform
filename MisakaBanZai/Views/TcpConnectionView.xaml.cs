@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -15,7 +16,9 @@ using MisakaBanZai.Services;
 using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.Enum;
 using System.Threading.Tasks;
+using System.Timers;
 using SHWDTech.Platform.Utility.ExtensionMethod;
+using Timer = System.Timers.Timer;
 
 namespace MisakaBanZai.Views
 {
@@ -57,9 +60,19 @@ namespace MisakaBanZai.Views
         private bool ShowDate => ChkShowDate.IsChecked == true;
 
         /// <summary>
+        /// 郑爷爷的自动回复
+        /// </summary>
+        private bool AutoReply => ChkAutoReply.IsChecked == true;
+
+        /// <summary>
         /// 是否添加空行
         /// </summary>
         private bool AddBlankToReceive => ChkAddBlankToReceive.IsChecked == true;
+
+        /// <summary>
+        /// 郑爷爷的定时发送
+        /// </summary>
+        private bool IsRegularSend => ChkRegularSend.IsChecked == true;
 
         /// <summary>
         /// 自动发送线程
@@ -117,6 +130,8 @@ namespace MisakaBanZai.Views
 
         public ReportService ReportService { get; set; } = new ReportService();
 
+        private Timer RegularSendTimer { get; set; }
+
         private TcpConnectionView()
         {
             InitializeComponent();
@@ -125,6 +140,13 @@ namespace MisakaBanZai.Views
             {
                 TxtLocalAddr.Items.Add(ipAddress);
             }
+
+            RegularSendTimer = new Timer
+            {
+                Interval = 120000,
+                Enabled = true
+            };
+            RegularSendTimer.Elapsed += RegularSend;
         }
 
         public TcpConnectionView(IMisakaConnection connection) : this()
@@ -489,6 +511,11 @@ namespace MisakaBanZai.Views
 
             TxtReceiveViewer.ScrollToEnd();
 
+            if (Globals.ByteArrayToString(socketBytes, false) == "System Reset\r\n" && AutoReply)
+            {
+                SendTimeCheck();
+            }
+
             UpdateStatusBar();
         }
 
@@ -804,6 +831,23 @@ namespace MisakaBanZai.Views
                 {
                     ChkFullDateMode.IsChecked = false;
                 }
+                if (checkBox.Name == "ChkRegularSend" && ChkRegularSend.IsChecked == true)
+                {
+                    RegularSendTimer.Start();
+                }
+                else if (checkBox.Name == "ChkRegularSend" && ChkRegularSend.IsChecked == false)
+                {
+                    RegularSendTimer.Stop();
+                }
+            }
+        }
+
+        private void RegularSend(object sender, ElapsedEventArgs e)
+        {
+            var regularSend = Dispatcher.Invoke(() => IsRegularSend);
+            if (regularSend && DateTime.Now.Minute >= 6 && DateTime.Now.Minute <= 8)
+            {
+                SendTimeCheck();
             }
         }
 
@@ -979,6 +1023,26 @@ namespace MisakaBanZai.Views
         {
             var window = new CommonlyUsed();
             window.Show();
+        }
+
+        private void SendTimeCheck()
+        {
+            var sendContnt = new List<byte> { 0xAC, 0xF1, 0x04, 0x01, 0xC0, 0x00, 0x00, 0x08 };
+            var year = DateTime.Now.Year - 2000;
+            sendContnt.Add((byte)year);
+            sendContnt.Add((byte)DateTime.Now.Month);
+            sendContnt.Add((byte)DateTime.Now.Day);
+            sendContnt.Add((byte)DateTime.Now.Hour);
+            sendContnt.Add((byte)DateTime.Now.Minute);
+            sendContnt.Add((byte)DateTime.Now.Second);
+            sendContnt.Add((byte)DateTime.Now.DayOfWeek);
+            sendContnt.Add(0x00);
+            var crc = Globals.GetUsmbcrc16(sendContnt.ToArray(), (ushort)sendContnt.Count);
+            var crcBytes = Globals.Uint16ToBytes(crc, false);
+            sendContnt.AddRange(crcBytes);
+            sendContnt.Add(0xB1);
+
+            _misakaConnection.Send(sendContnt.ToArray());
         }
 
         /// <summary>
