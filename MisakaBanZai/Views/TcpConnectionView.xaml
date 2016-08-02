@@ -110,7 +110,7 @@
                                 <Grid Row="5">
                                     <CheckBox x:Name="ChkAutoSend" Margin="5, 10, 0, 0" Unchecked="StopAutoSend" Checked="AutoSend"></CheckBox>
                                     <Label Content="自动发送" HorizontalAlignment="Left" Margin="25, 0, 0, 0" Tag="ChkAutoSend" MouseUp="LaberForCheckBoxOnMouseLeave"></Label>
-                                    <TextBox x:Name="AutoSendInterval" HorizontalAlignment="Right" Margin="0, 0, 55, 0" Width="80" TextChanged="CheckTextInput">2000</TextBox>
+                                    <TextBox x:Name="AutoSendInterval" HorizontalAlignment="Right" Margin="0, 0, 55, 0" Width="80">2000</TextBox>
                                     <Label Content="毫秒" HorizontalAlignment="Right" Margin="0, 0, 10, 0"></Label>
                                 </Grid>
                                 <Grid Row="6">

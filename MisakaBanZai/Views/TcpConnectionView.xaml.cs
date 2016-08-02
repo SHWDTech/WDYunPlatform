@@ -858,6 +858,11 @@ namespace MisakaBanZai.Views
         /// <param name="e"></param>
         private void AutoSend(object sender, EventArgs e)
         {
+            if (!CheckTextInput())
+            {
+                ChkAutoSend.IsChecked = false;
+                return;
+            }
             var interval = int.Parse(AutoSendInterval.Text);
             _autoSendThread = new Thread(() => DoAutoSend(interval));
             _autoSendThread.Start();
@@ -949,20 +954,17 @@ namespace MisakaBanZai.Views
         /// <summary>
         /// 检查自动发送间隔输入内容
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckTextInput(object sender, EventArgs e)
+        private bool CheckTextInput()
         {
-            if (!(sender is TextBox)) return;
-
-            var textBox = (TextBox)sender;
-
             int result;
-            if (!int.TryParse(textBox.Text, out result) || result == 0)
+            if (!int.TryParse(AutoSendInterval.Text, out result) || result == 0)
             {
-                textBox.Text = "10000";
-                MessageBox.Show("自动发送间隔只能输入大于零的数字！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                DispatcherAddReportData(ReportMessageType.Error, "自动发送间隔只能输入大于零的数字！");
+                AutoSendInterval.Text = "10000";
+                return false;
             }
+
+            return true;
         }
 
         /// <summary>
