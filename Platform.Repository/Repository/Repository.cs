@@ -306,16 +306,14 @@ namespace SHWD.Platform.Repository.Repository
         }
 
         private static bool IsPrimitive(Type type)
-        {
-            return type.IsPrimitive
-            || type == typeof(decimal)
-            || type == typeof(string)
-            || type == typeof(DateTime)
-            || type == typeof(Guid)
-            || (type.IsGenericType
-                && type.GetGenericTypeDefinition() == typeof(Nullable<>)
-                && type.GetGenericArguments().Any(t => t.IsValueType && IsPrimitive(t)));
-        }
+            => type.IsPrimitive
+                || type == typeof(decimal)
+                || type == typeof(string)
+                || type == typeof(DateTime)
+                || type == typeof(Guid)
+                || (type.IsGenericType
+                        && type.GetGenericTypeDefinition() == typeof(Nullable<>)
+                        && type.GetGenericArguments().Any(t => t.IsValueType && IsPrimitive(t)));
 
         public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
 

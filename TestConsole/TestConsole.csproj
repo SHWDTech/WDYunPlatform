@@ -62,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DbRepository\DbRepository.csproj">
+      <Project>{9c1dc47a-0142-4554-a8dc-1c2223ed192a}</Project>
+      <Name>DbRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>
@@ -89,10 +93,6 @@
     <ProjectReference Include="..\WdAdminTools\WdAdminTools.csproj">
       <Project>{003d437e-3634-41e6-ac2e-8ac8b10def1d}</Project>
       <Name>WdAdminTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Web_Cloud_Platform\Web_Cloud_Platform.csproj">
-      <Project>{c723121b-defd-49e7-82a4-dd1ef3fd5769}</Project>
-      <Name>Web_Cloud_Platform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
