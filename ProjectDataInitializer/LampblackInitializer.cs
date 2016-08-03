@@ -631,7 +631,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             {
                 Id = Guid.Parse("4181699e-5106-4cf8-a32b-947b72b60197"),
                 ProtocolId = lampblackProtocol.Id,
-                StructureName = "DataLength",
+                StructureName = "ProtocolStructure",
                 StructureIndex = 8,
                 StructureDataLength = 2,
                 CreateUserId = user.Id,

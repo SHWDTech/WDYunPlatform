@@ -129,7 +129,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
                 //协议中，数据段如果是自由组织的形式，那么数据库中设置数据段长度为零。解码时，按照协议中的DataLength段的值解码数据段。
                 var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
-                    ? Globals.BytesToInt16(package["DataLength"].ComponentBytes, 0, false)
+                    ? Globals.BytesToInt16(package["PayloadLength"].ComponentBytes, 0, false)
                     : structure.StructureDataLength;
 
                 if (currentIndex + componentDataLength > bufferBytes.Length)

@@ -21,6 +21,11 @@
         public const string TimingAutoReport = "TimingAutoReport";
 
         /// <summary>
+        /// 读取瞬时值
+        /// </summary>
+        public const string ReadCurrent = "ReadCurrent";
+
+        /// <summary>
         /// 设备控制
         /// </summary>
         public const string DeviceControl = "DeviceControl";

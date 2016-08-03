@@ -649,6 +649,22 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandDatas = new List<CommandData>()
             };
 
+            var commandC = new ProtocolCommand
+            {
+                Id = Guid.Parse("2a7cf232-30c1-4475-9847-93414a7dc02e"),
+                CommandTypeCode = new byte[] { 0xFD },
+                CommandCode = new byte[] { 0x08 },
+                ReceiveBytesLength = 30,
+                CommandCategory = CommandCategory.ReadCurrent,
+                ProtocolId = classic.Id,
+                CommandDeliverParamConfigs = new List<SysConfig> { commandReplyA },
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                LastUpdateDateTime = DateTime.Now,
+                LastUpdateUserId = user.Id,
+                CommandDatas = new List<CommandData>()
+            };
+
             commandA.CommandDatas.Add(commandDataA);
             commandA.CommandDatas.Add(commandDataB);
             commandA.CommandDatas.Add(commandDataC);
@@ -660,9 +676,21 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             commandA.CommandDatas.Add(commandDataI);
             commandA.CommandDatas.Add(commandDataJ);
 
+            commandC.CommandDatas.Add(commandDataA);
+            commandC.CommandDatas.Add(commandDataB);
+            commandC.CommandDatas.Add(commandDataC);
+            commandC.CommandDatas.Add(commandDataD);
+            commandC.CommandDatas.Add(commandDataE);
+            commandC.CommandDatas.Add(commandDataF);
+            commandC.CommandDatas.Add(commandDataG);
+            commandC.CommandDatas.Add(commandDataH);
+            commandC.CommandDatas.Add(commandDataI);
+            commandC.CommandDatas.Add(commandDataJ);
+
             dbContext.ProtocolCommands.Add(command);
             dbContext.ProtocolCommands.Add(commandA);
             dbContext.ProtocolCommands.Add(commandB);
+            dbContext.ProtocolCommands.Add(commandC);
 
             var lampblack = new Protocol
             {
@@ -806,30 +834,26 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.ProtocolStructures.Add(lbLrc);
             dbContext.ProtocolStructures.Add(lbTail);
 
-            //var devices = new List<Device>();
-            for (var i = 0; i < 1000; i++)
+            var dev = new Device()
             {
-                var dev = new Device()
-                {
-                    Id = Guid.NewGuid(),
-                    DeviceTypeId = deviceType.Id,
-                    DeviceCode = "扬尘硬件第三版测试一号",
-                    DevicePassword = string.Empty,
-                    DeviceModuleGuid = Guid.NewGuid(),
-                    DeviceNodeId = (i + 1000).ToString("X8"),
-                    FirmwareSetId = firmSet.Id,
-                    StartTime = DateTime.Now,
-                    PreEndTime = DateTime.Now,
-                    EndTime = DateTime.Now,
-                    Status = DeviceStatus.Enabled,
-                    DomainId = domain.Id,
-                    CreateUserId = user.Id,
-                    CreateDateTime = DateTime.Now,
-                    IsEnabled = true
-                };
+                Id = Guid.NewGuid(),
+                DeviceTypeId = deviceType.Id,
+                DeviceCode = "扬尘硬件第三版测试一号",
+                DevicePassword = string.Empty,
+                DeviceModuleGuid = Guid.NewGuid(),
+                DeviceNodeId = "00000000",
+                FirmwareSetId = firmSet.Id,
+                StartTime = DateTime.Now,
+                PreEndTime = DateTime.Now,
+                EndTime = DateTime.Now,
+                Status = DeviceStatus.Enabled,
+                DomainId = domain.Id,
+                CreateUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                IsEnabled = true
+            };
 
-                dbContext.Devices.Add(dev);
-            }
+            dbContext.Devices.Add(dev);
         }
     }
 
