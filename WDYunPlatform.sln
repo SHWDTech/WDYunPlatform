@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebViewModels", "WebViewMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbRepository", "DbRepository\DbRepository.csproj", "{9C1DC47A-0142-4554-A8DC-1C2223ED192A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceUnitTestTools", "DeviceUnitTestTools\DeviceUnitTestTools.csproj", "{F36D9ACF-1472-4FCC-AB85-D4631BAC4C78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,10 @@ Global
 		{9C1DC47A-0142-4554-A8DC-1C2223ED192A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C1DC47A-0142-4554-A8DC-1C2223ED192A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C1DC47A-0142-4554-A8DC-1C2223ED192A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F36D9ACF-1472-4FCC-AB85-D4631BAC4C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F36D9ACF-1472-4FCC-AB85-D4631BAC4C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F36D9ACF-1472-4FCC-AB85-D4631BAC4C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F36D9ACF-1472-4FCC-AB85-D4631BAC4C78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -216,5 +222,6 @@ Global
 		{399FA8CD-3370-4856-9588-F6B1E3777B22} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 		{C598C73C-2888-41DE-B2E1-ACE502CD57C0} = {54B65C67-3AF2-46B7-B61F-D78E9EE40652}
 		{9C1DC47A-0142-4554-A8DC-1C2223ED192A} = {02A70BE2-1106-4495-BCFE-64E88E55C06E}
+		{F36D9ACF-1472-4FCC-AB85-D4631BAC4C78} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 	EndGlobalSection
 EndGlobal
