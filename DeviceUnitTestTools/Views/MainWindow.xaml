@@ -1,0 +1,22 @@
+﻿<Window x:Class="DeviceUnitTestTools.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="设备测试工具" MinHeight="800" MinWidth="800" MaxHeight="800" MaxWidth="800" ResizeMode="NoResize" FontSize="16">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Row="0">
+            <ComboBox x:Name="CmbDeviceSelect" Margin="10" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" DisplayMemberPath="Value" SelectedValuePath="Key"></ComboBox>
+            <Button x:Name="ReadCurrent" Margin="240, 10" Width="200" Content="立即读取" HorizontalAlignment="Left"></Button>
+        </Grid>
+        <Grid Row="1">
+            <DataGrid x:Name="MonitorDataGrid" AutoGenerateColumns="True" AutoGeneratingColumn="OnAutoGeneratingColumn">
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

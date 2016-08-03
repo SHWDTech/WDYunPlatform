@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using Platform.Process.Enums;
@@ -140,6 +142,21 @@ namespace Platform.Process.Process
                 };
 
                 model.CleanessStatics.Add(record);
+            }
+        }
+
+        public List<MonitorData> GetTestDeviceMonitorDatas(Guid deviceGuid)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var today = DateTime.Now.GetToday();
+                return
+                    repo.GetModels(obj => obj.UpdateTime > today)
+                        .Include("CommandData")
+                        .Include("ProtocolData")
+                        .Where(item => item.ProtocolData.DeviceId == deviceGuid)
+                        .OrderByDescending(data => data.UpdateTime)
+                        .ToList();
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using SHWDTech.Platform.Model.IModel;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.IProcess
 {
@@ -14,5 +16,11 @@ namespace Platform.Process.IProcess
         /// <param name="isEnabled"></param>
         /// <returns></returns>
         IDevice GetDeviceByNodeId(string nodeId, bool isEnabled);
+
+        /// <summary>
+        /// 获取所有设备信息
+        /// </summary>
+        /// <returns></returns>
+        IList<Device> GetAllDevices();
     }
 }
