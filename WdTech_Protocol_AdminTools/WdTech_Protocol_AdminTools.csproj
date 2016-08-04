@@ -143,7 +143,6 @@
     <Compile Include="Services\AdminReportService.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />
     <Compile Include="TcpCore\CommunicationServices.cs" />
-    <Compile Include="TcpCore\Routeings.cs" />
     <Compile Include="TcpCore\TaskManager.cs" />
     <Compile Include="TcpCore\TcpClientManager.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
