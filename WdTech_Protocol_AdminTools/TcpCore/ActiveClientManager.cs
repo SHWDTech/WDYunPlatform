@@ -6,6 +6,8 @@ using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using WdTech_Protocol_AdminTools.Services;
 using System.Timers;
+using Platform.Process;
+using Platform.Process.Process;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -176,6 +178,29 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                         _clientSockets.Remove(tcpClientManager);
                     }
                 }
+            }
+        }
+
+        public List<Guid> ConnectedDevices()
+        {
+            lock (_clientSockets)
+            {
+                return _clientSockets.Select(obj => obj.DeviceGuid).ToList();
+            }
+        }
+
+        public void SendCommand(Guid deviceGuid, Guid commandGuid)
+        {
+            lock (_clientSockets)
+            {
+                var device = _clientSockets.FirstOrDefault(obj => obj.DeviceGuid == deviceGuid);
+                if (device == null) return;
+
+                var command =
+                    ProcessInvoke.GetInstance<ProtocolCodingProcess>().GetProtocolCommandFullLoadedById(commandGuid);
+                if (command == null) return;
+
+                device.Send(command);
             }
         }
     }

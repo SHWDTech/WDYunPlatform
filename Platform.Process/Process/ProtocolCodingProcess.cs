@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
@@ -20,6 +21,9 @@ namespace Platform.Process.Process
 
         public Protocol GetProtocolByName(string name)
             => Repo<ProtocolRepository>().GetModels(model => model.ProtocolName == name).FirstOrDefault();
+
+        public ProtocolCommand GetProtocolCommandFullLoadedById(Guid commandGuid)
+            => Repo<ProtocolCommandRepository>().GetModelIncludeById(commandGuid, new List<string>() {"Protocol", "Protocol.ProtocolStructures", "CommandDefinitions" });
 
     }
 }

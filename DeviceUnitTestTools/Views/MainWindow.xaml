@@ -8,14 +8,20 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Row="0">
             <ComboBox x:Name="CmbDeviceSelect" Margin="10" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" DisplayMemberPath="Value" SelectedValuePath="Key"></ComboBox>
-            <Button x:Name="ReadCurrent" Margin="240, 10" Width="200" Content="立即读取" HorizontalAlignment="Left"></Button>
+            <Button x:Name="BtnReadCurrent" Margin="240, 10" Width="200" Content="立即读取" HorizontalAlignment="Left" Click="ReadCurrent"></Button>
         </Grid>
         <Grid Row="1">
-            <DataGrid x:Name="MonitorDataGrid" AutoGenerateColumns="True" AutoGeneratingColumn="OnAutoGeneratingColumn">
+            <Label Content="设备连接状态："></Label>
+            <Label Content="不在线" Margin="120,0" x:Name="DeviceStatus"></Label>
+        </Grid>
+        <Grid Row="2">
+            <DataGrid x:Name="MonitorDataGrid" AutoGenerateColumns="True" AutoGeneratingColumn="OnAutoGeneratingColumn"
+                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ColumnWidth="*">
             </DataGrid>
         </Grid>
     </Grid>

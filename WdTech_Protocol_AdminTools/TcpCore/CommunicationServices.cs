@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -28,6 +29,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private static readonly ActiveClientManager Manager;
 
+        /// <summary>
+        /// 服务器例行任务
+        /// </summary>
+        private static readonly Routeings Routeings;
+
         public static int AliveConnection => Manager.AliveConnection;
 
         /// <summary>
@@ -46,6 +52,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             Manager = new ActiveClientManager();
             ProtocolInfoManager.InitManager();
+            Routeings = new Routeings();
         }
 
         /// <summary>
@@ -65,6 +72,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 _serverListener.Listen(2048);
                 _serverListener.BeginAccept(AcceptClient, _serverListener);
                 Manager.Start();
+                Routeings.StartRouteings();
 
                 StartDateTime = DateTime.Now;
                 IsStart = true;
@@ -102,7 +110,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                 Manager.Stop();
                 _serverListener.Close(0);
-
+                Routeings.StopRouteings();
 
                 IsStart = false;
 
@@ -155,5 +163,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             AllDone.Set();
         }
+
+        public static List<Guid> GetManagerDevices()
+            => Manager.ConnectedDevices();
+
+        public void SendCommand(Guid deviceGuid, Guid commandGuid)
+            => Manager.SendCommand(deviceGuid, commandGuid);
+
     }
 }

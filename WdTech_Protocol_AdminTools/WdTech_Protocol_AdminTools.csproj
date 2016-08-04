@@ -143,6 +143,7 @@
     <Compile Include="Services\AdminReportService.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />
     <Compile Include="TcpCore\CommunicationServices.cs" />
+    <Compile Include="TcpCore\Routeings.cs" />
     <Compile Include="TcpCore\TaskManager.cs" />
     <Compile Include="TcpCore\TcpClientManager.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -193,6 +194,10 @@
     <ProjectReference Include="..\LampblackCommandCoding\LampblackCommandCoding.csproj">
       <Project>{14641d52-2470-43cb-9bc1-99c601b35e5a}</Project>
       <Name>LampblackCommandCoding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MessageQueue.Models\Platform.MessageQueue.Models.csproj">
+      <Project>{33e6eba9-a13c-435a-b466-ce02ac279bd2}</Project>
+      <Name>Platform.MessageQueue.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
