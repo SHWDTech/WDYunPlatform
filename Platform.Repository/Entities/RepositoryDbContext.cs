@@ -407,5 +407,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 运行时间
         /// </summary>
         public virtual DbSet<RunningTime> RunningTimes { get; set; }
+
+        /// <summary>
+        /// 设备维护记录
+        /// </summary>
+        public virtual DbSet<DeviceMaintenance> DeviceMaintenances { get; set; }
     }
 }

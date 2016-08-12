@@ -65,6 +65,7 @@
     <Compile Include="Enums\CommandCategory.cs" />
     <Compile Include="Enums\DataOrderType.cs" />
     <Compile Include="Enums\DataValueType.cs" />
+    <Compile Include="Enums\DeviceMaintenanceStatus.cs" />
     <Compile Include="Enums\HotelRestaurantStatus.cs" />
     <Compile Include="Enums\ProtocolCheckType.cs" />
     <Compile Include="Enums\ProtocolDataName.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="IModel\IDataModel.cs" />
     <Compile Include="IModel\IDepartment.cs" />
     <Compile Include="IModel\IDevice.cs" />
+    <Compile Include="IModel\IDeviceMaintenance.cs" />
     <Compile Include="IModel\ILampblackDeviceModel.cs" />
     <Compile Include="IModel\IDeviceType.cs" />
     <Compile Include="IModel\IFirmware.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="Model\CommandDefinition.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Device.cs" />
+    <Compile Include="Model\DeviceMaintenance.cs" />
     <Compile Include="Model\LampblackDeviceModel.cs" />
     <Compile Include="Model\DeviceType.cs" />
     <Compile Include="Model\Firmware.cs" />
