@@ -2,7 +2,7 @@
 
 namespace SHWD.Platform.Repository.IRepository
 {
-    public interface IDeviceMaintenanceRepository : IRepository<DeviceMaintenance>
+    public interface IDeviceMaintenanceRepository : ISysDomainRepository<DeviceMaintenance>
     {
     }
 }

@@ -222,6 +222,8 @@
     <Content Include="Scripts\Page\Alarm.js" />
     <Content Include="Scripts\Page\CleanessStatistics.js" />
     <Content Include="Scripts\Page\CleanRate.js" />
+    <Content Include="Scripts\Page\DeviceMaintenance.js" />
+    <Content Include="Scripts\Page\EditDeviceMaintenance.js" />
     <Content Include="Scripts\Page\GeneralReport.js" />
     <Content Include="Scripts\Page\HistoryData.js" />
     <Content Include="Scripts\Page\Index.js" />
@@ -432,6 +434,7 @@
     <Content Include="Views\Query\HistoryData.cshtml" />
     <Content Include="Views\Query\RunningTime.cshtml" />
     <Content Include="Views\Shared\_unComplete.cshtml" />
+    <Content Include="Views\Management\EditDeviceMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

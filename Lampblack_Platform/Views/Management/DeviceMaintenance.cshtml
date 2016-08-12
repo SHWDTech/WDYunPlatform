@@ -1,4 +1,116 @@
-﻿
+﻿@using Lampblack_Platform.Models.Management
+@using MvcWebComponents.Extensions
+@using PagedList.Mvc
+@using SHWDTech.Platform.Model.Enums
+@model DeviceMaintenaceViewModel
 @{
     Layout = null;
 }
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        @using (Ajax.BeginForm("DeviceMaintenance", null, new AjaxOptions()
+        {
+            UpdateTargetId = "body-content",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST"
+        }, new { Id = "deviceMaintenance" }))
+        {
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="control-layer horizontal-group">
+                        <span class="glyphicon glyphicon-wrench" style="font-size: 20px;"></span>
+                        <span style="margin-left: 10px;">设备维修记录查询：</span>
+                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        <input type="button" class="btn btn-main" value="新增" id="add" />
+                        <input type="button" class="btn btn-main" value="导出" id="export" />
+                    </div>
+                    <div class="table-layer">
+                        <table class="table table-bordered table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        维护人
+                                    </td>
+                                    <td>
+                                        被维护设备
+                                    </td>
+                                    <td>
+                                        维护时间
+                                    </td>
+                                    <td>
+                                        维护前状态
+                                    </td>
+                                    <td>
+                                        维护后状态
+                                    </td>
+                                    <td>
+                                        备注
+                                    </td>
+                                    <td>
+                                        操作
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var record in Model.DeviceMaintenances)
+                                    {
+                                        <tr data-company-id="@record.Id">
+                                            @{
+                                                var beforeStatus = EnumHelper<DeviceMaintenanceStatus>.GetDisplayValue(record.BeforeMaintenance);
+                                                var afterStatus = EnumHelper<DeviceMaintenanceStatus>.GetDisplayValue(record.AfterMaintenance);
+                                            }
+                                            <td>@record.MaintenanceUser.UserIdentityName</td>
+                                            <td>@record.Device.DeviceCode</td>
+                                            <td>@record.MaintenanceDateTime.ToString("yyyy-MM-dd")</td>
+                                            <td>@beforeStatus</td>
+                                            <td>@afterStatus</td>
+                                            <td>@record.Comment</td>
+                                            <td>
+                                                @Ajax.ActionLink("编辑", "EditDeviceMaintenance", new { guid = record.Id },
+                                                    new AjaxOptions()
+                                                    {
+                                                        HttpMethod = "GET",
+                                                        OnSuccess = "slideUp.show",
+                                                        UpdateTargetId = "slide-up-content"
+                                                    })
+                                            </td>
+                                        </tr>
+                                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-body" style="margin-top: -30px;">
+                    <div style="float: right;">
+                        @{
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
+                            option.UlElementClasses = new[] { "no-margin pagination" };
+                        }
+                        @Html.PagedListPager(Model.DeviceMaintenances,
+                            page => Url.Action("DeviceMaintenance", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                    </div>
+                    <div class="horizontal-group">
+                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
+                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
+                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
+                            @{
+                                for (var i = 5; i < 25; i += 5)
+                                {
+                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
+                                    <option @selected>@i</option>
+                                }
+                            }
+                        </select>
+                        <label>条记录</label>
+                    </div>
+                </div>
+            </div>
+                                }
+    </div>
+</div>
+
+@Html.Partial("SlideUp")
+
+<script src="/Scripts/Page/DeviceMaintenance.js"></script>

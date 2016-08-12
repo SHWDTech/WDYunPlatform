@@ -1,0 +1,73 @@
+﻿@using MvcWebComponents.Extensions
+@model SHWDTech.Platform.Model.Model.DeviceMaintenance
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("EditDeviceMaintenance", null, new AjaxOptions()
+{
+    UpdateTargetId = "slide-up-content",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}.GeneralOptions(), new { id = "deviceMaintenceEdit" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    <table class="table table-bordered table-striped text-right">
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+        <colgroup style="width: 35%"></colgroup>
+        <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.MaintenanceUserId)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.MaintenanceUserId, (List<SelectListItem>)ViewBag.Users, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.MaintenanceUserId, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.DeviceId)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.DeviceId, (List<SelectListItem>)ViewBag.Devices, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DeviceId, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.MaintenanceDateTime)</td>
+                <td>
+                    @Html.TextBoxFor(m => m.MaintenanceDateTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MaintenanceDateTime, null, new { @class = "text-danger" })
+                </td>
+                <td>@Html.LabelFor(m => m.BeforeMaintenance)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.BeforeMaintenance, (List<SelectListItem>)ViewBag.Status, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BeforeMaintenance, null, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.AfterMaintenance)</td>
+                <td>
+                    @Html.DropDownListFor(m => m.AfterMaintenance, (List<SelectListItem>)ViewBag.Status, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.AfterMaintenance, null, new { @class = "text-danger" })
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                   
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Comment)</td>
+                <td colspan="3">
+                    @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = "请输入备注" })
+                </td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2"><input type="submit" class="btn btn-main" value="提交" style="margin: auto;" /></td>
+                <td colspan="2"><input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" /></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript" src="/Scripts/Page/EditDeviceMaintenance.js"></script>
