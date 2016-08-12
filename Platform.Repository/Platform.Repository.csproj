@@ -75,6 +75,7 @@
     <Compile Include="IRepository\ICommandDefinitionRepository.cs" />
     <Compile Include="IRepository\IDataStatisticsRepository.cs" />
     <Compile Include="IRepository\IDepartmentRepository.cs" />
+    <Compile Include="IRepository\IDeviceMaintenanceRepository.cs" />
     <Compile Include="IRepository\IDeviceModelRepository.cs" />
     <Compile Include="IRepository\ILampblackDeviceModelRepository.cs" />
     <Compile Include="IRepository\ILampblackUserRepository.cs" />
@@ -161,6 +162,10 @@
     <Compile Include="Migrations\201607240417413_AddRunningTIme.Designer.cs">
       <DependentUpon>201607240417413_AddRunningTIme.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608120310426_DeviceMaintenance.cs" />
+    <Compile Include="Migrations\201608120310426_DeviceMaintenance.Designer.cs">
+      <DependentUpon>201608120310426_DeviceMaintenance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -170,6 +175,7 @@
     <Compile Include="Repository\DataRepository.cs" />
     <Compile Include="Repository\DataStatisticsRepository.cs" />
     <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\DeviceMaintenanceRepository.cs" />
     <Compile Include="Repository\DeviceModelRepository.cs" />
     <Compile Include="Repository\DeviceRepository.cs" />
     <Compile Include="Repository\DeviceTypeRepository.cs" />
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607240417413_AddRunningTIme.resx">
       <DependentUpon>201607240417413_AddRunningTIme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120310426_DeviceMaintenance.resx">
+      <DependentUpon>201608120310426_DeviceMaintenance.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
