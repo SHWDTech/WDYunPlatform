@@ -313,9 +313,50 @@ namespace Lampblack_Platform.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DeviceMaintenance()
+        public ActionResult DeviceMaintenance(DeviceMaintenaceViewModel model)
         {
-            return View();
+            int count;
+            var deviceMaintenances = ProcessInvoke.GetInstance<DeviceMaintenanceProcess>()
+                .GetPagedDeviceMaintenance(model.PageIndex, model.PageSize, model.QueryName, out count);
+
+            model.Count = count;
+            model.DeviceMaintenances = deviceMaintenances;
+            model.PageCount = (count%model.PageSize) > 0 ? (count/model.PageSize) + 1 : (count/model.PageSize);
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [NamedAuth(Modules = "DeviceMaintenance")]
+        public ActionResult EditDeviceMaintenance(string guid)
+        {
+            GetDeviceMaintenanceItems();
+
+            if (string.IsNullOrWhiteSpace(guid))
+            {
+                return DefaultView();
+            }
+
+            var model = ProcessInvoke.GetInstance<DeviceMaintenanceProcess>().GetDeviceMaintenance(Guid.Parse(guid));
+            return View(model);
+        }
+
+        [HttpPost]
+        [NamedAuth(Modules = "DeviceMaintenance")]
+        public ActionResult EditDeviceMaintenance(DeviceMaintenance model)
+        {
+            var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
+
+            var exception = ProcessInvoke.GetInstance<DeviceMaintenanceProcess>().AddOrUpdateDeviceMaintenance(model, propertyNames);
+
+            if (exception != null)
+            {
+                GetDeviceMaintenanceItems();
+                return View(model);
+            }
+
+            return RedirectToAction("SubmitSuccess", "Common",
+                new { targetAction = "EditDeviceMaintenance", targetcontroller = "Management", target = "slide-up-content", postform = "deviceMaintenance" });
         }
 
         private void GetHotelRelatedItems()
@@ -368,6 +409,27 @@ namespace Lampblack_Platform.Controllers
                 .GetDeviceModelSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
+        }
+
+        private void GetDeviceMaintenanceItems()
+        {
+            ViewBag.Status = new List<SelectListItem>()
+            {
+                new SelectListItem {Text = "很脏", Value = "0"},
+                new SelectListItem {Text = "一般", Value = "1"},
+                new SelectListItem {Text = "干净", Value = "2"}
+            };
+
+            ViewBag.Users = ProcessInvoke.GetInstance<LampblackUserProcess>()
+                .GetLampblackUserSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .ToList();
+
+            ViewBag.Devices = ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
+                .GetRestaurantDeviceSelectList()
+                .Select(obj => new SelectListItem() { Text = obj.Key.ToString(), Value = obj.Value })
+                .ToList();
+
         }
 
         /// <summary>

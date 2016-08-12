@@ -4,7 +4,7 @@ using SHWDTech.Platform.Model.Model;
 
 namespace SHWD.Platform.Repository.Repository
 {
-    public class DeviceMaintenanceRepository : Repository<DeviceMaintenance>, IDeviceMaintenanceRepository
+    public class DeviceMaintenanceRepository : SysDomainRepository<DeviceMaintenance>, IDeviceMaintenanceRepository
     {
         public DeviceMaintenanceRepository()
         {

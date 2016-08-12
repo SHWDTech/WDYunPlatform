@@ -8,12 +8,12 @@ namespace SHWDTech.Platform.Model.Enums
     public enum DeviceMaintenanceStatus
     {
         [Display(Name = "很脏")]
-        Dirty,
+        Dirty = 0,
 
         [Display(Name = "一般")]
-        Normal,
+        Normal = 1,
 
         [Display(Name = "干净")]
-        Clean
+        Clean = 2
     }
 }

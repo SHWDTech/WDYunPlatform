@@ -36,4 +36,16 @@ namespace Lampblack_Platform.Models.Management
         /// </summary>
         public IPagedList<RestaurantDevice> RestaurantDevices { get; set; }
     }
+
+    public class DeviceMaintenaceViewModel : PagedListViewModelBase
+    {
+        /// <summary>
+        /// 餐饮企业列表
+        /// </summary>
+        public IPagedList<DeviceMaintenance> DeviceMaintenances { get; set; }
+
+        public override int PageSize { get; set; } = 15;
+
+        public override int PageIndex { get; set; } = 1;
+    }
 }

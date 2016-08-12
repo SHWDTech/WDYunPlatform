@@ -149,5 +149,14 @@ namespace Platform.Process.Process
                 return true;
             }
         }
+
+        public Dictionary<Guid, string> GetLampblackUserSelectList()
+        {
+            using (var repo = Repo<LampblackUserRepository>())
+            {
+                return repo.GetAllModels()
+                    .ToDictionary(key => key.Id, value => value.UserIdentityName);
+            }
+        }
     }
 }
