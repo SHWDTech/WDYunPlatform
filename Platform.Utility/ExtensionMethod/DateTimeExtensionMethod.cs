@@ -67,5 +67,11 @@ namespace SHWDTech.Platform.Utility.ExtensionMethod
 
         public static int MonthDifference(this DateTime lValue, DateTime rValue) 
             => Math.Abs((lValue.Month - rValue.Month) + 12 * (lValue.Year - rValue.Year));
+
+        public static DateTime GetCurrentMinute(this DateTime date)
+            => date.Trim(TimeSpan.TicksPerMinute);
+
+        public static DateTime GetCurrentSecond(this DateTime date)
+            => date.Trim(TimeSpan.TicksPerSecond);
     }
 }
