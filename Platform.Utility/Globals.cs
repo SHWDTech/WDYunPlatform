@@ -207,6 +207,32 @@ namespace SHWDTech.Platform.Utility
 
         /// <summary>
         /// 返回位于指定起始位置和结束位置之间的字节数组
+        /// 
+        /// </summary>
+        /// <param name="sourceBytes"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="endIndex"></param>
+        /// <returns></returns>
+        public static byte[] SubBytes(this byte[] sourceBytes, uint startIndex, uint endIndex)
+        {
+            if (endIndex > sourceBytes.Length) throw new ArgumentOutOfRangeException();
+
+            if (startIndex > endIndex) throw new ArgumentException("起始位置必须小于结束位置");
+
+            if (startIndex == endIndex) return new byte[0];
+
+            var returnBytes = new byte[endIndex - startIndex];
+
+            for (var i = 0; i < returnBytes.Length; i++)
+            {
+                returnBytes[i] = sourceBytes[startIndex + i];
+            }
+
+            return returnBytes;
+        }
+
+        /// <summary>
+        /// 返回位于指定起始位置和结束位置之间的字节数组
         /// </summary>
         /// <param name="sourceBytes">源字节数组</param>
         /// <param name="startIndex">返回字节集合的起始位置</param>
@@ -385,6 +411,18 @@ namespace SHWDTech.Platform.Utility
         };
 
         public static ushort GetUsmbcrc16(byte[] buffer, ushort usLen)
+        {
+            ushort crc16 = 0;
+
+            for (var bufferIndex = 0; bufferIndex < usLen; bufferIndex++)
+            {
+                crc16 = (ushort)((crc16 << 8) ^ Crc1021Table[((crc16 >> 8) ^ buffer[bufferIndex]) & 0xFF]);
+            }
+
+            return crc16;
+        }
+
+        public static ushort GetUsmbcrc16(byte[] buffer, uint usLen)
         {
             ushort crc16 = 0;
 
