@@ -385,6 +385,7 @@ namespace MisakaBanZai.Views
                 ChangeServerControlStatus(true);
                 BtnStartListening.IsEnabled = true;
                 BtnStartListening.Content = "开始侦听";
+                ChkAutoSend.IsChecked = false;
             });
         }
 
