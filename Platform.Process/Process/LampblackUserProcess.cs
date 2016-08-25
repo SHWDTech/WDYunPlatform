@@ -118,7 +118,7 @@ namespace Platform.Process.Process
         }
 
         public bool HasLoginName(LampblackUser user)
-            => Repo<LampblackUserRepository>().IsExists(obj => obj.LoginName == user.LoginName);
+            => Repo<LampblackUserRepository>().IsExists(obj => obj.LoginName == user.LoginName && obj.Id != user.Id);
 
         public bool UpdateUserInfo(Dictionary<string, string> userPropertys)
         {
