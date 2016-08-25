@@ -118,63 +118,6 @@
     <Compile Include="IRepository\IUserConfigRepository.cs" />
     <Compile Include="IRepository\IUserDictionaryRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
-    <Compile Include="Migrations\201607130517523_InitialCreate.cs" />
-    <Compile Include="Migrations\201607130517523_InitialCreate.Designer.cs">
-      <DependentUpon>201607130517523_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607140744454_AddStatistics.cs" />
-    <Compile Include="Migrations\201607140744454_AddStatistics.Designer.cs">
-      <DependentUpon>201607140744454_AddStatistics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607141000028_AddDeviceModel.cs" />
-    <Compile Include="Migrations\201607141000028_AddDeviceModel.Designer.cs">
-      <DependentUpon>201607141000028_AddDeviceModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607150803154_DeviceAddChannelCount.cs" />
-    <Compile Include="Migrations\201607150803154_DeviceAddChannelCount.Designer.cs">
-      <DependentUpon>201607150803154_DeviceAddChannelCount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607150908111_ModifyDeviceModel.cs" />
-    <Compile Include="Migrations\201607150908111_ModifyDeviceModel.Designer.cs">
-      <DependentUpon>201607150908111_ModifyDeviceModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607150910545_ReMapRestaurantDevice.cs" />
-    <Compile Include="Migrations\201607150910545_ReMapRestaurantDevice.Designer.cs">
-      <DependentUpon>201607150910545_ReMapRestaurantDevice.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607180212558_ReMapDevice.cs" />
-    <Compile Include="Migrations\201607180212558_ReMapDevice.Designer.cs">
-      <DependentUpon>201607180212558_ReMapDevice.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607190233254_ModigyDeviceStartDate.cs" />
-    <Compile Include="Migrations\201607190233254_ModigyDeviceStartDate.Designer.cs">
-      <DependentUpon>201607190233254_ModigyDeviceStartDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607200740016_ModifyProject.cs" />
-    <Compile Include="Migrations\201607200740016_ModifyProject.Designer.cs">
-      <DependentUpon>201607200740016_ModifyProject.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607211051099_AddDataChannel.cs" />
-    <Compile Include="Migrations\201607211051099_AddDataChannel.Designer.cs">
-      <DependentUpon>201607211051099_AddDataChannel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607230749280_ModiryDataStatistic.cs" />
-    <Compile Include="Migrations\201607230749280_ModiryDataStatistic.Designer.cs">
-      <DependentUpon>201607230749280_ModiryDataStatistic.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607231505471_ModifyDataStatistics.cs" />
-    <Compile Include="Migrations\201607231505471_ModifyDataStatistics.Designer.cs">
-      <DependentUpon>201607231505471_ModifyDataStatistics.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201607240417413_AddRunningTIme.cs" />
-    <Compile Include="Migrations\201607240417413_AddRunningTIme.Designer.cs">
-      <DependentUpon>201607240417413_AddRunningTIme.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608120310426_DeviceMaintenance.cs" />
-    <Compile Include="Migrations\201608120310426_DeviceMaintenance.Designer.cs">
-      <DependentUpon>201608120310426_DeviceMaintenance.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
     <Compile Include="Repository\CateringCompanyRepository.cs" />
@@ -231,50 +174,6 @@
       <Project>{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607130517523_InitialCreate.resx">
-      <DependentUpon>201607130517523_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607140744454_AddStatistics.resx">
-      <DependentUpon>201607140744454_AddStatistics.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607141000028_AddDeviceModel.resx">
-      <DependentUpon>201607141000028_AddDeviceModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607150803154_DeviceAddChannelCount.resx">
-      <DependentUpon>201607150803154_DeviceAddChannelCount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607150908111_ModifyDeviceModel.resx">
-      <DependentUpon>201607150908111_ModifyDeviceModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607150910545_ReMapRestaurantDevice.resx">
-      <DependentUpon>201607150910545_ReMapRestaurantDevice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607180212558_ReMapDevice.resx">
-      <DependentUpon>201607180212558_ReMapDevice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607190233254_ModigyDeviceStartDate.resx">
-      <DependentUpon>201607190233254_ModigyDeviceStartDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607200740016_ModifyProject.resx">
-      <DependentUpon>201607200740016_ModifyProject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607211051099_AddDataChannel.resx">
-      <DependentUpon>201607211051099_AddDataChannel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607230749280_ModiryDataStatistic.resx">
-      <DependentUpon>201607230749280_ModiryDataStatistic.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607231505471_ModifyDataStatistics.resx">
-      <DependentUpon>201607231505471_ModifyDataStatistics.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607240417413_AddRunningTIme.resx">
-      <DependentUpon>201607240417413_AddRunningTIme.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608120310426_DeviceMaintenance.resx">
-      <DependentUpon>201608120310426_DeviceMaintenance.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

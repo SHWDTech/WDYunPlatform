@@ -412,5 +412,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 设备维护记录
         /// </summary>
         public virtual DbSet<DeviceMaintenance> DeviceMaintenances { get; set; }
+
+        /// <summary>
+        /// 油烟设备模型
+        /// </summary>
+        public virtual DbSet<LampblackDeviceModel> LampblackDeviceModels { get; set; }
     }
 }

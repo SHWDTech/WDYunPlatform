@@ -2795,11 +2795,30 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu24);
 
+            var deviceModel = new LampblackDeviceModel
+            {
+                Id = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761"),
+                Name = "油烟净化器",
+                DomainId = userdomain.Id,
+                CreateDateTime = DateTime.Now,
+                CreateUserId = user.Id,
+                LastUpdateUserId = user.Id,
+                LastUpdateDateTime = DateTime.Now,
+                IsEnabled = true,
+                Fail = 5000,
+                Worse = 20000,
+                Qualified = 50000,
+                Good = 50001
+            };
+
+            dbContext.LampblackDeviceModels.Add(deviceModel);
+
             var device = new RestaurantDevice()
             {
                 Id = Guid.Parse("b5285be6-6ac2-4f61-99e4-5f2d8ee25602"),
-                DomainId = domain.Id,
-                DeviceType = lampblackDevicetype,
+                DomainId = userdomain.Id,
+                DeviceTypeId = lampblackDevicetype.Id,
+                DeviceModelId = deviceModel.Id,
                 DeviceCode =  "油烟一号",
                 DevicePassword = "12345678",
                 DeviceNodeId = "00000001",
