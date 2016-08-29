@@ -22,6 +22,7 @@ $(function () {
             }
         })
         .fail(function (ret) {
+            if (ret.status !== 500) return;
             var error;
             if (ret.responseJSON) {
                 error = ret.responseJSON;
