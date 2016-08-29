@@ -120,7 +120,6 @@ namespace MvcWebComponents.Controllers
         {
             var json = new JsonStruct()
             {
-                Success = true,
                 Message = message,
             };
 
@@ -138,7 +137,6 @@ namespace MvcWebComponents.Controllers
         {
             var json = new JsonStruct()
             {
-                Success = true,
                 Message = message,
                 Result = data
             };
@@ -156,7 +154,6 @@ namespace MvcWebComponents.Controllers
         {
             var json = new JsonStruct()
             {
-                Success = true,
                 Result = data
             };
 

@@ -98,7 +98,6 @@ namespace Lampblack_Platform.Controllers
 
             var json = new JsonStruct
             {
-                Success = success,
                 Message = !success ? "尝试删除用户信息失败，请刷新后重新尝试。" : "删除成功！",
                 PostForm = success ? "user" : ""
             };
@@ -177,7 +176,6 @@ namespace Lampblack_Platform.Controllers
 
             var json = new JsonStruct
             {
-                Success = sqlResult.Success,
                 Message = sqlResult.Message,
                 PostForm = sqlResult.Success ? "department" : ""
             };
@@ -256,7 +254,6 @@ namespace Lampblack_Platform.Controllers
 
             var json = new JsonStruct
             {
-                Success = sqlResult.Success,
                 Message = sqlResult.Message,
                 PostForm = sqlResult.Success ? "role" : ""
             };
@@ -270,7 +267,7 @@ namespace Lampblack_Platform.Controllers
             var role = ProcessInvoke.GetInstance<WdRoleProcess>().GetRole(guid);
             if (role == null)
             {
-                return Json(new JsonStruct() { Success = false, Message = "没有找到指定系统角色，请重新尝试！" },
+                return Json(new JsonStruct() { Message = "没有找到指定系统角色，请重新尝试！" },
                     JsonRequestBehavior.AllowGet);
             }
 

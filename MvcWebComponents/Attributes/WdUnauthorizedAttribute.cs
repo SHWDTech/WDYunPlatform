@@ -14,7 +14,6 @@ namespace MvcWebComponents.Attributes
                 {
                     Data = new JsonStruct()
                     {
-                        Success = false,
                         Message = "当前用户登录已经超时，请重新登陆！"
                     },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet

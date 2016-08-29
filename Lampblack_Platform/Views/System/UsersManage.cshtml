@@ -14,7 +14,7 @@
             UpdateTargetId = "body-content",
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "POST"
-        }, new { Id = "user" }))
+        }.GeneralOptions(), new { Id = "user" }))
         {
             <div class="panel">
                 <div class="panel-body">

@@ -1,5 +1,5 @@
 ﻿var getTable = function () {
-    base.AjaxGet("/System/EditUser", function (obj) {
+    base.AjaxGet("/System/EditUser", null, function (obj) {
         slideUp.append(obj);
         slideUp.show();
     });

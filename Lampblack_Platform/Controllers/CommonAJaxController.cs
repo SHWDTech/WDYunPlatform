@@ -17,7 +17,7 @@ namespace Lampblack_Platform.Controllers
         public ActionResult GetAreaList()
         {
             var areaId = Request["id"];
-            if (string.IsNullOrWhiteSpace(areaId)) return Json(new JsonStruct {Success = true}, JsonRequestBehavior.AllowGet);
+            if (string.IsNullOrWhiteSpace(areaId)) return Json(new JsonStruct(), JsonRequestBehavior.AllowGet);
             Guid guid;
             Guid.TryParse(areaId, out guid);
             if (guid != Guid.Empty)
@@ -26,13 +26,12 @@ namespace Lampblack_Platform.Controllers
 
                 return Json(new JsonStruct()
                 {
-                    Success = true,
                     Result = list.Select(obj => new { Id = obj.Key, ItemValue = obj.Value })
                 },
                     JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new JsonStruct { Success = true }, JsonRequestBehavior.AllowGet);
+            return Json(new JsonStruct(), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Hotels()
@@ -68,7 +67,6 @@ namespace Lampblack_Platform.Controllers
 
             return Json(new JsonStruct()
             {
-                Success = true,
                 Result = hotels.Select(obj => new { obj.Id, Name = obj.ProjectName })
             },
                 JsonRequestBehavior.AllowGet);
@@ -84,7 +82,6 @@ namespace Lampblack_Platform.Controllers
             var result = ProcessInvoke.GetInstance<RunningTimeProcess>().GetRunningTimeReport(model);
             return Json(new JsonStruct()
             {
-                Success = true,
                 Result = result.Select(obj => new { Date = obj.Key, Linkage = obj.Value })
             },
                 JsonRequestBehavior.AllowGet);

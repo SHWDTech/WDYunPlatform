@@ -11,14 +11,6 @@ namespace MvcWebComponents.Filters
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AjaxHandleErrorAttribute : HandleErrorAttribute
     {
-        /// <summary>
-        /// 初始化AjaxHandleError特性的新实例
-        /// </summary>
-        public AjaxHandleErrorAttribute()
-        {
-
-        }
-
         public override void OnException(ExceptionContext filterContext)
         {
             if (filterContext.HttpContext.Request.IsAjaxRequest())
@@ -26,7 +18,6 @@ namespace MvcWebComponents.Filters
                 filterContext.HttpContext.Response.StatusCode = 500;
                 var json = new JsonStruct()
                 {
-                    Success = false,
                     Message = "请求失败，请重新尝试，若多次失败请联系管理员！"
                 };
 

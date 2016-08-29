@@ -3,7 +3,7 @@ var AreaInfo = [];
 
 $(function () {
     base.AjaxGet('/Management/GetAreaInfo', null, function (obj) {
-        AreaInfo = obj;
+        AreaInfo = obj.Result;
         $('input[type=text][item-level=0]').node = '';
         $('ul[item-level=0]').attr('parentNode', '');
         if (AreaInfo.length > 0) {
@@ -38,8 +38,8 @@ $(function () {
         event.stopPropagation();
         var area = event.data.area;
         var li = event.data.li;
-        Msg('确定要删除【' + area.ItemValue + '】吗？', { title: '确认信息', confirm: '确定', callback: doRemoveArea, param: { area : area, li: li } });
-        };
+        Msg('确定要删除【' + area.ItemValue + '】吗？', { title: '确认信息', confirm: '确定', callback: doRemoveArea, param: { area: area, li: li } });
+    };
 
     //执行删除操作
     function doRemoveArea(param) {
@@ -73,18 +73,15 @@ $(function () {
         $('#areaEdit').attr('itemId', area.Id);
         slideUp.show();
         $('#confirm').off();
-        $('#confirm')
-            .on('click',
-                function () {
-                    slideUp.hide(false);
-                    base.AjaxGet('/Management/EditAreaInfo',
-                        { itemId: area.Id, editName: $('#areaEdit').find('input[type=text]').val() },
-                        function (obj) {
-                            var item = AreaInfo.filter(function (item) { return item.Id === obj.Id });
-                            item[0].ItemValue = obj.ItemValue;
-                            li.find('span')[0].innerHTML = obj.ItemValue;
-                        });
-                });
+        $('#confirm').on('click', function () {
+            slideUp.hide(false);
+            base.AjaxGet('/Management/EditAreaInfo', { itemId: area.Id, editName: $('#areaEdit').find('input[type=text]').val() }, function (obj) {
+                var result = obj.Result;
+                var item = AreaInfo.filter(function (item) { return item.Id === result.Id });
+                item[0].ItemValue = result.ItemValue;
+                li.find('span')[0].innerHTML = result.ItemValue;
+            });
+        });
     };
 
     //激活当前选中区域信息
@@ -147,17 +144,18 @@ $(function () {
 
         //获取添加结果
         base.AjaxGet('/Management/AddAreaInfo', { 'areaName': areaName, 'itemLevel': itemLevel, 'parentNode': parentNode }, function (obj) {
+            var result = obj.Result;
             var area = {
-                Id: obj.Id,
-                ItemKey: obj.ItemKey,
-                ItemValue: obj.ItemValue,
-                ItemLevel: obj.ItemLevel,
-                ParentNode: obj.ParentNode,
+                Id: result.Id,
+                ItemKey: result.ItemKey,
+                ItemValue: result.ItemValue,
+                ItemLevel: result.ItemLevel,
+                ParentNode: result.ParentNode,
                 Parent: AreaInfo.filter(function (obj) { return obj.Id === parentNode })
             };
             AreaInfo.push(area);
             var li = $('<li class="list-group-item onCreate"><span>' +
-                obj.ItemValue +
+                result.ItemValue +
                 '</span><span class="glyphicon glyphicon-remove delete-mark"></span><span class="glyphicon glyphicon-pencil edit-mark"></span></li>');
             $('ul[item-level=' + itemLevel + ']').append(li);
             li.one('mouseenter',

@@ -4,7 +4,7 @@ $(function () {
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty().append('<option value="none">全部</option>');
-            $(ret).each(function () {
+            $(ret.Result).each(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
         });

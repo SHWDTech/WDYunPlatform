@@ -26,8 +26,8 @@ $(function () {
     var getHotels = function () {
         base.AjaxGet('/CommonAjax/Hotels', { area: $('#areas').val(), street: $('#street').val(), address: $('#address').val() }, function (ret) {
             $('#hotels').empty();
-            if (!IsNullOrEmpty(ret)) {
-                $(ret).each(function(index, hotel) {
+            if (!IsNullOrEmpty(ret.Result)) {
+                $(ret.Result).each(function(index, hotel) {
                     $('#hotels').append('<span class="wd-card" value=' + hotel.Id + '>' + hotel.Name + '</span>');
                 });
             }
@@ -36,17 +36,18 @@ $(function () {
                 currentGauge.showLoading();
                 base.AjaxGet('/Home/HotelCurrentStatus', { hotelGuid: $(this).attr('value') }, function (ret) {
                     currentGauge.hideLoading();
-                    $('#current').html(ret.Current / 100 + 'mA');
-                    $('#cleanerStatus').html(ret.CleanerStatus);
-                    $('#fanStatus').html(ret.FanStatus);
-                    $('#lampblackIn').html(ret.LampblackIn + 'mg/m³');
-                    $('#lampblackOut').html(ret.LampblackOut + 'mg/m³');
-                    $('#cleanRate').html(ret.CleanRate);
+                    var record = ret.Result;
+                    $('#current').html(record.Current / 100 + 'mA');
+                    $('#cleanerStatus').html(record.CleanerStatus);
+                    $('#fanStatus').html(record.FanStatus);
+                    $('#lampblackIn').html(record.LampblackIn + 'mg/m³');
+                    $('#lampblackOut').html(record.LampblackOut + 'mg/m³');
+                    $('#cleanRate').html(record.CleanRate);
                     $('#removeRate').html();
-                    $('#cleanerRunTime').html(ret.CleanerRunTime);
-                    $('#fanRunTime').html(ret.FanRunTime);
+                    $('#cleanerRunTime').html(record.CleanerRunTime);
+                    $('#fanRunTime').html(record.FanRunTime);
 
-                    gaugeOption.series[0].data = { name: hotel, value: ret.Current / 100 };
+                    gaugeOption.series[0].data = { name: hotel, value: record.Current / 100 };
                     currentGauge.setOption(gaugeOption);
                 });
             });
@@ -56,7 +57,7 @@ $(function () {
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty().append('<option value="none">全部</option>');
-            $(ret).each(function () {
+            $(ret.Result).each(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
 

@@ -1,4 +1,5 @@
 ﻿@using Lampblack_Platform.Models.System
+@using MvcWebComponents.Extensions
 @model AuthorityViewModel
 
 @{
@@ -12,7 +13,7 @@
                 UpdateTargetId = "body-content",
                 InsertionMode = InsertionMode.Replace,
                 HttpMethod = "POST"
-            }, new { Id = "authority" }))
+            }.GeneralOptions(), new { Id = "authority" }))
             {
                 <div class="panel panel-default">
                     <div class="panel panel-heading">

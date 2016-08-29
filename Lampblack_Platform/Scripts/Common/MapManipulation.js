@@ -67,16 +67,17 @@ var add_MapPoint = function (item) {
 
 var markerShowView = function (id, zoom) {
     base.AjaxGet("/Monitor/GetMapHotelInfo", { hotelGuid: id }, function (ret) {
-        $(infoPanel.name).html(ret.Name);
-        $(infoPanel.chargeMan).html(ret.ChargeMan);
-        $(infoPanel.address).html(ret.Address);
-        $(infoPanel.telephone).html(ret.Phone);
-        $(infoPanel.current).html(ret.Current / 100 + 'mA');
-        $(infoPanel.cleanerStatus).html(ret.CleanerStatus === true ? '开启' : '关闭');
-        $(infoPanel.fanStatus).html(ret.FanStatus === true ? '开启' : '关闭');
-        $(infoPanel.lampblackIn).html(ret.LampblackIn + 'mg/m³');
-        $(infoPanel.lampblackOut).html(ret.LampblackOut + 'mg/m³');
-        $(infoPanel.cleanRate).html(ret.CleanRate);
+        var hotelInfo = ret.Result;
+        $(infoPanel.name).html(hotelInfo.Name);
+        $(infoPanel.chargeMan).html(hotelInfo.ChargeMan);
+        $(infoPanel.address).html(hotelInfo.Address);
+        $(infoPanel.telephone).html(hotelInfo.Phone);
+        $(infoPanel.current).html(hotelInfo.Current / 100 + 'mA');
+        $(infoPanel.cleanerStatus).html(hotelInfo.CleanerStatus === true ? '开启' : '关闭');
+        $(infoPanel.fanStatus).html(hotelInfo.FanStatus === true ? '开启' : '关闭');
+        $(infoPanel.lampblackIn).html(hotelInfo.LampblackIn + 'mg/m³');
+        $(infoPanel.lampblackOut).html(hotelInfo.LampblackOut + 'mg/m³');
+        $(infoPanel.cleanRate).html(hotelInfo.CleanRate);
 
         var point = $.grep(markers, function (e) { return e.id === id })[0].point;
         var infoWindow = new BMap.InfoWindow(infoPanel.body[0], { width: 400, height: 320, title: '<h4 class="text-center text-main-reverse">酒店当前状况</h4>' });
@@ -89,7 +90,7 @@ var markerShowView = function (id, zoom) {
 
 var getHotelInfo = function () {
     base.AjaxGet("/Monitor/GetHotelInfo", null, function (ret) {
-        $(ret).each(function(index, item) {
+        $(ret.Result).each(function(index, item) {
             add_MapPoint(item);
         });
     });
