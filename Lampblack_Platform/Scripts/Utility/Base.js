@@ -20,6 +20,16 @@ $(function () {
             if (!IsNullOrEmpty(callback)) {
                 callback(ret.Result);
             }
+        })
+        .fail(function (ret) {
+                var error = ret.responseJSON;
+                if (!IsNullOrEmpty(error.Message)) {
+                    var message = error.Message;
+                    if (!IsNullOrEmpty(error.Exception)) {
+                        message += ('<br/>ExceptionInfo:<br/>' + error.Exception);
+                }
+                Msg(message, { title: '提示！' });
+            }
         });
     }
 });
