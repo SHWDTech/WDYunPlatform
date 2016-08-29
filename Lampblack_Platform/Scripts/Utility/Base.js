@@ -149,7 +149,7 @@ function ajaxFailure(ret) {
         case 0:
             Msg("请求错误，请检查网络连接！", { title: '提示！' });
         case 500:
-            var error = ret.responseJSON;
+            var error = JSON.parse(ret.responseText);
             if (!IsNullOrEmpty(error.Message)) {
                 var message = error.Message;
                 if (!IsNullOrEmpty(error.Exception)) {
