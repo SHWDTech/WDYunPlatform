@@ -25,7 +25,6 @@ namespace Lampblack_Platform.Controllers
             var hotelLocation = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelLocations();
             return Json(new JsonStruct()
             {
-                Success = true,
                 Result = hotelLocation
             },JsonRequestBehavior.AllowGet);
         }
@@ -36,7 +35,6 @@ namespace Lampblack_Platform.Controllers
             var hotelLocation = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetMapHotelCurrentStatus(hotelGuid);
             return Json(new JsonStruct()
             {
-                Success = true,
                 Result = hotelLocation
             }, JsonRequestBehavior.AllowGet);
         }

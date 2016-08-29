@@ -9,11 +9,6 @@ namespace MvcWebComponents.Model
     public class JsonStruct
     {
         /// <summary>
-        /// 标识是否执行成功
-        /// </summary>
-        public bool Success { get; set; }
-
-        /// <summary>
         /// 请求的响应
         /// </summary>
         public object Result { get; set; }

@@ -48,7 +48,6 @@ namespace Lampblack_Platform.Controllers
 
             return Json(new JsonStruct()
             {
-                Success = true,
                 Result = currentStatus
             }, JsonRequestBehavior.AllowGet);
         }

@@ -4,7 +4,7 @@ $(function () {
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty().append('<option value="none">全部</option>');
-            $(ret).each(function () {
+            $(ret.Result).each(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
         });
@@ -74,7 +74,6 @@ $(function () {
     trendChart = echarts.init(document.getElementById('trendChart'));
 
     $('#query').on('click', function () {
-        debugger;
         var form = $('form').serialize();
         form.StartDateTime = $('#StartDateTime').val();
         form.DueDateTime = $('#DueDateTime').val();
@@ -85,7 +84,7 @@ $(function () {
             option.series[0].name = "趋势分析";
             var xAxisData = [];
             var seriesData = [];
-            $.each(ret, function () {
+            $.each(ret.Result, function () {
                 xAxisData.push($(this)[0].Date);
                 seriesData.push($(this)[0].Linkage);
             });

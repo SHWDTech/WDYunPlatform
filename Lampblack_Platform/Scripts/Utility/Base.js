@@ -3,38 +3,17 @@
 $(function () {
     base.AjaxGet = function (ajaxUrl, params, callback) {
         ajaxUrl = ajaxUrl + '?t=' + Date.now();
-        $.get(ajaxUrl, params, function (ret) {
-            if (IsNullOrEmpty(ret)) return;
-            if (!IsNullOrEmpty(ret.Message)) {
-                var message = ret.Message;
-                if (!IsNullOrEmpty(ret.Exception)) {
-                    message += ('<br/>ExceptionInfo:<br/>' + ret.Exception);
-                }
-                Msg(message, { title: '提示！' });
-            }
-
-            if (IsNullOrEmpty(ret.Success) || !ret.Success) {
-                return;
-            }
-
-            if (!IsNullOrEmpty(callback)) {
-                callback(ret.Result);
-            }
-        })
-        .fail(function (ret) {
-            if (ret.status !== 500) return;
-            var error;
-            if (ret.responseJSON) {
-                error = ret.responseJSON;
-            } else {
-                error = JSON.parse(ret.responseText);
-            }
-            if (!IsNullOrEmpty(error.Message)) {
-                var message = error.Message;
-                if (!IsNullOrEmpty(error.Exception)) {
-                    message += ('<br/>ExceptionInfo:<br/>' + error.Exception);
-                }
-                Msg(message, { title: '提示！' });
+        $.ajax(ajaxUrl,{
+            type: "GET",
+            data: params,
+            success:function(xhr) {
+                ajaxSuccess(xhr, params, callback);
+            },
+            error: function(xhr) {
+                ajaxFailure(xhr, params);
+            },
+            complete: function(xhr) {
+                ajaxComplete(xhr);
             }
         });
     }
@@ -71,6 +50,10 @@ var IsNullOrEmpty = function (obj) {
 
         return false;
     }
+}
+
+var IsFunction = function(obj) {
+    return typeof obj === "function";
 }
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -122,7 +105,7 @@ var Msg = function (msg, option) {
     if (!IsNullOrEmpty(option.callback)) {
         $('#modal-confirm').off();
         $('#modal-confirm').on('click', function () {
-            option.call(option.param);
+            option.callback(option.param);
         });
     }
 
@@ -149,22 +132,16 @@ function ajaxFailure(ret) {
             return;
         case 0:
             Msg("请求错误，请检查网络连接！", { title: '提示！' });
-        case 500:
-            var error = JSON.parse(ret.responseText);
-            if (!IsNullOrEmpty(error.Message)) {
-                var message = error.Message;
-                if (!IsNullOrEmpty(error.Exception)) {
-                    message += ('<br/>ExceptionInfo:<br/>' + error.Exception);
-                }
-                Msg(message, { title: '提示！' });
-            }
             return;
     }
 }
 
-function ajaxSuccess(ret) {
+function ajaxSuccess(ret, params, callback) {
     if (!IsNullOrEmpty(ret.PostForm)) {
         $('#' + ret.PostForm).submit();
+    }
+    if (!IsNullOrEmpty(callback) && IsFunction(callback)) {
+        callback(ret, params);
     }
 }
 
@@ -179,5 +156,4 @@ function ajaxComplete(ret) {
             Msg(message, { title: '提示！' });
         }
     }
-
 }

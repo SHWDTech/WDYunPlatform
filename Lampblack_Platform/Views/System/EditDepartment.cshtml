@@ -1,4 +1,5 @@
-﻿@model SHWDTech.Platform.Model.Model.Department
+﻿@using MvcWebComponents.Extensions
+@model SHWDTech.Platform.Model.Model.Department
 
 @{
     Layout = null;
@@ -9,7 +10,7 @@
     UpdateTargetId = "slide-up-content",
     InsertionMode = InsertionMode.Replace,
     HttpMethod = "POST"
-}, new { id = "departmentEdit" }))
+}.GeneralOptions(), new { id = "departmentEdit" }))
 {
     @Html.HiddenFor(m => m.Id)
     <table class="table table-bordered table-striped text-right">

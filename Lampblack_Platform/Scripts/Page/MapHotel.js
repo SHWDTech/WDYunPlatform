@@ -7,7 +7,7 @@
         base.AjaxGet('/Management/GetAreaList', { id: $('#AreaGuid').val() }, function (ret) {
             $('#StreetGuid').empty();
             $('#StreetGuid').append('<option value="">全部</option>');
-            $(ret).each(function () {
+            $(ret.Result).each(function () {
                 $('#StreetGuid').append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
         });

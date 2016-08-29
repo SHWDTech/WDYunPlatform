@@ -37,7 +37,6 @@ namespace Lampblack_Platform.Controllers
             var list = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetChildDistrict(parent);
 
             return Json(new JsonStruct() {
-                Success = true,
                 Result = list.Select(obj => new {Id = obj.Key, ItemValue = obj.Value})}, 
                 JsonRequestBehavior.AllowGet);
         }
@@ -56,7 +55,7 @@ namespace Lampblack_Platform.Controllers
             var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
             return district == null
-                ? Json(new JsonStruct() { Success = false, Message = "添加区县信息失败，请重新尝试。" }, JsonRequestBehavior.AllowGet)
+                ? Json(new JsonStruct() { Message = "添加区县信息失败，请重新尝试。" }, JsonRequestBehavior.AllowGet)
                 : Json("添加成功！", district, JsonRequestBehavior.AllowGet);
         }
 
@@ -81,9 +80,13 @@ namespace Lampblack_Platform.Controllers
                 ? "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。" 
                 : "删除成功！";
 
+            if (sqlResult.ErrorNumber == 547)
+            {
+                HttpContext.Response.StatusCode = 500;
+            }
+
             var json = new JsonStruct
             {
-                Success = sqlResult.Success,
                 Message = sqlResult.Message
             };
 
@@ -153,7 +156,6 @@ namespace Lampblack_Platform.Controllers
 
             var json = new JsonStruct
             {
-                Success = success,
                 Message = !success ? "尝试删除餐饮企业信息失败，请刷新后重新尝试。" : "删除成功！",
                 PostForm = "catering"
             };
@@ -227,7 +229,6 @@ namespace Lampblack_Platform.Controllers
 
             var json = new JsonStruct
             {
-                Success = success,
                 Message = !success ? "尝试删除餐饮企业信息失败，请刷新后重新尝试。" : "删除成功！",
                 PostForm = "catering"
             };
@@ -305,7 +306,6 @@ namespace Lampblack_Platform.Controllers
 
             var json = new JsonStruct
             {
-                Success = success,
                 Message = !success ? "尝试删除油烟设备信息失败，请刷新后重新尝试。" : "删除成功！",
                 PostForm = "device"
             };

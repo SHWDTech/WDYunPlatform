@@ -1,5 +1,5 @@
 ﻿var getTable = function () {
-    base.AjaxGet("/Management/EditHotel", function (obj) {
+    base.AjaxGet("/Management/EditHotel", null, function (obj) {
         slideUp.append(obj);
         slideUp.show();
     });
