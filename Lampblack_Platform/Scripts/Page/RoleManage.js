@@ -1,5 +1,5 @@
 ﻿var getTable = function () {
-    $.get("/System/EditRole", function (obj) {
+    base.AjaxGet("/System/EditRole", function (obj) {
         slideUp.append(obj);
         slideUp.show();
     });
