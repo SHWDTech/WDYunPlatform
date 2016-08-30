@@ -6,42 +6,42 @@ namespace LampblackTransfer
 {
     public class AutoProtocol
     {
-        public static readonly byte[] HeartBeatHead =
+        private static readonly byte[] HeartBeatHead =
         {
             0xAC, 0xF1, 0x01, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
         };
 
-        public static readonly byte[] HeartBeatBodyPart =
+        private static readonly byte[] HeartBeatBodyPart =
         {
-            0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00
+            0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x01, 0x00, 0x00, 0x00
         };
 
-        public static readonly byte[] AutoReportHead =
+        private static readonly byte[] AutoReportHead =
         {
             0xAC, 0xF4, 0x02, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38
         };
 
-        public static readonly byte[] AutoReportBody =
+        private static readonly byte[] AutoReportBody =
         {
-            0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x01, 0x00, 0x01, 0x00, 0x00, 0x26
+            0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x01, 0x00, 0x00, 0x26
         };
 
-        public static readonly byte[] AutoReportData =
+        private static readonly byte[] AutoReportData =
         {
             0x00, 0x01, 0x01, 0x00, 0x02, 0x00, 0x00, 0x01, 0x1F, 0x00, 0x03, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00,
             0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00
         };
 
-        public static readonly byte ProtocolTail = 0x81;
+        private static readonly byte ProtocolTail = 0x81;
 
         public static byte[] GetHeartBytes(string nodeId)
         {
             var byteList = new List<byte>();
-            var nodeBytes = Encoding.UTF8.GetBytes(nodeId);
+            var nodeBytes = HexStringToByteArray(nodeId);
             byteList.AddRange(HeartBeatHead);
             byteList.AddRange(nodeBytes);
             byteList.AddRange(HeartBeatBodyPart);
-            byte[] crc = new byte[2];
+            var crc = new byte[2];
             Uint16ToBytes(GetUsmbcrc16(byteList.ToArray(), (ushort) byteList.Count), crc, 0, false);
             byteList.AddRange(crc);
             byteList.Add(ProtocolTail);
@@ -52,12 +52,12 @@ namespace LampblackTransfer
         public static byte[] GetAutoReportBytes(AutoReportConfig config)
         {
             var byteList = new List<byte>();
-            var nodeBytes = Encoding.UTF8.GetBytes(config.NodeId);
+            var nodeBytes = HexStringToByteArray(config.NodeId);
             byteList.AddRange(AutoReportHead);
             byteList.AddRange(nodeBytes);
             byteList.AddRange(AutoReportBody);
             byteList.AddRange(GeneralDataBytes(config));
-            byte[] crc = new byte[2];
+            var crc = new byte[2];
             Uint16ToBytes(GetUsmbcrc16(byteList.ToArray(), (ushort)byteList.Count), crc, 0, false);
             byteList.AddRange(crc);
             byteList.Add(ProtocolTail);
@@ -70,6 +70,7 @@ namespace LampblackTransfer
             var data = new byte[38];
             Array.ConstrainedCopy(AutoReportData, 0, data, 0, 38);
             var current = BitConverter.GetBytes(config.CleanerNumber);
+            Array.Reverse(current);
             Array.ConstrainedCopy(current, 0, data, 5, 4);
             data[2] = (byte) (config.CleanerSwitch ? 0x01 : 0x00);
             data[11] = (byte) (config.FanSwitch ? 0x01 : 0x00);
@@ -114,7 +115,7 @@ namespace LampblackTransfer
             0x6e17, 0x7e36, 0x4e55, 0x5e74, 0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
         };
 
-        public static ushort GetUsmbcrc16(byte[] buffer, ushort usLen)
+        private static ushort GetUsmbcrc16(byte[] buffer, ushort usLen)
         {
             ushort crc16 = 0;
 
@@ -126,7 +127,7 @@ namespace LampblackTransfer
             return crc16;
         }
 
-        public static void Uint16ToBytes(ushort value, byte[] buffer, int offset, bool isLittleEndian)
+        private static void Uint16ToBytes(ushort value, byte[] buffer, int offset, bool isLittleEndian)
         {
             var bufferIndex = offset;
 
@@ -144,6 +145,31 @@ namespace LampblackTransfer
 
                 buffer[bufferIndex] = (byte)(value & 0xFF);
             }
+        }
+
+        private static byte[] HexStringToByteArray(string str)
+        {
+            str = str.Replace(" ", "");
+            if (str.Length % 2 != 0)
+            {
+                str = str.Substring(0, str.Length - 1);
+            }
+            var buffer = new byte[str.Length / 2];
+
+            try
+            {
+                for (var i = 0; i < str.Length; i += 2)
+                {
+                    buffer[i / 2] = Convert.ToByte(str.Substring(i, 2), 16);
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+
+            return buffer;
         }
     }
 }
