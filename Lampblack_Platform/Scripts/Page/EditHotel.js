@@ -27,10 +27,10 @@
     var getDistricts = function (id, select) {
         base.AjaxGet('/Management/GetAreaList', { id: id }, function (ret) {
             $(select).empty();
-            $(ret).each(function () {
+            $(ret.Result).each(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
-            if (ret.length > 0) {
+            if (ret.Result.length > 0) {
                 $(select).val(ret[0].Id).change();
             }
         });

@@ -66,6 +66,7 @@
                 <td>@Html.LabelFor(m => m.Telephone)</td>
                 <td>
                     @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control", placeholder = "请输入联系电话" })
+                    @Html.ValidationMessageFor(m => m.Telephone, null, new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>
