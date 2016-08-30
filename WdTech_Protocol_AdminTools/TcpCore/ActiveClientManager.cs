@@ -168,8 +168,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             lock (_clientSockets)
             {
                 var checkTime = DateTime.Now;
-                foreach (var tcpClientManager in _clientSockets)
+                for (var i = 0; i < _clientSockets.Count; i++)
                 {
+                    var tcpClientManager = _clientSockets[i];
                     if (checkTime - tcpClientManager.LastAliveDateTime > _disconnectInterval)
                     {
                         tcpClientManager.Close();
