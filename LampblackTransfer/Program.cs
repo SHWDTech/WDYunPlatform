@@ -32,6 +32,7 @@ namespace LampblackTransfer
             while (true)
             {
                 SendData();
+                Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}本次任务结束。");
                 Thread.Sleep(60000);
             }
             // ReSharper disable once FunctionNeverReturns
@@ -65,6 +66,7 @@ namespace LampblackTransfer
             foreach (var deviceInfo in _deviceInfos)
             {
                 Connect(deviceInfo);
+                Thread.Sleep(100);
             }
         }
 
@@ -76,13 +78,18 @@ namespace LampblackTransfer
             client.Client.Send(AutoProtocol.GetHeartBytes(device.NodeId));
             _clientPort++;
             Clients.Add(device, client);
-            Thread.Sleep(100);
         }
 
         static void SendData()
         {
             foreach (var tcpClient in Clients)
             {
+                tcpClient.Value.Client.Send(AutoProtocol.GetHeartBytes(tcpClient.Key.NodeId));
+                var temp = new byte[4096];
+                tcpClient.Value.Client.Receive(temp);
+                var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
+                if(nowTime < 1000 || (nowTime > 1400 && nowTime < 1530) || nowTime > 2200)
+                    continue;
                 tcpClient.Value.Client.Send(
                     AutoProtocol.GetAutoReportBytes(new AutoReportConfig
                     {
@@ -91,6 +98,9 @@ namespace LampblackTransfer
                         FanSwitch = tcpClient.Key.Opened,
                         NodeId = tcpClient.Key.NodeId
                     }));
+
+                Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{tcpClient.Key.NodeId}。");
+                Thread.Sleep(300);
             }
         }
 
