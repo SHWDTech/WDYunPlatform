@@ -70,6 +70,7 @@
     <Compile Include="AutoReportConfig.cs" />
     <Compile Include="DataTableExtensions.cs" />
     <Compile Include="DeviceInfo.cs" />
+    <Compile Include="DeviceTime.cs" />
     <Compile Include="ModelRange.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
