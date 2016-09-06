@@ -25,6 +25,8 @@ namespace LampblackTransfer
 
         private static int _clientPort;
 
+        private static readonly Dictionary<string, DeviceTime> DeviceTimes = new Dictionary<string, DeviceTime>();
+
         static void Main()
         {
             InitProgramConfig();
@@ -33,6 +35,11 @@ namespace LampblackTransfer
             {
                 SendData();
                 Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}本次任务结束。");
+                var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
+                if (nowTime > 855 && nowTime < 900)
+                {
+                    RefreashDeviceInfos();
+                }
                 Thread.Sleep(60000);
             }
             // ReSharper disable once FunctionNeverReturns
@@ -58,6 +65,22 @@ namespace LampblackTransfer
                 var table = new DataTable();
                 adapter.Fill(table);
                 _deviceInfos = table.ToListOf<DeviceInfo>();
+            }
+
+            RefreashDeviceTime();
+        }
+
+        static void RefreashDeviceTime()
+        {
+            DeviceTimes.Clear();
+            var rd = new Random();
+            foreach (var deviceInfo in _deviceInfos)
+            {
+                DeviceTimes.Add(deviceInfo.NodeId,new DeviceTime()
+                {
+                    StartTime = rd.Next(900, 1000),
+                    EndTime = rd.Next(2200, 2300)
+                } );
             }
         }
 
@@ -88,7 +111,8 @@ namespace LampblackTransfer
                 var temp = new byte[4096];
                 tcpClient.Value.Client.Receive(temp);
                 var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
-                if(nowTime < 1000 || (nowTime > 1400 && nowTime < 1530) || nowTime > 2200)
+                var time = DeviceTimes[tcpClient.Key.NodeId];
+                if(nowTime < time.StartTime || nowTime > time.EndTime)
                     continue;
                 tcpClient.Value.Client.Send(
                     AutoProtocol.GetAutoReportBytes(new AutoReportConfig
