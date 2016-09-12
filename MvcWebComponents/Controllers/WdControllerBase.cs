@@ -16,6 +16,11 @@ namespace MvcWebComponents.Controllers
         /// </summary>
         private readonly ControllerProcess _controllerProcess;
 
+        /// <summary>
+        /// 指定登陆用户
+        /// </summary>
+        public static string LoginName { get; set; }
+
         public WdControllerBase()
         {
             _controllerProcess = new ControllerProcess();
@@ -39,7 +44,10 @@ namespace MvcWebComponents.Controllers
 
         private void SetActionContext(ActionExecutingContext ctx, HttpContext context)
         {
-            var currentUser = _controllerProcess.GetCurrentUser(context);
+            var currentUser = !string.IsNullOrWhiteSpace(LoginName) 
+                ? _controllerProcess.GetCurrentUser(LoginName) 
+                : _controllerProcess.GetCurrentUser(context);
+            
 
             if (currentUser == null)
             {

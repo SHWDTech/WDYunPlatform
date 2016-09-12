@@ -47,6 +47,11 @@ namespace SHWDTech.Platform.Model.IModel
         DateTime? LastLoginDateTime { get; set; }
 
         /// <summary>
+        /// 是否可见
+        /// </summary>
+        bool IsVisiable { get; set; }
+
+        /// <summary>
         /// 用户状态
         /// </summary>
         UserStatus Status { get; set; }

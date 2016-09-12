@@ -356,14 +356,16 @@ namespace Platform.Process.Process
                 {
                     query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
                 }
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
 
-                var projectQuery = query.GroupBy(obj => new { obj.ProjectId, obj.UpdateTime })
+                var hotelIds = hotels.Select(obj => obj.Id);
+
+                var projectQuery = query.Where(rt => hotelIds.Contains(rt.ProjectId)).GroupBy(obj => new { obj.ProjectId, obj.UpdateTime })
                     .Select(item => item.FirstOrDefault())
                     .Select(run => new { run.ProjectId, run.UpdateTime});
 
                 var models = repo.GetAllModels();
 
-                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
 
                 var ret = from q in projectQuery
                     select
@@ -406,13 +408,15 @@ namespace Platform.Process.Process
                     query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
                 }
 
-                var projectQuery = query.GroupBy(obj => new { obj.ProjectId, obj.ProtocolDataId })
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+
+                var hotelIds = hotels.Select(obj => obj.Id);
+
+                var projectQuery = query.Where(data => hotelIds.Contains(data.ProjectId.Value)).GroupBy(obj => new { obj.ProjectId, obj.ProtocolDataId })
                     .Select(item => item.FirstOrDefault())
                     .Select(run => new { run.ProjectId, run.CommandDataId, run.ProtocolDataId, run.UpdateTime });
 
                 var models = repo.GetAllModels();
-
-                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
 
                 var ret = from q in projectQuery
                           select
@@ -484,13 +488,16 @@ namespace Platform.Process.Process
                     query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
                 }
 
-                var projectQuery = query.GroupBy(obj => new { obj.ProjectId, obj.UpdateTime })
+                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+
+                var hotelIds = hotels.Select(obj => obj.Id);
+
+                var projectQuery = query.Where(rt => hotelIds.Contains(rt.ProjectId)).GroupBy(obj => new { obj.ProjectId, obj.UpdateTime })
                     .Select(item => item.FirstOrDefault())
                     .Select(run => new { run.ProjectId, run.UpdateTime });
 
                 var models = repo.GetAllModels();
 
-                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
 
                 var ret = from q in projectQuery
                           select

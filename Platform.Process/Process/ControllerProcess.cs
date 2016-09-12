@@ -14,6 +14,9 @@ namespace Platform.Process.Process
         public WdUser GetCurrentUser(HttpContext context) 
             => GeneralProcess.GetUserByLoginName(context.User.Identity.Name);
 
+        public WdUser GetCurrentUser(string loginName)
+            => GeneralProcess.GetUserByLoginName(loginName);
+
         public Dictionary<string, string> GetBasePageInformation(IWdUser user)
         {
             var cache = PlatformCaches.GetCache($"{user.DomainId}-{SystemCacheNames.DomainCompany}");

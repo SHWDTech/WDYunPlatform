@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lampblack_Platform.Common;
+using MvcWebComponents.Controllers;
 using Platform.Cache;
 using Platform.Process.Process;
 using SHWD.Platform.Repository;
+using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
 
@@ -23,6 +26,7 @@ namespace Lampblack_Platform
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalInitial();
+            SetRepositoryFilter();
         }
 
         /// <summary>
@@ -57,6 +61,17 @@ namespace Lampblack_Platform
             };
 
             LampblackConfig.InitConfig(configDictionary);
+            WdControllerBase.LoginName = LampblackConfig.LoginName;
+        }
+
+        private void SetRepositoryFilter()
+        {
+            if (string.IsNullOrWhiteSpace(LampblackConfig.District)) return;
+            var districtId = Guid.Parse(LampblackConfig.District);
+            UserDictionaryRepository.Filter = (obj => obj.Id == districtId
+                                                      || (obj.ParentDictionary != null && obj.ParentDictionaryId == districtId)
+                                                      || (obj.ParentDictionary != null && obj.ParentDictionary.ParentDictionary != null && obj.ParentDictionary.ParentDictionaryId == districtId));
+            HotelRestaurantRepository.Filter = (obj => obj.DistrictId == districtId);
         }
     }
 }
