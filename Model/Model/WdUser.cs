@@ -51,6 +51,9 @@ namespace SHWDTech.Platform.Model.Model
         [DataType(DataType.DateTime)]
         public virtual DateTime? LastLoginDateTime { get; set; }
 
+        [Display(Name = "是否可见")]
+        public virtual bool IsVisiable { get; set; } = true;
+
         [Required]
         [Display(Name = "用户状态")]
         public virtual UserStatus Status { get; set; }

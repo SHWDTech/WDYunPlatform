@@ -22,7 +22,7 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<LampblackUserRepository>())
             {
-                var query = repo.GetAllModels();
+                var query = repo.GetModels(obj => obj.IsVisiable);
                 if (!string.IsNullOrWhiteSpace(queryName))
                 {
                     query = query.Where(obj => obj.UserName.Contains(queryName) || obj.UserIdentityName.Contains(queryName) || obj.LoginName.Contains(queryName));

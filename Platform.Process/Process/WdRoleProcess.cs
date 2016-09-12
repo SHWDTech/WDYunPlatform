@@ -17,7 +17,7 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<RoleRepository>())
             {
-                var query = repo.GetAllModels();
+                var query = repo.GetModels(obj => obj.IsVisiable);
                 if (!string.IsNullOrWhiteSpace(queryName))
                 {
                     query = query.Where(obj => obj.RoleName.Contains(queryName));

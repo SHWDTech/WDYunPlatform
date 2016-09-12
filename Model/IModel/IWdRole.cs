@@ -26,6 +26,11 @@ namespace SHWDTech.Platform.Model.IModel
         string RoleName { get; set; }
 
         /// <summary>
+        /// 是否可见
+        /// </summary>
+        bool IsVisiable { get; set; }
+
+        /// <summary>
         /// 属于该用户的角色
         /// </summary>
         ICollection<WdUser> Users { get; set; }

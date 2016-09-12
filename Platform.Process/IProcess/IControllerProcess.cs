@@ -18,6 +18,13 @@ namespace Platform.Process.IProcess
         WdUser GetCurrentUser(HttpContext context);
 
         /// <summary>
+        /// 获取指定用户信息
+        /// </summary>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
+        WdUser GetCurrentUser(string loginName);
+
+        /// <summary>
         /// 获取页面基础模型相关信息
         /// </summary>
         /// <param name="user"></param>

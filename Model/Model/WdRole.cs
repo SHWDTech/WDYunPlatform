@@ -26,6 +26,9 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(25)]
         public virtual string RoleName { get; set; }
 
+        [Display(Name = "是否可见")]
+        public virtual bool IsVisiable { get; set; } = true;
+
         [Display(Name = "包含用户")]
         public virtual ICollection<WdUser> Users { get; set; } = new List<WdUser>();
 
