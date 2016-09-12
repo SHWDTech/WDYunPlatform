@@ -33,6 +33,12 @@ namespace MvcWebComponents.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext ctx)
         {
+            if (!string.IsNullOrWhiteSpace(LoginName) && !ctx.HttpContext.User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SetAuthCookie(LoginName, false);
+                ctx.Result = new RedirectResult("/");
+            }
+
             if (ctx.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
                 || ctx.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
             {
