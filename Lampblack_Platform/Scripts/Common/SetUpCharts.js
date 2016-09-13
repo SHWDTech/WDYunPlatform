@@ -65,6 +65,18 @@ Echart_Tools.getGaugeOption = function () {
                 type: "gauge",
                 min: 0,
                 max: 2,
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        width: 18,
+                        color: [[0.05, '#d9534f'], [0.2, '#f0ad4e'], [0.5, '#5bc0de'], [1, '#5cb85c']]
+                    }
+                },
+                splitLine: {           // 分隔线
+                    length: 24,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        color: 'auto'
+                    }
+                },
                 title: {
                     show: true,
                     offsetCenter: [
@@ -78,7 +90,7 @@ Echart_Tools.getGaugeOption = function () {
                 },
                 detail: {
                     formatter: "{value}",
-                    offsetCenter: [0, '70%'],
+                    offsetCenter: [0, '100%'],
                     height: 40
                 },
                 data: [

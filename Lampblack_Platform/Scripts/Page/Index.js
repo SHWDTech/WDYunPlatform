@@ -13,7 +13,7 @@ $(function () {
     gaugeOption = Echart_Tools.getGaugeOption();
     gaugeOption.title.text = '当前电流值';
     gaugeOption.series[0].min = 0;
-    gaugeOption.series[0].max = 10;
+    gaugeOption.series[0].max = 1000;
     setChart();
 
     $('#tab-nav a').on('click', function () {
