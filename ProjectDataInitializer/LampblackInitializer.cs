@@ -1699,8 +1699,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             var userdomain = new Domain
             {
-                Id = Guid.Parse("20dd1e7b-0117-4bac-ac75-968e87145594"),
-                DomainName = "乾铎环科",
+                Id = Guid.Parse("9560e11b-1a70-456b-b201-6d0fa412bad2"),
+                DomainName = "上海驿鼎机电工程有限公司",
                 DomianType = DomainType.UserDomain,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -1969,7 +1969,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                LastUpdateDateTime = DateTime.Now
+                LastUpdateDateTime = DateTime.Now,
+                IsEnabled = false
             };
 
             dbContext.Modules.Add(submenu5);
@@ -2143,7 +2144,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                LastUpdateDateTime = DateTime.Now
+                LastUpdateDateTime = DateTime.Now,
+                IsEnabled = false
             };
 
             dbContext.Modules.Add(submenu9);
@@ -2178,7 +2180,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                LastUpdateDateTime = DateTime.Now
+                LastUpdateDateTime = DateTime.Now,
+                IsEnabled = false
             };
 
             dbContext.Modules.Add(submenu10);
@@ -2755,7 +2758,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                LastUpdateDateTime = DateTime.Now
+                LastUpdateDateTime = DateTime.Now,
+                IsEnabled = false
             };
 
             dbContext.Modules.Add(menu7);
@@ -2790,7 +2794,8 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateUserId = user.Id,
-                LastUpdateDateTime = DateTime.Now
+                LastUpdateDateTime = DateTime.Now,
+                IsEnabled = false
             };
 
             dbContext.Modules.Add(submenu24);

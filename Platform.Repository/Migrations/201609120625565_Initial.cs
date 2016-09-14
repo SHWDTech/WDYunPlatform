@@ -589,7 +589,7 @@ namespace SHWD.Platform.Repository.Migrations
                         LastUpdateDateTime = c.DateTime(),
                         LastUpdateUserId = c.Guid(),
                         IsDeleted = c.Boolean(nullable: false),
-                        IsEnabled = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false, defaultValue:true),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Domains", t => t.DomainId)
