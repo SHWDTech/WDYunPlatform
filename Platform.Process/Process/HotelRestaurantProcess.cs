@@ -148,6 +148,9 @@ namespace Platform.Process.Process
 
                 retDictionary.Add("CleanerRunTime", GetCleanerRunTimeString(hotel.Id));
                 retDictionary.Add("FanRunTime", GetFanRunTimeString(hotel.Id));
+                var firstOrDefault = recentDatas.FirstOrDefault();
+                if (firstOrDefault != null)
+                    retDictionary.Add("UpdateTime", firstOrDefault.UpdateTime);
             }
 
             return retDictionary;
@@ -761,6 +764,17 @@ namespace Platform.Process.Process
             }
 
             return string.Empty;
+        }
+
+        public List<HotelRestaurant> HotelsInDistrict(Guid districtId)
+        {
+            var district = Repo<UserDictionaryRepository>().GetModelById(districtId);
+
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                return repo.GetModels(obj => obj.DistrictId == district.Id)
+                .ToList();
+            }
         }
     }
 }
