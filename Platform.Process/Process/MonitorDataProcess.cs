@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Platform.Process.Enums;
@@ -61,6 +62,31 @@ namespace Platform.Process.Process
             using (var repo = Repo<MonitorDataRepository>())
             {
                 return repo.GetModels(exp).First();
+            }
+        }
+
+        public List<MonitorData> GetLastMonitorDatas(Guid deviceId)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var protocolData =
+                    Repo<ProtocolDataRepository>()
+                        .GetModels(obj => obj.DeviceId == deviceId)
+                        .OrderByDescending(item => item.UpdateTime)
+                        .FirstOrDefault();
+                return protocolData == null ? null : repo.GetModels(obj => obj.ProtocolDataId == protocolData.Id).ToList();
+            }
+        }
+
+        public MonitorData GetDeviceCleanerCurrent(Guid deviceId)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                return
+                    repo.GetModels(
+                            obj => obj.ProtocolData.DeviceId == deviceId && obj.CommandData.DataName == "CleanerCurrent")
+                        .OrderByDescending(item => item.UpdateTime)
+                        .FirstOrDefault();
             }
         }
 

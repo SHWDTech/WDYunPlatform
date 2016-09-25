@@ -84,5 +84,23 @@ namespace Platform.Process.Process
                 return repo.GetModelById(guid);
             }
         }
+
+        public List<RestaurantDevice> GetDevicesByRestaurant(Guid guid)
+        {
+            using (var repo = Repo<RestaurantDeviceRepository>())
+            {
+                return repo.GetModels(obj => obj.ProjectId == guid).ToList();
+            }
+        }
+
+        public List<RestaurantDevice> DevicesInDistrict(Guid districtId)
+        {
+            var district = Repo<UserDictionaryRepository>().GetModelById(districtId);
+
+            using (var repo = Repo<RestaurantDeviceRepository>())
+            {
+                return repo.GetModels(obj => obj.Hotel.DistrictId == district.Id).ToList();
+            }
+        }
     }
 }

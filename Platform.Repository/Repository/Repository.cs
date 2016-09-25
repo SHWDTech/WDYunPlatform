@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using EntityFramework.BulkInsert.Extensions;
 using System.Transactions;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Utility;
@@ -243,8 +242,10 @@ namespace SHWD.Platform.Repository.Repository
             {
                 try
                 {
-                    DbContext.BulkInsert(models);
-
+                    //DbContext.BulkInsert(models);
+                    DbContext.Configuration.AutoDetectChangesEnabled = false;
+                    DbContext.Set<T>().AddRange(models);
+                    DbContext.SaveChanges();
                 }
                 catch (System.Exception ex)
                 {

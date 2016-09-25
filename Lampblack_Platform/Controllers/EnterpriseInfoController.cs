@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process;
@@ -23,6 +24,13 @@ namespace Lampblack_Platform.Controllers
                     XPOS = hotel.Longitude.ToString(),
                     YPOS = hotel.Latitude.ToString(),
                 };
+
+                var devs = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
+                if (devs.Count > 0)
+                {
+                    enterp.CASE_ID = devs.First().Id.ToString();
+                    enterp.CASE_NAM = devs.First().DeviceName;
+                }
 
                 model.data.Add(enterp);
             }
