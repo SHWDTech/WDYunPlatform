@@ -31,7 +31,7 @@
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
             if (ret.Result.length > 0) {
-                $(select).val(ret[0].Id).change();
+                $(select).val(ret.Result[0].Id).change();
             }
         });
     }

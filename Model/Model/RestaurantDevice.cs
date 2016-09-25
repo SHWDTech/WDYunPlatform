@@ -105,6 +105,9 @@ namespace SHWDTech.Platform.Model.Model
         [ForeignKey("ProjectId")]
         public override Project Project { get; set; }
 
+        [ForeignKey("ProjectId")]
+        public virtual HotelRestaurant Hotel { get; set; }
+
         [Display(Name = "设备型号")]
         [ForeignKey("DeviceModelId")]
         public virtual LampblackDeviceModel LampblackDeviceModel { get; set; }
