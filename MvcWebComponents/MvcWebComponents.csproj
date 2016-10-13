@@ -90,12 +90,15 @@
     <Compile Include="Controllers\WdApiControllerBase.cs" />
     <Compile Include="Controllers\WdContext.cs" />
     <Compile Include="Controllers\WdControllerBase.cs" />
+    <Compile Include="Delegate.cs" />
+    <Compile Include="ExecuteResult.cs" />
     <Compile Include="Extensions\AjaxExtensions.cs" />
     <Compile Include="Extensions\EnumHelpercs.cs" />
     <Compile Include="Filters\AjaxGetAttribute.cs" />
     <Compile Include="Filters\AjaxHandleErrorAttribute.cs" />
     <Compile Include="Attributes\NamedAuthAttribute.cs" />
     <Compile Include="Filters\WdAuthorizeActionFilter.cs" />
+    <Compile Include="IWdScheduler.cs" />
     <Compile Include="Model\IPagedListViewModel.cs" />
     <Compile Include="Model\IBaseViewModel.cs" />
     <Compile Include="Model\JsonStruct.cs" />
@@ -103,6 +106,10 @@
     <Compile Include="Model\PagedListViewModelBase.cs" />
     <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchedulerState.cs" />
+    <Compile Include="SchedulerType.cs" />
+    <Compile Include="WdScheduler.cs" />
+    <Compile Include="WdSchedulerManager.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

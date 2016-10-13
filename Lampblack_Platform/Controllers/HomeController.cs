@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.Home;
@@ -6,6 +7,7 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
+using Platform.Cache;
 using Platform.Process;
 using Platform.Process.Enums;
 using Platform.Process.Process;
@@ -19,7 +21,7 @@ namespace Lampblack_Platform.Controllers
         {
             var model = new IndexViewModel();
 
-            var rates = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelCleanessList();
+            var rates = (Dictionary<string, string>)PlatformCaches.GetCache("Cleaness").CacheItem;
 
             foreach (var rate in rates)
             {
@@ -44,7 +46,7 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult HotelCurrentStatus(Guid hotelGuid)
         {
-            var currentStatus = new IndexHotelCurrentViewModel(ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelCurrentStatus(hotelGuid));
+            var currentStatus = new IndexHotelCurrentViewModel((Dictionary<string, object>)PlatformCaches.GetCache($"CurrentStat-{hotelGuid}").CacheItem);
 
             return Json(new JsonStruct()
             {

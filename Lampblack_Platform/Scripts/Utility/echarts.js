@@ -1,4 +1,4 @@
-(function webpackUniversalModuleDefinition(root, factory) {
+﻿(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -342,7 +342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            || this._model.get('backgroundColor');
 	        var zr = this._zr;
 	        var list = zr.storage.getDisplayList();
-	        // Stop animations
+	        // Suspend animations
 	        zrUtil.each(list, function (el) {
 	            el.stopAnimation(true);
 	        });
@@ -7810,7 +7810,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            else if (!time) {
 	                time = 500;
 	            }
-	            // Stop all previous animations
+	            // Suspend all previous animations
 	            this.stopAnimation();
 	            this._animateToShallow('', this, target, time, delay, easing, callback);
 
@@ -15573,7 +15573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        /**
-	         * Stop and clear all animation immediately
+	         * Suspend and clear all animation immediately
 	         */
 	        clearAnimation: function () {
 	            this.animation.clear();
@@ -20286,7 +20286,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // because points are not changed
 	                showSymbol && symbolDraw.updateData(data, isSymbolIgnore);
 
-	                // Stop symbol animation and sync with line points
+	                // Suspend symbol animation and sync with line points
 	                // FIXME performance?
 	                data.eachItemGraphicEl(function (el) {
 	                    el.stopAnimation(true);
@@ -20384,7 +20384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    symbol.__temp = true;
 	                    data.setItemGraphicEl(dataIndex, symbol);
 
-	                    // Stop scale animation
+	                    // Suspend scale animation
 	                    symbol.stopSymbolAnimation(true);
 
 	                    this.group.add(symbol);
@@ -20757,7 +20757,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    /**
-	     * Stop animation
+	     * Suspend animation
 	     * @param {boolean} toLastFrame
 	     */
 	    symbolProto.stopSymbolAnimation = function (toLastFrame) {
@@ -34719,7 +34719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    ? e.node2 : e.node1;
 	                if (!otherNode.__visited) {
 	                    if (cb.call(otherNode, otherNode, currentNode)) {
-	                        // Stop traversing
+	                        // Suspend traversing
 	                        return;
 	                    }
 	                    queue.push(otherNode);

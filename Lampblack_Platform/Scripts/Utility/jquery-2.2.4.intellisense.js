@@ -1375,7 +1375,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'finish': function() {
     /// <signature>
-    ///   <summary>Stop the currently-running animation, remove all queued animations, and complete all animations for the matched elements.</summary>
+    ///   <summary>Suspend the currently-running animation, remove all queued animations, and complete all animations for the matched elements.</summary>
     ///   <param name="queue" type="String">The name of the queue in which to stop animations.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -2399,13 +2399,13 @@ intellisense.annotate(jQuery.fn, {
   },
   'stop': function() {
     /// <signature>
-    ///   <summary>Stop the currently-running animation on the matched elements.</summary>
+    ///   <summary>Suspend the currently-running animation on the matched elements.</summary>
     ///   <param name="clearQueue" type="Boolean">A Boolean indicating whether to remove queued animation as well. Defaults to false.</param>
     ///   <param name="jumpToEnd" type="Boolean">A Boolean indicating whether to complete the current animation immediately. Defaults to false.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Stop the currently-running animation on the matched elements.</summary>
+    ///   <summary>Suspend the currently-running animation on the matched elements.</summary>
     ///   <param name="queue" type="String">The name of the queue in which to stop animations.</param>
     ///   <param name="clearQueue" type="Boolean">A Boolean indicating whether to remove queued animation as well. Defaults to false.</param>
     ///   <param name="jumpToEnd" type="Boolean">A Boolean indicating whether to complete the current animation immediately. Defaults to false.</param>
