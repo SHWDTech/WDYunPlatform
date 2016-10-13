@@ -46,7 +46,7 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult HotelCurrentStatus(Guid hotelGuid)
         {
-            var currentStatus = new IndexHotelCurrentViewModel((Dictionary<string, object>)PlatformCaches.GetCache($"CurrentStat-{hotelGuid}").CacheItem);
+            var currentStatus = new IndexHotelCurrentViewModel(ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelCurrentStatus(hotelGuid));
 
             return Json(new JsonStruct()
             {
