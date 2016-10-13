@@ -5973,7 +5973,7 @@ function getWidthOrHeight( elem, name, extra ) {
 			val = elem.style[ name ];
 		}
 
-		// Computed unit is not pixels. Stop here and return.
+		// Computed unit is not pixels. Suspend here and return.
 		if ( rnumnonpx.test( val ) ) {
 			return val;
 		}

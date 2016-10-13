@@ -1,4 +1,4 @@
-var Microsoft;
+﻿var Microsoft;
 (function (Microsoft) {
     var ApplicationInsights;
     (function (ApplicationInsights) {
@@ -2913,7 +2913,7 @@ var Microsoft;
                         return null;
                     }
                     catch (e) {
-                        ApplicationInsights._InternalLogging.warnToConsole("Stop page visit timer failed: " + ApplicationInsights.Util.dump(e));
+                        ApplicationInsights._InternalLogging.warnToConsole("Suspend page visit timer failed: " + ApplicationInsights.Util.dump(e));
                         return null;
                     }
                 };
