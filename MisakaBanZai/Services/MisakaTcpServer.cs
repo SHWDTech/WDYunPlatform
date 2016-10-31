@@ -152,6 +152,7 @@ namespace MisakaBanZai.Services
                 return;
             }
 
+            _broadcast = false;
             _currenTcpClient = _tcpClients[clientName];
         }
 
