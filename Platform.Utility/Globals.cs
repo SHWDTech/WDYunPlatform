@@ -1170,5 +1170,17 @@ namespace SHWDTech.Platform.Utility
         /// <returns></returns>
         public static string GetNullableDateTimeString(DateTime? value, string format)
             => value?.ToString(format) ?? "N/A";
+
+        public static bool IsPrimitive(Type type)
+        {
+            return type.IsPrimitive
+            || type == typeof(decimal)
+            || type == typeof(string)
+            || type == typeof(DateTime)
+            || type == typeof(Guid)
+            || (type.IsGenericType
+                && type.GetGenericTypeDefinition() == typeof(Nullable<>)
+                && type.GetGenericArguments().Any(t => t.IsValueType && IsPrimitive(t)));
+        }
     }
 }
