@@ -125,9 +125,13 @@ namespace SHWDTech.Platform.LampblackCommandCoding
                     return;
                 }
 
+                var channel = container[currentIndex];
+
                 var component = new PackageComponent
                 {
-                    ComponentName = data.DataName,
+                    ComponentName = $"{data.DataName}-{channel}",
+                    ComponentChannel = channel,
+                    CommandData = data,
                     DataValueType = data.DataValueType,
                     DataType = data.DataConvertType,
                     ComponentIndex = data.DataIndex,

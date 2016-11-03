@@ -112,16 +112,16 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var monitorDataList = new List<MonitorData>();
 
-            foreach (var commandData in package.Command.CommandDatas)
+            foreach (var dataComponent in package.DataComponents)
             {
-                if (package[commandData.DataName] == null || package[commandData.DataName].DataType == ProtocolDataType.None) continue;
-
-                var data = DataConvert.DecodeComponentData(package[commandData.DataName]);
+                if (dataComponent.Value.CommandData.DataName == null ||
+                    dataComponent.Value.CommandData.DataConvertType == ProtocolDataType.None) continue;
+                var data = DataConvert.DecodeComponentData(dataComponent.Value);
 
                 var monitorData = MonitorDataRepository.CreateDefaultModel();
                 monitorData.DomainId = package.Device.DomainId;
 
-                switch (commandData.DataValueType)
+                switch (dataComponent.Value.CommandData.DataValueType)
                 {
                     case DataValueType.Double:
                         monitorData.DoubleValue = Convert.ToDouble(data);
@@ -136,9 +136,10 @@ namespace SHWDTech.Platform.ProtocolCoding
 
                 monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
-                monitorData.CommandDataId = commandData.Id;
+                monitorData.CommandDataId = dataComponent.Value.CommandData.Id;
                 monitorData.ProjectId = package.Device.ProjectId;
-                monitorData.DataIsValid = (package[commandData.DataName].ValidFlag & 0x80) == 0;
+                monitorData.DataIsValid = (dataComponent.Value.ValidFlag & 0x80) == 0;
+                monitorData.DataChannel = dataComponent.Value.ComponentChannel;
 
                 monitorDataList.Add(monitorData);
             }
