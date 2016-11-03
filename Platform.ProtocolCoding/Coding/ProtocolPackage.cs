@@ -75,17 +75,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public List<string> DeliverParams => Command.CommandDeliverParams;
 
-        public int DataComponentCount => _dataComponents.Count;
+        public Dictionary<string, IPackageComponent> DataComponents { get; } = new Dictionary<string, IPackageComponent>();
+
+        public int DataComponentCount => DataComponents.Count;
 
         /// <summary>
         /// 协议包组件字典
         /// </summary>
         private readonly Dictionary<string, IPackageComponent> _structureComponents = new Dictionary<string, IPackageComponent>();
-
-        /// <summary>
-        /// 协议数据组件字典
-        /// </summary>
-        private readonly Dictionary<string, IPackageComponent> _dataComponents = new Dictionary<string, IPackageComponent>(); 
 
         public IPackageComponent this[string name]
         {
@@ -95,7 +92,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
                 if(_structureComponents.ContainsKey(name)) return _structureComponents[name];
 
-                return _dataComponents.ContainsKey(name) ? _dataComponents[name] : null;
+                return DataComponents.ContainsKey(name) ? DataComponents[name] : null;
             }
             set
             {
@@ -119,7 +116,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public void AppendData(IPackageComponent component)
         {
-            _dataComponents.Add(component.ComponentName, component);
+            DataComponents.Add(component.ComponentName, component);
         }
 
         public byte[] GetBytes()
@@ -146,9 +143,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         {
             var bytes = new List<byte>();
 
-            for (var i = 0; i < _dataComponents.Count; i++)
+            for (var i = 0; i < DataComponents.Count; i++)
             {
-                var dataBytes = _dataComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentBytes;
+                var dataBytes = DataComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentBytes;
 
                 bytes.AddRange(dataBytes);
             }

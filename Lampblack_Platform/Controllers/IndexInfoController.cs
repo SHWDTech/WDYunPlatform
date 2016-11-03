@@ -3,6 +3,7 @@ using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process;
 using Platform.Process.Process;
+using SHWDTech.Platform.Utility;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -10,38 +11,56 @@ namespace Lampblack_Platform.Controllers
     {
         public IndexInfo Get()
         {
-            var model = new IndexInfo();
-            var devs = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
-
-            foreach (var device in devs)
+            try
             {
-                var monitorDatas = ProcessInvoke.GetInstance<MonitorDataProcess>().GetDeviceCleanerCurrent(device.Id);
-                if(monitorDatas == null) continue;
-                var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                var fan =new Index
-                {
-                    EQUP_ID = $"{device.DeviceCode}001",
-                    RMON_TIME = time,
-                    EQUP_VAL = "0"
-                };
-                model.data.Add(fan);
-                var cleaner = new Index
-                {
-                    EQUP_ID = $"{device.DeviceCode}002",
-                    RMON_TIME = time,
-                    EQUP_VAL = "0"
-                };
-                model.data.Add(cleaner);
+                var model = new IndexInfo();
+                var devs =
+                    ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
+                        .DevicesInDistrict(Guid.Parse("24018BA6-481E-CFD3-5561-F3C2634397C4"));
 
-                var current = new Index
+                foreach (var device in devs)
                 {
-                    EQUP_ID = $"{device.DeviceCode}003",
-                    RMON_TIME = time,
-                    EQUP_VAL = monitorDatas.DoubleValue.Value.ToString("F4")
-                };
-                model.data.Add(current);
+                    var monitorDatas = ProcessInvoke.GetInstance<MonitorDataProcess>()
+                        .GetDeviceCleanerCurrent(device.Id);
+                    if (monitorDatas?.DoubleValue == null) continue;
+                    var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    var fan = new Index
+                    {
+                        EQUP_ID = $"{device.DeviceCode}001",
+                        RMON_TIME = time,
+                        EQUP_VAL = monitorDatas.DoubleValue.Value > 400 ? "0" : "1"
+                    };
+                    model.data.Add(fan);
+                    var cleaner = new Index
+                    {
+                        EQUP_ID = $"{device.DeviceCode}002",
+                        RMON_TIME = time,
+                        EQUP_VAL = monitorDatas.DoubleValue.Value > 400 ? "0" : "1"
+                    };
+                    model.data.Add(cleaner);
+
+                    var current = new Index
+                    {
+                        EQUP_ID = $"{device.DeviceCode}003",
+                        RMON_TIME = time,
+                        EQUP_VAL = monitorDatas.DoubleValue.Value.ToString("F4")
+                    };
+                    model.data.Add(current);
+                }
+                return model;
             }
-            return model;
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("接口执行失败。", ex);
+                var currentException = ex;
+                while (currentException.InnerException != null)
+                {
+                    LogService.Instance.Error("接口执行失败详细原因。", ex);
+                    currentException = currentException.InnerException;
+                }
+
+                return null;
+            }
         }
     }
 }

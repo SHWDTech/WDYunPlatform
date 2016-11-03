@@ -1,4 +1,5 @@
 ﻿using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -8,6 +9,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     public class PackageComponent : IPackageComponent
     {
         public string ComponentName { get; set; }
+
+        public short ComponentChannel { get; set; }
+
+        public CommandData CommandData { get; set; }
 
         public string DataType { get; set; }
 

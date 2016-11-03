@@ -1,4 +1,5 @@
 ﻿using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -11,6 +12,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 组件名称
         /// </summary>
         string ComponentName { get; set; }
+
+        /// <summary>
+        /// 组件通道号
+        /// </summary>
+        short ComponentChannel { get; set; }
+
+        /// <summary>
+        /// 组件相关指令数据类型
+        /// </summary>
+        CommandData CommandData { get; set; }
 
         /// <summary>
         /// 数据类型

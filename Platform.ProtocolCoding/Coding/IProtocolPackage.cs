@@ -54,6 +54,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         IPackageComponent this[string name] { get; set; }
 
         /// <summary>
+        /// 协议数据组件字典
+        /// </summary>
+        Dictionary<string, IPackageComponent> DataComponents { get; }
+
+        /// <summary>
         /// 数据段总数
         /// </summary>
         int DataComponentCount { get; }

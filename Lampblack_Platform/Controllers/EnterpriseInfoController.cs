@@ -12,7 +12,7 @@ namespace Lampblack_Platform.Controllers
         public EnterpriseInfo Get()
         {
             var model = new EnterpriseInfo();
-            var hotels = ProcessInvoke.GetInstance<HotelRestaurantProcess>().HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+            var hotels = ProcessInvoke.GetInstance<HotelRestaurantProcess>().HotelsInDistrict(Guid.Parse("24018BA6-481E-CFD3-5561-F3C2634397C4"));
             foreach (var hotel in hotels)
             {
                 var enterp = new Enterprise()
