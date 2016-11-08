@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -1182,5 +1183,8 @@ namespace SHWDTech.Platform.Utility
                 && type.GetGenericTypeDefinition() == typeof(Nullable<>)
                 && type.GetGenericArguments().Any(t => t.IsValueType && IsPrimitive(t)));
         }
+
+        public static bool IsProcessRunning(string processName)
+            => Process.GetProcesses().Any(process => process.ProcessName.Contains(processName));
     }
 }

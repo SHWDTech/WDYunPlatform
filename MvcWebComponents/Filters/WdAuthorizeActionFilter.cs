@@ -14,37 +14,36 @@ namespace MvcWebComponents.Filters
 
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
-            {
-                if (filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
+            if (!filterContext.HttpContext.User.Identity.IsAuthenticated) return;
+
+            if (filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
                 || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
-                {
-                    return;
-                }
+            {
+                return;
+            }
 
-                WdContext = (WdContext)filterContext.HttpContext.Items["WdContext"];
-                if (WdContext.WdUser.IsInRole("Root")
-                    || WdContext.WdUser.IsInRole("SuperAdmin"))
-                {
-                    return;
-                }
+            WdContext = (WdContext)filterContext.HttpContext.Items["WdContext"];
+            if (WdContext.WdUser.IsInRole("Root")
+                || WdContext.WdUser.IsInRole("SuperAdmin"))
+            {
+                return;
+            }
 
-                var executer = new NamedAuthorizeExecuter(filterContext);
+            var executer = new NamedAuthorizeExecuter(filterContext);
 
-                if (!(executer.ActionRequired && executer.ControllerRequired)
-                    || executer.ActionModule == "Ignore"
-                    || (executer.ActionModule == string.Empty && executer.ControllerModule == "Ignore")) return;
+            if (!(executer.ActionRequired && executer.ControllerRequired)
+                || executer.ActionModule == "Ignore"
+                || (executer.ActionModule == string.Empty && executer.ControllerModule == "Ignore")) return;
 
-                executer.AdjustModule(filterContext);
+            executer.AdjustModule(filterContext);
 
-                var actionPermission = WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ActionModule);
-                var controllerPermission =
-                    WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ControllerModule);
+            var actionPermission = WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ActionModule);
+            var controllerPermission =
+                WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ControllerModule);
 
-                if (actionPermission == null || (actionPermission.ParentPermissionId != null && controllerPermission == null))
-                {
-                    filterContext.Result = new RedirectResult("/Error/UnAuthorized");
-                }
+            if (actionPermission == null || (actionPermission.ParentPermissionId != null && controllerPermission == null))
+            {
+                filterContext.Result = new RedirectResult("/Error/UnAuthorized");
             }
         }
 
