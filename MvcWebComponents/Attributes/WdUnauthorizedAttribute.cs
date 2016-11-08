@@ -10,9 +10,9 @@ namespace MvcWebComponents.Attributes
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
                 filterContext.HttpContext.Response.StatusCode = 500;
-                filterContext.Result = new JsonResult()
+                filterContext.Result = new JsonResult
                 {
-                    Data = new JsonStruct()
+                    Data = new JsonStruct
                     {
                         Message = "当前用户登录已经超时，请重新登陆！"
                     },
