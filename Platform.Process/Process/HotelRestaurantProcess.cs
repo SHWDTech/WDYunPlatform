@@ -290,7 +290,7 @@ namespace Platform.Process.Process
                             CleanRate = TranslateCleanRateUrl(cleanRate),
                             CleanerSwitch = TranslateSwitchUrl(GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue),
                             FanSwitch = TranslateSwitchUrl(GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue),
-                            CleanerCurrent = (Globals.GetNullableNumber(cleanerCurrent?.DoubleValue) / 100.0).ToString("F2"),
+                            CleanerCurrent = Globals.GetNullableNumber(cleanerCurrent?.DoubleValue).ToString("F2"),
                             FanCurrent = (Globals.GetNullableNumber(GetMonitorDataValue(ProtocolDataName.FanCurrent, recentDatas)?.DoubleValue) / 100.0).ToString("F2"),
                             UpdateTime = recentDatas.Count > 0 ? recentDatas[0].UpdateTime.ToString("yyyy-MM-dd HH:mm:ss") : "N/A"
                         };

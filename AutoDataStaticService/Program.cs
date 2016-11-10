@@ -69,7 +69,7 @@ namespace AutoDataStaticService
 
             ProduceHotels(_produceType);
 
-            Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】任务执行完成！");
+            Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】任务执行完成！");
 
             Quit();
         }
@@ -78,7 +78,7 @@ namespace AutoDataStaticService
         {
             foreach (var hotel in _hotelGuids)
             {
-                Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理酒店历史数据，酒店名称：{hotel.ProjectName}");
+                Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理酒店历史数据，酒店名称：{hotel.ProjectName}");
                 try
                 {
                     switch (type)
@@ -111,7 +111,7 @@ namespace AutoDataStaticService
                     continue;
                 }
 
-                Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理小时历史数据，数据名称：{data.DataName}");
+                Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理小时历史数据，数据名称：{data.DataName}");
                 var lastDate = ProcessInvoke.GetInstance<DataStatisticsProcess>()
                         .GetLastUpdateDataDate(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid && obj.Type == StatisticsType.Hour);
 
@@ -151,7 +151,7 @@ namespace AutoDataStaticService
                 {
                     continue;
                 }
-                Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理每日历史数据，数据名称：{data.DataName}");
+                Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日历史数据，数据名称：{data.DataName}");
                 var lastDate = ProcessInvoke.GetInstance<DataStatisticsProcess>()
                         .GetLastUpdateDataDate(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid && obj.Type == StatisticsType.Day);
 
@@ -191,7 +191,7 @@ namespace AutoDataStaticService
                 {
                     continue;
                 }
-                Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理每日运行时间数据，数据名称：{data.DataName}");
+                Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日运行时间数据，数据名称：{data.DataName}");
                 var process = ProcessInvoke.GetInstance<RunningTimeProcess>();
 
                 var type = GetRunningType(data.DataName);
@@ -227,7 +227,7 @@ namespace AutoDataStaticService
             {
                 return;
             }
-            Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】开始处理每日设备运行时间数据。");
+            Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日设备运行时间数据。");
             var process = ProcessInvoke.GetInstance<RunningTimeProcess>();
 
             var lastDate = process.LastRecordDateTime(hotelGuid, RunningTimeType.Device);
@@ -323,7 +323,7 @@ namespace AutoDataStaticService
             _produceEndDayHour = DateTime.Now.AddHours(-1).GetCurrentHour();
             _produceEndDay = DateTime.Now.AddDays(-1).GetToday();
 
-            Log($"【{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}】系统初始化完成。");
+            Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】系统初始化完成。");
             return true;
         }
 

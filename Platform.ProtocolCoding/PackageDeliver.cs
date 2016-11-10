@@ -142,6 +142,23 @@ namespace SHWDTech.Platform.ProtocolCoding
                 monitorData.DataChannel = dataComponent.Value.ComponentChannel;
 
                 monitorDataList.Add(monitorData);
+
+                if (dataComponent.Value.CommandData.DataName != "CleanerCurrent") continue;
+                var cleanerSwitch = new MonitorData
+                {
+                    DomainId = package.Device.DomainId,
+                    ProtocolDataId = package.ProtocolData.Id,
+                    UpdateTime = DateTime.Now,
+                    CommandDataId = new Guid("15802959-D25B-42AD-BE50-5B48DCE4039A"),
+                    ProjectId = package.Device.ProjectId,
+                    DataIsValid = true,
+                    DataChannel = dataComponent.Value.ComponentChannel
+                };
+                if (monitorData.DoubleValue > 4)
+                {
+                    cleanerSwitch.BooleanValue = true;
+                }
+                monitorDataList.Add(cleanerSwitch);
             }
 
             lock (TempMonitorDatas)
