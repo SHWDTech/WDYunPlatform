@@ -47,7 +47,7 @@ $(function () {
                     $('#cleanerRunTime').html(record.CleanerRunTime);
                     $('#fanRunTime').html(record.FanRunTime);
 
-                    gaugeOption.series[0].data = { name: hotel, value: record.Current / 100 };
+                    gaugeOption.series[0].data = { name: hotel, value: record.Current };
                     currentGauge.setOption(gaugeOption);
                 });
             });

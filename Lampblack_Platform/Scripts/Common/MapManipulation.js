@@ -72,7 +72,7 @@ var markerShowView = function (id, zoom) {
         $(infoPanel.chargeMan).html(hotelInfo.ChargeMan);
         $(infoPanel.address).html(hotelInfo.Address);
         $(infoPanel.telephone).html(hotelInfo.Phone);
-        $(infoPanel.current).html(hotelInfo.Current / 100 + 'mA');
+        $(infoPanel.current).html(hotelInfo.Current + 'mA');
         $(infoPanel.cleanerStatus).html(hotelInfo.CleanerStatus === true ? '开启' : '关闭');
         $(infoPanel.fanStatus).html(hotelInfo.FanStatus === true ? '开启' : '关闭');
         $(infoPanel.lampblackIn).html(hotelInfo.LampblackIn + 'mg/m³');
