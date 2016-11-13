@@ -1131,11 +1131,11 @@ namespace SHWDTech.Platform.Utility
 
             if (isLittleEndian)
             {
-                val = (short)(((buffer[bufferIndex + 1] << 8) + buffer[bufferIndex]) & 0x7FFF);
+                val = (short)(((buffer[bufferIndex] << 8) + buffer[bufferIndex + 1]) & 0x7FFF);
             }
             else
             {
-                val = (short)(((buffer[bufferIndex] << 8) + buffer[bufferIndex + 1]) & 0x7FFF);
+                val = (short)(((buffer[bufferIndex + 1] << 8) + buffer[bufferIndex]) & 0x7FFF);
             }
 
             return val;
