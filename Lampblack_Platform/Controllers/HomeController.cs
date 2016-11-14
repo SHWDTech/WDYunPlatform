@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.Home;
@@ -7,7 +6,6 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
-using Platform.Cache;
 using Platform.Process;
 using Platform.Process.Enums;
 using Platform.Process.Process;
@@ -21,22 +19,22 @@ namespace Lampblack_Platform.Controllers
         {
             var model = new IndexViewModel();
 
-            var rates = (Dictionary<string, string>)PlatformCaches.GetCache("Cleaness").CacheItem;
+            var rates = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelCleanessList();
 
             foreach (var rate in rates)
             {
-                model.HotelCleanessList.Add(new HotelCleaness() { HotelName = rate.Key, CleanessRate = rate.Value });
+                model.HotelCleanessList.Add(new HotelCleaness() { HotelName = rate.ProjectName, CleanessRate = rate.ProjectCleaness });
             }
 
-            model.NoData = rates.Count(obj => obj.Value == CleanessRateResult.NoData);
+            model.NoData = rates.Count(obj => obj.ProjectCleaness == CleanessRateResult.NoData);
 
-            model.Faild = rates.Count(obj => obj.Value == CleanessRateResult.Fail);
+            model.Faild = rates.Count(obj => obj.ProjectCleaness == CleanessRateResult.Fail);
 
-            model.Worse = rates.Count(obj => obj.Value == CleanessRateResult.Worse);
+            model.Worse = rates.Count(obj => obj.ProjectCleaness == CleanessRateResult.Worse);
 
-            model.Qualified = rates.Count(obj => obj.Value == CleanessRateResult.Qualified);
+            model.Qualified = rates.Count(obj => obj.ProjectCleaness == CleanessRateResult.Qualified);
 
-            model.Good = rates.Count(obj => obj.Value == CleanessRateResult.Good);
+            model.Good = rates.Count(obj => obj.ProjectCleaness == CleanessRateResult.Good);
 
             ViewBag.Areas = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetDistrictSelectList();
 

@@ -17,6 +17,7 @@ using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.ExtensionMethod;
+using WebViewModels.ViewDataModel;
 
 namespace Platform.Process.Process
 {
@@ -108,32 +109,40 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<string, string> GetHotelCleanessList()
+        public List<HotelCleaness> GetHotelCleanessList()
         {
             using (var context = new RepositoryDbContext())
             {
-                ((IObjectContextAdapter) context).ObjectContext.CommandTimeout = 180;
+                ((IObjectContextAdapter)context).ObjectContext.CommandTimeout = 180;
                 var checkDate = DateTime.Now.AddMinutes(-2);
-                var hotelRestaurants = context.Set<HotelRestaurant>();
-                var monitorDatas = context.Set<MonitorData>();
-                var devices = context.Set<RestaurantDevice>();
-
-                var lastRecords = from hotel in hotelRestaurants
-                                  let monitorData = monitorDatas
-                                              .FirstOrDefault(data => data.ProjectId == hotel.Id && data.CommandData.DataName == ProtocolDataName.CleanerCurrent
-                                              && data.UpdateTime > checkDate)
-                                  let deviceModel = devices.FirstOrDefault(obj => obj.Hotel.Id == hotel.Id).LampblackDeviceModel
-                                  select new
-                                  {
-                                      Key = hotel.ProjectName,
-                                      Value = monitorData == null ? null : monitorData.DoubleValue,
-                                      ModelId = deviceModel == null ? Guid.Empty : deviceModel.Id
-                                  };
-
-                var cleanNess = new Dictionary<string, string>();
-                foreach (var record in lastRecords)
+                var modelId = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761");
+                var recentMonitorData = (from data in context.Set<MonitorData>()
+                                         let commandataId = context.Set<CommandData>().FirstOrDefault(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id
+                                         where data.UpdateTime > checkDate
+                                         where data.CommandDataId == commandataId
+                                         select data).ToList();
+                var cleanNess = new List<HotelCleaness>();
+                foreach (var hotel in context.Set<HotelRestaurant>())
                 {
-                    cleanNess.Add(record.Key, record.Value != null ? GetCleanRateByDeviceModel(record.Value, record.ModelId) : "无数据");
+                    var hoteldata = recentMonitorData.FirstOrDefault(obj => obj.ProjectId == hotel.Id);
+                    if (hoteldata != null)
+                    {
+                        cleanNess.Add(new HotelCleaness
+                        {
+                            ProjectName = hotel.ProjectName,
+                            ProjectCleaness = hoteldata.DoubleValue != null
+                                ? GetCleanRateByDeviceModel(hoteldata.DoubleValue, modelId)
+                                : "无数据"
+                        });
+                    }
+                    else
+                    {
+                        cleanNess.Add(new HotelCleaness
+                        {
+                            ProjectName = hotel.ProjectName,
+                            ProjectCleaness = "无数据"
+                        });
+                    }
                 }
                 return cleanNess;
             }
