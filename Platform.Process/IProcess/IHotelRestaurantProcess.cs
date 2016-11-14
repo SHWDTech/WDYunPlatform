@@ -4,6 +4,7 @@ using System.Data.Entity.Validation;
 using System.Linq.Expressions;
 using PagedList;
 using SHWDTech.Platform.Model.Model;
+using WebViewModels.ViewDataModel;
 
 namespace Platform.Process.IProcess
 {
@@ -52,7 +53,7 @@ namespace Platform.Process.IProcess
         /// 获取酒店清洁度情况列表
         /// </summary>
         /// <returns></returns>
-        Dictionary<string, string> GetHotelCleanessList();
+        List<HotelCleaness> GetHotelCleanessList();
 
         /// <summary>
         /// 获取地图上的酒店清洁度列表

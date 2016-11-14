@@ -76,6 +76,7 @@
     <Compile Include="ViewDataModel\CleanessStatics.cs" />
     <Compile Include="ViewDataModel\GeneralCompasion.cs" />
     <Compile Include="ViewDataModel\GeneralReport.cs" />
+    <Compile Include="ViewDataModel\HotelCleaness.cs" />
     <Compile Include="ViewModel\CleannessStatisticsViewModel.cs" />
     <Compile Include="ViewModel\GeneralComparisonViewModel.cs" />
     <Compile Include="ViewModel\GeneralReportViewModel.cs" />
