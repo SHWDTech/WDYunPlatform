@@ -130,6 +130,10 @@
     <Compile Include="Migrations\201609240416082_AddHotelToDevice.Designer.cs">
       <DependentUpon>201609240416082_AddHotelToDevice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611160611344_Add_DateTIme_Index.cs" />
+    <Compile Include="Migrations\201611160611344_Add_DateTIme_Index.Designer.cs">
+      <DependentUpon>201611160611344_Add_DateTIme_Index.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -197,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609240416082_AddHotelToDevice.resx">
       <DependentUpon>201609240416082_AddHotelToDevice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611160611344_Add_DateTIme_Index.resx">
+      <DependentUpon>201611160611344_Add_DateTIme_Index.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

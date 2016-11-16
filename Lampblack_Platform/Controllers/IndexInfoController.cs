@@ -11,14 +11,14 @@ namespace Lampblack_Platform.Controllers
     {
         public IndexInfo Get()
         {
-            try
-            {
-                var model = new IndexInfo();
-                var devs =
-                    ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
-                        .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+            var model = new IndexInfo();
+            var devs =
+                ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
+                    .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
 
-                foreach (var device in devs)
+            foreach (var device in devs)
+            {
+                try
                 {
                     var monitorDatas = ProcessInvoke.GetInstance<MonitorDataProcess>()
                         .GetDeviceCleanerCurrent(device.Id);
@@ -47,20 +47,19 @@ namespace Lampblack_Platform.Controllers
                     };
                     model.data.Add(current);
                 }
-                return model;
-            }
-            catch (Exception ex)
-            {
-                LogService.Instance.Error("接口执行失败。", ex);
-                var currentException = ex;
-                while (currentException.InnerException != null)
+                catch (Exception ex)
                 {
-                    LogService.Instance.Error("接口执行失败详细原因。", ex);
-                    currentException = currentException.InnerException;
+                    LogService.Instance.Error("IndexInfo接口执行失败。", ex);
+                    var currentException = ex;
+                    while (currentException.InnerException != null)
+                    {
+                        LogService.Instance.Error("IndexInfo接口执行失败详细原因。", ex);
+                        currentException = currentException.InnerException;
+                    }
                 }
 
-                return null;
             }
+            return model;
         }
     }
 }
