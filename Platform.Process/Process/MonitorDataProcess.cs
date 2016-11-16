@@ -82,11 +82,12 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                return
-                    repo.GetModels(
-                            obj => obj.ProtocolData.DeviceId == deviceId && obj.CommandData.DataName == "CleanerCurrent")
-                        .OrderByDescending(item => item.UpdateTime)
-                        .FirstOrDefault();
+                var commandId = Guid.Parse("EEE9EC55-7E84-4176-BB90-C13962352BC2");
+                var datas = from data in repo.GetAllModels()
+                    where data.ProtocolData.DeviceId == deviceId && data.CommandDataId == commandId
+                    orderby data.UpdateTime descending 
+                    select data;
+                return !datas.Any() ? null : datas.FirstOrDefault();
             }
         }
 

@@ -5,6 +5,7 @@ using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
@@ -33,6 +34,10 @@ namespace SHWD.Platform.Repository.Repository
         /// 数据检查条件
         /// </summary>
         protected Expression<Func<T, bool>> CheckFunc { get; set; }
+
+        public DbContextConfiguration Configuration => DbContext.Configuration;
+
+        public Database Database => DbContext.Database;
 
         /// <summary>
         /// 创建一个新的数据仓库泛型基类对象
