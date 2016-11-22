@@ -49,11 +49,11 @@ namespace Platform.Process.Process
             }
         }
 
-        public int GetDataCount(Expression<Func<MonitorData, bool>> exp)
+        public bool GetDataCount(Expression<Func<MonitorData, bool>> exp)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                return repo.GetCount(exp);
+                return repo.GetAllModels().Any(exp);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Platform.Process.Process
             var endDate = new DateTime(model.DueDateTime.Year, model.DueDateTime.Month,
                 DateTime.DaysInMonth(model.DueDateTime.Year, model.DueDateTime.Month));
 
-            var areas = ProcessInvoke.Instance<UserDictionaryProcess>()
+            var areas = Invoke<UserDictionaryProcess>()
                 .GetDictionaries(UserDictionaryType.Area, 0);
 
             var startDate = ReportStartDate(endDate, model.ReportType);

@@ -230,22 +230,22 @@ namespace Platform.Process.Process
                     repo.Set<CommandData>().First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
 
                 var datas = (from hotel in hotels
-                    let monitorDatas =
-                    repo.Set<MonitorData>()
-                        .Where(obj => obj.UpdateTime > checkDate)
-                        .OrderByDescending(data => data.UpdateTime)
-                    select new
-                    {
-                        HotelId = hotel.Id,
-                        MonitorData =
-                        monitorDatas.FirstOrDefault(
-                            obj => obj.ProjectId == hotel.Id && obj.CommandDataId == commandDataId)
-                    }).ToList();
+                             let monitorDatas =
+                             repo.Set<MonitorData>()
+                                 .Where(obj => obj.UpdateTime > checkDate)
+                                 .OrderByDescending(data => data.UpdateTime)
+                             select new
+                             {
+                                 HotelId = hotel.Id,
+                                 MonitorData =
+                                 monitorDatas.FirstOrDefault(
+                                     obj => obj.ProjectId == hotel.Id && obj.CommandDataId == commandDataId)
+                             }).ToList();
 
 
                 return (from hotel in hotels
                         let data = datas.First(obj => obj.HotelId == hotel.Id).MonitorData
-                        let cleanRate = data == null || data.UpdateTime < checkDate ? "noData" : GetCleanRate(data.DoubleValue, data.DeviceId)
+                        let cleanRate = data == null || data.UpdateTime < checkDate ? "noData" : GetCleanRateByDeviceModel(data.DoubleValue, data.DeviceId)
                         select new HotelLocations
                         {
                             Name = hotel.ProjectName,
@@ -327,53 +327,29 @@ namespace Platform.Process.Process
 
         public IPagedList<CleanRateView> GetPagedCleanRateView(int page, int pageSize, string queryName, out int count, List<Expression<Func<DataStatistics, bool>>> conditions = null)
         {
-            var viewList = new List<CleanRateView>();
+            var deviceModel = Repo<LampblackDeviceModelRepository>().GetAllModels().First().Id;
+            var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{deviceModel}").CacheItem;
+            var dayStatics = conditions?.Aggregate(
+                                     Repo<DataStatisticsRepository>()
+                                         .GetModels(obj => obj.Type == StatisticsType.Day && obj.CommandDataId == CommandDataId.CleanerCurrent),
+                                     (current, condition) => current.Where(condition))
+                                 .GroupBy(item => item.Device.ProjectId)
+                                 ?? Repo<DataStatisticsRepository>()
+                                 .GetModels(obj => obj.Type == StatisticsType.Day && obj.CommandDataId == CommandDataId.CleanerCurrent)
+                                 .GroupBy(item => item.Device.ProjectId);
+            var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
+            var cleanRateView = (from dayStatic in dayStatics
+                                select new CleanRateView
+                                {
+                                    HotelName = hotels.FirstOrDefault(obj => obj.Id == dayStatic.Key.Value).ProjectName,
+                                    Failed = dayStatic.Count(obj => obj.DoubleValue <= rater.Fail),
+                                    Worse = dayStatic.Count(obj => obj.DoubleValue > rater.Fail && obj.DoubleValue <= rater.Worse),
+                                    Qualified = dayStatic.Count(obj => obj.DoubleValue > rater.Worse && obj.DoubleValue <= rater.Qualified),
+                                    Good = dayStatic.Count(obj => obj.DoubleValue > rater.Good)
+                                }).OrderBy(view => view.HotelName);
 
-            var commandDataId = Repo<CommandDataRepository>()
-                .GetModel(obj => obj.DataName == ProtocolDataName.CleanerCurrent)
-                .Id;
-
-            using (var repo = Repo<HotelRestaurantRepository>())
-            {
-                var hotels = repo.GetAllModels().Select(obj => new { obj.Id, obj.ProjectName });
-                foreach (var hotel in hotels)
-                {
-                    var view = new CleanRateView()
-                    {
-                        HotelName = hotel.ProjectName,
-                        HotelId = hotel.Id
-                    };
-
-                    var hotelDevice = Repo<RestaurantDeviceRepository>().GetModels(device => device.ProjectId == hotel.Id);
-
-                    foreach (var device in hotelDevice)
-                    {
-                        var dayStatics = Repo<DataStatisticsRepository>().GetModels(obj =>
-                        obj.DeviceId == device.Id
-                        && obj.Type == StatisticsType.Day
-                        && obj.CommandDataId == commandDataId);
-                        if (conditions != null)
-                        {
-                            dayStatics = conditions.Aggregate(dayStatics, (current, condition) => current.Where(condition));
-                        }
-
-                        var model = Repo<RestaurantDeviceRepository>()
-                       .GetModelIncludeById(device.Id, new List<string> { "LampblackDeviceModel" })
-                       .LampblackDeviceModel;
-
-                        var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
-
-                        view.Failed += dayStatics.Count(item => item.DoubleValue <= rater.Fail);
-                        view.Worse += dayStatics.Count(item => item.DoubleValue > rater.Fail && item.DoubleValue <= rater.Worse);
-                        view.Qualified += dayStatics.Count(item => item.DoubleValue > rater.Worse && item.DoubleValue <= rater.Qualified);
-                        view.Good += dayStatics.Count(item => item.DoubleValue > rater.Good);
-                    }
-
-                    viewList.Add(view);
-                }
-                count = viewList.Count;
-                return viewList.ToPagedList(page, pageSize);
-            }
+            count = Repo<HotelRestaurantRepository>().GetCount(null);
+            return cleanRateView.ToPagedList(page, pageSize);
         }
 
         public IPagedList<RunningTimeView> GetPagedRunningTime(int page, int pageSize, string queryName, out int count, List<Expression<Func<RunningTime, bool>>> conditions = null)

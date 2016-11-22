@@ -42,6 +42,12 @@ namespace Platform.Process.Process
             return repo;
         }
 
+        public T Invoke<T>() where T : ProcessBase, new()
+        {
+            var process = new T {RepositoryContext = RepositoryContext};
+            return process;
+        }
+
         protected int Commit()
             => DbContext.SaveChanges();
 

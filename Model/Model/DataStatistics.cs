@@ -28,6 +28,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
+        [Index("Ix_Project_Device_UpdateTime", Order = 0)]
         public virtual Guid? ProjectId { get; set; }
 
         [Display(Name = "来源工地")]
@@ -40,6 +41,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Display(Name = "数据来源设备")]
         [ForeignKey("DeviceId")]
+        [Index("Ix_Project_Device_UpdateTime", Order = 1)]
         public virtual Device Device { get; set; }
 
         [Display(Name = "数据来源设备ID")]
@@ -56,6 +58,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "数据更新时间")]
+        [Index("Ix_Project_Device_UpdateTime", Order = 2)]
         public virtual DateTime UpdateTime { get; set; }
 
         [Required]

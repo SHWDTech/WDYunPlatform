@@ -48,7 +48,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual Guid DeviceId { get; set; }
 
         [Required]
-        [Display(Name = "相关设备")]
+        [Display(Name = "更新时间")]
         public virtual DateTime UpdateTime { get; set; }
     }
 }
