@@ -27,7 +27,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             var task = GetTask(taskGuid);
 
-            ProcessInvoke.GetInstance<CommandTaskProcess>().UPdateTaskStatus(task, status);
+            ProcessInvoke.Instance<CommandTaskProcess>().UPdateTaskStatus(task, status);
         }
 
         /// <summary>
@@ -39,18 +39,16 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             var task = GetTask(taskGuid);
 
-            ProcessInvoke.GetInstance<CommandTaskProcess>().UpdateExecuteStatus(task, exceteStatus);
+            ProcessInvoke.Instance<CommandTaskProcess>().UpdateExecuteStatus(task, exceteStatus);
         }
 
         private static CommandTask GetTask(Guid taskGuid)
         {
             var task = ResponingTasks.FirstOrDefault(obj => obj.Id == taskGuid);
 
-            if (task == null)
-            {
-                task = ProcessInvoke.GetInstance<CommandTaskProcess>().GetTaskByGuid(taskGuid);
-                ResponingTasks.Add(task);
-            }
+            if (task != null) return task;
+            task = ProcessInvoke.Instance<CommandTaskProcess>().GetTaskByGuid(taskGuid);
+            ResponingTasks.Add(task);
 
             return task;
         }

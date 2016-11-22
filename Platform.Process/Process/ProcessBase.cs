@@ -16,6 +16,8 @@ namespace Platform.Process.Process
     {
         public RepositoryDbContext DbContext { get; private set; }
 
+        public IRepositoryContext RepositoryContext { get; set; }
+
         public ProcessBase()
         {
             DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
@@ -35,7 +37,7 @@ namespace Platform.Process.Process
 
         public T Repo<T>() where T : RepositoryBase, IRepository, new()
         {
-            var repo = new T {DbContext = DbContext};
+            var repo = new T {DbContext = DbContext, ContextLocal = RepositoryContext };
             repo.InitEntitySet();
             return repo;
         }

@@ -81,7 +81,7 @@ namespace WdTech_Protocol_AdminTools.Common
 
             ServerAccount = ConfigurationManager.AppSettings["ServerAccount"];
 
-            var configs = ProcessInvoke.GetInstance<SysConfigProcess>().GetSysConfigsByType(SysConfigType.ProtocolAdminTools);
+            var configs = ProcessInvoke.Instance<SysConfigProcess>().GetSysConfigsByType(SysConfigType.ProtocolAdminTools);
 
             CommandQueue = configs.FirstOrDefault(obj => obj.SysConfigName == "CommandMessageQueueName")?.SysConfigValue;
 

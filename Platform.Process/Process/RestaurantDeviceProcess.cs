@@ -45,7 +45,7 @@ namespace Platform.Process.Process
                 {
                     if (model.Id == Guid.Empty)
                     {
-                        var dbModel = RestaurantDeviceRepository.CreateDefaultModel();
+                        var dbModel = repo.CreateDefaultModel();
                         foreach (var propertyName in propertyNames)
                         {
                             dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));

@@ -1,7 +1,6 @@
 ﻿using System;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
-using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Utility;
 
@@ -15,7 +14,7 @@ namespace Lampblack_Platform.Controllers
             {
                 var model = new EqupInfo();
                 var devs =
-                    ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
+                    ProcessInvoke<RestaurantDeviceProcess>()
                         .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
                 foreach (var device in devs)
                 {

@@ -78,7 +78,7 @@ namespace MvcWebComponents
             {
                 OnExecuting?.Invoke();
                 _executedTimes++;
-                if (!StopCondition.Compile().Invoke() || (ExecuteTimes != 0 && ExecuteTimes < _executedTimes)) return;
+                if ((StopCondition != null &&!StopCondition.Compile().Invoke()) || (ExecuteTimes != 0 && ExecuteTimes < _executedTimes)) return;
                 _timer.Dispose();
                 SchedulerState = SchedulerState.Finished;
             }

@@ -17,6 +17,7 @@ using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.ExtensionMethod;
+using WebViewModels.Enums;
 using WebViewModels.ViewDataModel;
 
 namespace Platform.Process.Process
@@ -60,7 +61,7 @@ namespace Platform.Process.Process
                 {
                     if (model.Id == Guid.Empty)
                     {
-                        var dbModel = HotelRestaurantRepository.CreateDefaultModel();
+                        var dbModel = repo.CreateDefaultModel();
                         foreach (var propertyName in propertyNames)
                         {
                             dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
@@ -218,42 +219,44 @@ namespace Platform.Process.Process
             }
         }
 
-        public List<object> GetHotelLocations()
+        public List<HotelLocations> GetHotelLocations()
         {
-            using (var repo = Repo<HotelRestaurantRepository>())
+            using (var repo = new RepositoryDbContext())
             {
-                var hotels = repo.GetAllModelList();
+                repo.Database.CommandTimeout = int.MaxValue;
+                var hotels = repo.Set<Project>().ToList();
+                var checkDate = DateTime.Now.AddMinutes(-2);
+                var commandDataId =
+                    repo.Set<CommandData>().First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
 
-                var hotelLocations = new List<object>();
-                foreach (var hotel in hotels)
-                {
-                    var current = GetLastMonitorData(hotel.Id)
-                        .Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
-                        .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
-
-                    var cleanRate = current == null ? "无数据" : GetCleanRate(current.DoubleValue, current.DeviceId);
-
-                    switch (cleanRate)
+                var datas = (from hotel in hotels
+                    let monitorDatas =
+                    repo.Set<MonitorData>()
+                        .Where(obj => obj.UpdateTime > checkDate)
+                        .OrderByDescending(data => data.UpdateTime)
+                    select new
                     {
-                        case CleanessRateResult.NoData:
-                            cleanRate = "noData";
-                            break;
-                        case CleanessRateResult.Qualified:
-                            cleanRate = "clean";
-                            break;
-                        case CleanessRateResult.Good:
-                            cleanRate = "clean";
-                            break;
-                        default:
-                            cleanRate = "dirty";
-                            break;
-                    }
+                        HotelId = hotel.Id,
+                        MonitorData =
+                        monitorDatas.FirstOrDefault(
+                            obj => obj.ProjectId == hotel.Id && obj.CommandDataId == commandDataId)
+                    }).ToList();
 
-                    var info = new { Name = hotel.ProjectName, hotel.Id, Point = new { hotel.Latitude, hotel.Longitude }, status = cleanRate };
-                    hotelLocations.Add(info);
-                }
 
-                return hotelLocations;
+                return (from hotel in hotels
+                        let data = datas.First(obj => obj.HotelId == hotel.Id).MonitorData
+                        let cleanRate = data == null || data.UpdateTime < checkDate ? "noData" : GetCleanRate(data.DoubleValue, data.DeviceId)
+                        select new HotelLocations
+                        {
+                            Name = hotel.ProjectName,
+                            Id = hotel.Id,
+                            Point = new LocationPoint
+                            {
+                                Latitude = $"{hotel.Latitude}",
+                                Longitude = $"{hotel.Longitude}"
+                            },
+                            Status = cleanRate
+                        }).ToList();
             }
         }
 
@@ -453,24 +456,24 @@ namespace Platform.Process.Process
                                   CleanerCurrent =
                                       models.FirstOrDefault(
                                           obj =>
-                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.CleanerCurrent).DoubleValue,
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandDataId == CommandDataId.CleanerCurrent).DoubleValue,
                                   CleanerSwitch =
                                       models.FirstOrDefault(
                                           obj =>
-                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch).BooleanValue,
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandDataId == CommandDataId.CleanerSwitch).BooleanValue,
                                   FanCurrent =
                                       models.FirstOrDefault(
                                           obj =>
-                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.FanCurrent).DoubleValue,
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandDataId == CommandDataId.FanCurrent).DoubleValue,
                                   FanSwitch =
                                       models.FirstOrDefault(
                                           obj =>
-                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandData.DataName == ProtocolDataName.FanSwitch).BooleanValue,
+                                              obj.ProtocolDataId == q.ProtocolDataId && obj.CommandDataId == CommandDataId.FanSwitch).BooleanValue,
                                   UpdateTime = q.UpdateTime
 
                               };
 
-                count = ret.Count();
+                count = Repo<ProtocolDataRepository>().GetCount(null);
 
                 return ret.OrderBy(obj => new { obj.UpdateTime, obj.HotelId }).ToPagedList(page, pageSize);
             }
@@ -562,6 +565,7 @@ namespace Platform.Process.Process
 
             using (var dataRepo = Repo<MonitorDataRepository>())
             {
+                dataRepo.DbContext.Database.CommandTimeout = int.MaxValue;
                 var datas = dataRepo.GetModels(data =>
                     data.ProjectId == hotelGuid
                     && data.UpdateTime > checkDate)

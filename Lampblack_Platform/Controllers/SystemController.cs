@@ -7,7 +7,6 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
-using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
@@ -28,7 +27,7 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var userList = ProcessInvoke.GetInstance<LampblackUserProcess>().GetPagedLampblackUsers(page, pageSize, queryName, out count);
+            var userList = ProcessInvoke<LampblackUserProcess>().GetPagedLampblackUsers(page, pageSize, queryName, out count);
 
             var model = new UserViewModel
             {
@@ -54,7 +53,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<LampblackUserProcess>().GetLampblackUser(Guid.Parse(guid));
+            var model = ProcessInvoke<LampblackUserProcess>().GetLampblackUser(Guid.Parse(guid));
             return View(model);
         }
 
@@ -73,13 +72,13 @@ namespace Lampblack_Platform.Controllers
 
             GetUserRelatedItems();
 
-            if (ProcessInvoke.GetInstance<LampblackUserProcess>().HasLoginName(model))
+            if (ProcessInvoke<LampblackUserProcess>().HasLoginName(model))
             {
                 ModelState.AddModelError("LoginName", "登录名已经存在！");
                 return View(model);
             }
 
-            var exception = ProcessInvoke.GetInstance<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames, roleList);
+            var exception = ProcessInvoke<LampblackUserProcess>().AddOrUpdateLampblackUser(model, propertyNames, roleList);
 
             if (exception != null)
             {
@@ -94,7 +93,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "UsersManage")]
         public ActionResult DeleteUser(Guid guid)
         {
-            var success = ProcessInvoke.GetInstance<LampblackUserProcess>().DeleteLampblackUser(guid);
+            var success = ProcessInvoke<LampblackUserProcess>().DeleteLampblackUser(guid);
 
             var json = new JsonStruct
             {
@@ -115,7 +114,7 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var departmentList = ProcessInvoke.GetInstance<DepartmentProcess>().GetPagedDepartments(page, pageSize, queryName, out count);
+            var departmentList = ProcessInvoke<DepartmentProcess>().GetPagedDepartments(page, pageSize, queryName, out count);
 
             var model = new DepartmentViewModel
             {
@@ -141,7 +140,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<DepartmentProcess>().GetDepartment(Guid.Parse(guid));
+            var model = ProcessInvoke<DepartmentProcess>().GetDepartment(Guid.Parse(guid));
             return View(model);
         }
 
@@ -151,7 +150,7 @@ namespace Lampblack_Platform.Controllers
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
-            var exception = ProcessInvoke.GetInstance<DepartmentProcess>().AddOrUpdateDepartmentr(model, propertyNames);
+            var exception = ProcessInvoke<DepartmentProcess>().AddOrUpdateDepartmentr(model, propertyNames);
 
             GetDepartmentRelatedItems();
 
@@ -168,7 +167,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "DepartmentManage")]
         public ActionResult DeleteDepartment(Guid guid)
         {
-            var sqlResult = ProcessInvoke.GetInstance<DepartmentProcess>().DeleteDepartment(guid);
+            var sqlResult = ProcessInvoke<DepartmentProcess>().DeleteDepartment(guid);
 
             sqlResult.Message = sqlResult.ErrorNumber == 547
                 ? "选中部门已经存在关联用户，请先删除用户后再删除此部门。"
@@ -193,7 +192,7 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var roleList = ProcessInvoke.GetInstance<WdRoleProcess>().GetPagedRoles(page, pageSize, queryName, out count);
+            var roleList = ProcessInvoke<WdRoleProcess>().GetPagedRoles(page, pageSize, queryName, out count);
 
             var model = new RoleViewModel
             {
@@ -219,7 +218,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<WdRoleProcess>().GetRole(Guid.Parse(guid));
+            var model = ProcessInvoke<WdRoleProcess>().GetRole(Guid.Parse(guid));
             return View(model);
         }
 
@@ -229,7 +228,7 @@ namespace Lampblack_Platform.Controllers
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
-            var exception = ProcessInvoke.GetInstance<WdRoleProcess>().AddOrUpdateRole(model, propertyNames);
+            var exception = ProcessInvoke<WdRoleProcess>().AddOrUpdateRole(model, propertyNames);
 
             GetRoleRelatedItems();
 
@@ -246,7 +245,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "RoleManage")]
         public ActionResult DeleteRole(Guid guid)
         {
-            var sqlResult = ProcessInvoke.GetInstance<WdRoleProcess>().DeleteRole(guid);
+            var sqlResult = ProcessInvoke<WdRoleProcess>().DeleteRole(guid);
 
             sqlResult.Message = sqlResult.ErrorNumber == 547
                 ? "选中角色已经存在关联用户，请先删除用户后再删除此角色。"
@@ -264,7 +263,7 @@ namespace Lampblack_Platform.Controllers
         [HttpGet]
         public ActionResult Authority(Guid guid)
         {
-            var role = ProcessInvoke.GetInstance<WdRoleProcess>().GetRole(guid);
+            var role = ProcessInvoke<WdRoleProcess>().GetRole(guid);
             if (role == null)
             {
                 return Json(new JsonStruct() { Message = "没有找到指定系统角色，请重新尝试！" },
@@ -287,7 +286,7 @@ namespace Lampblack_Platform.Controllers
 
             var permissions = Request["Permissions"]?.Split(',').ToList();
 
-            ProcessInvoke.GetInstance<WdRoleProcess>().UpdatePermissions(roleId, permissions);
+            ProcessInvoke<WdRoleProcess>().UpdatePermissions(roleId, permissions);
 
             return RedirectToAction("RoleManage");
         }
@@ -318,19 +317,19 @@ namespace Lampblack_Platform.Controllers
                 }
             };
 
-            cateringCompany.AddRange(ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
+            cateringCompany.AddRange(ProcessInvoke<CateringEnterpriseProcess>()
             .GetCateringCompanySelectList()
             .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
             .ToList());
 
             ViewBag.CateringCompany = cateringCompany;
 
-            ViewBag.Department = ProcessInvoke.GetInstance<DepartmentProcess>()
+            ViewBag.Department = ProcessInvoke<DepartmentProcess>()
                 .GetDepartmentSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
-            ViewBag.Roles = ProcessInvoke.GetInstance<WdRoleProcess>()
+            ViewBag.Roles = ProcessInvoke<WdRoleProcess>()
                 .GetRoleSelectList();
         }
 

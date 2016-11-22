@@ -134,9 +134,9 @@ namespace SHWD.Platform.Repository.Repository
         /// 创建默认数据模型
         /// </summary>
         /// <returns></returns>
-        public new static T CreateDefaultModel(bool generateId = true)
+        public new T CreateDefaultModel(bool generateId = true)
         {
-            var model = SysRepository<T>.CreateDefaultModel(generateId);
+            var model = base.CreateDefaultModel(generateId);
             model.DomainId = CurrentDomain.Id;
 
             return model;

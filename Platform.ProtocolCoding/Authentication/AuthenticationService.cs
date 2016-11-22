@@ -42,7 +42,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
             if (package.Protocol.ProtocolName == ProtocolNames.Classic || package.Protocol.ProtocolName == ProtocolNames.Lampblack)
             {
                 var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
-                return ProcessInvoke.GetInstance<DeviceProcess>().GetDeviceByNodeId(nodeId, true);
+                return ProcessInvoke.Instance<DeviceProcess>().GetDeviceByNodeId(nodeId, true);
             }
 
             return null;

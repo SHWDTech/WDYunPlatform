@@ -36,7 +36,7 @@ function map_init(func) {
 
 var add_MapPoint = function (item) {
     var iconAddr = '';
-    switch (item.status) {
+    switch (item.Status) {
         case LampblackStatus.clean:
             iconAddr = '/Resources/Images/Site/marker_red_sprite2.png';
             break;

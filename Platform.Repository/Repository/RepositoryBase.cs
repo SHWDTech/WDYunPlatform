@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using SHWD.Platform.Repository.Entities;
+﻿using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 
@@ -20,22 +19,22 @@ namespace SHWD.Platform.Repository.Repository
         /// <summary>
         /// 数据仓库上下文
         /// </summary>
-        public static IRepositoryContext RepositoryContext => ContextLocal == null ? ContextGlobal : ContextLocal.Value;
+        public IRepositoryContext RepositoryContext => ContextLocal ?? ContextGlobal;
 
         /// <summary>
         /// 当前线程的用户
         /// </summary>
-        public static IWdUser CurrentUser => RepositoryContext.CurrentUser;
+        public IWdUser CurrentUser => RepositoryContext.CurrentUser;
 
         /// <summary>
         /// 当前线程用户所属域
         /// </summary>
-        public static IDomain CurrentDomain => RepositoryContext.CurrentDomain;
+        public IDomain CurrentDomain => RepositoryContext.CurrentDomain;
 
         /// <summary>
         /// 数据仓库上下文线程对象
         /// </summary>
-        public static ThreadLocal<IRepositoryContext> ContextLocal { get; set; }
+        public IRepositoryContext ContextLocal { get; set; }
 
         /// <summary>
         /// 全局数据仓库上下文线程对象

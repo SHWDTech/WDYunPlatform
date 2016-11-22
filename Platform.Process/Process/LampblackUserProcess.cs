@@ -45,7 +45,7 @@ namespace Platform.Process.Process
 
                         if (model.Id == Guid.Empty)
                         {
-                            var dbModel = LampblackUserRepository.CreateDefaultModel();
+                            var dbModel = repo.CreateDefaultModel();
                             foreach (var propertyName in propertyNames)
                             {
                                 if (dbModel.GetType().GetProperties().Any(obj => obj.Name == propertyName))

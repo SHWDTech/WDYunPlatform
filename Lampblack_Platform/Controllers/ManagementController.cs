@@ -8,7 +8,6 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
-using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
 
@@ -23,7 +22,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Area")]
         public ActionResult GetAreaInfo()
         {
-            var areaInfo = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetAreaInfo();
+            var areaInfo = ProcessInvoke<UserDictionaryProcess>().GetAreaInfo();
             return Json(areaInfo, JsonRequestBehavior.AllowGet);
         }
 
@@ -34,7 +33,7 @@ namespace Lampblack_Platform.Controllers
             if (string.IsNullOrWhiteSpace(areaId)) return null;
             var parent = Guid.Parse(areaId);
 
-            var list = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetChildDistrict(parent);
+            var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(parent);
 
             return Json(new JsonStruct() {
                 Result = list.Select(obj => new {Id = obj.Key, ItemValue = obj.Value})}, 
@@ -52,7 +51,7 @@ namespace Lampblack_Platform.Controllers
 
             Guid.TryParse(Request["parentNode"], out parentNode);
 
-            var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
+            var district = ProcessInvoke<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
             return district == null
                 ? Json(new JsonStruct() { Message = "添加区县信息失败，请重新尝试。" }, JsonRequestBehavior.AllowGet)
@@ -64,7 +63,7 @@ namespace Lampblack_Platform.Controllers
         {
             var id = Guid.Parse(Request["itemId"]);
             var editName = Request["editName"];
-            var district = ProcessInvoke.GetInstance<UserDictionaryProcess>().EditArea(id, editName);
+            var district = ProcessInvoke<UserDictionaryProcess>().EditArea(id, editName);
 
             return Json("修改成功！", district, JsonRequestBehavior.AllowGet);
         }
@@ -74,7 +73,7 @@ namespace Lampblack_Platform.Controllers
         {
             var areaId = Guid.Parse(Request["Id"]);
 
-            var sqlResult = ProcessInvoke.GetInstance<UserDictionaryProcess>().DeleteArea(areaId);
+            var sqlResult = ProcessInvoke<UserDictionaryProcess>().DeleteArea(areaId);
 
             sqlResult.Message = sqlResult.ErrorNumber == 547 
                 ? "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。" 
@@ -103,7 +102,7 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var companyList = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetPagedCateringCompanies(page, pageSize, queryName, out count);
+            var companyList = ProcessInvoke<CateringEnterpriseProcess>().GetPagedCateringCompanies(page, pageSize, queryName, out count);
 
             var model = new CateringEnterpriseViewModel
             {
@@ -127,7 +126,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().GetCateringEnterprise(Guid.Parse(guid));
+            var model = ProcessInvoke<CateringEnterpriseProcess>().GetCateringEnterprise(Guid.Parse(guid));
             return View(model);
         }
 
@@ -137,7 +136,7 @@ namespace Lampblack_Platform.Controllers
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
-            var exception = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model, propertyNames);
+            var exception = ProcessInvoke<CateringEnterpriseProcess>().AddOrUpdateCateringEnterprise(model, propertyNames);
 
             if (exception != null)
             {
@@ -152,7 +151,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "CateringEnterprise")]
         public ActionResult DeleteCateringEnterprise(Guid guid)
         {
-            var success = ProcessInvoke.GetInstance<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
+            var success = ProcessInvoke<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
 
             var json = new JsonStruct
             {
@@ -173,7 +172,7 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var hotels = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetPagedHotelRestaurant(page, pageSize, queryName, out count);
+            var hotels = ProcessInvoke<HotelRestaurantProcess>().GetPagedHotelRestaurant(page, pageSize, queryName, out count);
 
             var model = new HotelViewModel()
             {
@@ -199,7 +198,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelRestaurant(Guid.Parse(guid));
+            var model = ProcessInvoke<HotelRestaurantProcess>().GetHotelRestaurant(Guid.Parse(guid));
             return View(model);
         }
 
@@ -209,7 +208,7 @@ namespace Lampblack_Platform.Controllers
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
-            var exception = ProcessInvoke.GetInstance<HotelRestaurantProcess>().AddOrUpdateHotelRestaurant(model, propertyNames);
+            var exception = ProcessInvoke<HotelRestaurantProcess>().AddOrUpdateHotelRestaurant(model, propertyNames);
 
             if (exception != null)
             {
@@ -225,7 +224,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Hotel")]
         public ActionResult DeleteHotel(Guid guid)
         {
-            var success = ProcessInvoke.GetInstance<HotelRestaurantProcess>().DeleteHotelRestaurant(guid);
+            var success = ProcessInvoke<HotelRestaurantProcess>().DeleteHotelRestaurant(guid);
 
             var json = new JsonStruct
             {
@@ -246,7 +245,7 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var deviceList = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().GetPagedRestaurantDevice(page, pageSize, queryName, out count);
+            var deviceList = ProcessInvoke<RestaurantDeviceProcess>().GetPagedRestaurantDevice(page, pageSize, queryName, out count);
 
             var model = new DeviceViewModel
             {
@@ -272,7 +271,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().GetRestaurantDevice(Guid.Parse(guid));
+            var model = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDevice(Guid.Parse(guid));
             return View(model);
         }
 
@@ -287,7 +286,7 @@ namespace Lampblack_Platform.Controllers
                 InitDeviceModel(model, propertyNames);
             }
 
-            var exception = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().AddOrUpdateRestaurantDevice(model, propertyNames);
+            var exception = ProcessInvoke<RestaurantDeviceProcess>().AddOrUpdateRestaurantDevice(model, propertyNames);
 
             if (exception != null)
             {
@@ -302,7 +301,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Device")]
         public ActionResult DeleteDevice(Guid guid)
         {
-            var success = ProcessInvoke.GetInstance<RestaurantDeviceProcess>().DeleteRestaurantDevice(guid);
+            var success = ProcessInvoke<RestaurantDeviceProcess>().DeleteRestaurantDevice(guid);
 
             var json = new JsonStruct
             {
@@ -316,7 +315,7 @@ namespace Lampblack_Platform.Controllers
         public ActionResult DeviceMaintenance(DeviceMaintenaceViewModel model)
         {
             int count;
-            var deviceMaintenances = ProcessInvoke.GetInstance<DeviceMaintenanceProcess>()
+            var deviceMaintenances = ProcessInvoke<DeviceMaintenanceProcess>()
                 .GetPagedDeviceMaintenance(model.PageIndex, model.PageSize, model.QueryName, out count);
 
             model.Count = count;
@@ -337,7 +336,7 @@ namespace Lampblack_Platform.Controllers
                 return DefaultView();
             }
 
-            var model = ProcessInvoke.GetInstance<DeviceMaintenanceProcess>().GetDeviceMaintenance(Guid.Parse(guid));
+            var model = ProcessInvoke<DeviceMaintenanceProcess>().GetDeviceMaintenance(Guid.Parse(guid));
             return View(model);
         }
 
@@ -347,7 +346,7 @@ namespace Lampblack_Platform.Controllers
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
-            var exception = ProcessInvoke.GetInstance<DeviceMaintenanceProcess>().AddOrUpdateDeviceMaintenance(model, propertyNames);
+            var exception = ProcessInvoke<DeviceMaintenanceProcess>().AddOrUpdateDeviceMaintenance(model, propertyNames);
 
             if (exception != null)
             {
@@ -361,12 +360,12 @@ namespace Lampblack_Platform.Controllers
 
         private void GetHotelRelatedItems()
         {
-            ViewBag.CateringCompany = ProcessInvoke.GetInstance<CateringEnterpriseProcess>()
+            ViewBag.CateringCompany = ProcessInvoke<CateringEnterpriseProcess>()
                 .GetCateringCompanySelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
-            ViewBag.District = ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            ViewBag.District = ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
@@ -400,12 +399,12 @@ namespace Lampblack_Platform.Controllers
                 new SelectListItem() {Text = "光电式", Value = "3"}
             };
 
-            ViewBag.Hotel = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            ViewBag.Hotel = ProcessInvoke<HotelRestaurantProcess>()
                 .GetHotelRestaurantSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
-            ViewBag.DeviceModels = ProcessInvoke.GetInstance<DeviceModelProcess>()
+            ViewBag.DeviceModels = ProcessInvoke<DeviceModelProcess>()
                 .GetDeviceModelSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
@@ -420,12 +419,12 @@ namespace Lampblack_Platform.Controllers
                 new SelectListItem {Text = "干净", Value = "2"}
             };
 
-            ViewBag.Users = ProcessInvoke.GetInstance<LampblackUserProcess>()
+            ViewBag.Users = ProcessInvoke<LampblackUserProcess>()
                 .GetLampblackUserSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
-            ViewBag.Devices = ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
+            ViewBag.Devices = ProcessInvoke<RestaurantDeviceProcess>()
                 .GetRestaurantDeviceSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Key.ToString(), Value = obj.Value })
                 .ToList();

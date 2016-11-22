@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
-using Platform.Process;
 using Platform.Process.Process;
 using WebViewModels.ViewModel;
 
@@ -26,7 +25,7 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult GeneralReport(GeneralReportViewModel model)
         {
-            ProcessInvoke.GetInstance<ReportProcess>().GetGeneralReportViewModel(model);
+            ProcessInvoke<ReportProcess>().GetGeneralReportViewModel(model);
             GetGeneralReport(model);
 
             return View(model);
@@ -34,7 +33,7 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult GeneralComparison(GeneralComparisonViewModel model)
         {
-            ProcessInvoke.GetInstance<ReportProcess>().GetGeneralComparisonViewModel(model);
+            ProcessInvoke<ReportProcess>().GetGeneralComparisonViewModel(model);
             GetGeneralCompison(model);
             return View(model);
         }
@@ -56,7 +55,7 @@ namespace Lampblack_Platform.Controllers
                     new SelectListItem() {Text = "全部", Value = ""}
                 };
 
-            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
@@ -69,7 +68,7 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult CleanlinessStatistics(CleannessStatisticsViewModel model)
         {
-            ProcessInvoke.GetInstance<MonitorDataProcess>().GetCleanessStaticses(model);
+            ProcessInvoke<MonitorDataProcess>().GetCleanessStaticses(model);
             GetStatictisCompison(model);
             return View(model);
         }
@@ -91,21 +90,21 @@ namespace Lampblack_Platform.Controllers
                     new SelectListItem() {Text = "全部", Value = ""}
                 };
 
-            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (model.AreaGuid != Guid.Empty)
             {
-                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.AreaGuid)
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (model.StreetGuid != Guid.Empty)
                 {
-                    addressList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.StreetGuid)
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
@@ -135,21 +134,21 @@ namespace Lampblack_Platform.Controllers
                     new SelectListItem() {Text = "全部", Value = ""}
                 };
 
-            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (model.AreaGuid != Guid.Empty)
             {
-                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.AreaGuid)
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (model.StreetGuid != Guid.Empty)
                 {
-                    addressList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.StreetGuid)
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
@@ -179,21 +178,21 @@ namespace Lampblack_Platform.Controllers
                     new SelectListItem() {Text = "全部", Value = ""}
                 };
 
-            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (model.AreaGuid != Guid.Empty)
             {
-                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.AreaGuid)
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (model.StreetGuid != Guid.Empty)
                 {
-                    addressList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.StreetGuid)
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());

@@ -1,7 +1,6 @@
 ﻿using System;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
-using Platform.Process;
 using Platform.Process.Enums;
 using Platform.Process.Process;
 
@@ -13,10 +12,10 @@ namespace Lampblack_Platform.Controllers
         {
             var model = new MonitorInfos();
 
-            var hotels = ProcessInvoke.GetInstance<HotelRestaurantProcess>().HotelsInDistrict(Guid.Parse("B20071A6-2015-B0B2-1902-F6D82F45B845"));
+            var hotels = ProcessInvoke<HotelRestaurantProcess>().HotelsInDistrict(Guid.Parse("B20071A6-2015-B0B2-1902-F6D82F45B845"));
             foreach (var hotel in hotels)
             {
-                var status = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelCurrentStatus(hotel.Id);
+                var status = ProcessInvoke<HotelRestaurantProcess>().GetHotelCurrentStatus(hotel.Id);
                 var data = new MonitorInfo()
                 {
                     entp_id = hotel.ProjectCode,

@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Model;
-using Platform.Process;
 using Platform.Process.Process;
 using WebViewModels.Enums;
 using WebViewModels.ViewModel;
@@ -22,7 +21,7 @@ namespace Lampblack_Platform.Controllers
             Guid.TryParse(areaId, out guid);
             if (guid != Guid.Empty)
             {
-                var list = ProcessInvoke.GetInstance<UserDictionaryProcess>().GetChildDistrict(guid);
+                var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(guid);
 
                 return Json(new JsonStruct()
                 {
@@ -63,7 +62,7 @@ namespace Lampblack_Platform.Controllers
                 }
             }
 
-            var hotels = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotels(districtGuid);
+            var hotels = ProcessInvoke<HotelRestaurantProcess>().GetHotels(districtGuid);
 
             return Json(new JsonStruct()
             {
@@ -79,7 +78,7 @@ namespace Lampblack_Platform.Controllers
                 model.StartDateTime = DateTime.Parse($"{Request["StartDateTime"]}-1-1");
                 model.DueDateTime = DateTime.Parse($"{Request["DueDateTime"]}-1-1");
             }
-            var result = ProcessInvoke.GetInstance<RunningTimeProcess>().GetRunningTimeReport(model);
+            var result = ProcessInvoke<RunningTimeProcess>().GetRunningTimeReport(model);
             return Json(new JsonStruct()
             {
                 Result = result.Select(obj => new { Date = obj.Key, Linkage = obj.Value })
