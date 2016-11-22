@@ -37,7 +37,7 @@ $(function () {
                 base.AjaxGet('/Home/HotelCurrentStatus', { hotelGuid: $(this).attr('value') }, function (ret) {
                     currentGauge.hideLoading();
                     var record = ret.Result;
-                    $('#current').html(record.Current / 100 + 'mA');
+                    $('#current').html(record.Current + 'mA');
                     $('#cleanerStatus').html(record.CleanerStatus);
                     $('#fanStatus').html(record.FanStatus);
                     $('#lampblackIn').html(record.LampblackIn + 'mg/m³');
