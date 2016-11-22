@@ -1,9 +1,6 @@
-﻿using System.Threading;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using Platform.Process.Process;
-using SHWD.Platform.Repository.IRepository;
-using SHWD.Platform.Repository.Repository;
 using Web_Cloud_Platform.Common;
 using Web_Cloud_Platform.Models;
 
@@ -49,16 +46,6 @@ namespace Web_Cloud_Platform.Controllers
         {
             WdContext = new WdContext(context);
             WdContext.WdUser = _controllerProcess.GetCurrentUser(WdContext.HttpContext);
-
-            //设置数据仓库类当前线程所需的用户和用户所属域信息
-            RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>
-            {
-                Value = new RepositoryContext
-                {
-                    CurrentUser = WdContext.WdUser,
-                    CurrentDomain = WdContext.WdUser.Domain
-                }
-            };
         }
 
         /// <summary>

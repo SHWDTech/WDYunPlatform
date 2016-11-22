@@ -18,7 +18,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "数据来源协议包ID")]
-        [Index("Ix_ProtocolData_UpdateTime", Order = 0)]
+        [Index("Ix_Project_ProtocolData_UpdateTime", Order = 1)]
         public virtual Guid ProtocolDataId { get; set; }
 
         [Display(Name = "数据来源协议包")]
@@ -37,6 +37,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
+        [Index("Ix_Project_ProtocolData_UpdateTime", Order = 0)]
         public virtual Guid? ProjectId { get; set; }
 
         [Display(Name = "来源工地")]
@@ -64,8 +65,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "数据上传时间")]
-        [Index("Ix_UpdateTime")]
-        [Index("Ix_ProtocolData_UpdateTime",Order = 1)]
+        [Index("Ix_Project_ProtocolData_UpdateTime",Order = 2)]
         public virtual DateTime UpdateTime { get; set; }
 
         [Display(Name = "是否有效数据")]

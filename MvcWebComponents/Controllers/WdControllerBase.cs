@@ -1,10 +1,8 @@
-﻿using System.Threading;
-using SHWD.Platform.Repository.Repository;
+﻿using SHWD.Platform.Repository.Repository;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using MvcWebComponents.Model;
-using SHWD.Platform.Repository.IRepository;
 using Platform.Process.Process;
 
 namespace MvcWebComponents.Controllers
@@ -66,16 +64,16 @@ namespace MvcWebComponents.Controllers
             {
                 context.Items.Add("WdContext", WdContext);
             }
-
-            RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>()
-            {
-                Value = new RepositoryContext()
-                {
-                    CurrentUser = WdContext.WdUser,
-                    CurrentDomain = WdContext.Domain
-                }
-            };
         }
+
+        protected T ProcessInvoke<T>() where T : ProcessBase, new() => new T()
+        {
+            RepositoryContext = new RepositoryContext
+            {
+                CurrentUser = WdContext.WdUser,
+                CurrentDomain = WdContext.Domain
+            }
+        };
 
         /// <summary>
         /// 创建一个将视图呈现给响应的ViewResult对象

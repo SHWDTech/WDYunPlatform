@@ -27,7 +27,7 @@ namespace SHWD.Platform.Repository.Repository
             EntitySet = EntitySet.Where(model => model.DomainId == CurrentDomain.Id);
         }
 
-        public new static T CreateDefaultModel(bool generateId = true)
+        public new T CreateDefaultModel(bool generateId = true)
         {
             var model = Repository<T>.CreateDefaultModel(generateId);
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
-using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Utility;
 
@@ -13,14 +12,14 @@ namespace Lampblack_Platform.Controllers
         {
             var model = new IndexInfo();
             var devs =
-                ProcessInvoke.GetInstance<RestaurantDeviceProcess>()
+                ProcessInvoke<RestaurantDeviceProcess>()
                     .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
 
             foreach (var device in devs)
             {
                 try
                 {
-                    var monitorDatas = ProcessInvoke.GetInstance<MonitorDataProcess>()
+                    var monitorDatas = ProcessInvoke<MonitorDataProcess>()
                         .GetDeviceCleanerCurrent(device.Id);
                     if (monitorDatas?.DoubleValue == null) continue;
                     var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");

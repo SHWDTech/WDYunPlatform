@@ -1,9 +1,7 @@
-﻿using System.Threading;
-using System.Web;
+﻿using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using Platform.Process.Process;
-using SHWD.Platform.Repository.IRepository;
 using SHWD.Platform.Repository.Repository;
 
 namespace MvcWebComponents.Controllers
@@ -29,16 +27,16 @@ namespace MvcWebComponents.Controllers
                 HttpContext.Current.Items.Add("WdContext", WdContext);
             }
 
-            RepositoryBase.ContextLocal = new ThreadLocal<IRepositoryContext>()
-            {
-                Value = new RepositoryContext()
-                {
-                    CurrentUser = WdContext.WdUser,
-                    CurrentDomain = WdContext.Domain
-                }
-            };
-
             base.Initialize(controllerContext);
         }
+
+        protected T ProcessInvoke<T> () where T : ProcessBase, new() => new T()
+        {
+            RepositoryContext = new RepositoryContext
+            {
+                CurrentUser = WdContext.WdUser,
+                CurrentDomain = WdContext.Domain
+            }
+        };
     }
 }

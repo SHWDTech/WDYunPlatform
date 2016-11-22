@@ -32,7 +32,7 @@ namespace Platform.Process.Process
                     return null;
                 }
 
-                var dictItem = UserDictionaryRepository.CreateDefaultModel();
+                var dictItem = repo.CreateDefaultModel();
                 dictItem.ItemKey = Globals.NewIdentityCode();
                 dictItem.ItemLevel = areaLevel;
                 dictItem.ItemValue = areaName;

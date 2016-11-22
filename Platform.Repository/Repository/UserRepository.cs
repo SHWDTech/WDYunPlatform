@@ -23,9 +23,9 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
-        public static WdUser CreateDefaultModel()
+        public WdUser CreateDefaultModel()
         {
-            var model = SysDomainRepository<WdUser>.CreateDefaultModel();
+            var model = base.CreateDefaultModel();
             model.Status = UserStatus.Enabled;
 
             return model;

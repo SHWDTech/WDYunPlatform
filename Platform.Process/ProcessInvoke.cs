@@ -33,7 +33,7 @@ namespace Platform.Process
         /// </summary>
         public static void DisposeRepositoryContext()
         {
-            RepositoryBase.ContextLocal.Dispose();
+            //RepositoryBase.ContextLocal.Dispose();
         }
 
         /// <summary>
@@ -41,6 +41,6 @@ namespace Platform.Process
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T GetInstance<T>() where T : ProcessBase, new() => new T();
+        public static T Instance<T>() where T : ProcessBase, new() => new T();
     }
 }

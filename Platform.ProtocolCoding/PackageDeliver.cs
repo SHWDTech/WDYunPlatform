@@ -79,7 +79,7 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
-                var monitorData = MonitorDataRepository.CreateDefaultModel();
+                var monitorData = new MonitorDataRepository().CreateDefaultModel();
                 monitorData.DomainId = package.Device.DomainId;
 
                 var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
@@ -118,7 +118,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                     dataComponent.Value.CommandData.DataConvertType == ProtocolDataType.None) continue;
                 var data = DataConvert.DecodeComponentData(dataComponent.Value);
 
-                var monitorData = MonitorDataRepository.CreateDefaultModel();
+                var monitorData = new MonitorDataRepository().CreateDefaultModel();
                 monitorData.DomainId = package.Device.DomainId;
 
                 switch (dataComponent.Value.CommandData.DataValueType)
@@ -187,21 +187,19 @@ namespace SHWDTech.Platform.ProtocolCoding
             {
                 var error = (1 << i);
 
-                if ((flag & error) != 0)
-                {
-                    var record = AlarmRepository.CreateDefaultModel();
-                    record.AlarmType = AlarmType.Lampblack;
-                    record.AlarmCode = error;
-                    record.AlarmDeviceId = package.Device.Id;
-                    record.UpdateTime = package.ReceiveDateTime;
-                    record.DomainId = package.Device.DomainId;
-                    alarmList.Add(record);
-                }
+                if ((flag & error) == 0) continue;
+                var record = new AlarmRepository().CreateDefaultModel();
+                record.AlarmType = AlarmType.Lampblack;
+                record.AlarmCode = error;
+                record.AlarmDeviceId = package.Device.Id;
+                record.UpdateTime = package.ReceiveDateTime;
+                record.DomainId = package.Device.DomainId;
+                alarmList.Add(record);
             }
 
             if (alarmList.Count > 0)
             {
-                ProcessInvoke.GetInstance<ProtocolPackageProcess>().AddOrUpdateAlarm(alarmList);
+                ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateAlarm(alarmList);
             }
         }
 
@@ -215,7 +213,7 @@ namespace SHWDTech.Platform.ProtocolCoding
                 while (TempMonitorDatas.Count > 0)
                 {
                     var executeDatas = TempMonitorDatas.ToArray();
-                    ProcessInvoke.GetInstance<ProtocolPackageProcess>().AddOrUpdateMonitorData(executeDatas);
+                    ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateMonitorData(executeDatas);
                     TempMonitorDatas.Clear();
                 }
             }
@@ -228,18 +226,18 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns>保存数据包相关信息</returns>
         public static void ParseProtocolData(IProtocolPackage package)
         {
-            var protocolData = ProtocolDataRepository.CreateDefaultModel();
+            var protocolData = new ProtocolDataRepository().CreateDefaultModel();
 
             protocolData.DeviceId = package.Device.Id;
             protocolData.ProtocolId = package.Protocol.Id;
             protocolData.ProtocolTime = package.ReceiveDateTime;
             protocolData.UpdateTime = DateTime.Now;
-            protocolData.DomainId = RepositoryBase.CurrentDomain.Id;
+            protocolData.DomainId = package.Device.DomainId;
             protocolData.ProtocolContent = package.GetBytes();
             protocolData.Length = protocolData.ProtocolContent.Length;
 
             package.ProtocolData = protocolData;
-            ProcessInvoke.GetInstance<ProtocolPackageProcess>().AddOrUpdateProtocolData(protocolData);
+            ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateProtocolData(protocolData);
         }
 
         /// <summary>

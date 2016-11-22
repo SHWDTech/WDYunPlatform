@@ -101,7 +101,7 @@ namespace Platform.Process.Process
             var endDate = new DateTime(model.DueDateTime.Year, model.DueDateTime.Month,
                 DateTime.DaysInMonth(model.DueDateTime.Year, model.DueDateTime.Month));
 
-            var areas = ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            var areas = ProcessInvoke.Instance<UserDictionaryProcess>()
                 .GetDictionaries(UserDictionaryType.Area, 0);
 
             var startDate = ReportStartDate(endDate, model.ReportType);

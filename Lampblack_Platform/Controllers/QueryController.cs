@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using Lampblack_Platform.Models.Query;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
-using Platform.Process;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
 
@@ -43,7 +42,7 @@ namespace Lampblack_Platform.Controllers
             Expression<Func<DataStatistics, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
             conditions.Add(endCondition);
 
-            var cleanRateView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var cleanRateView = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedCleanRateView(page, pageSize, queryName, out count, conditions);
 
             model.PageIndex = page;
@@ -84,7 +83,7 @@ namespace Lampblack_Platform.Controllers
             Expression<Func<RunningTime, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
             conditions.Add(endCondition);
 
-            var linkageView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var linkageView = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedLinkage(page, pageSize, queryName, out count, conditions);
 
             model.PageIndex = page;
@@ -130,7 +129,7 @@ namespace Lampblack_Platform.Controllers
             Expression<Func<Alarm, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
             conditions.Add(endCondition);
 
-            var alarmView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var alarmView = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedAlarm(page, pageSize, queryName, out count, conditions);
 
             model.PageIndex = page;
@@ -171,7 +170,7 @@ namespace Lampblack_Platform.Controllers
             Expression<Func<MonitorData, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
             conditions.Add(endCondition);
 
-            var historyData = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var historyData = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedHistoryData(page, pageSize, queryName, out count, conditions);
 
             model.PageIndex = page;
@@ -212,7 +211,7 @@ namespace Lampblack_Platform.Controllers
             Expression<Func<RunningTime, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
             conditions.Add(endCondition);
 
-            var runningTimeView = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var runningTimeView = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedRunningTime(page, pageSize, queryName, out count, conditions);
 
             model.PageIndex = page;

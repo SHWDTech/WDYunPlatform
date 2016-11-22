@@ -20,7 +20,7 @@ namespace SHWD.Platform.Repository.Repository
             
         }
 
-        public static MonitorData CreateDefaultModel()
+        public MonitorData CreateDefaultModel()
         {
             var model = CreateDefaultModel(false);
 

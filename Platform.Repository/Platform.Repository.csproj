@@ -134,6 +134,14 @@
     <Compile Include="Migrations\201611160611344_Add_DateTIme_Index.Designer.cs">
       <DependentUpon>201611160611344_Add_DateTIme_Index.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611211735271_AlertMonitorDataIndex.cs" />
+    <Compile Include="Migrations\201611211735271_AlertMonitorDataIndex.Designer.cs">
+      <DependentUpon>201611211735271_AlertMonitorDataIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611211818267_AlertMonitorDataIndex1.cs" />
+    <Compile Include="Migrations\201611211818267_AlertMonitorDataIndex1.Designer.cs">
+      <DependentUpon>201611211818267_AlertMonitorDataIndex1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -204,6 +212,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611160611344_Add_DateTIme_Index.resx">
       <DependentUpon>201611160611344_Add_DateTIme_Index.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611211735271_AlertMonitorDataIndex.resx">
+      <DependentUpon>201611211735271_AlertMonitorDataIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611211818267_AlertMonitorDataIndex1.resx">
+      <DependentUpon>201611211818267_AlertMonitorDataIndex1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

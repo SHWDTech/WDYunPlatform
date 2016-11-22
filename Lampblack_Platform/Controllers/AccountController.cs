@@ -63,7 +63,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Ignore")]
         public ActionResult SetUp()
         {
-            var user = ProcessInvoke.GetInstance<LampblackUserProcess>().GetLampblackUser(WdContext.WdUser.Id);
+            var user = ProcessInvoke<LampblackUserProcess>().GetLampblackUser(WdContext.WdUser.Id);
             var model = new SetUpViewModel
             {
                 UserId = user.Id,
@@ -85,7 +85,7 @@ namespace Lampblack_Platform.Controllers
                 {"UserIdentityName", model.UserIdentityName},
                 {"Password", model.Password }
             };
-            model.UpdateSuccessed = ProcessInvoke.GetInstance<LampblackUserProcess>().UpdateUserInfo(propertys);
+            model.UpdateSuccessed = ProcessInvoke<LampblackUserProcess>().UpdateUserInfo(propertys);
 
             return View(model);
         }

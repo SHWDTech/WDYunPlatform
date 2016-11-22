@@ -5,7 +5,9 @@ using System.Linq.Expressions;
 using Platform.Cache;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
+using WebViewModels.Enums;
 
 namespace Platform.Process.Process
 {
@@ -37,6 +39,23 @@ namespace Platform.Process.Process
             RefreashModules();
 
             RefreashPermissions();
+
+            using (var context = new RepositoryDbContext())
+            {
+                var commandDatas = context.Set<CommandData>();
+                CommandDataId.CleanerCurrent =
+                    commandDatas.First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
+                CommandDataId.CleanerSwitch =
+                    commandDatas.First(obj => obj.DataName == ProtocolDataName.CleanerSwitch).Id;
+                CommandDataId.FanCurrent =
+                    commandDatas.First(obj => obj.DataName == ProtocolDataName.FanCurrent).Id;
+                CommandDataId.FanSwitch =
+                    commandDatas.First(obj => obj.DataName == ProtocolDataName.FanSwitch).Id;
+                CommandDataId.LampblackInCon =
+                    commandDatas.First(obj => obj.DataName == ProtocolDataName.LampblackInCon).Id;
+                CommandDataId.LampblackOutCon =
+                    commandDatas.First(obj => obj.DataName == ProtocolDataName.LampblackOutCon).Id;
+            }
         }
 
         /// <summary>

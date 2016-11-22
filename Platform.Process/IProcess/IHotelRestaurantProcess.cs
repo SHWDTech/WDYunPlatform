@@ -73,7 +73,7 @@ namespace Platform.Process.IProcess
         /// 获取酒店位置信息
         /// </summary>
         /// <returns></returns>
-        List<object> GetHotelLocations();
+        List<HotelLocations> GetHotelLocations();
 
         /// <summary>
         /// 获取所有酒店的ID列表

@@ -8,7 +8,7 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
-using Platform.Process;
+using Platform.Cache;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
 
@@ -22,17 +22,17 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Map")]
         public ActionResult GetHotelInfo()
         {
-            var hotelLocation = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetHotelLocations();
+            var hotelLocation = PlatformCaches.GetCache("HotelLocations").CacheItem;
             return Json(new JsonStruct()
             {
                 Result = hotelLocation
-            },JsonRequestBehavior.AllowGet);
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [NamedAuth(Modules = "Map")]
         public ActionResult GetMapHotelInfo(Guid hotelGuid)
         {
-            var hotelLocation = ProcessInvoke.GetInstance<HotelRestaurantProcess>().GetMapHotelCurrentStatus(hotelGuid);
+            var hotelLocation = ProcessInvoke<HotelRestaurantProcess>().GetMapHotelCurrentStatus(hotelGuid);
             return Json(new JsonStruct()
             {
                 Result = hotelLocation
@@ -71,7 +71,7 @@ namespace Lampblack_Platform.Controllers
                 paramsObjects.Add("street", street.ToString());
             }
 
-            var hotelList = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var hotelList = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedHotelRestaurant(page, pageSize, queryName, out count, conditions);
 
             var model = new MapHotelViewModel
@@ -99,11 +99,14 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var area = string.IsNullOrWhiteSpace(Request["AreaGuid"]) ? Guid.Empty : Guid.Parse(Request["AreaGuid"]);
+            Guid area;
+            Guid.TryParse(Request["AreaGuid"], out area);
 
-            var street = string.IsNullOrWhiteSpace(Request["StreetGuid"]) ? Guid.Empty : Guid.Parse(Request["StreetGuid"]);
+            Guid street;
+            Guid.TryParse(Request["StreetGuid"], out street);
 
-            var address = string.IsNullOrWhiteSpace(Request["AddressGuid"]) ? Guid.Empty : Guid.Parse(Request["AddressGuid"]);
+            Guid address;
+            Guid.TryParse(Request["AddressGuid"], out address);
 
             var conditions = new List<Expression<Func<HotelRestaurant, bool>>>();
             var paramsObjects = new Dictionary<string, string>();
@@ -129,7 +132,7 @@ namespace Lampblack_Platform.Controllers
                 paramsObjects.Add("address", street.ToString());
             }
 
-            var hotelList = ProcessInvoke.GetInstance<HotelRestaurantProcess>()
+            var hotelList = ProcessInvoke<HotelRestaurantProcess>()
                 .GetPagedHotelStatus(page, pageSize, queryName, out count, conditions);
 
             var model = new ActualViewModel()
@@ -159,7 +162,7 @@ namespace Lampblack_Platform.Controllers
                     new SelectListItem() {Text = "全部", Value = ""}
                 };
 
-            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
@@ -170,7 +173,7 @@ namespace Lampblack_Platform.Controllers
 
                 model.AreaGuid = Guid.Parse(selectArea);
 
-                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(Guid.Parse(selectArea))
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
@@ -203,7 +206,7 @@ namespace Lampblack_Platform.Controllers
                     new SelectListItem() {Text = "全部", Value = ""}
                 };
 
-            areaList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+            areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
                 .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
@@ -214,7 +217,7 @@ namespace Lampblack_Platform.Controllers
 
                 model.AreaGuid = Guid.Parse(selectArea);
 
-                streetList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(Guid.Parse(selectArea))
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
@@ -223,7 +226,7 @@ namespace Lampblack_Platform.Controllers
                 {
                     var selectStreet = paramsObjects["street"];
                     model.StreetGuid = Guid.Parse(selectStreet);
-                    addressList.AddRange(ProcessInvoke.GetInstance<UserDictionaryProcess>()
+                    addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(Guid.Parse(selectArea))
                     .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
