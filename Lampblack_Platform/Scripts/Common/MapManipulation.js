@@ -37,10 +37,16 @@ function map_init(func) {
 var add_MapPoint = function (item) {
     var iconAddr = '';
     switch (item.Status) {
-        case LampblackStatus.clean:
+        case LampblackStatus.Qualified:
             iconAddr = '/Resources/Images/Site/marker_red_sprite2.png';
             break;
-        case LampblackStatus.dirty:
+        case LampblackStatus.Good:
+            iconAddr = '/Resources/Images/Site/marker_red_sprite2.png';
+            break;
+        case LampblackStatus.Fail:
+            iconAddr = '/Resources/Images/Site/marker_red.png';
+            break;
+        case LampblackStatus.Worse:
             iconAddr = '/Resources/Images/Site/marker_red.png';
             break;
         case LampblackStatus.noData:

@@ -228,6 +228,7 @@ namespace Platform.Process.Process
                 var checkDate = DateTime.Now.AddMinutes(-2);
                 var commandDataId =
                     repo.Set<CommandData>().First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
+                var modelId = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761");
 
                 var datas = (from hotel in hotels
                              let monitorDatas =
@@ -245,7 +246,7 @@ namespace Platform.Process.Process
 
                 return (from hotel in hotels
                         let data = datas.First(obj => obj.HotelId == hotel.Id).MonitorData
-                        let cleanRate = data == null || data.UpdateTime < checkDate ? "noData" : GetCleanRateByDeviceModel(data.DoubleValue, data.DeviceId)
+                        let cleanRate = data == null || data.UpdateTime < checkDate ? "无数据" : GetCleanRateByDeviceModel(data.DoubleValue, modelId)
                         select new HotelLocations
                         {
                             Name = hotel.ProjectName,
