@@ -74,7 +74,7 @@ namespace Platform.Process.Process
                 .AddEqual(item => item.StreetId == model.StreetGuid, model.StreetGuid)
                 .AddEqual(hotel => hotel.AddressId == model.AddressGuid, model.AddressGuid);
 
-            var areas = ProcessInvoke.Instance<UserDictionaryProcess>()
+            var areas = Invoke<UserDictionaryProcess>()
                 .GetDictionaries(UserDictionaryType.Area, 0);
 
             var repo = Repo<RunningTimeRepository>();
