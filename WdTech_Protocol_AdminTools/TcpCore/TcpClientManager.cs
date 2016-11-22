@@ -202,11 +202,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     {
                         LogService.Instance.Warn("协议解码错误！", ex);
                         _decodeErrorTimes++;
-                        if (_decodeErrorTimes == 5)
-                        {
-                            _processBuffer.RemoveAt(0);
-                            _decodeErrorTimes = 0;
-                        }
+                        if (_decodeErrorTimes != 5 || _processBuffer.Count <= 0) continue;
+                        _processBuffer.RemoveAt(0);
+                        _decodeErrorTimes = 0;
                     }
                 }
 

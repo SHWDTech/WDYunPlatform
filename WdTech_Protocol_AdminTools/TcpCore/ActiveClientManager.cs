@@ -124,7 +124,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_clientSockets)
             {
-                if (_clientSockets.Count(obj => obj.DeviceGuid == tcpClient.DeviceGuid) > 1)
+                if (_clientSockets.Any(obj => obj.ClientDevice != null && obj.DeviceGuid == tcpClient.DeviceGuid))
                 {
                     var existClients =
                         _clientSockets.Where(obj => obj.DeviceGuid == tcpClient.DeviceGuid)
