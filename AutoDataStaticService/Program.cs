@@ -106,7 +106,7 @@ namespace AutoDataStaticService
         {
             foreach (var data in _produceDatas)
             {
-                if (ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
                 {
                     continue;
                 }
@@ -147,7 +147,7 @@ namespace AutoDataStaticService
         {
             foreach (var data in _produceDatas)
             {
-                if (ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
                 {
                     continue;
                 }
@@ -187,7 +187,7 @@ namespace AutoDataStaticService
         {
             foreach (var data in _runningTimeDatas)
             {
-                if (ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
                 {
                     continue;
                 }
