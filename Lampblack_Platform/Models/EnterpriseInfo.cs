@@ -19,6 +19,10 @@ namespace Lampblack_Platform.Models
 
         public string QYDZ { get; set; }
 
+        public string PER { get; set; }
+
+        public string TEL { get; set; }
+
         public string QYSTREET { get; set; }
 
         public string XPOS { get; set; }

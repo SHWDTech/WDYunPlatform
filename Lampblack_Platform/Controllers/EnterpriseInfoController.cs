@@ -19,6 +19,8 @@ namespace Lampblack_Platform.Controllers
                     QYBM = hotel.ProjectCode,
                     QYMC = hotel.ProjectName,
                     QYDZ = hotel.AddressDetail,
+                    PER = hotel.ChargeMan,
+                    TEL = hotel.Telephone,
                     QYSTREET = hotel.Street.ItemValue,
                     XPOS = hotel.Longitude.ToString(),
                     YPOS = hotel.Latitude.ToString(),
