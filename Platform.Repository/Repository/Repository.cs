@@ -90,6 +90,13 @@ namespace SHWD.Platform.Repository.Repository
             return query.SingleOrDefault(exp);
         }
 
+        public virtual IQueryable<T> GetModelsInclude(Expression<Func<T, bool>> exp, List<string> includes)
+        {
+            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
+
+            return query.Where(exp);
+        }
+
         public virtual T GetModelById(Guid guid)
             => EntitySet.SingleOrDefault(obj => obj.Id == guid);
 
