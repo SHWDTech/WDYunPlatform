@@ -14,13 +14,14 @@ namespace Lampblack_Platform.Controllers
             var devs =
                 ProcessInvoke<RestaurantDeviceProcess>()
                     .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+            var checkDate = DateTime.Now.AddMinutes(-2);
 
             foreach (var device in devs)
             {
                 try
                 {
                     var monitorDatas = ProcessInvoke<MonitorDataProcess>()
-                        .GetDeviceCleanerCurrent(device.Id);
+                        .GetDeviceCleanerCurrent(device, checkDate);
                     if (monitorDatas?.DoubleValue == null) continue;
                     var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
                     var fan = new Index

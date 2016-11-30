@@ -78,16 +78,14 @@ namespace Platform.Process.Process
             }
         }
 
-        public MonitorData GetDeviceCleanerCurrent(Guid deviceId)
+        public MonitorData GetDeviceCleanerCurrent(RestaurantDevice device, DateTime checkDateTime)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var commandId = Guid.Parse("EEE9EC55-7E84-4176-BB90-C13962352BC2");
-                var datas = from data in repo.GetAllModels()
-                    where data.ProtocolData.DeviceId == deviceId && data.CommandDataId == commandId
-                    orderby data.UpdateTime descending 
-                    select data;
-                return !datas.Any() ? null : datas.FirstOrDefault();
+                var datas = repo.GetModelsInclude(data => data.ProjectId == device.ProjectId
+                    && data.CommandDataId == CommandDataId.CleanerCurrent
+                    && data.UpdateTime > checkDateTime, new List<string> {"ProtocolData"}).ToList();
+                return datas.FirstOrDefault(obj => obj.ProtocolData.DeviceId == device.Id);
             }
         }
 
