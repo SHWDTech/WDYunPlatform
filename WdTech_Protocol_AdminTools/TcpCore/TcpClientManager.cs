@@ -272,7 +272,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             if (result.Finalized)
             {
-                PackageDeliver.Delive(result, this);
+                _protocolEncoder.Delive(result, this);
             }
         }
 

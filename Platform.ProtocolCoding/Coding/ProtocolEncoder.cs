@@ -120,6 +120,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         public static byte[] EncodeProtocol(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
             => UnityFactory.Resolve<ICommandCoder<Type>>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
 
+        public void Delive(IProtocolPackage package, IPackageSource source)
+        {
+            var coder = GetCommandCoder(package.Protocol.ProtocolName);
+            coder.DoDelive(package, source);
+        }
+
         private static ICommandCoder<Type> GetCommandCoder(string protocolName)
         {
             if (CommandCoders.ContainsKey(protocolName)) return CommandCoders[protocolName];

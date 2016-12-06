@@ -1,18 +1,71 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
+using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.Coding;
-using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.ProtocolCoding.Generics;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.LampblackCommandCoding
 {
-    public class LampblackCommand : ICommandCoder<>
+    public class LampblackCommand : ICommandCoder<byte[]>
     {
-        public void DecodeCommand(IProtocolPackage package)
+        private readonly BytesPackageDeliver _deliver = new BytesPackageDeliver();
+
+        public IDataConverter<byte[]> DataConverter { get; set; } = new BytesDataConverter();
+
+        public IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
+        {
+            var package = new BytesProtocolPackage() { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
+
+            var structures = matchedProtocol.ProtocolStructures.ToList();
+
+            var currentIndex = 0;
+
+            for (var i = 0; i < structures.Count; i++)
+            {
+                var structure = structures.First(obj => obj.StructureIndex == i);
+
+                //协议中，数据段如果是自由组织的形式，那么数据库中设置数据段长度为零。解码时，按照协议中的DataLength段的值解码数据段。
+                var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
+                    ? Globals.BytesToInt16(package["DataLength"].ComponentContent, 0, true)
+                    : structure.StructureDataLength;
+
+                if (currentIndex + componentDataLength > bufferBytes.Length)
+                {
+                    package.Status = PackageStatus.NoEnoughBuffer;
+                    return package;
+                }
+
+                if (structure.StructureName == StructureNames.Data)
+                {
+                    DetectCommand(package, matchedProtocol);
+                    componentDataLength = package.Command.ReceiveBytesLength == 0 ? componentDataLength : package.Command.ReceiveBytesLength;
+                }
+
+                var component = new PackageComponent<byte[]>
+                {
+                    ComponentName = structure.StructureName,
+                    DataType = structure.DataType,
+                    ComponentIndex = structure.StructureIndex,
+                    ComponentContent = bufferBytes.SubBytes(currentIndex, currentIndex + componentDataLength)
+                };
+
+                currentIndex += componentDataLength;
+
+                package[structure.StructureName] = component;
+            }
+
+            DecodeCommand(package);
+
+            return package;
+        }
+
+        public void DecodeCommand(IProtocolPackage<byte[]> package)
         {
             var container = package[StructureNames.Data].ComponentContent;
 
@@ -29,9 +82,9 @@ namespace SHWDTech.Platform.LampblackCommandCoding
             package.Finalization();
         }
 
-        public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
+        public IProtocolPackage<byte[]> EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
-            var package = new ByteProtocolPackage<>(command)
+            var package = new BytesProtocolPackage(command)
             {
                 [StructureNames.CmdType] = { ComponentContent = command.CommandTypeCode },
                 [StructureNames.CmdByte] = { ComponentContent = command.CommandCode }
@@ -58,7 +111,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
             return package;
         }
 
-        public void DetectCommand(IProtocolPackage package, IProtocol matchedProtocol)
+        public void DetectCommand(IProtocolPackage<byte[]> package, IProtocol matchedProtocol)
         {
             foreach (var command in matchedProtocol.ProtocolCommands.Where(command =>
             (package[StructureNames.CmdType].ComponentContent.SequenceEqual(command.CommandTypeCode))
@@ -73,7 +126,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
         /// </summary>
         /// <param name="package"></param>
         /// <param name="container"></param>
-        private void DecodeOrderedData(IProtocolPackage package, byte[] container)
+        private void DecodeOrderedData(IProtocolPackage<byte[]> package, byte[] container)
         {
             var currentIndex = 0;
 
@@ -87,7 +140,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
                     return;
                 }
 
-                var component = new PackageComponent
+                var component = new PackageComponent<byte[]>
                 {
                     ComponentName = data.DataName,
                     DataType = data.DataConvertType,
@@ -106,7 +159,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
         /// </summary>
         /// <param name="package"></param>
         /// <param name="container"></param>
-        private void DecodeRandomData(IProtocolPackage package, byte[] container)
+        private void DecodeRandomData(IProtocolPackage<byte[]> package, byte[] container)
         {
             var currentIndex = 0;
 
@@ -128,7 +181,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
 
                 var channel = container[currentIndex];
 
-                var component = new PackageComponent
+                var component = new PackageComponent<byte[]>
                 {
                     ComponentName = $"{data.DataName}-{channel}",
                     ComponentChannel = channel,
@@ -144,6 +197,13 @@ namespace SHWDTech.Platform.LampblackCommandCoding
 
                 package.AppendData(component);
             }
+        }
+
+        public void DoDelive(IProtocolPackage package, IPackageSource source)
+        {
+            var bytesPackage = (IProtocolPackage<byte[]>)package;
+            if (bytesPackage == null) return;
+            _deliver.Delive(bytesPackage, source);
         }
     }
 }

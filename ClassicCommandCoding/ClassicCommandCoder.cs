@@ -16,11 +16,13 @@ namespace SHWDTech.Platform.ClassicCommandCoding
     /// </summary>
     public class ClassicCommandCoder : ICommandCoder<byte[]>
     {
+        private readonly BytesPackageDeliver _deliver = new BytesPackageDeliver();
+
         public IDataConverter<byte[]> DataConverter { get; set; } = new BytesDataConverter();
 
         public IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
         {
-            var package = new ByteProtocolPackage() { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
+            var package = new BytesProtocolPackage() { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
 
@@ -101,7 +103,7 @@ namespace SHWDTech.Platform.ClassicCommandCoding
 
         public IProtocolPackage<byte[]> EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
-            var package = new ByteProtocolPackage(command)
+            var package = new BytesProtocolPackage(command)
             {
                 [StructureNames.CmdType] = { ComponentContent = command.CommandTypeCode },
                 [StructureNames.CmdByte] = { ComponentContent = command.CommandCode }
@@ -136,6 +138,13 @@ namespace SHWDTech.Platform.ClassicCommandCoding
             {
                 package.Command = command;
             }
+        }
+
+        public void DoDelive(IProtocolPackage package, IPackageSource source)
+        {
+            var bytesPackage = (IProtocolPackage<byte[]>) package;
+            if (bytesPackage == null) return;
+            _deliver.Delive(bytesPackage, source);
         }
     }
 }

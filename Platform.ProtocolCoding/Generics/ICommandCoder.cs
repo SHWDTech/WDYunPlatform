@@ -36,5 +36,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Generics
         /// <param name="package">协议包</param>
         /// <param name="matchedProtocol">对应的协议</param>
         void DetectCommand(IProtocolPackage<T> package, IProtocol matchedProtocol);
+
+        /// <summary>
+        /// 执行协议包后续处理
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="source"></param>
+        void DoDelive(IProtocolPackage package, IPackageSource source);
     }
 }

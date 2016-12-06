@@ -12,14 +12,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     /// <summary>
     /// 协议包
     /// </summary>
-    public class ByteProtocolPackage : IProtocolPackage<byte[]>
+    public class BytesProtocolPackage : IProtocolPackage<byte[]>
     {
-        public ByteProtocolPackage()
+        public BytesProtocolPackage()
         {
             
         }
 
-        public ByteProtocolPackage(IProtocolCommand command)
+        public BytesProtocolPackage(IProtocolCommand command)
         {
             Protocol = command.Protocol;
 

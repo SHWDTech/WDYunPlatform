@@ -45,6 +45,7 @@
     <Compile Include="Authentication\AuthResult.cs" />
     <Compile Include="Authentication\AuthResultType.cs" />
     <Compile Include="BytesDataConverter.cs" />
+    <Compile Include="Coding\BytesPackageDeliver.cs" />
     <Compile Include="Coding\PackageComponent.cs" />
     <Compile Include="Coding\ProtocolPackage.cs" />
     <Compile Include="DataValidFlag.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Generics\ICommandCoder.cs" />
     <Compile Include="Generics\IDataConverter.cs" />
     <Compile Include="Generics\IPackageComponent.cs" />
+    <Compile Include="Generics\IPackageDeliver.cs" />
     <Compile Include="Generics\IProtocolPackage.cs" />
     <Compile Include="IDataVallidFlag.cs" />
     <Compile Include="IPackageSource.cs" />
@@ -70,7 +72,7 @@
     <Compile Include="Coding\ProtocolEncoder.cs" />
     <Compile Include="ProtocolChecker.cs" />
     <Compile Include="ProtocolInfoManager.cs" />
-    <Compile Include="Coding\ByteProtocolPackage.cs" />
+    <Compile Include="Coding\BytesProtocolPackage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
