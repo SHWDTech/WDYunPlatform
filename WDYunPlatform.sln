@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebViewModels", "WebViewMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LampblackTransfer", "LampblackTransfer\LampblackTransfer.csproj", "{8175F551-E5E1-4856-960E-689A4B8C2BEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NationalEnviromentCommandCoder", "NationalEnviromentCommandCoder\NationalEnviromentCommandCoder.csproj", "{D5004734-7570-4C40-8A04-3153A5B44A0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,10 @@ Global
 		{8175F551-E5E1-4856-960E-689A4B8C2BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8175F551-E5E1-4856-960E-689A4B8C2BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8175F551-E5E1-4856-960E-689A4B8C2BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5004734-7570-4C40-8A04-3153A5B44A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5004734-7570-4C40-8A04-3153A5B44A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5004734-7570-4C40-8A04-3153A5B44A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5004734-7570-4C40-8A04-3153A5B44A0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,5 +229,6 @@ Global
 		{399FA8CD-3370-4856-9588-F6B1E3777B22} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 		{C598C73C-2888-41DE-B2E1-ACE502CD57C0} = {54B65C67-3AF2-46B7-B61F-D78E9EE40652}
 		{8175F551-E5E1-4856-960E-689A4B8C2BEB} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
+		{D5004734-7570-4C40-8A04-3153A5B44A0C} = {9A830392-AC75-4AF0-80C8-ABE30CF0649B}
 	EndGlobalSection
 EndGlobal

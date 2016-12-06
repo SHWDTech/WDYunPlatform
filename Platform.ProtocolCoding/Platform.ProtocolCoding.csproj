@@ -48,6 +48,7 @@
     <Compile Include="Coding\BytesPackageDeliver.cs" />
     <Compile Include="Coding\PackageComponent.cs" />
     <Compile Include="Coding\ProtocolPackage.cs" />
+    <Compile Include="Coding\StringProtocolPackage.cs" />
     <Compile Include="DataValidFlag.cs" />
     <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\PackageSourceType.cs" />
@@ -73,6 +74,8 @@
     <Compile Include="ProtocolChecker.cs" />
     <Compile Include="ProtocolInfoManager.cs" />
     <Compile Include="Coding\BytesProtocolPackage.cs" />
+    <Compile Include="StringDataConverter.cs" />
+    <Compile Include="StringPackageDeliver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
