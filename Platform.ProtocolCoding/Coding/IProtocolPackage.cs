@@ -1,93 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.Model;
-using SHWDTech.Platform.ProtocolCoding.Enums;
+﻿using System.Collections.Generic;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
     /// <summary>
     /// 表示协议包
     /// </summary>
-    public interface IProtocolPackage
+    public interface IProtocolPackage<T> : IProtocolPackage
     {
-        /// <summary>
-        /// 是否已完成编解码
-        /// </summary>
-        bool Finalized { get; }
-
-        /// <summary>
-        /// 协议包长度
-        /// </summary>
-        int PackageLenth { get; }
-
-        /// <summary>
-        /// 协议包所属设备
-        /// </summary>
-        Device Device { get; set; }
-
-        /// <summary>
-        /// 协议接收时间
-        /// </summary>
-        DateTime ReceiveDateTime { get; set; }
-
-        /// <summary>
-        /// 协议包数据记录ID
-        /// </summary>
-        ProtocolData ProtocolData { get; set; }
-
-        /// <summary>
-        /// 所属协议
-        /// </summary>
-        Protocol Protocol { get; set; }
-
-        /// <summary>
-        /// 所属指令
-        /// </summary>
-        IProtocolCommand Command { get; set; }
-
         /// <summary>
         /// 获取指定名称的数据段
         /// </summary>
         /// <param name="name">数据段名称</param>
         /// <returns>指定名称的数据段</returns>
-        IPackageComponent this[string name] { get; set; }
+        IPackageComponent<T> this[string name] { get; set; }
 
         /// <summary>
         /// 协议数据组件字典
         /// </summary>
-        Dictionary<string, IPackageComponent> DataComponents { get; }
-
-        /// <summary>
-        /// 数据段总数
-        /// </summary>
-        int DataComponentCount { get; }
-
-        /// <summary>
-        /// 数据包处理参数
-        /// </summary>
-        List<string> DeliverParams { get; }
-
-        /// <summary>
-        /// 协议包状态
-        /// </summary>
-        PackageStatus Status { get; set; }
+        Dictionary<string, IPackageComponent<T>> DataComponents { get; }
 
         /// <summary>
         /// 添加数据段数据
         /// </summary>
         /// <param name="component"></param>
-        void AppendData(IPackageComponent component);
-
-        /// <summary>
-        /// 获取数据包字节流
-        /// </summary>
-        /// <returns></returns>
-        byte[] GetBytes();
-
-        /// <summary>
-        /// 完成协议包的编解码
-        /// </summary>
-        void Finalization();
+        void AppendData(IPackageComponent<T> component);
     }
 }

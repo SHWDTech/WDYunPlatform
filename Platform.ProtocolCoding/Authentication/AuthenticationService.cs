@@ -2,7 +2,7 @@
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
-using SHWDTech.Platform.ProtocolCoding.Enums;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 
 namespace SHWDTech.Platform.ProtocolCoding.Authentication
 {
@@ -18,7 +18,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         /// <returns></returns>
         public static AuthResult DeviceAuthcation(byte[] buffer)
         {
-            var package = ProtocolEncoding.Decode(buffer, ProtocolInfoManager.AllProtocols);
+            var package = ProtocolEncoder.Decode(buffer, ProtocolInfoManager.AllProtocols);
 
             if (!package.Finalized)
             {
@@ -38,14 +38,6 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         /// <param name="package"></param>
         /// <returns></returns>
         private static IDevice GetAuthedDevice(IProtocolPackage package)
-        {
-            if (package.Protocol.ProtocolName == ProtocolNames.Classic || package.Protocol.ProtocolName == ProtocolNames.Lampblack)
-            {
-                var nodeId = DataConvert.DecodeComponentData(package[StructureNames.NodeId]).ToString();
-                return ProcessInvoke.Instance<DeviceProcess>().GetDeviceByNodeId(nodeId, true);
-            }
-
-            return null;
-        }
+            => ProcessInvoke.Instance<DeviceProcess>().GetDeviceByNodeId(package.DeviceNodeId, true);
     }
 }

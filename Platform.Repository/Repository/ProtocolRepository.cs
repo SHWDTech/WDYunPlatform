@@ -28,6 +28,7 @@ namespace SHWD.Platform.Repository.Repository
                 .Include("ProtocolCommands.CommandDeliverParamConfigs")
                 .Include("Field")
                 .Include("SubField")
+                .Include("Firmwares")
                 .ToList();
 
         public Protocol GetProtocolFullLoadedByName(string name)

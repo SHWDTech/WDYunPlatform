@@ -5,15 +5,16 @@ using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.LampblackCommandCoding
 {
-    public class LampblackCommand : ICommandCoding
+    public class LampblackCommand : ICommandCoder<>
     {
         public void DecodeCommand(IProtocolPackage package)
         {
-            var container = package[StructureNames.Data].ComponentBytes;
+            var container = package[StructureNames.Data].ComponentContent;
 
             switch (package.Command.DataOrderType)
             {
@@ -30,28 +31,28 @@ namespace SHWDTech.Platform.LampblackCommandCoding
 
         public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
-            var package = new ProtocolPackage(command)
+            var package = new ByteProtocolPackage<>(command)
             {
-                [StructureNames.CmdType] = { ComponentBytes = command.CommandTypeCode },
-                [StructureNames.CmdByte] = { ComponentBytes = command.CommandCode }
+                [StructureNames.CmdType] = { ComponentContent = command.CommandTypeCode },
+                [StructureNames.CmdByte] = { ComponentContent = command.CommandCode }
             };
 
 
             foreach (var definition in command.CommandDefinitions)
             {
-                package[definition.StructureName].ComponentBytes = definition.ContentBytes;
+                package[definition.StructureName].ComponentContent = definition.ContentBytes;
             }
 
             if (paramBytes != null)
             {
                 foreach (var paramByte in paramBytes)
                 {
-                    package[paramByte.Key].ComponentBytes = paramByte.Value;
+                    package[paramByte.Key].ComponentContent = paramByte.Value;
                 }
             }
 
             var crcValue = Globals.GetUsmbcrc16(package.GetBytes(), (ushort)(package.PackageLenth - 3));
-            package[StructureNames.CRCValue].ComponentBytes = Globals.Uint16ToBytes(crcValue, false);
+            package[StructureNames.CRCValue].ComponentContent = Globals.Uint16ToBytes(crcValue, false);
 
             package.Finalization();
             return package;
@@ -60,8 +61,8 @@ namespace SHWDTech.Platform.LampblackCommandCoding
         public void DetectCommand(IProtocolPackage package, IProtocol matchedProtocol)
         {
             foreach (var command in matchedProtocol.ProtocolCommands.Where(command =>
-            (package[StructureNames.CmdType].ComponentBytes.SequenceEqual(command.CommandTypeCode))
-            && (package[StructureNames.CmdByte].ComponentBytes.SequenceEqual(command.CommandCode))))
+            (package[StructureNames.CmdType].ComponentContent.SequenceEqual(command.CommandTypeCode))
+            && (package[StructureNames.CmdByte].ComponentContent.SequenceEqual(command.CommandCode))))
             {
                 package.Command = command;
             }
@@ -91,7 +92,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
                     ComponentName = data.DataName,
                     DataType = data.DataConvertType,
                     ComponentIndex = data.DataIndex,
-                    ComponentBytes = container.SubBytes(currentIndex, currentIndex + data.DataLength)
+                    ComponentContent = container.SubBytes(currentIndex, currentIndex + data.DataLength)
                 };
 
                 currentIndex += data.DataLength;
@@ -136,7 +137,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
                     DataType = data.DataConvertType,
                     ComponentIndex = data.DataIndex,
                     ValidFlag = container[flagIndex],
-                    ComponentBytes = container.SubBytes(dataIndex, dataIndex + data.DataLength)
+                    ComponentContent = container.SubBytes(dataIndex, dataIndex + data.DataLength)
                 };
 
                 currentIndex = data.DataLength + dataIndex;

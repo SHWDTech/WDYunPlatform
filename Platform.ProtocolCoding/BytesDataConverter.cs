@@ -1,44 +1,22 @@
 ﻿using System;
 using System.Text;
-using SHWDTech.Platform.ProtocolCoding.Coding;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 using SHWDTech.Platform.Utility;
-// ReSharper disable UnusedMember.Local
 
 namespace SHWDTech.Platform.ProtocolCoding
 {
-    /// <summary>
-    /// 协议数据段解码工具
-    /// </summary>
-    public static class DataConvert
+    public class BytesDataConverter : DataConverter<byte[]>
     {
-        static DataConvert()
+        public override object DecodeComponentData(IPackageComponent<byte[]> packageComponent)
         {
-            Convert = typeof(DataConvert);
+            var convertMethod = Converter.GetMethod($"{packageComponent.DataType}Decode");
+
+            return convertMethod.Invoke(convertMethod, new object[] { packageComponent.ComponentContent });
         }
 
-        private static readonly Type Convert;
-
-        /// <summary>
-        /// 解码组件数据
-        /// </summary>
-        /// <param name="packageComponent"></param>
-        /// <returns></returns>
-        public static object DecodeComponentData(IPackageComponent packageComponent)
+        public override byte[] EncodeComponentData(IPackageComponent<byte[]> packageComponent, object componentData)
         {
-            var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Decode");
-
-            return convertMethod.Invoke(convertMethod, new object[] { packageComponent.ComponentBytes });
-        }
-
-        /// <summary>
-        /// 编码组件数据
-        /// </summary>
-        /// <param name="packageComponent"></param>
-        /// <param name="componentData"></param>
-        /// <returns></returns>
-        public static byte[] EncodeComponentData(IPackageComponent packageComponent, object componentData)
-        {
-            var convertMethod = Convert.GetMethod($"{packageComponent.DataType}Encode");
+            var convertMethod = Converter.GetMethod($"{packageComponent.DataType}Encode");
 
             return (byte[])convertMethod.Invoke(convertMethod, new[] { componentData });
         }
@@ -48,7 +26,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="nodeIdBytes"></param>
         /// <returns></returns>
-        public static string NodeIdDecode(byte[] nodeIdBytes) 
+        public static string NodeIdDecode(byte[] nodeIdBytes)
             => Globals.ByteArrayToHexString(nodeIdBytes, false).Trim();
 
         /// <summary>

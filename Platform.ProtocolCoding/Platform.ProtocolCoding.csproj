@@ -44,9 +44,9 @@
     <Compile Include="Authentication\AuthenticationService.cs" />
     <Compile Include="Authentication\AuthResult.cs" />
     <Compile Include="Authentication\AuthResultType.cs" />
+    <Compile Include="BytesDataConverter.cs" />
     <Compile Include="Coding\PackageComponent.cs" />
-    <Compile Include="Command\ICommandCoding.cs" />
-    <Compile Include="DataConvert.cs" />
+    <Compile Include="Coding\ProtocolPackage.cs" />
     <Compile Include="DataValidFlag.cs" />
     <Compile Include="Enums\AuthenticationStatus.cs" />
     <Compile Include="Enums\PackageSourceType.cs" />
@@ -57,15 +57,20 @@
     <Compile Include="Coding\IPackageComponent.cs" />
     <Compile Include="Coding\IProtocolPackage.cs" />
     <Compile Include="Enums\WdMessageCategory.cs" />
+    <Compile Include="Generics\DataConverter.cs" />
+    <Compile Include="Generics\ICommandCoder.cs" />
+    <Compile Include="Generics\IDataConverter.cs" />
+    <Compile Include="Generics\IPackageComponent.cs" />
+    <Compile Include="Generics\IProtocolPackage.cs" />
     <Compile Include="IDataVallidFlag.cs" />
     <Compile Include="IPackageSource.cs" />
     <Compile Include="MessageQueueModel\CommandMessage.cs" />
     <Compile Include="PackageDeliver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Coding\ProtocolEncoding.cs" />
+    <Compile Include="Coding\ProtocolEncoder.cs" />
     <Compile Include="ProtocolChecker.cs" />
     <Compile Include="ProtocolInfoManager.cs" />
-    <Compile Include="Coding\ProtocolPackage.cs" />
+    <Compile Include="Coding\ByteProtocolPackage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Platform.Model.csproj">

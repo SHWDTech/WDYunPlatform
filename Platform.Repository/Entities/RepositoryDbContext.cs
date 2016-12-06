@@ -59,6 +59,35 @@ namespace SHWD.Platform.Repository.Entities
                     cs.ToTable("UserPermission");
                 });
 
+            modelBuilder.Entity<FirmwareSet>()
+                .HasMany(s => s.Firmwares)
+                .WithMany(c => c.FirmwareSets)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("FirwareId");
+                    cs.MapRightKey("FirmwareSetId");
+                    cs.ToTable("FirmwareSetFirmware");
+                });
+
+            modelBuilder.Entity<FirmwareSet>()
+                .HasMany(s => s.Firmwares)
+                .WithMany(c => c.FirmwareSets)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("FirwareId");
+                    cs.MapRightKey("FirmwareSetId");
+                    cs.ToTable("FirmwareSetFirmware");
+                });
+
+            modelBuilder.Entity<Protocol>()
+                .HasMany(s => s.Firmwares)
+                .WithMany(c => c.Protocols)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ProtocolId");
+                    cs.MapRightKey("FirmwareId");
+                    cs.ToTable("ProtocolFirmware");
+                });
 
             modelBuilder.Entity<RestaurantDevice>()
                 .Map(m =>

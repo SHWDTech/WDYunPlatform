@@ -70,6 +70,11 @@ namespace SHWDTech.Platform.Model.IModel
         ICollection<ProtocolCommand> ProtocolCommands { get; set; }
 
         /// <summary>
+        /// 包含此协议的固件
+        /// </summary>
+        ICollection<Firmware> Firmwares { get; set; }
+
+        /// <summary>
         /// 协议发布时间
         /// </summary>
         DateTime ReleaseDateTime { get; set; }

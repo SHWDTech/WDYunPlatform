@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{30C9F4EB-9BCF-4201-8C1D-9472B60F768B}</ProjectGuid>
+    <ProjectGuid>{AD245241-E46B-4A26-B2EC-145C13A8D8CD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SHWDTech.Platform.ClassicCommandCoding</RootNamespace>
-    <AssemblyName>SHWDTech.Platform.ClassicCommandCoding</AssemblyName>
+    <RootNamespace>CommandCoding</RootNamespace>
+    <AssemblyName>CommandCoding</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AssemblyVersion>1.0.4.25</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,25 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassicCommandCoder.cs" />
+    <Compile Include="BytesCommandCoding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Model\Platform.Model.csproj">
-      <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
-      <Name>Platform.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.ProtocolCoding\Platform.ProtocolCoding.csproj">
-      <Project>{7924589d-fb3d-4496-8f48-c9dd58ff1574}</Project>
-      <Name>Platform.ProtocolCoding</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
-      <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
-      <Name>Platform.Utility</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

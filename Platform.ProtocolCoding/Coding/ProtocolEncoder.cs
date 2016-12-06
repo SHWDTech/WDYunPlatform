@@ -1,18 +1,18 @@
 ﻿using System;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
-using SHWDTech.Platform.ProtocolCoding.Command;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
     /// <summary>
     /// 协议编解码器
     /// </summary>
-    public class ProtocolEncoding
+    public class ProtocolEncoder
     {
         /// <summary>
         /// 设备包含协议
@@ -20,19 +20,30 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         private readonly List<Protocol> _deviceProtocols = new List<Protocol>();
 
         /// <summary>
+        /// 协议对应的解码器类实例
+        /// </summary>
+        private static readonly Dictionary<string, ICommandCoder<Type>> CommandCoders = new Dictionary<string, ICommandCoder<Type>>();
+
+        /// <summary>
         /// 解码包对应设备
         /// </summary>
         private readonly Device _device;
 
-        public ProtocolEncoding(IDevice device)
+        public ProtocolEncoder(IDevice device)
         {
             _device = (Device)device;
 
             foreach (var firmware in device.FirmwareSet.Firmwares)
             {
-                foreach (var protocol in firmware.Protocols)
+                var protocols =
+                    ProtocolInfoManager.AllProtocols.Where(obj => obj.Firmwares.Any(firm => firm.Id == firmware.Id))
+                        .ToList();
+                foreach (var protocol in protocols)
                 {
-                    _deviceProtocols.Add(ProtocolInfoManager.GetProtocolByName(protocol.ProtocolName));
+                    if (!_deviceProtocols.Contains(protocol))
+                    {
+                        _deviceProtocols.Add(protocol);
+                    }
                 }
             }
         }
@@ -68,9 +79,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         {
             var matchedProtocol = DetectProtocol(bufferBytes, protocols);
 
-            return matchedProtocol == null
-                ? new ProtocolPackage() { Status = PackageStatus.InvalidHead }
-                : DecodeProtocol(bufferBytes, matchedProtocol);
+            if(matchedProtocol == null) return new ProtocolPackage { Status = PackageStatus.InvalidHead };
+
+            var commandCoder = GetCommandCoder(matchedProtocol.ProtocolModule);
+
+            return commandCoder.DecodeProtocol(bufferBytes, matchedProtocol);
         }
 
         /// <summary>
@@ -105,61 +118,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="paramBytes"></param>
         /// <returns>协议字节流</returns>
         public static byte[] EncodeProtocol(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
-            => UnityFactory.Resolve<ICommandCoding>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
+            => UnityFactory.Resolve<ICommandCoder<Type>>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
 
-        /// <summary>
-        /// 协议解码
-        /// </summary>
-        /// <param name="bufferBytes">字节流</param>
-        /// <param name="matchedProtocol">对应的协议</param>
-        /// <returns>协议解析结果</returns>
-        public static IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
+        private static ICommandCoder<Type> GetCommandCoder(string protocolName)
         {
-            var package = new ProtocolPackage() { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
+            if (CommandCoders.ContainsKey(protocolName)) return CommandCoders[protocolName];
+            var coder = UnityFactory.Resolve<ICommandCoder<Type>>(protocolName);
+            CommandCoders.Add(protocolName, coder);
 
-            var structures = matchedProtocol.ProtocolStructures.ToList();
-
-            var commandCoder = UnityFactory.Resolve<ICommandCoding>(matchedProtocol.ProtocolModule);
-
-            var currentIndex = 0;
-
-            for (var i = 0; i < structures.Count; i++)
-            {
-                var structure = structures.First(obj => obj.StructureIndex == i);
-
-                //协议中，数据段如果是自由组织的形式，那么数据库中设置数据段长度为零。解码时，按照协议中的DataLength段的值解码数据段。
-                var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
-                    ? Globals.BytesToInt16(package["DataLength"].ComponentBytes, 0, true)
-                    : structure.StructureDataLength;
-
-                if (currentIndex + componentDataLength > bufferBytes.Length)
-                {
-                    package.Status = PackageStatus.NoEnoughBuffer;
-                    return package;
-                }
-
-                if (structure.StructureName == StructureNames.Data)
-                {
-                    commandCoder.DetectCommand(package, matchedProtocol);
-                    componentDataLength = package.Command.ReceiveBytesLength == 0 ? componentDataLength : package.Command.ReceiveBytesLength;
-                }
-
-                var component = new PackageComponent
-                {
-                    ComponentName = structure.StructureName,
-                    DataType = structure.DataType,
-                    ComponentIndex = structure.StructureIndex,
-                    ComponentBytes = bufferBytes.SubBytes(currentIndex, currentIndex + componentDataLength)
-                };
-
-                currentIndex += componentDataLength;
-
-                package[structure.StructureName] = component;
-            }
-
-            commandCoder.DecodeCommand(package);
-
-            return package;
+            return CommandCoders[protocolName];
         }
     }
 }

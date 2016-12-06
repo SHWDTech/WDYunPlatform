@@ -1,5 +1,5 @@
 ﻿using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.ProtocolCoding.Coding;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 
 namespace SHWDTech.Platform.ProtocolCoding.Authentication
 {

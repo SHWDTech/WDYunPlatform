@@ -34,11 +34,6 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         int ComponentIndex { get; set; }
 
         /// <summary>
-        /// 组件数据
-        /// </summary>
-        byte[] ComponentBytes { get; set; }
-
-        /// <summary>
         /// 数据值类型
         /// </summary>
         DataValueType DataValueType { get; set; }

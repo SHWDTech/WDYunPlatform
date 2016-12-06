@@ -6,8 +6,8 @@ using Platform.Process.Process;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
-using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
+using SHWDTech.Platform.ProtocolCoding.Generics;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolCoding
@@ -182,7 +182,7 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             var alarmList = new List<Alarm>();
 
-            var flag = Globals.BytesToUint16(exception.ComponentBytes, 0, false);
+            var flag = Globals.BytesToUint16(exception.ComponentContent, 0, false);
             for (var i = 0; i < 8; i++)
             {
                 var error = (1 << i);
@@ -247,7 +247,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <param name="monitorDatas">监测数据</param>
         public static void ProcessDataValidFlag(IProtocolPackage package, List<MonitorData> monitorDatas)
         {
-            var dataValidFlag = DataConvert.GetDataValidFlag(package[ProtocolDataName.DataValidFlag].ComponentBytes);
+            var dataValidFlag = DataConvert.GetDataValidFlag(package[ProtocolDataName.DataValidFlag].ComponentContent);
 
             foreach (var commandData in package.Command.CommandDatas)
             {

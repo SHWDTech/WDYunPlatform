@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="package"></param>
         /// <returns></returns>
-        public static bool CheckProtocol(IProtocolPackage package)
+        public static bool CheckProtocol<T>(IProtocolPackage<T> package)
         {
             var convertMethod = Convert.GetMethod($"{package.Protocol.CheckType}Checker");
 
@@ -34,11 +34,12 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// </summary>
         /// <param name="package"></param>
         /// <returns></returns>
-        public static bool Crc16Checker(IProtocolPackage package)
+        public static bool Crc16Checker<T>(IProtocolPackage<T> package)
         {
-            var calcCrc = Globals.GetUsmbcrc16(package.GetBytes(), (ushort)(package.PackageLenth - 3));
+            var realpackage = (ByteProtocolPackage) package;
+            var calcCrc = Globals.GetUsmbcrc16(realpackage.GetBytes(), (ushort)(package.PackageLenth - 3));
 
-            var protocolCrc = Globals.BytesToUint16(package[StructureNames.CRCValue].ComponentBytes, 0, false);
+            var protocolCrc = Globals.BytesToUint16(realpackage[StructureNames.CRCValue].ComponentContent, 0, false);
 
             return calcCrc == protocolCrc;
         }
