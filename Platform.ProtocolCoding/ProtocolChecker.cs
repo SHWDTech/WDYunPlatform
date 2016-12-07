@@ -38,7 +38,8 @@ namespace SHWDTech.Platform.ProtocolCoding
         /// <returns></returns>
         public static bool Crc16Checker<T>(IProtocolPackage<T> package)
         {
-            var realpackage = (BytesProtocolPackage) package;
+            var realpackage = package as BytesProtocolPackage;
+            if (realpackage == null) return false;
             var calcCrc = Globals.GetUsmbcrc16(realpackage.GetBytes(), (ushort)(package.PackageLenth - 3));
 
             var protocolCrc = Globals.BytesToUint16(realpackage[StructureNames.CRCValue].ComponentContent, 0, false);
@@ -48,7 +49,8 @@ namespace SHWDTech.Platform.ProtocolCoding
 
         public static bool CrcModBusChecker<T>(IProtocolPackage<T> package)
         {
-            var realpackage = (StringProtocolPackage) package;
+            var realpackage = package as StringProtocolPackage;
+            if (realpackage == null) return false;
             var protocolBytes = realpackage.GetBytes();
             var calcCrc = Globals.GetCrcModBus(protocolBytes.SubBytes(6, protocolBytes.Length - 6));
 

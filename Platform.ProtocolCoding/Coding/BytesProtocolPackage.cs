@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.ProtocolCoding.Generics;
 
@@ -12,7 +10,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     /// <summary>
     /// 协议包
     /// </summary>
-    public class BytesProtocolPackage : IProtocolPackage<byte[]>
+    public sealed class BytesProtocolPackage : ProtocolPackage, IProtocolPackage<byte[]>
     {
         public BytesProtocolPackage()
         {
@@ -51,36 +49,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             }
         }
 
-        public bool Finalized { get; private set; }
-
-        public int PackageLenth => _structureComponents.Sum(obj => obj.Value.ComponentContent.Length) + DataComponent.ComponentContent.Length;
+        public override bool Finalized { get; protected set; }
 
         /// <summary>
         /// 数据段索引
         /// </summary>
         private int _dataIndex;
 
-        public Device Device { get; set; }
-
-        public IProtocolCommand Command { get; set; }
-
         private IPackageComponent<byte[]> DataComponent { get; set; }
 
-        public DateTime ReceiveDateTime { get; set; }
-
-        public ProtocolData ProtocolData { get; set; }
-
-        public Protocol Protocol { get; set; }
-
-        public PackageStatus Status { get; set; } = PackageStatus.UnFinalized;
-
-        public string DeviceNodeId { get; set; }
-
-        public List<string> DeliverParams => Command.CommandDeliverParams;
-
         public Dictionary<string, IPackageComponent<byte[]>> DataComponents { get; } = new Dictionary<string, IPackageComponent<byte[]>>();
-
-        public int DataComponentCount => DataComponents.Count;
 
         /// <summary>
         /// 协议包组件字典
@@ -122,7 +100,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             DataComponents.Add(component.ComponentName, component);
         }
 
-        public byte[] GetBytes()
+        public override byte[] GetBytes()
         {
             var bytes = new List<byte>();
 
@@ -156,7 +134,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             DataComponent.ComponentContent = bytes.ToArray();
         }
 
-        public void Finalization()
+        public override void Finalization()
         {
             if (
                 //数据段单独存放，因此_componentData的长度为协议结构长度减一

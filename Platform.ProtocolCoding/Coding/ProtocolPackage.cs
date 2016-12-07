@@ -10,37 +10,37 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
     public class ProtocolPackage : IProtocolPackage
     {
-        public bool Finalized { get; } = false;
+        public virtual bool Finalized { get; protected set; } = false;
 
-        public int PackageLenth { get; } = 0;
+        public virtual int PackageLenth { get; } = 0;
 
-        public Device Device { get; set; }
+        public virtual Device Device { get; set; }
 
-        public DateTime ReceiveDateTime { get; set; }
+        public virtual DateTime ReceiveDateTime { get; set; }
 
-        public ProtocolData ProtocolData { get; set; }
+        public virtual ProtocolData ProtocolData { get; set; }
 
-        public Protocol Protocol { get; set; }
+        public virtual Protocol Protocol { get; set; }
 
-        public IProtocolCommand Command { get; set; }
+        public virtual IProtocolCommand Command { get; set; }
 
-        public int DataComponentCount { get; } = 0;
+        public virtual int DataComponentCount { get; } = 0;
 
-        public string DeviceNodeId { get; set; } = string.Empty;
+        public virtual string DeviceNodeId { get; set; } = string.Empty;
 
-        public List<string> DeliverParams { get; } = null;
+        public virtual List<string> DeliverParams { get; } = null;
 
-        public PackageStatus Status { get; set; }
+        public virtual PackageStatus Status { get; set; }
 
-        public bool NeedReply => Command.CommandCategory == CommandCategory.Authentication ||
+        public virtual bool NeedReply => Command.CommandCategory == CommandCategory.Authentication ||
                                  Command.CommandCategory == CommandCategory.HeartBeat;
 
-        public byte[] GetBytes()
+        public virtual byte[] GetBytes()
         {
             throw new NotImplementedException();
         }
 
-        public void Finalization()
+        public virtual void Finalization()
         {
             throw new NotImplementedException();
         }
