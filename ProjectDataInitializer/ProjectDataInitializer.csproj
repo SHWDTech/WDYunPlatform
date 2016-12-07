@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KsDustInitializer.cs" />
     <Compile Include="LampblackInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebPlatformInitializer.cs" />

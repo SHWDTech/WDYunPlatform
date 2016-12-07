@@ -6,7 +6,7 @@ namespace SHWDTech.Platform.ProtocolCoding
     {
         public override object DecodeComponentData(IPackageComponent<string> packageComponent)
         {
-            return packageComponent.ComponentContent;
+            return packageComponent.ComponentValue;
         }
 
         public override byte[] EncodeComponentData(IPackageComponent<string> packageComponent, object componentData)

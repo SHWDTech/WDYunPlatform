@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
@@ -30,6 +31,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         public List<string> DeliverParams { get; } = null;
 
         public PackageStatus Status { get; set; }
+
+        public bool NeedReply => Command.CommandCategory == CommandCategory.Authentication ||
+                                 Command.CommandCategory == CommandCategory.HeartBeat;
 
         public byte[] GetBytes()
         {

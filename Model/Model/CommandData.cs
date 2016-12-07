@@ -27,6 +27,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual string DataName { get; set; }
 
         [Required]
+        [Display(Name = "数据显示名称")]
+        public virtual string DataDisplayName { get; set; }
+
+        [Required]
         [Display(Name = "数据转换类型")]
         public virtual string DataConvertType { get; set; }
 

@@ -395,6 +395,29 @@ namespace SHWDTech.Platform.Utility
             return crc16;
         }
 
+        public static string GetCrcModBus(byte[] buffer)
+        {
+            ushort regCrc = 0xffff;
+
+            var len = buffer.Length;
+
+            for (var i = 0; i < len; i++)
+            {
+                regCrc ^= buffer[i];
+                for (var j = 0; j < 8; j++)
+                {
+                    if ((regCrc & 0x0001) != 0)
+
+                        regCrc = (ushort)(regCrc >> 1 ^ 0xA001);
+                    else
+                        regCrc >>= 1;
+                }
+            }
+            var tempReg = (byte)(regCrc >> 8);
+
+            return $"{(ushort) (regCrc << 8 | tempReg):X04}";
+        }
+
         /// <summary>
         /// 将输入的Byte数组转换为十六进制显示的字符串
         /// </summary>

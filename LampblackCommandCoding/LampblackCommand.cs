@@ -82,7 +82,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
             package.Finalization();
         }
 
-        public IProtocolPackage<byte[]> EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
+        public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
             var package = new BytesProtocolPackage(command)
             {

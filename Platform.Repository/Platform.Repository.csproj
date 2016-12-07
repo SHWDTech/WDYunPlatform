@@ -118,43 +118,6 @@
     <Compile Include="IRepository\IUserConfigRepository.cs" />
     <Compile Include="IRepository\IUserDictionaryRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
-    <Compile Include="Migrations\201609120625565_Initial.cs" />
-    <Compile Include="Migrations\201609120625565_Initial.Designer.cs">
-      <DependentUpon>201609120625565_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609120632536_AddUserRoleVisiable.cs" />
-    <Compile Include="Migrations\201609120632536_AddUserRoleVisiable.Designer.cs">
-      <DependentUpon>201609120632536_AddUserRoleVisiable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609240416082_AddHotelToDevice.cs" />
-    <Compile Include="Migrations\201609240416082_AddHotelToDevice.Designer.cs">
-      <DependentUpon>201609240416082_AddHotelToDevice.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611160611344_Add_DateTIme_Index.cs" />
-    <Compile Include="Migrations\201611160611344_Add_DateTIme_Index.Designer.cs">
-      <DependentUpon>201611160611344_Add_DateTIme_Index.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611211735271_AlertMonitorDataIndex.cs" />
-    <Compile Include="Migrations\201611211735271_AlertMonitorDataIndex.Designer.cs">
-      <DependentUpon>201611211735271_AlertMonitorDataIndex.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611211818267_AlertMonitorDataIndex1.cs" />
-    <Compile Include="Migrations\201611211818267_AlertMonitorDataIndex1.Designer.cs">
-      <DependentUpon>201611211818267_AlertMonitorDataIndex1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220532100_AddDataStatisticsIndex.cs" />
-    <Compile Include="Migrations\201611220532100_AddDataStatisticsIndex.Designer.cs">
-      <DependentUpon>201611220532100_AddDataStatisticsIndex.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220924142_AlertMonitorDataIndexAddDomain.cs" />
-    <Compile Include="Migrations\201611220924142_AlertMonitorDataIndexAddDomain.Designer.cs">
-      <DependentUpon>201611220924142_AlertMonitorDataIndexAddDomain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611220946259_RemoveDomainFromIndex.cs" />
-    <Compile Include="Migrations\201611220946259_RemoveDomainFromIndex.Designer.cs">
-      <DependentUpon>201611220946259_RemoveDomainFromIndex.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
     <Compile Include="Repository\CateringCompanyRepository.cs" />
@@ -211,35 +174,6 @@
       <Project>{95B28F0D-C7D4-479C-AABF-E0F8B4B0E06C}</Project>
       <Name>Platform.Utility</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609120625565_Initial.resx">
-      <DependentUpon>201609120625565_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609120632536_AddUserRoleVisiable.resx">
-      <DependentUpon>201609120632536_AddUserRoleVisiable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609240416082_AddHotelToDevice.resx">
-      <DependentUpon>201609240416082_AddHotelToDevice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611160611344_Add_DateTIme_Index.resx">
-      <DependentUpon>201611160611344_Add_DateTIme_Index.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611211735271_AlertMonitorDataIndex.resx">
-      <DependentUpon>201611211735271_AlertMonitorDataIndex.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611211818267_AlertMonitorDataIndex1.resx">
-      <DependentUpon>201611211818267_AlertMonitorDataIndex1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220532100_AddDataStatisticsIndex.resx">
-      <DependentUpon>201611220532100_AddDataStatisticsIndex.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220924142_AlertMonitorDataIndexAddDomain.resx">
-      <DependentUpon>201611220924142_AlertMonitorDataIndexAddDomain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611220946259_RemoveDomainFromIndex.resx">
-      <DependentUpon>201611220946259_RemoveDomainFromIndex.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

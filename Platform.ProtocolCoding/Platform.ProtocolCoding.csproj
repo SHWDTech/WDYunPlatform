@@ -65,6 +65,7 @@
     <Compile Include="Generics\IPackageComponent.cs" />
     <Compile Include="Generics\IPackageDeliver.cs" />
     <Compile Include="Generics\IProtocolPackage.cs" />
+    <Compile Include="ICommandCoder.cs" />
     <Compile Include="IDataVallidFlag.cs" />
     <Compile Include="IPackageSource.cs" />
     <Compile Include="MessageQueueModel\CommandMessage.cs" />

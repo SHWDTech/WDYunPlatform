@@ -807,29 +807,29 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.ProtocolStructures.Add(lbTail);
 
             //var devices = new List<Device>();
-            for (var i = 0; i < 1000; i++)
-            {
-                var dev = new Device()
-                {
-                    Id = Guid.NewGuid(),
-                    DeviceTypeId = deviceType.Id,
-                    DeviceCode = "扬尘硬件第三版测试一号",
-                    DevicePassword = string.Empty,
-                    DeviceModuleGuid = Guid.NewGuid(),
-                    DeviceNodeId = (i + 1000).ToString("X8"),
-                    FirmwareSetId = firmSet.Id,
-                    StartTime = DateTime.Now,
-                    PreEndTime = DateTime.Now,
-                    EndTime = DateTime.Now,
-                    Status = DeviceStatus.Enabled,
-                    DomainId = domain.Id,
-                    CreateUserId = user.Id,
-                    CreateDateTime = DateTime.Now,
-                    IsEnabled = true
-                };
+            //for (var i = 0; i < 1000; i++)
+            //{
+            //    var dev = new Device()
+            //    {
+            //        Id = Guid.NewGuid(),
+            //        DeviceTypeId = deviceType.Id,
+            //        DeviceCode = "扬尘硬件第三版测试一号",
+            //        DevicePassword = string.Empty,
+            //        DeviceModuleGuid = Guid.NewGuid(),
+            //        DeviceNodeId = (i + 1000).ToString("X8"),
+            //        FirmwareSetId = firmSet.Id,
+            //        StartTime = DateTime.Now,
+            //        PreEndTime = DateTime.Now,
+            //        EndTime = DateTime.Now,
+            //        Status = DeviceStatus.Enabled,
+            //        DomainId = domain.Id,
+            //        CreateUserId = user.Id,
+            //        CreateDateTime = DateTime.Now,
+            //        IsEnabled = true
+            //    };
 
-                dbContext.Devices.Add(dev);
-            }
+            //    dbContext.Devices.Add(dev);
+            //}
         }
     }
 

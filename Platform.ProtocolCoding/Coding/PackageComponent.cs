@@ -21,6 +21,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public T ComponentContent { get; set; }
 
+        public T ComponentValue { get; set; }
+
         public DataValueType DataValueType { get; set; }
 
         public byte ValidFlag { get; set; }

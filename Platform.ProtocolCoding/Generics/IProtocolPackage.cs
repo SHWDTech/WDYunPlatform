@@ -67,6 +67,11 @@ namespace SHWDTech.Platform.ProtocolCoding.Generics
         PackageStatus Status { get; set; }
 
         /// <summary>
+        /// 是否需要回复
+        /// </summary>
+        bool NeedReply { get; }
+
+        /// <summary>
         /// 获取数据包字节流
         /// </summary>
         /// <returns></returns>

@@ -24,15 +24,21 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
         public IProtocolPackage Package { get; }
 
         /// <summary>
+        /// 是否需要回复
+        /// </summary>
+        public bool NeedReply { get; }
+
+        /// <summary>
         /// 设备回复协议字节流
         /// </summary>
         public byte[] ReplyBytes => Package.Finalized ? Package.GetBytes() : new byte[0];
 
-        public AuthResult(AuthResultType type, IProtocolPackage package, IDevice device = null)
+        public AuthResult(AuthResultType type, IProtocolPackage package, IDevice device = null, bool needReply = false)
         {
             ResultType = type;
             AuthDevice = device;
             Package = package;
+            NeedReply = needReply;
         }
     }
 }

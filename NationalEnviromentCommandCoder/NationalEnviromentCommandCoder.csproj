@@ -7,8 +7,8 @@
     <ProjectGuid>{D5004734-7570-4C40-8A04-3153A5B44A0C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NationalEnviromentCommandCoder</RootNamespace>
-    <AssemblyName>NationalEnviromentCommandCoder</AssemblyName>
+    <RootNamespace>SHWDTech.Platform.NationalEnviromentCommandCoder</RootNamespace>
+    <AssemblyName>SHWDTech.Platform.NationalEnviromentCommandCoder</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

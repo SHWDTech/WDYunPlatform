@@ -29,7 +29,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
 
             return device == null
                 ? new AuthResult(AuthResultType.Faild, package)
-                : new AuthResult(AuthResultType.Success, package, device);
+                : new AuthResult(AuthResultType.Success, package, device, package.NeedReply);
         }
 
         /// <summary>

@@ -65,5 +65,10 @@
         /// </summary>
         // ReSharper disable once InconsistentNaming
         public const string CRCValue = "CRCValue";
+
+        /// <summary>
+        /// CRCMODBUS校验码
+        /// </summary>
+        public const string CrcModBus = "CrcModBus";
     }
 }

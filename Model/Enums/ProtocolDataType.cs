@@ -11,6 +11,11 @@
         public const string SingleByte = "SingleByte";
 
         /// <summary>
+        /// ASCII字符串
+        /// </summary>
+        public const string AsciiString = "AsciiString";
+
+        /// <summary>
         /// 字节数组
         /// </summary>
         public const string Bytes = "Bytes";
@@ -66,6 +71,11 @@
         /// </summary>
         // ReSharper disable once InconsistentNaming
         public const string CRC = "CRC";
+
+        /// <summary>
+        /// CRCModBus校验码（字符串形式）
+        /// </summary>
+        public const string CrcModBus = "CrcModBus";
 
         /// <summary>
         /// LRC校验码

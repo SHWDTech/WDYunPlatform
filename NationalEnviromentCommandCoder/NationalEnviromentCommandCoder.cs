@@ -9,13 +9,13 @@ using SHWDTech.Platform.ProtocolCoding.Coding;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.ProtocolCoding.Generics;
 
-namespace NationalEnviromentCommandCoder
+namespace SHWDTech.Platform.NationalEnviromentCommandCoder
 {
     public class NationalEnviromentCommandCoder : ICommandCoder<string>
     {
         private readonly StringPackageDeliver _deliver = new StringPackageDeliver();
 
-        public IDataConverter<string> DataConverter { get; set; }
+        public IDataConverter<string> DataConverter { get; set; } = new StringDataConverter();
 
         public void DecodeCommand(IProtocolPackage<string> package)
         {
@@ -33,7 +33,8 @@ namespace NationalEnviromentCommandCoder
 
             foreach (var commandDataDic in commandDataDicts)
             {
-                var commandData = package.Command.CommandDatas.First(obj => obj.DataName == commandDataDic.Key);
+                var commandData = package.Command.CommandDatas.FirstOrDefault(obj => obj.DataName == commandDataDic.Key);
+                if (commandData == null) continue;
                 var component = new PackageComponent<string>
                 {
                     ComponentName = commandDataDic.Key,
@@ -60,14 +61,14 @@ namespace NationalEnviromentCommandCoder
         public void DetectCommand(IProtocolPackage<string> package, IProtocol matchedProtocol)
         {
             foreach (var command in matchedProtocol.ProtocolCommands.Where(command =>
-            (package[StructureNames.CmdType].ComponentContent == Encoding.ASCII.GetString(command.CommandTypeCode))
-            && (package[StructureNames.CmdByte].ComponentContent == Encoding.ASCII.GetString(command.CommandCode))))
+            (package[StructureNames.CmdType].ComponentValue == Encoding.ASCII.GetString(command.CommandTypeCode))
+            && (package[StructureNames.CmdByte].ComponentValue == Encoding.ASCII.GetString(command.CommandCode))))
             {
                 package.Command = command;
             }
         }
 
-        public IProtocolPackage<string> EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
+        public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
             throw new NotImplementedException();
         }
@@ -89,7 +90,7 @@ namespace NationalEnviromentCommandCoder
                 var structure = structures.First(obj => obj.StructureIndex == i);
 
                 var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
-                    ? int.Parse(package["DataLength"].ComponentContent) - knownStructureLength
+                    ? int.Parse(package["ContentLength"].ComponentContent) - knownStructureLength + 12
                     : structure.StructureDataLength;
 
                 if (currentIndex + componentDataLength > protocolString.Length)
@@ -101,6 +102,11 @@ namespace NationalEnviromentCommandCoder
                 if (structure.StructureName == StructureNames.Data)
                 {
                     DetectCommand(package, matchedProtocol);
+                    if (package.Command == null)
+                    {
+                        package.Status = PackageStatus.InvalidHead;
+                        return package;
+                    }
                     componentDataLength = package.Command.ReceiveBytesLength == 0 ? componentDataLength : package.Command.ReceiveBytesLength;
                 }
 
@@ -109,8 +115,10 @@ namespace NationalEnviromentCommandCoder
                     ComponentName = structure.StructureName,
                     DataType = structure.DataType,
                     ComponentIndex = structure.StructureIndex,
-                    ComponentContent = ParseStructureValue(protocolString.Substring(currentIndex, currentIndex + componentDataLength))
+                    ComponentContent = protocolString.Substring(currentIndex, componentDataLength)
                 };
+
+                component.ComponentValue = ParseStructureValue(component.ComponentContent);
 
                 currentIndex += componentDataLength;
 
@@ -124,6 +132,11 @@ namespace NationalEnviromentCommandCoder
 
         private static string ParseStructureValue(string structureString)
         {
+            if (structureString.Contains("CP"))
+            {
+                return structureString;
+            }
+
             if (structureString.Contains(";"))
             {
                 structureString = structureString.Replace(";", string.Empty);

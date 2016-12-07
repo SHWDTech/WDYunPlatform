@@ -181,7 +181,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Unity.config" />
+    <None Include="Unity.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -211,6 +213,10 @@
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NationalEnviromentCommandCoder\NationalEnviromentCommandCoder.csproj">
+      <Project>{d5004734-7570-4c40-8a04-3153a5b44a0c}</Project>
+      <Name>NationalEnviromentCommandCoder</Name>
     </ProjectReference>
     <ProjectReference Include="..\Platform.Cache\Platform.Cache.csproj">
       <Project>{5ee1e1c1-00a8-4d4c-a0ea-55cb528f7ed7}</Project>

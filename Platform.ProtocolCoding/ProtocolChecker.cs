@@ -26,6 +26,8 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var convertMethod = Convert.GetMethod($"{package.Protocol.CheckType}Checker");
 
+            convertMethod = convertMethod.MakeGenericMethod(typeof(T));
+
             return (bool)convertMethod.Invoke(convertMethod, new object[] { package });
         }
 
@@ -40,6 +42,17 @@ namespace SHWDTech.Platform.ProtocolCoding
             var calcCrc = Globals.GetUsmbcrc16(realpackage.GetBytes(), (ushort)(package.PackageLenth - 3));
 
             var protocolCrc = Globals.BytesToUint16(realpackage[StructureNames.CRCValue].ComponentContent, 0, false);
+
+            return calcCrc == protocolCrc;
+        }
+
+        public static bool CrcModBusChecker<T>(IProtocolPackage<T> package)
+        {
+            var realpackage = (StringProtocolPackage) package;
+            var protocolBytes = realpackage.GetBytes();
+            var calcCrc = Globals.GetCrcModBus(protocolBytes.SubBytes(6, protocolBytes.Length - 6));
+
+            var protocolCrc = realpackage[StructureNames.CrcModBus].ComponentContent;
 
             return calcCrc == protocolCrc;
         }

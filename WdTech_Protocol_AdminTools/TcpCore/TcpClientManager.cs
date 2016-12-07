@@ -93,7 +93,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 接收器名称
         /// </summary>
         public string ReceiverName { get; set; }
-        
+
         /// <summary>
         /// 最后通信时间
         /// </summary>
@@ -256,7 +256,10 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id.ToString().ToUpper()}";
             _protocolEncoder = new ProtocolEncoder(ClientDevice);
             _authStatus = AuthenticationStatus.Authed;
-            Send(result.ReplyBytes);
+            if (result.NeedReply)
+            {
+                Send(result.ReplyBytes);
+            }
 
             OnClientAuthentication();
         }
@@ -325,7 +328,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
         }
 
-        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) 
+        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
             => Send(_protocolEncoder.Encode(command, paramBytes));
     }
 }

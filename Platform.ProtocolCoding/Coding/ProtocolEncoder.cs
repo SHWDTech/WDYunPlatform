@@ -1,5 +1,4 @@
-﻿using System;
-using SHWDTech.Platform.Model.IModel;
+﻿using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.Utility;
@@ -22,7 +21,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 协议对应的解码器类实例
         /// </summary>
-        private static readonly Dictionary<string, ICommandCoder<Type>> CommandCoders = new Dictionary<string, ICommandCoder<Type>>();
+        private static readonly Dictionary<string, ICommandCoder> CommandCoders = new Dictionary<string, ICommandCoder>();
 
         /// <summary>
         /// 解码包对应设备
@@ -118,7 +117,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <param name="paramBytes"></param>
         /// <returns>协议字节流</returns>
         public static byte[] EncodeProtocol(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
-            => UnityFactory.Resolve<ICommandCoder<Type>>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
+            => UnityFactory.Resolve<ICommandCoder>(command.Protocol.ProtocolModule).EncodeCommand(command, paramBytes).GetBytes();
 
         public void Delive(IProtocolPackage package, IPackageSource source)
         {
@@ -126,10 +125,10 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             coder.DoDelive(package, source);
         }
 
-        private static ICommandCoder<Type> GetCommandCoder(string protocolName)
+        private static ICommandCoder GetCommandCoder(string protocolName)
         {
             if (CommandCoders.ContainsKey(protocolName)) return CommandCoders[protocolName];
-            var coder = UnityFactory.Resolve<ICommandCoder<Type>>(protocolName);
+            var coder = UnityFactory.Resolve<ICommandCoder>(protocolName);
             CommandCoders.Add(protocolName, coder);
 
             return CommandCoders[protocolName];

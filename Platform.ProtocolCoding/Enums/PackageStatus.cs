@@ -8,26 +8,31 @@
         /// <summary>
         /// 未完成
         /// </summary>
-        UnFinalized,
+        UnFinalized = 0x00,
 
         /// <summary>
         /// 无效的协议头
         /// </summary>
-        InvalidHead,
+        InvalidHead = 0x01,
+
+        /// <summary>
+        /// 无效的指令
+        /// </summary>
+        InvalidCommand = 0x02,
 
         /// <summary>
         /// 缓存字节不足一个协议包
         /// </summary>
-        NoEnoughBuffer,
+        NoEnoughBuffer = 0x03,
 
         /// <summary>
         /// 无效的数据包
         /// </summary>
-        InvalidPackage,
+        InvalidPackage = 0x04,
 
         /// <summary>
         /// 已完成
         /// </summary>
-        Finalized
+        Finalized = 0xFF
     }
 }
