@@ -29,7 +29,7 @@ namespace Lampblack_Platform.Controllers
                 var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
                 if (devs.Count > 0)
                 {
-                    enterp.CASE_ID = devs.First().Id.ToString();
+                    enterp.CASE_ID = $"HPLB{devs.First().DeviceNodeId.Substring(4, 4)}";
                     enterp.CASE_NAM = devs.First().DeviceName;
                 }
 
