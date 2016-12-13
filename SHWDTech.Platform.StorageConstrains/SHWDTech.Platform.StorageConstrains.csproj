@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Enums\ModelState.cs" />
+    <Compile Include="Model\GuidModel.cs" />
     <Compile Include="Model\IGuidKey.cs" />
     <Compile Include="Model\IGuidModel.cs" />
     <Compile Include="Model\ILongKey.cs" />
