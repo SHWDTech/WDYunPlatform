@@ -14,7 +14,7 @@ namespace Lampblack_Platform.Models
     {
         public string EQUP_ID { get; set; }
 
-        public string RMON_TIME { get; set; }
+        public string RMON_TIM { get; set; }
 
         public string EQUP_VAL { get; set; }
     }
