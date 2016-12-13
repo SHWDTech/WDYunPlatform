@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CFFD96FF-629E-4E23-903D-80B0082B591A}</ProjectGuid>
+    <ProjectGuid>{0CFB5241-E1FF-46E2-AE18-B5BBFED742A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SHWDTech.Platform.ProtocolService</RootNamespace>
-    <AssemblyName>ProtocolService</AssemblyName>
+    <RootNamespace>SHWDTech.Platform.Model</RootNamespace>
+    <AssemblyName>SHWDTech.Platform.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,7 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -42,37 +50,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveClientEventArgs.cs" />
-    <Compile Include="AuthenticationStatus.cs" />
-    <Compile Include="DataBase\CommandData.cs" />
-    <Compile Include="DataBase\CommandDefinition.cs" />
-    <Compile Include="DataBase\DataOrderType.cs" />
-    <Compile Include="DataBase\DataValueType.cs" />
-    <Compile Include="DataBase\Firmware.cs" />
-    <Compile Include="DataBase\FirmwareSet.cs" />
-    <Compile Include="DataBase\Protocol.cs" />
-    <Compile Include="DataBase\ProtocolCommand.cs" />
-    <Compile Include="DataBase\ProtocolStructure.cs" />
-    <Compile Include="Delegates.cs" />
-    <Compile Include="IClientSource.cs" />
-    <Compile Include="ProtocolEncoding\AuthResult.cs" />
-    <Compile Include="ProtocolEncoding\EncodingManager.cs" />
-    <Compile Include="ProtocolEncoding\IProtocolEncoder.cs" />
-    <Compile Include="ProtocolEncoding\IProtocolPackage.cs" />
-    <Compile Include="ProtocolEncoding\PackageStatus.cs" />
-    <Compile Include="SocketActiveClient.cs" />
-    <Compile Include="IActiveClient.cs" />
-    <Compile Include="IServiceHost.cs" />
-    <Compile Include="ServiceHost.cs" />
-    <Compile Include="ServiceManager.cs" />
+    <Compile Include="Constrains\IGuidKey.cs" />
+    <Compile Include="Constrains\ILongKey.cs" />
+    <Compile Include="Constrains\IGuidModel.cs" />
+    <Compile Include="Constrains\ILongModel.cs" />
+    <Compile Include="Constrains\IModel.cs" />
+    <Compile Include="Enums\ModelState.cs" />
+    <Compile Include="GuidModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TcpServiceHost.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SHWDTech.Platform.Model\SHWDTech.Platform.Model.csproj">
-      <Project>{0cfb5241-e1ff-46e2-ae18-b5bbfed742a3}</Project>
-      <Name>SHWDTech.Platform.Model</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
