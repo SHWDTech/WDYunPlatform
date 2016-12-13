@@ -120,10 +120,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             lock (ReceiveBuffer)
             {
-                int readCount;
                 try
                 {
-                    readCount = client.EndReceive(result);
+                    var readCount = client.EndReceive(result);
 
                     var array = ReceiveBuffer.Last().Array;
                     lock (_processBuffer)
@@ -140,25 +139,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 }
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
-                    if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
+                    AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
+                    var innerException = ex.InnerException;
+                    while (innerException != null)
                     {
-                        client.Close();
-                        IsConnected = false;
+                        LogService.Instance.Error("接收客户端数据错误异常详细信息。", innerException);
+                        innerException = innerException.InnerException;
                     }
-                    else
-                    {
-                        AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
-                    }
-
+                    client.Dispose();
                     OnClientDisconnect();
-                    return;
-                }
-
-                if (readCount <= 0)
-                {
-                    OnClientDisconnect();
-                    client.Close(0);
-                    IsConnected = false;
                     return;
                 }
             }
@@ -205,6 +194,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                         if (_decodeErrorTimes != 5 || _processBuffer.Count <= 0) continue;
                         _processBuffer.RemoveAt(0);
                         _decodeErrorTimes = 0;
+                        return;
                     }
                 }
 

@@ -112,7 +112,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_clientSockets)
             {
-                _clientSockets.Remove(tcpClient);
+                var current = _clientSockets.FirstOrDefault(obj => obj.ReceiverName == tcpClient.ReceiverName);
+                if (current == null) return;
+                _clientSockets.Remove(current);
             }
             if (tcpClient.IsConnected)
             {
