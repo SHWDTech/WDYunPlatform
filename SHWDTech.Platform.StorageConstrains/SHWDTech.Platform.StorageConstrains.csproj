@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0CFB5241-E1FF-46E2-AE18-B5BBFED742A3}</ProjectGuid>
+    <ProjectGuid>{6B3823B8-0540-43AF-9F41-498287D2DD4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SHWDTech.Platform.Model</RootNamespace>
-    <AssemblyName>SHWDTech.Platform.Model</AssemblyName>
+    <RootNamespace>SHWDTech.Platform.StorageConstrains</RootNamespace>
+    <AssemblyName>StorageConstrains</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,18 +49,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constrains\IGuidKey.cs" />
-    <Compile Include="Constrains\ILongKey.cs" />
-    <Compile Include="Constrains\IGuidModel.cs" />
-    <Compile Include="Constrains\ILongModel.cs" />
-    <Compile Include="Constrains\IModel.cs" />
-    <Compile Include="Enums\ModelState.cs" />
-    <Compile Include="GuidModel.cs" />
+    <Compile Include="Model\Enums\ModelState.cs" />
+    <Compile Include="Model\IGuidKey.cs" />
+    <Compile Include="Model\IGuidModel.cs" />
+    <Compile Include="Model\ILongKey.cs" />
+    <Compile Include="Model\ILongModel.cs" />
+    <Compile Include="Model\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repository\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

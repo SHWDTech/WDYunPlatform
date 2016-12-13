@@ -1,4 +1,4 @@
-﻿namespace SHWDTech.Platform.Model.Enums
+﻿namespace SHWDTech.Platform.StorageConstrains.Model.Enums
 {
     /// <summary>
     /// 数据对象模型状态

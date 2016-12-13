@@ -1,4 +1,4 @@
-﻿namespace SHWDTech.Platform.Model.Constrains
+﻿namespace SHWDTech.Platform.StorageConstrains.Model
 {
     /// <summary>
     /// LONG类型主键

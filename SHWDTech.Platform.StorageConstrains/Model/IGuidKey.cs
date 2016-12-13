@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SHWDTech.Platform.Model.Constrains
+namespace SHWDTech.Platform.StorageConstrains.Model
 {
     /// <summary>
     /// GUID主键

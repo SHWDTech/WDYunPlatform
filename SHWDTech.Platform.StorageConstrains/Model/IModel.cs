@@ -1,6 +1,6 @@
-﻿using SHWDTech.Platform.Model.Enums;
+﻿using SHWDTech.Platform.StorageConstrains.Model.Enums;
 
-namespace SHWDTech.Platform.Model.Constrains
+namespace SHWDTech.Platform.StorageConstrains.Model
 {
     public interface IModel
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using SHWDTech.Platform.Model;
+using SHWDTech.Platform.StorageConstrains.Model;
 
 namespace SHWDTech.Platform.ProtocolService.DataBase
 {

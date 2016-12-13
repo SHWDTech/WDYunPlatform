@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SHWDTech.Platform.Repository")]
+[assembly: AssemblyTitle("SHWDTech.Platform.StorageConstrains")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SHWDTech.Platform.Repository")]
+[assembly: AssemblyProduct("SHWDTech.Platform.StorageConstrains")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("951dbba4-b0ea-4d09-9ce5-85b220934ec5")]
+[assembly: Guid("6b3823b8-0540-43af-9f41-498287d2dd4e")]
 
 // Version information for an assembly consists of the following four values:
 //

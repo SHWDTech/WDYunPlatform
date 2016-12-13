@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using SHWDTech.Platform.Model.Constrains;
-using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.StorageConstrains.Model.Enums;
 
-namespace SHWDTech.Platform.Model
+namespace SHWDTech.Platform.StorageConstrains.Model
 {
     [Serializable]
     public class GuidModel : IGuidModel
