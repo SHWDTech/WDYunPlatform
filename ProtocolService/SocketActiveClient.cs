@@ -130,7 +130,7 @@ namespace SHWDTech.Platform.ProtocolService
             OnDataReceived();
         }
 
-        public void Process()
+        private void Process()
         {
             lock (_processBuffer)
             {
@@ -153,6 +153,8 @@ namespace SHWDTech.Platform.ProtocolService
                     catch (Exception ex)
                     {
                         OnClientDecodeFailed(ex, string.Empty);
+                        _isProcessing = false;
+                        return;
                     }
                 }
 
