@@ -126,19 +126,17 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_clientSockets)
             {
-                if (_clientSockets.Any(obj => obj.ClientDevice != null && obj.DeviceGuid == tcpClient.DeviceGuid))
-                {
-                    var existClients =
-                        _clientSockets.Where(obj => obj.DeviceGuid == tcpClient.DeviceGuid)
-                            .Select(item => item.ClientGuid)
-                            .ToList();
+                var unUsedCLients =
+                    _clientSockets.Where(obj => obj.ClientDevice != null && obj.DeviceGuid == tcpClient.DeviceGuid && obj.ClientGuid != tcpClient.ClientGuid)
+                        .Select(item => item.DeviceGuid)
+                        .ToList();
 
-                    foreach (var client in existClients)
-                    {
-                        var unUsedCLient = _clientSockets.First(obj => obj.ClientGuid == client);
-                        _clientSockets.Remove(unUsedCLient);
-                    }
+                foreach (var client in unUsedCLients)
+                {
+                    var unUsedCLient = _clientSockets.First(obj => obj.DeviceGuid == client);
+                    _clientSockets.Remove(unUsedCLient);
                 }
+
             }
 
             AdminReportService.Instance.Info($"客户端授权通过，客户端设备NODEID：{tcpClient.ClientDevice.DeviceNodeId}");

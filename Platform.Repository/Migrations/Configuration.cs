@@ -9,7 +9,7 @@ namespace SHWD.Platform.Repository.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             CommandTimeout = Int32.MaxValue;
         }
 

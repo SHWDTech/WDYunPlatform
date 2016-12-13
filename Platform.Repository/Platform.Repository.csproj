@@ -154,6 +154,10 @@
     <Compile Include="Migrations\201611220946259_RemoveDomainFromIndex.Designer.cs">
       <DependentUpon>201611220946259_RemoveDomainFromIndex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612131011164_ProtocolFrimware.cs" />
+    <Compile Include="Migrations\201612131011164_ProtocolFrimware.Designer.cs">
+      <DependentUpon>201612131011164_ProtocolFrimware.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -199,7 +203,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611220946259_RemoveDomainFromIndex.resx">
       <DependentUpon>201611220946259_RemoveDomainFromIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612131011164_ProtocolFrimware.resx">
+      <DependentUpon>201612131011164_ProtocolFrimware.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

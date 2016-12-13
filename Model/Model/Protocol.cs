@@ -58,6 +58,9 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "协议包含的指令")]
         public virtual ICollection<ProtocolCommand> ProtocolCommands { get; set; }
 
+        [Display(Name = "包含此协议的固件")]
+        public virtual ICollection<Firmware> Firmwares { get; set; } = new List<Firmware>();
+
         [Required]
         [Display(Name = "协议发布时间")]
         public virtual DateTime ReleaseDateTime { get; set; }
