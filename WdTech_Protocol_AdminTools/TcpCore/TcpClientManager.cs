@@ -120,9 +120,10 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             lock (ReceiveBuffer)
             {
+                int readCount;
                 try
                 {
-                    var readCount = client.EndReceive(result);
+                    readCount = client.EndReceive(result);
 
                     var array = ReceiveBuffer.Last().Array;
                     lock (_processBuffer)
@@ -142,6 +143,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
                     OnClientDisconnect();
                     return;
+                }
+
+                if (readCount == 0)
+                {
+                    client.Disconnect(false);
+                    OnClientDisconnect();
                 }
             }
 
@@ -188,6 +195,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             case AuthenticationStatus.Authed:
                                 Decode();
                                 break;
+                            case AuthenticationStatus.AuthFailed:
+                                return;
                         }
                     }
                     catch (Exception ex)

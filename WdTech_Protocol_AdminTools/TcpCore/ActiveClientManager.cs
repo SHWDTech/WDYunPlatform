@@ -84,6 +84,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public void Stop()
         {
+            lock (_clientSockets)
+            {
+                for (var i = 0; i < _clientSockets.Count; i++)
+                {
+                    _clientSockets[i].Dispose();
+                    _clientSockets.Remove(_clientSockets[i]);
+                }
+            }
             _connectionCheckTimer.Stop();
         }
 

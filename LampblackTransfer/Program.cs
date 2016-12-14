@@ -30,6 +30,7 @@ namespace LampblackTransfer
         static void Main()
         {
             InitProgramConfig();
+            Console.ReadKey();
             StartTransfer();
             while (true)
             {
