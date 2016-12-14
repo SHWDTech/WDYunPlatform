@@ -40,11 +40,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private bool _processing;
 
         /// <summary>
-        /// 尝试解码失败次数
-        /// </summary>
-        private byte _decodeErrorTimes;
-
-        /// <summary>
         /// 客户端数据接收事件
         /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
@@ -58,6 +53,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 客户端完成授权事件
         /// </summary>
         public event ClientAuthenticationEventHandler ClientAuthenticationEvent;
+
+        /// <summary>
+        /// 指示SOCKET是否已经释放
+        /// </summary>
+        private bool _isDisposed;
 
         /// <summary>
         /// 指示通信对象是否已经连接上
@@ -140,13 +140,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
                     AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
-                    var innerException = ex.InnerException;
-                    while (innerException != null)
-                    {
-                        LogService.Instance.Error("接收客户端数据错误异常详细信息。", innerException);
-                        innerException = innerException.InnerException;
-                    }
-                    client.Dispose();
                     OnClientDisconnect();
                     return;
                 }
@@ -196,10 +189,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             LogService.Instance.Warn("协议解码异常详情。", innerException);
                             innerException = innerException.InnerException;
                         }
-                        _decodeErrorTimes++;
-                        if (_decodeErrorTimes != 5 || _processBuffer.Count <= 0) continue;
-                        _processBuffer.RemoveAt(0);
-                        _decodeErrorTimes = 0;
+                        _processing = false;
                         return;
                     }
                 }
@@ -213,6 +203,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void OnClientDisconnect()
         {
+            Dispose();
             ClientDisconnectEvent?.Invoke(this);
         }
 
@@ -244,6 +235,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             if (result.ResultType == AuthResultType.Faild)
             {
+                OnClientDisconnect();
                 return;
             }
 
@@ -322,5 +314,12 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
         public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) 
             => Send(_protocolEncoding.Encode(command, paramBytes));
+
+        public void Dispose()
+        {
+            if (_isDisposed) return;
+            _clientSocket.Dispose();
+            _isDisposed = true;
+        }
     }
 }

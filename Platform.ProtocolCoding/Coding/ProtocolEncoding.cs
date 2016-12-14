@@ -119,6 +119,12 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
 
+            if (string.IsNullOrWhiteSpace(matchedProtocol.ProtocolModule))
+            {
+                package.Status = PackageStatus.InvalidPackage;
+                return package;
+            }
+
             var commandCoder = UnityFactory.Resolve<ICommandCoding>(matchedProtocol.ProtocolModule);
 
             var currentIndex = 0;

@@ -134,6 +134,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 foreach (var client in unUsedCLients)
                 {
                     var unUsedCLient = _clientSockets.First(obj => obj.DeviceGuid == client);
+                    unUsedCLient.Dispose();
                     _clientSockets.Remove(unUsedCLient);
                 }
 
