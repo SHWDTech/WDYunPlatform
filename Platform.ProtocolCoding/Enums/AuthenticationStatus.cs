@@ -11,6 +11,11 @@
         NotAuthed,
 
         /// <summary>
+        /// 授权失败
+        /// </summary>
+        AuthFailed,
+
+        /// <summary>
         /// 已授权
         /// </summary>
         Authed

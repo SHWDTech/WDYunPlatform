@@ -92,7 +92,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 接收器名称
         /// </summary>
         public string ReceiverName { get; set; }
-        
+
         /// <summary>
         /// 最后通信时间
         /// </summary>
@@ -135,7 +135,10 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                     LastAliveDateTime = DateTime.Now;
 
-                    client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+                    if (_authStatus != AuthenticationStatus.AuthFailed)
+                    {
+                        client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+                    }
                 }
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
@@ -235,7 +238,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             if (result.ResultType == AuthResultType.Faild)
             {
-                OnClientDisconnect();
+                _authStatus = AuthenticationStatus.AuthFailed;
                 return;
             }
 
@@ -312,7 +315,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             }
         }
 
-        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null) 
+        public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
             => Send(_protocolEncoding.Encode(command, paramBytes));
 
         public void Dispose()
