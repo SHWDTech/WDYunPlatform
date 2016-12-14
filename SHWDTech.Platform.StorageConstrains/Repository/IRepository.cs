@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using SHWDTech.Platform.StorageConstrains.Model;
@@ -12,32 +11,12 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
     /// 数据仓库接口
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> where T : class, IModel, new()
+    public interface IRepository<T> : IRepositoryBase where T : class, IModel, new()
     {
-        /// <summary>
-        /// 数据仓库数据上下文
-        /// </summary>
-        DbContext DbContext { get; set; }
-
-        /// <summary>
-        /// 数据库上下文对应的数据库信息
-        /// </summary>
-        Database DataBase { get; }
-
-        /// <summary>
-        /// 数据库上下文配置信息
-        /// </summary>
-        DbContextConfiguration Configuration { get; }
-
         /// <summary>
         /// 对应数据模型的数据集
         /// </summary>
         DbSet<T> EntitySet { get; }
-
-        /// <summary>
-        /// 是否自动提交
-        /// </summary>
-        bool AutoCommit { get; set; }
 
         /// <summary>
         /// 获取数据集的第一个实例。

@@ -66,8 +66,10 @@
     <Compile Include="Repository\IGuidRepository.cs" />
     <Compile Include="Repository\ILongRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\IRepositoryBase.cs" />
     <Compile Include="Repository\LongRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

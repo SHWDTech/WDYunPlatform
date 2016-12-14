@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,27 +9,37 @@ using SHWDTech.Platform.StorageConstrains.Model;
 
 namespace SHWDTech.Platform.StorageConstrains.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class, IModel, new()
+    public class Repository<T> : RepositoryBase, IRepository<T> where T : class, IModel, new()
     {
-        public bool AutoCommit { get; set; }
+        private DbSet<T> _entitySet;
 
-        public DbSet<T> EntitySet { get; }
+        private IQueryable<T> _entityQuery;
 
-        public IQueryable<T> EntityQuery { get; }
-
-        public DbContext DbContext { get; set; }
-
-        public Database DataBase => DbContext.Database;
-
-        public DbContextConfiguration Configuration => DbContext.Configuration;
-
-        private Repository()
+        public DbSet<T> EntitySet
         {
-            EntitySet = DbContext.Set<T>();
-            EntityQuery = EntitySet.AsQueryable();
+            get
+            {
+                if (_entitySet == null && DbContext == null) return null;
+                return _entitySet ?? (_entitySet = DbContext.Set<T>());
+            }
+
         }
 
-        public Repository(DbContext dbContext) : this()
+        public IQueryable<T> EntityQuery
+        {
+            get
+            {
+                if (_entityQuery == null && DbContext == null) return null;
+                return _entityQuery ?? (_entityQuery = _entitySet.AsQueryable());
+            }
+        }
+
+        public Repository()
+        {
+
+        }
+
+        public Repository(DbContext dbContext)
         {
             DbContext = dbContext;
         }

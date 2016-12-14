@@ -6,6 +6,11 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
 {
     public class LongRepository<T> : Repository<T>, ILongRepository<T> where T : class, ILongModel, new()
     {
+        public LongRepository()
+        {
+            
+        }
+
         public LongRepository(DbContext dbContext) : base(dbContext)
         {
 

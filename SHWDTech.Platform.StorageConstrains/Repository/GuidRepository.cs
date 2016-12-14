@@ -7,6 +7,11 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
 {
     public class GuidRepository<T> : Repository<T>, IGuidRepository<T> where T : class, IGuidModel, new()
     {
+        public GuidRepository()
+        {
+            
+        }
+
         public GuidRepository(DbContext dbContext) : base(dbContext)
         {
             
