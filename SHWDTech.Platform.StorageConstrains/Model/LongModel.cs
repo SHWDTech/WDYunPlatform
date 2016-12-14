@@ -8,7 +8,7 @@ namespace SHWDTech.Platform.StorageConstrains.Model
     public class LongModel : ILongModel
     {
         [Key]
-        public virtual Guid Id { get; set; }
+        public virtual long Id { get; set; }
 
         public virtual ModelState ModelState { get; set; }
 
