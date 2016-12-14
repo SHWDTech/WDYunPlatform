@@ -100,16 +100,6 @@ namespace LampblackTransfer
             var client = new TcpClient(ipEndPoint);
             client.Connect(_serverIpAddress, _serverPort);
             client.Client.Send(AutoProtocol.GetHeartBytes(device.NodeId));
-            var temp = new byte[4096];
-            try
-            {
-                client.Client.Receive(temp);
-            }
-            catch (Exception)
-            {
-                client.Client.Dispose();
-                return;
-            }
             _clientPort++;
             Clients.Add(device, client);
         }
@@ -118,9 +108,6 @@ namespace LampblackTransfer
         {
             foreach (var tcpClient in Clients)
             {
-                tcpClient.Value.Client.Send(AutoProtocol.GetHeartBytes(tcpClient.Key.NodeId));
-                var temp = new byte[4096];
-                tcpClient.Value.Client.Receive(temp);
                 var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
                 var time = DeviceTimes[tcpClient.Key.NodeId];
                 if(nowTime < time.StartTime || nowTime > time.EndTime)

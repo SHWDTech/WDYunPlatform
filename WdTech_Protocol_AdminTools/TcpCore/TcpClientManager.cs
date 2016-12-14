@@ -135,10 +135,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                     LastAliveDateTime = DateTime.Now;
 
-                    if (_authStatus != AuthenticationStatus.AuthFailed)
-                    {
-                        client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
-                    }
+                    client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
                 }
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
@@ -148,7 +145,17 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 }
             }
 
-            OnReceivedData();
+            if (_authStatus != AuthenticationStatus.AuthFailed)
+            {
+                OnReceivedData();
+            }
+            else
+            {
+                lock (_processBuffer)
+                {
+                    _processBuffer.Clear();
+                }
+            }
         }
 
         /// <summary>
