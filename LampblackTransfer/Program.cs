@@ -90,9 +90,7 @@ namespace LampblackTransfer
             foreach (var deviceInfo in _deviceInfos)
             {
                 Connect(deviceInfo);
-                Console.WriteLine("Press Any Key");
-                Console.ReadKey();
-                //Thread.Sleep(100);
+                Thread.Sleep(100);
             }
         }
 
