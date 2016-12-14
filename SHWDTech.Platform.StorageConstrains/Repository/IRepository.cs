@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using SHWDTech.Platform.StorageConstrains.Model;
@@ -16,12 +17,22 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
         /// <summary>
         /// 数据仓库数据上下文
         /// </summary>
-        DbContext RepositoryDbContext { get; set; }
+        DbContext DbContext { get; set; }
+
+        /// <summary>
+        /// 数据库上下文对应的数据库信息
+        /// </summary>
+        Database DataBase { get; }
+
+        /// <summary>
+        /// 数据库上下文配置信息
+        /// </summary>
+        DbContextConfiguration Configuration { get; }
 
         /// <summary>
         /// 对应数据模型的数据集
         /// </summary>
-        IQueryable<T> EntitySet { get; }
+        DbSet<T> EntitySet { get; }
 
         /// <summary>
         /// 是否自动提交
@@ -108,7 +119,7 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
         /// <param name="model"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        T AddOrUpdate(T model, bool commit = false);
+        T AddOrUpdate(T model, bool? commit = null);
 
         /// <summary>
         /// 批量添加或更新数据
@@ -116,25 +127,25 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
         /// <param name="models"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        int AddOrUpdate(IEnumerable<T> models, bool commit = false);
+        int AddOrUpdate(IEnumerable<T> models, bool? commit = null);
 
         /// <summary>
         /// 更新数据部分属性
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="propertys"></param>
+        /// <param name="propertyNames"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        T PartialUpdate(T model, List<string> propertys, bool commit = false);
+        T PartialUpdate(T model, List<string> propertyNames, bool? commit = null);
 
         /// <summary>
         /// 批量更新数据部分属性
         /// </summary>
         /// <param name="models"></param>
-        /// <param name="properties"></param>
+        /// <param name="propertyNames"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        int PartialUpdate(IEnumerable<T> models, List<string> properties, bool commit = false);
+        int PartialUpdate(IEnumerable<T> models, List<string> propertyNames, bool? commit = null);
 
         /// <summary>
         /// 删除对象
@@ -142,7 +153,7 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
         /// <param name="model"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        bool Delete(T model, bool commit = false);
+        void Delete(T model, bool? commit = null);
 
         /// <summary>
         /// 批量删除对象
@@ -150,7 +161,7 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
         /// <param name="models"></param>
         /// <param name="commit"></param>
         /// <returns></returns>
-        bool Delete(IEnumerable<T> models, bool commit = false );
+        void Delete(IEnumerable<T> models, bool? commit = null );
 
         /// <summary>
         /// 数据是否存在
