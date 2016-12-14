@@ -102,6 +102,67 @@ namespace SHWDTech.Platform.StorageConstrains.Repository
         /// <returns></returns>
         IList<T> ParseModelList(string jsonString);
 
+        /// <summary>
+        /// 添加或更新数据
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        T AddOrUpdate(T model, bool commit = false);
 
+        /// <summary>
+        /// 批量添加或更新数据
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        int AddOrUpdate(IEnumerable<T> models, bool commit = false);
+
+        /// <summary>
+        /// 更新数据部分属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="propertys"></param>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        T PartialUpdate(T model, List<string> propertys, bool commit = false);
+
+        /// <summary>
+        /// 批量更新数据部分属性
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="properties"></param>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        int PartialUpdate(IEnumerable<T> models, List<string> properties, bool commit = false);
+
+        /// <summary>
+        /// 删除对象
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        bool Delete(T model, bool commit = false);
+
+        /// <summary>
+        /// 批量删除对象
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        bool Delete(IEnumerable<T> models, bool commit = false );
+
+        /// <summary>
+        /// 数据是否存在
+        /// </summary>
+        /// <param name="exp"></param>
+        /// <returns></returns>
+        bool IsExists(Func<T, bool> exp);
+
+        /// <summary>
+        /// 提交所有更改
+        /// </summary>
+        /// <returns></returns>
+        int Commit();
     }
 }
