@@ -100,7 +100,7 @@ namespace SHWDTech.Platform.ProtocolService
 
         private void Received(IAsyncResult result)
         {
-            var client = (Socket) result.AsyncState;
+            var client = (Socket)result.AsyncState;
 
             lock (ReceiveBuffer)
             {
@@ -148,6 +148,8 @@ namespace SHWDTech.Platform.ProtocolService
                             case AuthenticationStatus.Authed:
                                 Decode();
                                 break;
+                            default:
+                                return;
                         }
                     }
                     catch (Exception ex)

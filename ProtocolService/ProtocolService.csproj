@@ -57,6 +57,7 @@
     <Compile Include="IClientSource.cs" />
     <Compile Include="ProtocolEncoding\AuthResult.cs" />
     <Compile Include="ProtocolEncoding\EncodingManager.cs" />
+    <Compile Include="ProtocolEncoding\ICommandCoder.cs" />
     <Compile Include="ProtocolEncoding\IProtocolEncoder.cs" />
     <Compile Include="ProtocolEncoding\IProtocolPackage.cs" />
     <Compile Include="ProtocolEncoding\PackageStatus.cs" />
