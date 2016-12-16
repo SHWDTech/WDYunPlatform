@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
     /// 协议结构模型类
     /// </summary>
     [Serializable]
-    public class ProtocolStructure : GuidModel
+    public class ProtocolStructure : GuidModel, IProtocolStructure
     {
         [Required]
         [Display(Name = "所属协议ID")]
@@ -17,7 +17,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
 
         [Display(Name = "所属协议")]
         [ForeignKey("ProtocolId")]
-        public virtual Protocol Procotol { get; set; }
+        public virtual Protocol Protocol { get; set; }
 
         [Required]
         [Display(Name = "协议段数据类型")]

@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
     /// 固件集
     /// </summary>
     [Serializable]
-    public class FirmwareSet : GuidModel
+    public class FirmwareSet : GuidModel, IFirmwareSet
     {
         [Required]
         [Display(Name = "固件集名称")]

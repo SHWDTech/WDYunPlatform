@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-
+﻿
 namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 {
     public class AuthResult
@@ -7,23 +6,16 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// <summary>
         /// 客户端认证结果
         /// </summary>
-        public AuthenticationStatus ResultType { get; }
+        public AuthenticationStatus ResultType { get; set; } = AuthenticationStatus.AuthFailed;
 
         /// <summary>
         /// 客户端认证数据源
         /// </summary>
-        public IClientSource AuthedClientSource { get; }
+        public IClientSource AuthedClientSource { get; set; }
 
         /// <summary>
         /// 认证协议的数据报
         /// </summary>
-        public IProtocolPackage Package { get; }
-
-        public AuthResult(AuthenticationStatus type, IProtocolPackage package, IClientSource clientSource)
-        {
-            ResultType = type;
-            Package = package;
-            AuthedClientSource = clientSource;
-        }
+        public IProtocolPackage Package { get; set; }
     }
 }

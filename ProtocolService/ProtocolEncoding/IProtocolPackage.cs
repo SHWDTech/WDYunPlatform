@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SHWDTech.Platform.ProtocolService.DataBase;
 
 namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 {
@@ -21,7 +22,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// <summary>
         /// 协议包所属设备
         /// </summary>
-        IClientSource Device { get; set; }
+        IClientSource ClientSource { get; set; }
 
         /// <summary>
         /// 协议接收时间
@@ -31,17 +32,17 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// <summary>
         /// 协议包数据记录ID
         /// </summary>
-        //ProtocolData ProtocolData { get; set; }
+        IProtocolData ProtocolData { get; set; }
 
         /// <summary>
         /// 所属协议
         /// </summary>
-        //Protocol Protocol { get; set; }
+        IProtocol Protocol { get; set; }
 
         /// <summary>
         /// 所属指令
         /// </summary>
-        //IProtocolCommand Command { get; set; }
+        IProtocolCommand Command { get; set; }
 
         /// <summary>
         /// 数据段总数

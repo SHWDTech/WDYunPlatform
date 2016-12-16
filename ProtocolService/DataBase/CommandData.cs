@@ -10,7 +10,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
     /// 指令数据模型
     /// </summary>
     [Serializable]
-    public class CommandData : GuidModel
+    public class CommandData : GuidModel, ICommandData
     {
         [Required]
         [Display(Name = "数据索引值")]

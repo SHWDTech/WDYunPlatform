@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
     /// 通信协议
     /// </summary>
     [Serializable]
-    public class Protocol : GuidModel
+    public class Protocol : GuidModel, IProtocol
     {
         [Required]
         [Display(Name = "协议名称")]

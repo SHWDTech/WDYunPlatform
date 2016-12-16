@@ -9,7 +9,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
     /// 指令定义模型
     /// </summary>
     [Serializable]
-    public class CommandDefinition : GuidModel
+    public class CommandDefinition : GuidModel, ICommandDefinition
     {
         [Required]
         [Display(Name = "所属协议指令ID")]

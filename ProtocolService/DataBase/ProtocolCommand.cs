@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
     /// 协议指令模型
     /// </summary>
     [Serializable]
-    public class ProtocolCommand : GuidModel
+    public class ProtocolCommand : GuidModel , IProtocolCommand
     {
         [Display(Name = "指令类型编码")]
         public virtual byte[] CommandTypeCode { get; set; }
@@ -30,7 +30,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
 
         [Required]
         [Display(Name = "指令数据接收最大长度")]
-        public virtual int ReceiceMaxBytesLength { get; set; }
+        public virtual int ReceiveMaxBytesLength { get; set; }
 
         [Required]
         [Display(Name = "指令类型")]
