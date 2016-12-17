@@ -187,13 +187,13 @@ namespace SHWDTech.Platform.ProtocolService
         /// </summary>
         private void Decode()
         {
-            var result = ProtocolEncoder.Decode(_processBuffer.ToArray());
+            var package = ProtocolEncoder.Decode(_processBuffer.ToArray());
 
-            AsyncCleanBuffer(result);
+            AsyncCleanBuffer(package);
 
-            if (result.Finalized)
+            if (package.Finalized)
             {
-                ProtocolEncoder.Delive(result, this);
+                EncodingManager.RunBuinessHandler(package);
             }
         }
 

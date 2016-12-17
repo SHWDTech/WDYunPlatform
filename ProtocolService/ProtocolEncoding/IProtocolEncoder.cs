@@ -4,8 +4,19 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 {
     public interface IProtocolEncoder
     {
-        IProtocolPackage Decode(byte[] bufferBytes, IProtocol protocol);
+        /// <summary>
+        /// 解码协议数据
+        /// </summary>
+        /// <param name="bufferBytes"></param>
+        /// <returns></returns>
+        IProtocolPackage Decode(byte[] bufferBytes);
 
-        void Delive(IProtocolPackage package, IActiveClient client);
+        /// <summary>
+        /// 解码协议数据
+        /// </summary>
+        /// <param name="bufferBytes"></param>
+        /// <param name="protocol"></param>
+        /// <returns></returns>
+        IProtocolPackage Decode(byte[] bufferBytes, IProtocol protocol);
     }
 }

@@ -94,12 +94,14 @@
     <Compile Include="ProtocolEncoding\Generics\IPackageComponent.cs" />
     <Compile Include="ProtocolEncoding\Generics\IProtocolPackage.cs" />
     <Compile Include="ProtocolEncoding\Generics\PackageComponent.cs" />
-    <Compile Include="ProtocolEncoding\ICommandCoder.cs" />
+    <Compile Include="ProtocolEncoding\IBuinessHandler.cs" />
+    <Compile Include="ProtocolEncoding\IClientSourceProvider.cs" />
     <Compile Include="ProtocolEncoding\IPackageComponent.cs" />
     <Compile Include="ProtocolEncoding\IProtocolEncoder.cs" />
     <Compile Include="ProtocolEncoding\IProtocolPackage.cs" />
     <Compile Include="ProtocolEncoding\PackageStatus.cs" />
     <Compile Include="ProtocolEncoding\ProtocolChecker.cs" />
+    <Compile Include="ProtocolEncoding\ProtocolEncoder.cs" />
     <Compile Include="ProtocolEncoding\ProtocolPackage.cs" />
     <Compile Include="ProtocolEncoding\StringProtocolPackage.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
@@ -108,7 +110,6 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ProtocolEncoding\StructureNames.cs" />
-    <Compile Include="Provider\IClientSourceProvider.cs" />
     <Compile Include="SocketActiveClient.cs" />
     <Compile Include="IActiveClient.cs" />
     <Compile Include="IServiceHost.cs" />
@@ -136,6 +137,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Provider\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

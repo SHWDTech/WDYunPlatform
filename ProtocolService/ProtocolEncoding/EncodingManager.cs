@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.ProtocolService.DataBase;
-using SHWDTech.Platform.ProtocolService.Provider;
 using SHWDTech.Platform.Utility;
 
 namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
@@ -12,6 +11,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         static EncodingManager()
         {
             ResolveClientSourceProvier();
+            ResolveBuinessHandler();
         }
 
         /// <summary>
@@ -19,7 +19,15 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// </summary>
         private static readonly List<IProtocol> AllProtocols = new List<IProtocol>();
 
+        /// <summary>
+        /// 系统已经加载的所有设备信息提供程序
+        /// </summary>
         private static readonly List<IClientSourceProvider> ClientSourceProviders = new List<IClientSourceProvider>();
+
+        /// <summary>
+        /// 系统已经加载的所有业务处理程序
+        /// </summary>
+        private static readonly List<IBuinessHandler> BuinessHandlers = new List<IBuinessHandler>();
 
         /// <summary>
         /// 系统已经加载的所有协议解码器类实例
@@ -51,6 +59,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
                 return result;
             }
 
+            clientSource.ProtocolEncoder = encoder;
             package.ClientSource = clientSource;
             return result;
         }
@@ -76,6 +85,21 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
             }
         }
 
+        /// <summary>
+        /// 执行业务处理程序
+        /// </summary>
+        /// <param name="package"></param>
+        public static void RunBuinessHandler(IProtocolPackage package)
+        {
+            var handler = BuinessHandlers.FirstOrDefault(h => h.BusinessName == package.ClientSource.BusinessName);
+            handler?.RunHandler(package);
+        }
+
+        /// <summary>
+        /// 尝试查找设备信息
+        /// </summary>
+        /// <param name="package"></param>
+        /// <returns></returns>
         private static IClientSource TryGetClientSource(IProtocolPackage package)
         {
             foreach (var clientSourceProvider in ClientSourceProviders)
@@ -88,6 +112,25 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 获取所有注册的业务处理程序
+        /// </summary>
+        private static void ResolveBuinessHandler()
+        {
+            try
+            {
+                var handlers = UnityFactory.GetContainer().ResolveAll(typeof(IBuinessHandler));
+                foreach (var handler in handlers)
+                {
+                    BuinessHandlers.Add((IBuinessHandler)handler);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("Load BuinessHandler Failed.", ex);
+            }
         }
 
         /// <summary>
