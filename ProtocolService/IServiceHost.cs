@@ -6,6 +6,11 @@
     public interface IServiceHost
     {
         /// <summary>
+        /// 服务宿主是否在运行中
+        /// </summary>
+        ServiceHostStatus Status { get; }
+
+        /// <summary>
         /// 启动服务
         /// </summary>
         void Start();
@@ -16,9 +21,9 @@
         void Restart();
 
         /// <summary>
-        /// 停止服务
+        /// 关闭服务
         /// </summary>
-        void Stop();
+        void Close();
 
         /// <summary>
         /// 删除客户端对象

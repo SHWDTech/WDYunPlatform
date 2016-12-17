@@ -209,6 +209,7 @@ namespace MisakaBanZai.Services
                 }
 
                 _tcpListener.Close(0);
+                OnServerDisconnected();
 
                 foreach (var misakaTcpClient in _tcpClients)
                 {
@@ -261,6 +262,7 @@ namespace MisakaBanZai.Services
         /// </summary>
         private void OnServerDisconnected()
         {
+            _tcpListener.Dispose();
             ClientDisconnectEvent?.Invoke(this);
         }
 

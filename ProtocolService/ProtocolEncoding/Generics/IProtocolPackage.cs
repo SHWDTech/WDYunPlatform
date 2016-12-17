@@ -26,5 +26,12 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding.Generics
         /// </summary>
         /// <param name="component"></param>
         void AppendData(IPackageComponent<T> component);
+
+        /// <summary>
+        /// 获取指定名称数据的字符串值
+        /// </summary>
+        /// <param name="dataValueName"></param>
+        /// <returns></returns>
+        string GetDataValueString(string dataValueName);
     }
 }

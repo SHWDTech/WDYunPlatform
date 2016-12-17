@@ -110,6 +110,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ProtocolEncoding\StructureNames.cs" />
+    <Compile Include="ServiceHostStatus.cs" />
     <Compile Include="SocketActiveClient.cs" />
     <Compile Include="IActiveClient.cs" />
     <Compile Include="IServiceHost.cs" />

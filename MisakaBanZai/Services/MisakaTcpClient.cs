@@ -154,8 +154,8 @@ namespace MisakaBanZai.Services
             try
             {
                 ClientReceivedDataEvent = null;
-                _tcpClient.Shutdown(SocketShutdown.Both);
-                _tcpClient.Disconnect(false);
+                _tcpClient.Close();
+                _tcpClient.Dispose();
                 IsConnected = false;
             }
             catch (ObjectDisposedException)
@@ -238,6 +238,7 @@ namespace MisakaBanZai.Services
         /// </summary>
         private void OnClientDisconnect()
         {
+            _tcpClient.Dispose();
             ClientDisconnectEvent?.Invoke(this);
         }
     }

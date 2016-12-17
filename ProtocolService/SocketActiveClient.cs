@@ -23,44 +23,22 @@ namespace SHWDTech.Platform.ProtocolService
         /// </summary>
         private bool _isProcessing;
 
-        /// <summary>
-        /// 客户端数据接收事件
-        /// </summary>
         public event ActiveClientEventHandler ClientReceivedData;
 
-        /// <summary>
-        /// 客户端断开事件
-        /// </summary>
         public event ActiveClientEventHandler ClientDisconnect;
 
-        /// <summary>
-        /// 客户端授权事件
-        /// </summary>
         public event ActiveClientEventHandler ClientAuthenticated;
 
-        /// <summary>
-        /// 客户端解码失败事件
-        /// </summary>
         public event ActiveClientEventHandler ClientDecodeFalied;
 
-        /// <summary>
-        /// 客户端身份码
-        /// </summary>
-        public string ClientIdentity => ClientSource.ClientIdentity;
+        public string ClientAddress { get; }
 
-        /// <summary>
-        /// 客户端GUID
-        /// </summary>
-        public Guid ClientGuid { get; private set; }
+        public string ClientIdentity => ClientSource == null ? "未认证连接" : ClientSource.ClientIdentity;
+        
+        public Guid ClientGuid { get; }
 
-        /// <summary>
-        /// 指示客户端是否处于连接状态
-        /// </summary>
         public bool IsConnected { get; private set; }
 
-        /// <summary>
-        /// 客户端授权状态
-        /// </summary>
         public AuthenticationStatus AuthStatus { get; private set; }
 
         /// <summary>
@@ -68,9 +46,6 @@ namespace SHWDTech.Platform.ProtocolService
         /// </summary>
         private IList<ArraySegment<byte>> ReceiveBuffer { get; } = new List<ArraySegment<byte>>();
 
-        /// <summary>
-        /// 客户端数据源
-        /// </summary>
         public IClientSource ClientSource { get; set; }
 
         /// <summary>
@@ -83,9 +58,6 @@ namespace SHWDTech.Platform.ProtocolService
         /// </summary>
         private readonly TcpServiceHost _tcpServiceHost;
 
-        /// <summary>
-        /// 客户端最后一次活跃时间
-        /// </summary>
         public DateTime LastAliveDateTime { get; private set; }
 
         public SocketActiveClient(Socket clientSocket, TcpServiceHost host)
@@ -93,6 +65,7 @@ namespace SHWDTech.Platform.ProtocolService
             ClientGuid = Guid.NewGuid();
             _tcpServiceHost = host;
             _clientSocket = clientSocket;
+            ClientAddress = _clientSocket.RemoteEndPoint.ToString();
             ReceiveBuffer.Add(new ArraySegment<byte>(new byte[host.ClientReceiveBufferSize]));
             IsConnected = true;
             _clientSocket.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, _clientSocket);
@@ -107,7 +80,12 @@ namespace SHWDTech.Platform.ProtocolService
                 try
                 {
                     var readCount = client.EndReceive(result);
-
+                    if (readCount == 0)
+                    {
+                        client.Disconnect(true);
+                        InvalidConnection();
+                        return;
+                    }
                     var array = ReceiveBuffer.Last().Array;
                     lock (_processBuffer)
                     {
@@ -124,6 +102,7 @@ namespace SHWDTech.Platform.ProtocolService
                 catch (Exception)
                 {
                     InvalidConnection();
+                    return;
                 }
             }
 
@@ -221,10 +200,6 @@ namespace SHWDTech.Platform.ProtocolService
 
         }
 
-        /// <summary>
-        /// 发送数据
-        /// </summary>
-        /// <param name="protocolBytes">协议包字节流</param>
         public void Send(byte[] protocolBytes)
         {
             try
@@ -240,6 +215,7 @@ namespace SHWDTech.Platform.ProtocolService
 
         private void InvalidConnection()
         {
+            IsConnected = false;
             _clientSocket.Dispose();
             _tcpServiceHost.RemoveClient(this);
             OnClientDisconneted();

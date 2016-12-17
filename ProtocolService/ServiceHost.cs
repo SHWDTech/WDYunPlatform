@@ -15,11 +15,6 @@ namespace SHWDTech.Platform.ProtocolService
         protected Socket HostSocket;
 
         /// <summary>
-        /// 服务是否在运行中
-        /// </summary>
-        protected bool IsRunning;
-
-        /// <summary>
         /// 服务启动时间
         /// </summary>
         public DateTime StartDateTime { get; protected set; }
@@ -27,19 +22,21 @@ namespace SHWDTech.Platform.ProtocolService
         /// <summary>
         /// 已连接客户端套接字
         /// </summary>
-        protected List<IActiveClient> ActiveClients { get; set; }
+        protected List<IActiveClient> ActiveClients { get; set; } = new List<IActiveClient>();
+
+        public ServiceHostStatus Status { get; protected set; }
 
         public virtual void Start()
         {
             throw new NotImplementedException();
         }
 
-        public void Restart()
+        public virtual void Restart()
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Stop()
+        public virtual void Close()
         {
             throw new NotImplementedException();
         }

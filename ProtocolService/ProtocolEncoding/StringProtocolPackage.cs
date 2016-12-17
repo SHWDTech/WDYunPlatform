@@ -132,5 +132,15 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         {
             DataComponents.Add(component.ComponentName, component);
         }
+
+        public string GetDataValueString(string dataValueName)
+        {
+            if (!DataComponents.ContainsKey(dataValueName))
+            {
+                return string.Empty;
+            }
+
+            return DataComponents[dataValueName].ComponentValue;
+        }
     }
 }

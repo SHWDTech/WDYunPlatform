@@ -7,12 +7,12 @@ namespace SHWDTech.Platform.ProtocolService
         /// <summary>
         /// 数据源身份码
         /// </summary>
-        string ClientIdentity { get; set; }
+        string ClientIdentity { get; }
 
         /// <summary>
         /// 数据源所属业务
         /// </summary>
-        string BusinessName { get; set; }
+        string BusinessName { get; }
 
         /// <summary>
         /// 数据源对应解码器
