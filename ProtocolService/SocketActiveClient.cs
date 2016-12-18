@@ -176,13 +176,11 @@ namespace SHWDTech.Platform.ProtocolService
         private void Decode()
         {
             var package = ProtocolEncoder.Decode(_processBuffer.ToArray());
-
             AsyncCleanBuffer(package);
+            if (!package.Finalized) return;
 
-            if (package.Finalized)
-            {
-                EncodingManager.RunBuinessHandler(package);
-            }
+            package.ClientSource = ClientSource;
+            EncodingManager.RunBuinessHandler(package);
         }
 
         /// <summary>

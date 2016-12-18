@@ -11,7 +11,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// <summary>
         /// 客户端认证数据源
         /// </summary>
-        public IClientSource AuthedClientSource { get; set; }
+        public IClientSource AuthedClientSource => Package.ClientSource;
 
         /// <summary>
         /// 认证协议的数据报

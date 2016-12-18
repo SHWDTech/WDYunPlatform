@@ -52,15 +52,15 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
                 return result;
             }
 
-            var clientSource = TryGetClientSource(package);
-            if (clientSource == null)
+            TryGetClientSource(package);
+            if (package.ClientSource == null)
             {
                 result.ResultType = AuthenticationStatus.ClientNotRegistered;
                 return result;
             }
 
-            clientSource.ProtocolEncoder = encoder;
-            package.ClientSource = clientSource;
+            result.ResultType = AuthenticationStatus.Authed;
+            package.ClientSource.ProtocolEncoder = encoder;
             return result;
         }
 
@@ -101,18 +101,15 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// </summary>
         /// <param name="package"></param>
         /// <returns></returns>
-        private static IClientSource TryGetClientSource(IProtocolPackage package)
+        private static void TryGetClientSource(IProtocolPackage package)
         {
             foreach (var clientSourceProvider in ClientSourceProviders)
             {
                 var client = clientSourceProvider.GetClientSource(package.DeviceNodeId);
-                if (client != null)
-                {
-                    return client;
-                }
+                if (client == null) continue;
+                package.ClientSource = client;
+                break;
             }
-
-            return null;
         }
 
         /// <summary>

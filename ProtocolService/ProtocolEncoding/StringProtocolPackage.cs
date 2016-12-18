@@ -129,18 +129,9 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         private readonly Dictionary<string, IPackageComponent<string>> _structureComponents = new Dictionary<string, IPackageComponent<string>>();
 
         public void AppendData(IPackageComponent<string> component)
-        {
-            DataComponents.Add(component.ComponentName, component);
-        }
+            => DataComponents.Add(component.ComponentName, component);
 
         public string GetDataValueString(string dataValueName)
-        {
-            if (!DataComponents.ContainsKey(dataValueName))
-            {
-                return string.Empty;
-            }
-
-            return DataComponents[dataValueName].ComponentValue;
-        }
+            => !DataComponents.ContainsKey(dataValueName) ? string.Empty : DataComponents[dataValueName].ComponentValue;
     }
 }
