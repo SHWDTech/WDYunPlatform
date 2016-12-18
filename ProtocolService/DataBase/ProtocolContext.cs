@@ -4,7 +4,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
 {
     public class ProtocolContext : DbContext
     {
-        public ProtocolContext()
+        public ProtocolContext() : base("ProtocolContext")
         {
             
         }

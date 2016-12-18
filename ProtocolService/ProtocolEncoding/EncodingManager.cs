@@ -75,6 +75,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
                 try
                 {
                     var encoder = UnityFactory.Resolve<IProtocolEncoder>(protocol.ProtocolModule);
+                    encoder.Protocol = protocol;
                     AllProtocols.Add(protocol);
                     ProtocolEncoders.Add(protocol.ProtocolModule, encoder);
                 }

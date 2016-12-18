@@ -20,6 +20,11 @@ namespace SHWDTech.Platform.ProtocolService
         event ActiveClientEventHandler ClientAuthenticated;
 
         /// <summary>
+        /// 客户端授权失败事件
+        /// </summary>
+        event ActiveClientEventHandler ClientAuthenticateFailed;
+
+        /// <summary>
         /// 客户端解码失败事件
         /// </summary>
         event ActiveClientEventHandler ClientDecodeFalied;

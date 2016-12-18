@@ -6,6 +6,8 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 {
     public abstract class ProtocolEncoder : IProtocolEncoder
     {
+        public IProtocol Protocol { get; set; }
+
         public virtual IProtocolPackage Decode(byte[] bufferBytes)
         {
             throw new NotImplementedException();

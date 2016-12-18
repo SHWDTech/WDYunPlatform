@@ -29,12 +29,14 @@ namespace SHWDTech.Platform.ProtocolService
 
         public event ActiveClientEventHandler ClientAuthenticated;
 
+        public event ActiveClientEventHandler ClientAuthenticateFailed;
+
         public event ActiveClientEventHandler ClientDecodeFalied;
 
         public string ClientAddress { get; }
 
         public string ClientIdentity => ClientSource == null ? "未认证连接" : ClientSource.ClientIdentity;
-        
+
         public Guid ClientGuid { get; }
 
         public bool IsConnected { get; private set; }
@@ -86,6 +88,12 @@ namespace SHWDTech.Platform.ProtocolService
                         InvalidConnection();
                         return;
                     }
+
+                    if (AuthStatus == AuthenticationStatus.AuthFailed ||
+                        AuthStatus == AuthenticationStatus.ClientNotRegistered)
+                    {
+                        return;
+                    }
                     var array = ReceiveBuffer.Last().Array;
                     lock (_processBuffer)
                     {
@@ -94,9 +102,7 @@ namespace SHWDTech.Platform.ProtocolService
                             _processBuffer.Add(array[i]);
                         }
                     }
-
                     LastAliveDateTime = DateTime.Now;
-
                     client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
                 }
                 catch (Exception)
@@ -128,6 +134,8 @@ namespace SHWDTech.Platform.ProtocolService
                                 Decode();
                                 break;
                             default:
+                                _processBuffer.Clear();
+                                _isProcessing = false;
                                 return;
                         }
                     }
@@ -152,6 +160,7 @@ namespace SHWDTech.Platform.ProtocolService
             if (result.ResultType != AuthenticationStatus.Authed)
             {
                 AuthStatus = result.ResultType;
+                OnClientAuthenticaFailed();
                 return;
             }
 
@@ -182,7 +191,7 @@ namespace SHWDTech.Platform.ProtocolService
         /// <param name="package">当前处理中的协议包</param>
         private void AsyncCleanBuffer(IProtocolPackage package)
         {
-
+            if (package == null) return;
             switch (package.Status)
             {
                 case PackageStatus.NoEnoughBuffer:
@@ -213,11 +222,24 @@ namespace SHWDTech.Platform.ProtocolService
             }
         }
 
-        private void InvalidConnection()
+        /// <summary>
+        /// 关闭连接
+        /// </summary>
+        public void Close()
+            => InvalidConnection(false);
+
+        /// <summary>
+        /// 处理失效的连接
+        /// </summary>
+        private void InvalidConnection(bool remove = true)
         {
             IsConnected = false;
+            _clientSocket.Close();
             _clientSocket.Dispose();
-            _tcpServiceHost.RemoveClient(this);
+            if (remove)
+            {
+                _tcpServiceHost.RemoveClient(this);
+            }
             OnClientDisconneted();
         }
 
@@ -235,6 +257,11 @@ namespace SHWDTech.Platform.ProtocolService
         private void OnClientAuthentication()
         {
             ClientAuthenticated?.Invoke(new ActiveClientEventArgs(this));
+        }
+
+        private void OnClientAuthenticaFailed()
+        {
+            ClientAuthenticateFailed?.Invoke(new ActiveClientEventArgs(this));
         }
 
         private void OnClientDecodeFailed(Exception ex, string message)

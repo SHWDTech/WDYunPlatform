@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace SHWDTech.Platform.ProtocolService
 {
@@ -24,9 +26,30 @@ namespace SHWDTech.Platform.ProtocolService
         public int ClientReceiveBufferSize = 4096;
 
         /// <summary>
+        /// 连接超时断开周期
+        /// </summary>
+        public TimeSpan DisconnectInterval { get; set; } = TimeSpan.FromMinutes(5);
+
+        /// <summary>
+        /// 连接检查时间间隔
+        /// </summary>
+        public double CheckInterval { get; set; } = 120000;
+
+        /// <summary>
+        /// 连接检查定时器
+        /// </summary>
+        public readonly Timer ConnectionCheckTimer = new Timer();
+
+        /// <summary>
         /// TCP重置事件
         /// </summary>
         private static readonly ManualResetEvent AllDone = new ManualResetEvent(false);
+
+        public TcpServiceHost()
+        {
+            ConnectionCheckTimer.Elapsed += ConnectionCheck;
+            ConnectionCheckTimer.Interval = CheckInterval;
+        }
 
         /// <summary>
         /// 设置TCP连接的本地参数
@@ -57,6 +80,7 @@ namespace SHWDTech.Platform.ProtocolService
             HostSocket.Listen(2048);
             HostSocket.BeginAccept(AcceptClient, HostSocket);
             StartDateTime = DateTime.Now;
+            ConnectionCheckTimer.Enabled = true;
             Status = ServiceHostStatus.Running;
         }
 
@@ -66,6 +90,12 @@ namespace SHWDTech.Platform.ProtocolService
             Status = ServiceHostStatus.Stopped;
             HostSocket.Close();
             HostSocket.Dispose();
+            ConnectionCheckTimer.Enabled = false;
+            foreach (var activeClient in ActiveClients)
+            {
+                ((SocketActiveClient)activeClient).Close();
+            }
+            ActiveClients.Clear();
             HostSocket = null;
         }
 
@@ -134,6 +164,22 @@ namespace SHWDTech.Platform.ProtocolService
         protected virtual void OnClientAcceptFailed(Exception ex)
         {
             ClientAcceptFailed?.Invoke(new ActiveClientEventArgs(null, ex));
+        }
+
+        protected void ConnectionCheck(object sender, ElapsedEventArgs e)
+        {
+            lock (ActiveClients)
+            {
+                var checkTime = DateTime.Now;
+                for (var i = 0; i < ActiveClients.Count; i++)
+                {
+                    var activeClient = ActiveClients[i];
+                    if (checkTime - activeClient.LastAliveDateTime <= DisconnectInterval) continue;
+                    var client = (SocketActiveClient)activeClient;
+                    client.Close();
+                    ActiveClients.Remove(activeClient);
+                }
+            }
         }
     }
 }

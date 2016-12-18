@@ -5,6 +5,11 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
     public interface IProtocolEncoder
     {
         /// <summary>
+        /// 解码器对应协议
+        /// </summary>
+        IProtocol Protocol { get; set; }
+
+        /// <summary>
         /// 解码协议数据
         /// </summary>
         /// <param name="bufferBytes"></param>
