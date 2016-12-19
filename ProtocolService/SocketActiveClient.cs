@@ -229,20 +229,17 @@ namespace SHWDTech.Platform.ProtocolService
         /// 关闭连接
         /// </summary>
         public void Close()
-            => InvalidConnection(false);
+            => InvalidConnection();
 
         /// <summary>
         /// 处理失效的连接
         /// </summary>
-        private void InvalidConnection(bool remove = true)
+        private void InvalidConnection()
         {
             IsConnected = false;
             _clientSocket.Close();
             _clientSocket.Dispose();
-            if (remove)
-            {
-                _tcpServiceHost.RemoveClient(this);
-            }
+            _tcpServiceHost.RemoveClient(this);
             OnClientDisconneted();
         }
 
@@ -274,7 +271,7 @@ namespace SHWDTech.Platform.ProtocolService
 
         private void OnClientDecoded(IProtocolData protocolData)
         {
-            ClientDecoded?.Invoke(new ActiveClientEventArgs(this) {ProtocolData = protocolData});
+            ClientDecoded?.Invoke(new ActiveClientEventArgs(this) { ProtocolData = protocolData });
         }
     }
 }

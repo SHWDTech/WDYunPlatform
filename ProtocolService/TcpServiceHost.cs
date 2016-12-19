@@ -91,9 +91,10 @@ namespace SHWDTech.Platform.ProtocolService
             HostSocket.Close();
             HostSocket.Dispose();
             ConnectionCheckTimer.Enabled = false;
-            foreach (var activeClient in ActiveClients)
+            while (ActiveClients.Count > 0)
             {
-                ((SocketActiveClient)activeClient).Close();
+                var client = (SocketActiveClient)ActiveClients[0];
+                client.Close();
             }
             ActiveClients.Clear();
             HostSocket = null;
