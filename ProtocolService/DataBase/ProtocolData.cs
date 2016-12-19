@@ -21,6 +21,10 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
         public virtual byte[] ProtocolContent { get; set; }
 
         [Required]
+        [Display(Name = "协议字符串显示")]
+        public virtual string ProtocolString { get; set; }
+
+        [Required]
         [Display(Name = "协议长度")]
         public virtual int Length { get; set; }
 

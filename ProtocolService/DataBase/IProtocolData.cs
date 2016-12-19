@@ -20,6 +20,11 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
         byte[] ProtocolContent { get; set; }
 
         /// <summary>
+        /// 协议内容字符串表示值
+        /// </summary>
+        string ProtocolString { get; set; }
+
+        /// <summary>
         /// 协议内容长度
         /// </summary>
         int Length { get; set; }

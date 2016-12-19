@@ -48,5 +48,10 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
         /// 指令定义表
         /// </summary>
         public virtual DbSet<CommandDefinition> CommandDefinitions { get; set; }
+
+        /// <summary>
+        /// 协议数据记录
+        /// </summary>
+        public virtual DbSet<ProtocolData> ProtocolDatas { get; set; }
     }
 }

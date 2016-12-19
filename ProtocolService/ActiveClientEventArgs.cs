@@ -1,4 +1,5 @@
 ﻿using System;
+using SHWDTech.Platform.ProtocolService.DataBase;
 
 namespace SHWDTech.Platform.ProtocolService
 {
@@ -13,6 +14,11 @@ namespace SHWDTech.Platform.ProtocolService
         /// 包含的异常
         /// </summary>
         public Exception Exception { get; private set; }
+
+        /// <summary>
+        /// 协议数据
+        /// </summary>
+        public IProtocolData ProtocolData { get; set; }
 
         /// <summary>
         /// 异常的追加描述信息

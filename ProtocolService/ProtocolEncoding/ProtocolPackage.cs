@@ -28,6 +28,11 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
         public virtual PackageStatus Status { get; set; }
 
+        public virtual void SetupProtocolData()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual byte[] GetBytes()
         {
             throw new NotImplementedException();

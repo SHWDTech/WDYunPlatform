@@ -50,5 +50,7 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
         [Required]
         [Display(Name = "校验类型")]
         public virtual string CheckType { get; set; }
+
+        public string GetIdString() => Id.ToString();
     }
 }

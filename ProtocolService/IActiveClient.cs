@@ -30,6 +30,11 @@ namespace SHWDTech.Platform.ProtocolService
         event ActiveClientEventHandler ClientDecodeFalied;
 
         /// <summary>
+        /// 客户端解码完成事件
+        /// </summary>
+        event ActiveClientEventHandler ClientDecoded;
+
+        /// <summary>
         /// 客户端地址
         /// </summary>
         string ClientAddress { get; }

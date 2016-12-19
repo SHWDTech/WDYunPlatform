@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using SHWDTech.Platform.ProtocolService.DataBase;
 using SHWDTech.Platform.ProtocolService.ProtocolEncoding;
 
 namespace SHWDTech.Platform.ProtocolService
@@ -32,6 +33,8 @@ namespace SHWDTech.Platform.ProtocolService
         public event ActiveClientEventHandler ClientAuthenticateFailed;
 
         public event ActiveClientEventHandler ClientDecodeFalied;
+
+        public event ActiveClientEventHandler ClientDecoded;
 
         public string ClientAddress { get; }
 
@@ -180,6 +183,8 @@ namespace SHWDTech.Platform.ProtocolService
             if (!package.Finalized) return;
 
             package.ClientSource = ClientSource;
+            package.SetupProtocolData();
+            OnClientDecoded(package.ProtocolData);
             EncodingManager.RunBuinessHandler(package);
         }
 
@@ -265,6 +270,11 @@ namespace SHWDTech.Platform.ProtocolService
         private void OnClientDecodeFailed(Exception ex, string message)
         {
             ClientDecodeFalied?.Invoke(new ActiveClientEventArgs(this, ex, message));
+        }
+
+        private void OnClientDecoded(IProtocolData protocolData)
+        {
+            ClientDecoded?.Invoke(new ActiveClientEventArgs(this) {ProtocolData = protocolData});
         }
     }
 }

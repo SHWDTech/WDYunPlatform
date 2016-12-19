@@ -59,5 +59,11 @@ namespace SHWDTech.Platform.ProtocolService.DataBase
         /// 校验类型
         /// </summary>
         string CheckType { get; set; }
+
+        /// <summary>
+        /// 获取协议ID的字符串表现形式
+        /// </summary>
+        /// <returns></returns>
+        string GetIdString();
     }
 }

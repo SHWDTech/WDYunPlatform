@@ -10,6 +10,11 @@ namespace SHWDTech.Platform.ProtocolService
         string ClientIdentity { get; }
 
         /// <summary>
+        /// 客户端NODEID
+        /// </summary>
+        string ClientNodeId { get; }
+
+        /// <summary>
         /// 数据源所属业务
         /// </summary>
         string BusinessName { get; }

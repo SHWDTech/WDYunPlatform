@@ -65,6 +65,11 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         PackageStatus Status { get; set; }
 
         /// <summary>
+        /// 设置协议数据信息
+        /// </summary>
+        void SetupProtocolData();
+
+        /// <summary>
         /// 获取数据包字节流
         /// </summary>
         /// <returns></returns>

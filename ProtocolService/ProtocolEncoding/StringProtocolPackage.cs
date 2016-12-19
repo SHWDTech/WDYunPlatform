@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SHWDTech.Platform.ProtocolService.DataBase;
@@ -85,8 +86,21 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
             }
 
             Status = PackageStatus.Finalized;
-
             Finalized = true;
+        }
+
+        public override void SetupProtocolData()
+        {
+            if (ClientSource == null) return;
+            ProtocolData = new ProtocolData
+            {
+                Business = ClientSource.BusinessName,
+                DeviceNodeId = ClientSource.ClientNodeId,
+                ProtocolContent = GetBytes(),
+                ProtocolId = Guid.Parse(Protocol.GetIdString()),
+                PackageDateTime = DateTime.Now
+            };
+            ProtocolData.ProtocolString = Encoding.ASCII.GetString(ProtocolData.ProtocolContent);
         }
 
         public IPackageComponent<string> this[string name]
