@@ -98,8 +98,9 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
                 DeviceNodeId = ClientSource.ClientNodeId,
                 ProtocolContent = GetBytes(),
                 ProtocolId = Guid.Parse(Protocol.GetIdString()),
-                PackageDateTime = DateTime.Now
+                PackageDateTime = DateTime.Now,
             };
+            ProtocolData.Length = ProtocolData.ProtocolContent.Length;
             ProtocolData.ProtocolString = Encoding.ASCII.GetString(ProtocolData.ProtocolContent);
         }
 
