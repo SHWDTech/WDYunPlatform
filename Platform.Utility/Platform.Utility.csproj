@@ -82,12 +82,14 @@
     <Compile Include="ExtensionMethod\DateTimeExtensionMethod.cs" />
     <Compile Include="ExtensionMethod\QueryableExtensioins.cs" />
     <Compile Include="ExtensionMethod\RichTextBoxExtensionMethod.cs" />
+    <Compile Include="ExtensionMethod\RSACryptoServiceProviderExtensionMethod.cs" />
     <Compile Include="ExtensionMethod\WpfWindowExtrensionMethod.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="ILogService.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportService.cs" />
+    <Compile Include="Serialize\XmlSerializerHelper.cs" />
     <Compile Include="UnityFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
