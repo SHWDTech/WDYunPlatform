@@ -68,7 +68,7 @@ namespace WdTech_Protocol_AdminTools.Views
 
                 if (message == null) return;
 
-                TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]");
+                TxtReport.AppendText($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss fff}]");
                 TxtReport.AppendText(" => ");
                 TxtReport.AppendText(message.Message);
                 TxtReport.AppendText("\r\n");
