@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using SHWDTech.Platform.Utility;
 
 namespace LampblackTransfer
 {
@@ -109,21 +110,29 @@ namespace LampblackTransfer
         {
             foreach (var tcpClient in Clients)
             {
-                var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
-                var time = DeviceTimes[tcpClient.Key.NodeId];
-                if(nowTime < time.StartTime || nowTime > time.EndTime)
-                    continue;
-                tcpClient.Value.Client.Send(
-                    AutoProtocol.GetAutoReportBytes(new AutoReportConfig
-                    {
-                        CleanerNumber = GetRate(tcpClient.Key.Rate),
-                        CleanerSwitch = tcpClient.Key.Opened,
-                        FanSwitch = tcpClient.Key.Opened,
-                        NodeId = tcpClient.Key.NodeId
-                    }));
+                try
+                {
+                    var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
+                    var time = DeviceTimes[tcpClient.Key.NodeId];
+                    if (nowTime < time.StartTime || nowTime > time.EndTime)
+                        continue;
+                    tcpClient.Value.Client.Send(
+                        AutoProtocol.GetAutoReportBytes(new AutoReportConfig
+                        {
+                            CleanerNumber = GetRate(tcpClient.Key.Rate),
+                            CleanerSwitch = tcpClient.Key.Opened,
+                            FanSwitch = tcpClient.Key.Opened,
+                            NodeId = tcpClient.Key.NodeId
+                        }));
 
-                Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{tcpClient.Key.NodeId}。");
-                Thread.Sleep(300);
+                    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{tcpClient.Key.NodeId}。");
+                    Thread.Sleep(300);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error($"发送数据失败，设备NODEID：{tcpClient.Key.NodeId}。", ex);
+                    Clients.Remove(tcpClient.Key);
+                }
             }
         }
 

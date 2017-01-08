@@ -6,6 +6,7 @@ using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using WdTech_Protocol_AdminTools.Services;
 using System.Timers;
+using SHWDTech.Platform.Utility;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -122,7 +123,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 var current = _clientSockets.FirstOrDefault(obj => obj.ReceiverName == tcpClient.ReceiverName);
                 if (current == null) return;
-                _clientSockets.Remove(current);
+                try
+                {
+                    _clientSockets.Remove(current);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Fatal($"尝试删除设备失败，目标设备：{current.DeviceGuid}", ex);
+                }
             }
             if (tcpClient.IsConnected)
             {
@@ -143,7 +151,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 {
                     var unUsedCLient = _clientSockets.First(obj => obj.DeviceGuid == client);
                     unUsedCLient.Dispose();
-                    _clientSockets.Remove(unUsedCLient);
+                    try
+                    {
+                        _clientSockets.Remove(unUsedCLient);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Fatal($"尝试删除连接失效设备失败，目标设备：{unUsedCLient.DeviceGuid}", ex);
+                    }
                 }
 
             }
@@ -180,10 +195,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 for (var i = 0; i < _clientSockets.Count; i++)
                 {
                     var tcpClientManager = _clientSockets[i];
-                    if (checkTime - tcpClientManager.LastAliveDateTime > _disconnectInterval)
+                    if (checkTime - tcpClientManager.LastAliveDateTime <= _disconnectInterval) continue;
+                    tcpClientManager.Close();
+                    try
                     {
-                        tcpClientManager.Close();
                         _clientSockets.Remove(tcpClientManager);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Fatal($"尝试删除连接失效设备失败，目标设备：{tcpClientManager.DeviceGuid}", ex);
                     }
                 }
             }

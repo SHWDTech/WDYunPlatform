@@ -68,7 +68,7 @@ namespace WdTech_Protocol_AdminTools.Views
 
                 if (message == null) return;
 
-                TxtReport.AppendText($"[{DateTime.Now.ToString(AppConfig.FullDateFormat)}]");
+                TxtReport.AppendText($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss fff}]");
                 TxtReport.AppendText(" => ");
                 TxtReport.AppendText(message.Message);
                 TxtReport.AppendText("\r\n");
@@ -88,18 +88,25 @@ namespace WdTech_Protocol_AdminTools.Views
         /// <param name="e"></param>
         private void UpdateStatusBar(object sender, EventArgs e)
         {
-            if (CommunicationServices.IsStart)
+            try
             {
-                ServerIpAddress.Text = $"{CommunicationServices.ServerIpEndPoint}";
-            }
-            ServerStartTDateTime.Text = !CommunicationServices.IsStart
-                                        ? "-"
-                                        : $"{CommunicationServices.StartDateTime.ToString(AppConfig.StartDateFormat)}";
-            ServerRunningDateTime.Text = !CommunicationServices.IsStart
-                                        ? "-"
-                                        : $"{(CommunicationServices.StartDateTime - DateTime.Now).ToString("h'h 'm'm 's's'")}";
+                if (CommunicationServices.IsStart)
+                {
+                    ServerIpAddress.Text = $"{CommunicationServices.ServerIpEndPoint}";
+                }
+                ServerStartTDateTime.Text = !CommunicationServices.IsStart
+                    ? "-"
+                    : $"{CommunicationServices.StartDateTime.ToString(AppConfig.StartDateFormat)}";
+                ServerRunningDateTime.Text = !CommunicationServices.IsStart
+                    ? "-"
+                    : $"{(CommunicationServices.StartDateTime - DateTime.Now):h'h 'm'm 's's'}";
 
-            AliveConnection.Text = $"{CommunicationServices.AliveConnection}";
+                AliveConnection.Text = $"{CommunicationServices.AliveConnection}";
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("更新服务器状态失败。", ex);
+            }
         }
 
         /// <summary>
