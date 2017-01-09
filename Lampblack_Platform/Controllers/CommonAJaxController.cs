@@ -71,6 +71,44 @@ namespace Lampblack_Platform.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Devices()
+        {
+            var districtGuid = Guid.Empty;
+
+            if (!string.IsNullOrWhiteSpace(Request["area"]))
+            {
+                districtGuid = Guid.Parse(Request["area"]);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Request["street"]))
+            {
+                Guid guid;
+                Guid.TryParse(Request["street"], out guid);
+                if (guid != Guid.Empty)
+                {
+                    districtGuid = guid;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(Request["address"]))
+            {
+                Guid guid;
+                Guid.TryParse(Request["address"], out guid);
+                if (guid != Guid.Empty)
+                {
+                    districtGuid = guid;
+                }
+            }
+
+            var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevices(districtGuid);
+
+            return Json(new JsonStruct()
+            {
+                Result = devs.Select(obj => new { obj.Id, Name = obj.DeviceName })
+            },
+                JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetTrendAnalysis(TrendAnalisysViewModel model)
         {
             if (model.ReportType != ReportType.Month)

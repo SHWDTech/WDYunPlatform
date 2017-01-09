@@ -291,7 +291,7 @@ namespace Platform.Process.Process
                     };
 
                     var monitorDatas = GetLastMonitorData(hotel.Id);
-                    var dataGroup = monitorDatas.GroupBy(obj => obj.DataChannel);
+                    var dataGroup = monitorDatas.GroupBy(obj => new { obj.DataChannel , obj.DeviceId});
                     foreach (var group in dataGroup)
                     {
                         var recentDatas = group.ToList();
