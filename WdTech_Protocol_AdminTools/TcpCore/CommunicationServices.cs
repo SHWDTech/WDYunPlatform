@@ -149,6 +149,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             catch (SocketException ex)
             {
                 AdminReportService.Instance.Warning("接收客户端请求失败！", ex);
+                return;
             }
 
             server.BeginAccept(AcceptClient, server);

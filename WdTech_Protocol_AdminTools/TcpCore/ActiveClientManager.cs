@@ -45,16 +45,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 有效设备连接
         /// </summary>
-        public int AliveConnection
-        {
-            get
-            {
-                lock (_clientSockets)
-                {
-                    return _clientSockets.Count;
-                }
-            }
-        }
+        public int AliveConnection => _clientSockets.Count;
 
         public ActiveClientManager()
         {
@@ -130,6 +121,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 catch (Exception ex)
                 {
                     LogService.Instance.Fatal($"尝试删除设备失败，目标设备：{current.DeviceGuid}", ex);
+                    return;
                 }
             }
             if (tcpClient.IsConnected)
@@ -204,6 +196,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     catch (Exception ex)
                     {
                         LogService.Instance.Fatal($"尝试删除连接失效设备失败，目标设备：{tcpClientManager.DeviceGuid}", ex);
+                        return;
                     }
                 }
             }
