@@ -112,15 +112,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_clientSockets)
             {
-                var current = _clientSockets.FirstOrDefault(obj => obj.ReceiverName == tcpClient.ReceiverName);
-                if (current == null) return;
                 try
                 {
-                    _clientSockets.Remove(current);
+                    _clientSockets.Remove(tcpClient);
                 }
                 catch (Exception ex)
                 {
-                    LogService.Instance.Fatal($"尝试删除设备失败，目标设备：{current.DeviceGuid}", ex);
+                    LogService.Instance.Fatal($"尝试删除设备失败，目标设备：{tcpClient.DeviceGuid}", ex);
                     return;
                 }
             }
@@ -181,24 +179,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
         private void ConnectionCheck(object sender, ElapsedEventArgs e)
         {
-            lock (_clientSockets)
+            var checkTime = DateTime.Now;
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (var i = 0; i < _clientSockets.Count; i++)
             {
-                var checkTime = DateTime.Now;
-                for (var i = 0; i < _clientSockets.Count; i++)
-                {
-                    var tcpClientManager = _clientSockets[i];
-                    if (checkTime - tcpClientManager.LastAliveDateTime <= _disconnectInterval) continue;
-                    tcpClientManager.Close();
-                    try
-                    {
-                        _clientSockets.Remove(tcpClientManager);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogService.Instance.Fatal($"尝试删除连接失效设备失败，目标设备：{tcpClientManager.DeviceGuid}", ex);
-                        return;
-                    }
-                }
+                var tcpClientManager = _clientSockets[i];
+                if (checkTime - tcpClientManager.LastAliveDateTime <= _disconnectInterval) continue;
+                tcpClientManager.Close();
             }
         }
     }
