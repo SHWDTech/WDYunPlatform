@@ -46,12 +46,17 @@ namespace WdTech_Protocol_AdminTools
         protected virtual void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
         {
             LogService.Instance.Fatal("未处理异常。", (Exception)e.ExceptionObject);
-            MessageBox.Show("系统运行出现严重错误！");
+            if (e.IsTerminating)
+            {
+                MessageBox.Show($"系统运行出现严重错误！\r\n{((Exception)e.ExceptionObject).Message}");
+            }
         }
 
         protected virtual void AppUnhandleExceptionHandler(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
+            LogService.Instance.Fatal("未处理异常。", e.Exception);
             AdminReportService.Instance.Fatal("程序出现未处理异常。", e.Exception);
+            e.Handled = true;
         }
     }
 }
