@@ -24,6 +24,8 @@ namespace Lampblack_Platform.Controllers
                         EQUP_NAM = "风机",
                         CASE_ID = $"HPLB{device.DeviceNodeId.Substring(4, 4)}",
                         EQUP_TYP = "风机",
+                        EQUP_MOD = "",
+                        EQUP_LIM = ""
                     };
                     model.data.Add(equpFan);
 
@@ -33,6 +35,8 @@ namespace Lampblack_Platform.Controllers
                         EQUP_NAM = "净化器",
                         CASE_ID = $"HPLB{device.DeviceNodeId.Substring(4, 4)}",
                         EQUP_TYP = "净化器",
+                        EQUP_MOD = "",
+                        EQUP_LIM = ""
                     };
                     model.data.Add(equpCleaner);
 
@@ -42,6 +46,8 @@ namespace Lampblack_Platform.Controllers
                         EQUP_NAM = "清洁度",
                         CASE_ID = $"HPLB{device.DeviceNodeId.Substring(4, 4)}",
                         EQUP_TYP = "清洁度",
+                        EQUP_MOD = "0.001",
+                        EQUP_LIM = "0.6||0.1"
                     };
                     model.data.Add(equpRate);
                 }

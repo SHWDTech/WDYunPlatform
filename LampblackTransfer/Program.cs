@@ -143,13 +143,13 @@ namespace LampblackTransfer
             switch (rate)
             {
                 case 0:
-                    return new Random().Next(0,50);
+                    return new Random().Next(500,5000);
                 case 1:
-                    return new Random().Next(51, 200);
+                    return new Random().Next(5001, 20000);
                 case 2:
-                    return new Random().Next(201, 500);
+                    return new Random().Next(20001, 50000);
                 default:
-                    return new Random().Next(501, 1000);
+                    return new Random().Next(50001, 100000);
             }
         }
     }
