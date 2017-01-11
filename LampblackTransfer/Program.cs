@@ -80,8 +80,8 @@ namespace LampblackTransfer
             {
                 DeviceTimes.Add(deviceInfo.NodeId,new DeviceTime()
                 {
-                    StartTime = rd.Next(900, 1000),
-                    EndTime = rd.Next(2200, 2300)
+                    StartTime = rd.Next(800, 1000),
+                    EndTime = rd.Next(2100, 2300)
                 } );
             }
         }
@@ -108,30 +108,32 @@ namespace LampblackTransfer
 
         static void SendData()
         {
-            foreach (var tcpClient in Clients)
+            foreach (var dev in _deviceInfos)
             {
+                if (!Clients.ContainsKey(dev)) continue;
+                var tcpClient = Clients[dev];
                 try
                 {
                     var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
-                    var time = DeviceTimes[tcpClient.Key.NodeId];
+                    var time = DeviceTimes[dev.NodeId];
                     if (nowTime < time.StartTime || nowTime > time.EndTime)
                         continue;
-                    tcpClient.Value.Client.Send(
+                    tcpClient.Client.Send(
                         AutoProtocol.GetAutoReportBytes(new AutoReportConfig
                         {
-                            CleanerNumber = GetRate(tcpClient.Key.Rate),
-                            CleanerSwitch = tcpClient.Key.Opened,
-                            FanSwitch = tcpClient.Key.Opened,
-                            NodeId = tcpClient.Key.NodeId
+                            CleanerNumber = GetRate(dev.Rate),
+                            CleanerSwitch = dev.Opened,
+                            FanSwitch = dev.Opened,
+                            NodeId = dev.NodeId
                         }));
 
-                    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{tcpClient.Key.NodeId}。");
+                    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{dev.NodeId}。");
                     Thread.Sleep(300);
                 }
                 catch (Exception ex)
                 {
-                    LogService.Instance.Error($"发送数据失败，设备NODEID：{tcpClient.Key.NodeId}。", ex);
-                    Clients.Remove(tcpClient.Key);
+                    LogService.Instance.Error($"发送数据失败，设备NODEID：{dev.NodeId}。", ex);
+                    Clients.Remove(dev);
                 }
             }
         }
