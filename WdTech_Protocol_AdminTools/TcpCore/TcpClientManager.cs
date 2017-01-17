@@ -149,6 +149,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 {
                     client.Disconnect(false);
                     OnClientDisconnect();
+                    return;
                 }
             }
 

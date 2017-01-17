@@ -97,7 +97,6 @@ namespace LampblackTransfer
 
         static void Connect(DeviceInfo device)
         {
-
             var ipEndPoint = new IPEndPoint(_clientIpAddress, _clientPort);
             var client = new TcpClient(ipEndPoint);
             client.Connect(_serverIpAddress, _serverPort);

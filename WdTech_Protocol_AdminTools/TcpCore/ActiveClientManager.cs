@@ -186,6 +186,17 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 var tcpClientManager = _clientSockets[i];
                 if (checkTime - tcpClientManager.LastAliveDateTime <= _disconnectInterval) continue;
                 tcpClientManager.Close();
+                try
+                {
+                    lock (_clientSockets)
+                    {
+                        _clientSockets.Remove(tcpClientManager);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("移除无效连接失效。", ex);
+                }
             }
         }
     }
