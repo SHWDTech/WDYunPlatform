@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using SHWDTech.Platform.Utility;
 
 namespace LampblackTransfer
@@ -13,6 +15,8 @@ namespace LampblackTransfer
     class Program
     {
         private static List<DeviceInfo> _deviceInfos = new List<DeviceInfo>();
+
+        private static Dictionary<DeviceInfo, int> _devicePort = new Dictionary<DeviceInfo, int>();
 
         private static readonly Dictionary<DeviceInfo, TcpClient> Clients = new Dictionary<DeviceInfo, TcpClient>();
 
@@ -28,11 +32,12 @@ namespace LampblackTransfer
 
         private static readonly Dictionary<string, DeviceTime> DeviceTimes = new Dictionary<string, DeviceTime>();
 
-        static void Main()
+        private static void Main()
         {
             InitProgramConfig();
             Console.ReadKey();
             StartTransfer();
+            Task.Factory.StartNew(DeviceTryReConnect);
             while (true)
             {
                 SendData();
@@ -47,7 +52,7 @@ namespace LampblackTransfer
             // ReSharper disable once FunctionNeverReturns
         }
 
-        static void InitProgramConfig()
+        private static void InitProgramConfig()
         {
             _connectionString = ConfigurationManager.AppSettings["dbcon"];
             _serverIpAddress = IPAddress.Parse(ConfigurationManager.AppSettings["serverIp"]);
@@ -57,9 +62,10 @@ namespace LampblackTransfer
             RefreashDeviceInfos();
         }
 
-        static void RefreashDeviceInfos()
+        private static void RefreashDeviceInfos()
         {
             var tableName = "DeviceInfo";
+            _devicePort = new Dictionary<DeviceInfo, int>();
             using (var conn = new SQLiteConnection(_connectionString))
             {
                 var cmd = new SQLiteCommand($"SELECT * FROM {tableName}", conn);
@@ -68,11 +74,16 @@ namespace LampblackTransfer
                 adapter.Fill(table);
                 _deviceInfos = table.ToListOf<DeviceInfo>();
             }
+            var basePort = _clientPort;
+            foreach (var deviceInfo in _deviceInfos)
+            {
+                _devicePort.Add(deviceInfo, basePort++);
+            }
 
             RefreashDeviceTime();
         }
 
-        static void RefreashDeviceTime()
+        private static void RefreashDeviceTime()
         {
             DeviceTimes.Clear();
             var rd = new Random();
@@ -86,7 +97,7 @@ namespace LampblackTransfer
             }
         }
 
-        static void StartTransfer()
+        private static void StartTransfer()
         {
             foreach (var deviceInfo in _deviceInfos)
             {
@@ -95,17 +106,35 @@ namespace LampblackTransfer
             }
         }
 
-        static void Connect(DeviceInfo device)
+        private static void Connect(DeviceInfo device)
         {
-            var ipEndPoint = new IPEndPoint(_clientIpAddress, _clientPort);
-            var client = new TcpClient(ipEndPoint);
-            client.Connect(_serverIpAddress, _serverPort);
-            client.Client.Send(AutoProtocol.GetHeartBytes(device.NodeId));
-            _clientPort++;
-            Clients.Add(device, client);
+            try
+            {
+                var port = _devicePort[device];
+                var ipEndPoint = new IPEndPoint(_clientIpAddress, port);
+                var client = new TcpClient(ipEndPoint);
+                client.Connect(_serverIpAddress, _serverPort);
+                client.Client.Send(AutoProtocol.GetHeartBytes(device.NodeId));
+                Clients.Add(device, client);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("连接服务器失败。", ex);
+            }
         }
 
-        static void SendData()
+        private static void DeviceTryReConnect()
+        {
+            var disconnectDevices = _deviceInfos.Where(obj => !Clients.ContainsKey(obj)).ToList();
+            foreach (var disconnectDevice in disconnectDevices)
+            {
+                Connect(disconnectDevice);
+                Thread.Sleep(50);
+            }
+            Thread.Sleep(60000);
+        }
+
+        private static void SendData()
         {
             foreach (var dev in _deviceInfos)
             {
@@ -134,12 +163,11 @@ namespace LampblackTransfer
                     LogService.Instance.Error($"发送数据失败，设备NODEID：{dev.NodeId}。", ex);
                     tcpClient.Close();
                     Clients.Remove(dev);
-                    Connect(dev);
                 }
             }
         }
 
-        static int GetRate(long rate)
+        private static int GetRate(long rate)
         {
             switch (rate)
             {
