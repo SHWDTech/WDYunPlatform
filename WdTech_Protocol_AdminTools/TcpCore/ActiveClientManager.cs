@@ -165,17 +165,18 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
         private void ConnectionCheck(object sender, ElapsedEventArgs e)
         {
-            lock (_clientSockets)
+            var checkTime = DateTime.Now;
+            var currentIndex = 0;
+            while (currentIndex < _clientSockets.Count)
             {
-                var checkTime = DateTime.Now;
-                for (var i = 0; i < _clientSockets.Count; i++)
+                var client = _clientSockets[currentIndex];
+                if (checkTime - client.LastAliveDateTime >= _disconnectInterval)
                 {
-                    var tcpClientManager = _clientSockets[i];
-                    if (checkTime - tcpClientManager.LastAliveDateTime > _disconnectInterval)
-                    {
-                        tcpClientManager.Close();
-                        _clientSockets.Remove(tcpClientManager);
-                    }
+                    client.Close();
+                }
+                else
+                {
+                    currentIndex++;
                 }
             }
         }
