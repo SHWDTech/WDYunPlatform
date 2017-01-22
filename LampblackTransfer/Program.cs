@@ -32,6 +32,7 @@ namespace LampblackTransfer
 
         private static readonly Dictionary<string, DeviceTime> DeviceTimes = new Dictionary<string, DeviceTime>();
 
+
         private static void Main()
         {
             InitProgramConfig();
@@ -125,13 +126,17 @@ namespace LampblackTransfer
 
         private static void DeviceTryReConnect()
         {
-            var disconnectDevices = _deviceInfos.Where(obj => !Clients.ContainsKey(obj)).ToList();
-            foreach (var disconnectDevice in disconnectDevices)
+            while (true)
             {
-                Connect(disconnectDevice);
-                Thread.Sleep(50);
+                var disconnectDevices = _deviceInfos.Where(obj => !Clients.ContainsKey(obj)).ToList();
+                foreach (var disconnectDevice in disconnectDevices)
+                {
+                    Connect(disconnectDevice);
+                    Thread.Sleep(50);
+                }
+                Thread.Sleep(60000);
             }
-            Thread.Sleep(60000);
+            // ReSharper disable once FunctionNeverReturns
         }
 
         private static void SendData()
