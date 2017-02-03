@@ -116,6 +116,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="result">同步接受结果</param>
         public void Received(IAsyncResult result)
         {
+            if (_isDisposed) return;
+
             var client = (Socket)result.AsyncState;
 
             lock (ReceiveBuffer)

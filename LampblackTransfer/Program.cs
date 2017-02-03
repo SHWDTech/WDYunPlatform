@@ -166,6 +166,7 @@ namespace LampblackTransfer
                 catch (Exception ex)
                 {
                     LogService.Instance.Error($"发送数据失败，设备NODEID：{dev.NodeId}。", ex);
+                    tcpClient.Client.Close();
                     tcpClient.Client.Dispose();
                     Clients.Remove(dev);
                 }
