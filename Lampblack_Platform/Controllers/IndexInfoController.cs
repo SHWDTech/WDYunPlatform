@@ -28,14 +28,14 @@ namespace Lampblack_Platform.Controllers
                     {
                         EQUP_ID = $"{device.DeviceCode}001",
                         RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue.Value > 400 ? "0" : "1"
+                        EQUP_VAL = monitorDatas.DoubleValue.Value > 0 ? "1" : "0"
                     };
                     model.data.Add(fan);
                     var cleaner = new Index
                     {
                         EQUP_ID = $"{device.DeviceCode}002",
                         RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue.Value > 400 ? "0" : "1"
+                        EQUP_VAL = monitorDatas.DoubleValue.Value > 0 ? "1" : "0"
                     };
                     model.data.Add(cleaner);
 
