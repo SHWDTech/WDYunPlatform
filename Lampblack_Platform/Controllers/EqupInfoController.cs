@@ -22,7 +22,7 @@ namespace Lampblack_Platform.Controllers
                     {
                         EQUP_ID = $"{device.DeviceCode}001",
                         EQUP_NAM = "风机",
-                        CASE_ID = $"HPLB{device.DeviceNodeId.Substring(4, 4)}",
+                        CASE_ID = $"QDHP{Convert.ToInt32(device.DeviceNodeId.Substring(4, 4), 16):D4}",
                         EQUP_TYP = "风机",
                         EQUP_MOD = "",
                         EQUP_LIM = ""
@@ -33,7 +33,7 @@ namespace Lampblack_Platform.Controllers
                     {
                         EQUP_ID = $"{device.DeviceCode}002",
                         EQUP_NAM = "净化器",
-                        CASE_ID = $"HPLB{device.DeviceNodeId.Substring(4, 4)}",
+                        CASE_ID = $"QDHP{Convert.ToInt32(device.DeviceNodeId.Substring(4, 4), 16):D4}",
                         EQUP_TYP = "净化器",
                         EQUP_MOD = "",
                         EQUP_LIM = ""
@@ -44,7 +44,7 @@ namespace Lampblack_Platform.Controllers
                     {
                         EQUP_ID = $"{device.DeviceCode}003",
                         EQUP_NAM = "清洁度",
-                        CASE_ID = $"HPLB{device.DeviceNodeId.Substring(4, 4)}",
+                        CASE_ID = $"QDHP{Convert.ToInt32(device.DeviceNodeId.Substring(4, 4), 16):D4}",
                         EQUP_TYP = "清洁度",
                         EQUP_MOD = "0.001",
                         EQUP_LIM = "0.6||0.1"
