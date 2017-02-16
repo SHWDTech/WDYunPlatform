@@ -30,8 +30,6 @@ namespace LampblackTransfer
 
         private static int _clientPort;
 
-        private static int _lastUsedPort;
-
         private static readonly Dictionary<string, DeviceTime> DeviceTimes = new Dictionary<string, DeviceTime>();
 
 
@@ -83,11 +81,11 @@ namespace LampblackTransfer
 
         private static void AddDevicePort()
         {
-            _lastUsedPort = _clientPort + 1;
             foreach (var deviceInfo in _deviceInfos)
             {
                 if (_devicePort.ContainsKey(deviceInfo)) continue;
-                _devicePort.Add(deviceInfo, _lastUsedPort);
+                _clientPort += 1;
+                _devicePort.Add(deviceInfo, _clientPort);
             }
         }
 
