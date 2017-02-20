@@ -784,7 +784,7 @@ namespace Platform.Process.Process
 
             using (var repo = Repo<HotelRestaurantRepository>())
             {
-                return repo.GetModels(obj => obj.DistrictId == district.Id)
+                return repo.GetModelsInclude(obj => obj.DistrictId == district.Id, new List<string> { "RaletedCompany" })
                 .ToList();
             }
         }
