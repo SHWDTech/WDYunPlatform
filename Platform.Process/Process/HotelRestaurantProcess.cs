@@ -582,7 +582,7 @@ namespace Platform.Process.Process
                     Repo<DeviceRepository>().GetModels(dev => dev.ProjectId == hotelGuid).Select(obj => obj.Id).ToList();
                 var lastProtocol = Repo<ProtocolDataRepository>().GetModels(p => devs.Contains(p.DeviceId))
                     .OrderByDescending(item => item.UpdateTime).FirstOrDefault();
-                if (lastProtocol == null)
+                if (lastProtocol == null || lastProtocol.UpdateTime < checkDate)
                 {
                     return new List<MonitorData>();
                 }
