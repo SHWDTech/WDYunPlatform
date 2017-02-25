@@ -125,7 +125,7 @@ namespace Platform.Process.Process
             {
                 var device = repo.GetModelById(hotelGuid);
 
-                var recentDatas = GetLastMonitorData(device.Id);
+                var recentDatas = GetLastMonitorData(device);
 
                 retDictionary.Add("Current", GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue ?? 0.0);
                 retDictionary.Add("CleanerStatus", GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue ?? false);
@@ -152,19 +152,22 @@ namespace Platform.Process.Process
         /// <summary>
         /// 获取设备最新数据
         /// </summary>
-        /// <param name="devGuid"></param>
+        /// <param name="dev"></param>
         /// <returns></returns>
-        private List<MonitorData> GetLastMonitorData(Guid devGuid)
+        private List<MonitorData> GetLastMonitorData(RestaurantDevice dev)
         {
             var checkDate = DateTime.Now.Trim(TimeSpan.TicksPerSecond).AddMinutes(-2);
 
             using (var dataRepo = Repo<MonitorDataRepository>())
             {
-                dataRepo.DbContext.Database.CommandTimeout = int.MaxValue;
-                var datas = dataRepo.GetModels(data =>
-                    data.ProtocolData.DeviceId == devGuid
-                    && data.UpdateTime > checkDate)
-                    .ToList();
+                var protocol =
+                    Repo<ProtocolDataRepository>().GetModels(obj => obj.DeviceId == dev.Id).OrderByDescending(d => d.UpdateTime).FirstOrDefault();
+                if (protocol == null || protocol.UpdateTime < checkDate)
+                {
+                    return new List<MonitorData>();
+                }
+
+                var datas = dataRepo.GetModels(data => data.ProjectId == dev.ProjectId && data.ProtocolDataId == protocol.Id).ToList();
 
                 return datas;
             }
