@@ -578,9 +578,15 @@ namespace Platform.Process.Process
             using (var dataRepo = Repo<MonitorDataRepository>())
             {
                 dataRepo.DbContext.Database.CommandTimeout = int.MaxValue;
-                var datas = dataRepo.GetModels(data =>
-                    data.ProjectId == hotelGuid
-                    && data.UpdateTime > checkDate)
+                var devs =
+                    Repo<DeviceRepository>().GetModels(dev => dev.ProjectId == hotelGuid).Select(obj => obj.Id).ToList();
+                var lastProtocol = Repo<ProtocolDataRepository>().GetModels(p => devs.Contains(p.DeviceId))
+                    .OrderByDescending(item => item.UpdateTime).FirstOrDefault();
+                if (lastProtocol == null)
+                {
+                    return new List<MonitorData>();
+                }
+                var datas = dataRepo.GetModels(data => data.ProjectId == hotelGuid && data.ProjectId == lastProtocol.Id)
                     .ToList();
 
                 return datas;
