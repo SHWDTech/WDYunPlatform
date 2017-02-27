@@ -152,14 +152,14 @@ namespace Lampblack_Platform.Controllers
 
             int count;
 
-            var conditions = new List<Expression<Func<MonitorData, bool>>>();
+            var conditions = new List<Expression<Func<ProtocolData, bool>>>();
 
             if (model.StartDateTime == DateTime.MinValue)
             {
                 model.StartDateTime = DateTime.Now.AddDays(-7);
             }
 
-            Expression<Func<MonitorData, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
+            Expression<Func<ProtocolData, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
             conditions.Add(startCondition);
 
             if (model.EndDateTime == DateTime.MinValue)
@@ -167,7 +167,7 @@ namespace Lampblack_Platform.Controllers
                 model.EndDateTime = DateTime.Now;
             }
 
-            Expression<Func<MonitorData, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
+            Expression<Func<ProtocolData, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
             conditions.Add(endCondition);
 
             var historyData = ProcessInvoke<HotelRestaurantProcess>()
