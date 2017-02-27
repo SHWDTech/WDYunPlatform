@@ -603,7 +603,7 @@ namespace Platform.Process.Process
             => monitorDatas.FirstOrDefault(obj => obj.DataName == dataName);
 
 
-        public TimeSpan GetRunTime(Guid hotelGuid, DateTime startDate, string dataName)
+        public TimeSpan GetRunTime(Guid hotelGuid, DateTime startDate, Guid dataGuid)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
@@ -612,16 +612,16 @@ namespace Platform.Process.Process
                 var endDay = today.AddDays(1);
 
                 var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.BooleanValue == true
-                        && obj.CommandData.DataName == dataName
-                        && obj.UpdateTime > today)
+                        && obj.UpdateTime > today && obj.UpdateTime < endDay
+                        && obj.CommandDataId == dataGuid
+                        && obj.BooleanValue == true)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
                 var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.BooleanValue == true
-                        && obj.CommandData.DataName == dataName
-                        && obj.UpdateTime > today && obj.UpdateTime < endDay)
+                        && obj.UpdateTime > today && obj.UpdateTime < endDay
+                        && obj.CommandDataId == dataGuid
+                        && obj.BooleanValue == true)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();
 
@@ -739,7 +739,7 @@ namespace Platform.Process.Process
                 var endDay = today.AddDays(1);
 
                 var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.UpdateTime > today)
+                        && obj.UpdateTime > today && obj.UpdateTime < endDay)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
