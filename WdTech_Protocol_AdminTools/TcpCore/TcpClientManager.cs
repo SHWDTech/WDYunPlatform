@@ -205,7 +205,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             case AuthenticationStatus.Authed:
                                 Decode();
                                 break;
-                            case AuthenticationStatus.AuthFailed:
+                            default:
+                                _processBuffer.Remove(0);
                                 return;
                         }
                     }
