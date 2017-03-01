@@ -147,9 +147,16 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     return;
                 }
 
-                if (readCount == 0)
+                if (readCount == 0 && !_isDisposed)
                 {
-                    client.Disconnect(false);
+                    try
+                    {
+                        client.Disconnect(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Error("尝试断开套接字失败。", ex);
+                    }
                     OnClientDisconnect();
                     return;
                 }
