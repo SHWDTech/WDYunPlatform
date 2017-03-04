@@ -363,6 +363,7 @@ namespace Platform.Process.Process
         {
             var deviceModel = Repo<LampblackDeviceModelRepository>().GetAllModels().First().Id;
             var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{deviceModel}").CacheItem;
+            var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
             var dayStatics = conditions?.Aggregate(
                                      Repo<DataStatisticsRepository>()
                                          .GetModels(obj => obj.Type == StatisticsType.Day && obj.CommandDataId == CommandDataId.CleanerCurrent),
@@ -371,7 +372,6 @@ namespace Platform.Process.Process
                                  ?? Repo<DataStatisticsRepository>()
                                  .GetModels(obj => obj.Type == StatisticsType.Day && obj.CommandDataId == CommandDataId.CleanerCurrent)
                                  .GroupBy(item => item.Device.ProjectId);
-            var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
             var cleanRateView = (from dayStatic in dayStatics
                                  select new CleanRateView
                                  {
@@ -380,9 +380,9 @@ namespace Platform.Process.Process
                                      Worse = dayStatic.Count(obj => obj.DoubleValue > rater.Fail && obj.DoubleValue <= rater.Worse),
                                      Qualified = dayStatic.Count(obj => obj.DoubleValue > rater.Worse && obj.DoubleValue <= rater.Qualified),
                                      Good = dayStatic.Count(obj => obj.DoubleValue > rater.Good)
-                                 }).OrderBy(view => view.HotelName);
+                                 }).OrderBy(view => view.HotelName).Where(ret => ret.HotelName != null);
 
-            count = Repo<HotelRestaurantRepository>().GetCount(null);
+            count = hotels.Count();
             return cleanRateView.ToPagedList(page, pageSize);
         }
 
