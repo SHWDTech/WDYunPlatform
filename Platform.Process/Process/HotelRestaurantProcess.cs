@@ -245,7 +245,7 @@ namespace Platform.Process.Process
             using (var repo = new RepositoryDbContext())
             {
                 repo.Database.CommandTimeout = int.MaxValue;
-                var hotels = repo.Set<Project>().ToList();
+                var hotels = repo.Set<HotelRestaurant>().ToList();
                 var checkDate = DateTime.Now.AddMinutes(-2);
                 var commandDataId =
                     repo.Set<CommandData>().First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
@@ -257,6 +257,7 @@ namespace Platform.Process.Process
                     {
                         Name = hotel.ProjectName,
                         Id = hotel.Id,
+                        DistrictGuid = hotel.DistrictId,
                         Point = new LocationPoint
                         {
                             Latitude = $"{hotel.Latitude}",

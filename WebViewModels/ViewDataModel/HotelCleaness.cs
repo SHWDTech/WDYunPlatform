@@ -19,6 +19,8 @@ namespace WebViewModels.ViewDataModel
 
         public Guid Id { get; set; }
 
+        public Guid DistrictGuid { get; set; }
+
         public string Status { get; set; }
     }
 
