@@ -64,6 +64,10 @@ namespace Lampblack_Platform
                 }
             };
 
+            var userDiscticts =
+                (IList<SysDictionary>) GeneralProcess.GetConfig<SysDictionary>(c => c.ItemName == "userDistrict");
+            PlatformCaches.Add("userDistrict", userDiscticts, false, "SystemConfig");
+
             LampblackConfig.InitConfig(configDictionary);
             WdControllerBase.LoginName = LampblackConfig.LoginName;
             PlatformCaches.Add("Cleaness", ProcessInvoke.Instance<HotelRestaurantProcess>().GetHotelCleanessList());

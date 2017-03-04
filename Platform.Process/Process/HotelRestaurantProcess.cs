@@ -138,6 +138,7 @@ namespace Platform.Process.Process
                         {
                             cleanNess.Add(new HotelCleaness
                             {
+                                DistrictGuid = hotel.DistrictId,
                                 ProjectName = hotel.ProjectName,
                                 ProjectCleaness = "无数据"
                             });
@@ -146,6 +147,7 @@ namespace Platform.Process.Process
                         {
                             cleanNess.Add(new HotelCleaness
                             {
+                                DistrictGuid = hotel.DistrictId,
                                 ProjectName = hotel.ProjectName,
                                 ProjectCleaness = hotelData.DoubleValue != null
                             ? GetCleanRateByDeviceModel(hotelData.DoubleValue, modelId)
@@ -157,6 +159,7 @@ namespace Platform.Process.Process
                     {
                         cleanNess.Add(new HotelCleaness
                         {
+                            DistrictGuid = hotel.DistrictId,
                             ProjectName = hotel.ProjectName,
                             ProjectCleaness = "无数据"
                         });

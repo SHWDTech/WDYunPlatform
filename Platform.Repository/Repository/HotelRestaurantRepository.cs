@@ -28,6 +28,13 @@ namespace SHWD.Platform.Repository.Repository
             {
                 EntitySet = EntitySet.Where(Filter);
             }
+
+            if (ContextLocal.UserContext.ContainsKey("district"))
+            {
+                var userDistricts =
+                    ContextLocal.UserContext.Where(obj => obj.Key == "district").Select(item => (Guid) item.Value).ToList();
+                EntitySet = EntitySet.Where(obj => userDistricts.Contains(obj.DistrictId));
+            }
         }
     }
 }

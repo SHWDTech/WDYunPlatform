@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.Model;
@@ -51,9 +52,18 @@ namespace MvcWebComponents.Controllers
         /// </summary>
         public List<Module> Modules { get; private set; }
 
+        /// <summary>
+        /// 当前登陆用户的配置信息
+        /// </summary>
+        public Dictionary<string, object> UserContext { get; set; } = new Dictionary<string, object>();
+
+        public List<Guid> UserDistricts => !UserContext.ContainsKey("district")
+                                           ? null
+                                           : UserContext.Where(obj => obj.Key == "district").Select(item => (Guid)item.Value).ToList();
+
         private void GetPermissions()
         {
-            var permissionCache = (List<Permission>) PlatformCaches.GetCache($"User[{WdUser.Id}]-Permissions").CacheItem;
+            var permissionCache = (List<Permission>)PlatformCaches.GetCache($"User[{WdUser.Id}]-Permissions").CacheItem;
             Permissions = new List<Permission>();
             Permissions.AddRange(permissionCache);
             foreach (var wdRole in Roles)
