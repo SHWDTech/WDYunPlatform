@@ -7,946 +7,946 @@ namespace SHWD.Platform.Repository.Migrations
     {
         public override void Up()
         {
-        //    CreateTable(
-        //        "dbo.Alarms",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                AlarmDeviceId = c.Guid(nullable: false),
-        //                AlarmValue = c.Double(nullable: false),
-        //                AlarmType = c.Int(nullable: false),
-        //                AlarmCode = c.Int(nullable: false),
-        //                UpdateTime = c.DateTime(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Device", t => t.AlarmDeviceId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.AlarmDeviceId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Alarms",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        AlarmDeviceId = c.Guid(nullable: false),
+                        AlarmValue = c.Double(nullable: false),
+                        AlarmType = c.Int(nullable: false),
+                        AlarmCode = c.Int(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Device", t => t.AlarmDeviceId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.AlarmDeviceId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.Device",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                DeviceTypeId = c.Guid(nullable: false),
-        //                OriginalDeviceId = c.Guid(),
-        //                DeviceCode = c.String(nullable: false, maxLength: 25),
-        //                StatCode = c.Int(),
-        //                DevicePassword = c.String(maxLength: 25),
-        //                DeviceModuleGuid = c.Guid(),
-        //                DeviceNodeId = c.String(maxLength: 16),
-        //                FirmwareSetId = c.Guid(nullable: false),
-        //                ProjectId = c.Guid(),
-        //                StartTime = c.DateTime(),
-        //                PreEndTime = c.DateTime(),
-        //                EndTime = c.DateTime(),
-        //                Status = c.Byte(nullable: false),
-        //                CameraId = c.Guid(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //                CleanerType = c.Byte(),
-        //                DeviceName = c.String(maxLength: 50),
-        //                DeviceTerminalCode = c.String(maxLength: 50),
-        //                Photo = c.String(),
-        //                IpAddress = c.String(),
-        //                Discriminator = c.String(nullable: false, maxLength: 128),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Cameras", t => t.CameraId)
-        //        .ForeignKey("dbo.DeviceTypes", t => t.DeviceTypeId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.FirmwareSets", t => t.FirmwareSetId)
-        //        .ForeignKey("dbo.Device", t => t.OriginalDeviceId)
-        //        .ForeignKey("dbo.Project", t => t.ProjectId)
-        //        .Index(t => t.DeviceTypeId)
-        //        .Index(t => t.OriginalDeviceId)
-        //        .Index(t => t.FirmwareSetId)
-        //        .Index(t => t.ProjectId)
-        //        .Index(t => t.CameraId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Device",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        DeviceTypeId = c.Guid(nullable: false),
+                        OriginalDeviceId = c.Guid(),
+                        DeviceCode = c.String(nullable: false, maxLength: 25),
+                        StatCode = c.Int(),
+                        DevicePassword = c.String(maxLength: 25),
+                        DeviceModuleGuid = c.Guid(),
+                        DeviceNodeId = c.String(maxLength: 16),
+                        FirmwareSetId = c.Guid(nullable: false),
+                        ProjectId = c.Guid(),
+                        StartTime = c.DateTime(),
+                        PreEndTime = c.DateTime(),
+                        EndTime = c.DateTime(),
+                        Status = c.Byte(nullable: false),
+                        CameraId = c.Guid(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                        CleanerType = c.Byte(),
+                        DeviceName = c.String(maxLength: 50),
+                        DeviceTerminalCode = c.String(maxLength: 50),
+                        Photo = c.String(),
+                        IpAddress = c.String(),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Cameras", t => t.CameraId)
+                .ForeignKey("dbo.DeviceTypes", t => t.DeviceTypeId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.FirmwareSets", t => t.FirmwareSetId)
+                .ForeignKey("dbo.Device", t => t.OriginalDeviceId)
+                .ForeignKey("dbo.Project", t => t.ProjectId)
+                .Index(t => t.DeviceTypeId)
+                .Index(t => t.OriginalDeviceId)
+                .Index(t => t.FirmwareSetId)
+                .Index(t => t.ProjectId)
+                .Index(t => t.CameraId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.Cameras",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                CameraOutId = c.String(maxLength: 50),
-        //                AccessName = c.String(maxLength: 25),
-        //                AccessPassword = c.String(maxLength: 50),
-        //                AccessUrl = c.String(maxLength: 200),
-        //                AccessPort = c.Int(),
-        //                AccessTypeId = c.Guid(),
-        //                Compnany = c.String(maxLength: 50),
-        //                ExtraInformation = c.String(maxLength: 2000),
-        //                CameraStatus = c.Byte(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.AccessTypeId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.AccessTypeId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Cameras",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CameraOutId = c.String(maxLength: 50),
+                        AccessName = c.String(maxLength: 25),
+                        AccessPassword = c.String(maxLength: 50),
+                        AccessUrl = c.String(maxLength: 200),
+                        AccessPort = c.Int(),
+                        AccessTypeId = c.Guid(),
+                        Compnany = c.String(maxLength: 50),
+                        ExtraInformation = c.String(maxLength: 2000),
+                        CameraStatus = c.Byte(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SysDictionaries", t => t.AccessTypeId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.AccessTypeId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.SysDictionaries",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ItemName = c.String(nullable: false),
-        //                ItemKey = c.String(nullable: false),
-        //                ItemValue = c.String(nullable: false),
-        //                ItemLevel = c.Byte(nullable: false),
-        //                ParentDictionaryId = c.Guid(),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.ParentDictionaryId)
-        //        .Index(t => t.ParentDictionaryId);
+            CreateTable(
+                "dbo.SysDictionaries",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ItemName = c.String(nullable: false),
+                        ItemKey = c.String(nullable: false),
+                        ItemValue = c.String(nullable: false),
+                        ItemLevel = c.Byte(nullable: false),
+                        ParentDictionaryId = c.Guid(),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SysDictionaries", t => t.ParentDictionaryId)
+                .Index(t => t.ParentDictionaryId);
             
-        //    CreateTable(
-        //        "dbo.Domains",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                DomainName = c.String(nullable: false, maxLength: 50),
-        //                DomianType = c.String(maxLength: 50),
-        //                DomainStatus = c.Byte(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id);
+            CreateTable(
+                "dbo.Domains",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        DomainName = c.String(nullable: false, maxLength: 50),
+                        DomianType = c.String(maxLength: 50),
+                        DomainStatus = c.Byte(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
-        //    CreateTable(
-        //        "dbo.DeviceTypes",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                FieldId = c.Guid(nullable: false),
-        //                SubFieldId = c.Guid(nullable: false),
-        //                CustomerInfo = c.String(),
-        //                Version = c.String(nullable: false),
-        //                ReleaseDateTime = c.DateTime(nullable: false),
-        //                DeviceTypeCode = c.String(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.FieldId)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.SubFieldId)
-        //        .Index(t => t.FieldId)
-        //        .Index(t => t.SubFieldId);
+            CreateTable(
+                "dbo.DeviceTypes",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        FieldId = c.Guid(nullable: false),
+                        SubFieldId = c.Guid(nullable: false),
+                        CustomerInfo = c.String(),
+                        Version = c.String(nullable: false),
+                        ReleaseDateTime = c.DateTime(nullable: false),
+                        DeviceTypeCode = c.String(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SysDictionaries", t => t.FieldId)
+                .ForeignKey("dbo.SysDictionaries", t => t.SubFieldId)
+                .Index(t => t.FieldId)
+                .Index(t => t.SubFieldId);
             
-        //    CreateTable(
-        //        "dbo.FirmwareSets",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                FirmwareSetName = c.String(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id);
+            CreateTable(
+                "dbo.FirmwareSets",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        FirmwareSetName = c.String(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
-        //    CreateTable(
-        //        "dbo.Firmwares",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                FirmwareName = c.String(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id);
+            CreateTable(
+                "dbo.Firmwares",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        FirmwareName = c.String(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
-        //    CreateTable(
-        //        "dbo.Protocols",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                FieldId = c.Guid(nullable: false),
-        //                SubFieldId = c.Guid(nullable: false),
-        //                ProtocolName = c.String(nullable: false),
-        //                ProtocolModule = c.String(nullable: false),
-        //                CustomerInfo = c.String(),
-        //                Version = c.String(nullable: false),
-        //                Head = c.Binary(nullable: false),
-        //                Tail = c.Binary(nullable: false),
-        //                ReleaseDateTime = c.DateTime(nullable: false),
-        //                CheckType = c.String(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.FieldId)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.SubFieldId)
-        //        .Index(t => t.FieldId)
-        //        .Index(t => t.SubFieldId);
+            CreateTable(
+                "dbo.Protocols",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        FieldId = c.Guid(nullable: false),
+                        SubFieldId = c.Guid(nullable: false),
+                        ProtocolName = c.String(nullable: false),
+                        ProtocolModule = c.String(nullable: false),
+                        CustomerInfo = c.String(),
+                        Version = c.String(nullable: false),
+                        Head = c.Binary(nullable: false),
+                        Tail = c.Binary(nullable: false),
+                        ReleaseDateTime = c.DateTime(nullable: false),
+                        CheckType = c.String(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SysDictionaries", t => t.FieldId)
+                .ForeignKey("dbo.SysDictionaries", t => t.SubFieldId)
+                .Index(t => t.FieldId)
+                .Index(t => t.SubFieldId);
             
-        //    CreateTable(
-        //        "dbo.ProtocolCommands",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                CommandTypeCode = c.Binary(),
-        //                CommandCode = c.Binary(nullable: false),
-        //                SendBytesLength = c.Int(nullable: false),
-        //                ReceiveBytesLength = c.Int(nullable: false),
-        //                ReceiceMaxBytesLength = c.Int(nullable: false),
-        //                CommandCategory = c.String(nullable: false, maxLength: 50),
-        //                ProtocolId = c.Guid(nullable: false),
-        //                DataOrderType = c.Byte(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Protocols", t => t.ProtocolId)
-        //        .Index(t => t.ProtocolId);
+            CreateTable(
+                "dbo.ProtocolCommands",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CommandTypeCode = c.Binary(),
+                        CommandCode = c.Binary(nullable: false),
+                        SendBytesLength = c.Int(nullable: false),
+                        ReceiveBytesLength = c.Int(nullable: false),
+                        ReceiceMaxBytesLength = c.Int(nullable: false),
+                        CommandCategory = c.String(nullable: false, maxLength: 50),
+                        ProtocolId = c.Guid(nullable: false),
+                        DataOrderType = c.Byte(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Protocols", t => t.ProtocolId)
+                .Index(t => t.ProtocolId);
             
-        //    CreateTable(
-        //        "dbo.CommandDatas",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                DataIndex = c.Int(nullable: false),
-        //                DataLength = c.Int(nullable: false),
-        //                DataName = c.String(nullable: false),
-        //                DataDisplayName = c.String(nullable: false),
-        //                DataConvertType = c.String(nullable: false),
-        //                DataValueType = c.Byte(nullable: false),
-        //                DataFlag = c.Byte(nullable: false),
-        //                ValidFlagIndex = c.Int(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id);
+            CreateTable(
+                "dbo.CommandDatas",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        DataIndex = c.Int(nullable: false),
+                        DataLength = c.Int(nullable: false),
+                        DataName = c.String(nullable: false),
+                        DataDisplayName = c.String(nullable: false),
+                        DataConvertType = c.String(nullable: false),
+                        DataValueType = c.Byte(nullable: false),
+                        DataFlag = c.Byte(nullable: false),
+                        ValidFlagIndex = c.Int(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
-        //    CreateTable(
-        //        "dbo.CommandDefinitions",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                CommandGuid = c.Guid(nullable: false),
-        //                StructureName = c.String(),
-        //                ContentBytes = c.Binary(),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //                Command_Id = c.Guid(),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.ProtocolCommands", t => t.Command_Id)
-        //        .Index(t => t.Command_Id);
+            CreateTable(
+                "dbo.CommandDefinitions",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CommandGuid = c.Guid(nullable: false),
+                        StructureName = c.String(),
+                        ContentBytes = c.Binary(),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                        Command_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ProtocolCommands", t => t.Command_Id)
+                .Index(t => t.Command_Id);
             
-        //    CreateTable(
-        //        "dbo.SysConfigs",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                SysConfigName = c.String(nullable: false, maxLength: 25),
-        //                SysConfigType = c.String(nullable: false, maxLength: 25),
-        //                SysConfigValue = c.String(nullable: false, maxLength: 200),
-        //                ParentSysConfigId = c.Guid(),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.SysConfigs", t => t.ParentSysConfigId)
-        //        .Index(t => t.ParentSysConfigId);
+            CreateTable(
+                "dbo.SysConfigs",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        SysConfigName = c.String(nullable: false, maxLength: 25),
+                        SysConfigType = c.String(nullable: false, maxLength: 25),
+                        SysConfigValue = c.String(nullable: false, maxLength: 200),
+                        ParentSysConfigId = c.Guid(),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SysConfigs", t => t.ParentSysConfigId)
+                .Index(t => t.ParentSysConfigId);
             
-        //    CreateTable(
-        //        "dbo.ProtocolStructures",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ProtocolId = c.Guid(nullable: false),
-        //                DataType = c.String(nullable: false),
-        //                StructureName = c.String(nullable: false, maxLength: 50),
-        //                StructureIndex = c.Int(nullable: false),
-        //                StructureDataLength = c.Int(nullable: false),
-        //                DefaultBytes = c.Binary(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Protocols", t => t.ProtocolId)
-        //        .Index(t => t.ProtocolId);
+            CreateTable(
+                "dbo.ProtocolStructures",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ProtocolId = c.Guid(nullable: false),
+                        DataType = c.String(nullable: false),
+                        StructureName = c.String(nullable: false, maxLength: 50),
+                        StructureIndex = c.Int(nullable: false),
+                        StructureDataLength = c.Int(nullable: false),
+                        DefaultBytes = c.Binary(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Protocols", t => t.ProtocolId)
+                .Index(t => t.ProtocolId);
             
-        //    CreateTable(
-        //        "dbo.Project",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ProjectCode = c.String(nullable: false, maxLength: 200),
-        //                ProjectName = c.String(nullable: false, maxLength: 200),
-        //                ChargeMan = c.String(nullable: false, maxLength: 200),
-        //                Telephone = c.String(maxLength: 50),
-        //                Longitude = c.Single(),
-        //                Latitude = c.Single(),
-        //                Comment = c.String(maxLength: 2000),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //                Discriminator = c.String(nullable: false, maxLength: 128),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Project",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ProjectCode = c.String(nullable: false, maxLength: 200),
+                        ProjectName = c.String(nullable: false, maxLength: 200),
+                        ChargeMan = c.String(nullable: false, maxLength: 200),
+                        Telephone = c.String(maxLength: 50),
+                        Longitude = c.Single(),
+                        Latitude = c.Single(),
+                        Comment = c.String(maxLength: 2000),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.UserDictionaries",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ItemName = c.String(nullable: false),
-        //                ItemKey = c.String(nullable: false),
-        //                ItemValue = c.String(),
-        //                ItemLevel = c.Int(nullable: false),
-        //                ParentDictionaryId = c.Guid(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.UserDictionaries", t => t.ParentDictionaryId)
-        //        .Index(t => t.ParentDictionaryId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.UserDictionaries",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ItemName = c.String(nullable: false),
+                        ItemKey = c.String(nullable: false),
+                        ItemValue = c.String(),
+                        ItemLevel = c.Int(nullable: false),
+                        ParentDictionaryId = c.Guid(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.UserDictionaries", t => t.ParentDictionaryId)
+                .Index(t => t.ParentDictionaryId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.CateringCompanies",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                CompanyName = c.String(nullable: false, maxLength: 200),
-        //                CompanyCode = c.String(nullable: false, maxLength: 50),
-        //                ChargeMan = c.String(nullable: false, maxLength: 50),
-        //                Telephone = c.String(),
-        //                Email = c.String(),
-        //                Address = c.String(),
-        //                RegisterDateTime = c.DateTime(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.CateringCompanies",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        CompanyName = c.String(nullable: false, maxLength: 200),
+                        CompanyCode = c.String(nullable: false, maxLength: 50),
+                        ChargeMan = c.String(nullable: false, maxLength: 50),
+                        Telephone = c.String(),
+                        Email = c.String(),
+                        Address = c.String(),
+                        RegisterDateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.LampblackDeviceModels",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                Name = c.String(nullable: false, maxLength: 200),
-        //                Fail = c.Int(nullable: false),
-        //                Worse = c.Int(nullable: false),
-        //                Qualified = c.Int(nullable: false),
-        //                Good = c.Int(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.LampblackDeviceModels",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 200),
+                        Fail = c.Int(nullable: false),
+                        Worse = c.Int(nullable: false),
+                        Qualified = c.Int(nullable: false),
+                        Good = c.Int(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.DataStatistics",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false, identity: true),
-        //                CommandDataId = c.Guid(nullable: false),
-        //                DataChannel = c.Short(nullable: false),
-        //                ProjectId = c.Guid(),
-        //                DeviceId = c.Guid(nullable: false),
-        //                DoubleValue = c.Double(),
-        //                BooleanValue = c.Boolean(),
-        //                IntegerValue = c.Int(),
-        //                UpdateTime = c.DateTime(nullable: false),
-        //                Type = c.Byte(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.CommandDatas", t => t.CommandDataId)
-        //        .ForeignKey("dbo.Device", t => t.DeviceId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Project", t => t.ProjectId)
-        //        .Index(t => t.CommandDataId)
-        //        .Index(t => new { t.ProjectId, t.UpdateTime }, name: "Ix_Project_Device_UpdateTime")
-        //        .Index(t => t.DeviceId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.DataStatistics",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        CommandDataId = c.Guid(nullable: false),
+                        DataChannel = c.Short(nullable: false),
+                        ProjectId = c.Guid(),
+                        DeviceId = c.Guid(nullable: false),
+                        DoubleValue = c.Double(),
+                        BooleanValue = c.Boolean(),
+                        IntegerValue = c.Int(),
+                        UpdateTime = c.DateTime(nullable: false),
+                        Type = c.Byte(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.CommandDatas", t => t.CommandDataId)
+                .ForeignKey("dbo.Device", t => t.DeviceId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Project", t => t.ProjectId)
+                .Index(t => t.CommandDataId)
+                .Index(t => new { t.ProjectId, t.UpdateTime }, name: "Ix_Project_Device_UpdateTime")
+                .Index(t => t.DeviceId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.Departments",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                Name = c.String(nullable: false, maxLength: 50),
-        //                Comment = c.String(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Departments",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 50),
+                        Comment = c.String(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.DeviceMaintenances",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                MaintenanceUserId = c.Guid(nullable: false),
-        //                DeviceId = c.Guid(nullable: false),
-        //                MaintenanceDateTime = c.DateTime(nullable: false),
-        //                BeforeMaintenance = c.Int(nullable: false),
-        //                AfterMaintenance = c.Int(nullable: false),
-        //                Comment = c.String(maxLength: 2000),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Device", t => t.DeviceId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.WdUser", t => t.MaintenanceUserId)
-        //        .Index(t => t.MaintenanceUserId)
-        //        .Index(t => t.DeviceId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.DeviceMaintenances",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        MaintenanceUserId = c.Guid(nullable: false),
+                        DeviceId = c.Guid(nullable: false),
+                        MaintenanceDateTime = c.DateTime(nullable: false),
+                        BeforeMaintenance = c.Int(nullable: false),
+                        AfterMaintenance = c.Int(nullable: false),
+                        Comment = c.String(maxLength: 2000),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Device", t => t.DeviceId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.WdUser", t => t.MaintenanceUserId)
+                .Index(t => t.MaintenanceUserId)
+                .Index(t => t.DeviceId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.WdUser",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                UserName = c.String(nullable: false, maxLength: 25),
-        //                LoginName = c.String(nullable: false, maxLength: 25),
-        //                UserIdentityName = c.String(maxLength: 25),
-        //                Password = c.String(nullable: false, maxLength: 50),
-        //                Email = c.String(maxLength: 50),
-        //                Telephone = c.String(maxLength: 15),
-        //                LastLoginDateTime = c.DateTime(),
-        //                IsVisiable = c.Boolean(nullable: false),
-        //                Status = c.Byte(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //                Discriminator = c.String(nullable: false, maxLength: 128),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .Index(t => t.LoginName, unique: true)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.WdUser",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        UserName = c.String(nullable: false, maxLength: 25),
+                        LoginName = c.String(nullable: false, maxLength: 25),
+                        UserIdentityName = c.String(maxLength: 25),
+                        Password = c.String(nullable: false, maxLength: 50),
+                        Email = c.String(maxLength: 50),
+                        Telephone = c.String(maxLength: 15),
+                        LastLoginDateTime = c.DateTime(),
+                        IsVisiable = c.Boolean(nullable: false),
+                        Status = c.Byte(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.LoginName, unique: true)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.Permissions",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                PermissionName = c.String(nullable: false, maxLength: 50),
-        //                PermissionDisplayName = c.String(nullable: false, maxLength: 50),
-        //                ParentPermissionId = c.Guid(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Permissions", t => t.ParentPermissionId)
-        //        .Index(t => t.ParentPermissionId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Permissions",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        PermissionName = c.String(nullable: false, maxLength: 50),
+                        PermissionDisplayName = c.String(nullable: false, maxLength: 50),
+                        ParentPermissionId = c.Guid(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Permissions", t => t.ParentPermissionId)
+                .Index(t => t.ParentPermissionId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.WdRoles",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ParentRoleId = c.Guid(),
-        //                RoleName = c.String(nullable: false, maxLength: 25),
-        //                IsVisiable = c.Boolean(nullable: false),
-        //                Status = c.Int(nullable: false),
-        //                Comments = c.String(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.WdRoles", t => t.ParentRoleId)
-        //        .Index(t => t.ParentRoleId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.WdRoles",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ParentRoleId = c.Guid(),
+                        RoleName = c.String(nullable: false, maxLength: 25),
+                        IsVisiable = c.Boolean(nullable: false),
+                        Status = c.Int(nullable: false),
+                        Comments = c.String(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.WdRoles", t => t.ParentRoleId)
+                .Index(t => t.ParentRoleId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.Modules",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ParentModuleId = c.Guid(),
-        //                IsMenu = c.Boolean(nullable: false),
-        //                ModuleLevel = c.Int(nullable: false),
-        //                ModuleIndex = c.Int(nullable: false),
-        //                IconString = c.String(),
-        //                ModuleName = c.String(nullable: false, maxLength: 25),
-        //                Controller = c.String(maxLength: 25),
-        //                Action = c.String(maxLength: 25),
-        //                PermissionId = c.Guid(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Modules", t => t.ParentModuleId)
-        //        .ForeignKey("dbo.Permissions", t => t.PermissionId)
-        //        .Index(t => t.ParentModuleId)
-        //        .Index(t => t.PermissionId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.Modules",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ParentModuleId = c.Guid(),
+                        IsMenu = c.Boolean(nullable: false),
+                        ModuleLevel = c.Int(nullable: false),
+                        ModuleIndex = c.Int(nullable: false),
+                        IconString = c.String(),
+                        ModuleName = c.String(nullable: false, maxLength: 25),
+                        Controller = c.String(maxLength: 25),
+                        Action = c.String(maxLength: 25),
+                        PermissionId = c.Guid(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Modules", t => t.ParentModuleId)
+                .ForeignKey("dbo.Permissions", t => t.PermissionId)
+                .Index(t => t.ParentModuleId)
+                .Index(t => t.PermissionId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.MonitorDatas",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false, identity: true),
-        //                ProtocolDataId = c.Guid(nullable: false),
-        //                CommandDataId = c.Guid(nullable: false),
-        //                DataChannel = c.Short(nullable: false),
-        //                ProjectId = c.Guid(),
-        //                DoubleValue = c.Double(),
-        //                BooleanValue = c.Boolean(),
-        //                IntegerValue = c.Int(),
-        //                UpdateTime = c.DateTime(nullable: false),
-        //                DataIsValid = c.Boolean(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.CommandDatas", t => t.CommandDataId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Project", t => t.ProjectId)
-        //        .ForeignKey("dbo.ProtocolDatas", t => t.ProtocolDataId)
-        //        .Index(t => new { t.ProjectId, t.ProtocolDataId, t.UpdateTime }, name: "Ix_Project_ProtocolData_UpdateTime")
-        //        .Index(t => t.CommandDataId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.MonitorDatas",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        ProtocolDataId = c.Guid(nullable: false),
+                        CommandDataId = c.Guid(nullable: false),
+                        DataChannel = c.Short(nullable: false),
+                        ProjectId = c.Guid(),
+                        DoubleValue = c.Double(),
+                        BooleanValue = c.Boolean(),
+                        IntegerValue = c.Int(),
+                        UpdateTime = c.DateTime(nullable: false),
+                        DataIsValid = c.Boolean(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.CommandDatas", t => t.CommandDataId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Project", t => t.ProjectId)
+                .ForeignKey("dbo.ProtocolDatas", t => t.ProtocolDataId)
+                .Index(t => new { t.ProjectId, t.ProtocolDataId, t.UpdateTime }, name: "Ix_Project_ProtocolData_UpdateTime")
+                .Index(t => t.CommandDataId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.ProtocolDatas",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false, identity: true),
-        //                DeviceId = c.Guid(nullable: false),
-        //                ProtocolContent = c.Binary(nullable: false),
-        //                Length = c.Int(nullable: false),
-        //                ProtocolId = c.Guid(nullable: false),
-        //                ProtocolTime = c.DateTime(nullable: false),
-        //                UpdateTime = c.DateTime(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CommandTask_Id = c.Guid(),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Device", t => t.DeviceId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Protocols", t => t.ProtocolId)
-        //        .ForeignKey("dbo.CommandTasks", t => t.CommandTask_Id)
-        //        .Index(t => new { t.DeviceId, t.UpdateTime }, name: "Ix_Device_UpdateTime")
-        //        .Index(t => t.ProtocolId)
-        //        .Index(t => t.UpdateTime, name: "Ix_UpdateTime")
-        //        .Index(t => t.DomainId)
-        //        .Index(t => t.CommandTask_Id);
+            CreateTable(
+                "dbo.ProtocolDatas",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        DeviceId = c.Guid(nullable: false),
+                        ProtocolContent = c.Binary(nullable: false),
+                        Length = c.Int(nullable: false),
+                        ProtocolId = c.Guid(nullable: false),
+                        ProtocolTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CommandTask_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Device", t => t.DeviceId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Protocols", t => t.ProtocolId)
+                .ForeignKey("dbo.CommandTasks", t => t.CommandTask_Id)
+                .Index(t => new { t.DeviceId, t.UpdateTime }, name: "Ix_Device_UpdateTime")
+                .Index(t => t.ProtocolId)
+                .Index(t => t.UpdateTime, name: "Ix_UpdateTime")
+                .Index(t => t.DomainId)
+                .Index(t => t.CommandTask_Id);
             
-        //    CreateTable(
-        //        "dbo.Photos",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                DeviceId = c.Guid(),
-        //                PhotoTag = c.String(),
-        //                PhotoUrl = c.String(nullable: false, maxLength: 2000),
-        //                PhotoTypeId = c.Guid(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //                PhtotDevice_Id = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Device", t => t.DeviceId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.PhotoTypeId)
-        //        .ForeignKey("dbo.Device", t => t.PhtotDevice_Id)
-        //        .Index(t => t.DeviceId)
-        //        .Index(t => t.PhotoTypeId)
-        //        .Index(t => t.DomainId)
-        //        .Index(t => t.PhtotDevice_Id);
+            CreateTable(
+                "dbo.Photos",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        DeviceId = c.Guid(),
+                        PhotoTag = c.String(),
+                        PhotoUrl = c.String(nullable: false, maxLength: 2000),
+                        PhotoTypeId = c.Guid(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                        PhtotDevice_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Device", t => t.DeviceId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.SysDictionaries", t => t.PhotoTypeId)
+                .ForeignKey("dbo.Device", t => t.PhtotDevice_Id)
+                .Index(t => t.DeviceId)
+                .Index(t => t.PhotoTypeId)
+                .Index(t => t.DomainId)
+                .Index(t => t.PhtotDevice_Id);
             
-        //    CreateTable(
-        //        "dbo.RunningTimes",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                RunningTimeTicks = c.Long(nullable: false),
-        //                Type = c.Byte(nullable: false),
-        //                ProjectId = c.Guid(nullable: false),
-        //                DeviceId = c.Guid(nullable: false),
-        //                UpdateTime = c.DateTime(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Device", t => t.DeviceId)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Project", t => t.ProjectId)
-        //        .Index(t => t.ProjectId)
-        //        .Index(t => t.DeviceId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.RunningTimes",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        RunningTimeTicks = c.Long(nullable: false),
+                        Type = c.Byte(nullable: false),
+                        ProjectId = c.Guid(nullable: false),
+                        DeviceId = c.Guid(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Device", t => t.DeviceId)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Project", t => t.ProjectId)
+                .Index(t => t.ProjectId)
+                .Index(t => t.DeviceId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.CommandTasks",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                TaskDeviceId = c.Guid(nullable: false),
-        //                TaskCode = c.String(maxLength: 25),
-        //                TaskType = c.Int(nullable: false),
-        //                TaskStatus = c.Byte(nullable: false),
-        //                ExecuteStatus = c.Byte(nullable: false),
-        //                SetUpDateTime = c.DateTime(nullable: false),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.Device", t => t.TaskDeviceId)
-        //        .Index(t => t.TaskDeviceId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.CommandTasks",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        TaskDeviceId = c.Guid(nullable: false),
+                        TaskCode = c.String(maxLength: 25),
+                        TaskType = c.Int(nullable: false),
+                        TaskStatus = c.Byte(nullable: false),
+                        ExecuteStatus = c.Byte(nullable: false),
+                        SetUpDateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.Device", t => t.TaskDeviceId)
+                .Index(t => t.TaskDeviceId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.UserConfigs",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                UserConfigName = c.String(nullable: false, maxLength: 25),
-        //                UserConfigType = c.String(nullable: false, maxLength: 25),
-        //                UserConfigValue = c.String(nullable: false, maxLength: 200),
-        //                ParentUserConfigId = c.Guid(),
-        //                DomainId = c.Guid(nullable: false),
-        //                CreateDateTime = c.DateTime(nullable: false),
-        //                CreateUserId = c.Guid(nullable: false),
-        //                LastUpdateDateTime = c.DateTime(),
-        //                LastUpdateUserId = c.Guid(),
-        //                IsDeleted = c.Boolean(nullable: false),
-        //                IsEnabled = c.Boolean(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Domains", t => t.DomainId)
-        //        .ForeignKey("dbo.UserConfigs", t => t.ParentUserConfigId)
-        //        .Index(t => t.ParentUserConfigId)
-        //        .Index(t => t.DomainId);
+            CreateTable(
+                "dbo.UserConfigs",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        UserConfigName = c.String(nullable: false, maxLength: 25),
+                        UserConfigType = c.String(nullable: false, maxLength: 25),
+                        UserConfigValue = c.String(nullable: false, maxLength: 200),
+                        ParentUserConfigId = c.Guid(),
+                        DomainId = c.Guid(nullable: false),
+                        CreateDateTime = c.DateTime(nullable: false),
+                        CreateUserId = c.Guid(nullable: false),
+                        LastUpdateDateTime = c.DateTime(),
+                        LastUpdateUserId = c.Guid(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        IsEnabled = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Domains", t => t.DomainId)
+                .ForeignKey("dbo.UserConfigs", t => t.ParentUserConfigId)
+                .Index(t => t.ParentUserConfigId)
+                .Index(t => t.DomainId);
             
-        //    CreateTable(
-        //        "dbo.ProtocolFirmware",
-        //        c => new
-        //            {
-        //                ProtocolId = c.Guid(nullable: false),
-        //                FirmwareId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.ProtocolId, t.FirmwareId })
-        //        .ForeignKey("dbo.Protocols", t => t.ProtocolId, cascadeDelete: true)
-        //        .ForeignKey("dbo.Firmwares", t => t.FirmwareId, cascadeDelete: true)
-        //        .Index(t => t.ProtocolId)
-        //        .Index(t => t.FirmwareId);
+            CreateTable(
+                "dbo.ProtocolFirmware",
+                c => new
+                    {
+                        ProtocolId = c.Guid(nullable: false),
+                        FirmwareId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.ProtocolId, t.FirmwareId })
+                .ForeignKey("dbo.Protocols", t => t.ProtocolId, cascadeDelete: true)
+                .ForeignKey("dbo.Firmwares", t => t.FirmwareId, cascadeDelete: true)
+                .Index(t => t.ProtocolId)
+                .Index(t => t.FirmwareId);
             
-        //    CreateTable(
-        //        "dbo.CommandDataProtocolCommands",
-        //        c => new
-        //            {
-        //                CommandData_Id = c.Guid(nullable: false),
-        //                ProtocolCommand_Id = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.CommandData_Id, t.ProtocolCommand_Id })
-        //        .ForeignKey("dbo.CommandDatas", t => t.CommandData_Id, cascadeDelete: true)
-        //        .ForeignKey("dbo.ProtocolCommands", t => t.ProtocolCommand_Id, cascadeDelete: true)
-        //        .Index(t => t.CommandData_Id)
-        //        .Index(t => t.ProtocolCommand_Id);
+            CreateTable(
+                "dbo.CommandDataProtocolCommands",
+                c => new
+                    {
+                        CommandData_Id = c.Guid(nullable: false),
+                        ProtocolCommand_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.CommandData_Id, t.ProtocolCommand_Id })
+                .ForeignKey("dbo.CommandDatas", t => t.CommandData_Id, cascadeDelete: true)
+                .ForeignKey("dbo.ProtocolCommands", t => t.ProtocolCommand_Id, cascadeDelete: true)
+                .Index(t => t.CommandData_Id)
+                .Index(t => t.ProtocolCommand_Id);
             
-        //    CreateTable(
-        //        "dbo.SysConfigProtocolCommands",
-        //        c => new
-        //            {
-        //                SysConfig_Id = c.Guid(nullable: false),
-        //                ProtocolCommand_Id = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.SysConfig_Id, t.ProtocolCommand_Id })
-        //        .ForeignKey("dbo.SysConfigs", t => t.SysConfig_Id, cascadeDelete: true)
-        //        .ForeignKey("dbo.ProtocolCommands", t => t.ProtocolCommand_Id, cascadeDelete: true)
-        //        .Index(t => t.SysConfig_Id)
-        //        .Index(t => t.ProtocolCommand_Id);
+            CreateTable(
+                "dbo.SysConfigProtocolCommands",
+                c => new
+                    {
+                        SysConfig_Id = c.Guid(nullable: false),
+                        ProtocolCommand_Id = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.SysConfig_Id, t.ProtocolCommand_Id })
+                .ForeignKey("dbo.SysConfigs", t => t.SysConfig_Id, cascadeDelete: true)
+                .ForeignKey("dbo.ProtocolCommands", t => t.ProtocolCommand_Id, cascadeDelete: true)
+                .Index(t => t.SysConfig_Id)
+                .Index(t => t.ProtocolCommand_Id);
             
-        //    CreateTable(
-        //        "dbo.FirmwareSetFirmware",
-        //        c => new
-        //            {
-        //                FirmwareId = c.Guid(nullable: false),
-        //                FirmwareSetId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.FirmwareId, t.FirmwareSetId })
-        //        .ForeignKey("dbo.FirmwareSets", t => t.FirmwareId, cascadeDelete: true)
-        //        .ForeignKey("dbo.Firmwares", t => t.FirmwareSetId, cascadeDelete: true)
-        //        .Index(t => t.FirmwareId)
-        //        .Index(t => t.FirmwareSetId);
+            CreateTable(
+                "dbo.FirmwareSetFirmware",
+                c => new
+                    {
+                        FirmwareId = c.Guid(nullable: false),
+                        FirmwareSetId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.FirmwareId, t.FirmwareSetId })
+                .ForeignKey("dbo.FirmwareSets", t => t.FirmwareId, cascadeDelete: true)
+                .ForeignKey("dbo.Firmwares", t => t.FirmwareSetId, cascadeDelete: true)
+                .Index(t => t.FirmwareId)
+                .Index(t => t.FirmwareSetId);
             
-        //    CreateTable(
-        //        "dbo.RolePermission",
-        //        c => new
-        //            {
-        //                PermissionId = c.Guid(nullable: false),
-        //                RoleId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.PermissionId, t.RoleId })
-        //        .ForeignKey("dbo.Permissions", t => t.PermissionId, cascadeDelete: true)
-        //        .ForeignKey("dbo.WdRoles", t => t.RoleId, cascadeDelete: true)
-        //        .Index(t => t.PermissionId)
-        //        .Index(t => t.RoleId);
+            CreateTable(
+                "dbo.RolePermission",
+                c => new
+                    {
+                        PermissionId = c.Guid(nullable: false),
+                        RoleId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.PermissionId, t.RoleId })
+                .ForeignKey("dbo.Permissions", t => t.PermissionId, cascadeDelete: true)
+                .ForeignKey("dbo.WdRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.PermissionId)
+                .Index(t => t.RoleId);
             
-        //    CreateTable(
-        //        "dbo.UserPermission",
-        //        c => new
-        //            {
-        //                PermissionId = c.Guid(nullable: false),
-        //                UserId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.PermissionId, t.UserId })
-        //        .ForeignKey("dbo.Permissions", t => t.PermissionId, cascadeDelete: true)
-        //        .ForeignKey("dbo.WdUser", t => t.UserId, cascadeDelete: true)
-        //        .Index(t => t.PermissionId)
-        //        .Index(t => t.UserId);
+            CreateTable(
+                "dbo.UserPermission",
+                c => new
+                    {
+                        PermissionId = c.Guid(nullable: false),
+                        UserId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.PermissionId, t.UserId })
+                .ForeignKey("dbo.Permissions", t => t.PermissionId, cascadeDelete: true)
+                .ForeignKey("dbo.WdUser", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.PermissionId)
+                .Index(t => t.UserId);
             
-        //    CreateTable(
-        //        "dbo.UserRole",
-        //        c => new
-        //            {
-        //                UserId = c.Guid(nullable: false),
-        //                RoleId = c.Guid(nullable: false),
-        //            })
-        //        .PrimaryKey(t => new { t.UserId, t.RoleId })
-        //        .ForeignKey("dbo.WdUser", t => t.UserId, cascadeDelete: true)
-        //        .ForeignKey("dbo.WdRoles", t => t.RoleId, cascadeDelete: true)
-        //        .Index(t => t.UserId)
-        //        .Index(t => t.RoleId);
+            CreateTable(
+                "dbo.UserRole",
+                c => new
+                    {
+                        UserId = c.Guid(nullable: false),
+                        RoleId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.WdUser", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.WdRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
-        //    CreateTable(
-        //        "dbo.LampblackUser",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                DepartmentId = c.Guid(),
-        //                CateringCompanyId = c.Guid(),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.Departments", t => t.DepartmentId)
-        //        .ForeignKey("dbo.CateringCompanies", t => t.CateringCompanyId)
-        //        .ForeignKey("dbo.WdUser", t => t.Id)
-        //        .Index(t => t.Id)
-        //        .Index(t => t.DepartmentId)
-        //        .Index(t => t.CateringCompanyId);
+            CreateTable(
+                "dbo.LampblackUser",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        DepartmentId = c.Guid(),
+                        CateringCompanyId = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Departments", t => t.DepartmentId)
+                .ForeignKey("dbo.CateringCompanies", t => t.CateringCompanyId)
+                .ForeignKey("dbo.WdUser", t => t.Id)
+                .Index(t => t.Id)
+                .Index(t => t.DepartmentId)
+                .Index(t => t.CateringCompanyId);
             
-        //    CreateTable(
-        //        "dbo.ParticulateMatterProject",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                StatCode = c.Int(nullable: false, identity: true),
-        //                StatBJH = c.String(nullable: false, maxLength: 20),
-        //                ProjectOutCode = c.String(maxLength: 25),
-        //                StatName = c.String(nullable: false, maxLength: 20),
-        //                Department = c.String(nullable: false, maxLength: 30),
-        //                Compnany = c.String(),
-        //                Address = c.String(maxLength: 50),
-        //                Country = c.String(maxLength: 20),
-        //                Street = c.String(maxLength: 20),
-        //                DistrictId = c.Guid(nullable: false),
-        //                Square = c.Short(nullable: false),
-        //                ProStartDate = c.DateTime(nullable: false),
-        //                Stage = c.String(maxLength: 20),
-        //                ProjectStageId = c.Guid(),
-        //                StartDate = c.DateTime(nullable: false),
-        //                TypeId = c.Guid(),
-        //                AlarmTypeId = c.Guid(),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.DistrictId)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.ProjectStageId)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.TypeId)
-        //        .ForeignKey("dbo.SysDictionaries", t => t.AlarmTypeId)
-        //        .ForeignKey("dbo.Project", t => t.Id)
-        //        .Index(t => t.Id)
-        //        .Index(t => t.DistrictId)
-        //        .Index(t => t.ProjectStageId)
-        //        .Index(t => t.TypeId)
-        //        .Index(t => t.AlarmTypeId);
+            CreateTable(
+                "dbo.ParticulateMatterProject",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        StatCode = c.Int(nullable: false, identity: true),
+                        StatBJH = c.String(nullable: false, maxLength: 20),
+                        ProjectOutCode = c.String(maxLength: 25),
+                        StatName = c.String(nullable: false, maxLength: 20),
+                        Department = c.String(nullable: false, maxLength: 30),
+                        Compnany = c.String(),
+                        Address = c.String(maxLength: 50),
+                        Country = c.String(maxLength: 20),
+                        Street = c.String(maxLength: 20),
+                        DistrictId = c.Guid(nullable: false),
+                        Square = c.Short(nullable: false),
+                        ProStartDate = c.DateTime(nullable: false),
+                        Stage = c.String(maxLength: 20),
+                        ProjectStageId = c.Guid(),
+                        StartDate = c.DateTime(nullable: false),
+                        TypeId = c.Guid(),
+                        AlarmTypeId = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SysDictionaries", t => t.DistrictId)
+                .ForeignKey("dbo.SysDictionaries", t => t.ProjectStageId)
+                .ForeignKey("dbo.SysDictionaries", t => t.TypeId)
+                .ForeignKey("dbo.SysDictionaries", t => t.AlarmTypeId)
+                .ForeignKey("dbo.Project", t => t.Id)
+                .Index(t => t.Id)
+                .Index(t => t.DistrictId)
+                .Index(t => t.ProjectStageId)
+                .Index(t => t.TypeId)
+                .Index(t => t.AlarmTypeId);
             
-        //    CreateTable(
-        //        "dbo.RestaurantDevice",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                ProductionDateTime = c.DateTime(nullable: false),
-        //                Telephone = c.String(nullable: false),
-        //                CollectFrequency = c.Int(nullable: false),
-        //                CleanerName = c.String(maxLength: 50),
-        //                CleanerModel = c.String(maxLength: 200),
-        //                CleanerManufacturer = c.String(maxLength: 200),
-        //                CleanerRatedVoltage = c.Double(nullable: false),
-        //                CleanerMaxCurrent = c.Double(nullable: false),
-        //                CleanerRatedCurrent = c.Double(nullable: false),
-        //                CleanerMinCurrent = c.Double(nullable: false),
-        //                FanType = c.String(),
-        //                FanManufacturer = c.String(),
-        //                FanRatedVoltage = c.Double(nullable: false),
-        //                FanMaxCurrent = c.Double(nullable: false),
-        //                FanRatedCurrent = c.Double(nullable: false),
-        //                FanMinCurrent = c.Double(nullable: false),
-        //                FanDeliveryRate = c.Double(nullable: false),
-        //                Comment = c.String(maxLength: 2000),
-        //                DeviceModelId = c.Guid(nullable: false),
-        //                ChannelCount = c.Int(nullable: false),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.LampblackDeviceModels", t => t.DeviceModelId)
-        //        .ForeignKey("dbo.Device", t => t.Id)
-        //        .Index(t => t.Id)
-        //        .Index(t => t.DeviceModelId);
+            CreateTable(
+                "dbo.RestaurantDevice",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        ProductionDateTime = c.DateTime(nullable: false),
+                        Telephone = c.String(nullable: false),
+                        CollectFrequency = c.Int(nullable: false),
+                        CleanerName = c.String(maxLength: 50),
+                        CleanerModel = c.String(maxLength: 200),
+                        CleanerManufacturer = c.String(maxLength: 200),
+                        CleanerRatedVoltage = c.Double(nullable: false),
+                        CleanerMaxCurrent = c.Double(nullable: false),
+                        CleanerRatedCurrent = c.Double(nullable: false),
+                        CleanerMinCurrent = c.Double(nullable: false),
+                        FanType = c.String(),
+                        FanManufacturer = c.String(),
+                        FanRatedVoltage = c.Double(nullable: false),
+                        FanMaxCurrent = c.Double(nullable: false),
+                        FanRatedCurrent = c.Double(nullable: false),
+                        FanMinCurrent = c.Double(nullable: false),
+                        FanDeliveryRate = c.Double(nullable: false),
+                        Comment = c.String(maxLength: 2000),
+                        DeviceModelId = c.Guid(nullable: false),
+                        ChannelCount = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.LampblackDeviceModels", t => t.DeviceModelId)
+                .ForeignKey("dbo.Device", t => t.Id)
+                .Index(t => t.Id)
+                .Index(t => t.DeviceModelId);
             
-        //    CreateTable(
-        //        "dbo.HotelRestaurant",
-        //        c => new
-        //            {
-        //                Id = c.Guid(nullable: false),
-        //                RaletedCompanyId = c.Guid(nullable: false),
-        //                RegisterDateTime = c.DateTime(nullable: false),
-        //                Email = c.String(),
-        //                DistrictId = c.Guid(nullable: false),
-        //                StreetId = c.Guid(nullable: false),
-        //                AddressId = c.Guid(nullable: false),
-        //                Status = c.Byte(nullable: false),
-        //                OpeningDateTime = c.DateTime(),
-        //                StopDateTime = c.DateTime(),
-        //                CookStoveNumber = c.Int(nullable: false),
-        //                AddressDetail = c.String(),
-        //            })
-        //        .PrimaryKey(t => t.Id)
-        //        .ForeignKey("dbo.CateringCompanies", t => t.RaletedCompanyId)
-        //        .ForeignKey("dbo.UserDictionaries", t => t.DistrictId)
-        //        .ForeignKey("dbo.UserDictionaries", t => t.StreetId)
-        //        .ForeignKey("dbo.UserDictionaries", t => t.AddressId)
-        //        .ForeignKey("dbo.Project", t => t.Id)
-        //        .Index(t => t.Id)
-        //        .Index(t => t.RaletedCompanyId)
-        //        .Index(t => t.DistrictId)
-        //        .Index(t => t.StreetId)
-        //        .Index(t => t.AddressId);
+            CreateTable(
+                "dbo.HotelRestaurant",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        RaletedCompanyId = c.Guid(nullable: false),
+                        RegisterDateTime = c.DateTime(nullable: false),
+                        Email = c.String(),
+                        DistrictId = c.Guid(nullable: false),
+                        StreetId = c.Guid(nullable: false),
+                        AddressId = c.Guid(nullable: false),
+                        Status = c.Byte(nullable: false),
+                        OpeningDateTime = c.DateTime(),
+                        StopDateTime = c.DateTime(),
+                        CookStoveNumber = c.Int(nullable: false),
+                        AddressDetail = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.CateringCompanies", t => t.RaletedCompanyId)
+                .ForeignKey("dbo.UserDictionaries", t => t.DistrictId)
+                .ForeignKey("dbo.UserDictionaries", t => t.StreetId)
+                .ForeignKey("dbo.UserDictionaries", t => t.AddressId)
+                .ForeignKey("dbo.Project", t => t.Id)
+                .Index(t => t.Id)
+                .Index(t => t.RaletedCompanyId)
+                .Index(t => t.DistrictId)
+                .Index(t => t.StreetId)
+                .Index(t => t.AddressId);
             
         }
         
