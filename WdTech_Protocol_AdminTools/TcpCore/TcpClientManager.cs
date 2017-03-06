@@ -347,7 +347,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         }
 
         public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
-            => Send(_protocolEncoding.Encode(command, paramBytes));
+            => Send(_protocolEncoder.Encode(command, paramBytes));
 
         public void Dispose()
         {
