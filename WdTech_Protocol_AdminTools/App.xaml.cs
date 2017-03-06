@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Threading;
 using Platform.Process;
 using Platform.Process.Process;
-using SHWD.Platform.Repository;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Common;
 using WdTech_Protocol_AdminTools.Services;

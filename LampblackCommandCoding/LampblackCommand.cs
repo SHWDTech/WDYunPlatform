@@ -79,6 +79,7 @@ namespace SHWDTech.Platform.LampblackCommandCoding
                     break;
             }
 
+            package.DeviceNodeId = (string)DataConverter.DecodeComponentData(package["NodeId"]);
             package.Finalization();
         }
 

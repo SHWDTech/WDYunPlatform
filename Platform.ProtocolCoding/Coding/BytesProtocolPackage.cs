@@ -14,7 +14,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     {
         public BytesProtocolPackage()
         {
-            
+
         }
 
         public BytesProtocolPackage(IProtocolCommand command)
@@ -51,6 +51,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public override bool Finalized { get; protected set; }
 
+        public override int PackageLenth => _structureComponents.Select(p => p.Value.ComponentContent.Length).Sum() + DataComponent.ComponentContent.Length;
+
         /// <summary>
         /// 数据段索引
         /// </summary>
@@ -71,7 +73,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             {
                 if (name == "Data") return DataComponent;
 
-                if(_structureComponents.ContainsKey(name)) return _structureComponents[name];
+                if (_structureComponents.ContainsKey(name)) return _structureComponents[name];
 
                 return DataComponents.ContainsKey(name) ? DataComponents[name] : null;
             }
@@ -141,7 +143,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 (_structureComponents.Count + 1 != Protocol.ProtocolStructures.Count)
                 || !ProtocolChecker.CheckProtocol(this)
                 || DataComponent == null
-                || (Command.DataOrderType == DataOrderType.Order  && DataComponent.ComponentContent.Length != Command.ReceiveBytesLength)
+                || (Command.DataOrderType == DataOrderType.Order && DataComponent.ComponentContent.Length != Command.ReceiveBytesLength)
                 )
             {
                 Status = PackageStatus.InvalidPackage;
