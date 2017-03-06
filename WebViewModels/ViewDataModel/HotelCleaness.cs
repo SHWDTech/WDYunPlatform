@@ -4,6 +4,8 @@ namespace WebViewModels.ViewDataModel
 {
     public class HotelCleaness
     {
+        public Guid DistrictGuid { get; set; }
+
         public string ProjectName { get; set; }
 
         public string ProjectCleaness { get; set; }
@@ -16,6 +18,8 @@ namespace WebViewModels.ViewDataModel
         public LocationPoint Point { get; set; } = new LocationPoint();
 
         public Guid Id { get; set; }
+
+        public Guid DistrictGuid { get; set; }
 
         public string Status { get; set; }
     }

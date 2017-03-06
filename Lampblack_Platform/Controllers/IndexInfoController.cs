@@ -28,14 +28,14 @@ namespace Lampblack_Platform.Controllers
                     {
                         EQUP_ID = $"{device.DeviceCode}001",
                         RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue.Value > 0 ? "1" : "0"
+                        EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
                     model.data.Add(fan);
                     var cleaner = new Index
                     {
                         EQUP_ID = $"{device.DeviceCode}002",
                         RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue.Value > 0 ? "1" : "0"
+                        EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
                     model.data.Add(cleaner);
 
@@ -56,6 +56,8 @@ namespace Lampblack_Platform.Controllers
                         LogService.Instance.Error("IndexInfo接口执行失败详细原因。", ex);
                         currentException = currentException.InnerException;
                     }
+
+                    return model;
                 }
 
             }

@@ -23,8 +23,8 @@ $(function () {
         $(this).parent().addClass('active');
     });
 
-    var getHotels = function () {
-        base.AjaxGet('/CommonAjax/Hotels', { area: $('#areas').val(), street: $('#street').val(), address: $('#address').val() }, function (ret) {
+    var getDevices = function () {
+        base.AjaxGet('/CommonAjax/Devices', { area: $('#areas').val(), street: $('#street').val(), address: $('#address').val() }, function (ret) {
             $('#hotels').empty();
             if (!IsNullOrEmpty(ret.Result)) {
                 $(ret.Result).each(function(index, hotel) {
@@ -34,7 +34,7 @@ $(function () {
             $('.wd-card').on('click', function () {
                 hotel = $(this).html();
                 currentGauge.showLoading();
-                base.AjaxGet('/Home/HotelCurrentStatus', { hotelGuid: $(this).attr('value') }, function (ret) {
+                base.AjaxGet('/Home/DeviceCurrentStatus', { hotelGuid: $(this).attr('value') }, function (ret) {
                     currentGauge.hideLoading();
                     var record = ret.Result;
                     $('#current').html(record.Current + 'mA');
@@ -61,7 +61,7 @@ $(function () {
                 $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
             });
 
-            getHotels();
+            getDevices();
         });
     }
 
@@ -75,7 +75,7 @@ $(function () {
     });
 
     $('#address').on('change', function() {
-        getHotels();
+        getDevices();
     });
 
     $('#areas').change();

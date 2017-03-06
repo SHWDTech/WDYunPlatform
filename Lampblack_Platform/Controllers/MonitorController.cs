@@ -11,6 +11,7 @@ using MvcWebComponents.Model;
 using Platform.Cache;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
+using WebViewModels.ViewDataModel;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -22,8 +23,12 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Map")]
         public ActionResult GetHotelInfo()
         {
-            var hotelLocation = PlatformCaches.GetCache("HotelLocations").CacheItem;
-            return Json(new JsonStruct()
+            var hotelLocation =((List<HotelLocations>)PlatformCaches.GetCache("HotelLocations").CacheItem);
+            if (WdContext.UserDistricts != null)
+            {
+                hotelLocation = hotelLocation.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();
+            }
+                return Json(new JsonStruct()
             {
                 Result = hotelLocation
             }, JsonRequestBehavior.AllowGet);

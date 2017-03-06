@@ -1,9 +1,14 @@
-﻿using SHWD.Platform.Repository.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using SHWD.Platform.Repository.Repository;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using MvcWebComponents.Model;
+using Platform.Cache;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Model;
 
 namespace MvcWebComponents.Controllers
 {
@@ -64,6 +69,12 @@ namespace MvcWebComponents.Controllers
             {
                 context.Items.Add("WdContext", WdContext);
             }
+            var userDistricts = ((IList<SysDictionary>)PlatformCaches.GetCache("userDistrict").CacheItem)
+                .Where(obj => obj.ItemKey == currentUser.Id.ToString().ToUpper()).ToList();
+            foreach (var userDistrict in userDistricts)
+            {
+                WdContext.UserContext.Add("district", Guid.Parse(userDistrict.ItemValue));
+            }
         }
 
         protected T ProcessInvoke<T>() where T : ProcessBase, new() => new T()
@@ -71,7 +82,8 @@ namespace MvcWebComponents.Controllers
             RepositoryContext = new RepositoryContext
             {
                 CurrentUser = WdContext.WdUser,
-                CurrentDomain = WdContext.Domain
+                CurrentDomain = WdContext.Domain,
+                UserContext = WdContext.UserContext
             }
         };
 

@@ -157,8 +157,20 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<UserDictionaryRepository>())
             {
-                return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
+                if (RepositoryContext.UserContext.ContainsKey("district"))
+                {
+                    var userDistrict =
+                        RepositoryContext.UserContext.Where(obj => obj.Key == "district")
+                            .Select(item => Guid.Parse(item.Value.ToString().ToUpper()))
+                            .ToList();
+                    return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0 && userDistrict.Contains(obj.Id))
                     .ToDictionary(key => key.Id, value => value.ItemValue);
+                }
+                else
+                {
+                    return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
+                    .ToDictionary(key => key.Id, value => value.ItemValue);
+                }
             }
         }
 

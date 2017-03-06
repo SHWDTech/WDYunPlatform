@@ -1,4 +1,5 @@
-﻿using SHWD.Platform.Repository.IRepository;
+﻿using System.Collections.Generic;
+using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
 
 namespace SHWD.Platform.Repository.Repository
@@ -11,5 +12,7 @@ namespace SHWD.Platform.Repository.Repository
         public IWdUser CurrentUser { get; set; }
 
         public IDomain CurrentDomain { get; set; }
+
+        public Dictionary<string, object> UserContext { get; set; }
     }
 }

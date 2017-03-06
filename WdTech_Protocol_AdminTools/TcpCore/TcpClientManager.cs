@@ -41,11 +41,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private bool _processing;
 
         /// <summary>
-        /// 尝试解码失败次数
-        /// </summary>
-        private byte _decodeErrorTimes;
-
-        /// <summary>
         /// 客户端数据接收事件
         /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
@@ -59,6 +54,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// 客户端完成授权事件
         /// </summary>
         public event ClientAuthenticationEventHandler ClientAuthenticationEvent;
+
+        /// <summary>
+        /// 指示SOCKET是否已经释放
+        /// </summary>
+        private bool _isDisposed;
 
         /// <summary>
         /// 指示通信对象是否已经连接上
@@ -117,6 +117,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="result">同步接受结果</param>
         public void Received(IAsyncResult result)
         {
+            if (_isDisposed) return;
+
             var client = (Socket)result.AsyncState;
 
             lock (ReceiveBuffer)
@@ -141,30 +143,37 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                 }
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
-                    if (ex.Message == "远程主机强迫关闭了一个现有的连接。")
-                    {
-                        client.Close();
-                        IsConnected = false;
-                    }
-                    else
-                    {
-                        AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
-                    }
-
+                    AdminReportService.Instance.Warning($"接收客户端数据错误！套接字：{ReceiverName}", ex);
                     OnClientDisconnect();
                     return;
                 }
 
-                if (readCount <= 0)
+                if (readCount == 0 && !_isDisposed)
                 {
+                    try
+                    {
+                        client.Disconnect(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Error("尝试断开套接字失败。", ex);
+                    }
                     OnClientDisconnect();
-                    client.Close(0);
-                    IsConnected = false;
                     return;
                 }
             }
 
-            OnReceivedData();
+            if (_authStatus != AuthenticationStatus.AuthFailed)
+            {
+                OnReceivedData();
+            }
+            else
+            {
+                lock (_processBuffer)
+                {
+                    _processBuffer.Clear();
+                }
+            }
         }
 
         /// <summary>
@@ -197,15 +206,22 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             case AuthenticationStatus.Authed:
                                 Decode();
                                 break;
+                            default:
+                                _processBuffer.Remove(0);
+                                return;
                         }
                     }
                     catch (Exception ex)
                     {
                         LogService.Instance.Warn("协议解码错误！", ex);
-                        _decodeErrorTimes++;
-                        if (_decodeErrorTimes != 5 || _processBuffer.Count <= 0) continue;
-                        _processBuffer.RemoveAt(0);
-                        _decodeErrorTimes = 0;
+                        var innerException = ex.InnerException;
+                        while (innerException != null)
+                        {
+                            LogService.Instance.Warn("协议解码异常详情。", innerException);
+                            innerException = innerException.InnerException;
+                        }
+                        _processing = false;
+                        return;
                     }
                 }
 
@@ -218,6 +234,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void OnClientDisconnect()
         {
+            Dispose();
             ClientDisconnectEvent?.Invoke(this);
         }
 
@@ -249,6 +266,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             if (result.ResultType == AuthResultType.Faild)
             {
+                _authStatus = AuthenticationStatus.AuthFailed;
                 return;
             }
 
@@ -329,6 +347,13 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         }
 
         public void Send(ProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
-            => Send(_protocolEncoder.Encode(command, paramBytes));
+            => Send(_protocolEncoding.Encode(command, paramBytes));
+
+        public void Dispose()
+        {
+            if (_isDisposed) return;
+            _clientSocket.Dispose();
+            _isDisposed = true;
+        }
     }
 }

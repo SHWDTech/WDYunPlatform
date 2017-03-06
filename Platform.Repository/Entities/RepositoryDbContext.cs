@@ -64,17 +64,7 @@ namespace SHWD.Platform.Repository.Entities
                 .WithMany(c => c.FirmwareSets)
                 .Map(cs =>
                 {
-                    cs.MapLeftKey("FirwareId");
-                    cs.MapRightKey("FirmwareSetId");
-                    cs.ToTable("FirmwareSetFirmware");
-                });
-
-            modelBuilder.Entity<FirmwareSet>()
-                .HasMany(s => s.Firmwares)
-                .WithMany(c => c.FirmwareSets)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("FirwareId");
+                    cs.MapLeftKey("FirmwareId");
                     cs.MapRightKey("FirmwareSetId");
                     cs.ToTable("FirmwareSetFirmware");
                 });

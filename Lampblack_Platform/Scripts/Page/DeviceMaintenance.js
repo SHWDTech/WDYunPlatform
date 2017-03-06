@@ -1,5 +1,5 @@
 ﻿var getTable = function () {
-    base.AjaxGet("/Management/EditDeviceMaintenance", function (obj) {
+    base.AjaxGet("/Management/EditDeviceMaintenance", null, function (obj) {
         slideUp.append(obj);
         slideUp.show();
     });

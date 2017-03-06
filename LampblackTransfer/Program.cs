@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using SHWDTech.Platform.Utility;
 
 namespace LampblackTransfer
@@ -13,6 +15,8 @@ namespace LampblackTransfer
     class Program
     {
         private static List<DeviceInfo> _deviceInfos = new List<DeviceInfo>();
+
+        private static Dictionary<DeviceInfo, int> _devicePort = new Dictionary<DeviceInfo, int>();
 
         private static readonly Dictionary<DeviceInfo, TcpClient> Clients = new Dictionary<DeviceInfo, TcpClient>();
 
@@ -28,10 +32,13 @@ namespace LampblackTransfer
 
         private static readonly Dictionary<string, DeviceTime> DeviceTimes = new Dictionary<string, DeviceTime>();
 
-        static void Main()
+
+        private static void Main()
         {
             InitProgramConfig();
+            Console.ReadKey();
             StartTransfer();
+            Task.Factory.StartNew(DeviceTryReConnect);
             while (true)
             {
                 SendData();
@@ -46,7 +53,7 @@ namespace LampblackTransfer
             // ReSharper disable once FunctionNeverReturns
         }
 
-        static void InitProgramConfig()
+        private static void InitProgramConfig()
         {
             _connectionString = ConfigurationManager.AppSettings["dbcon"];
             _serverIpAddress = IPAddress.Parse(ConfigurationManager.AppSettings["serverIp"]);
@@ -56,9 +63,10 @@ namespace LampblackTransfer
             RefreashDeviceInfos();
         }
 
-        static void RefreashDeviceInfos()
+        private static void RefreashDeviceInfos()
         {
             var tableName = "DeviceInfo";
+            _devicePort = new Dictionary<DeviceInfo, int>();
             using (var conn = new SQLiteConnection(_connectionString))
             {
                 var cmd = new SQLiteCommand($"SELECT * FROM {tableName}", conn);
@@ -67,11 +75,21 @@ namespace LampblackTransfer
                 adapter.Fill(table);
                 _deviceInfos = table.ToListOf<DeviceInfo>();
             }
-
+            AddDevicePort();
             RefreashDeviceTime();
         }
 
-        static void RefreashDeviceTime()
+        private static void AddDevicePort()
+        {
+            foreach (var deviceInfo in _deviceInfos)
+            {
+                if (_devicePort.ContainsKey(deviceInfo)) continue;
+                _clientPort += 1;
+                _devicePort.Add(deviceInfo, _clientPort);
+            }
+        }
+
+        private static void RefreashDeviceTime()
         {
             DeviceTimes.Clear();
             var rd = new Random();
@@ -79,13 +97,13 @@ namespace LampblackTransfer
             {
                 DeviceTimes.Add(deviceInfo.NodeId,new DeviceTime()
                 {
-                    StartTime = rd.Next(900, 1000),
-                    EndTime = rd.Next(2200, 2300)
+                    StartTime = rd.Next(800, 1000),
+                    EndTime = rd.Next(2100, 2300)
                 } );
             }
         }
 
-        static void StartTransfer()
+        private static void StartTransfer()
         {
             foreach (var deviceInfo in _deviceInfos)
             {
@@ -94,55 +112,78 @@ namespace LampblackTransfer
             }
         }
 
-        static void Connect(DeviceInfo device)
+        private static void Connect(DeviceInfo device)
         {
-            var ipEndPoint = new IPEndPoint(_clientIpAddress, _clientPort);
-            var client = new TcpClient(ipEndPoint);
-            client.Connect(_serverIpAddress, _serverPort);
-            client.Client.Send(AutoProtocol.GetHeartBytes(device.NodeId));
-            _clientPort++;
-            Clients.Add(device, client);
+            try
+            {
+                var port = _devicePort[device];
+                var ipEndPoint = new IPEndPoint(_clientIpAddress, port);
+                var client = new TcpClient(ipEndPoint);
+                client.Connect(_serverIpAddress, _serverPort);
+                client.Client.Send(AutoProtocol.GetHeartBytes(device.NodeId));
+                Clients.Add(device, client);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("连接服务器失败。", ex);
+            }
         }
 
-        static void SendData()
+        private static void DeviceTryReConnect()
         {
-            foreach (var tcpClient in Clients)
+            while (true)
             {
+                var disconnectDevices = _deviceInfos.Where(obj => !Clients.ContainsKey(obj)).ToList();
+                foreach (var disconnectDevice in disconnectDevices)
+                {
+                    Connect(disconnectDevice);
+                    Thread.Sleep(50);
+                }
+                Thread.Sleep(60000);
+            }
+            // ReSharper disable once FunctionNeverReturns
+        }
+
+        private static void SendData()
+        {
+            foreach (var dev in _deviceInfos)
+            {
+                if (!Clients.ContainsKey(dev)) continue;
+                var tcpClient = Clients[dev];
                 try
                 {
-                    tcpClient.Value.Client.Send(AutoProtocol.GetHeartBytes(tcpClient.Key.NodeId));
-                    var temp = new byte[4096];
-                    tcpClient.Value.Client.Receive(temp);
                     var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
-                    var time = DeviceTimes[tcpClient.Key.NodeId];
+                    var time = DeviceTimes[dev.NodeId];
                     if (nowTime < time.StartTime || nowTime > time.EndTime)
                         continue;
-                    tcpClient.Value.Client.Send(
+                    tcpClient.Client.Send(
                         AutoProtocol.GetAutoReportBytes(new AutoReportConfig
                         {
-                            CleanerNumber = GetRate(tcpClient.Key.Rate),
-                            CleanerSwitch = tcpClient.Key.Opened,
-                            FanSwitch = tcpClient.Key.Opened,
-                            NodeId = tcpClient.Key.NodeId
+                            CleanerNumber = GetRate(dev.Rate),
+                            CleanerSwitch = dev.Opened,
+                            FanSwitch = dev.Opened,
+                            NodeId = dev.NodeId
                         }));
 
-                    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{tcpClient.Key.NodeId}。");
+                    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{dev.NodeId}。");
                     Thread.Sleep(300);
                 }
                 catch (Exception ex)
                 {
-                    Thread.Sleep(300);
-                    LogService.Instance.Error($"发送数据失败，设备NODEID：{tcpClient.Key.NodeId}", ex);
+                    LogService.Instance.Error($"发送数据失败，设备NODEID：{dev.NodeId}。", ex);
+                    tcpClient.Client.Close();
+                    tcpClient.Client.Dispose();
+                    Clients.Remove(dev);
                 }
             }
         }
 
-        static int GetRate(long rate)
+        private static int GetRate(long rate)
         {
             switch (rate)
             {
                 case 0:
-                    return new Random().Next(0,50);
+                    return new Random().Next(5,50);
                 case 1:
                     return new Random().Next(51, 200);
                 case 2:

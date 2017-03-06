@@ -18,12 +18,12 @@ namespace AutoDataStaticService
         /// <summary>
         /// 需要计算的指令数据
         /// </summary>
-        private static List<CommandData> _produceDatas;
+        private static readonly List<CommandData> ProduceDatas = new List<CommandData>();
 
         /// <summary>
         /// 运行时间指令数据
         /// </summary>
-        private static List<CommandData> _runningTimeDatas;
+        private static readonly List<CommandData> RunningTimeDatas = new List<CommandData>();
 
         /// <summary>
         /// 需要更新的餐饮酒店
@@ -104,9 +104,9 @@ namespace AutoDataStaticService
 
         static void ProduceHourDatas(Guid hotelGuid)
         {
-            foreach (var data in _produceDatas)
+            foreach (var data in ProduceDatas)
             {
-                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectId == hotelGuid  && obj.CommandDataId == data.Id))
                 {
                     continue;
                 }
@@ -145,18 +145,18 @@ namespace AutoDataStaticService
 
         private static void ProduceDayDatas(Guid hotelGuid)
         {
-            foreach (var data in _produceDatas)
+            foreach (var data in ProduceDatas)
             {
-                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectId == hotelGuid && obj.CommandDataId == data.Id))
                 {
                     continue;
                 }
                 Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日历史数据，数据名称：{data.DataName}");
                 var lastDate = ProcessInvoke.Instance<DataStatisticsProcess>()
-                        .GetLastUpdateDataDate(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid && obj.Type == StatisticsType.Day);
+                        .GetLastUpdateDataDate(obj => obj.ProjectId == hotelGuid && obj.CommandDataId == data.Id && obj.Type == StatisticsType.Day);
 
                 var startDate = lastDate == DateTime.MinValue
-                    ? ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid).UpdateTime
+                    ? ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectId == hotelGuid && obj.CommandDataId == data.Id).UpdateTime
                     : lastDate;
 
                 startDate = startDate.GetToday();
@@ -185,9 +185,9 @@ namespace AutoDataStaticService
 
         private static void ProduceDayRunningTime(Guid hotelGuid)
         {
-            foreach (var data in _runningTimeDatas)
+            foreach (var data in RunningTimeDatas)
             {
-                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectId == hotelGuid && obj.CommandDataId == data.Id))
                 {
                     continue;
                 }
@@ -196,7 +196,7 @@ namespace AutoDataStaticService
 
                 var type = GetRunningType(data.DataName);
                 var lastDate = process.LastRecordDateTime(hotelGuid, type);
-                var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.CommandDataId == data.Id && obj.ProjectId == hotelGuid);
+                var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectId == hotelGuid && obj.CommandDataId == data.Id);
                 var startDate = lastDate == DateTime.MinValue
                         ? firstMonitorData.UpdateTime
                         : lastDate.AddDays(1);
@@ -205,7 +205,7 @@ namespace AutoDataStaticService
                 {
                     var date = startDate;
                     var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
-                        .GetRunTime(hotelGuid, date, data.DataName);
+                        .GetRunTime(hotelGuid, date, data.Id);
 
                     var runningTime = new RunningTimeRepository().CreateDefaultModel();
                     runningTime.UpdateTime = date.GetToday();
@@ -297,26 +297,18 @@ namespace AutoDataStaticService
 
             ProcessInvoke.SetupGlobalRepositoryContext(serverUser, serverUser.Domain);
 
-            _produceDatas = new List<CommandData>();
             using (var context = new RepositoryDbContext())
             {
                 foreach (var data in AppConfig.CommandDatas)
                 {
-                    _produceDatas.Add(context.Set<CommandData>().First(obj => obj.DataName == data));
+                    ProduceDatas.Add(context.Set<CommandData>().First(obj => obj.DataName == data));
                 }
-            }
 
-            _runningTimeDatas = new List<CommandData>();
-            using (var context = new RepositoryDbContext())
-            {
                 foreach (var data in AppConfig.RunningTimeDatas)
                 {
-                    _runningTimeDatas.Add(context.Set<CommandData>().First(obj => obj.DataName == data));
+                    RunningTimeDatas.Add(context.Set<CommandData>().First(obj => obj.DataName == data));
                 }
-            }
 
-            using (var context = new RepositoryDbContext())
-            {
                 _hotelGuids = context.Set<HotelRestaurant>().ToList();
             }
 

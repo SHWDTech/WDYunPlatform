@@ -6,6 +6,7 @@ using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.ProtocolCoding.MessageQueueModel;
 using WdTech_Protocol_AdminTools.Services;
 using System.Timers;
+using SHWDTech.Platform.Utility;
 
 namespace WdTech_Protocol_AdminTools.TcpCore
 {
@@ -44,16 +45,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 有效设备连接
         /// </summary>
-        public int AliveConnection
-        {
-            get
-            {
-                lock (_clientSockets)
-                {
-                    return _clientSockets.Count;
-                }
-            }
-        }
+        public int AliveConnection => _clientSockets.Count;
 
         public ActiveClientManager()
         {
@@ -84,6 +76,14 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         public void Stop()
         {
+            lock (_clientSockets)
+            {
+                for (var i = 0; i < _clientSockets.Count; i++)
+                {
+                    _clientSockets[i].Dispose();
+                    _clientSockets.Remove(_clientSockets[i]);
+                }
+            }
             _connectionCheckTimer.Stop();
         }
 
@@ -112,7 +112,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_clientSockets)
             {
-                _clientSockets.Remove(tcpClient);
+                try
+                {
+                    _clientSockets.Remove(tcpClient);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Fatal($"尝试删除设备失败，目标设备：{tcpClient.DeviceGuid}", ex);
+                    return;
+                }
             }
             if (tcpClient.IsConnected)
             {
@@ -124,19 +132,25 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_clientSockets)
             {
-                if (_clientSockets.Any(obj => obj.ClientDevice != null && obj.DeviceGuid == tcpClient.DeviceGuid))
-                {
-                    var existClients =
-                        _clientSockets.Where(obj => obj.DeviceGuid == tcpClient.DeviceGuid)
-                            .Select(item => item.ClientGuid)
-                            .ToList();
+                var unUsedCLients =
+                    _clientSockets.Where(obj => obj.ClientDevice != null && obj.DeviceGuid == tcpClient.DeviceGuid && obj.ClientGuid != tcpClient.ClientGuid)
+                        .Select(item => item.DeviceGuid)
+                        .ToList();
 
-                    foreach (var client in existClients)
+                foreach (var client in unUsedCLients)
+                {
+                    var unUsedCLient = _clientSockets.First(obj => obj.DeviceGuid == client);
+                    unUsedCLient.Dispose();
+                    try
                     {
-                        var unUsedCLient = _clientSockets.First(obj => obj.ClientGuid == client);
                         _clientSockets.Remove(unUsedCLient);
                     }
+                    catch (Exception ex)
+                    {
+                        LogService.Instance.Fatal($"尝试删除连接失效设备失败，目标设备：{unUsedCLient.DeviceGuid}", ex);
+                    }
                 }
+
             }
 
             AdminReportService.Instance.Info($"客户端授权通过，客户端设备NODEID：{tcpClient.ClientDevice.DeviceNodeId}");
