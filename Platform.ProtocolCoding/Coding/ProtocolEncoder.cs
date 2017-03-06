@@ -121,40 +121,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public void Delive(IProtocolPackage package, IPackageSource source)
         {
-            var package = new ProtocolPackage() { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
-
-            var structures = matchedProtocol.ProtocolStructures.ToList();
-
-            if (string.IsNullOrWhiteSpace(matchedProtocol.ProtocolModule))
-            {
-                package.Status = PackageStatus.InvalidPackage;
-                return package;
-            }
-
-            var commandCoder = UnityFactory.Resolve<ICommandCoding>(matchedProtocol.ProtocolModule);
-
-            var currentIndex = 0;
-
-            for (var i = 0; i < structures.Count; i++)
-            {
-                var structure = structures.First(obj => obj.StructureIndex == i);
-
-                //协议中，数据段如果是自由组织的形式，那么数据库中设置数据段长度为零。解码时，按照协议中的DataLength段的值解码数据段。
-                var componentDataLength = structure.StructureName == StructureNames.Data && structure.StructureDataLength == 0
-                    ? Globals.BytesToInt16(package["DataLength"].ComponentBytes, 0, true)
-                    : structure.StructureDataLength;
-
-                if (currentIndex + componentDataLength > bufferBytes.Length)
-                {
-                    package.Status = PackageStatus.NoEnoughBuffer;
-                    return package;
-                }
-
-                if (structure.StructureName == StructureNames.Data)
-                {
-                    commandCoder.DetectCommand(package, matchedProtocol);
-                    componentDataLength = package.Command.ReceiveBytesLength == 0 ? componentDataLength : package.Command.ReceiveBytesLength;
-                }
+            var coder = GetCommandCoder(package.Protocol.ProtocolName);
+            coder.DoDelive(package, source);
+        }
 
         private static ICommandCoder GetCommandCoder(string protocolName)
         {
