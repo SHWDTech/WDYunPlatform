@@ -28,7 +28,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public virtual string DeviceNodeId { get; set; } = string.Empty;
 
-        public virtual List<string> DeliverParams { get; } = null;
+        public virtual List<string> DeliverParams => Command.CommandDeliverParams;
 
         public virtual PackageStatus Status { get; set; }
 

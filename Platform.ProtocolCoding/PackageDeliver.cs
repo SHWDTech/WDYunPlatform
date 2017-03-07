@@ -43,7 +43,7 @@ namespace SHWDTech.Platform.ProtocolCoding
 
             foreach (var deliverMethod in deliverParams.Select(param => Deliver.GetMethod(param)))
             {
-                deliverMethod.Invoke(deliverMethod, new object[] { package, source });
+                deliverMethod.Invoke(this, new object[] { package, source });
             }
         }
 
