@@ -5,6 +5,11 @@
     /// </summary>
     public interface IProject : ISysDomainModel
     {
+        /// <summary>
+        /// 索引列
+        /// </summary>
+        long Identity { get; set; }
+
         string ProjectCode { get; set; }
 
         string ProjectName { get; set; }

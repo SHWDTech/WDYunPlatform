@@ -15,11 +15,6 @@ namespace SHWDTech.Platform.Model.IModel
         Guid CommandDataId { get; set; }
 
         /// <summary>
-        /// 数据类型
-        /// </summary>
-        CommandData CommandData { get; set; }
-
-        /// <summary>
         /// 数据来源通道号
         /// </summary>
         short DataChannel { get; set; }
@@ -27,22 +22,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 数据来源工地ID
         /// </summary>
-        Guid? ProjectId { get; set; }
+        long ProjectIdentity { get; set; }
 
         /// <summary>
-        /// 数据来源工地
+        /// 来源设备ID
         /// </summary>
-        Project Project { get; set; }
-
-        /// <summary>
-        /// 数据名称
-        /// </summary>
-        string DataName { get; }
-
-        /// <summary>
-        /// 数据来源设备
-        /// </summary>
-        Device Device { get; set; }
+        long DeviceIdentity { get; set; }
 
         /// <summary>
         /// 浮点数据值

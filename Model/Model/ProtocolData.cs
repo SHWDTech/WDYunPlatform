@@ -12,18 +12,10 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class ProtocolData : DataModelBase, IProtocolData
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public override Guid Id { get; set; }
-
         [Required]
         [Display(Name = "协议所属设备ID")]
         [Index("Ix_Device_UpdateTime", Order = 0)]
-        public virtual Guid DeviceId { get; set; }
-
-        [Display(Name = "协议所属设备")]
-        [ForeignKey("DeviceId")]
-        public virtual Device Device { get; set; }
+        public virtual long DeviceIdentity { get; set; }
 
         [Required]
         [Display(Name = "协议内容")]
@@ -36,10 +28,6 @@ namespace SHWDTech.Platform.Model.Model
         [Required]
         [Display(Name = "协议类型ID")]
         public virtual Guid ProtocolId { get; set; }
-
-        [Display(Name = "协议类型")]
-        [ForeignKey("ProtocolId")]
-        public virtual Protocol Protocol { get; set; }
 
         [DataType(DataType.DateTime)]
         [Display(Name = "协议包组包完成时间")]

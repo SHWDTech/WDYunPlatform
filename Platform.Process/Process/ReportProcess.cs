@@ -32,7 +32,7 @@ namespace Platform.Process.Process
                         HotelName = hotel.ProjectName
                     };
 
-                    if (repo.GetCount(obj => obj.ProjectId == hotel.Id) <= 0)
+                    if (repo.GetCount(obj => obj.ProjectIdentity == hotel.Identity) <= 0)
                     {
                         report.TotalCleanerRunTimeTicks = 0;
                         report.TotalFanRunTimeTicks = 0;
@@ -43,7 +43,7 @@ namespace Platform.Process.Process
                     var cleanerRecord = repo.GetModels(obj =>
                         obj.UpdateTime >= startDate
                         && obj.UpdateTime < model.DueDateTime
-                        && obj.ProjectId == hotel.Id
+                        && obj.ProjectIdentity == hotel.Identity
                         && obj.Type == RunningTimeType.Cleaner);
                     if (cleanerRecord.Count() != 0)
                     {
@@ -53,7 +53,7 @@ namespace Platform.Process.Process
                     var fanRecord = repo.GetModels(obj =>
                         obj.UpdateTime >= startDate
                         && obj.UpdateTime < model.DueDateTime
-                        && obj.ProjectId == hotel.Id
+                        && obj.ProjectIdentity == hotel.Identity
                         && obj.Type == RunningTimeType.Fan);
 
                     if (fanRecord.Count() != 0)
@@ -85,8 +85,8 @@ namespace Platform.Process.Process
                     AreaGuid = userDictionary.Id,
                     AreaName = userDictionary.ItemValue
                 };
-                var areaHotels = hotels.Where(obj => obj.DistrictId == userDictionary.Id).Select(item => item.Id).ToList();
-                var hotelRunningTimes = repo.GetModels(obj => areaHotels.Contains(obj.ProjectId));
+                var areaHotels = hotels.Where(obj => obj.DistrictId == userDictionary.Id).Select(item => item.Identity).ToList();
+                var hotelRunningTimes = repo.GetModels(obj => areaHotels.Contains(obj.ProjectIdentity));
                 record.CurrentLinkage = GetLinkage(hotelRunningTimes, model.DueDateTime, model.ReportType);
 
                 var lastdueDateTime = ReportStartDate(model.DueDateTime, model.ReportType);

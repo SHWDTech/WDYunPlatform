@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.IModel;
@@ -36,12 +38,38 @@ namespace SHWD.Platform.Repository.Repository
             return model;
         }
 
+        public virtual T GetModelIncludeById(long id, List<string> includes)
+        {
+            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
+
+            return query.SingleOrDefault(obj => obj.Id == id);
+        }
+
+        public virtual T GetModelById(long id)
+            => EntitySet.SingleOrDefault(obj => obj.Id == id);
+
         public override T ParseModel(string jsonString)
         {
             var model = base.ParseModel(jsonString);
             model.DomainId = CurrentDomain.Id;
 
             return model;
+        }
+
+        public virtual long PartialUpdateDoCommit(T model, List<string> propertyNames)
+        {
+            DoPartialUpdate(model, propertyNames);
+
+            return Submit() != 1 ? -1 : model.Id;
+        }
+
+        public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
+
+        public virtual long AddOrUpdateDoCommit(T model)
+        {
+            DoAddOrUpdate(model);
+
+            return Submit() != 1 ? -1 : model.Id;
         }
     }
 }

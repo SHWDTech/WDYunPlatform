@@ -36,7 +36,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
-                monitorData.ProjectId = package.Device.ProjectId;
+                monitorData.DeviceIdentity = package.Device.Identity;
+                monitorData.ProjectIdentity = package.Device.Project.Identity;
 
                 monitorDataList.Add(monitorData);
             }
@@ -83,7 +84,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = dataComponent.Value.CommandData.Id;
-                monitorData.ProjectId = package.Device.ProjectId;
+                monitorData.DeviceIdentity = package.Device.Identity;
+                monitorData.ProjectIdentity = package.Device.Project.Identity;
                 monitorData.DataIsValid = (dataComponent.Value.ValidFlag & 0x80) == 0;
                 monitorData.DataChannel = dataComponent.Value.ComponentChannel;
 
@@ -96,7 +98,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     ProtocolDataId = package.ProtocolData.Id,
                     UpdateTime = DateTime.Now,
                     CommandDataId = new Guid("15802959-D25B-42AD-BE50-5B48DCE4039A"),
-                    ProjectId = package.Device.ProjectId,
+                    DeviceIdentity = package.Device.Identity,
+                    ProjectIdentity = package.Device.Project.Identity,
                     DataIsValid = true,
                     DataChannel = dataComponent.Value.ComponentChannel
                 };

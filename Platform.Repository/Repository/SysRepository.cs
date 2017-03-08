@@ -2,8 +2,10 @@
 using SHWDTech.Platform.Model.IModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using SHWD.Platform.Repository.Entities;
+using SHWDTech.Platform.Utility;
 
 namespace SHWD.Platform.Repository.Repository
 {
@@ -36,6 +38,11 @@ namespace SHWD.Platform.Repository.Repository
             model.IsEnabled = true;
             model.CreateDateTime = DateTime.Now;
             model.CreateUserId = CurrentUser.Id;
+
+            if (genereteId)
+            {
+                model.Id = Globals.NewCombId();
+            }
 
             return model;
         }
@@ -70,13 +77,24 @@ namespace SHWD.Platform.Repository.Repository
             base.AddOrUpdate(modelList);
         }
 
-        public override Guid AddOrUpdateDoCommit(T model)
+        public virtual Guid AddOrUpdateDoCommit(T model)
         {
             model.LastUpdateDateTime = DateTime.Now;
             model.LastUpdateUserId = CurrentUser.Id;
+            DoAddOrUpdate(model);
 
-            return base.AddOrUpdateDoCommit(model);
+            return Submit() != 1 ? Guid.Empty : model.Id;
         }
+
+        public virtual T GetModelIncludeById(Guid guid, List<string> includes)
+        {
+            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
+
+            return query.SingleOrDefault(obj => obj.Id == guid);
+        }
+
+        public virtual T GetModelById(Guid guid)
+            => EntitySet.SingleOrDefault(obj => obj.Id == guid);
 
         public override int AddOrUpdateDoCommit(IEnumerable<T> models)
         {
@@ -113,14 +131,15 @@ namespace SHWD.Platform.Repository.Repository
             base.PartialUpdate(models, propertyNames);
         }
 
-        public override Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
+        public virtual Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
         {
             model.LastUpdateDateTime = DateTime.Now;
             model.LastUpdateUserId = CurrentUser.Id;
             propertyNames.Add("LastUpdateDateTime");
             propertyNames.Add("LastUpdateUserId");
+            DoPartialUpdate(model, propertyNames);
 
-            return base.PartialUpdateDoCommit(model, propertyNames);
+            return Submit() != 1 ? Guid.Empty : model.Id;
         }
 
         public override int PartialUpdateDoCommit(List<T> models, List<string> propertyNames)
@@ -163,5 +182,7 @@ namespace SHWD.Platform.Repository.Repository
                 SetEnableStatus(model, enableStatus);
             }
         }
+
+        public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
     }
 }

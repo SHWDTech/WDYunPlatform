@@ -1,6 +1,5 @@
 ﻿using System;
 using SHWDTech.Platform.Model.Enums;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -25,24 +24,14 @@ namespace SHWDTech.Platform.Model.IModel
         RunningTimeType Type { get; set; }
 
         /// <summary>
-        /// 运行时间关联酒店
-        /// </summary>
-        Project Project { get; set; }
-
-        /// <summary>
         /// 运行时间关联时间ID
         /// </summary>
-        Guid ProjectId { get; set; }
-
-        /// <summary>
-        /// 运行时间关联设备
-        /// </summary>
-        Device Device { get; set; }
+        long ProjectIdentity { get; set; }
 
         /// <summary>
         /// 运行时间关联设备ID
         /// </summary>
-        Guid DeviceId { get; set; }
+        long DeviceIdentity { get; set; }
 
         /// <summary>
         /// 记录时间

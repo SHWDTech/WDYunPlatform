@@ -10,6 +10,11 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IDevice : ISysDomainModel
     {
         /// <summary>
+        /// 索引列
+        /// </summary>
+        long Identity { get; set; }
+
+        /// <summary>
         /// 设备类型ID
         /// </summary>
         Guid DeviceTypeId { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.IModel;
 using SHWDTech.Platform.Model.ModelBase;
 
@@ -11,6 +12,10 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Project : SysDomainModelBase, IProject
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Index("Index_Project_Identity", IsClustered = true, IsUnique = true)]
+        public long Identity { get; set; }
+
         [Required]
         [Display(Name = "项目编码")]
         [MaxLength(200)]

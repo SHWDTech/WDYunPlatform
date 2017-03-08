@@ -11,6 +11,7 @@ using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Utility.ExtensionMethod;
+using WebViewModels.Enums;
 
 namespace Platform.Process.Process
 {
@@ -133,11 +134,11 @@ namespace Platform.Process.Process
                 retDictionary.Add("LampblackIn", GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue ?? 0.0);
                 retDictionary.Add("LampblackOut", GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue ?? 0.0);
 
-                var cleanerCurrent = recentDatas.Where(data => data.DataName == ProtocolDataName.CleanerCurrent)
+                var cleanerCurrent = recentDatas.Where(data => data.CommandDataId == CommandDataId.CleanerCurrent)
                 .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
 
                 retDictionary.Add("CleanRate",
-                    cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceId));
+                    cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceIdentity));
 
                 retDictionary.Add("CleanerRunTime", GetCleanerRunTimeString(device.Id));
                 retDictionary.Add("FanRunTime", GetFanRunTimeString(device.Id));
@@ -161,13 +162,13 @@ namespace Platform.Process.Process
             using (var dataRepo = Repo<MonitorDataRepository>())
             {
                 var protocol =
-                    Repo<ProtocolDataRepository>().GetModels(obj => obj.DeviceId == dev.Id).OrderByDescending(d => d.UpdateTime).FirstOrDefault();
+                    Repo<ProtocolDataRepository>().GetModels(obj => obj.DeviceIdentity == dev.Identity).OrderByDescending(d => d.UpdateTime).FirstOrDefault();
                 if (protocol == null || protocol.UpdateTime < checkDate)
                 {
                     return new List<MonitorData>();
                 }
 
-                var datas = dataRepo.GetModels(data => data.ProjectId == dev.ProjectId && data.ProtocolDataId == protocol.Id).ToList();
+                var datas = dataRepo.GetModels(data => data.ProjectIdentity == dev.Project.Identity && data.ProtocolDataId == protocol.Id).ToList();
 
                 return datas;
             }
@@ -180,18 +181,21 @@ namespace Platform.Process.Process
         /// <param name="monitorDatas"></param>
         /// <returns></returns>
         private MonitorData GetMonitorDataValue(string dataName, List<MonitorData> monitorDatas)
-            => monitorDatas.FirstOrDefault(obj => obj.DataName == dataName);
+        {
+            var commandData = Repo<CommandDataRepository>().GetModel(d => d.DataName == dataName);
+            return monitorDatas.FirstOrDefault(obj => obj.CommandDataId == commandData.Id);
+        }
 
         /// <summary>
         /// 获取清洁度值
         /// </summary>
         /// <param name="current"></param>
-        /// <param name="deviceId"></param>
+        /// <param name="deviceIdentity"></param>
         /// <returns></returns>
-        private string GetCleanRate(double? current, Guid deviceId)
+        private string GetCleanRate(double? current, long deviceIdentity)
         {
             var model = Repo<RestaurantDeviceRepository>()
-                       .GetModelIncludeById(deviceId, new List<string> { "LampblackDeviceModel" })
+                       .GetDeviceIncludesByIdentity(deviceIdentity, new List<string> { "LampblackDeviceModel" })
                        .LampblackDeviceModel;
 
             var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
@@ -208,18 +212,19 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
+                var hotel = Repo<HotelRestaurantRepository>().GetModelById(hotelGuid);
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
 
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                var start = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
                         && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
+                        && obj.CommandDataId == CommandDataId.CleanerCurrent
                         && obj.UpdateTime > today)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                var end = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
                         && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
+                        && obj.CommandDataId == CommandDataId.CleanerCurrent
                         && obj.UpdateTime > today)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();
@@ -251,18 +256,19 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
+                var hotel = Repo<HotelRestaurantRepository>().GetModelById(hotelGuid);
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
 
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                var start = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
                         && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.FanSwitch
+                        && obj.CommandDataId == CommandDataId.FanSwitch
                         && obj.UpdateTime > today)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
+                var end = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
                         && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.FanSwitch
+                        && obj.CommandDataId == CommandDataId.FanSwitch
                         && obj.UpdateTime > today)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();

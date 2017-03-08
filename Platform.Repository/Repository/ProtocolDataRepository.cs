@@ -1,5 +1,4 @@
-﻿using System;
-using SHWD.Platform.Repository.Entities;
+﻿using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWDTech.Platform.Model.Model;
 
@@ -23,8 +22,6 @@ namespace SHWD.Platform.Repository.Repository
         public ProtocolData CreateDefaultModel()
         {
             var model = new DataRepository<ProtocolData>().CreateDefaultModel();
-
-            model.Id = Guid.Empty;
 
             return model;
         }

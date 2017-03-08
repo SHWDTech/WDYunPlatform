@@ -1,5 +1,4 @@
-﻿using SHWDTech.Platform.Model.Model;
-using System;
+﻿using System;
 
 namespace SHWDTech.Platform.Model.IModel
 {
@@ -11,22 +10,12 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 数据所属协议包ID
         /// </summary>
-        Guid ProtocolDataId { get; set; }
-
-        /// <summary>
-        /// 数据所属协议包
-        /// </summary>
-        ProtocolData ProtocolData { get; set; }
+        long ProtocolDataId { get; set; }
 
         /// <summary>
         /// 数据类型ID
         /// </summary>
         Guid CommandDataId { get; set; }
-
-        /// <summary>
-        /// 数据类型
-        /// </summary>
-        CommandData CommandData { get; set; }
 
         /// <summary>
         /// 数据来源通道号
@@ -36,27 +25,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 来源工地ID
         /// </summary>
-        Guid? ProjectId { get; set; }
-
-        /// <summary>
-        /// 来源工地
-        /// </summary>
-        Project Project { get; set; }
-
-        /// <summary>
-        /// 来源设备
-        /// </summary>
-        Device Device { get; }
-
-        /// <summary>
-        /// 来源设备
-        /// </summary>
-        Guid DeviceId { get; }
-
-        /// <summary>
-        /// 数据名称类型
-        /// </summary>
-        string DataName { get; }
+        long ProjectIdentity { get; set; }
 
         /// <summary>
         /// 浮点数据值

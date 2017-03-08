@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using SHWD.Platform.Repository.Entities;
@@ -28,6 +30,13 @@ namespace SHWD.Platform.Repository.Repository
             {
                 EntitySet = EntitySet.Where(Filter);
             }
+        }
+
+        public RestaurantDevice GetDeviceIncludesByIdentity(long identity, List<string> includes)
+        {
+            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
+
+            return query.SingleOrDefault(obj => obj.Identity == identity);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Platform.Process.Business
         /// <summary>
         /// 酒店ID
         /// </summary>
-        public Guid HotelId { get; set; }
+        public long HotelId { get; set; }
 
         /// <summary>
         /// 酒店名称

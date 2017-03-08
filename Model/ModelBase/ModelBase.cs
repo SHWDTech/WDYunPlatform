@@ -11,10 +11,6 @@ namespace SHWDTech.Platform.Model.ModelBase
     [Serializable]
     public class ModelBase : IModel.IModel
     {
-        [Key]
-        [Display(Name = "唯一标识符")]
-        public virtual Guid Id { get; set; }
-
         [NotMapped]
         [Display(Name = "模型状态")]
         public virtual ModelState ModelState { get; set; } = ModelState.UnChanged;

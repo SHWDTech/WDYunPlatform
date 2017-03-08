@@ -76,13 +76,6 @@ namespace SHWD.Platform.Repository.Repository
         public virtual T GetModel(Expression<Func<T, bool>> exp)
             => EntitySet.SingleOrDefault(exp);
 
-        public virtual T GetModelIncludeById(Guid guid, List<string> includes)
-        {
-            var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
-
-            return query.SingleOrDefault(obj => obj.Id == guid);
-        }
-
         public virtual T GetModelInclude(Expression<Func<T, bool>> exp, List<string> includes)
         {
             var query = includes.Aggregate(EntitySet, (current, include) => current.Include(include));
@@ -96,9 +89,6 @@ namespace SHWD.Platform.Repository.Repository
 
             return query.Where(exp);
         }
-
-        public virtual T GetModelById(Guid guid)
-            => EntitySet.SingleOrDefault(obj => obj.Id == guid);
 
         public virtual int GetCount(Expression<Func<T, bool>> exp)
             => exp == null ? EntitySet.Count() : EntitySet.Where(exp).Count();
@@ -114,11 +104,6 @@ namespace SHWD.Platform.Repository.Repository
             {
                 ModelState = ModelState.Added
             };
-
-            if (generateId)
-            {
-                model.Id = Globals.NewCombId();
-            }
 
             return model;
         }
@@ -174,13 +159,6 @@ namespace SHWD.Platform.Repository.Repository
             DoAddOrUpdate(models);
         }
 
-        public virtual Guid AddOrUpdateDoCommit(T model)
-        {
-            DoAddOrUpdate(model);
-
-            return Submit() != 1 ? Guid.Empty : model.Id;
-        }
-
         public virtual int AddOrUpdateDoCommit(IEnumerable<T> models)
         {
             DoAddOrUpdate(models);
@@ -232,13 +210,6 @@ namespace SHWD.Platform.Repository.Repository
         public virtual void PartialUpdate(List<T> models, List<string> propertyNames)
         {
             DoPartialUpdate(models, propertyNames);
-        }
-
-        public virtual Guid PartialUpdateDoCommit(T model, List<string> propertyNames)
-        {
-            DoPartialUpdate(model, propertyNames);
-
-            return Submit() != 1 ? Guid.Empty : model.Id;
         }
 
         public virtual int PartialUpdateDoCommit(List<T> models, List<string> propertyNames)
@@ -330,8 +301,6 @@ namespace SHWD.Platform.Repository.Repository
                 && type.GetGenericArguments().Any(t => t.IsValueType && IsPrimitive(t)));
         }
 
-        public virtual bool IsExists(T model) => EntitySet.Any(obj => obj.Id == model.Id);
-
         public virtual bool IsExists(Func<T, bool> exp) => EntitySet.Any(exp);
 
         /// <summary>
@@ -358,7 +327,7 @@ namespace SHWD.Platform.Repository.Repository
         /// 提交更改
         /// </summary>
         /// <returns></returns>
-        private int Submit()
+        protected int Submit()
             => DbContext.SaveChanges();
 
         public void Dispose()

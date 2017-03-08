@@ -8,6 +8,11 @@ namespace SHWDTech.Platform.Model.IModel
     public interface ISysModel : IModel
     {
         /// <summary>
+        /// 主键
+        /// </summary>
+        Guid Id { get; set; }
+
+        /// <summary>
         /// 字段创建时间
         /// </summary>
         DateTime CreateDateTime { get; set; }

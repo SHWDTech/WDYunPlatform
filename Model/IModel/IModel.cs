@@ -9,11 +9,6 @@ namespace SHWDTech.Platform.Model.IModel
     public interface IModel
     {
         /// <summary>
-        /// 数据唯一标识ID
-        /// </summary>
-        Guid Id { get; set; }
-
-        /// <summary>
         /// 对象状态
         /// </summary>
         ModelState ModelState { get; set; }

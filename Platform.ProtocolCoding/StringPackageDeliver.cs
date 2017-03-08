@@ -33,7 +33,8 @@ namespace SHWDTech.Platform.ProtocolCoding
                 monitorData.ProtocolDataId = package.ProtocolData.Id;
                 monitorData.UpdateTime = DateTime.Now;
                 monitorData.CommandDataId = commandData.Id;
-                monitorData.ProjectId = package.Device.ProjectId;
+                monitorData.DeviceIdentity = package.Device.Identity;
+                monitorData.ProjectIdentity = package.Device.Project.Identity;
 
                 monitorDataList.Add(monitorData);
             }

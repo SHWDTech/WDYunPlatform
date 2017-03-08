@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SHWDTech.Platform.Model.Model;
 
 namespace SHWDTech.Platform.Model.ModelBase
 {
@@ -12,12 +11,13 @@ namespace SHWDTech.Platform.Model.ModelBase
     [Serializable]
     public class DataModelBase : ModelBase, IDataModel
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+
         [Required]
         [Display(Name = "所属域ID")]
         public virtual Guid DomainId { get; set; }
 
-        [Display(Name = "所属域")]
-        [ForeignKey("DomainId")]
-        public virtual Domain Domain { get; set; }
     }
 }

@@ -11,12 +11,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 协议所属设备ID
         /// </summary>
-        Guid DeviceId { get; set; }
-
-        /// <summary>
-        /// 协议所属设备
-        /// </summary>
-        Device Device { get; set; }
+        long DeviceIdentity { get; set; }
 
         /// <summary>
         /// 协议内容
@@ -32,11 +27,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// 协议类型ID
         /// </summary>
         Guid ProtocolId { get; set; }
-
-        /// <summary>
-        /// 协议类型
-        /// </summary>
-        Protocol Protocol { get; set; }
 
         /// <summary>
         /// 协议包组包完成时间

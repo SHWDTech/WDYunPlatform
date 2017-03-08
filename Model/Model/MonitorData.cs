@@ -12,47 +12,25 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class MonitorData : DataModelBase, IMonitorData
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public override Guid Id { get; set; }
-
         [Required]
         [Display(Name = "数据来源协议包ID")]
-        [Index("Ix_Project_ProtocolData_UpdateTime", Order = 1)]
-        public virtual Guid ProtocolDataId { get; set; }
+        [Index("Ix_Project_Device_ProtocolData", Order = 2)]
+        public virtual long ProtocolDataId { get; set; }
 
-        [Display(Name = "数据来源协议包")]
-        [ForeignKey("ProtocolDataId")]
-        public virtual ProtocolData ProtocolData { get; set; }
+        [Required]
+        [Index("Ix_Project_Device_ProtocolData", Order = 1)]
+        public virtual long DeviceIdentity { get; set; }
 
         [Required]
         [Display(Name = "数据类型ID")]
         public virtual Guid CommandDataId { get; set; }
 
-        [Display(Name = "数据类型")]
-        [ForeignKey("CommandDataId")]
-        public virtual CommandData CommandData { get; set; }
-
         [Display(Name = "数据来源通道号")]
         public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
-        [Index("Ix_Project_ProtocolData_UpdateTime", Order = 0)]
-        public virtual Guid? ProjectId { get; set; }
-
-        [Display(Name = "来源工地")]
-        [ForeignKey("ProjectId")]
-        public virtual Project Project { get; set; }
-
-        [NotMapped]
-        [Display(Name = "数据名称")]
-        public virtual string DataName => CommandData.DataName;
-
-        [NotMapped]
-        public virtual Device Device => ProtocolData.Device;
-
-        [NotMapped]
-        public virtual Guid DeviceId => Device.Id;
+        [Index("Ix_Project_Device_ProtocolData", Order = 0)]
+        public virtual long ProjectIdentity { get; set; }
 
         [Display(Name = "浮点数据值")]
         public virtual double? DoubleValue { get; set; }
@@ -65,7 +43,6 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "数据上传时间")]
-        [Index("Ix_Project_ProtocolData_UpdateTime",Order = 2)]
         public virtual DateTime UpdateTime { get; set; }
 
         [Display(Name = "是否有效数据")]

@@ -12,40 +12,20 @@ namespace SHWDTech.Platform.Model.Model
     /// </summary>
     public class DataStatistics : DataModelBase, IDataStatistics
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public override Guid Id { get; set; }
-
         [Required]
         [Display(Name = "数据类型ID")]
         public virtual Guid CommandDataId { get; set; }
-
-        [Display(Name = "数据类型")]
-        [ForeignKey("CommandDataId")]
-        public virtual CommandData CommandData { get; set; }
 
         [Display(Name = "数据来源通道号")]
         public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
         [Index("Ix_Project_Device_UpdateTime", Order = 0)]
-        public virtual Guid? ProjectId { get; set; }
+        public virtual long ProjectIdentity { get; set; }
 
-        [Display(Name = "来源工地")]
-        [ForeignKey("ProjectId")]
-        public virtual Project Project { get; set; }
-
-        [NotMapped]
-        [Display(Name = "数据名称")]
-        public virtual string DataName => CommandData.DataName;
-
-        [Display(Name = "数据来源设备")]
-        [ForeignKey("DeviceId")]
         [Index("Ix_Project_Device_UpdateTime", Order = 1)]
-        public virtual Device Device { get; set; }
-
         [Display(Name = "数据来源设备ID")]
-        public virtual Guid DeviceId { get; set; }
+        public virtual long DeviceIdentity { get; set; }
 
         [Display(Name = "浮点数据值")]
         public virtual double? DoubleValue { get; set; }

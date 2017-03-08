@@ -84,7 +84,7 @@ namespace SHWDTech.Platform.ProtocolCoding
         {
             var protocolData = new ProtocolDataRepository().CreateDefaultModel();
 
-            protocolData.DeviceId = package.Device.Id;
+            protocolData.DeviceIdentity = package.Device.Identity;
             protocolData.ProtocolId = package.Protocol.Id;
             protocolData.ProtocolTime = package.ReceiveDateTime;
             protocolData.UpdateTime = DateTime.Now;

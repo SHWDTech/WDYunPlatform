@@ -31,21 +31,13 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "运行时间类型")]
         public virtual RunningTimeType Type { get; set; }
 
-        [Display(Name = "相关酒店")]
-        [ForeignKey("ProjectId")]
-        public virtual Project Project { get; set; }
-
         [Required]
         [Display(Name = "相关酒店")]
-        public virtual Guid ProjectId { get; set; }
-
-        [Display(Name = "相关设备")]
-        [ForeignKey("DeviceId")]
-        public virtual Device Device { get; set; }
+        public virtual long ProjectIdentity { get; set; }
 
         [Required]
         [Display(Name = "相关设备")]
-        public virtual Guid DeviceId { get; set; }
+        public virtual long DeviceIdentity { get; set; }
 
         [Required]
         [Display(Name = "更新时间")]

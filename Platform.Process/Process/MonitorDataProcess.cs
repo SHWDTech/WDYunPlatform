@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using Platform.Process.Enums;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
-using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
@@ -69,9 +68,10 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
+                var device = Repo<DeviceRepository>().GetModelById(deviceId);
                 var protocolData =
                     Repo<ProtocolDataRepository>()
-                        .GetModels(obj => obj.DeviceId == deviceId)
+                        .GetModels(obj => obj.DeviceIdentity == device.Identity)
                         .OrderByDescending(item => item.UpdateTime)
                         .FirstOrDefault();
                 return protocolData == null ? null : repo.GetModels(obj => obj.ProtocolDataId == protocolData.Id).ToList();
@@ -82,10 +82,10 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var datas = repo.GetModelsInclude(data => data.ProjectId == device.ProjectId
+                var datas = repo.GetModelsInclude(data => data.ProjectIdentity == device.Project.Identity
                     && data.CommandDataId == CommandDataId.CleanerCurrent
                     && data.UpdateTime > checkDateTime, new List<string> {"ProtocolData"}).ToList();
-                return datas.FirstOrDefault(obj => obj.ProtocolData.DeviceId == device.Id);
+                return datas.FirstOrDefault(obj => obj.DeviceIdentity == device.Identity);
             }
         }
 
@@ -108,48 +108,48 @@ namespace Platform.Process.Process
 
             foreach (var area in areas)
             {
-                var areaHotels = hotels.Where(obj => obj.DistrictId == area.Id).Select(item => item.Id).ToList();
+                var areaHotels = hotels.Where(obj => obj.DistrictId == area.Id).Select(item => item.Identity).ToList();
                 var faild = (from data in repo
-                             where areaHotels.Contains(data.ProjectId.Value)
-                                   && data.CommandData.DataName == ProtocolDataName.CleanerCurrent
+                             where areaHotels.Contains(data.ProjectIdentity)
+                                   && data.CommandDataId == CommandDataId.CleanerCurrent
                                    && data.DoubleValue < (from device in devices
-                                                          where device.ProjectId == data.ProjectId
+                                                          where device.Project.Identity == data.ProjectIdentity
                                                           select device.LampblackDeviceModel).FirstOrDefault().Fail
                              select data).Count();
 
                 var worse = (from data in repo
-                             where areaHotels.Contains(data.ProjectId.Value)
-                                   && data.CommandData.DataName == ProtocolDataName.CleanerCurrent
+                             where areaHotels.Contains(data.ProjectIdentity)
+                                   && data.CommandDataId == CommandDataId.CleanerCurrent
                                    && data.DoubleValue > (from device in devices
-                                                          where device.ProjectId == data.ProjectId
+                                                          where device.Project.Identity == data.ProjectIdentity
                                                           select device.LampblackDeviceModel).FirstOrDefault().Fail
                                    && data.DoubleValue < (from device in devices
-                                                          where device.ProjectId == data.ProjectId
+                                                          where device.Project.Identity == data.ProjectIdentity
                                                           select device.LampblackDeviceModel).FirstOrDefault().Worse
                              select data).Count();
 
                 var qualified = (from data in repo
-                                 where areaHotels.Contains(data.ProjectId.Value)
-                                       && data.CommandData.DataName == ProtocolDataName.CleanerCurrent
+                                 where areaHotels.Contains(data.ProjectIdentity)
+                                       && data.CommandDataId == CommandDataId.CleanerCurrent
                                        && data.DoubleValue > (from device in devices
-                                                              where device.ProjectId == data.ProjectId
+                                                              where device.Project.Identity == data.ProjectIdentity
                                                               select device.LampblackDeviceModel).FirstOrDefault().Worse
                                        && data.DoubleValue < (from device in devices
-                                                              where device.ProjectId == data.ProjectId
+                                                              where device.Project.Identity == data.ProjectIdentity
                                                               select device.LampblackDeviceModel).FirstOrDefault().Qualified
                                  select data).Count();
 
                 var good = (from data in repo
-                            where areaHotels.Contains(data.ProjectId.Value)
-                                  && data.CommandData.DataName == ProtocolDataName.CleanerCurrent
+                            where areaHotels.Contains(data.ProjectIdentity)
+                                  && data.CommandDataId == CommandDataId.CleanerCurrent
                                   && data.DoubleValue > (from device in devices
-                                                         where device.ProjectId == data.ProjectId
+                                                         where device.Project.Identity == data.ProjectIdentity
                                                          select device.LampblackDeviceModel).FirstOrDefault().Qualified
                             select data).Count();
 
                 var fan = (from data in repo
-                           where areaHotels.Contains(data.ProjectId.Value)
-                                 && data.CommandData.DataName == ProtocolDataName.FanSwitch
+                           where areaHotels.Contains(data.ProjectIdentity)
+                                 && data.CommandDataId == CommandDataId.FanSwitch
                                  && data.BooleanValue == true
                            select data).Count();
 

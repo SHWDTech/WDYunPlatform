@@ -13,6 +13,10 @@ namespace SHWDTech.Platform.Model.Model
     [Serializable]
     public class Device : SysDomainModelBase, IDevice
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Index("Index_Device_Identity", IsClustered = true, IsUnique = true)]
+        public long Identity { get; set; }
+
         [Required]
         [Display(Name = "设备类型ID")]
         public virtual Guid DeviceTypeId { get; set; }

@@ -12,10 +12,10 @@ namespace Platform.Process.IProcess
         /// <summary>
         /// 最后记录时间
         /// </summary>
-        /// <param name="hotelGuid"></param>
+        /// <param name="hotelIdentity"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        DateTime LastRecordDateTime(Guid hotelGuid, RunningTimeType type);
+        DateTime LastRecordDateTime(long hotelIdentity, RunningTimeType type);
 
         /// <summary>
         /// 存储运行时间数据

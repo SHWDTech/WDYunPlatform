@@ -16,8 +16,8 @@ namespace SHWDTech.Platform.Model.ModelBase
         [Display(Name = "所属域ID")]
         public virtual Guid DomainId { get; set; }
 
-        [Display(Name = "所属域")]
         [ForeignKey("DomainId")]
+        [Display(Name = "所属域")]
         public virtual Domain Domain { get; set; }
     }
 }

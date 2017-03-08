@@ -16,11 +16,11 @@ namespace Platform.Process.Process
     /// </summary>
     public class RunningTimeProcess : ProcessBase, IRunningTimeProcess
     {
-        public DateTime LastRecordDateTime(Guid hotelGuid, RunningTimeType type)
+        public DateTime LastRecordDateTime(long hotelIdentity, RunningTimeType type)
         {
             using (var repo = Repo<RunningTimeRepository>())
             {
-                var lastRecord = repo.GetModels(obj => obj.ProjectId == hotelGuid && obj.Type == type)
+                var lastRecord = repo.GetModels(obj => obj.ProjectIdentity == hotelIdentity && obj.Type == type)
                     .OrderByDescending(item => item.UpdateTime).FirstOrDefault();
 
                 return lastRecord?.UpdateTime ?? DateTime.MinValue;
@@ -37,7 +37,7 @@ namespace Platform.Process.Process
                 .AddEqual(item => item.StreetId == model.StreetGuid, model.StreetGuid)
                 .AddEqual(hotel => hotel.AddressId == model.AddressGuid, model.AddressGuid)
                 .AddEqual(h => h.ProjectName == model.QueryName, model.QueryName)
-                .Select(t => t.Id).ToList();
+                .Select(t => t.Identity).ToList();
             model.StartDateTime = model.StartDateTime.GetCurrentMonth();
             model.DueDateTime = model.DueDateTime.GetCurrentMonth();
 
@@ -46,7 +46,7 @@ namespace Platform.Process.Process
             var linageList = new Dictionary<string, double>();
             using (var repo = Repo<RunningTimeRepository>())
             {
-                var runTimes = repo.GetModels(obj => hotels.Contains(obj.ProjectId));
+                var runTimes = repo.GetModels(obj => hotels.Contains(obj.ProjectIdentity));
                 foreach (var date in dateList)
                 {
                     linageList.Add(date.ToString("yyyy-MM"), GetLinkage(runTimes, date, model.ReportType));
