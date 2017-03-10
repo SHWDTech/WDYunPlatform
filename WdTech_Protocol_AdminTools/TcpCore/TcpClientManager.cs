@@ -172,6 +172,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 while (_processBuffer.Count > 0)
                 {
+                    if (_isDisposed) return;
                     try
                     {
                         IProtocolPackage package = null;
@@ -252,7 +253,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                 OnClientAuthentication();
             }
-            else if (result.ResultType == AuthResultType.DeviceNotRegisted)
+            else if (result.ResultType == AuthResultType.DeviceNotRegisted || result.ResultType == AuthResultType.DecodedFailed)
             {
                 _authStatus = AuthenticationStatus.AuthFailed;
             }

@@ -114,6 +114,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             {
                 try
                 {
+                    tcpClient.ClientAuthenticationEvent -= ClientAuthenticationed;
+                    tcpClient.ClientDisconnectEvent -= ClientDisconnected;
                     _clientSockets.Remove(tcpClient);
                 }
                 catch (Exception ex)
