@@ -124,7 +124,7 @@ namespace Platform.Process.Process
             var retDictionary = new Dictionary<string, object>();
             using (var repo = Repo<RestaurantDeviceRepository>())
             {
-                var device = repo.GetModelIncludeById(hotelGuid, new List<string>() {"Project"});
+                var device = repo.GetModelIncludeById(hotelGuid, new List<string>() { "Project" });
 
                 var recentDatas = GetLastMonitorData(device);
 
@@ -215,45 +215,13 @@ namespace Platform.Process.Process
             {
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
                 var tomorrow = today.AddDays(1);
-                var ticks = repo.GetModels(r => r.ProjectIdentity == dev.Project.Identity
+                var ticks = repo.GetModels(r => r.Type == RunningTimeType.Cleaner
+                                                && r.ProjectIdentity == dev.Project.Identity
                                                 && r.DeviceIdentity == dev.Identity
-                                                && r.Type == RunningTimeType.Cleaner
                                                 && r.UpdateTime > today
                                                 && r.UpdateTime < tomorrow)
                     .Sum(obj => obj.RunningTimeTicks);
                 var timeSpan = TimeSpan.FromTicks(ticks);
-                
-
-                //var start = repo.GetModels(obj => obj.ProjectIdentity == dev.Project.Identity
-                //        && obj.DeviceIdentity == dev.Identity
-                //        && obj.UpdateTime > today
-                //        && obj.CommandDataId == CommandDataId.CleanerCurrent 
-                //        && obj.BooleanValue == true)
-                //    .OrderBy(item => item.UpdateTime)
-                //    .FirstOrDefault();
-
-                //var end = repo.GetModels(obj => obj.ProjectIdentity == dev.Project.Identity
-                //        && obj.DeviceIdentity == dev.Identity
-                //        && obj.UpdateTime > today
-                //        && obj.CommandDataId == CommandDataId.CleanerCurrent
-                //        && obj.BooleanValue == true)
-                //    .OrderByDescending(item => item.UpdateTime)
-                //    .FirstOrDefault();
-
-                //TimeSpan timeSpan;
-                //if (start == null)
-                //{
-                //    return "00小时00分00秒";
-                //}
-                //if (end == null)
-                //{
-                //    timeSpan = DateTime.Now - start.UpdateTime;
-                //}
-                //else
-                //{
-                //    timeSpan = end.UpdateTime - start.UpdateTime;
-                //}
-
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
@@ -265,40 +233,17 @@ namespace Platform.Process.Process
         /// <returns></returns>
         private string GetFanRunTimeString(RestaurantDevice dev)
         {
-            using (var repo = Repo<MonitorDataRepository>())
+            using (var repo = Repo<RunningTimeRepository>())
             {
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
-
-                var start = repo.GetModels(obj => obj.ProjectIdentity == dev.Project.Identity
-                        && obj.DeviceIdentity == dev.Identity
-                        && obj.UpdateTime > today
-                        && obj.CommandDataId == CommandDataId.FanSwitch
-                        && obj.BooleanValue == true)
-                    .OrderBy(item => item.UpdateTime)
-                    .FirstOrDefault();
-
-                var end = repo.GetModels(obj => obj.ProjectIdentity == dev.Project.Identity
-                        && obj.DeviceIdentity == dev.Identity
-                        && obj.UpdateTime > today
-                        && obj.CommandDataId == CommandDataId.FanSwitch
-                        && obj.BooleanValue == true)
-                    .OrderByDescending(item => item.UpdateTime)
-                    .FirstOrDefault();
-
-                TimeSpan timeSpan;
-                if (start == null)
-                {
-                    return "00小时00分00秒";
-                }
-                if (end == null)
-                {
-                    timeSpan = DateTime.Now - start.UpdateTime;
-                }
-                else
-                {
-                    timeSpan = end.UpdateTime - start.UpdateTime;
-                }
-
+                var tomorrow = today.AddDays(1);
+                var ticks = repo.GetModels(r => r.Type == RunningTimeType.Fan
+                                                && r.ProjectIdentity == dev.Project.Identity
+                                                && r.DeviceIdentity == dev.Identity
+                                                && r.UpdateTime > today
+                                                && r.UpdateTime < tomorrow)
+                    .Sum(obj => obj.RunningTimeTicks);
+                var timeSpan = TimeSpan.FromTicks(ticks);
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
