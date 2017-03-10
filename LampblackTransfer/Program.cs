@@ -73,7 +73,7 @@ namespace LampblackTransfer
                 var adapter = new SQLiteDataAdapter(cmd);
                 var table = new DataTable();
                 adapter.Fill(table);
-                _deviceInfos = table.ToListOf<DeviceInfo>();
+                _deviceInfos = table.ToListOf<DeviceInfo>().OrderBy(dev => dev.Id).ToList();
             }
             AddDevicePort();
             RefreashDeviceTime();

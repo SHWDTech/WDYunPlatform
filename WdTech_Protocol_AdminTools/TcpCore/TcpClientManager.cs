@@ -36,11 +36,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private ProtocolEncoder _protocolEncoder;
 
         /// <summary>
-        /// 是否正在解析协议
-        /// </summary>
-        private bool _processing;
-
-        /// <summary>
         /// 客户端数据接收事件
         /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
@@ -123,10 +118,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
             lock (ReceiveBuffer)
             {
-                int readCount;
                 try
                 {
-                    readCount = client.EndReceive(result);
+                    var readCount = client.EndReceive(result);
 
                     var array = ReceiveBuffer.Last().Array;
                     lock (_processBuffer)
@@ -139,7 +133,15 @@ namespace WdTech_Protocol_AdminTools.TcpCore
 
                     LastAliveDateTime = DateTime.Now;
 
-                    client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+                    if (readCount != 0)
+                    {
+                        client.BeginReceive(ReceiveBuffer, SocketFlags.None, Received, client);
+                    }
+                    else
+                    {
+                        Close();
+                        return;
+                    }
                 }
                 catch (Exception ex) when (ex is ObjectDisposedException || ex is SocketException)
                 {
@@ -147,33 +149,9 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     OnClientDisconnect();
                     return;
                 }
-
-                if (readCount == 0 && !_isDisposed)
-                {
-                    try
-                    {
-                        client.Disconnect(false);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogService.Instance.Error("尝试断开套接字失败。", ex);
-                    }
-                    OnClientDisconnect();
-                    return;
-                }
             }
 
-            if (_authStatus != AuthenticationStatus.AuthFailed)
-            {
-                OnReceivedData();
-            }
-            else
-            {
-                lock (_processBuffer)
-                {
-                    _processBuffer.Clear();
-                }
-            }
+            OnReceivedData();
         }
 
         /// <summary>
@@ -181,7 +159,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void OnReceivedData()
         {
-            if (!_processing) Process();
+            Process();
             ClientReceivedDataEvent?.Invoke(this);
         }
 
@@ -192,24 +170,25 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_processBuffer)
             {
-                _processing = true;
-
                 while (_processBuffer.Count > 0)
                 {
                     try
                     {
+                        IProtocolPackage package = null;
                         switch (_authStatus)
                         {
                             case AuthenticationStatus.NotAuthed:
-                                Authentication();
+                                package = Authentication();
+                                break;
+                            case AuthenticationStatus.AuthFailed:
+                                Close();
                                 break;
                             case AuthenticationStatus.Authed:
-                                Decode();
+                                package = Decode();
                                 break;
-                            default:
-                                _processBuffer.Remove(0);
-                                return;
                         }
+
+                        AsyncCleanBuffer(package);
                     }
                     catch (Exception ex)
                     {
@@ -220,12 +199,10 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                             LogService.Instance.Warn("协议解码异常详情。", innerException);
                             innerException = innerException.InnerException;
                         }
-                        _processing = false;
+                        _processBuffer.Clear();
                         return;
                     }
                 }
-
-                _processing = false;
             }
         }
 
@@ -258,43 +235,44 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 身份验证
         /// </summary>
-        private void Authentication()
+        private IProtocolPackage Authentication()
         {
             var result = AuthenticationService.DeviceAuthcation(_processBuffer.ToArray());
 
-            AsyncCleanBuffer(result.Package);
+            if (result.ResultType == AuthResultType.Success)
+            {
+                ClientDevice = result.AuthDevice;
+                ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id.ToString().ToUpper()}";
+                _protocolEncoder = new ProtocolEncoder(ClientDevice);
+                _authStatus = AuthenticationStatus.Authed;
+                if (result.NeedReply)
+                {
+                    Send(result.ReplyBytes);
+                }
 
-            if (result.ResultType == AuthResultType.Faild)
+                OnClientAuthentication();
+            }
+            else if (result.ResultType == AuthResultType.DeviceNotRegisted)
             {
                 _authStatus = AuthenticationStatus.AuthFailed;
-                return;
             }
 
-            ClientDevice = result.AuthDevice;
-            ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id.ToString().ToUpper()}";
-            _protocolEncoder = new ProtocolEncoder(ClientDevice);
-            _authStatus = AuthenticationStatus.Authed;
-            if (result.NeedReply)
-            {
-                Send(result.ReplyBytes);
-            }
-
-            OnClientAuthentication();
+            return result.Package;
         }
 
         /// <summary>
         /// 解码缓存字节为协议包
         /// </summary>
-        private void Decode()
+        private IProtocolPackage Decode()
         {
             var result = _protocolEncoder.Decode(_processBuffer.ToArray());
-
-            AsyncCleanBuffer(result);
 
             if (result.Finalized)
             {
                 _protocolEncoder.Delive(result, this);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -303,7 +281,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="package">当前处理中的协议包</param>
         private void AsyncCleanBuffer(IProtocolPackage package)
         {
-
+            if (package == null) return;
             switch (package.Status)
             {
                 case PackageStatus.NoEnoughBuffer:

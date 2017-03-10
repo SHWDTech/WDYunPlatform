@@ -22,13 +22,13 @@ namespace SHWDTech.Platform.ProtocolCoding.Authentication
 
             if (!package.Finalized)
             {
-                return new AuthResult(AuthResultType.Faild, package);
+                return new AuthResult(AuthResultType.DecodedFailed, package);
             }
 
             var device = GetAuthedDevice(package);
 
             return device == null
-                ? new AuthResult(AuthResultType.Faild, package)
+                ? new AuthResult(AuthResultType.DeviceNotRegisted, package)
                 : new AuthResult(AuthResultType.Success, package, device, package.NeedReply);
         }
 

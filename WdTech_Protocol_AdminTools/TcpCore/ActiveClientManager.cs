@@ -143,6 +143,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                     unUsedCLient.Dispose();
                     try
                     {
+                        unUsedCLient.ClientAuthenticationEvent -= ClientAuthenticationed;
+                        unUsedCLient.ClientDisconnectEvent -= ClientDisconnected;
                         _clientSockets.Remove(unUsedCLient);
                     }
                     catch (Exception ex)

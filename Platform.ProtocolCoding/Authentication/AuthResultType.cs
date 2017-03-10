@@ -6,9 +6,9 @@
     public enum AuthResultType
     {
         /// <summary>
-        /// 认证失败
+        /// 协议包解码失败
         /// </summary>
-        Faild,
+        DecodedFailed,
 
         /// <summary>
         /// 设备未注册
