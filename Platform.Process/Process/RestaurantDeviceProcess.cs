@@ -220,7 +220,9 @@ namespace Platform.Process.Process
                                                 && r.DeviceIdentity == dev.Identity
                                                 && r.UpdateTime > today
                                                 && r.UpdateTime < tomorrow)
-                    .Sum(obj => obj.RunningTimeTicks);
+                    .Select(item => item.RunningTimeTicks)
+                    .DefaultIfEmpty(0)
+                    .Sum(obj => obj);
                 var timeSpan = TimeSpan.FromTicks(ticks);
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
@@ -242,7 +244,9 @@ namespace Platform.Process.Process
                                                 && r.DeviceIdentity == dev.Identity
                                                 && r.UpdateTime > today
                                                 && r.UpdateTime < tomorrow)
-                    .Sum(obj => obj.RunningTimeTicks);
+                    .Select(item => item.RunningTimeTicks)
+                    .DefaultIfEmpty(0)
+                    .Sum(obj => obj);
                 var timeSpan = TimeSpan.FromTicks(ticks);
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }

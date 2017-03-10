@@ -122,9 +122,9 @@
     <Compile Include="Migrations\201703060831356_Initial.Designer.cs">
       <DependentUpon>201703060831356_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703090154159_ChangeStructure.cs" />
-    <Compile Include="Migrations\201703090154159_ChangeStructure.Designer.cs">
-      <DependentUpon>201703090154159_ChangeStructure.cs</DependentUpon>
+    <Compile Include="Migrations\201703100348042_ChangeStructure.cs" />
+    <Compile Include="Migrations\201703100348042_ChangeStructure.Designer.cs">
+      <DependentUpon>201703100348042_ChangeStructure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
@@ -190,8 +190,8 @@
     <EmbeddedResource Include="Migrations\201703060831356_Initial.resx">
       <DependentUpon>201703060831356_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703090154159_ChangeStructure.resx">
-      <DependentUpon>201703090154159_ChangeStructure.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703100348042_ChangeStructure.resx">
+      <DependentUpon>201703100348042_ChangeStructure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

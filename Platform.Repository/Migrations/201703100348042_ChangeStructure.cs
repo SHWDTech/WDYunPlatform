@@ -214,9 +214,10 @@ namespace SHWD.Platform.Repository.Migrations
             AddPrimaryKey("dbo.UserConfigs", "Id");
             CreateIndex("dbo.Device", "Identity", unique: true, clustered: true, name: "Index_Device_Identity");
             CreateIndex("dbo.Project", "Identity", unique: true, clustered: true, name: "Index_Project_Identity");
-            CreateIndex("dbo.DataStatistics", new[] { "ProjectIdentity", "DeviceIdentity", "UpdateTime" }, name: "Ix_Project_Device_UpdateTime");
-            CreateIndex("dbo.MonitorDatas", new[] { "ProjectIdentity", "DeviceIdentity", "ProtocolDataId" }, name: "Ix_Project_Device_ProtocolData");
-            CreateIndex("dbo.ProtocolDatas", new[] { "DeviceIdentity", "UpdateTime" }, name: "Ix_Device_UpdateTime");
+            CreateIndex("dbo.DataStatistics", new[] { "Type", "ProjectIdentity", "DeviceIdentity", "UpdateTime" }, name: "IX_Type_Project_Device_UpdateTime");
+            CreateIndex("dbo.MonitorDatas", new[] { "ProjectIdentity", "DeviceIdentity", "ProtocolDataId", "UpdateTime" }, clustered: true, name: "IX_Project_Device_Protocol_UpdateTime");
+            CreateIndex("dbo.ProtocolDatas", new[] { "DeviceIdentity", "UpdateTime" }, clustered: true, name: "Ix_Device_UpdateTime");
+            CreateIndex("dbo.RunningTimes", new[] { "Type", "ProjectIdentity", "DeviceIdentity", "UpdateTime" }, clustered: true, name: "IX_Type_Project_Device_UpdateTime");
             AddForeignKey("dbo.Device", "OriginalDeviceId", "dbo.Device", "Id");
             AddForeignKey("dbo.Alarms", "AlarmDeviceId", "dbo.Device", "Id");
             AddForeignKey("dbo.DeviceMaintenances", "DeviceId", "dbo.Device", "Id");
@@ -379,9 +380,10 @@ namespace SHWD.Platform.Repository.Migrations
             DropForeignKey("dbo.DeviceMaintenances", "DeviceId", "dbo.Device");
             DropForeignKey("dbo.Alarms", "AlarmDeviceId", "dbo.Device");
             DropForeignKey("dbo.Device", "OriginalDeviceId", "dbo.Device");
+            DropIndex("dbo.RunningTimes", "IX_Type_Project_Device_UpdateTime");
             DropIndex("dbo.ProtocolDatas", "Ix_Device_UpdateTime");
-            DropIndex("dbo.MonitorDatas", "Ix_Project_Device_ProtocolData");
-            DropIndex("dbo.DataStatistics", "Ix_Project_Device_UpdateTime");
+            DropIndex("dbo.MonitorDatas", "IX_Project_Device_Protocol_UpdateTime");
+            DropIndex("dbo.DataStatistics", "IX_Type_Project_Device_UpdateTime");
             DropIndex("dbo.Project", "Index_Project_Identity");
             DropIndex("dbo.Device", "Index_Device_Identity");
             DropPrimaryKey("dbo.UserConfigs");

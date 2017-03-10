@@ -13,7 +13,7 @@ namespace SHWD.Platform.Repository.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201703090154159_ChangeStructure"; }
+            get { return "201703100348042_ChangeStructure"; }
         }
         
         string IMigrationMetadata.Source
