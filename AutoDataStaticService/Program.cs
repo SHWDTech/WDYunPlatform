@@ -127,8 +127,8 @@ namespace AutoDataStaticService
                     var date = startDate;
                     var min = ProcessInvoke.Instance<MonitorDataProcess>()
                         .GetMinHotelMonitorData(obj =>
-                                obj.UpdateTime > date && obj.UpdateTime < endDate && obj.ProjectIdentity == hotelIdentity &&
-                                obj.CommandDataId == data.Id);
+                                obj.ProjectIdentity == hotelIdentity && obj.UpdateTime > date && obj.UpdateTime < endDate
+                                && obj.CommandDataId == data.Id);
 
                     if (min == null)
                     {
@@ -167,8 +167,8 @@ namespace AutoDataStaticService
                     var date = startDate;
                     var min = ProcessInvoke.Instance<MonitorDataProcess>()
                         .GetMinHotelMonitorData(obj =>
-                                obj.UpdateTime > date && obj.UpdateTime < endDate && obj.ProjectIdentity == hotelIdentity &&
-                                obj.CommandDataId == data.Id);
+                                obj.ProjectIdentity == hotelIdentity && obj.UpdateTime > date && obj.UpdateTime < endDate
+                                && obj.CommandDataId == data.Id);
 
                     if (min == null)
                     {

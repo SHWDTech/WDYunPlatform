@@ -14,7 +14,7 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "协议所属设备ID")]
-        [Index("Ix_Device_UpdateTime", Order = 0)]
+        [Index("Ix_Device_UpdateTime", IsClustered = true, Order = 0)]
         public virtual long DeviceIdentity { get; set; }
 
         [Required]
@@ -34,7 +34,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual DateTime ProtocolTime { get; set; }
 
         [DataType(DataType.DateTime)]
-        [Index("Ix_Device_UpdateTime", Order = 1)]
+        [Index("Ix_Device_UpdateTime", IsClustered = true, Order = 1)]
         [Index("Ix_UpdateTime")]
         [Display(Name = "协议数据更新时间")]
         public virtual DateTime UpdateTime { get; set; }

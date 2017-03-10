@@ -13,7 +13,7 @@ namespace SHWDTech.Platform.Model.ModelBase
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         [Required]
         [Display(Name = "所属域ID")]

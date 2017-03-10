@@ -14,11 +14,11 @@ namespace SHWDTech.Platform.Model.Model
     {
         [Required]
         [Display(Name = "数据来源协议包ID")]
-        [Index("Ix_Project_Device_ProtocolData", Order = 2)]
+        [Index("IX_Project_Device_Protocol_UpdateTime", IsClustered = true, Order = 2)]
         public virtual long ProtocolDataId { get; set; }
 
         [Required]
-        [Index("Ix_Project_Device_ProtocolData", Order = 1)]
+        [Index("IX_Project_Device_Protocol_UpdateTime", IsClustered = true, Order = 1)]
         public virtual long DeviceIdentity { get; set; }
 
         [Required]
@@ -29,7 +29,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
-        [Index("Ix_Project_Device_ProtocolData", Order = 0)]
+        [Index("IX_Project_Device_Protocol_UpdateTime", IsClustered = true, Order = 0)]
         public virtual long ProjectIdentity { get; set; }
 
         [Display(Name = "浮点数据值")]
@@ -43,6 +43,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "数据上传时间")]
+        [Index("IX_Project_Device_Protocol_UpdateTime", IsClustered = true, Order = 3)]
         public virtual DateTime UpdateTime { get; set; }
 
         [Display(Name = "是否有效数据")]

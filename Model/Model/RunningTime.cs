@@ -29,18 +29,22 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "运行时间类型")]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 0)]
         public virtual RunningTimeType Type { get; set; }
 
         [Required]
         [Display(Name = "相关酒店")]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 1)]
         public virtual long ProjectIdentity { get; set; }
 
         [Required]
         [Display(Name = "相关设备")]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 2)]
         public virtual long DeviceIdentity { get; set; }
 
         [Required]
         [Display(Name = "更新时间")]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 3)]
         public virtual DateTime UpdateTime { get; set; }
     }
 }
