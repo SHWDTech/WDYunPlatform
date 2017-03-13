@@ -36,11 +36,6 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         private ProtocolEncoder _protocolEncoder;
 
         /// <summary>
-        /// 是否正在解析协议
-        /// </summary>
-        private bool _processing;
-
-        /// <summary>
         /// 客户端数据接收事件
         /// </summary>
         public event ClientReceivedDataEventHandler ClientReceivedDataEvent;
@@ -181,7 +176,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// </summary>
         private void OnReceivedData()
         {
-            if (!_processing) Process();
+            Process();
             ClientReceivedDataEvent?.Invoke(this);
         }
 
@@ -192,40 +187,37 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         {
             lock (_processBuffer)
             {
-                _processing = true;
-
-                while (_processBuffer.Count > 0)
+                IProtocolPackage package;
+                try
                 {
-                    try
+                    switch (_authStatus)
                     {
-                        switch (_authStatus)
-                        {
-                            case AuthenticationStatus.NotAuthed:
-                                Authentication();
-                                break;
-                            case AuthenticationStatus.Authed:
-                                Decode();
-                                break;
-                            default:
-                                _processBuffer.Remove(0);
-                                return;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogService.Instance.Warn("协议解码错误！", ex);
-                        var innerException = ex.InnerException;
-                        while (innerException != null)
-                        {
-                            LogService.Instance.Warn("协议解码异常详情。", innerException);
-                            innerException = innerException.InnerException;
-                        }
-                        _processing = false;
-                        return;
+                        case AuthenticationStatus.NotAuthed:
+                            package = Authentication();
+                            break;
+                        case AuthenticationStatus.Authed:
+                            package = Decode();
+                            break;
+                        default:
+                            return;
                     }
                 }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Warn("协议解码错误！", ex);
+                    var innerException = ex.InnerException;
+                    while (innerException != null)
+                    {
+                        LogService.Instance.Warn("协议解码异常详情。", innerException);
+                        innerException = innerException.InnerException;
+                    }
+                    package = new ProtocolPackage
+                    {
+                        Status = PackageStatus.InvalidPackage
+                    };
+                }
 
-                _processing = false;
+                AsyncCleanBuffer(package);
             }
         }
 
@@ -258,43 +250,44 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 身份验证
         /// </summary>
-        private void Authentication()
+        private IProtocolPackage Authentication()
         {
             var result = AuthenticationService.DeviceAuthcation(_processBuffer.ToArray());
-
-            AsyncCleanBuffer(result.Package);
 
             if (result.ResultType == AuthResultType.Faild)
             {
                 _authStatus = AuthenticationStatus.AuthFailed;
-                return;
             }
-
-            ClientDevice = result.AuthDevice;
-            ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id.ToString().ToUpper()}";
-            _protocolEncoder = new ProtocolEncoder(ClientDevice);
-            _authStatus = AuthenticationStatus.Authed;
-            if (result.NeedReply)
+            else
             {
-                Send(result.ReplyBytes);
+                ClientDevice = result.AuthDevice;
+                ReceiverName = $"{ClientDevice.DeviceCode} - {ClientDevice.Id.ToString().ToUpper()}";
+                _protocolEncoder = new ProtocolEncoder(ClientDevice);
+                _authStatus = AuthenticationStatus.Authed;
+                if (result.NeedReply)
+                {
+                    Send(result.ReplyBytes);
+                }
+
+                OnClientAuthentication();
             }
 
-            OnClientAuthentication();
+            return result.Package;
         }
 
         /// <summary>
         /// 解码缓存字节为协议包
         /// </summary>
-        private void Decode()
+        private IProtocolPackage Decode()
         {
             var result = _protocolEncoder.Decode(_processBuffer.ToArray());
-
-            AsyncCleanBuffer(result);
 
             if (result.Finalized)
             {
                 _protocolEncoder.Delive(result, this);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -303,19 +296,16 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="package">当前处理中的协议包</param>
         private void AsyncCleanBuffer(IProtocolPackage package)
         {
-
+            if (package == null) return;
             switch (package.Status)
             {
                 case PackageStatus.NoEnoughBuffer:
                     return;
-                case PackageStatus.InvalidHead:
-                    _processBuffer.RemoveAt(0);
-                    return;
-                case PackageStatus.InvalidPackage:
-                    _processBuffer.RemoveRange(0, package.PackageLenth);
-                    return;
                 case PackageStatus.Finalized:
                     _processBuffer.RemoveRange(0, package.PackageLenth);
+                    return;
+                default:
+                    _processBuffer.Clear();
                     return;
             }
 

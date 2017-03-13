@@ -14,9 +14,9 @@ namespace LampblackTransfer
 {
     class Program
     {
-        private static List<DeviceInfo> _deviceInfos = new List<DeviceInfo>();
+        private static readonly List<DeviceInfo> DeviceInfos = new List<DeviceInfo>();
 
-        private static Dictionary<DeviceInfo, int> _devicePort = new Dictionary<DeviceInfo, int>();
+        private static readonly Dictionary<DeviceInfo, int> DevicePort = new Dictionary<DeviceInfo, int>();
 
         private static readonly Dictionary<DeviceInfo, TcpClient> Clients = new Dictionary<DeviceInfo, TcpClient>();
 
@@ -66,14 +66,20 @@ namespace LampblackTransfer
         private static void RefreashDeviceInfos()
         {
             var tableName = "DeviceInfo";
-            _devicePort = new Dictionary<DeviceInfo, int>();
             using (var conn = new SQLiteConnection(_connectionString))
             {
                 var cmd = new SQLiteCommand($"SELECT * FROM {tableName}", conn);
                 var adapter = new SQLiteDataAdapter(cmd);
                 var table = new DataTable();
                 adapter.Fill(table);
-                _deviceInfos = table.ToListOf<DeviceInfo>();
+                var freashDevInfo = table.ToListOf<DeviceInfo>();
+                foreach (var deviceInfo in freashDevInfo)
+                {
+                    if (DeviceInfos.All(d => d.NodeId != deviceInfo.NodeId))
+                    {
+                        DeviceInfos.Add(deviceInfo);
+                    }
+                }
             }
             AddDevicePort();
             RefreashDeviceTime();
@@ -81,11 +87,11 @@ namespace LampblackTransfer
 
         private static void AddDevicePort()
         {
-            foreach (var deviceInfo in _deviceInfos)
+            foreach (var deviceInfo in DeviceInfos)
             {
-                if (_devicePort.ContainsKey(deviceInfo)) continue;
+                if (DevicePort.ContainsKey(deviceInfo)) continue;
                 _clientPort += 1;
-                _devicePort.Add(deviceInfo, _clientPort);
+                DevicePort.Add(deviceInfo, _clientPort);
             }
         }
 
@@ -93,7 +99,7 @@ namespace LampblackTransfer
         {
             DeviceTimes.Clear();
             var rd = new Random();
-            foreach (var deviceInfo in _deviceInfos)
+            foreach (var deviceInfo in DeviceInfos)
             {
                 DeviceTimes.Add(deviceInfo.NodeId,new DeviceTime()
                 {
@@ -105,7 +111,7 @@ namespace LampblackTransfer
 
         private static void StartTransfer()
         {
-            foreach (var deviceInfo in _deviceInfos)
+            foreach (var deviceInfo in DeviceInfos)
             {
                 Connect(deviceInfo);
                 Thread.Sleep(100);
@@ -116,7 +122,7 @@ namespace LampblackTransfer
         {
             try
             {
-                var port = _devicePort[device];
+                var port = DevicePort[device];
                 var ipEndPoint = new IPEndPoint(_clientIpAddress, port);
                 var client = new TcpClient(ipEndPoint);
                 client.Connect(_serverIpAddress, _serverPort);
@@ -125,7 +131,8 @@ namespace LampblackTransfer
             }
             catch (Exception ex)
             {
-                LogService.Instance.Error("连接服务器失败。", ex);
+                LogService.Instance.Error($"连接服务器失败，设备NODEID：{device.NodeId}，端口号：{DevicePort[device]}。", ex);
+                Console.WriteLine($"连接服务器失败，设备NODEID：{device.NodeId}，端口号：{DevicePort[device]}，异常信息：{ex.Message}。");
             }
         }
 
@@ -133,7 +140,7 @@ namespace LampblackTransfer
         {
             while (true)
             {
-                var disconnectDevices = _deviceInfos.Where(obj => !Clients.ContainsKey(obj)).ToList();
+                var disconnectDevices = DeviceInfos.Where(obj => !Clients.ContainsKey(obj)).ToList();
                 foreach (var disconnectDevice in disconnectDevices)
                 {
                     Connect(disconnectDevice);
@@ -146,7 +153,7 @@ namespace LampblackTransfer
 
         private static void SendData()
         {
-            foreach (var dev in _deviceInfos)
+            foreach (var dev in DeviceInfos)
             {
                 if (!Clients.ContainsKey(dev)) continue;
                 var tcpClient = Clients[dev];
