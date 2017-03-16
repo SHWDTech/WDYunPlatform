@@ -210,33 +210,12 @@ namespace Platform.Process.Process
             {
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
 
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
-                        && obj.UpdateTime > today)
-                    .OrderBy(item => item.UpdateTime)
-                    .FirstOrDefault();
+                var runningCount = repo.GetModels(obj => obj.ProtocolData.DeviceId == hotelGuid
+                                                         && obj.BooleanValue == true
+                                                         && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
+                                                         && obj.UpdateTime > today).Count();
 
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.CleanerSwitch
-                        && obj.UpdateTime > today)
-                    .OrderByDescending(item => item.UpdateTime)
-                    .FirstOrDefault();
-
-                TimeSpan timeSpan;
-                if (start == null)
-                {
-                    return "00小时00分00秒";
-                }
-                if (end == null)
-                {
-                    timeSpan = DateTime.Now - start.UpdateTime;
-                }
-                else
-                {
-                    timeSpan = end.UpdateTime - start.UpdateTime;
-                }
+                var timeSpan = TimeSpan.FromMinutes(runningCount * 2);
 
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
@@ -253,33 +232,12 @@ namespace Platform.Process.Process
             {
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
 
-                var start = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.FanSwitch
-                        && obj.UpdateTime > today)
-                    .OrderBy(item => item.UpdateTime)
-                    .FirstOrDefault();
+                var runningCount = repo.GetModels(obj => obj.ProtocolData.DeviceId == hotelGuid
+                                                  && obj.BooleanValue == true
+                                                  && obj.CommandData.DataName == ProtocolDataName.FanSwitch
+                                                  && obj.UpdateTime > today).Count();
 
-                var end = repo.GetModels(obj => obj.ProjectId == hotelGuid
-                        && obj.BooleanValue == true
-                        && obj.CommandData.DataName == ProtocolDataName.FanSwitch
-                        && obj.UpdateTime > today)
-                    .OrderByDescending(item => item.UpdateTime)
-                    .FirstOrDefault();
-
-                TimeSpan timeSpan;
-                if (start == null)
-                {
-                    return "00小时00分00秒";
-                }
-                if (end == null)
-                {
-                    timeSpan = DateTime.Now - start.UpdateTime;
-                }
-                else
-                {
-                    timeSpan = end.UpdateTime - start.UpdateTime;
-                }
+                var timeSpan = TimeSpan.FromMinutes(runningCount * 2);
 
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
