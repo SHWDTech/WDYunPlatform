@@ -20,10 +20,10 @@ namespace SHWDTech.Platform.Model.Model
         public virtual short DataChannel { get; set; } = 0;
 
         [Display(Name = "来源工地ID")]
-        [Index("IX_Type_Project_Device_UpdateTime", Order = 1)]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 1)]
         public virtual long ProjectIdentity { get; set; }
 
-        [Index("IX_Type_Project_Device_UpdateTime", Order = 2)]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 2)]
         [Display(Name = "数据来源设备ID")]
         public virtual long DeviceIdentity { get; set; }
 
@@ -38,12 +38,12 @@ namespace SHWDTech.Platform.Model.Model
 
         [Required]
         [Display(Name = "数据更新时间")]
-        [Index("IX_Type_Project_Device_UpdateTime", Order = 3)]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 3)]
         public virtual DateTime UpdateTime { get; set; }
 
         [Required]
         [Display(Name = "统计类型")]
-        [Index("IX_Type_Project_Device_UpdateTime", Order = 0)]
+        [Index("IX_Type_Project_Device_UpdateTime", IsClustered = true, Order = 0)]
         public StatisticsType Type { get; set; }
     }
 }

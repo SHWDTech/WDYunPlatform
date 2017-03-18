@@ -214,7 +214,7 @@ namespace SHWD.Platform.Repository.Migrations
             AddPrimaryKey("dbo.UserConfigs", "Id");
             CreateIndex("dbo.Device", "Identity", unique: true, clustered: true, name: "Index_Device_Identity");
             CreateIndex("dbo.Project", "Identity", unique: true, clustered: true, name: "Index_Project_Identity");
-            CreateIndex("dbo.DataStatistics", new[] { "Type", "ProjectIdentity", "DeviceIdentity", "UpdateTime" }, name: "IX_Type_Project_Device_UpdateTime");
+            CreateIndex("dbo.DataStatistics", new[] { "Type", "ProjectIdentity", "DeviceIdentity", "UpdateTime" }, clustered: true, name: "IX_Type_Project_Device_UpdateTime");
             CreateIndex("dbo.MonitorDatas", new[] { "ProjectIdentity", "DeviceIdentity", "ProtocolDataId", "UpdateTime" }, clustered: true, name: "IX_Project_Device_Protocol_UpdateTime");
             CreateIndex("dbo.ProtocolDatas", new[] { "DeviceIdentity", "UpdateTime" }, clustered: true, name: "Ix_Device_UpdateTime");
             CreateIndex("dbo.RunningTimes", new[] { "Type", "ProjectIdentity", "DeviceIdentity", "UpdateTime" }, clustered: true, name: "IX_Type_Project_Device_UpdateTime");
