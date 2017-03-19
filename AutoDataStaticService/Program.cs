@@ -113,10 +113,10 @@ namespace AutoDataStaticService
 
                 Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理小时历史数据，数据名称：{data.DataName}");
                 var lastDate = ProcessInvoke.Instance<DataStatisticsProcess>()
-                        .GetLastUpdateDataDate(obj => obj.CommandDataId == data.Id && obj.ProjectIdentity == hotelIdentity && obj.Type == StatisticsType.Hour);
+                        .GetLastUpdateDataDate(obj => obj.Type == StatisticsType.Hour && obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id);
 
                 var startDate = lastDate == DateTime.MinValue
-                    ? ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.CommandDataId == data.Id && obj.ProjectIdentity == hotelIdentity).UpdateTime
+                    ? ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id).UpdateTime
                     : lastDate;
 
                 startDate = startDate.GetCurrentHour();
@@ -153,7 +153,7 @@ namespace AutoDataStaticService
                 }
                 Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日历史数据，数据名称：{data.DataName}");
                 var lastDate = ProcessInvoke.Instance<DataStatisticsProcess>()
-                        .GetLastUpdateDataDate(obj => obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id && obj.Type == StatisticsType.Day);
+                        .GetLastUpdateDataDate(obj => obj.Type == StatisticsType.Day && obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id);
 
                 var startDate = lastDate == DateTime.MinValue
                     ? ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id).UpdateTime
