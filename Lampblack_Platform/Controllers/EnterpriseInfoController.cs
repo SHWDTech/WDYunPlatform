@@ -17,7 +17,7 @@ namespace Lampblack_Platform.Controllers
                 var enterp = new Enterprise()
                 {
                     QYBM = hotel.ProjectCode,
-                    QYMC = hotel.RaletedCompany.CompanyName,
+                    QYMC = $"{hotel.RaletedCompany.CompanyName}({hotel.ProjectName})",
                     QYDZ = hotel.AddressDetail,
                     PER = hotel.ChargeMan,
                     TEL = hotel.Telephone,
