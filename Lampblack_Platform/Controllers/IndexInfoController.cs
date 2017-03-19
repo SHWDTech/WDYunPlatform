@@ -26,14 +26,14 @@ namespace Lampblack_Platform.Controllers
                     var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
                     var fan = new Index
                     {
-                        EQUP_ID = $"{device.DeviceCode}001",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}001",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
                     model.data.Add(fan);
                     var cleaner = new Index
                     {
-                        EQUP_ID = $"{device.DeviceCode}002",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}002",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
@@ -41,7 +41,7 @@ namespace Lampblack_Platform.Controllers
 
                     var current = new Index
                     {
-                        EQUP_ID = $"{device.DeviceCode}003",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}003",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue.Value.ToString("F4")
                     };
