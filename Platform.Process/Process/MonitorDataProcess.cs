@@ -82,9 +82,9 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var datas = repo.GetModelsInclude(data => data.ProjectIdentity == device.Project.Identity
+                var datas = repo.GetModels(data => data.ProjectIdentity == device.Project.Identity
                     && data.CommandDataId == CommandDataId.CleanerCurrent
-                    && data.UpdateTime > checkDateTime, new List<string> {"ProtocolData"}).ToList();
+                    && data.UpdateTime > checkDateTime).ToList();
                 return datas.FirstOrDefault(obj => obj.DeviceIdentity == device.Identity);
             }
         }
