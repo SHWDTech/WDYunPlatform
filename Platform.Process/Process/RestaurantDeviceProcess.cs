@@ -211,19 +211,26 @@ namespace Platform.Process.Process
         /// <returns></returns>
         private string GetCleanerRunTimeString(RestaurantDevice dev)
         {
-            using (var repo = Repo<RunningTimeRepository>())
+            using (var repo = Repo<MonitorDataRepository>())
             {
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
-                var tomorrow = today.AddDays(1);
-                var ticks = repo.GetModels(r => r.Type == RunningTimeType.Cleaner
-                                                && r.ProjectIdentity == dev.Project.Identity
+                var ticks = repo.GetModels(r => r.ProjectIdentity == dev.Project.Identity
                                                 && r.DeviceIdentity == dev.Identity
                                                 && r.UpdateTime > today
-                                                && r.UpdateTime < tomorrow)
-                    .Select(item => item.RunningTimeTicks)
-                    .DefaultIfEmpty(0)
-                    .Sum(obj => obj);
-                var timeSpan = TimeSpan.FromTicks(ticks);
+                                                && r.CommandDataId == CommandDataId.CleanerSwitch
+                                                && r.BooleanValue == true);
+                var first = ticks.OrderBy(t => t.UpdateTime).FirstOrDefault();
+                var last = ticks.OrderByDescending(t => t.UpdateTime).FirstOrDefault();
+                TimeSpan timeSpan;
+                if (first == null || last == null)
+                {
+                    timeSpan = TimeSpan.Zero;
+                }
+                else
+                {
+                    timeSpan = last.UpdateTime - first.UpdateTime;
+                }
+                
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
@@ -235,19 +242,25 @@ namespace Platform.Process.Process
         /// <returns></returns>
         private string GetFanRunTimeString(RestaurantDevice dev)
         {
-            using (var repo = Repo<RunningTimeRepository>())
+            using (var repo = Repo<MonitorDataRepository>())
             {
                 var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
-                var tomorrow = today.AddDays(1);
-                var ticks = repo.GetModels(r => r.Type == RunningTimeType.Fan
-                                                && r.ProjectIdentity == dev.Project.Identity
+                var ticks = repo.GetModels(r => r.ProjectIdentity == dev.Project.Identity
                                                 && r.DeviceIdentity == dev.Identity
                                                 && r.UpdateTime > today
-                                                && r.UpdateTime < tomorrow)
-                    .Select(item => item.RunningTimeTicks)
-                    .DefaultIfEmpty(0)
-                    .Sum(obj => obj);
-                var timeSpan = TimeSpan.FromTicks(ticks);
+                                                && r.CommandDataId == CommandDataId.FanSwitch
+                                                && r.BooleanValue == true);
+                var first = ticks.OrderBy(t => t.UpdateTime).FirstOrDefault();
+                var last = ticks.OrderByDescending(t => t.UpdateTime).FirstOrDefault();
+                TimeSpan timeSpan;
+                if (first == null || last == null)
+                {
+                    timeSpan = TimeSpan.Zero;
+                }
+                else
+                {
+                    timeSpan = last.UpdateTime - first.UpdateTime;
+                }
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
