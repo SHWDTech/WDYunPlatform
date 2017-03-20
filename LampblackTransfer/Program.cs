@@ -42,11 +42,7 @@ namespace LampblackTransfer
             {
                 SendData();
                 Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}本次任务结束。");
-                var nowTime = int.Parse(DateTime.Now.ToString("HHmm"));
-                if (nowTime > 855 && nowTime < 900)
-                {
-                    RefreashDeviceInfos();
-                }
+                RefreashDeviceInfos();
                 Thread.Sleep(60000);
             }
             // ReSharper disable once FunctionNeverReturns
@@ -110,7 +106,6 @@ namespace LampblackTransfer
             foreach (var deviceInfo in DeviceInfos)
             {
                 Connect(deviceInfo);
-                Thread.Sleep(100);
             }
         }
 
@@ -139,7 +134,6 @@ namespace LampblackTransfer
                 foreach (var disconnectDevice in disconnectDevices)
                 {
                     Connect(disconnectDevice);
-                    Thread.Sleep(50);
                 }
                 Thread.Sleep(60000);
             }
@@ -168,7 +162,6 @@ namespace LampblackTransfer
                         }));
 
                     Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}：发送数据成功，设备NODEID：{dev.NodeId}。");
-                    Thread.Sleep(300);
                 }
                 catch (Exception ex)
                 {
