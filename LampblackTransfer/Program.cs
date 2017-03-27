@@ -30,6 +30,8 @@ namespace LampblackTransfer
 
         private static int _clientPort;
 
+        private static Random _random;
+
         private static readonly Dictionary<string, DeviceTime> DeviceTimes = new Dictionary<string, DeviceTime>();
 
         private static void Main()
@@ -55,6 +57,7 @@ namespace LampblackTransfer
             _serverPort = int.Parse(ConfigurationManager.AppSettings["serverPort"]);
             _clientIpAddress = IPAddress.Parse(ConfigurationManager.AppSettings["clientIp"]);
             _clientPort = int.Parse(ConfigurationManager.AppSettings["clientPort"]);
+            _random = new Random();
             RefreashDeviceInfos();
         }
 
@@ -178,13 +181,13 @@ namespace LampblackTransfer
             switch (rate)
             {
                 case 0:
-                    return new Random().Next(5,50);
+                    return _random.Next(5,50);
                 case 1:
-                    return new Random().Next(51, 200);
+                    return _random.Next(51, 200);
                 case 2:
-                    return new Random().Next(201, 500);
+                    return _random.Next(201, 500);
                 default:
-                    return new Random().Next(501, 1000);
+                    return _random.Next(501, 1000);
             }
         }
     }

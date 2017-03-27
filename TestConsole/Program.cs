@@ -8,19 +8,14 @@ namespace TestConsole
     {
         static void Main()
         {
-            var serverUser = GeneralProcess.GetUserByLoginName("CommnicationServer");
-
-            if (serverUser == null)
+            var i = 0;
+            var rd = new Random();
+            while (i < 200)
             {
-                Console.WriteLine(@"通信管理员账号信息错误，请检查配置！");
-                return;
+                Console.WriteLine($"rd1: {rd.Next(0, 1000)}, rd2{new Random().Next(0, 1000)}");
+                i++;
             }
-
-            RepositoryBase.ContextGlobal = new RepositoryContext()
-            {
-                CurrentUser = serverUser,
-                CurrentDomain = serverUser.Domain
-            };
+            Console.ReadKey();
         }
     }
 }
