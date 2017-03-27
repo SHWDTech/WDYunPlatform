@@ -115,7 +115,7 @@ namespace Platform.Process.Process
             {
                 return repo.GetModels(obj => obj.Hotel.DistrictId == districtGuid
                 || obj.Hotel.StreetId == districtGuid
-                || obj.Hotel.AddressId == districtGuid).ToList();
+                || obj.Hotel.AddressId == districtGuid).OrderBy(d => new {d.ProjectId, d.Id}).ToList();
             }
         }
 
