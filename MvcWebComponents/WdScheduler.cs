@@ -78,8 +78,6 @@ namespace MvcWebComponents
             {
                 OnExecuting?.Invoke();
                 _executedTimes++;
-                if ((StopCondition != null &&!StopCondition.Compile().Invoke()) || (ExecuteTimes != 0 && ExecuteTimes < _executedTimes)) return;
-                _timer.Dispose();
                 SchedulerState = SchedulerState.Finished;
             }
             catch (Exception ex)
@@ -87,11 +85,29 @@ namespace MvcWebComponents
                 ExecuteResult = new ExecuteResult(ex);
                 SchedulerState = SchedulerState.Filed;
             }
+
+            Executed();
+        }
+
+        private void Executed()
+        {
+            AfterExecuting?.Invoke();
+            if (SchedulerType == SchedulerType.ExecuteOnce
+                || (SchedulerType == SchedulerType.Interval && ExecuteTimes != 0 && ExecuteTimes <= _executedTimes)
+                || (SchedulerType == SchedulerType.StopOnCondition && StopCondition != null && StopCondition.Compile().Invoke()))
+            {
+                _timer.Dispose();
+            }
         }
 
         /// <summary>
         /// 计划任务执行事件
         /// </summary>
         public event OnExecuting OnExecuting;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public event AfterExecuting AfterExecuting;
     }
 }

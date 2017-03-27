@@ -95,7 +95,7 @@
                             option.UlElementClasses = new[] { "no-margin pagination" };
                         }
                         @Html.PagedListPager(Model.HotelsStatus,
-                            page => Url.Action("Actual", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
+                            page => Url.Action("Actual", new { page, queryName = Model.QueryName, pageSize = Model.PageSize, Model.AreaGuid, Model.StreetGuid, Model.AddressGuid }), option)
                     </div>
                     <div class="horizontal-group">
                         <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
