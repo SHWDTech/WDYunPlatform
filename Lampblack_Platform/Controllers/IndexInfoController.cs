@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process.Process;
@@ -11,15 +12,18 @@ namespace Lampblack_Platform.Controllers
         public IndexInfo Get()
         {
             var model = new IndexInfo();
-            var devs =
-                ProcessInvoke<RestaurantDeviceProcess>()
-                    .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+            var hotels =
+                   ProcessInvoke<HotelRestaurantProcess>()
+                       .HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
             var checkDate = DateTime.Now.AddMinutes(-2);
 
-            foreach (var device in devs)
+            foreach (var hotel in hotels)
             {
                 try
                 {
+                    var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
+                    if (devs.Count <= 0) continue;
+                    var device = devs.First();
                     var monitorDatas = ProcessInvoke<MonitorDataProcess>()
                         .GetDeviceCleanerCurrent(device, checkDate);
                     if (monitorDatas?.DoubleValue == null) continue;

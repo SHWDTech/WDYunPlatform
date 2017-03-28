@@ -11,24 +11,27 @@ namespace Lampblack_Platform.Controllers
         public EnterpriseInfo Get()
         {
             var model = new EnterpriseInfo();
-            var devs =
-                    ProcessInvoke<RestaurantDeviceProcess>()
-                        .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
-            foreach (var dev in devs)
+            var hotels =
+                    ProcessInvoke<HotelRestaurantProcess>()
+                        .HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+            foreach (var hotel in hotels)
             {
+                var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
+                if (devs.Count <= 0) continue;
                 var enterp = new Enterprise
                 {
-                    QYBM = dev.Hotel.ProjectCode,
-                    QYMC = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
-                    QYDZ = dev.Hotel.AddressDetail,
-                    PER = dev.Hotel.ChargeMan,
-                    TEL = dev.Hotel.Telephone,
-                    QYSTREET = dev.Hotel.Street.ItemValue,
-                    XPOS = dev.Hotel.Longitude.ToString(),
-                    YPOS = dev.Hotel.Latitude.ToString(),
-                    CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}",
-                    CASE_NAM = dev.DeviceName,
+                    QYBM = hotel.ProjectCode,
+                    QYMC = $"{hotel.RaletedCompany.CompanyName}({hotel.ProjectName})",
+                    QYDZ = hotel.AddressDetail,
+                    PER = hotel.ChargeMan,
+                    TEL = hotel.Telephone,
+                    QYSTREET = hotel.Street.ItemValue,
+                    XPOS = hotel.Longitude.ToString(),
+                    YPOS = hotel.Latitude.ToString()
                 };
+                var dev = devs.First();
+                enterp.CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}";
+                enterp.CASE_NAM = dev.DeviceName;
 
                 model.data.Add(enterp);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process.Process;
@@ -13,11 +14,14 @@ namespace Lampblack_Platform.Controllers
             try
             {
                 var model = new EqupInfo();
-                var devs =
-                    ProcessInvoke<RestaurantDeviceProcess>()
-                        .DevicesInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
-                foreach (var device in devs)
+                var hotels =
+                    ProcessInvoke<HotelRestaurantProcess>()
+                        .HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+                foreach (var hotel in hotels)
                 {
+                    var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
+                    if (devs.Count <= 0) continue;
+                    var device = devs.First();
                     var equpFan = new Equp
                     {
                         EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}001",
