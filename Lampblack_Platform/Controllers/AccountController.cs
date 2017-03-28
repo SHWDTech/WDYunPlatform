@@ -19,6 +19,10 @@ namespace Lampblack_Platform.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.LoginTitle = "餐饮油烟在线监控平台";
             return DefaultView();
