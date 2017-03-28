@@ -14,7 +14,7 @@ namespace Lampblack_Platform.Controllers
             var hotels = ProcessInvoke<HotelRestaurantProcess>().HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
             foreach (var hotel in hotels)
             {
-                var enterp = new Enterprise()
+                var enterp = new Enterprise
                 {
                     QYBM = hotel.ProjectCode,
                     QYMC = $"{hotel.RaletedCompany.CompanyName}({hotel.ProjectName})",
@@ -29,7 +29,7 @@ namespace Lampblack_Platform.Controllers
                 var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
                 if (devs.Count > 0)
                 {
-                    enterp.CASE_ID = $"HPLB{devs.First().DeviceNodeId.Substring(4, 4)}";
+                    enterp.CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(devs.First().DeviceNodeId, 16)):D6}";
                     enterp.CASE_NAM = devs.First().DeviceName;
                 }
 
