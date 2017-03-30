@@ -21,12 +21,12 @@ namespace Lampblack_Platform.Controllers
                 {
                     var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
                     if (devs.Count <= 0) continue;
-                    var device = devs.First();
+                    var device = devs.OrderBy(d => d.Identity).First();
                     var equpFan = new Equp
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}001",
+                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01001",
                         EQUP_NAM = "风机",
-                        CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}",
+                        CASE_ID = $"QDHP{device.Project.Identity:D6}",
                         EQUP_TYP = "风机",
                         EQUP_MOD = "",
                         EQUP_LIM = ""
@@ -35,9 +35,9 @@ namespace Lampblack_Platform.Controllers
 
                     var equpCleaner = new Equp
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}002",
+                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01002",
                         EQUP_NAM = "净化器",
-                        CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}",
+                        CASE_ID = $"QDHP{device.Project.Identity:D6}",
                         EQUP_TYP = "净化器",
                         EQUP_MOD = "",
                         EQUP_LIM = ""
@@ -46,9 +46,9 @@ namespace Lampblack_Platform.Controllers
 
                     var equpRate = new Equp
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}003",
+                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01003",
                         EQUP_NAM = "清洁度",
-                        CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}",
+                        CASE_ID = $"QDHP{device.Project.Identity:D6}",
                         EQUP_TYP = "清洁度",
                         EQUP_MOD = "0.001",
                         EQUP_LIM = "0.6||0.1"

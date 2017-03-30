@@ -95,7 +95,7 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<RestaurantDeviceRepository>())
             {
-                return repo.GetModels(obj => obj.ProjectId == guid).ToList();
+                return repo.GetModelsInclude(obj => obj.ProjectId == guid, new List<string> { "Project" }).ToList();
             }
         }
 

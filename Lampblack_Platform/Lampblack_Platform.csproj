@@ -188,6 +188,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\AccountViewModels.cs" />
+    <Compile Include="Models\BootstrapTable\BootstrapTablePostParams.cs" />
     <Compile Include="Models\EnterpriseInfo.cs" />
     <Compile Include="Models\EqupInfo.cs" />
     <Compile Include="Models\Home\HomeViewModels.cs" />
@@ -238,8 +239,8 @@
     <Content Include="Resources\Images\Site\tweed.png" />
     <Content Include="Resources\Images\Site\weather.png" />
     <Content Include="Resources\Images\Site\wood_pattern.png" />
-    <Content Include="Scripts\bootstrap-datetimepicker.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\Utility\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\Utility\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-table\bootstrap-table.js" />
     <Content Include="Scripts\bootstrap-table\bootstrap-table.min.js" />
     <Content Include="Scripts\bootstrap-table\extensions\editable\bootstrap-table-editable.min.js" />
@@ -276,16 +277,16 @@
     <Content Include="Scripts\bootstrap-table\locale\bootstrap-table-vi-VN.min.js" />
     <Content Include="Scripts\bootstrap-table\locale\bootstrap-table-zh-CN.min.js" />
     <Content Include="Scripts\bootstrap-table\locale\bootstrap-table-zh-TW.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Utility\bootstrap.js" />
+    <Content Include="Scripts\Utility\bootstrap.min.js" />
     <Content Include="Scripts\Common\SetUpCharts.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\moment-with-locales.js" />
-    <Content Include="Scripts\moment-with-locales.min.js" />
-    <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\moment.min.js" />
+    <None Include="Scripts\Utility\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Utility\jquery.validate.js" />
+    <Content Include="Scripts\Utility\jquery.validate.min.js" />
+    <Content Include="Scripts\Utility\moment-with-locales.js" />
+    <Content Include="Scripts\Utility\moment-with-locales.min.js" />
+    <Content Include="Scripts\Utility\moment.js" />
+    <Content Include="Scripts\Utility\moment.min.js" />
     <Content Include="Scripts\Page\Actual.js" />
     <Content Include="Scripts\Page\Alarm.js" />
     <Content Include="Scripts\Page\CleanessStatistics.js" />
@@ -299,15 +300,9 @@
     <Content Include="Scripts\Page\RunningTime.js" />
     <Content Include="Scripts\Page\Setup.js" />
     <Content Include="Scripts\Page\TrendAnalysis.js" />
-    <Content Include="Scripts\Utility\bootstrap.js" />
-    <Content Include="Scripts\Utility\bootstrap.min.js" />
     <Content Include="Scripts\Common\Const.js" />
     <Content Include="Scripts\Common\MapManipulation.js" />
     <Content Include="Scripts\Component\SlideUp.js" />
-    <Content Include="Scripts\Utility\moment-with-locales.js" />
-    <Content Include="Scripts\Utility\moment-with-locales.min.js" />
-    <Content Include="Scripts\Utility\moment.js" />
-    <Content Include="Scripts\Utility\moment.min.js" />
     <Content Include="Scripts\Page\Authority.js" />
     <Content Include="Scripts\Page\EditRole.js" />
     <Content Include="Scripts\Page\EditUser.js" />
@@ -329,8 +324,6 @@
     <Content Include="Scripts\Page\Login.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\Utility\ai.0.22.9-build00167.min.js" />
-    <Content Include="Scripts\Utility\bootstrap-datetimepicker.js" />
-    <Content Include="Scripts\Utility\bootstrap-datetimepicker.min.js" />
     <Content Include="Mvc.sitemap" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -425,9 +418,6 @@
     <Content Include="Scripts\Utility\jquery-2.2.4.js" />
     <Content Include="Scripts\Utility\jquery-2.2.4.min.js" />
     <Content Include="Scripts\Utility\jquery-2.2.4.min.map" />
-    <None Include="Scripts\Utility\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\Utility\jquery.validate.js" />
-    <Content Include="Scripts\Utility\jquery.validate.min.js" />
     <Content Include="Scripts\Utility\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Utility\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Utility\layout.js" />

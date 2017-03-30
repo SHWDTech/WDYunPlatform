@@ -139,6 +139,7 @@
     <Compile Include="Model\FirmwareSet.cs" />
     <Compile Include="Model\HotelRestaurant.cs" />
     <Compile Include="Model\DataStatistics.cs" />
+    <Compile Include="Model\LampblackRecord.cs" />
     <Compile Include="Model\LampblackUser.cs" />
     <Compile Include="Model\Module.cs" />
     <Compile Include="Model\MonitorData.cs" />

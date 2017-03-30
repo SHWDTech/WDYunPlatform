@@ -1,7 +1,4 @@
-﻿@using Lampblack_Platform.Models.Query
-@using MvcWebComponents.Extensions
-@using PagedList.Mvc
-@model HistoryDataViewModel
+﻿@using MvcWebComponents.Extensions
 @{
     Layout = null;
 }
@@ -20,88 +17,35 @@
                     <div class="control-layer horizontal-group">
                         <span class="glyphicon glyphicon-bell" style="font-size: 20px;"></span>
                         <span style="margin-left: 10px;" class="span100">历史数据查询：</span>
-                        @Html.LabelFor(m => m.StartDateTime, new { @class = "lbl100" })
-                        <input type="text" id="StartDateTime" name="StartDateTime" value="@Model.StartDateTime.ToString("yyyy-MM-dd")" class="form-control control120" />
-                        @Html.LabelFor(m => m.EndDateTime, new { @class = "lbl100" })
-                        <input type="text" id="EndDateTime" name="EndDateTime" value="@Model.EndDateTime.ToString("yyyy-MM-dd")" class="form-control control120" />
-                        <input type="submit" class="btn btn-main" value="查询" id="query" />
+                        @Html.Label("开始时间：", new { @class = "lbl80" })
+                        <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" class="form-control control120" />
+                        @Html.Label("结束时间：", new { @class = "lbl80" })
+                        <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control120" />
+                        <input type="button" class="btn btn-main" value="查询" id="query" />
                         <input type="button" class="btn btn-main" value="导出" id="export" />
                     </div>
                     <div class="table-layer">
-                        <table class="table table-bordered table-hover text-center">
-                            <thead>
-                                <tr>
-                                    <td style="width: 10%;">
-                                        酒店名称
-                                    </td>
-                                    <td style="width: 10%;">
-                                        净化器电流
-                                    </td>
-                                    <td style="width: 10%;">
-                                        净化器开关
-                                    </td>
-                                    @*<td style="width: 10%;">
-                                        风机电流
-                                    </td>*@
-                                    <td style="width: 10%;">
-                                        风机开关
-                                    </td>
-                                    <td style="width: 10%">
-                                        更新时间
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    foreach (var hotel in Model.HistoryData)
-                                    {
-                                        <tr data-hotel-id="@hotel.HotelId">
-                                            <td>@hotel.HotelName</td>
-                                            @{
-                                                var cleanerCurrent = hotel.CleanerCurrent == null ? "无数据" : (hotel.CleanerCurrent.Value/1000.0).ToString("F2");
-                                                var cleanerSwitch = hotel.CleanerSwitch == null ? "无数据" : (hotel.CleanerSwitch == true ? "开" : "关");
-                                                //var fanCurrent = hotel.FanCurrent == null ? "无数据" : (hotel.FanCurrent.Value/1000.0).ToString("F2");
-                                                var fanSwitch = hotel.FanSwitch == null ? "无数据" : (hotel.FanSwitch == true ? "开" : "关");
-                                            }
-                                            <td>@cleanerCurrent</td>
-                                            <td>@cleanerSwitch</td>
-                                            @*<td>@fanCurrent</td>*@
-                                            <td>@fanSwitch</td>
-                                            <th>@hotel.UpdateTime</th>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="panel panel-body" style="margin-top: -30px;">
-                    <div style="float: right;">
-                        @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
-                            option.UlElementClasses = new[] { "no-margin pagination" };
+                        @{ var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                            {
+                                id = "history_data",
+                                data_page_size = 50,
+                                data_query_params = "historyParams"
+                            });
+                            var builder = table.Column("酒店（饭店）名称", "HotelName")
+                                                           .Column("设备编码", "DeviceCode")
+                                                           .Column("通道号", "Channel")
+                                                           .Column("净化器开关", "CleanerSwitch")
+                                                           .Column("净化器电流", "CleanerCurrent")
+                                                           .Column("风机开关", "FanSwitch")
+                                                           .Column("风机电流", "FanCurrent")
+                                                           .Column("数据时间", "DateTime");
                         }
-                        @Html.PagedListPager(Model.HistoryData,
-                            page => Url.Action("HistoryData", new { page, Model.StartDateTime, Model.EndDateTime, pageSize = Model.PageSize }), option)
-                    </div>
-                    <div class="horizontal-group">
-                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
-                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
-                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
-                            @{
-                                for (var i = 5; i < 25; i += 5)
-                                {
-                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
-                                    <option @selected>@i</option>
-                                }
-                            }
-                        </select>
-                        <label>条记录</label>
+                        @(builder)
                     </div>
                 </div>
             </div>
-                                }
+                            }
     </div>
 </div>
 
-<script src="/Scripts/Page/Alarm.js"></script>
+<script src="/Scripts/Page/HistoryData.js"></script>

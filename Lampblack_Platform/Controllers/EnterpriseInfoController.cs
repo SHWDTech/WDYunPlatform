@@ -29,8 +29,8 @@ namespace Lampblack_Platform.Controllers
                     XPOS = hotel.Longitude.ToString(),
                     YPOS = hotel.Latitude.ToString()
                 };
-                var dev = devs.First();
-                enterp.CASE_ID = $"QDHP{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}";
+                var dev = devs.OrderBy(d => d.Identity).First();
+                enterp.CASE_ID = $"QDHP{hotel.Identity:D6}";
                 enterp.CASE_NAM = dev.DeviceName;
 
                 model.data.Add(enterp);

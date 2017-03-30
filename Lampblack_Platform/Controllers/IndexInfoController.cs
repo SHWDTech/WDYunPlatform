@@ -23,21 +23,21 @@ namespace Lampblack_Platform.Controllers
                 {
                     var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
                     if (devs.Count <= 0) continue;
-                    var device = devs.First();
+                    var device = devs.OrderBy(d => d.Identity).First();
                     var monitorDatas = ProcessInvoke<MonitorDataProcess>()
                         .GetDeviceCleanerCurrent(device, checkDate);
                     if (monitorDatas?.DoubleValue == null) continue;
                     var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
                     var fan = new Index
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}001",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}_01001",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
                     model.data.Add(fan);
                     var cleaner = new Index
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}002",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}_01002",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
@@ -45,7 +45,7 @@ namespace Lampblack_Platform.Controllers
 
                     var current = new Index
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}003",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}_01003",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue.Value.ToString("F4")
                     };

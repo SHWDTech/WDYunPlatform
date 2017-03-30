@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using Lampblack_Platform.Models.BootstrapTable;
 using Lampblack_Platform.Models.Query;
+using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using Platform.Process.Process;
@@ -96,10 +98,7 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        public ActionResult RemovalRate()
-        {
-            return View();
-        }
+        public ActionResult RemovalRate() => View();
 
         public ActionResult Alarm(AlarmViewModel model)
         {
@@ -142,45 +141,17 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        public ActionResult HistoryData(HistoryDataViewModel model)
+        
+        public ActionResult HistoryData() => View();
+
+        [NamedAuth(Modules = "HistoryData", Required = true)]
+        public ActionResult HistoryDataTable(HistoryDataTable post)
         {
-            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
-
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
-
-            var queryName = Request["queryName"];
-
-            int count;
-
-            var conditions = new List<Expression<Func<ProtocolData, bool>>>();
-
-            if (model.StartDateTime == DateTime.MinValue)
+            return Json(new
             {
-                model.StartDateTime = DateTime.Now.AddDays(-7);
-            }
-
-            Expression<Func<ProtocolData, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
-            conditions.Add(startCondition);
-
-            if (model.EndDateTime == DateTime.MinValue)
-            {
-                model.EndDateTime = DateTime.Now;
-            }
-
-            Expression<Func<ProtocolData, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
-            conditions.Add(endCondition);
-
-            var historyData = ProcessInvoke<HotelRestaurantProcess>()
-                .GetPagedHistoryData(page, pageSize, queryName, out count, conditions);
-
-            model.PageIndex = page;
-            model.PageSize = pageSize;
-            model.QueryName = queryName;
-            model.Count = count;
-            model.HistoryData = historyData;
-            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
-
-            return View(model);
+                total = 0,
+                rows = new string[10]
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult RunningTime(RunningTimeViewModel model)
