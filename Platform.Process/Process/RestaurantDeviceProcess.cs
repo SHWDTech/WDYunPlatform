@@ -178,9 +178,10 @@ namespace Platform.Process.Process
             var list = new List<DeviceActualStatusTable>();
             query = query.Include("Hotel");
             var records = Repo<LampblackRecordRepository>().GetAllModels();
+            var checkTime = DateTime.Now.AddMinutes(-2);
             foreach (var device in query)
             {
-                var record = records.Where(r => r.ProjectIdentity == device.Project.Identity && r.DeviceIdentity == device.Identity)
+                var record = records.Where(r => r.ProjectIdentity == device.Project.Identity && r.DeviceIdentity == device.Identity && r.RecordDateTime > checkTime)
                     .OrderByDescending(item => item.RecordDateTime).FirstOrDefault();
                 var row = new DeviceActualStatusTable
                 {

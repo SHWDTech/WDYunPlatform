@@ -125,7 +125,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             var records = new List<LampblackRecord>();
             var current = 0;
 
-            while (current <= dev.ChannelCount)
+            while (current <= dev.ChannelCount - 1)
             {
                 var record = new LampblackRecord
                 {
@@ -137,7 +137,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     FanCurrent = Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)),
                     LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackIn-{current}", package)),
                     LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOut-{current}", package)),
-                    RecordDateTime = DateTime.Now
+                    RecordDateTime = DateTime.Now,
+                    DomainId = package.Device.DomainId
                 };
                 record.CleanerSwitch = record.CleanerCurrent > 4;
                 current++;
