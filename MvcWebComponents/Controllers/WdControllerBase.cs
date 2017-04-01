@@ -183,5 +183,7 @@ namespace MvcWebComponents.Controllers
 
             return base.Json(json, requestBehavior);
         }
+
+        protected JsonResult JsonTable(object data) => base.Json(data, JsonRequestBehavior.AllowGet);
     }
 }

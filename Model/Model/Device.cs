@@ -76,7 +76,7 @@ namespace SHWDTech.Platform.Model.Model
         public virtual DateTime? EndTime { get; set; }
 
         [Display(Name = "设备状态")]
-        public virtual DeviceStatus Status { get; set; }
+        public virtual DeviceStatus Status { get; set; } = DeviceStatus.Disabled;
 
         [Display(Name = "设备关联摄像头ID")]
         public Guid? CameraId { get; set; }

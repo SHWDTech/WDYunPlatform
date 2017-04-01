@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.IModel;
-using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
 {
@@ -14,6 +11,6 @@ namespace Platform.Process.Process
     public class DeviceProcess : ProcessBase, IDeviceProcess
     {
         public IDevice GetDeviceByNodeId(string nodeId, bool isEnabled) 
-            => Repo<DeviceRepository>().GetDeviceByNodeId(nodeId, isEnabled).FirstOrDefault();
+            => Repo<RestaurantDeviceRepository>().GetDeviceByNodeId(nodeId, isEnabled).FirstOrDefault();
     }
 }

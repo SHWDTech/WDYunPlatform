@@ -3,6 +3,7 @@ using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Utility;
 
 namespace Lampblack_Platform.Controllers
@@ -22,7 +23,7 @@ namespace Lampblack_Platform.Controllers
                 try
                 {
                     var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
-                    if (devs.Count <= 0) continue;
+                    if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
                     var device = devs.OrderBy(d => d.Identity).First();
                     var monitorDatas = ProcessInvoke<MonitorDataProcess>()
                         .GetDeviceCleanerCurrent(device, checkDate);

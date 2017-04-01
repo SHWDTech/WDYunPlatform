@@ -1,119 +1,48 @@
-﻿@using MvcWebComponents.Extensions
-@using PagedList.Mvc
-@model Lampblack_Platform.Models.Monitor.ActualViewModel
-
-@{
+﻿@{
     Layout = null;
 }
 
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
-        @using (Ajax.BeginForm("Actual", null, new AjaxOptions()
-        {
-            UpdateTargetId = "body-content",
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST"
-        }.GeneralOptions(), new { Id = "actual" }))
-        {
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="control-layer horizontal-group">
-                        <span class="span60">区县：</span>
-                        @Html.DropDownListFor(m => m.AreaGuid, Model.AreaListItems, new { @class = "form-control"})
-                        <span class="span60">街道：</span>
-                        @Html.DropDownListFor(m => m.StreetGuid, Model.StreetListItems, new { @class = "form-control" })
-                        <span class="span60">地址：</span>
-                        @Html.DropDownListFor(m => m.AddressGuid, Model.AddressListItems, new { @class = "form-control" })
-                        <span class="span80">酒店名称：</span>
-                        <input type="text" class="form-control" name="queryName" value="@Model.QueryName" />
-                        <input type="submit" class="btn btn-main" value="查询" id="query" />
-                        <input type="button" class="btn btn-main" value="导出" id="export" />
-                    </div>
-                    <div class="table-layer">
-                        <table class="table table-bordered table-hover text-center">
-                            <thead>
-                                <tr>
-                                    <td style="width: 12.5%;">
-                                        酒店（饭店）名称
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        清洁度
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        净化器状态
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        风机状态
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        出烟浓度（mg/m³）
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        净化器电流（mA）
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        风机电流（mA）
-                                    </td>
-                                    <td style="width: 12.5%;">
-                                        监测时间
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    foreach (var hotel in Model.HotelsStatus)
-                                    {
-                                        for (var i = 0; i < hotel.ChannelStatus.Count; i++)
-                                        {
-                                            <tr>
-                                                @{
-                                                    var channel = hotel.ChannelStatus[i];
-                                                    if (i == 0)
-                                                    {
-                                                        <td rowspan="@hotel.ChannelStatus.Count">@hotel.Name</td>
-                                                    }
-                                                }
-                                                <td><img src="@channel.CleanRate" /></td>
-                                                <td><img src="@channel.CleanerSwitch" /></td>
-                                                <td><img src="@channel.FanSwitch" /></td>
-                                                <td>@channel.LampblackOut</td>
-                                                <td>@channel.CleanerCurrent</td>
-                                                <td>@channel.FanCurrent</td>
-                                                <td>@channel.UpdateTime</td>
-                                            </tr>
-                                                        }
-                                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="control-layer horizontal-group">
+                    <span class="span60">区县：</span>
+                    <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
+                    <span class="span60" style="margin-left: 10px;">街道：</span>
+                    <select class="form-control" id="StreetGuid" style="width: 180px;">
+                        <option value="0">全部</option>
+                    </select>
+                    <span class="span60" style="margin-left: 10px;">地址：</span>
+                    <select class="form-control" id="AddressGuid" style="width: 180px;">
+                        <option value="0">全部</option>
+                    </select>
+                    <span class="span80" style="margin-left: 10px;">酒店名称：</span>
+                    <input type="text" class="form-control" name="queryName" id="queryName" value="" style="width: 180px;" />
+                    <input type="button" class="btn btn-main" value="查询" id="actualQuery" />
+                    <input type="button" class="btn btn-main" value="导出" id="export" />
                 </div>
-                <div class="panel panel-body" style="margin-top: -30px;">
-                    <div style="float: right;">
-                        @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
-                            option.UlElementClasses = new[] { "no-margin pagination" };
-                        }
-                        @Html.PagedListPager(Model.HotelsStatus,
-                            page => Url.Action("Actual", new { page, queryName = Model.QueryName, pageSize = Model.PageSize, Model.AreaGuid, Model.StreetGuid, Model.AddressGuid }), option)
-                    </div>
-                    <div class="horizontal-group">
-                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
-                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
-                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
-                            @{
-                                for (var i = 5; i < 25; i += 5)
-                                {
-                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
-                                    <option @selected>@i</option>
-                                }
-                            }
-                        </select>
-                        <label>条记录</label>
-                    </div>
+                <div class="table-layer">
+                    @{ var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                        {
+                            id = "actual_status",
+                            data_page_size = 25
+                        });
+                        var builder = table.Column("酒店（饭店）名称", "ProjectName")
+                                           .Column("设备编码", "DeviceCode")
+                                           .Column("通道号", "Channel")
+                                           .Column("清洁度", "CleanRate")
+                                           .Column("净化器状态", "CleanerStatus")
+                                           .Apply(ColumnOption.formatter, "statusFormatter")
+                                           .Column("风机状态", "FanStatus")
+                                           .Apply(ColumnOption.formatter, "statusFormatter")
+                                           .Column("净化器电流", "CleanerCurrent")
+                                           .Column("监测时间", "RecordDateTime");
+                    }
+                    @(builder)
                 </div>
             </div>
-                                }
+        </div>
     </div>
 </div>
 

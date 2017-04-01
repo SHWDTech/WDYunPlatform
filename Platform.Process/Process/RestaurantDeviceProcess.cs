@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using PagedList;
@@ -12,6 +13,7 @@ using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
+using WebViewModels.ViewModel;
 
 namespace Platform.Process.Process
 {
@@ -83,6 +85,27 @@ namespace Platform.Process.Process
             }
         }
 
+        public IQueryable<RestaurantDevice> GetRestaurantDevice() => Repo<RestaurantDeviceRepository>().GetAllModels();
+
+        public IQueryable<RestaurantDevice> GetRestaurantDeviceByArea(Guid district, Guid street, Guid address)
+        {
+            var query = Repo<RestaurantDeviceRepository>().GetAllModels();
+            if (district != Guid.Empty)
+            {
+                query = query.Where(d => d.Hotel.DistrictId == district);
+            }
+            if (street != Guid.Empty)
+            {
+                query = query.Where(d => d.Hotel.StreetId == street);
+            }
+            if (address != Guid.Empty)
+            {
+                query = query.Where(d => d.Hotel.AddressId == address);
+            }
+
+            return query;
+        }
+
         public RestaurantDevice GetRestaurantDevice(Guid guid)
         {
             using (var repo = Repo<RestaurantDeviceRepository>())
@@ -148,6 +171,37 @@ namespace Platform.Process.Process
             }
 
             return retDictionary;
+        }
+
+        public List<DeviceActualStatusTable> DeviceCurrentStatus(IQueryable<RestaurantDevice> query)
+        {
+            var list = new List<DeviceActualStatusTable>();
+            query = query.Include("Hotel");
+            var records = Repo<LampblackRecordRepository>().GetAllModels();
+            foreach (var device in query)
+            {
+                var record = records.Where(r => r.ProjectIdentity == device.Project.Identity && r.DeviceIdentity == device.Identity)
+                    .OrderByDescending(item => item.RecordDateTime).FirstOrDefault();
+                var row = new DeviceActualStatusTable
+                {
+                    ProjectGuid = device.Hotel.Id,
+                    ProjectName = device.Hotel.ProjectName,
+                    DeviceCode = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}",
+                    Channel = "1"
+                };
+                if (record != null)
+                {
+                    row.CleanRate = GetCleanRate(record.CleanerCurrent, device.Identity);
+                    row.FanStatus = record.FanSwitch;
+                    row.CleanerCurrent = $"{record.CleanerCurrent}";
+                    row.CleanerStatus = record.CleanerSwitch;
+                    row.RecordDateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}";
+                }
+
+                list.Add(row);
+            }
+
+            return list;
         }
 
         /// <summary>

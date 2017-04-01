@@ -23,4 +23,15 @@ namespace Lampblack_Platform.Models.BootstrapTable
 
         public DateTime EndDateTime { get; set; }
     }
+
+    public class AcutalDataTable : BootstrapTablePostParams
+    {
+        public Guid Area { get; set; }
+
+        public Guid Street { get; set; }
+
+        public Guid Address { get; set; }
+
+        public string Name { get; set; }
+    }
 }

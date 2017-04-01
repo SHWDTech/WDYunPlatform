@@ -57,66 +57,34 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public void Lampblack(IProtocolPackage<byte[]> package, IPackageSource source)
         {
-            var monitorDataList = new List<MonitorData>();
+            var dev = (RestaurantDevice) package.Device;
+            var records = new List<LampblackRecord>();
+            var current = 0;
 
-            foreach (var dataComponent in package.DataComponents)
+            while (current <= dev.ChannelCount)
             {
-                if (dataComponent.Value.CommandData.DataName == null ||
-                    dataComponent.Value.CommandData.DataConvertType == ProtocolDataType.None) continue;
-                var data = _dataConverter.DecodeComponentData(dataComponent.Value);
-
-                var monitorData = new MonitorDataRepository().CreateDefaultModel();
-                monitorData.DomainId = package.Device.DomainId;
-
-                switch (dataComponent.Value.CommandData.DataValueType)
+                var record = new LampblackRecord
                 {
-                    case DataValueType.Double:
-                        monitorData.DoubleValue = Convert.ToDouble(data);
-                        break;
-                    case DataValueType.Integer:
-                        monitorData.IntegerValue = Convert.ToInt32(data);
-                        break;
-                    case DataValueType.Boolean:
-                        monitorData.BooleanValue = Convert.ToBoolean(data);
-                        break;
-                }
-
-                monitorData.ProtocolDataId = package.ProtocolData.Id;
-                monitorData.UpdateTime = DateTime.Now;
-                monitorData.CommandDataId = dataComponent.Value.CommandData.Id;
-                monitorData.DeviceIdentity = package.Device.Identity;
-                monitorData.ProjectIdentity = package.Device.Project.Identity;
-                monitorData.DataIsValid = (dataComponent.Value.ValidFlag & 0x80) == 0;
-                monitorData.DataChannel = dataComponent.Value.ComponentChannel;
-
-                monitorDataList.Add(monitorData);
-
-                if (dataComponent.Value.CommandData.DataName != "CleanerCurrent") continue;
-                var cleanerSwitch = new MonitorData
-                {
-                    DomainId = package.Device.DomainId,
-                    ProtocolDataId = package.ProtocolData.Id,
-                    UpdateTime = DateTime.Now,
-                    CommandDataId = new Guid("15802959-D25B-42AD-BE50-5B48DCE4039A"),
-                    DeviceIdentity = package.Device.Identity,
-                    ProjectIdentity = package.Device.Project.Identity,
-                    DataIsValid = true,
-                    DataChannel = dataComponent.Value.ComponentChannel
+                    ProjectIdentity = dev.Project.Identity,
+                    DeviceIdentity = dev.Identity,
+                    ProtocolId = package.ProtocolData.Id,
+                    CleanerCurrent = Convert.ToInt32(DecodeComponentDataByName($"CleanerCurrent-{current}", package)),
+                    FanSwitch = Convert.ToBoolean(DecodeComponentDataByName($"FanSwitch-{current}", package)),
+                    FanCurrent = Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)),
+                    LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackIn-{current}", package)),
+                    LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOut-{current}", package)),
+                    RecordDateTime = DateTime.Now
                 };
-                if (monitorData.DoubleValue > 4)
-                {
-                    cleanerSwitch.BooleanValue = true;
-                }
-                monitorDataList.Add(cleanerSwitch);
+                record.CleanerSwitch = record.CleanerCurrent > 4;
+                current++;
+                records.Add(record);
             }
 
-            lock (TempMonitorDatas)
-            {
-                TempMonitorDatas.AddRange(monitorDataList);
-            }
-
-            OnMonitorDataReceived();
+            ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateLampblackRecord(records);
         }
+
+        private object DecodeComponentDataByName(string name, IProtocolPackage<byte[]> package) 
+            => package.DataComponents.ContainsKey(name) ? _dataConverter.DecodeComponentData(package.DataComponents[name]) : 0;
 
         /// <summary>
         /// 油烟系统报警信息处理

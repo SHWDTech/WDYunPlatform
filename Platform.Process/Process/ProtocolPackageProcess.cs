@@ -18,6 +18,14 @@ namespace Platform.Process.Process
             }
         }
 
+        public void AddOrUpdateLampblackRecord(IList<LampblackRecord> records)
+        {
+            using (var repo = Repo<LampblackRecordRepository>())
+            {
+                repo.BulkInsert(records);
+            }
+        }
+
         public void AddOrUpdateProtocolData(ProtocolData protocolData)
             => Repo<ProtocolDataRepository>().AddOrUpdateDoCommit(protocolData);
 

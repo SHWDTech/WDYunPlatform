@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201703180344562_ChangeStructure.Designer.cs">
       <DependentUpon>201703180344562_ChangeStructure.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703310901093_AddTableLampblackRecord.cs" />
+    <Compile Include="Migrations\201703310901093_AddTableLampblackRecord.Designer.cs">
+      <DependentUpon>201703310901093_AddTableLampblackRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="Repository\FirmwareRepository.cs" />
     <Compile Include="Repository\FirmwareSetRepository.cs" />
     <Compile Include="Repository\LampblackDeviceModelRepository.cs" />
+    <Compile Include="Repository\LampblackRecordRepository.cs" />
     <Compile Include="Repository\LampblackUserRepository.cs" />
     <Compile Include="Repository\ModuleRepository.cs" />
     <Compile Include="Repository\MonitorDataRepository.cs" />
@@ -192,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703180344562_ChangeStructure.resx">
       <DependentUpon>201703180344562_ChangeStructure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703310901093_AddTableLampblackRecord.resx">
+      <DependentUpon>201703310901093_AddTableLampblackRecord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

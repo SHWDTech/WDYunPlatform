@@ -117,6 +117,7 @@
     <Compile Include="Process\DeviceProcess.cs" />
     <Compile Include="Process\GeneralProcess.cs" />
     <Compile Include="Process\HotelRestaurantProcess.cs" />
+    <Compile Include="Process\LampblackRecordProcess.cs" />
     <Compile Include="Process\MonitorDataProcess.cs" />
     <Compile Include="Process\PermissionProcess.cs" />
     <Compile Include="Process\ProcessBase.cs" />

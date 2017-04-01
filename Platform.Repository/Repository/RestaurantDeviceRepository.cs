@@ -38,5 +38,12 @@ namespace SHWD.Platform.Repository.Repository
 
             return query.SingleOrDefault(obj => obj.Identity == identity);
         }
+
+        public IList<Device> GetDeviceByNodeId(string nodeId, bool isEnabled)
+            => DbContext.Devices.Include("FirmwareSet")
+                    .Include("FirmwareSet.Firmwares")
+                    .Include("Project")
+                    .Where(device => device.DeviceNodeId == nodeId && device.IsEnabled == isEnabled)
+                    .ToList();
     }
 }

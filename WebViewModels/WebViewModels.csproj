@@ -79,6 +79,7 @@
     <Compile Include="ViewDataModel\GeneralReport.cs" />
     <Compile Include="ViewDataModel\HotelCleaness.cs" />
     <Compile Include="ViewModel\CleannessStatisticsViewModel.cs" />
+    <Compile Include="ViewModel\DeviceActualStatusTable.cs" />
     <Compile Include="ViewModel\GeneralComparisonViewModel.cs" />
     <Compile Include="ViewModel\GeneralReportViewModel.cs" />
     <Compile Include="ViewModel\TrendAnalisysViewModel.cs" />

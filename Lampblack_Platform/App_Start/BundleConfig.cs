@@ -22,12 +22,14 @@ namespace Lampblack_Platform
                       "~/Scripts/Utility/bootstrap.js",
                       "~/Scripts/Utility/respond.js",
                       "~/Scripts/bootstrap-table/bootstrap-table.js",
-                      "~/Scripts/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"));
+                      "~/Scripts/bootstrap-table/locale/bootstrap-table-zh-CN.min.js",
+                      "~/Scripts/Utility/select2.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/bootstrap-table.css"));
+                      "~/Content/bootstrap-table.css",
+                      "~/Content/css/select2.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/layout").Include(
                 "~/Scripts/Utility/layout.js",

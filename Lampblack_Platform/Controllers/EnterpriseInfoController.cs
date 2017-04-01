@@ -3,6 +3,7 @@ using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Enums;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -17,7 +18,7 @@ namespace Lampblack_Platform.Controllers
             foreach (var hotel in hotels)
             {
                 var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
-                if (devs.Count <= 0) continue;
+                if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
                 var enterp = new Enterprise
                 {
                     QYBM = hotel.ProjectCode,

@@ -19,19 +19,32 @@ namespace Lampblack_Platform.Controllers
             if (string.IsNullOrWhiteSpace(areaId)) return Json(new JsonStruct(), JsonRequestBehavior.AllowGet);
             Guid guid;
             Guid.TryParse(areaId, out guid);
-            if (guid != Guid.Empty)
+            var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(guid);
+            list.Add(Guid.Empty, "全部");
+
+            return Json(new JsonStruct()
             {
-                var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(guid);
-
-                return Json(new JsonStruct()
-                {
-                    Result = list.Select(obj => new { Id = obj.Key, ItemValue = obj.Value })
-                },
-                    JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(new JsonStruct(), JsonRequestBehavior.AllowGet);
+                Result = list.Select(obj => new { id = obj.Key, text = obj.Value }).ToList().OrderBy(o => o.id)
+            },
+                JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult UserDistrictSelections()
+        {
+            var dict = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts();
+            dict.Add(Guid.Empty, "全部");
+
+            return Json(new JsonStruct()
+            {
+                Result = dict.Select(item => new {id = item.Key, text = item.Value}).ToList().OrderBy(o => o.id)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult UserDistricts() => Json(new JsonStruct()
+        {
+            Result = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts().Select(item => new {id = item.Key, text = item.Value})
+        }, JsonRequestBehavior.AllowGet);
 
         public ActionResult Hotels()
         {

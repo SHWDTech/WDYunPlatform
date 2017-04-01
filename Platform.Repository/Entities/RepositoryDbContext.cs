@@ -436,5 +436,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 油烟设备模型
         /// </summary>
         public virtual DbSet<LampblackDeviceModel> LampblackDeviceModels { get; set; }
+
+        /// <summary>
+        /// 油烟监控记录
+        /// </summary>
+        public virtual DbSet<LampblackRecord> LampblackRecords { get; set; }
     }
 }
