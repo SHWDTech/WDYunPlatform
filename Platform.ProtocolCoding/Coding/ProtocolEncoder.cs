@@ -127,11 +127,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         private static ICommandCoder GetCommandCoder(string protocolName)
         {
-            if (CommandCoders.ContainsKey(protocolName)) return CommandCoders[protocolName];
-            var coder = UnityFactory.Resolve<ICommandCoder>(protocolName);
-            CommandCoders.Add(protocolName, coder);
+            lock (CommandCoders)
+            {
+                if (CommandCoders.ContainsKey(protocolName)) return CommandCoders[protocolName];
+                var coder = UnityFactory.Resolve<ICommandCoder>(protocolName);
+                CommandCoders.Add(protocolName, coder);
 
-            return CommandCoders[protocolName];
+                return CommandCoders[protocolName];
+            }
         }
     }
 }
