@@ -18,6 +18,8 @@
         format: 'HH:mm'
     });
 
+    $('#RaletedCompanyId').select2();
+
     $('#reset').on('click', function () {
         resetValidation();
         $('#hotelEdit').find('input[type=text]').val('');

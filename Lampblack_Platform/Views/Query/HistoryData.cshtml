@@ -18,9 +18,11 @@
                         <span class="glyphicon glyphicon-bell" style="font-size: 20px;"></span>
                         <span style="margin-left: 10px;" class="span100">历史数据查询：</span>
                         @Html.Label("开始时间：", new { @class = "lbl80" })
-                        <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" class="form-control control120" />
+                        <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" class="form-control control140" />
                         @Html.Label("结束时间：", new { @class = "lbl80" })
-                        <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control120" />
+                        <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control140" />
+                        <span class="span60">区县：</span>
+                        <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
                         <input type="button" class="btn btn-main" value="查询" id="query" />
                         <input type="button" class="btn btn-main" value="导出" id="export" />
                     </div>
@@ -31,14 +33,15 @@
                                 data_page_size = 50,
                                 data_query_params = "historyParams"
                             });
-                            var builder = table.Column("酒店（饭店）名称", "HotelName")
-                                                           .Column("设备编码", "DeviceName")
-                                                           .Column("通道号", "Channel")
-                                                           .Column("净化器开关", "CleanerSwitch")
-                                                           .Column("净化器电流", "CleanerCurrent")
-                                                           .Column("风机开关", "FanSwitch")
-                                                           .Column("风机电流", "FanCurrent")
-                                                           .Column("数据时间", "DateTime");
+                            var builder = table.Column("所属区县", "DistrictName")
+                                .Column("酒店（饭店）名称", "HotelName")
+                                .Column("设备编码", "DeviceName")
+                                .Column("通道号", "Channel")
+                                .Column("净化器开关", "CleanerSwitch")
+                                .Column("净化器电流", "CleanerCurrent")
+                                .Column("风机开关", "FanSwitch")
+                                .Column("风机电流", "FanCurrent")
+                                .Column("数据时间", "DateTime");
                         }
                         @(builder)
                     </div>

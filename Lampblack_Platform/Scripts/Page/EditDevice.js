@@ -9,4 +9,6 @@
         $('#deviceEdit').find('input[type=text]').val('');
         $('#deviceEdit').find('select').val('');
     });
+
+    $('#ProjectId').select2();
 })

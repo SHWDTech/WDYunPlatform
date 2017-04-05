@@ -25,4 +25,6 @@
         url: '/Query/HistoryDataTable',
         queryParams: historyParams
     });
+
+    $('#AddressGuid').select2();
 });
