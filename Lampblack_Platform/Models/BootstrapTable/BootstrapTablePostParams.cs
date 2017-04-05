@@ -19,9 +19,11 @@ namespace Lampblack_Platform.Models.BootstrapTable
 
     public class HistoryDataTable : BootstrapTablePostParams
     {
-        public DateTime StartDateTime { get; set; }
+        public Guid Hotel { get; set; }
 
-        public DateTime EndDateTime { get; set; }
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
     }
 
     public class AcutalDataTable : BootstrapTablePostParams

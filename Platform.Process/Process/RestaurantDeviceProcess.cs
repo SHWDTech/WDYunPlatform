@@ -206,14 +206,6 @@ namespace Platform.Process.Process
             return list;
         }
 
-        private string GetDistrictName(Guid districtGuid)
-        {
-            var names = (List<UserDictionary>)PlatformCaches.GetCache("DistrictInfo").CacheItem;
-            var district = names.First(o => o.Id == districtGuid);
-
-            return district.ItemValue;
-        }
-
         /// <summary>
         /// 获取设备最新数据
         /// </summary>
@@ -328,5 +320,7 @@ namespace Platform.Process.Process
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }
+
+        public IQueryable<RestaurantDevice> AllDevices() => Repo<RestaurantDeviceRepository>().GetAllModels();
     }
 }

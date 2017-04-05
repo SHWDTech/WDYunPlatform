@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Platform.Cache;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Entities;
 using SHWD.Platform.Repository.IRepository;
 using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Model;
 
 namespace Platform.Process.Process
 {
@@ -58,6 +61,14 @@ namespace Platform.Process.Process
             DbContext = string.IsNullOrWhiteSpace(DbRepository.ConnectionString)
                     ? new RepositoryDbContext()
                     : new RepositoryDbContext(DbRepository.ConnectionString);
+        }
+
+        public static string GetDistrictName(Guid districtGuid)
+        {
+            var names = (List<UserDictionary>)PlatformCaches.GetCache("DistrictInfo").CacheItem;
+            var district = names.First(o => o.Id == districtGuid);
+
+            return district.ItemValue;
         }
 
         /// <summary>

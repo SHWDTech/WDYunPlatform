@@ -21,8 +21,8 @@ namespace Lampblack_Platform.Controllers
             Guid.TryParse(areaId, out guid);
             var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(guid);
             list.Add(Guid.Empty, "全部");
-
-            return Json(new JsonStruct()
+        
+            return Json(new JsonStruct
             {
                 Result = list.Select(obj => new { id = obj.Key, text = obj.Value }).ToList().OrderBy(o => o.id)
             },
@@ -34,16 +34,16 @@ namespace Lampblack_Platform.Controllers
             var dict = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts();
             dict.Add(Guid.Empty, "全部");
 
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
-                Result = dict.Select(item => new {id = item.Key, text = item.Value}).ToList().OrderBy(o => o.id)
+                Result = dict.Select(item => new { id = item.Key, text = item.Value }).ToList().OrderBy(o => o.id)
             }, JsonRequestBehavior.AllowGet);
         }
 
 
         public ActionResult UserDistricts() => Json(new JsonStruct()
         {
-            Result = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts().Select(item => new {id = item.Key, text = item.Value})
+            Result = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts().Select(item => new { id = item.Key, text = item.Value })
         }, JsonRequestBehavior.AllowGet);
 
         public ActionResult Hotels()
@@ -77,7 +77,7 @@ namespace Lampblack_Platform.Controllers
 
             var hotels = ProcessInvoke<HotelRestaurantProcess>().GetHotels(districtGuid);
 
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
                 Result = hotels.Select(obj => new { obj.Id, Name = obj.ProjectName })
             },
@@ -115,7 +115,7 @@ namespace Lampblack_Platform.Controllers
 
             var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevices(districtGuid);
 
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
                 Result = devs.Select(obj => new { obj.Id, Name = obj.DeviceName })
             },
@@ -130,9 +130,24 @@ namespace Lampblack_Platform.Controllers
                 model.DueDateTime = DateTime.Parse($"{Request["DueDateTime"]}-1-1");
             }
             var result = ProcessInvoke<RunningTimeProcess>().GetRunningTimeReport(model);
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
                 Result = result.Select(obj => new { Date = obj.Key, Linkage = obj.Value })
+            },
+                JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetDistrictHotel(Guid id)
+        {
+            var hotels = ProcessInvoke<HotelRestaurantProcess>()
+                .GetDistrictHotelRestaurants(id)
+                .Select(obj => new { id = obj.Id, text = obj.ProjectName }).ToList();
+            hotels.Add(new {id = Guid.Empty, text = "全部"});
+            var ret = hotels.OrderBy(item => item.id);
+
+            return Json(new JsonStruct
+            {
+                Result = ret
             },
                 JsonRequestBehavior.AllowGet);
         }

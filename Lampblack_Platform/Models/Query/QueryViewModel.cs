@@ -128,4 +128,25 @@ namespace Lampblack_Platform.Models.Query
         /// </summary>
         public IPagedList<HistoryData> HistoryData { get; set; }
     }
+
+    public class HistoryDataTableRows
+    {
+        public string DistrictName { get; set; }
+
+        public string HotelName { get; set; }
+
+        public string DeviceName { get; set; }
+
+        public int Channel { get; set; } = 1;
+
+        public bool CleanerSwitch { get; set; }
+
+        public double CleanerCurrent { get; set; }
+
+        public bool FanSwitch { get; set; }
+
+        public double FanCurrent { get; set; }
+
+        public string DateTime { get; set; }
+    }
 }

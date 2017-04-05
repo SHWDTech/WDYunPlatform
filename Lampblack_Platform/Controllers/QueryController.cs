@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.BootstrapTable;
@@ -52,8 +53,8 @@ namespace Lampblack_Platform.Controllers
             model.QueryName = queryName;
             model.Count = count;
             model.CleanRateView = cleanRateView;
-            model.PageCount = (count%pageSize) > 0 ? (count/pageSize) + 1 : (count/pageSize);
-            
+            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
+
             return View(model);
         }
 
@@ -141,17 +142,40 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        
+
         public ActionResult HistoryData() => View();
 
         [NamedAuth(Modules = "HistoryData", Required = true)]
         public ActionResult HistoryDataTable(HistoryDataTable post)
         {
-            return Json(new
+            if (post.Hotel == Guid.Empty) return null;
+            var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(post.Hotel);
+            var query = ProcessInvoke<LampblackRecordProcess>().GetRecordRepo();
+            query = query.Where(obj => obj.ProjectIdentity == hotel.Identity && obj.RecordDateTime > post.StartDate && obj.RecordDateTime < post.EndDate);
+            var total = query.Count();
+            if (total == 0) return null;
+            var records = query.OrderByDescending(o => o.RecordDateTime).Skip(post.offset).Take(post.limit).ToList();
+            var devIdentity = records[0].DeviceIdentity;
+            var dev = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().First(d => d.Identity == devIdentity);
+            var districtName = ProcessBase.GetDistrictName(hotel.DistrictId);
+            var rows = (from record in records
+                        select new HistoryDataTableRows
+                        {
+                            DistrictName = districtName,
+                            HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                            DeviceName = dev.DeviceName,
+                            CleanerSwitch = record.CleanerSwitch,
+                            CleanerCurrent = record.CleanerCurrent,
+                            FanSwitch = record.FanSwitch,
+                            FanCurrent = record.FanCurrent,
+                            DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                        }).ToList();
+
+            return JsonTable(new
             {
-                total = 0,
-                rows = new string[10]
-            }, JsonRequestBehavior.AllowGet);
+                total,
+                rows
+            });
         }
 
         public ActionResult RunningTime(RunningTimeViewModel model)

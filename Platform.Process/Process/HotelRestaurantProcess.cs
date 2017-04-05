@@ -44,6 +44,14 @@ namespace Platform.Process.Process
             }
         }
 
+        public HotelRestaurant GetHotelById(Guid id)
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                return repo.GetModelById(id);
+            }
+        }
+
         public HotelRestaurant GetHotelRestaurant(Guid guid)
         {
             using (var repo = Repo<HotelRestaurantRepository>())
@@ -226,6 +234,14 @@ namespace Platform.Process.Process
                 };
 
                 return status;
+            }
+        }
+
+        public List<HotelRestaurant> GetDistrictHotelRestaurants(Guid districtGuid)
+        {
+            using (var repo = Repo<HotelRestaurantRepository>())
+            {
+                return districtGuid == Guid.Empty ? repo.GetAllModels().ToList() : repo.GetModels(obj => obj.DistrictId == districtGuid).ToList();
             }
         }
 
