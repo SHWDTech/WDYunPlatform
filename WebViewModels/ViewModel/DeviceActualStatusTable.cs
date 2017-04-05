@@ -6,9 +6,11 @@ namespace WebViewModels.ViewModel
     {
         public Guid ProjectGuid { get; set; }
 
+        public string DistrictName { get; set; }
+
         public string ProjectName { get; set; }
 
-        public string DeviceCode { get; set; }
+        public string DeviceName { get; set; }
 
         public string Channel { get; set; }
 

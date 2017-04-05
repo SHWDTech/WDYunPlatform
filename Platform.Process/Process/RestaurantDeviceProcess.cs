@@ -176,7 +176,7 @@ namespace Platform.Process.Process
         public List<DeviceActualStatusTable> DeviceCurrentStatus(IQueryable<RestaurantDevice> query)
         {
             var list = new List<DeviceActualStatusTable>();
-            query = query.Include("Hotel");
+            query = query.Include("Hotel").Include("Hotel.RaletedCompany");
             var records = Repo<LampblackRecordRepository>().GetAllModels();
             var checkTime = DateTime.Now.AddMinutes(-2);
             foreach (var device in query)
@@ -185,9 +185,10 @@ namespace Platform.Process.Process
                     .OrderByDescending(item => item.RecordDateTime).FirstOrDefault();
                 var row = new DeviceActualStatusTable
                 {
+                    DistrictName = GetDistrictName(device.Hotel.DistrictId),
                     ProjectGuid = device.Hotel.Id,
-                    ProjectName = device.Hotel.ProjectName,
-                    DeviceCode = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}",
+                    ProjectName = $"{device.Hotel.RaletedCompany.CompanyName}({device.Hotel.ProjectName})",
+                    DeviceName = $"{device.DeviceName}",
                     Channel = "1"
                 };
                 if (record != null)
@@ -203,6 +204,14 @@ namespace Platform.Process.Process
             }
 
             return list;
+        }
+
+        private string GetDistrictName(Guid districtGuid)
+        {
+            var names = (List<UserDictionary>)PlatformCaches.GetCache("DistrictInfo").CacheItem;
+            var district = names.First(o => o.Id == districtGuid);
+
+            return district.ItemValue;
         }
 
         /// <summary>

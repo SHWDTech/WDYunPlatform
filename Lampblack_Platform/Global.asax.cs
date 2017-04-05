@@ -64,6 +64,8 @@ namespace Lampblack_Platform
                 }
             };
 
+            PlatformCaches.Add("DistrictInfo", (List<UserDictionary>)GeneralProcess.GetConfig<UserDictionary>(o => o.ItemName == "Area" && o.ItemLevel == 0));
+
             var userDiscticts =
                 (IList<SysDictionary>) GeneralProcess.GetConfig<SysDictionary>(c => c.ItemName == "userDistrict");
             PlatformCaches.Add("userDistrict", userDiscticts, false, "SystemConfig");
