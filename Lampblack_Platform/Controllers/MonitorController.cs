@@ -110,10 +110,7 @@ namespace Lampblack_Platform.Controllers
                 .Take(post.limit);
 
             var devs = ProcessInvoke<RestaurantDeviceProcess>().DeviceCurrentStatus(query);
-
-            var orderedDevs = devs.OrderBy(d => d.ProjectGuid);
-
-            var merge = orderedDevs.GroupBy(d => d.ProjectGuid).Where(e => e.Count() > 1)
+            var merge = devs.GroupBy(d => d.ProjectGuid).Where(e => e.Count() > 1)
                 .Select(v => new
                 {
                     index = devs.IndexOf(devs.First(d => d.ProjectGuid == v.Key)),

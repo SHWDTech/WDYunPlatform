@@ -203,6 +203,7 @@ namespace Platform.Process.Process
                 list.Add(row);
             }
 
+            list = list.OrderBy(dev => dev.ProjectGuid).ToList();
             return list;
         }
 
