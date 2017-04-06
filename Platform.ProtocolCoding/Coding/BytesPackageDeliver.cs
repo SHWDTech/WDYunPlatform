@@ -7,6 +7,7 @@ using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
+using StackExchange.Redis;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -143,9 +144,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 record.CleanerSwitch = record.CleanerCurrent > 4;
                 current++;
                 records.Add(record);
+                SetStatusCache(package, record);
             }
 
             ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateLampblackRecord(records);
+        }
+
+        private void SetStatusCache(IProtocolPackage<byte[]> package, LampblackRecord record)
+        {
+            var db = ConnectionMultiplexer.Connect("localhost").GetDatabase();
+            db.StringSet($"Device:CleanerCurrent:{package.Device.Id}", $"{record.CleanerCurrent}");
         }
 
         private object DecodeComponentDataByName(string name, IProtocolPackage<byte[]> package) 
