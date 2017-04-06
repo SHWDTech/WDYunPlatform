@@ -16,7 +16,7 @@ namespace Lampblack_Platform.Controllers
             foreach (var hotel in hotels)
             {
                 var status = ProcessInvoke<HotelRestaurantProcess>().GetHotelCurrentStatus(hotel.Id);
-                var data = new MonitorInfo()
+                var data = new MonitorInfo
                 {
                     entp_id = hotel.ProjectCode,
                     entp_nam = hotel.ProjectName,

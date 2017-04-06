@@ -35,7 +35,8 @@ namespace Lampblack_Platform.Controllers
 
             var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(parent);
 
-            return Json(new JsonStruct() {
+            return Json(new JsonStruct
+                {
                 Result = list.Select(obj => new {Id = obj.Key, ItemValue = obj.Value})}, 
                 JsonRequestBehavior.AllowGet);
         }
@@ -54,7 +55,7 @@ namespace Lampblack_Platform.Controllers
             var district = ProcessInvoke<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
             return district == null
-                ? Json(new JsonStruct() { Message = "添加区县信息失败，请重新尝试。" }, JsonRequestBehavior.AllowGet)
+                ? Json(new JsonStruct { Message = "添加区县信息失败，请重新尝试。" }, JsonRequestBehavior.AllowGet)
                 : Json("添加成功！", district, JsonRequestBehavior.AllowGet);
         }
 
@@ -174,7 +175,7 @@ namespace Lampblack_Platform.Controllers
 
             var hotels = ProcessInvoke<HotelRestaurantProcess>().GetPagedHotelRestaurant(page, pageSize, queryName, out count);
 
-            var model = new HotelViewModel()
+            var model = new HotelViewModel
             {
                 Count = count,
                 PageSize = pageSize,
@@ -362,57 +363,57 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.CateringCompany = ProcessInvoke<CateringEnterpriseProcess>()
                 .GetCateringCompanySelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.District = ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.Street = new List<SelectListItem>();
 
             ViewBag.Address = new List<SelectListItem>();
 
-            ViewBag.Status = new List<SelectListItem>()
+            ViewBag.Status = new List<SelectListItem>
             {
-                new SelectListItem() {Text = "营业中", Value = "0"},
-                new SelectListItem() {Text = "装修中", Value = "1"},
-                new SelectListItem() {Text = "停业中", Value = "2"}
+                new SelectListItem {Text = "营业中", Value = "0"},
+                new SelectListItem {Text = "装修中", Value = "1"},
+                new SelectListItem {Text = "停业中", Value = "2"}
             };
         }
 
         private void GetDeviceRelatedItems()
         {
-            ViewBag.Status = new List<SelectListItem>()
+            ViewBag.Status = new List<SelectListItem>
             {
-                new SelectListItem() {Text = "使用中", Value = "0"},
-                new SelectListItem() {Text = "停用中", Value = "1"},
-                new SelectListItem() {Text = "维修中", Value = "2"}
+                new SelectListItem {Text = "使用中", Value = "0"},
+                new SelectListItem {Text = "停用中", Value = "1"},
+                new SelectListItem {Text = "维修中", Value = "2"}
             };
 
-            ViewBag.CleanerType = new List<SelectListItem>()
+            ViewBag.CleanerType = new List<SelectListItem>
             {
-                new SelectListItem() {Text = "静电式", Value = "0"},
-                new SelectListItem() {Text = "过滤式", Value = "1"},
-                new SelectListItem() {Text = "负离子", Value = "2"},
-                new SelectListItem() {Text = "光电式", Value = "3"}
+                new SelectListItem {Text = "静电式", Value = "0"},
+                new SelectListItem {Text = "过滤式", Value = "1"},
+                new SelectListItem {Text = "负离子", Value = "2"},
+                new SelectListItem {Text = "光电式", Value = "3"}
             };
 
             ViewBag.Hotel = ProcessInvoke<HotelRestaurantProcess>()
                 .GetHotelRestaurantSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.DeviceModels = ProcessInvoke<DeviceModelProcess>()
                 .GetDeviceModelSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
         }
 
         private void GetDeviceMaintenanceItems()
         {
-            ViewBag.Status = new List<SelectListItem>()
+            ViewBag.Status = new List<SelectListItem>
             {
                 new SelectListItem {Text = "很脏", Value = "0"},
                 new SelectListItem {Text = "一般", Value = "1"},
@@ -421,12 +422,12 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.Users = ProcessInvoke<LampblackUserProcess>()
                 .GetLampblackUserSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.Devices = ProcessInvoke<RestaurantDeviceProcess>()
                 .GetRestaurantDeviceSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Key.ToString(), Value = obj.Value })
+                .Select(obj => new SelectListItem { Text = obj.Key.ToString(), Value = obj.Value })
                 .ToList();
 
         }

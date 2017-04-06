@@ -266,11 +266,11 @@ namespace Lampblack_Platform.Controllers
             var role = ProcessInvoke<WdRoleProcess>().GetRole(guid);
             if (role == null)
             {
-                return Json(new JsonStruct() { Message = "没有找到指定系统角色，请重新尝试！" },
+                return Json(new JsonStruct { Message = "没有找到指定系统角色，请重新尝试！" },
                     JsonRequestBehavior.AllowGet);
             }
 
-            var model = new AuthorityViewModel()
+            var model = new AuthorityViewModel
             {
                 Role = role,
                 Permissions = GeneralProcess.GetSysPeremissions()
@@ -293,24 +293,24 @@ namespace Lampblack_Platform.Controllers
 
         private void GetDepartmentRelatedItems()
         {
-            ViewBag.Enable = new List<SelectListItem>()
+            ViewBag.Enable = new List<SelectListItem>
             {
-                new SelectListItem() {Text = "启用", Value = "true"},
-                new SelectListItem() {Text = "停用", Value = "false"}
+                new SelectListItem {Text = "启用", Value = "true"},
+                new SelectListItem {Text = "停用", Value = "false"}
             };
         }
 
         private void GetUserRelatedItems()
         {
-            ViewBag.Enable = new List<SelectListItem>()
+            ViewBag.Enable = new List<SelectListItem>
             {
-                new SelectListItem() {Text = "启用", Value = "true"},
-                new SelectListItem() {Text = "停用", Value = "false"}
+                new SelectListItem {Text = "启用", Value = "true"},
+                new SelectListItem {Text = "停用", Value = "false"}
             };
 
-            var cateringCompany = new List<SelectListItem>()
+            var cateringCompany = new List<SelectListItem>
             {
-                new SelectListItem()
+                new SelectListItem
                 {
                     Text = "",
                     Value = ""
@@ -319,14 +319,14 @@ namespace Lampblack_Platform.Controllers
 
             cateringCompany.AddRange(ProcessInvoke<CateringEnterpriseProcess>()
             .GetCateringCompanySelectList()
-            .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+            .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
             .ToList());
 
             ViewBag.CateringCompany = cateringCompany;
 
             ViewBag.Department = ProcessInvoke<DepartmentProcess>()
                 .GetDepartmentSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList();
 
             ViewBag.Roles = ProcessInvoke<WdRoleProcess>()
@@ -335,10 +335,10 @@ namespace Lampblack_Platform.Controllers
 
         private void GetRoleRelatedItems()
         {
-            ViewBag.Enable = new List<SelectListItem>()
+            ViewBag.Enable = new List<SelectListItem>
             {
-                new SelectListItem() {Text = "启用", Value = "true"},
-                new SelectListItem() {Text = "停用", Value = "false"}
+                new SelectListItem {Text = "启用", Value = "true"},
+                new SelectListItem {Text = "停用", Value = "false"}
             };
         }
     }

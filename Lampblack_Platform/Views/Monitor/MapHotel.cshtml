@@ -8,7 +8,7 @@
 }
 
 <div>
-    @using (Ajax.BeginForm("MapHotel", null, new AjaxOptions()
+    @using (Ajax.BeginForm("MapHotel", null, new AjaxOptions
     {
         UpdateTargetId = "searchTable",
         InsertionMode = InsertionMode.Replace,
@@ -52,7 +52,7 @@
             </table>
             <div style="float: right;">
                 @{
-                    var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+                    var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions
                     {
                         HttpMethod = "POST",
                         UpdateTargetId = "searchTable",

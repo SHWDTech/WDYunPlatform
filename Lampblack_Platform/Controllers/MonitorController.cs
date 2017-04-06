@@ -29,8 +29,8 @@ namespace Lampblack_Platform.Controllers
             {
                 hotelLocation = hotelLocation.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();
             }
-                return Json(new JsonStruct()
-            {
+                return Json(new JsonStruct
+                {
                 Result = hotelLocation
             }, JsonRequestBehavior.AllowGet);
         }
@@ -39,7 +39,7 @@ namespace Lampblack_Platform.Controllers
         public ActionResult GetMapHotelInfo(Guid hotelGuid)
         {
             var hotelLocation = ProcessInvoke<HotelRestaurantProcess>().GetMapHotelCurrentStatus(hotelGuid);
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
                 Result = hotelLocation
             }, JsonRequestBehavior.AllowGet);
@@ -111,7 +111,9 @@ namespace Lampblack_Platform.Controllers
 
             var devs = ProcessInvoke<RestaurantDeviceProcess>().DeviceCurrentStatus(query);
 
-            var merge = devs.GroupBy(d => d.ProjectGuid).Where(e => e.Count() > 1)
+            var orderedDevs = devs.OrderBy(d => d.ProjectGuid);
+
+            var merge = orderedDevs.GroupBy(d => d.ProjectGuid).Where(e => e.Count() > 1)
                 .Select(v => new
                 {
                     index = devs.IndexOf(devs.First(d => d.ProjectGuid == v.Key)),
@@ -130,17 +132,17 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = "" }
+                    new SelectListItem {Text = "全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (paramsObjects.ContainsKey("area"))
@@ -151,7 +153,7 @@ namespace Lampblack_Platform.Controllers
 
                 streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(Guid.Parse(selectArea))
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (paramsObjects.ContainsKey("street"))

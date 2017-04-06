@@ -24,7 +24,7 @@
                     <div class="sub-menu-item">
                         @Ajax.InnerElementActionLink($"<span class='glyphicon glyphicon-play'></span>  <span>{subMenu.ModuleName}</span>",
                        subMenu.Action, subMenu.Controller, null,
-                       new AjaxOptions()
+                       new AjaxOptions
                        {
                            UpdateTargetId = "body-content",
                            InsertionMode = InsertionMode.Replace,

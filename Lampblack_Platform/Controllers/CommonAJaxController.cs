@@ -41,7 +41,7 @@ namespace Lampblack_Platform.Controllers
         }
 
 
-        public ActionResult UserDistricts() => Json(new JsonStruct()
+        public ActionResult UserDistricts() => Json(new JsonStruct
         {
             Result = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts().Select(item => new { id = item.Key, text = item.Value })
         }, JsonRequestBehavior.AllowGet);

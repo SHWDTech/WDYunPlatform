@@ -82,7 +82,7 @@ namespace Lampblack_Platform.Controllers
         [AjaxGet]
         public ActionResult SetUp(SetUpViewModel model)
         {
-            var propertys = new Dictionary<string, string>()
+            var propertys = new Dictionary<string, string>
             {
                 {"UserId", model.UserId.ToString() },
                 {"UserIdentityName", model.UserIdentityName},

@@ -9,7 +9,7 @@
 
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
-        @using (Ajax.BeginForm("Hotel", null, new AjaxOptions()
+        @using (Ajax.BeginForm("Hotel", null, new AjaxOptions
         {
             UpdateTargetId = "body-content",
             InsertionMode = InsertionMode.Replace,
@@ -90,14 +90,14 @@
                                             <td>@registerDate</td>
                                             <td>
                                                 @Ajax.ActionLink("编辑", "EditHotel", new { guid = hotel.Id },
-                                                new AjaxOptions()
+                                                new AjaxOptions
                                                 {
                                                     HttpMethod = "GET",
                                                     OnSuccess = "slideUp.show",
                                                     UpdateTargetId = "slide-up-content"
                                                 })
                                                 @Ajax.ActionLink("删除", "DeleteHotel", new { guid = hotel.Id },
-                                                new AjaxOptions()
+                                                new AjaxOptions
                                                 {
                                                     HttpMethod = "GET",
                                                     Confirm = "确定删除吗？"
@@ -113,7 +113,7 @@
                 <div class="panel panel-body" style="margin-top: -30px;">
                     <div style="float: right;">
                         @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
+                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
                             option.UlElementClasses = new[] { "no-margin pagination" };
                         }
                         @Html.PagedListPager(Model.HotelRestaurants,

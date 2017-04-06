@@ -29,7 +29,7 @@ namespace Lampblack_Platform.Controllers
 
             foreach (var rate in rates)
             {
-                model.HotelCleanessList.Add(new HotelCleaness() { HotelName = rate.ProjectName, CleanessRate = rate.ProjectCleaness });
+                model.HotelCleanessList.Add(new HotelCleaness { HotelName = rate.ProjectName, CleanessRate = rate.ProjectCleaness });
             }
 
             model.NoData = rates.Count(obj => obj.ProjectCleaness == CleanessRateResult.NoData);
@@ -52,7 +52,7 @@ namespace Lampblack_Platform.Controllers
         {
             var currentStatus = new IndexHotelCurrentViewModel(ProcessInvoke<HotelRestaurantProcess>().GetHotelCurrentStatus(hotelGuid));
 
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
                 Result = currentStatus
             }, JsonRequestBehavior.AllowGet);
@@ -63,7 +63,7 @@ namespace Lampblack_Platform.Controllers
         {
             var currentStatus = new IndexHotelCurrentViewModel(ProcessInvoke<RestaurantDeviceProcess>().GetDeviceCurrentStatus(hotelGuid));
 
-            return Json(new JsonStruct()
+            return Json(new JsonStruct
             {
                 Result = currentStatus
             }, JsonRequestBehavior.AllowGet);

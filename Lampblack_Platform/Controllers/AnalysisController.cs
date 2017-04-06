@@ -42,22 +42,22 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = "" }
+                    new SelectListItem {Text = "全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             model.AreaListItems = areaList;
@@ -77,36 +77,36 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = "" }
+                    new SelectListItem {Text = "全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (model.AreaGuid != Guid.Empty)
             {
                 streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.AreaGuid)
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (model.StreetGuid != Guid.Empty)
                 {
                     addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.StreetGuid)
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 }
@@ -121,36 +121,36 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = "" }
+                    new SelectListItem {Text = "全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (model.AreaGuid != Guid.Empty)
             {
                 streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.AreaGuid)
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (model.StreetGuid != Guid.Empty)
                 {
                     addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.StreetGuid)
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 }
@@ -165,36 +165,36 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = "" }
+                    new SelectListItem {Text = "全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem() {Text = "全部", Value = ""}
+                    new SelectListItem {Text = "全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                 .GetDistrictSelectList()
-                .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                 .ToList());
 
             if (model.AreaGuid != Guid.Empty)
             {
                 streetList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.AreaGuid)
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 if (model.StreetGuid != Guid.Empty)
                 {
                     addressList.AddRange(ProcessInvoke<UserDictionaryProcess>()
                     .GetChildDistrict(model.StreetGuid)
-                    .Select(obj => new SelectListItem() { Text = obj.Value, Value = obj.Key.ToString() })
+                    .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
                     .ToList());
 
                 }
