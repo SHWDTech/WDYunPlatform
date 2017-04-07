@@ -151,7 +151,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         private void SetStatusCache(IProtocolPackage<byte[]> package, LampblackRecord record)
         {
-            RedisService.GetREdisDatabase().StringSet($"Hotel:CleanerCurrent:{package.Device.ProjectId}", $"{record.CleanerCurrent}");
+            RedisService.GetREdisDatabase().StringSet($"Hotel:CleanerCurrent:{package.Device.ProjectId}", $"{record.CleanerCurrent}", TimeSpan.FromMinutes(2));
         }
 
         private object DecodeComponentDataByName(string name, IProtocolPackage<byte[]> package) 
