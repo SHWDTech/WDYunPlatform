@@ -427,7 +427,7 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.Devices = ProcessInvoke<RestaurantDeviceProcess>()
                 .GetRestaurantDeviceSelectList()
-                .Select(obj => new SelectListItem { Text = obj.Key.ToString(), Value = obj.Value })
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key })
                 .ToList();
 
         }

@@ -9,4 +9,6 @@
         $('#deviceMaintenceEdit').find('input[type=text]').val('');
         $('#deviceMaintenceEdit').find('select').val('');
     });
+
+    $('#DeviceId').select2();
 })

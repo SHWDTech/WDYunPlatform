@@ -41,7 +41,7 @@ namespace Platform.Process.Process
         {
             using (var repo = Repo<RestaurantDeviceRepository>())
             {
-                return repo.GetAllModels().ToDictionary(obj => obj.DeviceName, item => item.Id.ToString());
+                return repo.GetAllModels().ToDictionary(obj => obj.Id.ToString(), item => item.DeviceName);
             }
         }
 
