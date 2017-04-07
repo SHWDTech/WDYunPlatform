@@ -14,6 +14,10 @@ namespace WebViewModels.ViewModel
 
         public string Channel { get; set; }
 
+        public string ChargeMan { get; set; }
+
+        public string Telephone { get; set; }
+
         public string CleanRate { get; set; } = "无数据";
 
         public bool CleanerStatus { get; set; } = false;

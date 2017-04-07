@@ -33,13 +33,17 @@
                                            .Column("酒店（饭店）名称", "ProjectName")
                                            .Column("设备名称", "DeviceName")
                                            .Column("通道号", "Channel")
+                                           .Column("联系人", "ChargeMan")
+                                           .Column("联系电话", "Telephone")
                                            .Column("清洁度", "CleanRate")
+                                           .Apply(ColumnOption.formatter, "cleanerFormatter")
                                            .Column("净化器状态", "CleanerStatus")
                                            .Apply(ColumnOption.formatter, "statusFormatter")
                                            .Column("风机状态", "FanStatus")
                                            .Apply(ColumnOption.formatter, "statusFormatter")
                                            .Column("净化器电流", "CleanerCurrent")
-                                           .Column("监测时间", "RecordDateTime");
+                                           .Column("监测时间", "RecordDateTime")
+                                           .Apply(ColumnOption.width, "125");
                     }
                     @(builder)
                 </div>

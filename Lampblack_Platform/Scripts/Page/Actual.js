@@ -7,6 +7,22 @@
         }
     }
 
+    window.cleanerFormatter = function(value) {
+        switch (value) {
+        case LampblackStatus.Fail:
+            return '<img src="/Resources/Images/Site/CleanRate/F_3232.png" title="失效"/>';
+        case LampblackStatus.noData:
+            return '<img src="/Resources/Images/Site/CleanRate/N_3232.png" title="无数据"/>';
+        case LampblackStatus.Worse:
+            return '<img src="/Resources/Images/Site/CleanRate/W_3232.png" title="较差"/>';
+        case LampblackStatus.Qualified:
+            return '<img src="/Resources/Images/Site/CleanRate/Q_3232.png" title="合格"/>';
+        case LampblackStatus.Good:
+            return '<img src="/Resources/Images/Site/CleanRate/G_3232.png" title="良好"/>';
+        }
+        return '';
+    };
+
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty();

@@ -9,10 +9,8 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
-using Platform.Cache;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Model;
-using WebViewModels.ViewDataModel;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -106,7 +104,11 @@ namespace Lampblack_Platform.Controllers
                 query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
             }
             var total = query.Count();
-            query = query.OrderBy(d => d.Identity).Skip(post.offset)
+            query = query.OrderBy(d => new
+                {
+                    d.ProjectId,
+                    d.Identity
+                }).Skip(post.offset)
                 .Take(post.limit);
 
             var devs = ProcessInvoke<RestaurantDeviceProcess>().DeviceCurrentStatus(query);

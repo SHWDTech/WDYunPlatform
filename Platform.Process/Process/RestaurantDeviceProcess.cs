@@ -189,7 +189,9 @@ namespace Platform.Process.Process
                     ProjectGuid = device.Hotel.Id,
                     ProjectName = $"{device.Hotel.RaletedCompany.CompanyName}({device.Hotel.ProjectName})",
                     DeviceName = $"{device.DeviceName}",
-                    Channel = "1"
+                    Channel = "1",
+                    ChargeMan = device.Hotel.ChargeMan,
+                    Telephone = device.Telephone
                 };
                 if (record != null)
                 {
