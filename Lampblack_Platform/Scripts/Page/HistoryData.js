@@ -24,9 +24,13 @@
         return params;
     }
 
+    var table;
+
     $('#query').on('click', function () {
-        debugger;
-        $('#history_data').bootstrapTable('refresh');
+        table = $('#history_data').bootstrapTable('refresh',
+            {
+                pageNumber: 1
+            });
     });
 
     $('#history_data').bootstrapTable({

@@ -63,7 +63,10 @@
             Address: $('#AddressGuid').val(),
             Name: $('#queryName').val()
         };
-        $('#actual_status').bootstrapTable('refresh');
+        $('#actual_status').bootstrapTable('refresh',
+            {
+                pageNumber : 1
+            });
     });
 
     $('#actual_status').on('load-success.bs.table', function (e, data) {
