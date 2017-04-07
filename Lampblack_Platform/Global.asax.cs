@@ -7,10 +7,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lampblack_Platform.Common;
-using MvcWebComponents;
 using MvcWebComponents.Controllers;
 using Platform.Cache;
-using Platform.Process;
 using Platform.Process.Process;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
@@ -72,26 +70,6 @@ namespace Lampblack_Platform
 
             LampblackConfig.InitConfig(configDictionary);
             WdControllerBase.LoginName = LampblackConfig.LoginName;
-            PlatformCaches.Add("Cleaness", ProcessInvoke.Instance<HotelRestaurantProcess>().GetHotelCleanessList());
-            var updateCleaness = new WdScheduler(SchedulerType.Interval)
-            {
-                Interval = 120000
-            };
-            updateCleaness.OnExecuting += () =>
-            {
-                PlatformCaches.Add("Cleaness", ProcessInvoke.Instance<HotelRestaurantProcess>().GetHotelCleanessList());
-            };
-            WdSchedulerManager.Register(updateCleaness);
-            PlatformCaches.Add("HotelLocations", ProcessInvoke.Instance<HotelRestaurantProcess>().GetHotelLocations());
-            var updateLocations = new WdScheduler(SchedulerType.Interval)
-            {
-                Interval = 120000
-            };
-            updateLocations.OnExecuting += () =>
-            {
-                PlatformCaches.Add("HotelLocations", ProcessInvoke.Instance<HotelRestaurantProcess>().GetHotelLocations());
-            };
-            WdSchedulerManager.Register(updateLocations);
         }
 
         private void SetRepositoryFilter()

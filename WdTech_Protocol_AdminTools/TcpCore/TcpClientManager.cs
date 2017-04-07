@@ -58,7 +58,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <summary>
         /// 指示通信对象是否已经连接上
         /// </summary>
-        public bool IsConnected { get; private set; }
+        public bool IsConnected { get; }
 
         public Guid ClientGuid { get; }
 

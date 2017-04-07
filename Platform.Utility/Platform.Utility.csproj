@@ -57,9 +57,14 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="StackExchange.Redis, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.2.1\lib\net45\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -87,6 +92,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="ILogService.cs" />
     <Compile Include="LogService.cs" />
+    <Compile Include="RedisService.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportService.cs" />
     <Compile Include="Serialize\XmlSerializerHelper.cs" />

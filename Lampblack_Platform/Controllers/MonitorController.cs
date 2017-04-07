@@ -24,7 +24,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Map")]
         public ActionResult GetHotelInfo()
         {
-            var hotelLocation =((List<HotelLocations>)PlatformCaches.GetCache("HotelLocations").CacheItem);
+            var hotelLocation = ProcessInvoke<HotelRestaurantProcess>().GetHotelLocations();
             if (WdContext.UserDistricts != null)
             {
                 hotelLocation = hotelLocation.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();

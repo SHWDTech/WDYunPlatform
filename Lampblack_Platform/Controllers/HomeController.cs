@@ -20,8 +20,7 @@ namespace Lampblack_Platform.Controllers
         {
             var model = new IndexViewModel();
 
-            var rates =
-                (List<WebViewModels.ViewDataModel.HotelCleaness>) PlatformCaches.GetCache("Cleaness").CacheItem;
+            var rates = ProcessInvoke<HotelRestaurantProcess>().GetHotelCleanessList();
             if (WdContext.UserDistricts != null)
             {
                 rates = rates.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();

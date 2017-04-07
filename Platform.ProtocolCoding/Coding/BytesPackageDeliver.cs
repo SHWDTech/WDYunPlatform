@@ -7,7 +7,6 @@ using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
-using StackExchange.Redis;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -152,8 +151,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         private void SetStatusCache(IProtocolPackage<byte[]> package, LampblackRecord record)
         {
-            var db = ConnectionMultiplexer.Connect("localhost").GetDatabase();
-            db.StringSet($"Device:CleanerCurrent:{package.Device.Id}", $"{record.CleanerCurrent}");
+            RedisService.GetREdisDatabase().StringSet($"Hotel:CleanerCurrent:{package.Device.ProjectId}", $"{record.CleanerCurrent}");
         }
 
         private object DecodeComponentDataByName(string name, IProtocolPackage<byte[]> package) 

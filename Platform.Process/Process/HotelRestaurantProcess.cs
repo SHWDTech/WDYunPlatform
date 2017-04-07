@@ -123,58 +123,32 @@ namespace Platform.Process.Process
             using (var context = new RepositoryDbContext())
             {
                 ((IObjectContextAdapter)context).ObjectContext.CommandTimeout = 180;
-                var checkDate = DateTime.Now.AddMinutes(-2);
-                var commandDataId =
-                    context.Set<CommandData>().First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
                 var modelId = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761");
-                var cleanNess = new List<HotelCleaness>();
-                foreach (var hotel in context.Set<HotelRestaurant>())
-                {
-                    var devs =
-                        context.Set<Device>().Where(dev => dev.ProjectId == hotel.Id).Select(item => item.Identity).ToList();
-                    var lastProtocol =
-                        context.Set<ProtocolData>()
-                            .Where(d => devs.Contains(d.DeviceIdentity))
-                            .OrderByDescending(dat => dat.UpdateTime)
-                            .FirstOrDefault();
-                    if (lastProtocol != null && lastProtocol.UpdateTime >= checkDate)
+                var cleanNess = context.Set<HotelRestaurant>()
+                    .Select(h => new
                     {
-                        var hotelData = context.Set<MonitorData>().FirstOrDefault(d => d.ProjectIdentity == hotel.Identity 
-                        && d.ProtocolDataId == lastProtocol.Id 
-                        && d.CommandDataId == commandDataId);
-                        if (hotelData == null)
-                        {
-                            cleanNess.Add(new HotelCleaness
-                            {
-                                DistrictGuid = hotel.DistrictId,
-                                ProjectName = hotel.ProjectName,
-                                ProjectCleaness = "无数据"
-                            });
-                        }
-                        else
-                        {
-                            cleanNess.Add(new HotelCleaness
-                            {
-                                DistrictGuid = hotel.DistrictId,
-                                ProjectName = hotel.ProjectName,
-                                ProjectCleaness = hotelData.DoubleValue != null
-                            ? GetCleanRateByDeviceModel(hotelData.DoubleValue, modelId)
-                            : "无数据"
-                            });
-                        }
-                    }
-                    else
+                        h.Id,
+                        h.DistrictId,
+                        h.ProjectName
+                    }).ToList()
+                    .Select(a => new HotelCleaness
                     {
-                        cleanNess.Add(new HotelCleaness
-                        {
-                            DistrictGuid = hotel.DistrictId,
-                            ProjectName = hotel.ProjectName,
-                            ProjectCleaness = "无数据"
-                        });
-                    }
-                }
+                        DistrictGuid = a.DistrictId,
+                        ProjectName = a.ProjectName,
+                        ProjectCleaness = GetCleanRateByDeviceModel(GetCleanerCurrentFromRedis($"Hotel:CleanerCurrent:{a.Id}"), modelId)
+                    }).ToList();
                 return cleanNess;
             }
+        }
+
+        private double? GetCleanerCurrentFromRedis(string key)
+        {
+            var current = RedisService.GetREdisDatabase().StringGet(key);
+            if (current.HasValue)
+            {
+                return double.Parse(current.ToString());
+            }
+            return null;
         }
 
         public Dictionary<string, object> GetHotelCurrentStatus(Guid hotelGuid)
@@ -262,9 +236,6 @@ namespace Platform.Process.Process
             {
                 repo.Database.CommandTimeout = int.MaxValue;
                 var hotels = repo.Set<HotelRestaurant>().ToList();
-                var checkDate = DateTime.Now.AddMinutes(-2);
-                var commandDataId =
-                    repo.Set<CommandData>().First(obj => obj.DataName == ProtocolDataName.CleanerCurrent).Id;
                 var modelId = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761");
 
                 foreach (var hotel in hotels)
@@ -280,35 +251,22 @@ namespace Platform.Process.Process
                             Longitude = $"{hotel.Longitude}"
                         }
                     };
-                    var devs =
-                        repo.Set<Device>().Where(dev => dev.ProjectId == hotel.Id).Select(item => item.Identity).ToList();
-                    var lastProtocol =
-                        repo.Set<ProtocolData>()
-                            .Where(d => devs.Contains(d.DeviceIdentity))
-                            .OrderByDescending(dat => dat.UpdateTime)
-                            .FirstOrDefault();
-                    if (lastProtocol != null && lastProtocol.UpdateTime >= checkDate)
+                    if (repo.Set<Device>().Any(dev => dev.ProjectId == hotel.Id))
                     {
-                        var hotelData =
-                            repo.Set<MonitorData>()
-                                .FirstOrDefault(d => d.ProjectIdentity == hotel.Identity 
-                                && d.ProtocolDataId == lastProtocol.Id 
-                                && d.CommandDataId == commandDataId);
-                        if (hotelData == null)
+                        var lastRecord = RedisService.GetREdisDatabase().StringGet($"Hotel:CleanerCurrent:{hotel.Id}");
+                        double? rate = null;
+                        if (lastRecord.HasValue)
                         {
-                            locat.Status = "无数据";
+                            rate = double.Parse(lastRecord.ToString());
                         }
-                        else
-                        {
-                            var cleanRate = GetCleanRateByDeviceModel(hotelData.DoubleValue, modelId);
-                            locat.Status = cleanRate;
-                        }
+
+                        locat.Status = GetCleanRateByDeviceModel(rate, modelId);
                     }
                     else
                     {
-                        locat.Status = "无数据";
+                        locat.Status = GetCleanRateByDeviceModel(null, modelId);
                     }
-
+                    
                     locations.Add(locat);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using StackExchange.Redis;
 
 namespace Lampblack_Platform.Common
 {
@@ -15,6 +16,7 @@ namespace Lampblack_Platform.Common
             FirmwareSetGuid = (Guid) configs["firmwareSetGuid"];
             LoginName = ConfigurationManager.AppSettings["LoginName"];
             District = ConfigurationManager.AppSettings["District"];
+            RedisDbObject = ConnectionMultiplexer.Connect("localhost").GetDatabase();
         }
 
         /// <summary>
@@ -36,5 +38,10 @@ namespace Lampblack_Platform.Common
         /// 所属区县
         /// </summary>
         public static string District { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Redis对象
+        /// </summary>
+        public static IDatabase RedisDbObject { get; private set; }
     }
 }
