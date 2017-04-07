@@ -65,7 +65,7 @@
         };
         $('#actual_status').bootstrapTable('refresh',
             {
-                pageNumber : 1
+                url: '/Monitor/ActualTable'
             });
     });
 

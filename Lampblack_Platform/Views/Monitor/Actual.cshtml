@@ -26,7 +26,8 @@
                     @{ var table = Html.BootstrapTable(null, TablePaginationOption.server, new
                         {
                             id = "actual_status",
-                            data_page_size = 25
+                            data_page_size = 25,
+                            data_reset_offset = true
                         });
                         var builder = table.Column("所属区县", "DistrictName")
                                            .Column("酒店（饭店）名称", "ProjectName")

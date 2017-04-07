@@ -29,7 +29,7 @@
     $('#query').on('click', function () {
         table = $('#history_data').bootstrapTable('refresh',
             {
-                pageNumber: 1
+                url: '/Query/HistoryDataTable'
             });
     });
 
