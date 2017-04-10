@@ -5,6 +5,7 @@ using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Model.Table;
 using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
 using WebViewModels.ViewModel;
@@ -206,6 +207,39 @@ namespace Platform.Process.Process
             }
 
             return 0;
+        }
+
+        public List<RunningTimeTable> GetRunningTimeTables(List<RestaurantDevice> devs, DateTime startDateTime, DateTime endDateTime)
+        {
+            var rows = devs.Select(d => new RunningTimeTable
+            {
+                DistrictName = GetDistrictName(d.Hotel.DistrictId),
+                ProjectName = d.Hotel.ProjectName,
+                DeviceName = d.DeviceName,
+                DeviceRunningTime = GetRunningTimes(startDateTime, endDateTime, RunningTimeType.Device, d.Hotel.Identity, d.Identity),
+                CleanerRunningTime = GetRunningTimes(startDateTime, endDateTime, RunningTimeType.Cleaner, d.Hotel.Identity, d.Identity),
+                FanRunningTime = GetRunningTimes(startDateTime, endDateTime, RunningTimeType.Fan, d.Hotel.Identity, d.Identity)
+            }).ToList();
+            return rows;
+        }
+
+        public string GetRunningTimes(DateTime startDateTime, DateTime endDateTime, RunningTimeType type,
+            long hotelIdentity, long deviceIdentity)
+        {
+            long ticks = 0;
+            using (var repo = Repo<RunningTimeRepository>())
+            {
+                var query = repo.GetModels(r => r.Type == type && r.ProjectIdentity == hotelIdentity &&
+                                    r.DeviceIdentity == deviceIdentity
+                                    && r.UpdateTime > startDateTime && r.UpdateTime < endDateTime);
+                if (query.Any())
+                {
+                    ticks = query.Sum(q => q.RunningTimeTicks);
+                }
+            }
+
+            var timeSpan = TimeSpan.FromTicks(ticks);
+            return $"{timeSpan.Days * 24 + timeSpan.Hours}小时{timeSpan.Minutes}分钟";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
@@ -178,45 +179,31 @@ namespace Lampblack_Platform.Controllers
             });
         }
 
-        public ActionResult RunningTime(RunningTimeViewModel model)
+        public ActionResult RunningTime() => View();
+
+        [NamedAuth(Modules = "RunningTime", Required = true)]
+        public ActionResult RunningTimeTable(RunntingDataTable post)
         {
-            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
-
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
-
-            var queryName = Request["queryName"];
-
-            int count;
-
-            var conditions = new List<Expression<Func<RunningTime, bool>>>();
-
-            if (model.StartDateTime == DateTime.MinValue)
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            if (!string.IsNullOrWhiteSpace(post.Name))
             {
-                model.StartDateTime = DateTime.Now.AddDays(-7);
+                query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
             }
+            var total = query.Count();
+            var devs = query.Include("Hotel").OrderBy(d => new
+                {
+                    d.ProjectId,
+                    d.Identity
+                }).Skip(post.offset)
+                .Take(post.limit).ToList();
 
-            Expression<Func<RunningTime, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
-            conditions.Add(startCondition);
+            var rows = ProcessInvoke<RunningTimeProcess>().GetRunningTimeTables(devs, post.StartDate, post.EndDate);
 
-            if (model.EndDateTime == DateTime.MinValue)
+            return JsonTable(new
             {
-                model.EndDateTime = DateTime.Now;
-            }
-
-            Expression<Func<RunningTime, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
-            conditions.Add(endCondition);
-
-            var runningTimeView = ProcessInvoke<HotelRestaurantProcess>()
-                .GetPagedRunningTime(page, pageSize, queryName, out count, conditions);
-
-            model.PageIndex = page;
-            model.PageSize = pageSize;
-            model.QueryName = queryName;
-            model.Count = count;
-            model.RunningTimeView = runningTimeView;
-            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
-
-            return View(model);
+                total,
+                rows
+            });
         }
     }
 }
