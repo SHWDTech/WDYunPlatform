@@ -1,103 +1,52 @@
-﻿@using Lampblack_Platform.Models.Query
-@using MvcWebComponents.Extensions
-@using PagedList.Mvc
-@model LinkageViewModel
-@{
+﻿@{
     Layout = null;
 }
 
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
-        @using (Ajax.BeginForm("LinkageRate", null, new AjaxOptions
-        {
-            UpdateTargetId = "body-content",
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST"
-        }.GeneralOptions(), new { Id = "linkAge" }))
-        {
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="control-layer horizontal-group">
-                        <span class="glyphicon glyphicon-resize-small" style="font-size: 20px;"></span>
-                        <span style="margin-left: 10px;" class="span100">联动比查询：</span>
-                        @Html.LabelFor(m => m.StartDateTime, new { @class = "lbl100" })
-                        <input type="text" id="StartDateTime" name="StartDateTime" value="@Model.StartDateTime.ToString("yyyy-MM-dd")" class="form-control control120" />
-                        @Html.LabelFor(m => m.EndDateTime, new { @class = "lbl100" })
-                        <input type="text" id="EndDateTime" name="EndDateTime" value="@Model.EndDateTime.ToString("yyyy-MM-dd")" class="form-control control120" />
-                        <input type="submit" class="btn btn-main" value="查询" id="query" />
-                        <input type="button" class="btn btn-main" value="导出" id="export" />
-                    </div>
-                    <div class="table-layer">
-                        <table class="table table-bordered table-hover text-center">
-                            <thead>
-                                <tr>
-                                    <td style="width: 10%;">
-                                        酒店名称
-                                    </td>
-                                    <td style="width: 10%;">
-                                        净化器运行时间
-                                    </td>
-                                    <td style="width: 10%;">
-                                        风机运行时间
-                                    </td>
-                                    <td style="width: 10%">
-                                        联动比
-                                    </td>
-                                    <td style="width: 10%">
-                                        更新时间
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    foreach (var hotel in Model.LinkageView)
-                                    {
-                                        <tr data-hotel-id="@hotel.HotelId">
-                                            <td>@hotel.HotelName</td>
-                                            @{
-                                                var cleaner = $"{hotel.CleannerRunningTime.Hours}小时{hotel.CleannerRunningTime.Minutes}分钟";
-                                                var fan = $"{hotel.FanRunningTime.Hours}小时{hotel.FanRunningTime.Minutes}分钟";
-                                            }
-                                            <td>@cleaner</td>
-                                            <td>@fan</td>
-                                            @{
-                                                var linkage = hotel.CompleteLinkaged ? "完全联动" : "不完全联动";
-                                            }
-                                            <td>@linkage</td>
-                                            <td>@hotel.UpdateTime</td>
-                                        </tr>
-                                                }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="control-layer horizontal-group">
+                    <span class="glyphicon glyphicon-resize-small" style="font-size: 20px;"></span>
+                    <span style="margin-left: 10px;" class="span100">联动比查询：</span>
+                    <label for="QueryDateTime">查询时间：</label>
+                    <input type="text" id="QueryDateTime" name="QueryDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control120" />
                 </div>
-                <div class="panel panel-body" style="margin-top: -30px;">
-                    <div style="float: right;">
-                        @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
-                            option.UlElementClasses = new[] { "no-margin pagination" };
-                        }
-                        @Html.PagedListPager(Model.LinkageView,
-                            page => Url.Action("LinkageRate", new { page, Model.StartDateTime, Model.EndDateTime, pageSize = Model.PageSize }), option)
-                    </div>
-                    <div class="horizontal-group">
-                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
-                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
-                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
-                            @{
-                                for (var i = 5; i < 25; i += 5)
-                                {
-                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
-                                    <option @selected>@i</option>
-                                }
-                            }
-                        </select>
-                        <label>条记录</label>
-                    </div>
+                <div class="control-layer horizontal-group">
+                    <span class="span60">区县：</span>
+                    <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
+                    <span class="span60" style="margin-left: 10px;">街道：</span>
+                    <select class="form-control" id="StreetGuid" style="width: 180px;">
+                        <option value="0">全部</option>
+                    </select>
+                    <span class="span60" style="margin-left: 10px;">地址：</span>
+                    <select class="form-control" id="AddressGuid" style="width: 180px;">
+                        <option value="0">全部</option>
+                    </select>
+                    <span class="span80" style="margin-left: 10px;">酒店名称：</span>
+                    <input type="text" class="form-control" name="queryName" id="queryName" value="" style="width: 180px;" />
+                    <input type="submit" class="btn btn-main" value="查询" id="linkageRateQuery" />
+                    <input type="button" class="btn btn-main" value="导出" id="export" />
+                </div>
+                <div class="table-layer">
+                    @{
+                        var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                        {
+                            id = "linkage_table",
+                            data_page_size = 25,
+                            data_reset_offset = true
+                        });
+                        var builder = table.Column("所属区县", "DistrictName")
+                            .Column("酒店（饭店）名称", "ProjectName")
+                            .Column("设备名称", "DeviceName")
+                            .Column("净化器运行时间", "CleanerRunningTime")
+                            .Column("风机运行时间", "FanRunningTime")
+                            .Column("联动比状态", "LinkageRate");
+                    }
+                    @(builder)
                 </div>
             </div>
-                                }
+        </div>
     </div>
 </div>
 

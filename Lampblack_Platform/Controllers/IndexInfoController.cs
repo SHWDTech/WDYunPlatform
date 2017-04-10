@@ -24,7 +24,7 @@ namespace Lampblack_Platform.Controllers
                 {
                     var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
                     if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
-                    var device = devs.OrderBy(d => d.Identity).First();
+                    var device = devs.OrderBy(d => d.Identity).First(obj => obj.Status == DeviceStatus.Enabled);
                     var monitorDatas = ProcessInvoke<MonitorDataProcess>()
                         .GetDeviceCleanerCurrent(device, checkDate);
                     if (monitorDatas?.DoubleValue == null) continue;

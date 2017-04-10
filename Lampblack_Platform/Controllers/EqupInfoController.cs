@@ -22,7 +22,7 @@ namespace Lampblack_Platform.Controllers
                 {
                     var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
                     if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
-                    var device = devs.OrderBy(d => d.Identity).First();
+                    var device = devs.OrderBy(d => d.Identity).First(obj => obj.Status == DeviceStatus.Enabled);
                     var equpFan = new Equp
                     {
                         EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01001",
