@@ -163,6 +163,7 @@
     <Compile Include="Model\UserConfig.cs" />
     <Compile Include="Model\UserDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Table\LinkageRateTable.cs" />
     <Compile Include="Table\RunningTimeTable.cs" />
   </ItemGroup>
   <ItemGroup>

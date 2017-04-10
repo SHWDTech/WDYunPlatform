@@ -61,10 +61,29 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult LinkageRate() => View();
 
-        public ActionResult LinkageRateTable()
+        [NamedAuth(Modules = "LinkageRate", Required = true)]
+        public ActionResult LinkageRateTable(LinkageRateTable post)
         {
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            if (!string.IsNullOrWhiteSpace(post.Name))
+            {
+                query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
+            }
+            var total = query.Count();
+            var devs = query.Include("Hotel").OrderBy(d => new
+                {
+                    d.ProjectId,
+                    d.Identity
+                }).Skip(post.offset)
+                .Take(post.limit).ToList();
 
-            return null;
+            var rows = ProcessInvoke<RunningTimeProcess>().GetLinkageRateTables(devs, post.QueryDateTime);
+
+            return JsonTable(new
+            {
+                total,
+                rows
+            });
         }
 
         public ActionResult RemovalRate() => View();

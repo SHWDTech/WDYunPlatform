@@ -51,4 +51,17 @@ namespace Lampblack_Platform.Models.BootstrapTable
 
         public string Name { get; set; }
     }
+
+    public class LinkageRateTable : BootstrapTablePostParams
+    {
+        public Guid Area { get; set; }
+
+        public Guid Street { get; set; }
+
+        public Guid Address { get; set; }
+
+        public DateTime QueryDateTime { get; set; }
+
+        public string Name { get; set; }
+    }
 }

@@ -201,12 +201,7 @@ namespace Platform.Process.Process
                     obj.UpdateTime >= startDate
                     && obj.UpdateTime < dueDateTime
                     && obj.Type == runTimeType);
-            if (runningTime.Count() != 0)
-            {
-                return runningTime.Sum(item => item.RunningTimeTicks);
-            }
-
-            return 0;
+            return runningTime.Count() != 0 ? runningTime.Sum(item => item.RunningTimeTicks) : 0;
         }
 
         public List<RunningTimeTable> GetRunningTimeTables(List<RestaurantDevice> devs, DateTime startDateTime, DateTime endDateTime)
@@ -223,7 +218,12 @@ namespace Platform.Process.Process
             return rows;
         }
 
-        public string GetRunningTimes(DateTime startDateTime, DateTime endDateTime, RunningTimeType type,
+        public List<LinkageRateTable> GetLinkageRateTables(List<RestaurantDevice> devs, DateTime queryDateTime)
+        {
+            return null;
+        }
+
+        private string GetRunningTimes(DateTime startDateTime, DateTime endDateTime, RunningTimeType type,
             long hotelIdentity, long deviceIdentity)
         {
             long ticks = 0;
