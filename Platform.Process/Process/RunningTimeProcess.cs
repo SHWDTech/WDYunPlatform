@@ -220,7 +220,21 @@ namespace Platform.Process.Process
 
         public List<LinkageRateTable> GetLinkageRateTables(List<RestaurantDevice> devs, DateTime queryDateTime)
         {
-            return null;
+            var rows = devs.Select(d => new LinkageRateTable
+            {
+                DistrictName = GetDistrictName(d.Hotel.DistrictId),
+                ProjectName = d.Hotel.ProjectName,
+                DeviceName = d.DeviceName,
+                CleanerRunningTime = GetRunningTimes(queryDateTime, RunningTimeType.Cleaner, d.Hotel.Identity, d.Identity),
+                FanRunningTime = GetRunningTimes(queryDateTime, RunningTimeType.Fan, d.Hotel.Identity, d.Identity)
+            }).ToList();
+
+            foreach (var row in rows)
+            {
+                row.LinkageRate = row.CleanerRunningTime.Equals(row.FanRunningTime) ? "完全联动" : "不完全联动";
+            }
+
+            return rows;
         }
 
         private string GetRunningTimes(DateTime startDateTime, DateTime endDateTime, RunningTimeType type,
@@ -232,6 +246,25 @@ namespace Platform.Process.Process
                 var query = repo.GetModels(r => r.Type == type && r.ProjectIdentity == hotelIdentity &&
                                     r.DeviceIdentity == deviceIdentity
                                     && r.UpdateTime > startDateTime && r.UpdateTime < endDateTime);
+                if (query.Any())
+                {
+                    ticks = query.Sum(q => q.RunningTimeTicks);
+                }
+            }
+
+            var timeSpan = TimeSpan.FromTicks(ticks);
+            return $"{timeSpan.Days * 24 + timeSpan.Hours}小时{timeSpan.Minutes}分钟";
+        }
+
+        private string GetRunningTimes(DateTime queryDateTime, RunningTimeType type, long hotelIdentity,
+            long deviceIdentity)
+        {
+            long ticks = 0;
+            using (var repo = Repo<RunningTimeRepository>())
+            {
+                var query = repo.GetModels(r => r.Type == type && r.ProjectIdentity == hotelIdentity &&
+                                                r.DeviceIdentity == deviceIdentity
+                                                && r.UpdateTime == queryDateTime);
                 if (query.Any())
                 {
                     ticks = query.Sum(q => q.RunningTimeTicks);

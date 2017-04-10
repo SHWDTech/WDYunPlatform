@@ -32,9 +32,10 @@
     });
     $('#AddressGuid').select2();
 
+    debugger;
     $('#linkage_table').bootstrapTable({
         url: '/Query/LinkageRateTable',
-        queryParams: function (params) {
+        queryParams: function(params) {
             params.Area = $('#AreaGuid').val();
             params.Street = $('#StreetGuid').val();
             params.Address = $('#AddressGuid').val();
@@ -42,7 +43,7 @@
             params.Name = $('#queryName').val();
             return params;
         },
-        height: $('#running_time').parents('.float-card').height() - 150
+        height: $('#linkage_table').parents('.float-card').height() - 150
     });
 
     $('#linkageRateQuery').on('click', function () {

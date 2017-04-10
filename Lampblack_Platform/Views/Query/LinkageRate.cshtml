@@ -10,7 +10,7 @@
                     <span class="glyphicon glyphicon-resize-small" style="font-size: 20px;"></span>
                     <span style="margin-left: 10px;" class="span100">联动比查询：</span>
                     <label for="QueryDateTime">查询时间：</label>
-                    <input type="text" id="QueryDateTime" name="QueryDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control120" />
+                    <input type="text" id="QueryDateTime" name="QueryDateTime" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")" class="form-control control120" />
                 </div>
                 <div class="control-layer horizontal-group">
                     <span class="span60">区县：</span>
