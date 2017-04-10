@@ -585,23 +585,24 @@ namespace Platform.Process.Process
         }
 
 
-        public TimeSpan GetRunTime(long hotelIdentity, DateTime startDate, Guid dataGuid)
+        public TimeSpan GetRunTime(long hotelIdentity, long devIdentity, DateTime startDate, Guid dataGuid)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var hotel = Repo<HotelRestaurantRepository>().GetModel(h => h.Identity == hotelIdentity);
                 var today = startDate.GetToday();
 
                 var endDay = today.AddDays(1);
 
-                var start = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
+                var start = repo.GetModels(obj => obj.ProjectIdentity == hotelIdentity
+                        && obj.DeviceIdentity == devIdentity
                         && obj.UpdateTime > today && obj.UpdateTime < endDay
                         && obj.CommandDataId == dataGuid
                         && obj.BooleanValue == true)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
-                var end = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
+                var end = repo.GetModels(obj => obj.ProjectIdentity == hotelIdentity
+                        && obj.DeviceIdentity == devIdentity
                         && obj.UpdateTime > today && obj.UpdateTime < endDay
                         && obj.CommandDataId == dataGuid
                         && obj.BooleanValue == true)
@@ -715,21 +716,22 @@ namespace Platform.Process.Process
         }
 
 
-        public TimeSpan GetDeviceRunTime(long hotelIdentity, DateTime startDate)
+        public TimeSpan GetDeviceRunTime(long hotelIdentity, long deviceIdentity, DateTime startDate)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
-                var hotel = Repo<HotelRestaurantRepository>().GetModel(h => h.Identity == hotelIdentity);
                 var today = startDate.GetToday();
 
                 var endDay = today.AddDays(1);
 
-                var start = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
+                var start = repo.GetModels(obj => obj.ProjectIdentity == hotelIdentity
+                        && obj.DeviceIdentity == deviceIdentity
                         && obj.UpdateTime > today && obj.UpdateTime < endDay)
                     .OrderBy(item => item.UpdateTime)
                     .FirstOrDefault();
 
-                var end = repo.GetModels(obj => obj.ProjectIdentity == hotel.Identity
+                var end = repo.GetModels(obj => obj.ProjectIdentity == hotelIdentity
+                        && obj.DeviceIdentity == deviceIdentity
                         && obj.UpdateTime > today && obj.UpdateTime < endDay)
                     .OrderByDescending(item => item.UpdateTime)
                     .FirstOrDefault();

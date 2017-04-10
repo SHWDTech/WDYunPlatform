@@ -17,11 +17,11 @@ namespace Platform.Process.Process
     /// </summary>
     public class RunningTimeProcess : ProcessBase, IRunningTimeProcess
     {
-        public DateTime LastRecordDateTime(long hotelIdentity, RunningTimeType type)
+        public DateTime LastRecordDateTime(long hotelIdentity, long deviceIdentity, RunningTimeType type)
         {
             using (var repo = Repo<RunningTimeRepository>())
             {
-                var lastRecord = repo.GetModels(obj => obj.ProjectIdentity == hotelIdentity && obj.Type == type)
+                var lastRecord = repo.GetModels(obj => obj.Type == type && obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == deviceIdentity)
                     .OrderByDescending(item => item.UpdateTime).FirstOrDefault();
 
                 return lastRecord?.UpdateTime ?? DateTime.MinValue;

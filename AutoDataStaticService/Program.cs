@@ -106,7 +106,7 @@ namespace AutoDataStaticService
         {
             foreach (var data in ProduceDatas)
             {
-                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectIdentity == hotelIdentity  && obj.CommandDataId == data.Id))
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id))
                 {
                     continue;
                 }
@@ -185,72 +185,83 @@ namespace AutoDataStaticService
 
         private static void ProduceDayRunningTime(long hotelIdentity)
         {
-            foreach (var data in RunningTimeDatas)
+            var devs = GetHotelDevices(hotelIdentity);
+            foreach (var dev in devs)
             {
-                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id))
+                foreach (var data in RunningTimeDatas)
                 {
-                    continue;
-                }
-                Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日运行时间数据，数据名称：{data.DataName}");
-                var process = ProcessInvoke.Instance<RunningTimeProcess>();
+                    if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == dev.Identity && obj.CommandDataId == data.Id))
+                    {
+                        continue;
+                    }
+                    Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日运行时间数据，数据名称：{data.DataName}");
+                    var process = ProcessInvoke.Instance<RunningTimeProcess>();
 
-                var type = GetRunningType(data.DataName);
-                var lastDate = process.LastRecordDateTime(hotelIdentity, type);
-                var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity && obj.CommandDataId == data.Id);
-                var startDate = lastDate == DateTime.MinValue
+                    var type = GetRunningType(data.DataName);
+                    var lastDate = process.LastRecordDateTime(hotelIdentity, dev.Identity, type);
+                    var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity
+                                                                                                        && obj.DeviceIdentity == dev.Identity
+                                                                                                        && obj.CommandDataId == data.Id);
+                    var startDate = lastDate == DateTime.MinValue
                         ? firstMonitorData.UpdateTime
                         : lastDate.AddDays(1);
 
-                while (startDate <= _produceEndDay)
-                {
-                    var date = startDate;
-                    var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
-                        .GetRunTime(hotelIdentity, date, data.Id);
+                    while (startDate <= _produceEndDay)
+                    {
+                        var date = startDate;
+                        var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
+                            .GetRunTime(hotelIdentity, dev.Identity, date, data.Id);
 
-                    var runningTime = new RunningTimeRepository().CreateDefaultModel();
-                    runningTime.UpdateTime = date.GetToday();
-                    runningTime.ProjectIdentity = hotelIdentity;
-                    runningTime.RunningTimeSpan = runTime;
-                    runningTime.DeviceIdentity = firstMonitorData.DeviceIdentity;
-                    runningTime.Type = type;
+                        var runningTime = new RunningTimeRepository().CreateDefaultModel();
+                        runningTime.UpdateTime = date.GetToday();
+                        runningTime.ProjectIdentity = hotelIdentity;
+                        runningTime.RunningTimeSpan = runTime;
+                        runningTime.DeviceIdentity = dev.Identity;
+                        runningTime.Type = type;
 
-                    ProcessInvoke.Instance<RunningTimeProcess>().StoreRunningTime(runningTime);
+                        ProcessInvoke.Instance<RunningTimeProcess>().StoreRunningTime(runningTime);
 
-                    startDate = startDate.AddDays(1);
+                        startDate = startDate.AddDays(1);
+                    }
                 }
             }
         }
 
         private static void ProduceDeviceDayRunningTime(long hotelIdentity)
         {
-            if (ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectIdentity == hotelIdentity))
+            var devs = GetHotelDevices(hotelIdentity);
+            foreach (var dev in devs)
             {
-                return;
-            }
-            Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日设备运行时间数据。");
-            var process = ProcessInvoke.Instance<RunningTimeProcess>();
+                if (!ProcessInvoke.Instance<MonitorDataProcess>().GetDataCount(obj => obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == dev.Identity))
+                {
+                    return;
+                }
+                Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】开始处理每日设备运行时间数据。");
+                var process = ProcessInvoke.Instance<RunningTimeProcess>();
 
-            var lastDate = process.LastRecordDateTime(hotelIdentity, RunningTimeType.Device);
-            var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity);
-            var startDate = lastDate == DateTime.MinValue
+                var lastDate = process.LastRecordDateTime(hotelIdentity, dev.Identity, RunningTimeType.Device);
+                var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity
+                && obj.DeviceIdentity == dev.Identity);
+                var startDate = lastDate == DateTime.MinValue
                     ? firstMonitorData.UpdateTime
                     : lastDate.AddDays(1);
+                startDate = startDate.GetToday();
+                while (startDate <= _produceEndDay)
+                {
+                    var date = startDate;
+                    var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
+                        .GetDeviceRunTime(hotelIdentity, dev.Identity, date);
 
-            while (startDate <= _produceEndDay)
-            {
-                var date = startDate;
-                var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
-                    .GetDeviceRunTime(hotelIdentity, date);
+                    var runningTime = new RunningTimeRepository().CreateDefaultModel();
+                    runningTime.UpdateTime = date.GetToday();
+                    runningTime.ProjectIdentity = hotelIdentity;
+                    runningTime.RunningTimeSpan = runTime;
+                    runningTime.DeviceIdentity = dev.Identity;
+                    runningTime.Type = RunningTimeType.Device;
+                    ProcessInvoke.Instance<RunningTimeProcess>().StoreRunningTime(runningTime);
 
-                var runningTime = new RunningTimeRepository().CreateDefaultModel();
-                runningTime.UpdateTime = date.GetToday();
-                runningTime.ProjectIdentity = hotelIdentity;
-                runningTime.RunningTimeSpan = runTime;
-                runningTime.DeviceIdentity = firstMonitorData.DeviceIdentity;
-                runningTime.Type = RunningTimeType.Device;
-                ProcessInvoke.Instance<RunningTimeProcess>().StoreRunningTime(runningTime);
-
-                startDate = startDate.AddDays(1);
+                    startDate = startDate.AddDays(1);
+                }
             }
         }
 
@@ -318,6 +329,9 @@ namespace AutoDataStaticService
             Log($"【{DateTime.Now:yyyy-MM-dd HH:mm:ss}】系统初始化完成。");
             return true;
         }
+
+        private static List<Device> GetHotelDevices(long projectIdentity)
+            => ProcessInvoke.Instance<DeviceProcess>().GetProjectDevices(projectIdentity);
 
         private static void Log(string log)
         {
