@@ -35,13 +35,21 @@ namespace Lampblack_Platform.Controllers
                     d.Identity
                 }).Skip(post.offset)
                 .Take(post.limit).ToList();
+            var merge = devs.GroupBy(d => d.Hotel.Id).Where(e => e.Count() > 1)
+                .Select(v => new
+                {
+                    index = devs.IndexOf(devs.First(d => d.Hotel.Id == v.Key)),
+                    count = v.Count()
+                }).ToList();
 
             var rows = ProcessInvoke<HotelRestaurantProcess>().GetCleanRateTables(devs, post.StartDate, post.EndDate);
+
 
             return JsonTable(new
             {
                 total,
-                rows
+                rows,
+                merge
             });
         }
 
@@ -62,13 +70,20 @@ namespace Lampblack_Platform.Controllers
                     d.Identity
                 }).Skip(post.offset)
                 .Take(post.limit).ToList();
+            var merge = devs.GroupBy(d => d.Hotel.Id).Where(e => e.Count() > 1)
+                .Select(v => new
+                {
+                    index = devs.IndexOf(devs.First(d => d.Hotel.Id == v.Key)),
+                    count = v.Count()
+                }).ToList();
 
             var rows = ProcessInvoke<RunningTimeProcess>().GetLinkageRateTables(devs, post.QueryDateTime);
 
             return JsonTable(new
             {
                 total,
-                rows
+                rows,
+                merge
             });
         }
 
@@ -168,13 +183,20 @@ namespace Lampblack_Platform.Controllers
                     d.Identity
                 }).Skip(post.offset)
                 .Take(post.limit).ToList();
+            var merge = devs.GroupBy(d => d.Hotel.Id).Where(e => e.Count() > 1)
+                .Select(v => new
+                {
+                    index = devs.IndexOf(devs.First(d => d.Hotel.Id == v.Key)),
+                    count = v.Count()
+                }).ToList();
 
             var rows = ProcessInvoke<RunningTimeProcess>().GetRunningTimeTables(devs, post.StartDate, post.EndDate);
 
             return JsonTable(new
             {
                 total,
-                rows
+                rows,
+                merge
             });
         }
     }

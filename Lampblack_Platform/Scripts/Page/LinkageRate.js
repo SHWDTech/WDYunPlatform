@@ -51,4 +51,12 @@
                 url: '/Query/LinkageRateTable'
             });
     });
+
+    $('#linkage_table').on('load-success.bs.table', function (e, data) {
+        var idx = 0;
+        while (idx < data.merge.length) {
+            $('#linkage_table').bootstrapTable('mergeCells', { index: data.merge[idx].index, field: 'ProjectName', rowspan: data.merge[idx].count });
+            idx++;
+        }
+    });
 });

@@ -57,4 +57,12 @@
                 url: '/Query/RunningTimeTable'
             });
     });
+
+    $('#running_time').on('load-success.bs.table', function (e, data) {
+        var idx = 0;
+        while (idx < data.merge.length) {
+            $('#running_time').bootstrapTable('mergeCells', { index: data.merge[idx].index, field: 'ProjectName', rowspan: data.merge[idx].count });
+            idx++;
+        }
+    });
 });
