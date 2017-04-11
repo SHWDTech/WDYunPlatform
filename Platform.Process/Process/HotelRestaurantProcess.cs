@@ -266,7 +266,7 @@ namespace Platform.Process.Process
                     {
                         locat.Status = GetCleanRateByDeviceModel(null, modelId);
                     }
-                    
+
                     locations.Add(locat);
                 }
             }
@@ -333,115 +333,22 @@ namespace Platform.Process.Process
             }
         }
 
-        public IPagedList<CleanRateView> GetPagedCleanRateView(int page, int pageSize, string queryName, out int count, List<Expression<Func<DataStatistics, bool>>> conditions = null)
+        public List<CleanRateTable> GetCleanRateTables(List<RestaurantDevice> devs, DateTime startDateTime, DateTime endDateTime)
         {
-            var deviceModel = Repo<LampblackDeviceModelRepository>().GetAllModels().First().Id;
-            var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{deviceModel}").CacheItem;
-            var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
-            var dayStatics = conditions?.Aggregate(
-                                     Repo<DataStatisticsRepository>()
-                                         .GetModels(obj => obj.Type == StatisticsType.Day && obj.CommandDataId == CommandDataId.CleanerCurrent),
-                                     (current, condition) => current.Where(condition))
-                                 .GroupBy(item => item.ProjectIdentity)
-                                 ?? Repo<DataStatisticsRepository>()
-                                 .GetModels(obj => obj.Type == StatisticsType.Day && obj.CommandDataId == CommandDataId.CleanerCurrent)
-                                 .GroupBy(item => item.ProjectIdentity);
-            var cleanRateView = (from dayStatic in dayStatics
-                                 select new CleanRateView
-                                 {
-                                     HotelName = hotels.FirstOrDefault(obj => obj.Identity == dayStatic.Key).ProjectName,
-                                     Failed = dayStatic.Count(obj => obj.DoubleValue <= rater.Fail),
-                                     Worse = dayStatic.Count(obj => obj.DoubleValue > rater.Fail && obj.DoubleValue <= rater.Worse),
-                                     Qualified = dayStatic.Count(obj => obj.DoubleValue > rater.Worse && obj.DoubleValue <= rater.Qualified),
-                                     Good = dayStatic.Count(obj => obj.DoubleValue > rater.Good)
-                                 }).OrderBy(view => view.HotelName).Where(ret => ret.HotelName != null);
-
-            count = hotels.Count();
-            return cleanRateView.ToPagedList(page, pageSize);
-        }
-
-        public IPagedList<RunningTimeView> GetPagedRunningTime(int page, int pageSize, string queryName, out int count, List<Expression<Func<RunningTime, bool>>> conditions = null)
-        {
-            using (var repo = Repo<RunningTimeRepository>())
-            {
-                var query = repo.GetAllModels();
-                if (conditions != null)
+            var dayStatic = Repo<DataStatisticsRepository>().GetAllModels();
+            return (from dev in devs
+                let rater = (CleanessRate) PlatformCaches.GetCache($"CleanessRate-{dev.LampblackDeviceModel.Id}").CacheItem
+                let devStatic = dayStatic.Where(obj => obj.Type == StatisticsType.Day && obj.ProjectIdentity == dev.Hotel.Identity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime >= startDateTime && obj.UpdateTime <= endDateTime && obj.CommandDataId == CommandDataId.CleanerCurrent)
+                select new CleanRateTable
                 {
-                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
-                }
-                var hotels = Repo<HotelRestaurantRepository>().GetAllModels();
-
-                var hotelIds = hotels.Select(obj => obj.Identity);
-
-                var projectQuery = query.Where(rt => hotelIds.Contains(rt.ProjectIdentity)).GroupBy(obj => new { obj.ProjectIdentity, obj.UpdateTime })
-                    .Select(item => item.FirstOrDefault())
-                    .Select(run => new { run.ProjectIdentity, run.UpdateTime });
-
-                var models = repo.GetAllModels();
-
-
-                var ret = from q in projectQuery
-                          select
-                              new RunningTimeView
-                              {
-                                  HotelId = q.ProjectIdentity,
-                                  HotelName = hotels.FirstOrDefault(obj => obj.Identity == q.ProjectIdentity).ProjectName,
-                                  CleannerRunningTimeTicks =
-                                      models.FirstOrDefault(
-                                          obj =>
-                                              obj.ProjectIdentity == q.ProjectIdentity && obj.UpdateTime == q.UpdateTime &&
-                                              obj.Type == RunningTimeType.Cleaner).RunningTimeTicks,
-                                  FanRunningTimeTicks =
-                                      models.FirstOrDefault(
-                                          obj =>
-                                              obj.ProjectIdentity == q.ProjectIdentity && obj.UpdateTime == q.UpdateTime &&
-                                              obj.Type == RunningTimeType.Fan).RunningTimeTicks,
-                                  DeviceRunningTimeTicks =
-                                      models.FirstOrDefault(
-                                          obj =>
-                                              obj.ProjectIdentity == q.ProjectIdentity && obj.UpdateTime == q.UpdateTime &&
-                                              obj.Type == RunningTimeType.Device).RunningTimeTicks,
-                                  UpdateTime = q.UpdateTime
-
-                              };
-
-                count = projectQuery.Count();
-
-                return ret.OrderBy(obj => new { obj.UpdateTime, obj.HotelId }).ToPagedList(page, pageSize);
-            }
-        }
-
-        public IPagedList<HistoryData> GetPagedHistoryData(int page, int pageSize, string queryName, out int count, List<Expression<Func<ProtocolData, bool>>> conditions = null)
-        {
-            using (var repo = Repo<ProtocolDataRepository>())
-            {
-                repo.Database.CommandTimeout = 180;
-
-                var query = repo.GetAllModels();
-                if (conditions != null)
-                {
-                    query = conditions.Aggregate(query, (current, condition) => current.Where(condition));
-                }
-
-                var monitorDatas = Repo<MonitorDataRepository>().GetAllModels();
-
-                var ret = from p in query
-                    let monitors = monitorDatas.Where(m => m.ProtocolDataId == p.Id)
-                    let project = Repo<DeviceRepository>().GetAllModels().FirstOrDefault(dev => dev.Identity == p.DeviceIdentity).Project
-                    select new HistoryData
-                    {
-                        HotelId = project.Id,
-                        HotelName = project.ProjectName,
-                        CleanerCurrent = monitors.FirstOrDefault(m => m.CommandDataId == CommandDataId.CleanerCurrent).DoubleValue,
-                        CleanerSwitch = monitors.FirstOrDefault(m => m.CommandDataId == CommandDataId.CleanerSwitch).BooleanValue,
-                        FanCurrent = monitors.FirstOrDefault(m => m.CommandDataId == CommandDataId.FanCurrent).DoubleValue,
-                        FanSwitch = monitors.FirstOrDefault(m => m.CommandDataId == CommandDataId.FanSwitch).BooleanValue
-                    };
-
-                count = Repo<ProtocolDataRepository>().GetCount(null);
-
-                return ret.ToPagedList(page, pageSize);
-            }
+                    DistrictName = GetDistrictName(dev.Hotel.DistrictId),
+                    ProjectName = dev.Hotel.ProjectName,
+                    DeviceName = dev.DeviceName,
+                    Failed = devStatic.Count(d => d.DoubleValue <= rater.Fail),
+                    Worse = devStatic.Count(d => d.DoubleValue > rater.Fail && d.DoubleValue <= rater.Worse),
+                    Qualified = devStatic.Count(d => d.DoubleValue > rater.Worse && d.DoubleValue <= rater.Qualified),
+                    Good = devStatic.Count(d => d.DoubleValue > rater.Good)
+                }).ToList();
         }
 
         public IPagedList<AlarmView> GetPagedAlarm(int page, int pageSize, string queryName, out int count, List<Expression<Func<Alarm, bool>>> conditions = null)

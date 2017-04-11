@@ -1,21 +1,15 @@
-﻿using System;
-
-namespace Platform.Process.Business
+﻿namespace Platform.Process.Business
 {
     /// <summary>
     /// 清洁度视图
     /// </summary>
-    public class CleanRateView
+    public class CleanRateTable
     {
-        /// <summary>
-        /// 酒店ID
-        /// </summary>
-        public Guid HotelId { get; set; }
+        public string DistrictName { get; set; }
 
-        /// <summary>
-        /// 酒店名称
-        /// </summary>
-        public string HotelName { get; set; }
+        public string ProjectName { get; set; }
+
+        public string DeviceName { get; set; }
 
         /// <summary>
         /// 失效总数

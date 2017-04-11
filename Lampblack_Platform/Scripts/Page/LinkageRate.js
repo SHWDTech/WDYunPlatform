@@ -32,7 +32,6 @@
     });
     $('#AddressGuid').select2();
 
-    debugger;
     $('#linkage_table').bootstrapTable({
         url: '/Query/LinkageRateTable',
         queryParams: function(params) {

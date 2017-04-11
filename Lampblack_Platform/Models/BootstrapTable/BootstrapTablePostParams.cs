@@ -37,7 +37,22 @@ namespace Lampblack_Platform.Models.BootstrapTable
         public string Name { get; set; }
     }
 
-    public class RunntingDataTable : BootstrapTablePostParams
+    public class RunngingDataTable : BootstrapTablePostParams
+    {
+        public Guid Area { get; set; }
+
+        public Guid Street { get; set; }
+
+        public Guid Address { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    public class CleanRateDataTable : BootstrapTablePostParams
     {
         public Guid Area { get; set; }
 

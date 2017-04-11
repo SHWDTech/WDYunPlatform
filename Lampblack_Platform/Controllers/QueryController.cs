@@ -18,45 +18,31 @@ namespace Lampblack_Platform.Controllers
     public class QueryController : WdControllerBase
     {
         // GET: Query
-        public ActionResult CleanRate(CleanRateViewModel model)
+        public ActionResult CleanRate() => View();
+
+        [NamedAuth(Modules = "CleanRate", Required = true)]
+        public ActionResult CleanRateTable(CleanRateDataTable post)
         {
-            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
-
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
-
-            var queryName = Request["queryName"];
-
-            int count;
-
-            var conditions = new List<Expression<Func<DataStatistics, bool>>>();
-
-            if (model.StartDateTime == DateTime.MinValue)
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            if (!string.IsNullOrWhiteSpace(post.Name))
             {
-                model.StartDateTime = DateTime.Now.AddDays(-7);
+                query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
             }
+            var total = query.Count();
+            var devs = query.Include("Hotel").Include("LampblackDeviceModel").OrderBy(d => new
+                {
+                    d.ProjectId,
+                    d.Identity
+                }).Skip(post.offset)
+                .Take(post.limit).ToList();
 
-            Expression<Func<DataStatistics, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
-            conditions.Add(startCondition);
+            var rows = ProcessInvoke<HotelRestaurantProcess>().GetCleanRateTables(devs, post.StartDate, post.EndDate);
 
-            if (model.EndDateTime == DateTime.MinValue)
+            return JsonTable(new
             {
-                model.EndDateTime = DateTime.Now;
-            }
-
-            Expression<Func<DataStatistics, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
-            conditions.Add(endCondition);
-
-            var cleanRateView = ProcessInvoke<HotelRestaurantProcess>()
-                .GetPagedCleanRateView(page, pageSize, queryName, out count, conditions);
-
-            model.PageIndex = page;
-            model.PageSize = pageSize;
-            model.QueryName = queryName;
-            model.Count = count;
-            model.CleanRateView = cleanRateView;
-            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
-
-            return View(model);
+                total,
+                rows
+            });
         }
 
         public ActionResult LinkageRate() => View();
@@ -168,7 +154,7 @@ namespace Lampblack_Platform.Controllers
         public ActionResult RunningTime() => View();
 
         [NamedAuth(Modules = "RunningTime", Required = true)]
-        public ActionResult RunningTimeTable(RunntingDataTable post)
+        public ActionResult RunningTimeTable(RunngingDataTable post)
         {
             var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
             if (!string.IsNullOrWhiteSpace(post.Name))

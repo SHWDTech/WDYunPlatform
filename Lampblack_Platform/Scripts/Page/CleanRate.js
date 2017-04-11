@@ -1,15 +1,56 @@
 ﻿$(function () {
-    $('#pageSize').on("change", function () {
-        $('#cleanRate').submit();
-    });
-
     $('#StartDateTime').datetimepicker({
         locale: 'zh-cn',
-        format: 'L'
+        format: 'YYYY-MM-DD'
     });
 
     $('#EndDateTime').datetimepicker({
         locale: 'zh-cn',
-        format: 'L'
+        format: 'YYYY-MM-DD'
+    });
+
+    var getDistricts = function (id, select) {
+        base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
+            $(select).empty();
+            $(select).select2({
+                data: ret.Result
+            });
+            $(select).trigger("select2:select");
+        });
+    }
+    $.get('CommonAjax/UserDistrictSelections', null, function (ret) {
+        var selecter = $('#AreaGuid').select2({
+            data: ret.Result
+        });
+        $(selecter).on("select2:select", function (e) {
+            getDistricts(e.params.data.id, $('#StreetGuid'));
+        });
+    });
+
+    $('#StreetGuid').select2();
+    $('#StreetGuid').on("select2:select", function (e) {
+        if (e.params != null) {
+            getDistricts(e.params.data.id, $('#AddressGuid'));
+        } else {
+            getDistricts(0, $('#AddressGuid'));
+        }
+    });
+    $('#AddressGuid').select2();
+
+    $('#cleanRate_table').bootstrapTable({
+        url: '/Query/CleanRateTable',
+        queryParams: function (params) {
+            params.StartDate = $('#StartDateTime').val();
+            params.EndDate = $('#EndDateTime').val();
+            return params;
+        },
+        height: $('#cleanRate_table').parents('.float-card').height() - 100
+    });
+
+    $('#cleanRateQuery').on('click', function () {
+        $('#cleanRate_table').bootstrapTable('refresh',
+            {
+                url: '/Query/CleanRateTable'
+            });
     });
 });

@@ -79,7 +79,7 @@
   <ItemGroup>
     <Compile Include="Business\AlarmView.cs" />
     <Compile Include="Business\ChannelStatus.cs" />
-    <Compile Include="Business\CleanRateView.cs" />
+    <Compile Include="Business\CleanRateTable.cs" />
     <Compile Include="Business\HistoryData.cs" />
     <Compile Include="Business\HotelActualStatus.cs" />
     <Compile Include="Business\Lampblack.cs" />
