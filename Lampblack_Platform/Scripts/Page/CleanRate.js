@@ -40,11 +40,14 @@
     $('#cleanRate_table').bootstrapTable({
         url: '/Query/CleanRateTable',
         queryParams: function (params) {
+            params.Area = $('#AreaGuid').val();
+            params.Street = $('#StreetGuid').val();
+            params.Address = $('#AddressGuid').val();
             params.StartDate = $('#StartDateTime').val();
             params.EndDate = $('#EndDateTime').val();
             return params;
         },
-        height: $('#cleanRate_table').parents('.float-card').height() - 100
+        height: $('#cleanRate_table').parents('.float-card').height() - 150
     });
 
     $('#cleanRateQuery').on('click', function () {
