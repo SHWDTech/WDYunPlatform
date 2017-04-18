@@ -268,18 +268,24 @@ namespace MisakaBanZai.Views
         /// </summary>
         private void RefreshClients()
         {
+            var currentIndex = CmbConnectedClient.SelectedIndex;
             CmbConnectedClient.Items.Clear();
             CmbConnectedClient.Items.Add(Appconfig.SelectAllConnection);
 
-            if (_misakaConnection != null)
+            if (_misakaConnection == null) return;
+            foreach (var clientName in ((MisakaTcpServer)_misakaConnection).GetClientNameList())
             {
-                foreach (var clientName in ((MisakaTcpServer)_misakaConnection).GetClientNameList())
-                {
-                    CmbConnectedClient.Items.Add(clientName);
-                }
+                CmbConnectedClient.Items.Add(clientName);
             }
 
-            CmbConnectedClient.SelectedIndex = CmbConnectedClient.Items.Count - 1;
+            if (currentIndex <= CmbConnectedClient.Items.Count)
+            {
+                CmbConnectedClient.SelectedIndex = currentIndex;
+            }
+            else
+            {
+                CmbConnectedClient.SelectedIndex = 0;
+            }
         }
 
         /// <summary>
