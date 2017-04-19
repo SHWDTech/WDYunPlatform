@@ -282,7 +282,7 @@ namespace MisakaBanZai.Views
             {
                 CmbConnectedClient.SelectedIndex = currentIndex;
             }
-            else
+            else if(CmbConnectedClient.SelectedIndex > 0)
             {
                 CmbConnectedClient.SelectedIndex = 0;
             }
