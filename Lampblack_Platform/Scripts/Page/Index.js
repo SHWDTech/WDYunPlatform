@@ -8,6 +8,11 @@ var gaugeOption = null;
 var hotel = null;
 
 $(function () {
+    var panel = $('#hotels').parent('.panel');
+    var head = $('#hotels').parent('.panel').children('.panel-heading');
+    var bodys = $('#hotels').parent('.panel').children('.panel-body');
+    $('#hotels').height(panel.outerHeight() - head.outerHeight() - $(bodys[0]).outerHeight() - $(bodys[1]).outerHeight());
+
     pieChart = echarts.init(document.getElementById('cleannessMap'));
     currentGauge = echarts.init(document.getElementById('currentStatus'));
     gaugeOption = Echart_Tools.getGaugeOption();
