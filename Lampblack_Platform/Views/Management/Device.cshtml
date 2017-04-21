@@ -1,141 +1,54 @@
-﻿@using Lampblack_Platform.Models.Management
-@using MvcWebComponents.Extensions
-@using PagedList.Mvc
-@using SHWDTech.Platform.Model.Enums
-@model DeviceViewModel
-@{
+﻿@{
     Layout = null;
 }
 
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
-        @using (Ajax.BeginForm("Device", null, new AjaxOptions
-        {
-            UpdateTargetId = "body-content",
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST"
-        }.GeneralOptions(), new { Id = "device" }))
-        {
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="control-layer horizontal-group">
-                        <span class="glyphicon glyphicon-wrench" style="font-size: 20px;"></span>
-                        <span style="margin-left: 10px;">设备查询：</span>
-                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName"/>
-                        <input type="submit" class="btn btn-main" value="查询" id="query"/>
-                        <input type="button" class="btn btn-main" value="新增" id="add"/>
-                        <input type="button" class="btn btn-main" value="导出" id="export"/>
-                    </div>
-                    <div class="table-layer">
-                        <table class="table table-bordered table-hover text-center">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        设备终端号
-                                    </td>
-                                    <td>
-                                        设备名称
-                                    </td>
-                                    <td>
-                                        设备编号
-                                    </td>
-                                    <td>
-                                        手机号
-                                    </td>
-                                    <td>
-                                        出厂日期
-                                    </td>
-                                    <td>
-                                        状态
-                                    </td>
-                                    <td>
-                                        创建时间
-                                    </td>
-                                    <td>
-                                        设备照片
-                                    </td>
-                                    <td>
-                                        IP地址
-                                    </td>
-                                    <td>
-                                        采集频率
-                                    </td>
-                                    <td>
-                                        说明
-                                    </td>
-                                    <td>
-                                        操作
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    foreach (var device in Model.RestaurantDevices)
-                                    {
-                                        <tr data-company-id="@device.Id">
-                                            @{
-                                                var status = EnumHelper<DeviceStatus>.GetDisplayValue(device.Status);
-                                                var productionDate = device.ProductionDateTime?.ToString("yyyy-MM-dd") ?? "";
-                                            }
-                                            <td>@device.DeviceTerminalCode</td>
-                                            <td>@device.DeviceName</td>
-                                            <td>@device.DeviceCode</td>
-                                            <td>@device.Telephone</td>
-                                            <td>@productionDate</td>
-                                            <td>@status</td>
-                                            <td>@device.CreateDateTime</td>
-                                            <td>@device.Photo</td>
-                                            <td>@device.IpAddress</td>
-                                            <td>@device.CollectFrequency</td>
-                                            <td>@device.Comment</td>
-                                            <td>
-                                                @Ajax.ActionLink("编辑", "EditDevice", new {guid = device.Id},
-                                                    new AjaxOptions
-                                                    {
-                                                        HttpMethod = "GET",
-                                                        OnSuccess = "slideUp.show",
-                                                        UpdateTargetId = "slide-up-content"
-                                                    })
-                                                @Ajax.ActionLink("删除", "DeleteDevice", new {guid = device.Id},
-                                                    new AjaxOptions
-                                                    {
-                                                        HttpMethod = "GET",
-                                                        Confirm = "确定删除吗？"
-                                                    }.GeneralOptions())
-                                            </td>
-                                        </tr>
-                                                }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="control-layer horizontal-group">
+                    <span class="span60">区县：</span>
+                    <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
+                    <span class="span60" style="margin-left: 10px;">街道：</span>
+                    <select class="form-control" id="StreetGuid" style="width: 180px;">
+                        <option value="0">全部</option>
+                    </select>
+                    <span class="span60" style="margin-left: 10px;">地址：</span>
+                    <select class="form-control" id="AddressGuid" style="width: 180px;">
+                        <option value="0">全部</option>
+                    </select>
+                    <span class="span80" style="margin-left: 10px;">设备名称：</span>
+                    <input type="text" class="form-control" name="queryName" id="queryName" value="" style="width: 180px;" />
+                    <input type="submit" class="btn btn-main" value="查询" id="deviceQuery"/>
+                    <input type="button" class="btn btn-main" value="新增" id="add"/>
+                    <input type="button" class="btn btn-main" value="导出" id="export"/>
                 </div>
-                <div class="panel panel-body" style="margin-top: -30px;">
-                    <div style="float: right;">
-                        @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
-                            option.UlElementClasses = new[] { "no-margin pagination" };
-                        }
-                        @Html.PagedListPager(Model.RestaurantDevices,
-                            page => Url.Action("Device", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
-                    </div>
-                    <div class="horizontal-group">
-                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
-                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
-                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
-                            @{
-                                for (var i = 5; i < 25; i += 5)
-                                {
-                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
-                                    <option @selected>@i</option>
-                                }
-                            }
-                        </select>
-                        <label>条记录</label>
-                    </div>
+                <div class="table-layer">
+                    @{
+                        var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                        {
+                            id = "device_table",
+                            data_page_size = 25,
+                            data_reset_offset = true
+                        });
+                        var builder = table.Column("所属区县", "DistrictName")
+                            .Column("所属酒店", "ProjectName")
+                            .Column("设备名称", "DeviceName")
+                            .Column("设备编号", "DeviceCode")
+                            .Column("手机号", "Telephone")
+                            .Column("出厂日期", "Telephone")
+                            .Column("设备状态", "ProductionDateTime")
+                            .Column("设备照片", "ProductionDateTime")
+                            .Column("说明", "Photo")
+                            .Column("操作", "Operate")
+                            .Apply(ColumnOption.width, "100")
+                            .Apply(ColumnOption.formatter, "deviceOperateFormatter")
+                            .Apply(ColumnOption.events, "deviceEvents");
+                    }
+                    @(builder)
                 </div>
             </div>
-                                }
+        </div>
     </div>
 </div>
 

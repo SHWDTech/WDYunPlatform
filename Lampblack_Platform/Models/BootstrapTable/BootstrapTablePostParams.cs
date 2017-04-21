@@ -101,4 +101,15 @@ namespace Lampblack_Platform.Models.BootstrapTable
 
         public string QueryName { get; set; }
     }
+
+    public class DeviceTable : BootstrapTablePostParams
+    {
+        public Guid Area { get; set; }
+
+        public Guid Street { get; set; }
+
+        public Guid Address { get; set; }
+
+        public string QueryName { get; set; }
+    }
 }

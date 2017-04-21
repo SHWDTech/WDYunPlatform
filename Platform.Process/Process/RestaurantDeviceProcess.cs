@@ -89,7 +89,7 @@ namespace Platform.Process.Process
 
         public IQueryable<RestaurantDevice> GetRestaurantDeviceByArea(Guid district, Guid street, Guid address)
         {
-            var query = Repo<RestaurantDeviceRepository>().GetAllModels();
+            var query = Repo<RestaurantDeviceRepository>().GetAllModels().Include("Hotel").Include("Hotel.District");
             if (district != Guid.Empty)
             {
                 query = query.Where(d => d.Hotel.DistrictId == district);
@@ -289,7 +289,7 @@ namespace Platform.Process.Process
                 {
                     timeSpan = last.UpdateTime - first.UpdateTime;
                 }
-                
+
                 return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
             }
         }

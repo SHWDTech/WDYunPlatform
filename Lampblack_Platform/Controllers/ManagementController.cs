@@ -276,27 +276,38 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult Device()
         {
-            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+            return View();
+        }
 
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+        [NamedAuth(Modules = "Device")]
+        public ActionResult DeviceTable(DeviceTable post)
+        {
+            var devs = ProcessInvoke<RestaurantDeviceProcess>()
+                .GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            var total = devs.Count();
+            var rows = devs.OrderBy(d => d.Id)
+                .Skip(post.offset)
+                .Take(post.limit)
+                .ToList()
+                .Select(r => new
+                {
+                    r.Id,
+                    DistrictName = r.Hotel.District.ItemValue,
+                    r.Hotel.ProjectName,
+                    r.DeviceName,
+                    r.DeviceCode,
+                    r.Telephone,
+                    ProductionDateTime = $"{r.ProductionDateTime:yyyy-MM-dd}",
+                    r.Photo,
+                    r.Comment
+                })
+                .ToList();
 
-            var queryName = Request["queryName"];
-
-            int count;
-
-            var deviceList = ProcessInvoke<RestaurantDeviceProcess>().GetPagedRestaurantDevice(page, pageSize, queryName, out count);
-
-            var model = new DeviceViewModel
+            return JsonTable(new
             {
-                Count = count,
-                PageSize = pageSize,
-                QueryName = queryName,
-                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
-                PageIndex = page,
-                RestaurantDevices = deviceList
-            };
-
-            return View(model);
+                total,
+                rows
+            });
         }
 
         [HttpGet]

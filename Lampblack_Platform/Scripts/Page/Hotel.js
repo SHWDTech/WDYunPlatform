@@ -8,7 +8,7 @@
 window.hotelOperateFormatter = function () {
     return [
         '<a class="update" href="javascript:void(0)" title="编辑酒店">编辑</a>',
-        '<a class="delete" href="javascript:void(0)" title="删除删除" style="margin-left: 10px;">删除</a>'
+        '<a class="delete" href="javascript:void(0)" title="删除酒店" style="margin-left: 10px;">删除</a>'
     ].join('');
 }
 
