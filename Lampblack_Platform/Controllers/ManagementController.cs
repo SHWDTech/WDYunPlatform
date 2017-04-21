@@ -298,6 +298,7 @@ namespace Lampblack_Platform.Controllers
                     r.DeviceCode,
                     r.Telephone,
                     ProductionDateTime = $"{r.ProductionDateTime:yyyy-MM-dd}",
+                    Status = GetDeviceStatus(r.Status),
                     r.Photo,
                     r.Comment
                 })
@@ -308,6 +309,21 @@ namespace Lampblack_Platform.Controllers
                 total,
                 rows
             });
+        }
+
+        private string GetDeviceStatus(DeviceStatus status)
+        {
+            switch (status)
+            {
+                case DeviceStatus.Enabled:
+                    return "使用中";
+                case DeviceStatus.Maintenance:
+                    return "维护中";
+                case DeviceStatus.Disabled:
+                    return "已停用";
+                default:
+                    return "";
+            }
         }
 
         [HttpGet]
