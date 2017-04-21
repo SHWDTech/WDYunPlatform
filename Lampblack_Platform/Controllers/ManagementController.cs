@@ -11,6 +11,7 @@ using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Controllers
@@ -168,27 +169,52 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult Hotel()
         {
-            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+            return View();
+        }
 
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
+        [NamedAuth(Modules = "Hotel")]
+        public ActionResult HotelTable(HotelTable post)
+        {
+            var hotels = ProcessInvoke<HotelRestaurantProcess>()
+                .GetHotelRestaurantByArea(post.Area, post.Street, post.Address);
+            var total = hotels.Count();
+            var rows = hotels.OrderBy(h => h.Id).Skip(post.offset).Take(post.limit)
+                .ToList()
+                .Select(r => new
+                {
+                    r.Id,
+                    DistrictName = r.District.ItemValue,
+                    r.ProjectName,
+                    Street = r.Street.ItemValue,
+                    r.AddressDetail,
+                    r.ChargeMan,
+                    r.Telephone,
+                    Duration = $"[{r.OpeningDateTime:hh:mm} - {r.StopDateTime:hh:mm}]",
+                    Status = GetHotelStatus(r.Status),
+                    RegisterDateTime = $"{r.RegisterDateTime:yyyy-MM-dd}"
 
-            var queryName = Request["queryName"];
+                }).ToList();
 
-            int count;
-
-            var hotels = ProcessInvoke<HotelRestaurantProcess>().GetPagedHotelRestaurant(page, pageSize, queryName, out count);
-
-            var model = new HotelViewModel
+            return JsonTable(new
             {
-                Count = count,
-                PageSize = pageSize,
-                QueryName = queryName,
-                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
-                PageIndex = page,
-                HotelRestaurants = hotels
-            };
+                total,
+                rows
+            });
+        }
 
-            return View(model);
+        private string GetHotelStatus(HotelRestaurantStatus status)
+        {
+            switch (status)
+            {
+                case HotelRestaurantStatus.Opening:
+                    return "营业中";
+                case HotelRestaurantStatus.Decorating:
+                    return "装修中";
+                case HotelRestaurantStatus.Stoped:
+                    return "停业中";
+                default:
+                    return "";
+            }
         }
 
         [HttpGet]

@@ -14,12 +14,12 @@ window.cateringEnterpriseFormatter = function () {
 
 window.cateringEnterpriseEvents = {
     'click .update': function (e, value, row) {
-        base.AjaxGet("/Management/EditCateringEnterprise", { guid : row.Id}, function (obj) {
+        base.AjaxGet("/Management/EditCateringEnterprise", { guid: row.Id }, function (obj) {
             slideUp.append(obj);
             slideUp.show();
         });
     },
-    'click .delete': function(e, value, row) {
+    'click .delete': function (e, value, row) {
         if (confirm("确定删除吗？")) {
             base.AjaxGet("/Management/DeleteCateringEnterprise", { guid: row.Id }, function (ret) {
                 base.Msg(ret.Message);
@@ -33,7 +33,7 @@ $(function () {
         getTable();
     });
 
-    $('#cateringEnterpriseQuery').on('click', function() {
+    $('#cateringEnterpriseQuery').on('click', function () {
         $('#cateringEnterprise_table').bootstrapTable('refresh', {
             url: '/Management/CateringEnterpriseTable'
         });
@@ -67,15 +67,26 @@ $(function () {
     });
     $('#AddressGuid').select2();
 
+    var ceqp = {
+        QueryName: $('#queryName').val()
+    }
+
     $('#cateringEnterprise_table').bootstrapTable({
         url: '/Management/CateringEnterpriseTable',
         queryParams: function (params) {
-            params.Area = $('#AreaGuid').val();
-            params.Street = $('#StreetGuid').val();
-            params.Address = $('#AddressGuid').val();
-            params.QueryName = $('#queryName').val();
+            params.QueryName = ceqp.QueryName;
             return params;
         },
-        height: $('#cateringEnterprise_table').parents('.float-card').height() - 135
+        height: $('#cateringEnterprise_table').parents('.float-card').height() - 100
+    });
+
+    $('#cateringEnterpriseQuery').on('click', function () {
+        ceqp = {
+            QueryName: $('#queryName').val()
+        }
+        $('#cateringEnterprise_table').bootstrapTable('refresh',
+            {
+                url: '/Management/CateringEnterpriseTable'
+            });
     });
 });

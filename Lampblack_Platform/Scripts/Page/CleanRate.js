@@ -37,20 +37,35 @@
     });
     $('#AddressGuid').select2();
 
+    var crqp = {
+        Area: $('#AreaGuid').val(),
+        Street: $('#StreetGuid').val(),
+        Address: $('#AddressGuid').val(),
+        StartDate: $('#StartDateTime').val(),
+        EndDate: $('#EndDateTime').val()
+    }
+
     $('#cleanRate_table').bootstrapTable({
         url: '/Query/CleanRateTable',
         queryParams: function (params) {
-            params.Area = $('#AreaGuid').val();
-            params.Street = $('#StreetGuid').val();
-            params.Address = $('#AddressGuid').val();
-            params.StartDate = $('#StartDateTime').val();
-            params.EndDate = $('#EndDateTime').val();
+            params.Area = crqp.Area;
+            params.Street = crqp.Street;
+            params.Address = crqp.Address;
+            params.StartDate = crqp.StartDate;
+            params.EndDate = crqp.EndDate;
             return params;
         },
         height: $('#cleanRate_table').parents('.float-card').height() - 150
     });
 
     $('#cleanRateQuery').on('click', function () {
+        crqp = {
+            Area: $('#AreaGuid').val(),
+            Street: $('#StreetGuid').val(),
+            Address: $('#AddressGuid').val(),
+            StartDate: $('#StartDateTime').val(),
+            EndDate: $('#EndDateTime').val()
+        }
         $('#cleanRate_table').bootstrapTable('refresh',
             {
                 url: '/Query/CleanRateTable'

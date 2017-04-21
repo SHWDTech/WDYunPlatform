@@ -37,21 +37,38 @@
     });
     $('#AddressGuid').select2();
 
+    var rtqp = {
+        Area: $('#AreaGuid').val(),
+        Street: $('#StreetGuid').val(),
+        Address: $('#AddressGuid').val(),
+        StartDate: $('#StartDateTime').val(),
+        EndDate: $('#EndDateTime').val(),
+        Name: $('#queryName').val()
+    }
+
     $('#running_time').bootstrapTable({
         url: '/Query/RunningTimeTable',
         queryParams: function (params) {
-            params.Area = $('#AreaGuid').val();
-            params.Street = $('#StreetGuid').val();
-            params.Address = $('#AddressGuid').val();
-            params.StartDate = $('#StartDateTime').val();
-            params.EndDate = $('#EndDateTime').val();
-            params.Name = $('#queryName').val();
+            params.Area = rtqp.Area;
+            params.Street = rtqp.Street;
+            params.Address = rtqp.Address;
+            params.StartDate = rtqp.StartDate;
+            params.EndDate = rtqp.EndDate;
+            params.Name = rtqp.Name;
             return params;
         },
         height: $('#running_time').parents('.float-card').height() - 150
     });
 
     $('#runningTimeQuery').on('click', function () {
+        rtqp = {
+            Area: $('#AreaGuid').val(),
+            Street: $('#StreetGuid').val(),
+            Address: $('#AddressGuid').val(),
+            StartDate: $('#StartDateTime').val(),
+            EndDate: $('#EndDateTime').val(),
+            Name: $('#queryName').val()
+        }
         $('#running_time').bootstrapTable('refresh',
             {
                 url: '/Query/RunningTimeTable'

@@ -44,6 +44,25 @@ namespace Platform.Process.Process
             }
         }
 
+        public IQueryable<HotelRestaurant> GetHotelRestaurantByArea(Guid district, Guid street, Guid address)
+        {
+            var query = Repo<HotelRestaurantRepository>().GetModelsInclude(h => h.IsEnabled, new List<string> { "District", "Street", "Address" });
+            if (district != Guid.Empty)
+            {
+                query = query.Where(d => d.DistrictId == district);
+            }
+            if (street != Guid.Empty)
+            {
+                query = query.Where(d => d.StreetId == street);
+            }
+            if (address != Guid.Empty)
+            {
+                query = query.Where(d => d.AddressId == address);
+            }
+
+            return query;
+        }
+
         public HotelRestaurant GetHotelById(Guid id)
         {
             using (var repo = Repo<HotelRestaurantRepository>())
@@ -337,18 +356,18 @@ namespace Platform.Process.Process
         {
             var dayStatic = Repo<DataStatisticsRepository>().GetAllModels();
             return (from dev in devs
-                let rater = (CleanessRate) PlatformCaches.GetCache($"CleanessRate-{dev.LampblackDeviceModel.Id}").CacheItem
-                let devStatic = dayStatic.Where(obj => obj.Type == StatisticsType.Day && obj.ProjectIdentity == dev.Hotel.Identity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime >= startDateTime && obj.UpdateTime <= endDateTime && obj.CommandDataId == CommandDataId.CleanerCurrent)
-                select new CleanRateTable
-                {
-                    DistrictName = GetDistrictName(dev.Hotel.DistrictId),
-                    ProjectName = dev.Hotel.ProjectName,
-                    DeviceName = dev.DeviceName,
-                    Failed = devStatic.Count(d => d.DoubleValue <= rater.Fail),
-                    Worse = devStatic.Count(d => d.DoubleValue > rater.Fail && d.DoubleValue <= rater.Worse),
-                    Qualified = devStatic.Count(d => d.DoubleValue > rater.Worse && d.DoubleValue <= rater.Qualified),
-                    Good = devStatic.Count(d => d.DoubleValue > rater.Good)
-                }).ToList();
+                    let rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{dev.LampblackDeviceModel.Id}").CacheItem
+                    let devStatic = dayStatic.Where(obj => obj.Type == StatisticsType.Day && obj.ProjectIdentity == dev.Hotel.Identity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime >= startDateTime && obj.UpdateTime <= endDateTime && obj.CommandDataId == CommandDataId.CleanerCurrent)
+                    select new CleanRateTable
+                    {
+                        DistrictName = GetDistrictName(dev.Hotel.DistrictId),
+                        ProjectName = dev.Hotel.ProjectName,
+                        DeviceName = dev.DeviceName,
+                        Failed = devStatic.Count(d => d.DoubleValue <= rater.Fail),
+                        Worse = devStatic.Count(d => d.DoubleValue > rater.Fail && d.DoubleValue <= rater.Worse),
+                        Qualified = devStatic.Count(d => d.DoubleValue > rater.Worse && d.DoubleValue <= rater.Qualified),
+                        Good = devStatic.Count(d => d.DoubleValue > rater.Good)
+                    }).ToList();
         }
 
         public IPagedList<AlarmView> GetPagedAlarm(int page, int pageSize, string queryName, out int count, List<Expression<Func<Alarm, bool>>> conditions = null)

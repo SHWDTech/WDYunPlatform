@@ -28,7 +28,9 @@
                             .Column("邮箱地址", "Email")
                             .Column("详细地址", "Address")
                             .Column("注册时间", "RegisterDateTime")
+                            .Apply(ColumnOption.width, "100")
                             .Column("操作", "Operate")
+                            .Apply(ColumnOption.width, "100")
                             .Apply(ColumnOption.formatter, "cateringEnterpriseFormatter")
                             .Apply(ColumnOption.events, "cateringEnterpriseEvents");
                     }

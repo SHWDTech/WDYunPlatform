@@ -32,20 +32,36 @@
     });
     $('#AddressGuid').select2();
 
+    var lkrqp = {
+        Area: $('#AreaGuid').val(),
+        Street: $('#StreetGuid').val(),
+        Address: $('#AddressGuid').val(),
+        QueryDateTime: $('#QueryDateTime').val(),
+        Name: $('#queryName').val()
+    }
+
     $('#linkage_table').bootstrapTable({
         url: '/Query/LinkageRateTable',
         queryParams: function(params) {
-            params.Area = $('#AreaGuid').val();
-            params.Street = $('#StreetGuid').val();
-            params.Address = $('#AddressGuid').val();
-            params.QueryDateTime = $('#QueryDateTime').val();
-            params.Name = $('#queryName').val();
+            params.Area = lkrqp.Area;
+            params.Street = lkrqp.Street;
+            params.Address = lkrqp.Address;
+            params.QueryDateTime = lkrqp.QueryDateTime;
+            params.Name = lkrqp.Name;
             return params;
         },
         height: $('#linkage_table').parents('.float-card').height() - 150
     });
 
     $('#linkageRateQuery').on('click', function () {
+        lkrqp = {
+            Area: $('#AreaGuid').val(),
+            Street: $('#StreetGuid').val(),
+            Address: $('#AddressGuid').val(),
+            QueryDateTime: $('#QueryDateTime').val(),
+            Name: $('#Name').val()
+        }
+
         $('#linkage_table').bootstrapTable('refresh',
             {
                 url: '/Query/LinkageRateTable'

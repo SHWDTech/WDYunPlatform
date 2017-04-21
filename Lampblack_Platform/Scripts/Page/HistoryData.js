@@ -17,16 +17,20 @@
         format: 'YYYY-MM-DD'
     });
 
-    var queryParams = function (params) {
-        params.Hotel = $('#DistrictHotels').val();
-        params.StartDate = $('#StartDateTime').val();
-        params.EndDate = $('#EndDateTime').val();
-        return params;
+    var hdqp = {
+        Hotel: $('#DistrictHotels').val(),
+        StartDate: $('#StartDateTime').val(),
+        EndDate: $('#EndDateTime').val()
     }
 
     var table;
 
     $('#query').on('click', function () {
+        hdqp = {
+            Hotel: $('#DistrictHotels').val(),
+            StartDate: $('#StartDateTime').val(),
+            EndDate: $('#EndDateTime').val()
+        }
         table = $('#history_data').bootstrapTable('refresh',
             {
                 url: '/Query/HistoryDataTable'
@@ -35,7 +39,12 @@
 
     $('#history_data').bootstrapTable({
         url: '/Query/HistoryDataTable',
-        queryParams: queryParams,
+        queryParams: function (params) {
+            params.Hotel = hdqp.Hotel;
+            params.StartDate = hdqp.StartDate;
+            params.EndDate = hdqp.EndDate;
+            return params;
+        },
         height: $('#history_data').parents('.float-card').height() - 100
     });
 
