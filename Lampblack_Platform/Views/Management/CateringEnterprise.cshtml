@@ -1,123 +1,41 @@
-﻿@using Lampblack_Platform.Models.Management
-@using MvcWebComponents.Extensions
-@using PagedList.Mvc
-@model CateringEnterpriseViewModel
-@{
+﻿@{
     Layout = null;
 }
 
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
-        @using (Ajax.BeginForm("CateringEnterprise", null, new AjaxOptions
-        {
-            UpdateTargetId = "body-content",
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST"
-        }.GeneralOptions(), new { Id = "catering" }))
-        {
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="control-layer horizontal-group">
-                        <span class="glyphicon glyphicon-print" style="font-size: 20px;"></span>
-                        <span class="span80" style="margin-left: 10px;">企业查询：</span>
-                        <input type="text" class="form-control control280" name="queryName" value="@Model.QueryName"/>
-                        <input type="submit" class="btn btn-main" value="查询" id="query"/>
-                        <input type="button" class="btn btn-main" value="新增" id="add"/>
-                        <input type="button" class="btn btn-main" value="导出" id="export"/>
-                    </div>
-                    <div class="table-layer">
-                        <table class="table table-bordered table-hover text-center">
-                            <thead>
-                            <tr>
-                                <td style="width: 35%;">
-                                    餐饮企业名称
-                                </td>
-                                <td style="width: 10%;">
-                                    企业编号
-                                </td>
-                                <td style="width: 5%;">
-                                    负责人
-                                </td>
-                                <td style="width: 8%;">
-                                    电话号码
-                                </td>
-                                <td style="width: 8%">
-                                    邮箱地址
-                                </td>
-                                <td style="width: 18%;">
-                                    详细地址
-                                </td>
-                                <td style="width: 8%;">
-                                    注册时间
-                                </td>
-                                <td style="width: 8%;">
-                                    操作
-                                </td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @{
-                                foreach (var company in Model.CateringCompanies)
-                                {
-                                    <tr data-company-id="@company.Id">
-                                        <td>@company.CompanyName</td>
-                                        <td>@company.CompanyCode</td>
-                                        <td>@company.ChargeMan</td>
-                                        <td>@company.Telephone</td>
-                                        <td>@company.Email</td>
-                                        <td>@company.Address</td>
-                                        @{
-                                            var registerDate = company.RegisterDateTime?.ToString("yyyy-MM-dd") ?? "";
-                                        }
-                                        <td>@registerDate</td>
-                                        <td>
-                                            @Ajax.ActionLink("编辑", "EditCateringEnterprise", new {guid = company.Id},
-                                                new AjaxOptions
-                                                {
-                                                    HttpMethod = "GET",
-                                                    OnSuccess = "slideUp.show",
-                                                    UpdateTargetId = "slide-up-content"
-                                                })
-                                            @Ajax.ActionLink("删除", "DeleteCateringEnterprise", new {guid = company.Id},
-                                                new AjaxOptions
-                                                {
-                                                    HttpMethod = "GET",
-                                                    Confirm = "确定删除吗？"
-                                                }.GeneralOptions())
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="control-layer horizontal-group">
+                    <span class="span100" style="margin-left: 10px;">餐饮企业名称：</span>
+                    <input type="text" class="form-control control240" id="queryName"/>
+                    <input type="button" class="btn btn-main" value="查询" id="cateringEnterpriseQuery"/>
+                    <input type="button" class="btn btn-main" value="新增" id="add"/>
+                    <input type="button" class="btn btn-main" value="导出" id="export"/>
                 </div>
-                <div class="panel panel-body" style="margin-top: -30px;">
-                    <div style="float: right;">
-                        @{
-                            var option = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "body-content", InsertionMode = InsertionMode.Replace }.GeneralOptions());
-                            option.UlElementClasses = new[] { "no-margin pagination" };
-                        }
-                        @Html.PagedListPager(Model.CateringCompanies,
-                            page => Url.Action("CateringEnterprise", new { page, queryName = Model.QueryName, pageSize = Model.PageSize }), option)
-                    </div>
-                    <div class="horizontal-group">
-                        <label>第 @Model.PageIndex 页 / 共 @Model.PageCount 页 共 @Model.Count 条记录</label>
-                        <label style="margin-left: 20px; margin-right: 5px;">每页显示</label>
-                        <select class="form-control" style="width: 80px;" id="pageSize" name="pageSize">
-                            @{
-                                for (var i = 5; i < 25; i += 5)
-                                {
-                                    var selected = Model.PageSize == i ? "selected='selected'" : "";
-                                    <option @selected>@i</option>
-                                }
-                            }
-                        </select>
-                        <label>条记录</label>
-                    </div>
+                <div class="table-layer">
+                    @{
+                        var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                        {
+                            id = "cateringEnterprise_table",
+                            data_page_size = 25,
+                            data_reset_offset = true
+                        });
+                        var builder = table.Column("餐饮企业名称", "CompanyName")
+                            .Column("企业编号", "CompanyCode")
+                            .Column("负责人", "ChargeMan")
+                            .Column("电话号码", "Telephone")
+                            .Column("邮箱地址", "Email")
+                            .Column("详细地址", "Address")
+                            .Column("注册时间", "RegisterDateTime")
+                            .Column("操作", "Operate")
+                            .Apply(ColumnOption.formatter, "cateringEnterpriseFormatter")
+                            .Apply(ColumnOption.events, "cateringEnterpriseEvents");
+                    }
+                    @(builder)
                 </div>
             </div>
-                                }
+        </div>
     </div>
 </div>
 

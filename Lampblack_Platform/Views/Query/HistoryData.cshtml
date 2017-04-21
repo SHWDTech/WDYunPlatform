@@ -1,58 +1,49 @@
-﻿@using MvcWebComponents.Extensions
-@{
+﻿@{
     Layout = null;
 }
 
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
-        @using (Ajax.BeginForm("HistoryData", null, new AjaxOptions
-        {
-            UpdateTargetId = "body-content",
-            InsertionMode = InsertionMode.Replace,
-            HttpMethod = "POST"
-        }.GeneralOptions(), new { Id = "history" }))
-        {
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="control-layer horizontal-group">
-                        <span class="glyphicon glyphicon-bell" style="font-size: 20px;"></span>
-                        <span style="margin-left: 10px;" class="span100">历史数据查询：</span>
-                        @Html.Label("开始时间：", new { @class = "lbl80" })
-                        <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" class="form-control control140" />
-                        @Html.Label("结束时间：", new { @class = "lbl80" })
-                        <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control140" />
-                        <span class="span60">区县：</span>
-                        <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
-                        <span class="span60" style="margin-left: 10px;">酒店：</span>
-                        <select class="form-control" id="DistrictHotels" style="width: 210px;"></select>
-                        <input type="button" class="btn btn-main" value="查询" id="query" style="margin-left: 10px;"/>
-                        <input type="button" class="btn btn-main" value="导出" id="export" />
-                    </div>
-                    <div class="table-layer">
-                        @{ var table = Html.BootstrapTable(null, TablePaginationOption.server, new
-                            {
-                                id = "history_data",
-                                data_page_size = 50,
-                                data_query_params = "historyParams",
-                                data_reset_offset = true
-                            });
-                            var builder = table.Column("所属区县", "DistrictName")
-                                .Column("酒店（饭店）名称", "HotelName")
-                                .Column("设备编码", "DeviceName")
-                                .Column("通道号", "Channel")
-                                .Column("净化器开关", "CleanerSwitch")
-                                .Apply(ColumnOption.formatter, "statusFormatter")
-                                .Column("净化器电流", "CleanerCurrent")
-                                .Column("风机开关", "FanSwitch")
-                                .Apply(ColumnOption.formatter, "statusFormatter")
-                                .Column("风机电流", "FanCurrent")
-                                .Column("数据时间", "DateTime");
-                        }
-                        @(builder)
-                    </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="control-layer horizontal-group">
+                    <span class="glyphicon glyphicon-bell" style="font-size: 20px;"></span>
+                    <span style="margin-left: 10px;" class="span100">历史数据查询：</span>
+                    @Html.Label("开始时间：", new { @class = "lbl80" })
+                    <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" class="form-control control140" />
+                    @Html.Label("结束时间：", new { @class = "lbl80" })
+                    <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control140" />
+                    <span class="span60">区县：</span>
+                    <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
+                    <span class="span60" style="margin-left: 10px;">酒店：</span>
+                    <select class="form-control" id="DistrictHotels" style="width: 210px;"></select>
+                    <input type="button" class="btn btn-main" value="查询" id="query" style="margin-left: 10px;"/>
+                    <input type="button" class="btn btn-main" value="导出" id="export" />
+                </div>
+                <div class="table-layer">
+                    @{ var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                       {
+                           id = "history_data",
+                           data_page_size = 50,
+                           data_query_params = "historyParams",
+                           data_reset_offset = true
+                       });
+                        var builder = table.Column("所属区县", "DistrictName")
+                            .Column("酒店（饭店）名称", "HotelName")
+                            .Column("设备编码", "DeviceName")
+                            .Column("通道号", "Channel")
+                            .Column("净化器开关", "CleanerSwitch")
+                            .Apply(ColumnOption.formatter, "statusFormatter")
+                            .Column("净化器电流", "CleanerCurrent")
+                            .Column("风机开关", "FanSwitch")
+                            .Apply(ColumnOption.formatter, "statusFormatter")
+                            .Column("风机电流", "FanCurrent")
+                            .Column("数据时间", "DateTime");
+                    }
+                    @(builder)
                 </div>
             </div>
-                            }
+        </div>
     </div>
 </div>
 

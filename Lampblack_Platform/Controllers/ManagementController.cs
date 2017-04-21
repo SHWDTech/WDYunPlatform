@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 using Lampblack_Platform.Common;
+using Lampblack_Platform.Models.BootstrapTable;
 using Lampblack_Platform.Models.Management;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
@@ -16,7 +18,7 @@ namespace Lampblack_Platform.Controllers
     [AjaxGet]
     public class ManagementController : WdControllerBase
     {
-        public ActionResult Area() 
+        public ActionResult Area()
             => View();
 
         [NamedAuth(Modules = "Area")]
@@ -36,8 +38,9 @@ namespace Lampblack_Platform.Controllers
             var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(parent);
 
             return Json(new JsonStruct
-                {
-                Result = list.Select(obj => new {Id = obj.Key, ItemValue = obj.Value})}, 
+            {
+                Result = list.Select(obj => new { Id = obj.Key, ItemValue = obj.Value })
+            },
                 JsonRequestBehavior.AllowGet);
         }
 
@@ -76,8 +79,8 @@ namespace Lampblack_Platform.Controllers
 
             var sqlResult = ProcessInvoke<UserDictionaryProcess>().DeleteArea(areaId);
 
-            sqlResult.Message = sqlResult.ErrorNumber == 547 
-                ? "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。" 
+            sqlResult.Message = sqlResult.ErrorNumber == 547
+                ? "选中区域或选中区域的子区域已经存在关联酒店（饭店），请先删除关联酒店（饭店)后再删除此区域。"
                 : "删除成功！";
 
             if (sqlResult.ErrorNumber == 547)
@@ -321,7 +324,7 @@ namespace Lampblack_Platform.Controllers
 
             model.Count = count;
             model.DeviceMaintenances = deviceMaintenances;
-            model.PageCount = (count%model.PageSize) > 0 ? (count/model.PageSize) + 1 : (count/model.PageSize);
+            model.PageCount = (count % model.PageSize) > 0 ? (count / model.PageSize) + 1 : (count / model.PageSize);
 
             return View(model);
         }
@@ -359,6 +362,42 @@ namespace Lampblack_Platform.Controllers
                 new { targetAction = "EditDeviceMaintenance", targetcontroller = "Management", target = "slide-up-content", postform = "deviceMaintenance" });
         }
 
+        [NamedAuth(Modules = "CateringEnterprise")]
+        public ActionResult CateringEnterpriseTable(CateringEnterpriseTable post)
+        {
+            Expression<Func<CateringCompany, bool>> exp;
+            if (string.IsNullOrWhiteSpace(post.QueryName))
+            {
+                exp = null;
+            }
+            else
+            {
+                exp = c => c.CompanyName.Contains(post.QueryName);
+            }
+
+            var cats = ProcessInvoke<CateringEnterpriseProcess>()
+                .GetCateringCompanyByArea(exp, post.offset, post.limit, out int total);
+
+
+            var rows = cats.Select(c => new
+            {
+                c.Id,
+                c.CompanyName,
+                c.CompanyCode,
+                c.ChargeMan,
+                c.Telephone,
+                c.Email,
+                c.Address,
+                RegisterDateTime = $"{c.RegisterDateTime:yyyy-MM-dd}"
+            }).ToList();
+
+            return JsonTable(new
+            {
+                total,
+                rows
+            });
+        }
+
         private void GetHotelRelatedItems()
         {
             ViewBag.CateringCompany = ProcessInvoke<CateringEnterpriseProcess>()
@@ -377,9 +416,9 @@ namespace Lampblack_Platform.Controllers
 
             ViewBag.Status = new List<SelectListItem>
             {
-                new SelectListItem {Text = "营业中", Value = "0"},
-                new SelectListItem {Text = "装修中", Value = "1"},
-                new SelectListItem {Text = "停业中", Value = "2"}
+                new SelectListItem {Text = @"营业中", Value = "0"},
+                new SelectListItem {Text = @"装修中", Value = "1"},
+                new SelectListItem {Text = @"停业中", Value = "2"}
             };
         }
 
@@ -387,17 +426,17 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.Status = new List<SelectListItem>
             {
-                new SelectListItem {Text = "使用中", Value = "0"},
-                new SelectListItem {Text = "停用中", Value = "1"},
-                new SelectListItem {Text = "维修中", Value = "2"}
+                new SelectListItem {Text = @"使用中", Value = "0"},
+                new SelectListItem {Text = @"停用中", Value = "1"},
+                new SelectListItem {Text = @"维修中", Value = "2"}
             };
 
             ViewBag.CleanerType = new List<SelectListItem>
             {
-                new SelectListItem {Text = "静电式", Value = "0"},
-                new SelectListItem {Text = "过滤式", Value = "1"},
-                new SelectListItem {Text = "负离子", Value = "2"},
-                new SelectListItem {Text = "光电式", Value = "3"}
+                new SelectListItem {Text = @"静电式", Value = "0"},
+                new SelectListItem {Text = @"过滤式", Value = "1"},
+                new SelectListItem {Text = @"负离子", Value = "2"},
+                new SelectListItem {Text = @"光电式", Value = "3"}
             };
 
             ViewBag.Hotel = ProcessInvoke<HotelRestaurantProcess>()
@@ -415,9 +454,9 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.Status = new List<SelectListItem>
             {
-                new SelectListItem {Text = "很脏", Value = "0"},
-                new SelectListItem {Text = "一般", Value = "1"},
-                new SelectListItem {Text = "干净", Value = "2"}
+                new SelectListItem {Text = @"很脏", Value = "0"},
+                new SelectListItem {Text = @"一般", Value = "1"},
+                new SelectListItem {Text = @"干净", Value = "2"}
             };
 
             ViewBag.Users = ProcessInvoke<LampblackUserProcess>()

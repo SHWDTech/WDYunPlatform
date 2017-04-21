@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
 using PagedList;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
@@ -64,6 +65,22 @@ namespace Platform.Process.Process
             }
 
             return null;
+        }
+
+        public List<CateringCompany> GetCateringCompanyByArea(Expression<Func<CateringCompany, bool>> exp,int offset, int limit, out int count)
+        {
+            using (var repo = Repo<CateringCompanyRepository>())
+            {
+                var ents = repo.GetAllModels();
+                if (exp != null)
+                {
+                    ents = ents.Where(exp);
+                }
+
+                count = ents.Count();
+
+                return ents.OrderBy(e => e.Id).Skip(offset).Take(limit).ToList();
+            }
         }
 
         public bool DeleteCateringEnterprise(Guid componyId)

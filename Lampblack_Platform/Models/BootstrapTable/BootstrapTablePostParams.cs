@@ -79,4 +79,15 @@ namespace Lampblack_Platform.Models.BootstrapTable
 
         public string Name { get; set; }
     }
+
+    public class CateringEnterpriseTable : BootstrapTablePostParams
+    {
+        public Guid Area { get; set; }
+
+        public Guid Street { get; set; }
+
+        public Guid Address { get; set; }
+
+        public string QueryName { get; set; }
+    }
 }
