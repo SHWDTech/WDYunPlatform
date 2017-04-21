@@ -229,6 +229,15 @@ namespace Lampblack_Platform.Controllers
             }
 
             var model = ProcessInvoke<HotelRestaurantProcess>().GetHotelRestaurant(Guid.Parse(guid));
+            ViewBag.Street = ProcessInvoke<UserDictionaryProcess>()
+                .GetStreetSelectList(model.DistrictId)
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
+                .ToList();
+            ViewBag.Address = ProcessInvoke<UserDictionaryProcess>()
+                .GetAddressSelectList(model.StreetId)
+                .Select(obj => new SelectListItem { Text = obj.Value, Value = obj.Key.ToString() })
+                .ToList();
+
             return View(model);
         }
 

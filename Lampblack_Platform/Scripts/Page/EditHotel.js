@@ -47,7 +47,10 @@
         getDistricts($(this).val(), $('#AddressId'));
     });
 
-    $('#DistrictId').change();
+    debugger;
+    if ($('#Id').val().length < 16) {
+        $('#DistrictId').change();
+    }
 });
 
 function init_EditHotel() {

@@ -166,11 +166,26 @@ namespace Platform.Process.Process
                     return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0 && userDistrict.Contains(obj.Id))
                     .ToDictionary(key => key.Id, value => value.ItemValue);
                 }
-                else
-                {
-                    return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
+                return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 0)
                     .ToDictionary(key => key.Id, value => value.ItemValue);
-                }
+            }
+        }
+
+        public Dictionary<Guid, string> GetStreetSelectList(Guid district)
+        {
+            using (var repo = Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 1 && obj.ParentDictionaryId == district)
+                    .ToDictionary(key => key.Id, value => value.ItemValue);
+            }
+        }
+
+        public Dictionary<Guid, string> GetAddressSelectList(Guid street)
+        {
+            using (var repo = Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModels(obj => obj.ItemName == UserDictionaryType.Area && obj.ItemLevel == 2 && obj.ParentDictionaryId == street)
+                    .ToDictionary(key => key.Id, value => value.ItemValue);
             }
         }
 
