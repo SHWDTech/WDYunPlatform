@@ -177,6 +177,10 @@ namespace Lampblack_Platform.Controllers
         {
             var hotels = ProcessInvoke<HotelRestaurantProcess>()
                 .GetHotelRestaurantByArea(post.Area, post.Street, post.Address);
+            if (!string.IsNullOrWhiteSpace(post.QueryName))
+            {
+                hotels = hotels.Where(h => h.ProjectName.Contains(post.QueryName));
+            }
             var total = hotels.Count();
             var rows = hotels.OrderBy(h => h.Id).Skip(post.offset).Take(post.limit)
                 .ToList()
@@ -284,6 +288,10 @@ namespace Lampblack_Platform.Controllers
         {
             var devs = ProcessInvoke<RestaurantDeviceProcess>()
                 .GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            if (!string.IsNullOrWhiteSpace(post.QueryName))
+            {
+                devs = devs.Where(d => d.DeviceName.Contains(post.QueryName) || d.Hotel.ProjectName.Contains(post.QueryName));
+            }
             var total = devs.Count();
             var rows = devs.OrderBy(d => d.Id)
                 .Skip(post.offset)

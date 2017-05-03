@@ -33,12 +33,6 @@ $(function () {
         getTable();
     });
 
-    $('#cateringEnterpriseQuery').on('click', function () {
-        $('#cateringEnterprise_table').bootstrapTable('refresh', {
-            url: '/Management/CateringEnterpriseTable'
-        });
-    });
-
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty();
