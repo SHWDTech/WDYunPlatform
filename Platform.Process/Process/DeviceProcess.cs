@@ -12,8 +12,11 @@ namespace Platform.Process.Process
     /// </summary>
     public class DeviceProcess : ProcessBase, IDeviceProcess
     {
-        public IDevice GetDeviceByNodeId(string nodeId, bool isEnabled) 
+        public IDevice GetDeviceByNodeId(string nodeId, bool isEnabled)
             => Repo<RestaurantDeviceRepository>().GetDeviceByNodeId(nodeId, isEnabled).FirstOrDefault();
+
+        public IDevice GetDeviceByNodeId(string nodeId)
+            => Repo<RestaurantDeviceRepository>().GetDeviceByNodeId(nodeId).FirstOrDefault();
 
         public List<Device> GetProjectDevices(long projectIdentity) => Repo<DeviceRepository>()
             .GetModels(d => d.Project.Identity == projectIdentity)

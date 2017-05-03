@@ -45,5 +45,12 @@ namespace SHWD.Platform.Repository.Repository
                     .Include("Project")
                     .Where(device => device.DeviceNodeId == nodeId && device.IsEnabled == isEnabled)
                     .ToList();
+
+        public IList<Device> GetDeviceByNodeId(string nodeId)
+            => DbContext.Devices.Include("FirmwareSet")
+                .Include("FirmwareSet.Firmwares")
+                .Include("Project")
+                .Where(device => device.DeviceNodeId == nodeId)
+                .ToList();
     }
 }
