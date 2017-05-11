@@ -23,6 +23,10 @@
         return '';
     };
 
+    window.actualFormatter = function() {
+        return '<input type="button" class="btn btn-main" value="强制打开"/>';
+    }
+
     var getDistricts = function (id, select) {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty();

@@ -53,10 +53,9 @@ namespace MvcWebComponents.Controllers
 
         private void SetActionContext(ActionExecutingContext ctx, HttpContext context)
         {
-            var currentUser = !string.IsNullOrWhiteSpace(LoginName) 
-                ? _controllerProcess.GetCurrentUser(LoginName) 
+            var currentUser = !string.IsNullOrWhiteSpace(LoginName)
+                ? _controllerProcess.GetCurrentUser(LoginName)
                 : _controllerProcess.GetCurrentUser(context);
-            
 
             if (currentUser == null)
             {

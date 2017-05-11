@@ -27,5 +27,7 @@ namespace WebViewModels.ViewModel
         public bool FanStatus { get; set; } = false;
 
         public string RecordDateTime { get; set; } = "N/A";
+
+        public string Density { get; set; }
     }
 }

@@ -41,9 +41,12 @@
                                            .Apply(ColumnOption.formatter, "statusFormatter")
                                            .Column("风机状态", "FanStatus")
                                            .Apply(ColumnOption.formatter, "statusFormatter")
-                                           .Column("净化器电流", "CleanerCurrent")
+                                           .Column("净化器电流(mA)", "CleanerCurrent")
+                                           .Column("油烟浓度(mg/m³)", "Density")
                                            .Column("监测时间", "RecordDateTime")
-                                           .Apply(ColumnOption.width, "125");
+                                           .Apply(ColumnOption.width, "125")
+                                           .Column("操作")
+                                           .Apply(ColumnOption.formatter, "actualFormatter");
                     }
                     @(builder)
                 </div>

@@ -56,7 +56,13 @@ namespace Platform.Process.Process
                         var dbModel = repo.CreateDefaultModel();
                         foreach (var propertyName in propertyNames)
                         {
-                            dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
+                            var propertyInfo = dbModel.GetType()
+                                .GetProperty(propertyName);
+                            if (propertyInfo == null) continue;
+                            var memberInfo = model.GetType().GetProperty(propertyName);
+                            if (memberInfo != null)
+                                propertyInfo
+                                    .SetValue(dbModel, memberInfo.GetValue(model));
                         }
                         repo.AddOrUpdateDoCommit(dbModel);
                     }
@@ -200,6 +206,7 @@ namespace Platform.Process.Process
                     row.CleanerCurrent = $"{record.CleanerCurrent}";
                     row.CleanerStatus = record.CleanerSwitch;
                     row.RecordDateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}";
+                    row.Density = CalcDensity(record.CleanerCurrent);
                 }
 
                 list.Add(row);
@@ -207,6 +214,15 @@ namespace Platform.Process.Process
 
             list = list.OrderBy(dev => dev.ProjectGuid).ToList();
             return list;
+        }
+
+        private string CalcDensity(double current)
+        {
+            if (current < 300) return "失效";
+
+            if (current > 300 && current < 500) return $"{Math.Round(20 + (current - 500) / 40, 3)}";
+
+            return $"{Math.Round(5 - (current - 500) / 167, 3)}";
         }
 
         /// <summary>

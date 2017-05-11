@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <input type="button" class="btn btn-main" value="防拆卸报警" id="alarmA"/>
+                <input type="button" class="btn btn-main" value="断电报警" id="alarmB"/>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active" id="liA">
+                        <a>防拆卸报警</a>
+                    </li>
+                    <li role="presentation" id="liB">
+                        <a>断电报警</a>
+                    </li>
+                </ul>
+                <div style="padding: 15px;">
+                    <span>报警设备：</span>
+                    <select></select>
+                    <span>报警说明：</span>
+                    <textarea style="width: 100%; height: 450px; margin-top: 10px;"></textarea>
+                    <input type="button" class="btn btn-main" value="提交" style="float: right;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.get('/CommonAjax/GetAllDevice', function (data) {
+        $('select').select2({
+            data: data.Result
+        });
+    });
+
+    $('#alarmA').on('click', function() {
+        $('#liA').addClass('active');
+        $('#liB').removeClass('active');
+    });
+    $('#alarmB').on('click', function () {
+        $('#liB').addClass('active');
+        $('#liA').removeClass('active');
+    });
+</script>

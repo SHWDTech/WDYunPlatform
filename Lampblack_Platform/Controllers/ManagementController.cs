@@ -468,6 +468,9 @@ namespace Lampblack_Platform.Controllers
             });
         }
 
+        [NamedAuth(Modules = "ManualAlarm", Required = false)]
+        public ActionResult ManualAlarm() => View();
+
         private void GetHotelRelatedItems()
         {
             ViewBag.CateringCompany = ProcessInvoke<CateringEnterpriseProcess>()

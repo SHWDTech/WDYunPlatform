@@ -21,7 +21,6 @@ namespace Lampblack_Platform.Controllers
             Guid.TryParse(areaId, out guid);
             var list = ProcessInvoke<UserDictionaryProcess>().GetChildDistrict(guid);
             list.Add(Guid.Empty, "全部");
-        
             return Json(new JsonStruct
             {
                 Result = list.Select(obj => new { id = obj.Key, text = obj.Value }).ToList().OrderBy(o => o.id)
@@ -150,6 +149,19 @@ namespace Lampblack_Platform.Controllers
                 Result = ret
             },
                 JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAllDevice()
+        {
+            var devs = ProcessInvoke<RestaurantDeviceProcess>()
+                .GetRestaurantDevice()
+                .Select(d => new
+                {
+                    id = d.Id,
+                    text = d.DeviceName
+                })
+                .ToList();
+            return Json(devs, JsonRequestBehavior.AllowGet);
         }
     }
 }
