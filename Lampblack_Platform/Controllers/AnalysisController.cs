@@ -42,17 +42,17 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = "" }
+                    new SelectListItem {Text = @"全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
@@ -77,17 +77,17 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = "" }
+                    new SelectListItem {Text = @"全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
@@ -121,17 +121,17 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = "" }
+                    new SelectListItem {Text = @"全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()
@@ -165,17 +165,17 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = "" }
+                    new SelectListItem {Text = @"全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             var addressList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()

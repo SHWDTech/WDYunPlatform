@@ -38,6 +38,11 @@ namespace WebViewModels.ViewModel
         public ReportType ReportType { get; set; }
 
         /// <summary>
+        /// 开始日期
+        /// </summary>
+        public DateTime StartDateTime;
+
+        /// <summary>
         /// 截止日期
         /// </summary>
         [Display(Name = "截止日期：")]

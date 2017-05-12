@@ -218,9 +218,9 @@ namespace Platform.Process.Process
 
         private string CalcDensity(double current)
         {
-            if (current < 300) return "失效";
+            if (current < 50) return "失效";
 
-            if (current > 300 && current < 500) return $"{Math.Round(20 + (current - 500) / 40, 3)}";
+            if (current > 50 && current < 500) return $"{Math.Round(20 + (current - 500) / 90, 3)}";
 
             return $"{Math.Round(5 - (current - 500) / 167, 3)}";
         }

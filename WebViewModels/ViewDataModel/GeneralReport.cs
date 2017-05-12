@@ -36,7 +36,7 @@ namespace WebViewModels.ViewDataModel
         /// <summary>
         /// 风机总运行时间
         /// </summary>
-        public TimeSpan TotalFanRunTime 
+        public TimeSpan TotalFanRunTime
             => new TimeSpan(TotalFanRunTimeTicks);
 
         /// <summary>
@@ -47,7 +47,9 @@ namespace WebViewModels.ViewDataModel
             get
             {
                 if (TotalCleanerRunTimeTicks == 0) return 0.0;
-                return (TotalFanRunTimeTicks * 1.0 / TotalCleanerRunTimeTicks * 1.0) * 100;
+                var linkage = TotalFanRunTimeTicks * 1.0 / TotalCleanerRunTimeTicks * 1.0 * 100;
+                if (linkage > 100) linkage = 100;
+                return Math.Round(linkage, 3);
             }
         }
     }

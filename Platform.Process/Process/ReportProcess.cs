@@ -20,7 +20,7 @@ namespace Platform.Process.Process
                 .AddEqual(item => item.StreetId == model.StreetGuid, model.StreetGuid)
                 .AddEqual(hotel => hotel.AddressId == model.AddressGuid, model.AddressGuid);
 
-            var startDate = ReportStartDate(model.DueDateTime, model.ReportType).GetToday();
+            model.StartDateTime = ReportStartDate(model.DueDateTime, model.ReportType).GetToday();
 
             using (var repo = Repo<RunningTimeRepository>())
             {
@@ -41,7 +41,7 @@ namespace Platform.Process.Process
                     }
 
                     var cleanerRecord = repo.GetModels(obj =>
-                        obj.UpdateTime >= startDate
+                        obj.UpdateTime >= model.StartDateTime
                         && obj.UpdateTime < model.DueDateTime
                         && obj.ProjectIdentity == hotel.Identity
                         && obj.Type == RunningTimeType.Cleaner);
@@ -51,7 +51,7 @@ namespace Platform.Process.Process
                     }
 
                     var fanRecord = repo.GetModels(obj =>
-                        obj.UpdateTime >= startDate
+                        obj.UpdateTime >= model.StartDateTime
                         && obj.UpdateTime < model.DueDateTime
                         && obj.ProjectIdentity == hotel.Identity
                         && obj.Type == RunningTimeType.Fan);
