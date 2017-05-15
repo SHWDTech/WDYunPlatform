@@ -23,7 +23,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "CleanRate", Required = true)]
         public ActionResult CleanRateTable(CleanRateDataTable post)
         {
-            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address, WdContext.UserDistricts);
             if (!string.IsNullOrWhiteSpace(post.Name))
             {
                 query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
@@ -58,7 +58,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "LinkageRate", Required = true)]
         public ActionResult LinkageRateTable(LinkageRateTable post)
         {
-            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address, WdContext.UserDistricts);
             if (!string.IsNullOrWhiteSpace(post.Name))
             {
                 query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
@@ -171,7 +171,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "RunningTime", Required = true)]
         public ActionResult RunningTimeTable(RunngingDataTable post)
         {
-            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address, WdContext.UserDistricts);
             if (!string.IsNullOrWhiteSpace(post.Name))
             {
                 query = query.Where(d => d.Project.ProjectName.Contains(post.Name));

@@ -93,9 +93,13 @@ namespace Platform.Process.Process
 
         public IQueryable<RestaurantDevice> GetRestaurantDevice() => Repo<RestaurantDeviceRepository>().GetAllModels();
 
-        public IQueryable<RestaurantDevice> GetRestaurantDeviceByArea(Guid district, Guid street, Guid address)
+        public IQueryable<RestaurantDevice> GetRestaurantDeviceByArea(Guid district, Guid street, Guid address, List<Guid> userDistricts)
         {
             var query = Repo<RestaurantDeviceRepository>().GetAllModels().Include("Hotel").Include("Hotel.District");
+            if (userDistricts != null)
+            {
+                query = query.Where(d => userDistricts.Contains(d.Hotel.DistrictId));
+            }
             if (district != Guid.Empty)
             {
                 query = query.Where(d => d.Hotel.DistrictId == district);

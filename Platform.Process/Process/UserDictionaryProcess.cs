@@ -198,12 +198,16 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<Guid, string> GetUserDistricts()
+        public Dictionary<Guid, string> GetUserDistricts(List<Guid> userDistricts)
         {
             using (var repo = Repo<UserDictionaryRepository>())
             {
-                return repo.GetModels(obj => obj.ItemName == "Area" && obj.ItemLevel == 0)
-                    .ToDictionary(key => key.Id, value => value.ItemValue);
+                var query = repo.GetModels(obj => obj.ItemName == "Area" && obj.ItemLevel == 0);
+                if (userDistricts != null)
+                {
+                    query = query.Where(obj => userDistricts.Contains(obj.Id));
+                }
+                return query.ToDictionary(key => key.Id, value => value.ItemValue);
             }
         }
 

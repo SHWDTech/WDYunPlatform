@@ -30,7 +30,7 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult UserDistrictSelections()
         {
-            var dict = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts();
+            var dict = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts(WdContext.UserDistricts);
             dict.Add(Guid.Empty, "全部");
 
             return Json(new JsonStruct
@@ -42,7 +42,7 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult UserDistricts() => Json(new JsonStruct
         {
-            Result = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts().Select(item => new { id = item.Key, text = item.Value })
+            Result = ProcessInvoke<UserDictionaryProcess>().GetUserDistricts(WdContext.UserDistricts).Select(item => new { id = item.Key, text = item.Value })
         }, JsonRequestBehavior.AllowGet);
 
         public ActionResult Hotels()

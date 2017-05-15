@@ -287,7 +287,7 @@ namespace Lampblack_Platform.Controllers
         public ActionResult DeviceTable(DeviceTable post)
         {
             var devs = ProcessInvoke<RestaurantDeviceProcess>()
-                .GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+                .GetRestaurantDeviceByArea(post.Area, post.Street, post.Address, WdContext.UserDistricts);
             if (!string.IsNullOrWhiteSpace(post.QueryName))
             {
                 devs = devs.Where(d => d.DeviceName.Contains(post.QueryName) || d.Hotel.ProjectName.Contains(post.QueryName));

@@ -27,8 +27,8 @@ namespace Lampblack_Platform.Controllers
             {
                 hotelLocation = hotelLocation.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();
             }
-                return Json(new JsonStruct
-                {
+            return Json(new JsonStruct
+            {
                 Result = hotelLocation
             }, JsonRequestBehavior.AllowGet);
         }
@@ -98,17 +98,17 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Actual")]
         public ActionResult ActualTable(AcutalDataTable post)
         {
-            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address);
+            var query = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDeviceByArea(post.Area, post.Street, post.Address, WdContext.UserDistricts);
             if (!string.IsNullOrWhiteSpace(post.Name))
             {
                 query = query.Where(d => d.Project.ProjectName.Contains(post.Name));
             }
             var total = query.Count();
             query = query.OrderBy(d => new
-                {
-                    d.ProjectId,
-                    d.Identity
-                }).Skip(post.offset)
+            {
+                d.ProjectId,
+                d.Identity
+            }).Skip(post.offset)
                 .Take(post.limit);
 
             var devs = ProcessInvoke<RestaurantDeviceProcess>().DeviceCurrentStatus(query);
@@ -131,12 +131,12 @@ namespace Lampblack_Platform.Controllers
         {
             var areaList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = "" }
+                    new SelectListItem {Text = @"全部", Value = "" }
                 };
 
             var streetList = new List<SelectListItem>
                 {
-                    new SelectListItem {Text = "全部", Value = ""}
+                    new SelectListItem {Text = @"全部", Value = ""}
                 };
 
             areaList.AddRange(ProcessInvoke<UserDictionaryProcess>()

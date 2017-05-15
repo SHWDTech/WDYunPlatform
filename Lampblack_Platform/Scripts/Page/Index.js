@@ -9,7 +9,6 @@ var hotel = null;
 
 $(function () {
     var panel = $('#hotels').parent('.panel');
-    debugger;
     $(panel).height($(panel).parent('.float-card').height());
     var head = $('#hotels').parent('.panel').children('.panel-heading');
     var bodys = $('#hotels').parent('.panel').children('.panel-body');
