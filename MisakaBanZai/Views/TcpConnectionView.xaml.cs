@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -282,7 +284,7 @@ namespace MisakaBanZai.Views
             {
                 CmbConnectedClient.SelectedIndex = currentIndex;
             }
-            else if(CmbConnectedClient.SelectedIndex > 0)
+            else if (CmbConnectedClient.SelectedIndex > 0)
             {
                 CmbConnectedClient.SelectedIndex = 0;
             }
@@ -895,8 +897,22 @@ namespace MisakaBanZai.Views
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void ReceiveTextBoxTextChanged(object sender, EventArgs e)
         {
-            if (TxtReceiveViewer.Text.Length > 10000)
+            if (TxtReceiveViewer.Text.Length > 524288)
+            {
+                try
+                {
+                    using (var file = File.Open($"{Directory.GetCurrentDirectory()}\\HistoryFile\\{DateTime.Now:yyyy-MM-dd_HH_mm_ss}", FileMode.OpenOrCreate))
+                    {
+                        var logs = Encoding.GetEncoding("GB2312").GetBytes(TxtReceiveViewer.Text);
+                        file.Write(logs, 0, logs.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("Save Log Failed", ex);
+                }
                 TxtReceiveViewer.Clear();
+            }
         }
 
         /// <summary>
