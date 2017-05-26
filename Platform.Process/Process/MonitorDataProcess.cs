@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Platform.Cache;
 using Platform.Process.Enums;
 using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
+using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
@@ -104,7 +106,8 @@ namespace Platform.Process.Process
 
             var startDate = ReportStartDate(endDate, model.ReportType);
             var repo = Repo<MonitorDataRepository>().GetAllModels().Where(obj => obj.UpdateTime > startDate && obj.UpdateTime < endDate);
-            var devices = Repo<RestaurantDeviceRepository>().GetAllModels();
+            var deviceModelId = Repo<DeviceModelRepository>().GetAllModels().First().Id;
+            var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{deviceModelId}").CacheItem;
 
             foreach (var area in areas)
             {
@@ -112,39 +115,27 @@ namespace Platform.Process.Process
                 var faild = (from data in repo
                              where areaHotels.Contains(data.ProjectIdentity)
                                    && data.CommandDataId == CommandDataId.CleanerCurrent
-                                   && data.DoubleValue < (from device in devices
-                                                          where device.Project.Identity == data.ProjectIdentity
-                                                          select device.LampblackDeviceModel).FirstOrDefault().Fail
+                                   && data.DoubleValue < rater.Fail
                              select data).Count();
 
                 var worse = (from data in repo
                              where areaHotels.Contains(data.ProjectIdentity)
                                    && data.CommandDataId == CommandDataId.CleanerCurrent
-                                   && data.DoubleValue > (from device in devices
-                                                          where device.Project.Identity == data.ProjectIdentity
-                                                          select device.LampblackDeviceModel).FirstOrDefault().Fail
-                                   && data.DoubleValue < (from device in devices
-                                                          where device.Project.Identity == data.ProjectIdentity
-                                                          select device.LampblackDeviceModel).FirstOrDefault().Worse
+                                   && data.DoubleValue > rater.Fail
+                                   && data.DoubleValue < rater.Worse
                              select data).Count();
 
                 var qualified = (from data in repo
                                  where areaHotels.Contains(data.ProjectIdentity)
                                        && data.CommandDataId == CommandDataId.CleanerCurrent
-                                       && data.DoubleValue > (from device in devices
-                                                              where device.Project.Identity == data.ProjectIdentity
-                                                              select device.LampblackDeviceModel).FirstOrDefault().Worse
-                                       && data.DoubleValue < (from device in devices
-                                                              where device.Project.Identity == data.ProjectIdentity
-                                                              select device.LampblackDeviceModel).FirstOrDefault().Qualified
+                                       && data.DoubleValue > rater.Worse
+                                       && data.DoubleValue < rater.Qualified
                                  select data).Count();
 
                 var good = (from data in repo
                             where areaHotels.Contains(data.ProjectIdentity)
                                   && data.CommandDataId == CommandDataId.CleanerCurrent
-                                  && data.DoubleValue > (from device in devices
-                                                         where device.Project.Identity == data.ProjectIdentity
-                                                         select device.LampblackDeviceModel).FirstOrDefault().Qualified
+                                  && data.DoubleValue > rater.Qualified
                             select data).Count();
 
                 var fan = (from data in repo

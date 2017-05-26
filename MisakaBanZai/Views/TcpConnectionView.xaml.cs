@@ -170,7 +170,7 @@ namespace MisakaBanZai.Views
 
             var textBox = (TextBox)sender;
 
-            if (textBox.Name == "TxtRemoteConnPort")
+            if (textBox.Name == @"TxtRemoteConnPort")
             {
                 SwitchConnectStatus(sender, e);
             }
@@ -831,19 +831,19 @@ namespace MisakaBanZai.Views
                                      select checkBox)
             {
                 checkBox.IsChecked = !checkBox.IsChecked;
-                if (checkBox.Name == "ChkFullDateMode" && ChkFullDateMode.IsChecked == true)
+                if (checkBox.Name == @"ChkFullDateMode" && ChkFullDateMode.IsChecked == true)
                 {
                     ChkShowDate.IsChecked = true;
                 }
-                if (checkBox.Name == "ChkShowDate" && ChkShowDate.IsChecked == false)
+                if (checkBox.Name == @"ChkShowDate" && ChkShowDate.IsChecked == false)
                 {
                     ChkFullDateMode.IsChecked = false;
                 }
-                if (checkBox.Name == "ChkRegularSend" && ChkRegularSend.IsChecked == true)
+                if (checkBox.Name == @"ChkRegularSend" && ChkRegularSend.IsChecked == true)
                 {
                     RegularSendTimer.Start();
                 }
-                else if (checkBox.Name == "ChkRegularSend" && ChkRegularSend.IsChecked == false)
+                else if (checkBox.Name == @"ChkRegularSend" && ChkRegularSend.IsChecked == false)
                 {
                     RegularSendTimer.Stop();
                 }
@@ -901,7 +901,7 @@ namespace MisakaBanZai.Views
             {
                 try
                 {
-                    using (var file = File.Open($"{Directory.GetCurrentDirectory()}\\HistoryFile\\{DateTime.Now:yyyy-MM-dd_HH_mm_ss}", FileMode.OpenOrCreate))
+                    using (var file = File.Open($"{Directory.GetCurrentDirectory()}\\HistoryFile\\{DateTime.Now:yyyy-MM-dd_HH_mm_ss}.txt", FileMode.OpenOrCreate))
                     {
                         var logs = Encoding.GetEncoding("GB2312").GetBytes(TxtReceiveViewer.Text);
                         file.Write(logs, 0, logs.Length);
@@ -1000,9 +1000,9 @@ namespace MisakaBanZai.Views
 
             var button = (Button)sender;
 
-            if (button.Name == "ClearSend") TxtDataSend.Clear();
+            if (button.Name == @"ClearSend") TxtDataSend.Clear();
 
-            if (button.Name == "ClearReceive") TxtReceiveViewer.Clear();
+            if (button.Name == @"ClearReceive") TxtReceiveViewer.Clear();
         }
 
         /// <summary>
