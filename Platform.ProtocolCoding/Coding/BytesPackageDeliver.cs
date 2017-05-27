@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Platform.Process;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
+using WebViewModels.ViewDataModel;
 
 namespace SHWDTech.Platform.ProtocolCoding.Coding
 {
@@ -18,28 +20,31 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 存储协议包携带的数据
         /// </summary>
         /// <param name="package">接收到的协议包</param>
-        /// <param name="source">接收数据源</param>
+        /// <param name="source">协议包来源</param>
         public void StoreData(IProtocolPackage<byte[]> package, IPackageSource source)
         {
             var monitorDataList = new List<MonitorData>();
 
             for (var i = 0; i < package.Command.CommandDatas.Count; i++)
             {
-                var monitorData = new MonitorDataRepository().CreateDefaultModel();
-                monitorData.DomainId = package.Device.DomainId;
+                using (var monitorDataRepository = new MonitorDataRepository())
+                {
+                    var monitorData = monitorDataRepository.CreateDefaultModel();
+                    monitorData.DomainId = package.Device.DomainId;
 
-                var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+                    var commandData = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
 
-                var temp = _dataConverter.DecodeComponentData(package[commandData.DataName]);
+                    var temp = _dataConverter.DecodeComponentData(package[commandData.DataName]);
 
-                monitorData.DoubleValue = Convert.ToDouble(temp);
-                monitorData.ProtocolDataId = package.ProtocolData.Id;
-                monitorData.UpdateTime = DateTime.Now;
-                monitorData.CommandDataId = commandData.Id;
-                monitorData.DeviceIdentity = package.Device.Identity;
-                monitorData.ProjectIdentity = package.Device.Project.Identity;
+                    monitorData.DoubleValue = Convert.ToDouble(temp);
+                    monitorData.ProtocolDataId = package.ProtocolData.Id;
+                    monitorData.UpdateTime = DateTime.Now;
+                    monitorData.CommandDataId = commandData.Id;
+                    monitorData.DeviceIdentity = package.Device.Identity;
+                    monitorData.ProjectIdentity = package.Device.Project.Identity;
 
-                monitorDataList.Add(monitorData);
+                    monitorDataList.Add(monitorData);
+                }
             }
 
             if (package[ProtocolDataName.DataValidFlag] != null)
@@ -64,50 +69,52 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 if (dataComponent.Value.CommandData.DataName == null ||
                     dataComponent.Value.CommandData.DataConvertType == ProtocolDataType.None) continue;
                 var data = _dataConverter.DecodeComponentData(dataComponent.Value);
-
-                var monitorData = new MonitorDataRepository().CreateDefaultModel();
-                monitorData.DomainId = package.Device.DomainId;
-
-                switch (dataComponent.Value.CommandData.DataValueType)
+                using (var monitorDataRepository = new MonitorDataRepository())
                 {
-                    case DataValueType.Double:
-                        monitorData.DoubleValue = Convert.ToDouble(data);
-                        break;
-                    case DataValueType.Integer:
-                        monitorData.IntegerValue = Convert.ToInt32(data);
-                        break;
-                    case DataValueType.Boolean:
-                        monitorData.BooleanValue = Convert.ToBoolean(data);
-                        break;
+                    var monitorData = monitorDataRepository.CreateDefaultModel();
+                    monitorData.DomainId = package.Device.DomainId;
+
+                    switch (dataComponent.Value.CommandData.DataValueType)
+                    {
+                        case DataValueType.Double:
+                            monitorData.DoubleValue = Convert.ToDouble(data);
+                            break;
+                        case DataValueType.Integer:
+                            monitorData.IntegerValue = Convert.ToInt32(data);
+                            break;
+                        case DataValueType.Boolean:
+                            monitorData.BooleanValue = Convert.ToBoolean(data);
+                            break;
+                    }
+
+                    monitorData.ProtocolDataId = package.ProtocolData.Id;
+                    monitorData.UpdateTime = DateTime.Now;
+                    monitorData.CommandDataId = dataComponent.Value.CommandData.Id;
+                    monitorData.DeviceIdentity = package.Device.Identity;
+                    monitorData.ProjectIdentity = package.Device.Project.Identity;
+                    monitorData.DataIsValid = (dataComponent.Value.ValidFlag & 0x80) == 0;
+                    monitorData.DataChannel = dataComponent.Value.ComponentChannel;
+
+                    monitorDataList.Add(monitorData);
+
+                    if (dataComponent.Value.CommandData.DataName != "CleanerCurrent") continue;
+                    var cleanerSwitch = new MonitorData
+                    {
+                        DomainId = package.Device.DomainId,
+                        ProtocolDataId = package.ProtocolData.Id,
+                        UpdateTime = DateTime.Now,
+                        CommandDataId = new Guid("15802959-D25B-42AD-BE50-5B48DCE4039A"),
+                        DeviceIdentity = package.Device.Identity,
+                        ProjectIdentity = package.Device.Project.Identity,
+                        DataIsValid = true,
+                        DataChannel = dataComponent.Value.ComponentChannel
+                    };
+                    if (monitorData.DoubleValue > 4)
+                    {
+                        cleanerSwitch.BooleanValue = true;
+                    }
+                    monitorDataList.Add(cleanerSwitch);
                 }
-
-                monitorData.ProtocolDataId = package.ProtocolData.Id;
-                monitorData.UpdateTime = DateTime.Now;
-                monitorData.CommandDataId = dataComponent.Value.CommandData.Id;
-                monitorData.DeviceIdentity = package.Device.Identity;
-                monitorData.ProjectIdentity = package.Device.Project.Identity;
-                monitorData.DataIsValid = (dataComponent.Value.ValidFlag & 0x80) == 0;
-                monitorData.DataChannel = dataComponent.Value.ComponentChannel;
-
-                monitorDataList.Add(monitorData);
-
-                if (dataComponent.Value.CommandData.DataName != "CleanerCurrent") continue;
-                var cleanerSwitch = new MonitorData
-                {
-                    DomainId = package.Device.DomainId,
-                    ProtocolDataId = package.ProtocolData.Id,
-                    UpdateTime = DateTime.Now,
-                    CommandDataId = new Guid("15802959-D25B-42AD-BE50-5B48DCE4039A"),
-                    DeviceIdentity = package.Device.Identity,
-                    ProjectIdentity = package.Device.Project.Identity,
-                    DataIsValid = true,
-                    DataChannel = dataComponent.Value.ComponentChannel
-                };
-                if (monitorData.DoubleValue > 4)
-                {
-                    cleanerSwitch.BooleanValue = true;
-                }
-                monitorDataList.Add(cleanerSwitch);
             }
 
             lock (TempMonitorDatas)
@@ -149,9 +156,45 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateLampblackRecord(records);
         }
 
-        private void SetStatusCache(IProtocolPackage<byte[]> package, LampblackRecord record)
+        private static void SetStatusCache(IProtocolPackage<byte[]> package, LampblackRecord record)
         {
-            RedisService.GetREdisDatabase().StringSet($"Hotel:CleanerCurrent:{package.Device.ProjectId}", $"{record.CleanerCurrent}", TimeSpan.FromMinutes(2));
+            try
+            {
+                var fanRunTimeRedisKey = RedisService.GetRedisDatabase()
+                    .StringGet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
+                var fanRunTime = fanRunTimeRedisKey.HasValue ? long.Parse(fanRunTimeRedisKey.ToString()) : 0;
+                fanRunTime += 1200000000;
+                RedisService.GetRedisDatabase()
+                    .StringSet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{fanRunTime}");
+
+                var cleanerRunTimeRedisKey = RedisService.GetRedisDatabase()
+                    .StringGet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
+                var cleanerRunTime = cleanerRunTimeRedisKey.HasValue ? long.Parse(cleanerRunTimeRedisKey.ToString()) : 0;
+                cleanerRunTime += 1200000000;
+                RedisService.GetRedisDatabase()
+                    .StringSet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{cleanerRunTime}");
+
+                var deviceCurrentStatus = new DeviceCurrentStatus
+                {
+                    FanCurrent = record.FanCurrent,
+                    CleanerCurrent = record.CleanerCurrent,
+                    CleanerSwitch = record.CleanerSwitch,
+                    FanSwitch = record.FanSwitch,
+                    LampblackIn = record.LampblackIn,
+                    LampblackOut = record.LampblackOut,
+                    FanRunTimeTicks = fanRunTime,
+                    CleanerRunTimeTicks = cleanerRunTime,
+                    UpdateTime = record.RecordDateTime.Ticks
+                };
+                RedisService.GetRedisDatabase().StringSet($"Device:DeviceCurrentStatus:{package.Device.Id}",
+                    JsonConvert.SerializeObject(deviceCurrentStatus), TimeSpan.FromMinutes(2));
+                RedisService.GetRedisDatabase().StringSet($"Hotel:CleanerCurrent:{package.Device.ProjectId}",
+                    $"{record.CleanerCurrent}", TimeSpan.FromMinutes(2));
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("更新缓存失败！", ex);
+            }
         }
 
         private object DecodeComponentDataByName(string name, IProtocolPackage<byte[]> package) 
@@ -161,7 +204,6 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 油烟系统报警信息处理
         /// </summary>
         /// <param name="package"></param>
-        /// <param name="source"></param>
         public static void LampblackAlarm(IProtocolPackage<byte[]> package, IPackageSource source)
         {
             var exception = package[ProtocolDataName.LampblackException];
@@ -176,13 +218,16 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 var error = (1 << i);
 
                 if ((flag & error) == 0) continue;
-                var record = new AlarmRepository().CreateDefaultModel();
-                record.AlarmType = AlarmType.Lampblack;
-                record.AlarmCode = error;
-                record.AlarmDeviceId = package.Device.Id;
-                record.UpdateTime = package.ReceiveDateTime;
-                record.DomainId = package.Device.DomainId;
-                alarmList.Add(record);
+                using (var alarmRepository = new AlarmRepository())
+                {
+                    var record = alarmRepository.CreateDefaultModel();
+                    record.AlarmType = AlarmType.Lampblack;
+                    record.AlarmCode = error;
+                    record.AlarmDeviceId = package.Device.Id;
+                    record.UpdateTime = package.ReceiveDateTime;
+                    record.DomainId = package.Device.DomainId;
+                    alarmList.Add(record);
+                }
             }
 
             if (alarmList.Count > 0)
@@ -196,7 +241,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// </summary>
         /// <param name="package">协议数据包</param>
         /// <param name="monitorDatas">监测数据</param>
-        public void ProcessDataValidFlag(IProtocolPackage<byte[]> package, List<MonitorData> monitorDatas)
+        public static void ProcessDataValidFlag(IProtocolPackage<byte[]> package, List<MonitorData> monitorDatas)
         {
             var dataValidFlag = BytesDataConverter.GetDataValidFlag(package[ProtocolDataName.DataValidFlag].ComponentContent);
 

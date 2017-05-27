@@ -50,6 +50,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// <summary>
         /// 将字节流解码成协议包
         /// </summary>
+        /// <param name="bufferBytes">等待解码的字节流</param>
         /// <returns></returns>
         public IProtocolPackage Decode(byte[] bufferBytes)
         {

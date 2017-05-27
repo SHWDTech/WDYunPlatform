@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using Newtonsoft.Json;
 using PagedList;
 using Platform.Cache;
 using Platform.Process.Business;
@@ -10,9 +11,10 @@ using Platform.Process.IProcess;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
-using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Utility;
 using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
+using WebViewModels.ViewDataModel;
 using WebViewModels.ViewModel;
 
 namespace Platform.Process.Process
@@ -152,35 +154,14 @@ namespace Platform.Process.Process
             }
         }
 
-        public Dictionary<string, object> GetDeviceCurrentStatus(Guid hotelGuid)
+        public DeviceCurrentStatus GetDeviceCurrentStatus(Guid deviceGuid)
         {
-            var retDictionary = new Dictionary<string, object>();
-            using (var repo = Repo<RestaurantDeviceRepository>())
-            {
-                var device = repo.GetModelIncludeById(hotelGuid, new List<string>() { "Project" });
+            var devIdentity = Repo<RestaurantDeviceRepository>().GetModelById(deviceGuid).Identity;
+            var statusStr = RedisService.GetRedisDatabase().StringGet($"Device:DeviceCurrentStatus:{deviceGuid}");
+            var status = statusStr.HasValue ? JsonConvert.DeserializeObject<DeviceCurrentStatus>(statusStr.ToString()) : new DeviceCurrentStatus();
+            status.CleanRate = GetCleanRate(status.CleanerCurrent, devIdentity);
 
-                var recentDatas = GetLastMonitorData(device);
-
-                retDictionary.Add("Current", GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue ?? 0.0);
-                retDictionary.Add("CleanerStatus", GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue ?? false);
-                retDictionary.Add("FanStatus", GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue ?? false);
-                retDictionary.Add("LampblackIn", GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue ?? 0.0);
-                retDictionary.Add("LampblackOut", GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue ?? 0.0);
-
-                var cleanerCurrent = recentDatas.Where(data => data.CommandDataId == CommandDataId.CleanerCurrent)
-                .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
-
-                retDictionary.Add("CleanRate",
-                    cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceIdentity));
-
-                retDictionary.Add("CleanerRunTime", GetCleanerRunTimeString(device));
-                retDictionary.Add("FanRunTime", GetFanRunTimeString(device));
-                var firstOrDefault = recentDatas.FirstOrDefault();
-                if (firstOrDefault != null)
-                    retDictionary.Add("UpdateTime", firstOrDefault.UpdateTime);
-            }
-
-            return retDictionary;
+            return status;
         }
 
         public List<DeviceActualStatusTable> DeviceCurrentStatus(IQueryable<RestaurantDevice> query)

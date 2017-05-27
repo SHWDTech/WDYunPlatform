@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
 using PagedList;
 using Platform.Cache;
 using Platform.Process.Business;
@@ -91,7 +92,14 @@ namespace Platform.Process.Process
                         var dbModel = repo.CreateDefaultModel();
                         foreach (var propertyName in propertyNames)
                         {
-                            dbModel.GetType().GetProperty(propertyName).SetValue(dbModel, model.GetType().GetProperty(propertyName).GetValue(model));
+                            var propertyInfo = dbModel.GetType().GetProperty(propertyName);
+                            if (propertyInfo != null)
+                            {
+                                var memberInfo = model.GetType().GetProperty(propertyName);
+                                if (memberInfo != null)
+                                    propertyInfo.SetValue(dbModel,
+                                        memberInfo.GetValue(model));
+                            }
                         }
                         repo.AddOrUpdateDoCommit(dbModel);
                     }
@@ -160,9 +168,9 @@ namespace Platform.Process.Process
             }
         }
 
-        private double? GetCleanerCurrentFromRedis(string key)
+        private static double? GetCleanerCurrentFromRedis(string key)
         {
-            var current = RedisService.GetREdisDatabase().StringGet(key);
+            var current = RedisService.GetRedisDatabase().StringGet(key);
             if (current.HasValue)
             {
                 return double.Parse(current.ToString());
@@ -206,24 +214,21 @@ namespace Platform.Process.Process
             using (var repo = Repo<HotelRestaurantRepository>())
             {
                 var hotel = repo.GetModelById(hotelGuid);
-
-                var recentDatas = GetLastMonitorData(hotel.Id);
-
-                var cleanerCurrent = recentDatas.Where(data => data.CommandDataId == CommandDataId.CleanerCurrent)
-                .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
-
+                var device = Repo<RestaurantDeviceRepository>().GetModels(d => d.ProjectId == hotel.Id).First();
+                var statusStr = RedisService.GetRedisDatabase().StringGet($"Device:DeviceCurrentStatus:{device.Id}");
+                var devStatus = statusStr.HasValue ? JsonConvert.DeserializeObject<DeviceCurrentStatus>(statusStr.ToString()) : new DeviceCurrentStatus();
                 var status = new
                 {
-                    Current = GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue ?? 0.0,
-                    CleanerStatus = GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue ?? false,
-                    FanStatus = GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue ?? false,
-                    LampblackIn = GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue ?? 0.0,
-                    LampblackOut = GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue ?? 0.0,
+                    Current = devStatus.CleanerCurrent,
+                    CleanerStatus = devStatus.CleanerSwitch,
+                    FanStatus = devStatus.FanSwitch,
+                    devStatus.LampblackIn,
+                    devStatus.LampblackOut,
                     Name = hotel.ProjectName,
                     hotel.ChargeMan,
                     Address = hotel.AddressDetail,
                     Phone = hotel.Telephone,
-                    CleanRate = cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceIdentity)
+                    CleanRate = GetCleanRate(devStatus.CleanerCurrent, device.Identity)
                 };
 
                 return status;
@@ -272,7 +277,7 @@ namespace Platform.Process.Process
                     };
                     if (repo.Set<Device>().Any(dev => dev.ProjectId == hotel.Id))
                     {
-                        var lastRecord = RedisService.GetREdisDatabase().StringGet($"Hotel:CleanerCurrent:{hotel.Id}");
+                        var lastRecord = RedisService.GetRedisDatabase().StringGet($"Hotel:CleanerCurrent:{hotel.Id}");
                         double? rate = null;
                         if (lastRecord.HasValue)
                         {
@@ -443,7 +448,7 @@ namespace Platform.Process.Process
             return Lampblack.GetCleanessRate(current, rater);
         }
 
-        private string GetCleanRateByDeviceModel(double? current, Guid deviceModelId)
+        private static string GetCleanRateByDeviceModel(double? current, Guid deviceModelId)
         {
             if (deviceModelId == Guid.Empty) return "无数据";
             var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{deviceModelId}").CacheItem;

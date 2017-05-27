@@ -11,6 +11,6 @@ namespace SHWDTech.Platform.Utility
             RedisDatabase = ConnectionMultiplexer.Connect("localhost").GetDatabase();
         }
 
-        public static IDatabase GetREdisDatabase() => RedisDatabase;
+        public static IDatabase GetRedisDatabase() => RedisDatabase;
     }
 }

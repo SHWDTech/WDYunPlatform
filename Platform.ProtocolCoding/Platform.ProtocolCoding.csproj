@@ -32,9 +32,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="StackExchange.Redis, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\StackExchange.Redis.1.2.1\lib\net45\StackExchange.Redis.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.2.3\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -100,6 +102,10 @@
     <ProjectReference Include="..\Platform.Utility\Platform.Utility.csproj">
       <Project>{95b28f0d-c7d4-479c-aabf-e0f8b4b0e06c}</Project>
       <Name>Platform.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebViewModels\WebViewModels.csproj">
+      <Project>{C598C73C-2888-41DE-B2E1-ACE502CD57C0}</Project>
+      <Name>WebViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

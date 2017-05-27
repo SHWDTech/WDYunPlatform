@@ -43,7 +43,7 @@ $(function () {
                 base.AjaxGet('/Home/DeviceCurrentStatus', { hotelGuid: $(this).attr('value') }, function (ret) {
                     currentGauge.hideLoading();
                     var record = ret.Result;
-                    $('#current').html(record.Current + 'mA');
+                    $('#current').html(record.CleanerCurrent + 'mA');
                     $('#cleanerStatus').html(record.CleanerStatus);
                     $('#fanStatus').html(record.FanStatus);
                     $('#lampblackIn').html(record.LampblackIn + 'mg/m³');
@@ -53,7 +53,7 @@ $(function () {
                     $('#cleanerRunTime').html(record.CleanerRunTime);
                     $('#fanRunTime').html(record.FanRunTime);
 
-                    gaugeOption.series[0].data = { name: hotel, value: record.Current };
+                    gaugeOption.series[0].data = { name: hotel, value: record.CleanerCurrent };
                     currentGauge.setOption(gaugeOption);
                 });
             });
