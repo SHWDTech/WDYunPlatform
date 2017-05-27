@@ -165,14 +165,14 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 var fanRunTime = fanRunTimeRedisKey.HasValue ? long.Parse(fanRunTimeRedisKey.ToString()) : 0;
                 fanRunTime += 1200000000;
                 RedisService.GetRedisDatabase()
-                    .StringSet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{fanRunTime}");
+                    .StringSet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{fanRunTime}", TimeSpan.FromDays(1));
 
                 var cleanerRunTimeRedisKey = RedisService.GetRedisDatabase()
                     .StringGet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
                 var cleanerRunTime = cleanerRunTimeRedisKey.HasValue ? long.Parse(cleanerRunTimeRedisKey.ToString()) : 0;
                 cleanerRunTime += 1200000000;
                 RedisService.GetRedisDatabase()
-                    .StringSet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{cleanerRunTime}");
+                    .StringSet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{cleanerRunTime}", TimeSpan.FromDays(1));
 
                 var deviceCurrentStatus = new DeviceCurrentStatus
                 {
@@ -204,6 +204,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         /// 油烟系统报警信息处理
         /// </summary>
         /// <param name="package"></param>
+        /// <param name="source">协议包来源</param>
         public static void LampblackAlarm(IProtocolPackage<byte[]> package, IPackageSource source)
         {
             var exception = package[ProtocolDataName.LampblackException];
