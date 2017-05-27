@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.BootstrapTable;
 using Lampblack_Platform.Models.Query;
@@ -10,7 +8,6 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using Platform.Process.Process;
-using SHWDTech.Platform.Model.Model;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -89,47 +86,18 @@ namespace Lampblack_Platform.Controllers
 
         public ActionResult RemovalRate() => View();
 
-        public ActionResult Alarm(AlarmViewModel model)
+        public ActionResult Alarm() => View();
+
+        public ActionResult AlarmDataTable(BootstrapTablePostParams post)
         {
-            var page = string.IsNullOrWhiteSpace(Request["page"]) ? 1 : int.Parse(Request["page"]);
+            var rows = ProcessInvoke<AlarmProcess>().GetAlarmTableData(post.offset, post.limit, out int total);
 
-            var pageSize = string.IsNullOrWhiteSpace(Request["pageSize"]) ? 10 : int.Parse(Request["pageSize"]);
-
-            var queryName = Request["queryName"];
-
-            int count;
-
-            var conditions = new List<Expression<Func<Alarm, bool>>>();
-
-            if (model.StartDateTime == DateTime.MinValue)
+            return Json(new
             {
-                model.StartDateTime = DateTime.Now.AddDays(-7);
-            }
-
-            Expression<Func<Alarm, bool>> startCondition = ex => ex.UpdateTime > model.StartDateTime;
-            conditions.Add(startCondition);
-
-            if (model.EndDateTime == DateTime.MinValue)
-            {
-                model.EndDateTime = DateTime.Now;
-            }
-
-            Expression<Func<Alarm, bool>> endCondition = ex => ex.UpdateTime < model.EndDateTime;
-            conditions.Add(endCondition);
-
-            var alarmView = ProcessInvoke<HotelRestaurantProcess>()
-                .GetPagedAlarm(page, pageSize, queryName, out count, conditions);
-
-            model.PageIndex = page;
-            model.PageSize = pageSize;
-            model.QueryName = queryName;
-            model.Count = count;
-            model.AlarmView = alarmView;
-            model.PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize);
-
-            return View(model);
+                total,
+                rows
+            }, JsonRequestBehavior.AllowGet);
         }
-
 
         public ActionResult HistoryData() => View();
 

@@ -19,7 +19,7 @@ namespace SHWDTech.Platform.Model.Model
 
         [ForeignKey("AlarmDeviceId")]
         [Display(Name = "报警信息来源设备")]
-        public virtual Device AlarmDevice { get; set; }
+        public virtual RestaurantDevice AlarmDevice { get; set; }
 
         [Display(Name = "报警信息值")]
         public virtual double AlarmValue { get; set; }

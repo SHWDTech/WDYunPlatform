@@ -17,7 +17,7 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 报警信息所属设备
         /// </summary>
-        Device AlarmDevice { get; set; }
+        RestaurantDevice AlarmDevice { get; set; }
 
         /// <summary>
         /// 报警信息值

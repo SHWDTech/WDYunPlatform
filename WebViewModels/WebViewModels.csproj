@@ -74,6 +74,7 @@
     <Compile Include="Enums\ReportSeason.cs" />
     <Compile Include="Enums\ReportType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewDataModel\AlarmTableView.cs" />
     <Compile Include="ViewDataModel\CleanessStatics.cs" />
     <Compile Include="ViewDataModel\DeviceCurrentStatus.cs" />
     <Compile Include="ViewDataModel\GeneralCompasion.cs" />

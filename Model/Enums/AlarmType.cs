@@ -1,4 +1,6 @@
-﻿namespace SHWDTech.Platform.Model.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SHWDTech.Platform.Model.Enums
 {
     /// <summary>
     /// 报警类型
@@ -6,8 +8,15 @@
     public enum AlarmType
     {
         /// <summary>
-        /// 油烟报警
+        /// 油烟浓度超标
         /// </summary>
-        Lampblack
+        [Display(Name = "油烟浓度超标")]
+        LampblackDensity,
+
+        /// <summary>
+        /// 净化器失效
+        /// </summary>
+        [Display(Name = "净化器失效")]
+        LampblackCleaner
     }
 }

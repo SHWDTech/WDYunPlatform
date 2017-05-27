@@ -112,6 +112,7 @@
     <Compile Include="IProcess\IWdRoleProcess.cs" />
     <Compile Include="ProcessInvoke.cs" />
     <Compile Include="Process\AccountProcess.cs" />
+    <Compile Include="Process\AlarmProcess.cs" />
     <Compile Include="Process\CateringEnterpriseProcess.cs" />
     <Compile Include="Process\ControllerProcess.cs" />
     <Compile Include="Process\DataStatisticsProcess.cs" />
