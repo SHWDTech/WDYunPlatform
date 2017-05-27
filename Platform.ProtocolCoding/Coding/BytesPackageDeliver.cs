@@ -150,9 +150,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 record.CleanerSwitch = record.CleanerCurrent > 4;
                 current++;
                 records.Add(record);
-                SetStatusCache(package, record);
             }
-
+            SetStatusCache(package, records[0]);
             ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateLampblackRecord(records);
         }
 
@@ -160,19 +159,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
         {
             try
             {
-                var fanRunTimeRedisKey = RedisService.GetRedisDatabase()
-                    .StringGet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
+                var fanRunTimeRedisKey = RedisService.MakeSureStringGet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
                 var fanRunTime = fanRunTimeRedisKey.HasValue ? long.Parse(fanRunTimeRedisKey.ToString()) : 0;
-                fanRunTime += 1200000000;
-                RedisService.GetRedisDatabase()
-                    .StringSet($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{fanRunTime}", TimeSpan.FromDays(1));
+                fanRunTime += 600000000;
+                RedisService.StringSetInQueue($"Device:FanRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{fanRunTime}", TimeSpan.FromDays(1));
 
-                var cleanerRunTimeRedisKey = RedisService.GetRedisDatabase()
-                    .StringGet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
+                var cleanerRunTimeRedisKey = RedisService.MakeSureStringGet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}");
                 var cleanerRunTime = cleanerRunTimeRedisKey.HasValue ? long.Parse(cleanerRunTimeRedisKey.ToString()) : 0;
-                cleanerRunTime += 1200000000;
-                RedisService.GetRedisDatabase()
-                    .StringSet($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{cleanerRunTime}", TimeSpan.FromDays(1));
+                cleanerRunTime += 600000000;
+                RedisService.StringSetInQueue($"Device:CleanerRunTime:{DateTime.Now:yyyy-MM-dd}:{package.Device.Id}", $"{cleanerRunTime}", TimeSpan.FromDays(1));
 
                 var deviceCurrentStatus = new DeviceCurrentStatus
                 {
@@ -186,9 +181,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     CleanerRunTimeTicks = cleanerRunTime,
                     UpdateTime = record.RecordDateTime.Ticks
                 };
-                RedisService.GetRedisDatabase().StringSet($"Device:DeviceCurrentStatus:{package.Device.Id}",
+                RedisService.StringSetInQueue($"Device:DeviceCurrentStatus:{package.Device.Id}",
                     JsonConvert.SerializeObject(deviceCurrentStatus), TimeSpan.FromMinutes(2));
-                RedisService.GetRedisDatabase().StringSet($"Hotel:CleanerCurrent:{package.Device.ProjectId}",
+                RedisService.StringSetInQueue($"Hotel:CleanerCurrent:{package.Device.ProjectId}",
                     $"{record.CleanerCurrent}", TimeSpan.FromMinutes(2));
             }
             catch (Exception ex)
@@ -222,7 +217,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 using (var alarmRepository = new AlarmRepository())
                 {
                     var record = alarmRepository.CreateDefaultModel();
-                    record.AlarmType = AlarmType.Lampblack;
+                    record.AlarmType = AlarmType.LampblackCleaner;
                     record.AlarmCode = error;
                     record.AlarmDeviceId = package.Device.Id;
                     record.UpdateTime = package.ReceiveDateTime;

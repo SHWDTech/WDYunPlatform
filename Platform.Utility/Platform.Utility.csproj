@@ -94,6 +94,7 @@
     <Compile Include="ILogService.cs" />
     <Compile Include="LogService.cs" />
     <Compile Include="RedisService.cs" />
+    <Compile Include="RedisStringSetQueueElement.cs" />
     <Compile Include="ReportMessage.cs" />
     <Compile Include="ReportService.cs" />
     <Compile Include="Serialize\XmlSerializerHelper.cs" />
