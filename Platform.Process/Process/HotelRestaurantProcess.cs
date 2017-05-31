@@ -228,7 +228,7 @@ namespace Platform.Process.Process
                     hotel.ChargeMan,
                     Address = hotel.AddressDetail,
                     Phone = hotel.Telephone,
-                    CleanRate = GetCleanRate(devStatus.CleanerCurrent, device.Identity)
+                    CleanRate = statusStr.HasValue ? GetCleanRate(devStatus.CleanerCurrent, device.Identity) : "电源未接通"
                 };
 
                 return status;
@@ -450,7 +450,7 @@ namespace Platform.Process.Process
 
         private static string GetCleanRateByDeviceModel(double? current, Guid deviceModelId)
         {
-            if (deviceModelId == Guid.Empty) return "无数据";
+            if (deviceModelId == Guid.Empty) return "电源未接通";
             var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{deviceModelId}").CacheItem;
 
             return Lampblack.GetCleanessRate(current, rater);

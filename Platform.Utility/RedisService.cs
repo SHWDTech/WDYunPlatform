@@ -14,7 +14,8 @@ namespace SHWDTech.Platform.Utility
 
         static RedisService()
         {
-            RedisDatabase = ConnectionMultiplexer.Connect("localhost").GetDatabase();
+            var multiplexerLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect("localhost"));
+            RedisDatabase = multiplexerLazy.Value.GetDatabase();
             Task.Factory.StartNew(ProcessQueue);
         }
 
@@ -47,6 +48,7 @@ namespace SHWDTech.Platform.Utility
                 }
                 catch (Exception)
                 {
+                    //LogService.Instance.Error("Redis StringGet Error", ex);
                     continue;
                 }
             }
@@ -60,7 +62,7 @@ namespace SHWDTech.Platform.Utility
             {
                 if (StringSetQueue.Count <= 0)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(50);
                     continue;
                 }
 
@@ -71,6 +73,7 @@ namespace SHWDTech.Platform.Utility
                 }
                 catch (Exception)
                 {
+                    //LogService.Instance.Error("Redis StringSet Error", ex);
                     StringSetQueue.Enqueue(set);
                 }
             }

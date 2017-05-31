@@ -8,7 +8,7 @@
         /// <summary>
         /// 无数据
         /// </summary>
-        public const string NoData = "无数据";
+        public const string NoData = "电源未接通";
 
         /// <summary>
         /// 失效
