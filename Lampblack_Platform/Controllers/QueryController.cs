@@ -107,6 +107,7 @@ namespace Lampblack_Platform.Controllers
             if (post.Hotel == Guid.Empty) return null;
             var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(post.Hotel);
             var query = ProcessInvoke<LampblackRecordProcess>().GetRecordRepo();
+            post.EndDate = post.EndDate.AddDays(1);
             query = query.Where(obj => obj.ProjectIdentity == hotel.Identity && obj.RecordDateTime > post.StartDate && obj.RecordDateTime < post.EndDate);
             var total = query.Count();
             if (total == 0) return null;

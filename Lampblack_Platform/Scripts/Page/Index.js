@@ -64,7 +64,7 @@ $(function () {
         base.AjaxGet('/CommonAjax/GetAreaList', { id: id }, function (ret) {
             $(select).empty().append('<option value="none">全部</option>');
             $(ret.Result).each(function () {
-                $(select).append('<option value=' + this.Id + '>' + this.ItemValue + '</option>');
+                $(select).append('<option value=' + this.id + '>' + this.text + '</option>');
             });
 
             getDevices();
