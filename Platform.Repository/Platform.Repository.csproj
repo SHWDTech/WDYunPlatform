@@ -118,17 +118,9 @@
     <Compile Include="IRepository\IUserConfigRepository.cs" />
     <Compile Include="IRepository\IUserDictionaryRepository.cs" />
     <Compile Include="IRepository\IUserRepository.cs" />
-    <Compile Include="Migrations\201703060831356_Initial.cs" />
-    <Compile Include="Migrations\201703060831356_Initial.Designer.cs">
-      <DependentUpon>201703060831356_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703180344562_ChangeStructure.cs" />
-    <Compile Include="Migrations\201703180344562_ChangeStructure.Designer.cs">
-      <DependentUpon>201703180344562_ChangeStructure.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703310901093_AddTableLampblackRecord.cs" />
-    <Compile Include="Migrations\201703310901093_AddTableLampblackRecord.Designer.cs">
-      <DependentUpon>201703310901093_AddTableLampblackRecord.cs</DependentUpon>
+    <Compile Include="Migrations\201706010557527_Initial.cs" />
+    <Compile Include="Migrations\201706010557527_Initial.Designer.cs">
+      <DependentUpon>201706010557527_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
@@ -192,14 +184,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703060831356_Initial.resx">
-      <DependentUpon>201703060831356_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703180344562_ChangeStructure.resx">
-      <DependentUpon>201703180344562_ChangeStructure.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703310901093_AddTableLampblackRecord.resx">
-      <DependentUpon>201703310901093_AddTableLampblackRecord.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706010557527_Initial.resx">
+      <DependentUpon>201706010557527_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

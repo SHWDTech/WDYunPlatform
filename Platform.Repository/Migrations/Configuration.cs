@@ -10,7 +10,6 @@ namespace SHWD.Platform.Repository.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            CommandTimeout = Int32.MaxValue;
         }
 
         protected override void Seed(SHWD.Platform.Repository.Entities.RepositoryDbContext context)

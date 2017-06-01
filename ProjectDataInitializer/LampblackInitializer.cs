@@ -36,7 +36,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 IsEnabled = true
             };
 
-            var commUser = new WdUser()
+            var commUser = new WdUser
             {
                 Id = Guid.Parse("c8c95a88-5d5d-4e80-a2d6-3ff32d472bde"),
                 UserName = "CommnicationServer",
@@ -63,7 +63,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 IsEnabled = true
             };
 
-            var adminRole = new WdRole()
+            var adminRole = new WdRole
             {
                 Id = Guid.Parse("fce321ca-8761-44c4-8204-546dfa6134e1"),
                 RoleName = "SuperAdmin",
@@ -75,7 +75,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 IsEnabled = true
             };
 
-            var serverRole = new WdRole()
+            var serverRole = new WdRole
             {
                 Id = Guid.Parse("a45ae4cd-d0ad-4cea-b666-6787a42b2b4d"),
                 RoleName = "Server",
@@ -320,7 +320,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var password = new ProtocolStructure()
+            var password = new ProtocolStructure
             {
                 Id = Guid.Parse("eddaa794-088a-4cc0-8c8e-b09635ba249a"),
                 ProtocolId = classic.Id,
@@ -336,7 +336,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 }
             };
 
-            var nodeid = new ProtocolStructure()
+            var nodeid = new ProtocolStructure
             {
                 Id = Guid.Parse("ff20af2c-8f93-4755-889f-e8943c023e7d"),
                 ProtocolId = classic.Id,
@@ -352,7 +352,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var descrip = new ProtocolStructure()
+            var descrip = new ProtocolStructure
             {
                 Id = Guid.Parse("92006a07-3726-4cdc-99a4-7b3fdf7ef03d"),
                 ProtocolId = classic.Id,
@@ -368,7 +368,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
             };
 
-            var sourceaddr = new ProtocolStructure()
+            var sourceaddr = new ProtocolStructure
             {
                 Id = Guid.Parse("9ccdffd7-7d22-43d1-9185-a58541ce87f8"),
                 ProtocolId = classic.Id,
@@ -384,7 +384,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x01 }
             };
 
-            var destination = new ProtocolStructure()
+            var destination = new ProtocolStructure
             {
                 Id = Guid.Parse("20ddc634-6ce6-47cc-82e1-c3df8f68abaa"),
                 ProtocolId = classic.Id,
@@ -400,7 +400,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x01 }
             };
 
-            var datalength = new ProtocolStructure()
+            var datalength = new ProtocolStructure
             {
                 Id = Guid.Parse("ad465018-24d3-400d-b7d5-712abf54ceeb"),
                 ProtocolId = classic.Id,
@@ -416,7 +416,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
-            var data = new ProtocolStructure()
+            var data = new ProtocolStructure
             {
                 Id = Guid.Parse("4cde87be-468c-46cf-a1f9-0172f21761ca"),
                 ProtocolId = classic.Id,
@@ -432,7 +432,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var crc = new ProtocolStructure()
+            var crc = new ProtocolStructure
             {
                 Id = Guid.Parse("1bd5725a-0408-4c4a-b7ad-f2c92dd830e2"),
                 ProtocolId = classic.Id,
@@ -448,7 +448,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
-            var tail = new ProtocolStructure()
+            var tail = new ProtocolStructure
             {
                 Id = Guid.Parse("6aea3080-bb97-4e50-8140-7c31728b1637"),
                 ProtocolId = classic.Id,
@@ -547,7 +547,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbpassword = new ProtocolStructure()
+            var lbpassword = new ProtocolStructure
             {
                 Id = Guid.Parse("417b4fdd-2130-4739-b751-077b0eb040b1"),
                 ProtocolId = lampblackProtocol.Id,
@@ -563,7 +563,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 }
             };
 
-            var lbnodeid = new ProtocolStructure()
+            var lbnodeid = new ProtocolStructure
             {
                 Id = Guid.Parse("7304e821-3e9b-402c-8e1b-75bdbb51b95a"),
                 ProtocolId = lampblackProtocol.Id,
@@ -579,7 +579,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbdescrip = new ProtocolStructure()
+            var lbdescrip = new ProtocolStructure
             {
                 Id = Guid.Parse("021ba57c-8987-4a4b-8e1a-376cad575ef8"),
                 ProtocolId = lampblackProtocol.Id,
@@ -595,7 +595,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
             };
 
-            var lbdatasource = new ProtocolStructure()
+            var lbdatasource = new ProtocolStructure
             {
                 Id = Guid.Parse("6b829782-8602-4464-a4ad-1ea53d45426f"),
                 ProtocolId = lampblackProtocol.Id,
@@ -611,7 +611,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x01 }
             };
 
-            var reserved = new ProtocolStructure()
+            var reserved = new ProtocolStructure
             {
                 Id = Guid.Parse("28af7dfb-72aa-4f39-b8e2-60f8d7e75532"),
                 ProtocolId = lampblackProtocol.Id,
@@ -627,7 +627,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x01 }
             };
 
-            var lbdatalength = new ProtocolStructure()
+            var lbdatalength = new ProtocolStructure
             {
                 Id = Guid.Parse("4181699e-5106-4cf8-a32b-947b72b60197"),
                 ProtocolId = lampblackProtocol.Id,
@@ -643,7 +643,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
-            var lbdata = new ProtocolStructure()
+            var lbdata = new ProtocolStructure
             {
                 Id = Guid.Parse("afcc3ffc-db70-4841-aa91-ac28aa4b701a"),
                 ProtocolId = lampblackProtocol.Id,
@@ -659,7 +659,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbcrc = new ProtocolStructure()
+            var lbcrc = new ProtocolStructure
             {
                 Id = Guid.Parse("dee88fe7-0285-4e36-96c2-4c17ce007a6f"),
                 ProtocolId = lampblackProtocol.Id,
@@ -675,7 +675,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x00, 0x00 }
             };
 
-            var lbtail = new ProtocolStructure()
+            var lbtail = new ProtocolStructure
             {
                 Id = Guid.Parse("c2478dc2-5736-4bbc-8f51-d396fab81454"),
                 ProtocolId = lampblackProtocol.Id,
@@ -704,7 +704,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.ProtocolStructures.Add(lbcrc);
             dbContext.ProtocolStructures.Add(lbtail);
 
-            var commandReply = new SysConfig()
+            var commandReply = new SysConfig
             {
                 Id = Guid.Parse("6ca98eba-47df-45c3-9bfb-1b56865b0a11"),
                 SysConfigName = ProtocolDeliveryParam.ReplyOriginal,
@@ -717,7 +717,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
 
-            var commandReplyA = new SysConfig()
+            var commandReplyA = new SysConfig
             {
                 Id = Guid.Parse("b06c49c1-f9f7-4e69-92df-04fa55f95045"),
                 SysConfigName = ProtocolDeliveryParam.StoreData,
@@ -729,7 +729,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandReplyLampblack = new SysConfig()
+            var commandReplyLampblack = new SysConfig
             {
                 Id = Guid.Parse("80918814-68f6-4c4e-932a-69277eb8ce9e"),
                 SysConfigName = ProtocolDeliveryParam.Lampblack,
@@ -741,7 +741,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lampblackAlarm = new SysConfig()
+            var lampblackAlarm = new SysConfig
             {
                 Id = Guid.Parse("a6f21730-45c7-49d5-8757-b36e972a7b5c"),
                 SysConfigName = ProtocolDeliveryParam.LampblackAlram,
@@ -771,12 +771,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.SysConfigs.Add(commandReplyLampblack);
             dbContext.SysConfigs.Add(lampblackAlarm);
 
-            var commandDataA = new CommandData()
+            var commandDataA = new CommandData
             {
                 Id = Guid.Parse("46225dc9-ffe2-43af-bba4-7b45bbb55af2"),
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.DataValidFlag,
+                DataDisplayName = "数据有效性验证标志",
                 DataConvertType = ProtocolDataType.TwoBytesToUShort,
                 CreateDateTime = DateTime.Now,
                 CreateUserId = user.Id,
@@ -784,12 +785,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataB = new CommandData()
+            var commandDataB = new CommandData
             {
                 Id = Guid.Parse("489287c6-e179-4864-bd02-7f8962d5e81c"),
                 DataIndex = 1,
                 DataLength = 4,
                 DataName = ProtocolDataName.Pm25,
+                DataDisplayName = "PM2.5",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 1,
@@ -799,12 +801,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataC = new CommandData()
+            var commandDataC = new CommandData
             {
                 Id = Guid.Parse("b69c75a5-c813-42a6-a3a6-5eeef561c068"),
                 DataIndex = 2,
                 DataLength = 4,
                 DataName = ProtocolDataName.Pm100,
+                DataDisplayName = "PM10",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 1,
@@ -814,12 +817,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataD = new CommandData()
+            var commandDataD = new CommandData
             {
                 Id = Guid.Parse("36b4d5eb-b141-4cfd-9df5-d4508103fbbf"),
                 DataIndex = 3,
                 DataLength = 4,
                 DataName = ProtocolDataName.Cpm,
+                DataDisplayName = "颗粒物",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 2,
@@ -829,12 +833,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataE = new CommandData()
+            var commandDataE = new CommandData
             {
                 Id = Guid.Parse("57874a4a-9a91-42dd-86de-e8940ad92c10"),
                 DataIndex = 4,
                 DataLength = 2,
                 DataName = ProtocolDataName.Noise,
+                DataDisplayName = "噪音",
                 DataConvertType = ProtocolDataType.TwoBytesToDoubleSeparate,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 3,
@@ -844,12 +849,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataF = new CommandData()
+            var commandDataF = new CommandData
             {
                 Id = Guid.Parse("7e175d64-be72-48ed-baf2-549f80c27319"),
                 DataIndex = 5,
                 DataLength = 3,
                 DataName = ProtocolDataName.WindDirection,
+                DataDisplayName = "风向",
                 DataConvertType = ProtocolDataType.ThreeBytesToUShort,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 4,
@@ -859,12 +865,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataG = new CommandData()
+            var commandDataG = new CommandData
             {
                 Id = Guid.Parse("0c9124b1-168d-4510-bd8b-1acd183895a3"),
                 DataIndex = 6,
                 DataLength = 3,
                 DataName = ProtocolDataName.WindSpeed,
+                DataDisplayName = "风速",
                 DataConvertType = ProtocolDataType.ThreeBytesToUShort,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 5,
@@ -874,12 +881,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataH = new CommandData()
+            var commandDataH = new CommandData
             {
                 Id = Guid.Parse("dc8815aa-0203-4c82-a09a-73521bcf208b"),
                 DataIndex = 7,
                 DataLength = 2,
                 DataName = ProtocolDataName.Temperature,
+                DataDisplayName = "温度",
                 DataConvertType = ProtocolDataType.TwoBytesToDoubleSeparate,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 6,
@@ -889,12 +897,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataI = new CommandData()
+            var commandDataI = new CommandData
             {
                 Id = Guid.Parse("1ff2c99a-e0af-4419-80f6-53e69574d2c4"),
                 DataIndex = 8,
                 DataLength = 2,
                 DataName = ProtocolDataName.Humidity,
+                DataDisplayName = "湿度",
                 DataConvertType = ProtocolDataType.TwoBytesToDoubleSeparate,
                 DataValueType = DataValueType.Double,
                 ValidFlagIndex = 6,
@@ -904,12 +913,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var commandDataJ = new CommandData()
+            var commandDataJ = new CommandData
             {
                 Id = Guid.Parse("d24a7c0b-05f1-4a3f-b82c-6a5615ccdfc5"),
                 DataIndex = 9,
                 DataLength = 4,
                 DataName = ProtocolDataName.Voc,
+                DataDisplayName = "VOC",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 ValidFlagIndex = 7,
                 CreateDateTime = DateTime.Now,
@@ -1008,7 +1018,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Protocols.Add(lampblack);
 
-            var lbHead = new ProtocolStructure()
+            var lbHead = new ProtocolStructure
             {
                 Id = Guid.Parse("a47ffc76-30ed-4d94-84d7-74540c51d9c4"),
                 ProtocolId = lampblack.Id,
@@ -1024,7 +1034,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[] { 0x3A }
             };
 
-            var lbFunctionCode = new ProtocolStructure()
+            var lbFunctionCode = new ProtocolStructure
             {
                 Id = Guid.Parse("b9c7a5ef-d6ec-43e8-bdec-edcddbc8d4bb"),
                 ProtocolId = lampblack.Id,
@@ -1040,7 +1050,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbDeviceNodeId = new ProtocolStructure()
+            var lbDeviceNodeId = new ProtocolStructure
             {
                 Id = Guid.Parse("a98f5e06-5093-4ab9-9762-5dacc4bdaf73"),
                 ProtocolId = lampblack.Id,
@@ -1056,7 +1066,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbData = new ProtocolStructure()
+            var lbData = new ProtocolStructure
             {
                 Id = Guid.Parse("c3ec8746-7c23-43bd-9cf8-a0db19c29655"),
                 ProtocolId = lampblack.Id,
@@ -1072,7 +1082,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbAscTime = new ProtocolStructure()
+            var lbAscTime = new ProtocolStructure
             {
                 Id = Guid.Parse("d9c5172a-233b-4ea8-b064-297bc9c8fb75"),
                 ProtocolId = lampblack.Id,
@@ -1088,7 +1098,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbLrc = new ProtocolStructure()
+            var lbLrc = new ProtocolStructure
             {
                 Id = Guid.Parse("3e8b6176-19b0-4b0b-8635-a9a995799da4"),
                 ProtocolId = lampblack.Id,
@@ -1104,7 +1114,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 DefaultBytes = new byte[0]
             };
 
-            var lbTail = new ProtocolStructure()
+            var lbTail = new ProtocolStructure
             {
                 Id = Guid.Parse("56d4150a-7a22-4c74-8a22-9bc6b3bb70f7"),
                 ProtocolId = lampblack.Id,
@@ -1537,7 +1547,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 CommandCategory = CommandCategory.TimingAutoReport,
                 ProtocolId = lampblackProtocol.Id,
                 DataOrderType = DataOrderType.Random,
-                CommandDeliverParamConfigs = new List<SysConfig>() { commandReplyLampblack, lampblackAlarm },
+                CommandDeliverParamConfigs = new List<SysConfig> { commandReplyLampblack, lampblackAlarm },
                 CreateUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 LastUpdateDateTime = DateTime.Now,
@@ -1568,12 +1578,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.ProtocolCommands.Add(lbReadDeviceStatus);
             dbContext.ProtocolCommands.Add(lbAutoReport);
 
-            var lmCommandA = new CommandData()
+            var lmCommandA = new CommandData
             {
                 Id = Guid.Parse("15802959-d25b-42ad-be50-5b48dce4039a"),
                 DataIndex = 0,
                 DataLength = 1,
                 DataName = ProtocolDataName.CleanerSwitch,
+                DataDisplayName = "净化器开关",
                 DataConvertType = ProtocolDataType.ByteToBoolean,
                 DataValueType = DataValueType.Boolean,
                 DataFlag = 0x01,
@@ -1583,12 +1594,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandB = new CommandData()
+            var lmCommandB = new CommandData
             {
                 Id = Guid.Parse("eee9ec55-7e84-4176-bb90-c13962352bc2"),
                 DataIndex = 0,
                 DataLength = 4,
                 DataName = ProtocolDataName.CleanerCurrent,
+                DataDisplayName = "净化器电流",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 DataFlag = 0x02,
@@ -1598,12 +1610,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandC = new CommandData()
+            var lmCommandC = new CommandData
             {
                 Id = Guid.Parse("adce87e7-aef2-4548-aa1e-fb435b72834f"),
                 DataIndex = 0,
                 DataLength = 1,
                 DataName = ProtocolDataName.FanSwitch,
+                DataDisplayName = "风机开关",
                 DataConvertType = ProtocolDataType.ByteToBoolean,
                 DataValueType = DataValueType.Boolean,
                 DataFlag = 0x03,
@@ -1613,12 +1626,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandD = new CommandData()
+            var lmCommandD = new CommandData
             {
                 Id = Guid.Parse("f15b955e-af42-44a5-a547-e1e2e7cdac1d"),
                 DataIndex = 0,
                 DataLength = 4,
                 DataName = ProtocolDataName.LampblackInCon,
+                DataDisplayName = "进口油烟",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 DataFlag = 0x05,
@@ -1628,12 +1642,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandE = new CommandData()
+            var lmCommandE = new CommandData
             {
                 Id = Guid.Parse("d0e478ae-836a-45eb-ba93-32fdf1cbee61"),
                 DataIndex = 0,
                 DataLength = 4,
                 DataName = ProtocolDataName.LampblackOutCon,
+                DataDisplayName = "出口油烟",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 DataFlag = 0x06,
@@ -1643,12 +1658,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandF = new CommandData()
+            var lmCommandF = new CommandData
             {
                 Id = Guid.Parse("01323f2c-70c9-4073-a58c-77f10c819f9c"),
                 DataIndex = 0,
                 DataLength = 4,
                 DataName = ProtocolDataName.FanCurrent,
+                DataDisplayName = "风机电流",
                 DataConvertType = ProtocolDataType.FourBytesToUInt32,
                 DataValueType = DataValueType.Double,
                 DataFlag = 0x04,
@@ -1658,12 +1674,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandG = new CommandData()
+            var lmCommandG = new CommandData
             {
                 Id = Guid.Parse("4b2d3a2e-6392-4503-bec2-f60f2457135c"),
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.LampblackException,
+                DataDisplayName = "异常",
                 DataConvertType = ProtocolDataType.TwoBytesToUShort,
                 DataValueType = DataValueType.Integer,
                 CreateDateTime = DateTime.Now,
@@ -1673,12 +1690,13 @@ namespace SHWDTech.Platform.ProjectDataInitializer
                 LastUpdateUserId = user.Id
             };
 
-            var lmCommandH = new CommandData()
+            var lmCommandH = new CommandData
             {
                 Id = Guid.Parse("b80862b9-e70a-4d00-aaa7-abd27651566a"),
                 DataIndex = 0,
                 DataLength = 2,
                 DataName = ProtocolDataName.DeviceStatus,
+                DataDisplayName = "设备状态",
                 DataConvertType = ProtocolDataType.TwoBytesToUShort,
                 DataValueType = DataValueType.Integer,
                 DataFlag = 0x08,
@@ -1731,7 +1749,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             dbContext.SysDomains.Add(userdomain);
             dbContext.Users.Add(qd);
 
-            var menuPermission1 = new Permission()
+            var menuPermission1 = new Permission
             {
                 Id = Guid.Parse("c3ac6551-2d34-445d-9bd0-89983518e1ac"),
                 PermissionName = "Monitor",
@@ -1745,7 +1763,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(menuPermission1);
 
-            var menu1 = new Module()
+            var menu1 = new Module
             {
                 Id = Guid.Parse("38f7dd0c-9210-4103-92ef-0a32a61e44ee"),
                 DomainId = userdomain.Id,
@@ -1765,7 +1783,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu1);
 
-            var submenuPermission1 = new Permission()
+            var submenuPermission1 = new Permission
             {
                 Id = Guid.Parse("7ce6e9d1-4a10-4f8f-bde0-49ac1d325c7f"),
                 DomainId = userdomain.Id,
@@ -1780,7 +1798,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission1);
 
-            var submenu1 = new Module()
+            var submenu1 = new Module
             {
                 Id = Guid.Parse("7bd18c1a-c73c-4626-ab70-84ce8ac59673"),
                 DomainId = userdomain.Id,
@@ -1800,7 +1818,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu1);
 
-            var submenuPermission2 = new Permission()
+            var submenuPermission2 = new Permission
             {
                 Id = Guid.Parse("20920372-3c41-4b94-9038-49a53fbd85bf"),
                 DomainId = userdomain.Id,
@@ -1815,7 +1833,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission2);
 
-            var submenu2 = new Module()
+            var submenu2 = new Module
             {
                 Id = Guid.Parse("fc7753a0-6ef0-45cf-98fd-81e209acca0f"),
                 DomainId = userdomain.Id,
@@ -1835,7 +1853,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu2);
 
-            var menuPermission2 = new Permission()
+            var menuPermission2 = new Permission
             {
                 Id = Guid.Parse("4272ff65-4393-4d8e-bdbe-3de87a4e2624"),
                 DomainId = userdomain.Id,
@@ -1849,7 +1867,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(menuPermission2);
 
-            var menu2 = new Module()
+            var menu2 = new Module
             {
                 Id = Guid.Parse("31c6b62e-c6b8-443a-a082-0f7f1fe3a8b4"),
                 DomainId = userdomain.Id,
@@ -1869,7 +1887,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu2);
 
-            var submenuPermission3 = new Permission()
+            var submenuPermission3 = new Permission
             {
                 Id = Guid.Parse("ac1ff757-38ab-4a85-9615-04623f1ae534"),
                 DomainId = userdomain.Id,
@@ -1884,7 +1902,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission3);
 
-            var submenu3 = new Module()
+            var submenu3 = new Module
             {
                 Id = Guid.Parse("aad53b14-45f3-49de-af05-542f9f7471fb"),
                 DomainId = userdomain.Id,
@@ -1904,7 +1922,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu3);
 
-            var submenuPermission4 = new Permission()
+            var submenuPermission4 = new Permission
             {
                 Id = Guid.Parse("d560a920-87b4-4bd0-b297-01271db1a6d7"),
                 DomainId = userdomain.Id,
@@ -1919,7 +1937,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission4);
 
-            var submenu4 = new Module()
+            var submenu4 = new Module
             {
                 Id = Guid.Parse("8fb76e4d-6ef2-48cb-8a9b-690c420b4526"),
                 DomainId = userdomain.Id,
@@ -1939,7 +1957,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu4);
 
-            var submenuPermission5 = new Permission()
+            var submenuPermission5 = new Permission
             {
                 Id = Guid.Parse("b14be3d9-df37-42a0-ba18-12c6ff073fa1"),
                 DomainId = userdomain.Id,
@@ -1954,7 +1972,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission5);
 
-            var submenu5 = new Module()
+            var submenu5 = new Module
             {
                 Id = Guid.Parse("36998c60-817b-489d-a3c1-bef5b5117a8a"),
                 DomainId = userdomain.Id,
@@ -1975,7 +1993,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu5);
 
-            var submenuPermission6 = new Permission()
+            var submenuPermission6 = new Permission
             {
                 Id = Guid.Parse("532a61dd-7646-4da4-98c3-a99a5613f4b5"),
                 DomainId = userdomain.Id,
@@ -1990,7 +2008,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission6);
 
-            var submenu6 = new Module()
+            var submenu6 = new Module
             {
                 Id = Guid.Parse("85a9b291-9a1d-4d83-afdf-553369b5594d"),
                 DomainId = userdomain.Id,
@@ -2010,7 +2028,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu6);
 
-            var submenuPermission7 = new Permission()
+            var submenuPermission7 = new Permission
             {
                 Id = Guid.Parse("31d560a1-377f-495a-8000-31e2bd8e41eb"),
                 DomainId = userdomain.Id,
@@ -2025,7 +2043,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission7);
 
-            var submenu7 = new Module()
+            var submenu7 = new Module
             {
                 Id = Guid.Parse("c8cfccf0-b872-4c4b-99b2-a6b871f1cf36"),
                 DomainId = userdomain.Id,
@@ -2045,7 +2063,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu7);
 
-            var submenuPermission8 = new Permission()
+            var submenuPermission8 = new Permission
             {
                 Id = Guid.Parse("4ca5c010-b3e9-40bb-91bb-5da47bf65e70"),
                 DomainId = userdomain.Id,
@@ -2060,7 +2078,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission8);
 
-            var submenu8 = new Module()
+            var submenu8 = new Module
             {
                 Id = Guid.Parse("d0bd6836-d0c3-4d63-b18b-95da6ffb1785"),
                 DomainId = userdomain.Id,
@@ -2080,7 +2098,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu8);
 
-            var menuPermission3 = new Permission()
+            var menuPermission3 = new Permission
             {
                 Id = Guid.Parse("6c6923eb-1b2b-4196-a102-1bb7512d96a7"),
                 DomainId = userdomain.Id,
@@ -2094,7 +2112,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(menuPermission3);
 
-            var menu3 = new Module()
+            var menu3 = new Module
             {
                 Id = Guid.Parse("4b1b7f18-3b4c-487c-b99a-f1119ab77c2d"),
                 DomainId = userdomain.Id,
@@ -2114,7 +2132,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu3);
 
-            var submenuPermission9 = new Permission()
+            var submenuPermission9 = new Permission
             {
                 Id = Guid.Parse("22ac589e-8355-42cd-bf71-3c119fbb3b9f"),
                 DomainId = userdomain.Id,
@@ -2129,7 +2147,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission9);
 
-            var submenu9 = new Module()
+            var submenu9 = new Module
             {
                 Id = Guid.Parse("baa4cfc2-ca73-44f3-a3ca-e7fd4cd64b3e"),
                 DomainId = userdomain.Id,
@@ -2150,7 +2168,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu9);
 
-            var submenuPermission10 = new Permission()
+            var submenuPermission10 = new Permission
             {
                 Id = Guid.Parse("a4a36255-1b22-4068-850c-2bb16c574fc8"),
                 DomainId = userdomain.Id,
@@ -2165,7 +2183,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission10);
 
-            var submenu10 = new Module()
+            var submenu10 = new Module
             {
                 Id = Guid.Parse("70a4d091-26c4-4edc-80ba-63708998513f"),
                 DomainId = userdomain.Id,
@@ -2186,7 +2204,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu10);
 
-            var submenuPermission11 = new Permission()
+            var submenuPermission11 = new Permission
             {
                 Id = Guid.Parse("8de6c713-8686-4809-a061-36ddafbe30fe"),
                 DomainId = userdomain.Id,
@@ -2201,7 +2219,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission11);
 
-            var submenu11 = new Module()
+            var submenu11 = new Module
             {
                 Id = Guid.Parse("aff54122-5f3d-4b82-b474-14c1f0be8798"),
                 DomainId = userdomain.Id,
@@ -2221,7 +2239,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu11);
 
-            var submenuPermission12 = new Permission()
+            var submenuPermission12 = new Permission
             {
                 Id = Guid.Parse("0b144420-d539-4812-958a-79507dd50811"),
                 DomainId = userdomain.Id,
@@ -2236,7 +2254,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission12);
 
-            var submenu12 = new Module()
+            var submenu12 = new Module
             {
                 Id = Guid.Parse("59654562-ee10-466d-898d-62e02c139799"),
                 DomainId = userdomain.Id,
@@ -2256,7 +2274,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu12);
 
-            var submenuPermission13 = new Permission()
+            var submenuPermission13 = new Permission
             {
                 Id = Guid.Parse("67b72c18-744d-4439-bcf4-f98b37b4ae03"),
                 DomainId = userdomain.Id,
@@ -2271,7 +2289,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission13);
 
-            var submenu13 = new Module()
+            var submenu13 = new Module
             {
                 Id = Guid.Parse("e1e0bdf8-4961-47fb-87e9-eb1b4dd4ed9e"),
                 DomainId = userdomain.Id,
@@ -2291,7 +2309,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu13);
 
-            var submenuPermission14 = new Permission()
+            var submenuPermission14 = new Permission
             {
                 Id = Guid.Parse("1b716c90-bcd6-4fdb-8d5a-fd3e3419dba7"),
                 DomainId = userdomain.Id,
@@ -2306,7 +2324,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission14);
 
-            var submenu14 = new Module()
+            var submenu14 = new Module
             {
                 Id = Guid.Parse("396604ce-53ec-4f91-a03b-15ec2282cbeb"),
                 DomainId = userdomain.Id,
@@ -2326,7 +2344,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu14);
 
-            var menuPermission4 = new Permission()
+            var menuPermission4 = new Permission
             {
                 Id = Guid.Parse("6a023746-295a-4e1a-b4b9-70899f23e00f"),
                 DomainId = userdomain.Id,
@@ -2340,7 +2358,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(menuPermission4);
 
-            var menu4 = new Module()
+            var menu4 = new Module
             {
                 Id = Guid.Parse("2e6a7a8d-aea2-42c2-b109-ab7dfd4c9b77"),
                 DomainId = userdomain.Id,
@@ -2360,7 +2378,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu4);
 
-            var submenuPermission15 = new Permission()
+            var submenuPermission15 = new Permission
             {
                 Id = Guid.Parse("fffc7ffb-8e8e-4911-b11a-c196e1a75eb5"),
                 DomainId = userdomain.Id,
@@ -2375,7 +2393,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission15);
 
-            var submenu15 = new Module()
+            var submenu15 = new Module
             {
                 Id = Guid.Parse("3be1c2ec-9651-47d3-8790-745ac0f50d3d"),
                 DomainId = userdomain.Id,
@@ -2395,7 +2413,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu15);
 
-            var menu5 = new Module()
+            var menu5 = new Module
             {
                 Id = Guid.Parse("67d9a3a7-00f5-468d-9d3f-2cee2e610d3f"),
                 DomainId = userdomain.Id,
@@ -2415,7 +2433,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu5);
 
-            var submenuPermission16 = new Permission()
+            var submenuPermission16 = new Permission
             {
                 Id = Guid.Parse("f9660af0-a03d-4303-b174-2e5a35cfbe5e"),
                 DomainId = userdomain.Id,
@@ -2430,7 +2448,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission16);
 
-            var submenu16 = new Module()
+            var submenu16 = new Module
             {
                 Id = Guid.Parse("01623cfa-9217-4965-a208-eaeeccb2ac9a"),
                 DomainId = userdomain.Id,
@@ -2450,7 +2468,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu16);
 
-            var submenuPermission17 = new Permission()
+            var submenuPermission17 = new Permission
             {
                 Id = Guid.Parse("ff8745cc-c333-4444-925d-f896d2c1a5aa"),
                 DomainId = userdomain.Id,
@@ -2465,7 +2483,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission17);
 
-            var submenu17 = new Module()
+            var submenu17 = new Module
             {
                 Id = Guid.Parse("3ac94c2b-0b3f-4322-b677-4055f1a7cd2b"),
                 DomainId = userdomain.Id,
@@ -2485,7 +2503,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu17);
 
-            var submenuPermission18 = new Permission()
+            var submenuPermission18 = new Permission
             {
                 Id = Guid.Parse("939534b1-e02e-40e8-9789-fab1931c17ff"),
                 DomainId = userdomain.Id,
@@ -2500,7 +2518,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission18);
 
-            var submenu18 = new Module()
+            var submenu18 = new Module
             {
                 Id = Guid.Parse("11dc58a6-212f-4ec4-bb23-b3f64be3e4fb"),
                 DomainId = userdomain.Id,
@@ -2520,7 +2538,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu18);
 
-            var submenuPermission19 = new Permission()
+            var submenuPermission19 = new Permission
             {
                 Id = Guid.Parse("adcb5b6a-b9eb-42bc-8077-e998e785fa41"),
                 DomainId = userdomain.Id,
@@ -2535,7 +2553,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission19);
 
-            var submenu19 = new Module()
+            var submenu19 = new Module
             {
                 Id = Guid.Parse("cf898c95-e226-4f18-84d9-4bde6bf9f88d"),
                 DomainId = userdomain.Id,
@@ -2555,7 +2573,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu19);
 
-            var menuPermission5 = new Permission()
+            var menuPermission5 = new Permission
             {
                 Id = Guid.Parse("66711a7a-5345-4f66-b5fd-d17fd309244d"),
                 DomainId = userdomain.Id,
@@ -2569,7 +2587,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(menuPermission5);
 
-            var menu6 = new Module()
+            var menu6 = new Module
             {
                 Id = Guid.Parse("1eb7fb6c-d18a-4205-ae97-c65a0a84762d"),
                 DomainId = userdomain.Id,
@@ -2589,7 +2607,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu6);
 
-            var submenuPermission20 = new Permission()
+            var submenuPermission20 = new Permission
             {
                 Id = Guid.Parse("cd324a23-e2f4-4ccc-9649-0bebad01d724"),
                 DomainId = userdomain.Id,
@@ -2604,7 +2622,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission20);
 
-            var submenu20 = new Module()
+            var submenu20 = new Module
             {
                 Id = Guid.Parse("acaf8062-2896-44db-b4df-00c71d267a14"),
                 DomainId = userdomain.Id,
@@ -2624,7 +2642,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu20);
 
-            var submenuPermission21 = new Permission()
+            var submenuPermission21 = new Permission
             {
                 Id = Guid.Parse("6555fdd3-456f-4949-b33e-1705e9063d8c"),
                 DomainId = userdomain.Id,
@@ -2639,7 +2657,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission21);
 
-            var submenu21 = new Module()
+            var submenu21 = new Module
             {
                 Id = Guid.Parse("7773c894-7e39-47bf-859e-11ba96fc1a88"),
                 DomainId = userdomain.Id,
@@ -2659,7 +2677,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu21);
 
-            var submenuPermission22 = new Permission()
+            var submenuPermission22 = new Permission
             {
                 Id = Guid.Parse("36bdd32c-e4d0-41df-a211-12500dbff7e9"),
                 DomainId = userdomain.Id,
@@ -2674,7 +2692,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission22);
 
-            var submenu22 = new Module()
+            var submenu22 = new Module
             {
                 Id = Guid.Parse("51e6e0d5-7499-415a-bc21-530cd2c60f38"),
                 DomainId = userdomain.Id,
@@ -2694,7 +2712,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu22);
 
-            var submenuPermission23 = new Permission()
+            var submenuPermission23 = new Permission
             {
                 Id = Guid.Parse("6a1e5d80-b611-465c-89b5-d2019cd2510f"),
                 DomainId = userdomain.Id,
@@ -2709,7 +2727,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission23);
 
-            var submenu23 = new Module()
+            var submenu23 = new Module
             {
                 Id = Guid.Parse("abe7305c-0112-4c78-9f32-045197cf4e4c"),
                 DomainId = userdomain.Id,
@@ -2729,7 +2747,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(submenu23);
 
-            var menuPermission6 = new Permission()
+            var menuPermission6 = new Permission
             {
                 Id = Guid.Parse("4ebb5066-56e1-4ad5-933b-a86c7454cc0d"),
                 DomainId = userdomain.Id,
@@ -2743,7 +2761,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(menuPermission6);
 
-            var menu7 = new Module()
+            var menu7 = new Module
             {
                 Id = Guid.Parse("68919b20-56d4-4bc4-bed5-d5114061a6a5"),
                 DomainId = userdomain.Id,
@@ -2764,7 +2782,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Modules.Add(menu7);
 
-            var submenuPermission24 = new Permission()
+            var submenuPermission24 = new Permission
             {
                 Id = Guid.Parse("6d0e94dc-d3e9-404e-90a0-06f8bf95cc02"),
                 DomainId = userdomain.Id,
@@ -2779,7 +2797,7 @@ namespace SHWDTech.Platform.ProjectDataInitializer
 
             dbContext.Permissions.Add(submenuPermission24);
 
-            var submenu24 = new Module()
+            var submenu24 = new Module
             {
                 Id = Guid.Parse("5d0cef23-ecaf-46fc-bd5e-d36c07f4ef2d"),
                 DomainId = userdomain.Id,
@@ -2817,31 +2835,6 @@ namespace SHWDTech.Platform.ProjectDataInitializer
             };
 
             dbContext.LampblackDeviceModels.Add(deviceModel);
-
-            var device = new RestaurantDevice()
-            {
-                Id = Guid.Parse("b5285be6-6ac2-4f61-99e4-5f2d8ee25602"),
-                DomainId = userdomain.Id,
-                DeviceTypeId = lampblackDevicetype.Id,
-                DeviceModelId = deviceModel.Id,
-                DeviceCode =  "油烟一号",
-                DevicePassword = "12345678",
-                DeviceNodeId = "00000001",
-                FirmwareSetId = lampblackfirmset.Id,
-                StartTime = DateTime.Now,
-                Status = DeviceStatus.Enabled,
-                ProductionDateTime = DateTime.Now,
-                Telephone = "18701987043",
-                CollectFrequency = 1,
-                DeviceName = "油烟一号",
-                DeviceTerminalCode = "油烟一号",
-                CreateUserId = user.Id,
-                CreateDateTime = DateTime.Now,
-                LastUpdateUserId = user.Id,
-                LastUpdateDateTime = DateTime.Now
-            };
-
-            dbContext.RestaurantDevices.Add(device);
         }
     }
 

@@ -11,7 +11,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Alarms",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Long(nullable: false, identity: true),
                         AlarmDeviceId = c.Guid(nullable: false),
                         AlarmValue = c.Double(nullable: false),
                         AlarmType = c.Int(nullable: false),
@@ -21,15 +21,14 @@ namespace SHWD.Platform.Repository.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Device", t => t.AlarmDeviceId)
-                .ForeignKey("dbo.Domains", t => t.DomainId)
-                .Index(t => t.AlarmDeviceId)
-                .Index(t => t.DomainId);
+                .Index(t => t.AlarmDeviceId);
             
             CreateTable(
                 "dbo.Device",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
+                        Identity = c.Long(nullable: false, identity: true),
                         DeviceTypeId = c.Guid(nullable: false),
                         OriginalDeviceId = c.Guid(),
                         DeviceCode = c.String(nullable: false, maxLength: 25),
@@ -58,13 +57,14 @@ namespace SHWD.Platform.Repository.Migrations
                         IpAddress = c.String(),
                         Discriminator = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, "Ix_Device", false)
+                .ForeignKey("dbo.Project", t => t.ProjectId)
                 .ForeignKey("dbo.Cameras", t => t.CameraId)
                 .ForeignKey("dbo.DeviceTypes", t => t.DeviceTypeId)
                 .ForeignKey("dbo.Domains", t => t.DomainId)
                 .ForeignKey("dbo.FirmwareSets", t => t.FirmwareSetId)
                 .ForeignKey("dbo.Device", t => t.OriginalDeviceId)
-                .ForeignKey("dbo.Project", t => t.ProjectId)
+                .Index(t => t.Identity, unique: true, clustered: true, name: "Index_Device_Identity")
                 .Index(t => t.DeviceTypeId)
                 .Index(t => t.OriginalDeviceId)
                 .Index(t => t.FirmwareSetId)
@@ -76,7 +76,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Cameras",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         CameraOutId = c.String(maxLength: 50),
                         AccessName = c.String(maxLength: 25),
                         AccessPassword = c.String(maxLength: 50),
@@ -104,7 +104,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.SysDictionaries",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         ItemName = c.String(nullable: false),
                         ItemKey = c.String(nullable: false),
                         ItemValue = c.String(nullable: false),
@@ -125,7 +125,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Domains",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         DomainName = c.String(nullable: false, maxLength: 50),
                         DomianType = c.String(maxLength: 50),
                         DomainStatus = c.Byte(nullable: false),
@@ -142,7 +142,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.DeviceTypes",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         FieldId = c.Guid(nullable: false),
                         SubFieldId = c.Guid(nullable: false),
                         CustomerInfo = c.String(),
@@ -166,7 +166,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.FirmwareSets",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         FirmwareSetName = c.String(nullable: false),
                         CreateDateTime = c.DateTime(nullable: false),
                         CreateUserId = c.Guid(nullable: false),
@@ -181,7 +181,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Firmwares",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         FirmwareName = c.String(nullable: false),
                         CreateDateTime = c.DateTime(nullable: false),
                         CreateUserId = c.Guid(nullable: false),
@@ -196,7 +196,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Protocols",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         FieldId = c.Guid(nullable: false),
                         SubFieldId = c.Guid(nullable: false),
                         ProtocolName = c.String(nullable: false),
@@ -224,7 +224,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.ProtocolCommands",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         CommandTypeCode = c.Binary(),
                         CommandCode = c.Binary(nullable: false),
                         SendBytesLength = c.Int(nullable: false),
@@ -248,7 +248,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.CommandDatas",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         DataIndex = c.Int(nullable: false),
                         DataLength = c.Int(nullable: false),
                         DataName = c.String(nullable: false),
@@ -270,7 +270,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.CommandDefinitions",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         CommandGuid = c.Guid(nullable: false),
                         StructureName = c.String(),
                         ContentBytes = c.Binary(),
@@ -290,7 +290,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.SysConfigs",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         SysConfigName = c.String(nullable: false, maxLength: 25),
                         SysConfigType = c.String(nullable: false, maxLength: 25),
                         SysConfigValue = c.String(nullable: false, maxLength: 200),
@@ -310,7 +310,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.ProtocolStructures",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         ProtocolId = c.Guid(nullable: false),
                         DataType = c.String(nullable: false),
                         StructureName = c.String(nullable: false, maxLength: 50),
@@ -332,7 +332,8 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Project",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
+                        Identity = c.Long(nullable: false, identity: true),
                         ProjectCode = c.String(nullable: false, maxLength: 200),
                         ProjectName = c.String(nullable: false, maxLength: 200),
                         ChargeMan = c.String(nullable: false, maxLength: 200),
@@ -349,15 +350,16 @@ namespace SHWD.Platform.Repository.Migrations
                         IsEnabled = c.Boolean(nullable: false),
                         Discriminator = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, "Ix_Project", false)
                 .ForeignKey("dbo.Domains", t => t.DomainId)
+                .Index(t => t.Identity, unique: true, clustered: true, name: "Index_Project_Identity")
                 .Index(t => t.DomainId);
             
             CreateTable(
                 "dbo.UserDictionaries",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         ItemName = c.String(nullable: false),
                         ItemKey = c.String(nullable: false),
                         ItemValue = c.String(),
@@ -381,7 +383,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.CateringCompanies",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         CompanyName = c.String(nullable: false, maxLength: 200),
                         CompanyCode = c.String(nullable: false, maxLength: 50),
                         ChargeMan = c.String(nullable: false, maxLength: 50),
@@ -405,7 +407,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.LampblackDeviceModels",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 200),
                         Fail = c.Int(nullable: false),
                         Worse = c.Int(nullable: false),
@@ -427,11 +429,11 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.DataStatistics",
                 c => new
                     {
-                        Id = c.Guid(nullable: false, identity: true),
+                        Id = c.Long(nullable: false, identity: true),
                         CommandDataId = c.Guid(nullable: false),
                         DataChannel = c.Short(nullable: false),
-                        ProjectId = c.Guid(),
-                        DeviceId = c.Guid(nullable: false),
+                        ProjectIdentity = c.Long(nullable: false),
+                        DeviceIdentity = c.Long(nullable: false),
                         DoubleValue = c.Double(),
                         BooleanValue = c.Boolean(),
                         IntegerValue = c.Int(),
@@ -439,21 +441,14 @@ namespace SHWD.Platform.Repository.Migrations
                         Type = c.Byte(nullable: false),
                         DomainId = c.Guid(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.CommandDatas", t => t.CommandDataId)
-                .ForeignKey("dbo.Device", t => t.DeviceId)
-                .ForeignKey("dbo.Domains", t => t.DomainId)
-                .ForeignKey("dbo.Project", t => t.ProjectId)
-                .Index(t => t.CommandDataId)
-                .Index(t => new { t.ProjectId, t.UpdateTime }, name: "Ix_Project_Device_UpdateTime")
-                .Index(t => t.DeviceId)
-                .Index(t => t.DomainId);
+                .PrimaryKey(t => t.Id, "Ix_DataStatistics", false)
+                .Index(t => new { t.Type, t.ProjectIdentity, t.DeviceIdentity, t.UpdateTime }, clustered: true, name: "IX_Type_Project_Device_UpdateTime");
             
             CreateTable(
                 "dbo.Departments",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 50),
                         Comment = c.String(),
                         DomainId = c.Guid(nullable: false),
@@ -472,7 +467,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.DeviceMaintenances",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         MaintenanceUserId = c.Guid(nullable: false),
                         DeviceId = c.Guid(nullable: false),
                         MaintenanceDateTime = c.DateTime(nullable: false),
@@ -499,7 +494,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.WdUser",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         UserName = c.String(nullable: false, maxLength: 25),
                         LoginName = c.String(nullable: false, maxLength: 25),
                         UserIdentityName = c.String(maxLength: 25),
@@ -527,7 +522,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.Permissions",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         PermissionName = c.String(nullable: false, maxLength: 50),
                         PermissionDisplayName = c.String(nullable: false, maxLength: 50),
                         ParentPermissionId = c.Guid(),
@@ -549,7 +544,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.WdRoles",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         ParentRoleId = c.Guid(),
                         RoleName = c.String(nullable: false, maxLength: 25),
                         IsVisiable = c.Boolean(nullable: false),
@@ -570,10 +565,30 @@ namespace SHWD.Platform.Repository.Migrations
                 .Index(t => t.DomainId);
             
             CreateTable(
+                "dbo.LampblackRecords",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        ProjectIdentity = c.Long(nullable: false),
+                        DeviceIdentity = c.Long(nullable: false),
+                        ProtocolId = c.Long(nullable: false),
+                        CleanerSwitch = c.Boolean(nullable: false),
+                        CleanerCurrent = c.Int(nullable: false),
+                        FanSwitch = c.Boolean(nullable: false),
+                        FanCurrent = c.Int(nullable: false),
+                        LampblackIn = c.Int(nullable: false),
+                        LampblackOut = c.Int(nullable: false),
+                        RecordDateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id, "Ix_LampblackRecords", false)
+                .Index(t => new { t.ProjectIdentity, t.DeviceIdentity, t.RecordDateTime }, clustered: true, name: "Ix_Project_Device_RecordDateTime");
+            
+            CreateTable(
                 "dbo.Modules",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         ParentModuleId = c.Guid(),
                         IsMenu = c.Boolean(nullable: false),
                         ModuleLevel = c.Int(nullable: false),
@@ -603,11 +618,12 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.MonitorDatas",
                 c => new
                     {
-                        Id = c.Guid(nullable: false, identity: true),
-                        ProtocolDataId = c.Guid(nullable: false),
+                        Id = c.Long(nullable: false, identity: true),
+                        ProtocolDataId = c.Long(nullable: false),
+                        DeviceIdentity = c.Long(nullable: false),
                         CommandDataId = c.Guid(nullable: false),
                         DataChannel = c.Short(nullable: false),
-                        ProjectId = c.Guid(),
+                        ProjectIdentity = c.Long(nullable: false),
                         DoubleValue = c.Double(),
                         BooleanValue = c.Boolean(),
                         IntegerValue = c.Int(),
@@ -615,45 +631,14 @@ namespace SHWD.Platform.Repository.Migrations
                         DataIsValid = c.Boolean(nullable: false),
                         DomainId = c.Guid(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.CommandDatas", t => t.CommandDataId)
-                .ForeignKey("dbo.Domains", t => t.DomainId)
-                .ForeignKey("dbo.Project", t => t.ProjectId)
-                .ForeignKey("dbo.ProtocolDatas", t => t.ProtocolDataId)
-                .Index(t => new { t.ProjectId, t.ProtocolDataId, t.UpdateTime }, name: "Ix_Project_ProtocolData_UpdateTime")
-                .Index(t => t.CommandDataId)
-                .Index(t => t.DomainId);
-            
-            CreateTable(
-                "dbo.ProtocolDatas",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false, identity: true),
-                        DeviceId = c.Guid(nullable: false),
-                        ProtocolContent = c.Binary(nullable: false),
-                        Length = c.Int(nullable: false),
-                        ProtocolId = c.Guid(nullable: false),
-                        ProtocolTime = c.DateTime(nullable: false),
-                        UpdateTime = c.DateTime(nullable: false),
-                        DomainId = c.Guid(nullable: false),
-                        CommandTask_Id = c.Guid(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Device", t => t.DeviceId)
-                .ForeignKey("dbo.Domains", t => t.DomainId)
-                .ForeignKey("dbo.Protocols", t => t.ProtocolId)
-                .ForeignKey("dbo.CommandTasks", t => t.CommandTask_Id)
-                .Index(t => new { t.DeviceId, t.UpdateTime }, name: "Ix_Device_UpdateTime")
-                .Index(t => t.ProtocolId)
-                .Index(t => t.UpdateTime, name: "Ix_UpdateTime")
-                .Index(t => t.DomainId)
-                .Index(t => t.CommandTask_Id);
+                .PrimaryKey(t => t.Id, "Ix_MonitorDatas", false)
+                .Index(t => new { t.ProjectIdentity, t.DeviceIdentity, t.ProtocolDataId, t.UpdateTime }, clustered: true, name: "IX_Project_Device_Protocol_UpdateTime");
             
             CreateTable(
                 "dbo.Photos",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         DeviceId = c.Guid(),
                         PhotoTag = c.String(),
                         PhotoUrl = c.String(nullable: false, maxLength: 2000),
@@ -678,30 +663,45 @@ namespace SHWD.Platform.Repository.Migrations
                 .Index(t => t.PhtotDevice_Id);
             
             CreateTable(
+                "dbo.ProtocolDatas",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        DeviceIdentity = c.Long(nullable: false),
+                        ProtocolContent = c.Binary(nullable: false),
+                        Length = c.Int(nullable: false),
+                        ProtocolId = c.Guid(nullable: false),
+                        ProtocolTime = c.DateTime(nullable: false),
+                        UpdateTime = c.DateTime(nullable: false),
+                        DomainId = c.Guid(nullable: false),
+                        CommandTask_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id, "Ix_ProtocolDatas", false)
+                .ForeignKey("dbo.CommandTasks", t => t.CommandTask_Id)
+                .Index(t => new { t.DeviceIdentity, t.UpdateTime }, clustered: true, name: "Ix_Device_UpdateTime")
+                .Index(t => t.UpdateTime, name: "Ix_UpdateTime")
+                .Index(t => t.CommandTask_Id);
+            
+            CreateTable(
                 "dbo.RunningTimes",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Long(nullable: false, identity: true),
                         RunningTimeTicks = c.Long(nullable: false),
                         Type = c.Byte(nullable: false),
-                        ProjectId = c.Guid(nullable: false),
-                        DeviceId = c.Guid(nullable: false),
+                        ProjectIdentity = c.Long(nullable: false),
+                        DeviceIdentity = c.Long(nullable: false),
                         UpdateTime = c.DateTime(nullable: false),
                         DomainId = c.Guid(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Device", t => t.DeviceId)
-                .ForeignKey("dbo.Domains", t => t.DomainId)
-                .ForeignKey("dbo.Project", t => t.ProjectId)
-                .Index(t => t.ProjectId)
-                .Index(t => t.DeviceId)
-                .Index(t => t.DomainId);
+                .PrimaryKey(t => t.Id, "Ix_RunningTimes", false)
+                .Index(t => new { t.Type, t.ProjectIdentity, t.DeviceIdentity, t.UpdateTime }, clustered: true, name: "IX_Type_Project_Device_UpdateTime");
             
             CreateTable(
                 "dbo.CommandTasks",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         TaskDeviceId = c.Guid(nullable: false),
                         TaskCode = c.String(maxLength: 25),
                         TaskType = c.Int(nullable: false),
@@ -726,7 +726,7 @@ namespace SHWD.Platform.Repository.Migrations
                 "dbo.UserConfigs",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         UserConfigName = c.String(nullable: false, maxLength: 25),
                         UserConfigType = c.String(nullable: false, maxLength: 25),
                         UserConfigValue = c.String(nullable: false, maxLength: 200),
@@ -972,20 +972,10 @@ namespace SHWD.Platform.Repository.Migrations
             DropForeignKey("dbo.ProtocolDatas", "CommandTask_Id", "dbo.CommandTasks");
             DropForeignKey("dbo.CommandTasks", "TaskDeviceId", "dbo.Device");
             DropForeignKey("dbo.CommandTasks", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.RunningTimes", "ProjectId", "dbo.Project");
-            DropForeignKey("dbo.RunningTimes", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.RunningTimes", "DeviceId", "dbo.Device");
             DropForeignKey("dbo.Photos", "PhtotDevice_Id", "dbo.Device");
             DropForeignKey("dbo.Photos", "PhotoTypeId", "dbo.SysDictionaries");
             DropForeignKey("dbo.Photos", "DomainId", "dbo.Domains");
             DropForeignKey("dbo.Photos", "DeviceId", "dbo.Device");
-            DropForeignKey("dbo.MonitorDatas", "ProtocolDataId", "dbo.ProtocolDatas");
-            DropForeignKey("dbo.ProtocolDatas", "ProtocolId", "dbo.Protocols");
-            DropForeignKey("dbo.ProtocolDatas", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.ProtocolDatas", "DeviceId", "dbo.Device");
-            DropForeignKey("dbo.MonitorDatas", "ProjectId", "dbo.Project");
-            DropForeignKey("dbo.MonitorDatas", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.MonitorDatas", "CommandDataId", "dbo.CommandDatas");
             DropForeignKey("dbo.Modules", "PermissionId", "dbo.Permissions");
             DropForeignKey("dbo.Modules", "ParentModuleId", "dbo.Modules");
             DropForeignKey("dbo.Modules", "DomainId", "dbo.Domains");
@@ -1004,20 +994,18 @@ namespace SHWD.Platform.Repository.Migrations
             DropForeignKey("dbo.DeviceMaintenances", "DomainId", "dbo.Domains");
             DropForeignKey("dbo.DeviceMaintenances", "DeviceId", "dbo.Device");
             DropForeignKey("dbo.Departments", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.DataStatistics", "ProjectId", "dbo.Project");
-            DropForeignKey("dbo.DataStatistics", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.DataStatistics", "DeviceId", "dbo.Device");
-            DropForeignKey("dbo.DataStatistics", "CommandDataId", "dbo.CommandDatas");
-            DropForeignKey("dbo.Alarms", "DomainId", "dbo.Domains");
             DropForeignKey("dbo.Alarms", "AlarmDeviceId", "dbo.Device");
+            DropForeignKey("dbo.Project", "DomainId", "dbo.Domains");
+            DropForeignKey("dbo.Device", "OriginalDeviceId", "dbo.Device");
+            DropForeignKey("dbo.Device", "FirmwareSetId", "dbo.FirmwareSets");
+            DropForeignKey("dbo.Device", "DomainId", "dbo.Domains");
+            DropForeignKey("dbo.Device", "DeviceTypeId", "dbo.DeviceTypes");
+            DropForeignKey("dbo.Device", "CameraId", "dbo.Cameras");
             DropForeignKey("dbo.LampblackDeviceModels", "DomainId", "dbo.Domains");
             DropForeignKey("dbo.Device", "ProjectId", "dbo.Project");
             DropForeignKey("dbo.CateringCompanies", "DomainId", "dbo.Domains");
             DropForeignKey("dbo.UserDictionaries", "ParentDictionaryId", "dbo.UserDictionaries");
             DropForeignKey("dbo.UserDictionaries", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.Project", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.Device", "OriginalDeviceId", "dbo.Device");
-            DropForeignKey("dbo.Device", "FirmwareSetId", "dbo.FirmwareSets");
             DropForeignKey("dbo.FirmwareSetFirmware", "FirmwareSetId", "dbo.Firmwares");
             DropForeignKey("dbo.FirmwareSetFirmware", "FirmwareId", "dbo.FirmwareSets");
             DropForeignKey("dbo.Protocols", "SubFieldId", "dbo.SysDictionaries");
@@ -1032,11 +1020,8 @@ namespace SHWD.Platform.Repository.Migrations
             DropForeignKey("dbo.ProtocolFirmware", "FirmwareId", "dbo.Firmwares");
             DropForeignKey("dbo.ProtocolFirmware", "ProtocolId", "dbo.Protocols");
             DropForeignKey("dbo.Protocols", "FieldId", "dbo.SysDictionaries");
-            DropForeignKey("dbo.Device", "DomainId", "dbo.Domains");
-            DropForeignKey("dbo.Device", "DeviceTypeId", "dbo.DeviceTypes");
             DropForeignKey("dbo.DeviceTypes", "SubFieldId", "dbo.SysDictionaries");
             DropForeignKey("dbo.DeviceTypes", "FieldId", "dbo.SysDictionaries");
-            DropForeignKey("dbo.Device", "CameraId", "dbo.Cameras");
             DropForeignKey("dbo.Cameras", "DomainId", "dbo.Domains");
             DropForeignKey("dbo.Cameras", "AccessTypeId", "dbo.SysDictionaries");
             DropForeignKey("dbo.SysDictionaries", "ParentDictionaryId", "dbo.SysDictionaries");
@@ -1073,24 +1058,19 @@ namespace SHWD.Platform.Repository.Migrations
             DropIndex("dbo.UserConfigs", new[] { "ParentUserConfigId" });
             DropIndex("dbo.CommandTasks", new[] { "DomainId" });
             DropIndex("dbo.CommandTasks", new[] { "TaskDeviceId" });
-            DropIndex("dbo.RunningTimes", new[] { "DomainId" });
-            DropIndex("dbo.RunningTimes", new[] { "DeviceId" });
-            DropIndex("dbo.RunningTimes", new[] { "ProjectId" });
+            DropIndex("dbo.RunningTimes", "IX_Type_Project_Device_UpdateTime");
+            DropIndex("dbo.ProtocolDatas", new[] { "CommandTask_Id" });
+            DropIndex("dbo.ProtocolDatas", "Ix_UpdateTime");
+            DropIndex("dbo.ProtocolDatas", "Ix_Device_UpdateTime");
             DropIndex("dbo.Photos", new[] { "PhtotDevice_Id" });
             DropIndex("dbo.Photos", new[] { "DomainId" });
             DropIndex("dbo.Photos", new[] { "PhotoTypeId" });
             DropIndex("dbo.Photos", new[] { "DeviceId" });
-            DropIndex("dbo.ProtocolDatas", new[] { "CommandTask_Id" });
-            DropIndex("dbo.ProtocolDatas", new[] { "DomainId" });
-            DropIndex("dbo.ProtocolDatas", "Ix_UpdateTime");
-            DropIndex("dbo.ProtocolDatas", new[] { "ProtocolId" });
-            DropIndex("dbo.ProtocolDatas", "Ix_Device_UpdateTime");
-            DropIndex("dbo.MonitorDatas", new[] { "DomainId" });
-            DropIndex("dbo.MonitorDatas", new[] { "CommandDataId" });
-            DropIndex("dbo.MonitorDatas", "Ix_Project_ProtocolData_UpdateTime");
+            DropIndex("dbo.MonitorDatas", "IX_Project_Device_Protocol_UpdateTime");
             DropIndex("dbo.Modules", new[] { "DomainId" });
             DropIndex("dbo.Modules", new[] { "PermissionId" });
             DropIndex("dbo.Modules", new[] { "ParentModuleId" });
+            DropIndex("dbo.LampblackRecords", "Ix_Project_Device_RecordDateTime");
             DropIndex("dbo.WdRoles", new[] { "DomainId" });
             DropIndex("dbo.WdRoles", new[] { "ParentRoleId" });
             DropIndex("dbo.Permissions", new[] { "DomainId" });
@@ -1101,15 +1081,13 @@ namespace SHWD.Platform.Repository.Migrations
             DropIndex("dbo.DeviceMaintenances", new[] { "DeviceId" });
             DropIndex("dbo.DeviceMaintenances", new[] { "MaintenanceUserId" });
             DropIndex("dbo.Departments", new[] { "DomainId" });
-            DropIndex("dbo.DataStatistics", new[] { "DomainId" });
-            DropIndex("dbo.DataStatistics", new[] { "DeviceId" });
-            DropIndex("dbo.DataStatistics", "Ix_Project_Device_UpdateTime");
-            DropIndex("dbo.DataStatistics", new[] { "CommandDataId" });
+            DropIndex("dbo.DataStatistics", "IX_Type_Project_Device_UpdateTime");
             DropIndex("dbo.LampblackDeviceModels", new[] { "DomainId" });
             DropIndex("dbo.CateringCompanies", new[] { "DomainId" });
             DropIndex("dbo.UserDictionaries", new[] { "DomainId" });
             DropIndex("dbo.UserDictionaries", new[] { "ParentDictionaryId" });
             DropIndex("dbo.Project", new[] { "DomainId" });
+            DropIndex("dbo.Project", "Index_Project_Identity");
             DropIndex("dbo.ProtocolStructures", new[] { "ProtocolId" });
             DropIndex("dbo.SysConfigs", new[] { "ParentSysConfigId" });
             DropIndex("dbo.CommandDefinitions", new[] { "Command_Id" });
@@ -1127,7 +1105,7 @@ namespace SHWD.Platform.Repository.Migrations
             DropIndex("dbo.Device", new[] { "FirmwareSetId" });
             DropIndex("dbo.Device", new[] { "OriginalDeviceId" });
             DropIndex("dbo.Device", new[] { "DeviceTypeId" });
-            DropIndex("dbo.Alarms", new[] { "DomainId" });
+            DropIndex("dbo.Device", "Index_Device_Identity");
             DropIndex("dbo.Alarms", new[] { "AlarmDeviceId" });
             DropTable("dbo.HotelRestaurant");
             DropTable("dbo.RestaurantDevice");
@@ -1143,10 +1121,11 @@ namespace SHWD.Platform.Repository.Migrations
             DropTable("dbo.UserConfigs");
             DropTable("dbo.CommandTasks");
             DropTable("dbo.RunningTimes");
-            DropTable("dbo.Photos");
             DropTable("dbo.ProtocolDatas");
+            DropTable("dbo.Photos");
             DropTable("dbo.MonitorDatas");
             DropTable("dbo.Modules");
+            DropTable("dbo.LampblackRecords");
             DropTable("dbo.WdRoles");
             DropTable("dbo.Permissions");
             DropTable("dbo.WdUser");
