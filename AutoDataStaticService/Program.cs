@@ -132,7 +132,7 @@ namespace AutoDataStaticService
                         var min = ProcessInvoke.Instance<MonitorDataProcess>()
                             .GetMinHotelMonitorData(obj =>
                                 obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime > date && obj.UpdateTime < endDate
-                                && obj.CommandDataId == data.Id);
+                                && obj.CommandDataId == data.Id && obj.DataChannel == 0);
 
                         if (min == null)
                         {
@@ -177,7 +177,7 @@ namespace AutoDataStaticService
                         var min = ProcessInvoke.Instance<MonitorDataProcess>()
                             .GetMinHotelMonitorData(obj =>
                                 obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime > date && obj.UpdateTime < endDate
-                                && obj.CommandDataId == data.Id);
+                                && obj.CommandDataId == data.Id && obj.DataChannel == 0);
 
                         if (min == null)
                         {
@@ -211,7 +211,8 @@ namespace AutoDataStaticService
                     var lastDate = process.LastRecordDateTime(hotelIdentity, dev.Identity, type);
                     var firstMonitorData = ProcessInvoke.Instance<MonitorDataProcess>().GetFirst(obj => obj.ProjectIdentity == hotelIdentity
                                                                                                         && obj.DeviceIdentity == dev.Identity
-                                                                                                        && obj.CommandDataId == data.Id);
+                                                                                                        && obj.CommandDataId == data.Id
+                                                                                                        && obj.DataChannel == 0);
                     var startDate = lastDate == DateTime.MinValue
                         ? firstMonitorData.UpdateTime
                         : lastDate.AddDays(1);
