@@ -22,14 +22,14 @@ namespace Lampblack_Platform.Controllers
         public ActionResult Area()
             => View();
 
-        [NamedAuth(Modules = "Area")]
+        [NamedAuth(Modules = nameof(Area))]
         public ActionResult GetAreaInfo()
         {
             var areaInfo = ProcessInvoke<UserDictionaryProcess>().GetAreaInfo();
             return Json(areaInfo, JsonRequestBehavior.AllowGet);
         }
 
-        [NamedAuth(Modules = "Area")]
+        [NamedAuth(Modules = nameof(Area))]
         public ActionResult GetAreaList()
         {
             var areaId = Request["id"];
@@ -45,7 +45,7 @@ namespace Lampblack_Platform.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
-        [NamedAuth(Modules = "Area")]
+        [NamedAuth(Modules = nameof(Area))]
         public ActionResult AddAreaInfo()
         {
             var areaName = Request["areaName"];
@@ -54,7 +54,7 @@ namespace Lampblack_Platform.Controllers
 
             Guid parentNode;
 
-            Guid.TryParse(Request["parentNode"], out parentNode);
+            Guid.TryParse(Request[nameof(parentNode)], out parentNode);
 
             var district = ProcessInvoke<UserDictionaryProcess>().AddArea(areaName, itemLevel, parentNode);
 
@@ -63,7 +63,7 @@ namespace Lampblack_Platform.Controllers
                 : Json("添加成功！", district, JsonRequestBehavior.AllowGet);
         }
 
-        [NamedAuth(Modules = "Area")]
+        [NamedAuth(Modules = nameof(Area))]
         public ActionResult EditAreaInfo()
         {
             var id = Guid.Parse(Request["itemId"]);
@@ -73,7 +73,7 @@ namespace Lampblack_Platform.Controllers
             return Json("修改成功！", district, JsonRequestBehavior.AllowGet);
         }
 
-        [NamedAuth(Modules = "Area")]
+        [NamedAuth(Modules = nameof(Area))]
         public ActionResult DeleteArea()
         {
             var areaId = Guid.Parse(Request["Id"]);
@@ -123,7 +123,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "CateringEnterprise")]
+        [NamedAuth(Modules = nameof(CateringEnterprise))]
         public ActionResult EditCateringEnterprise(string guid)
         {
             if (string.IsNullOrWhiteSpace(guid))
@@ -136,7 +136,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "CateringEnterprise")]
+        [NamedAuth(Modules = nameof(CateringEnterprise))]
         public ActionResult EditCateringEnterprise(CateringCompany model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -149,11 +149,11 @@ namespace Lampblack_Platform.Controllers
             }
 
             return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditCateringEnterprise", targetcontroller = "Management", target = "slide-up-content", postform = "catering" });
+                new { targetAction = nameof(EditCateringEnterprise), targetcontroller = "Management", target = "slide-up-content", postform = "catering" });
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "CateringEnterprise")]
+        [NamedAuth(Modules = nameof(CateringEnterprise))]
         public ActionResult DeleteCateringEnterprise(Guid guid)
         {
             var success = ProcessInvoke<CateringEnterpriseProcess>().DeleteCateringEnterprise(guid);
@@ -172,7 +172,7 @@ namespace Lampblack_Platform.Controllers
             return View();
         }
 
-        [NamedAuth(Modules = "Hotel")]
+        [NamedAuth(Modules = nameof(Hotel))]
         public ActionResult HotelTable(HotelTable post)
         {
             var hotels = ProcessInvoke<HotelRestaurantProcess>()
@@ -222,7 +222,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "Hotel")]
+        [NamedAuth(Modules = nameof(Hotel))]
         public ActionResult EditHotel(string guid)
         {
             GetHotelRelatedItems();
@@ -246,7 +246,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "Hotel")]
+        [NamedAuth(Modules = nameof(Hotel))]
         public ActionResult EditHotel(HotelRestaurant model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -259,12 +259,12 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditHotel", targetcontroller = "Management", target = "slide-up-content", postform = "hotel" });
+            return RedirectToAction("SubmitSuccess", nameof(Common),
+                new { targetAction = nameof(EditHotel), targetcontroller = "Management", target = "slide-up-content", postform = "hotel" });
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "Hotel")]
+        [NamedAuth(Modules = nameof(Hotel))]
         public ActionResult DeleteHotel(Guid guid)
         {
             var success = ProcessInvoke<HotelRestaurantProcess>().DeleteHotelRestaurant(guid);
@@ -283,7 +283,7 @@ namespace Lampblack_Platform.Controllers
             return View();
         }
 
-        [NamedAuth(Modules = "Device")]
+        [NamedAuth(Modules = nameof(Device))]
         public ActionResult DeviceTable(DeviceTable post)
         {
             var devs = ProcessInvoke<RestaurantDeviceProcess>()
@@ -335,22 +335,23 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "Device")]
+        [NamedAuth(Modules = nameof(Device))]
         public ActionResult EditDevice(string guid)
         {
-            GetDeviceRelatedItems();
-
             if (string.IsNullOrWhiteSpace(guid))
             {
-                return DefaultView();
+                GetDeviceRelatedItems();
+                return View(new RestaurantDevice{Status = DeviceStatus.Disabled});
             }
 
             var model = ProcessInvoke<RestaurantDeviceProcess>().GetRestaurantDevice(Guid.Parse(guid));
+            GetDeviceRelatedItems();
+
             return View(model);
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "Device")]
+        [NamedAuth(Modules = nameof(Device))]
         public ActionResult EditDevice(RestaurantDevice model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -368,11 +369,11 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditDevice", targetcontroller = "Management", target = "slide-up-content", postform = "device" });
+            return RedirectToAction("SubmitSuccess", nameof(Common),
+                new { targetAction = nameof(EditDevice), targetcontroller = "Management", target = "slide-up-content", postform = "device" });
         }
 
-        [NamedAuth(Modules = "Device")]
+        [NamedAuth(Modules = nameof(Device))]
         public ActionResult DeleteDevice(Guid guid)
         {
             var success = ProcessInvoke<RestaurantDeviceProcess>().DeleteRestaurantDevice(guid);
@@ -400,7 +401,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "DeviceMaintenance")]
+        [NamedAuth(Modules = nameof(DeviceMaintenance))]
         public ActionResult EditDeviceMaintenance(string guid)
         {
             GetDeviceMaintenanceItems();
@@ -415,7 +416,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "DeviceMaintenance")]
+        [NamedAuth(Modules = nameof(DeviceMaintenance))]
         public ActionResult EditDeviceMaintenance(DeviceMaintenance model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -428,11 +429,11 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditDeviceMaintenance", targetcontroller = "Management", target = "slide-up-content", postform = "deviceMaintenance" });
+            return RedirectToAction("SubmitSuccess", nameof(Common),
+                new { targetAction = nameof(EditDeviceMaintenance), targetcontroller = "Management", target = "slide-up-content", postform = "deviceMaintenance" });
         }
 
-        [NamedAuth(Modules = "CateringEnterprise")]
+        [NamedAuth(Modules = nameof(CateringEnterprise))]
         public ActionResult CateringEnterpriseTable(CateringEnterpriseTable post)
         {
             Expression<Func<CateringCompany, bool>> exp;
@@ -468,7 +469,7 @@ namespace Lampblack_Platform.Controllers
             });
         }
 
-        [NamedAuth(Modules = "ManualAlarm", Required = false)]
+        [NamedAuth(Modules = nameof(ManualAlarm), Required = false)]
         public ActionResult ManualAlarm() => View();
 
         private void GetHotelRelatedItems()
@@ -497,13 +498,6 @@ namespace Lampblack_Platform.Controllers
 
         private void GetDeviceRelatedItems()
         {
-            ViewBag.Status = new List<SelectListItem>
-            {
-                new SelectListItem {Text = @"使用中", Value = "0"},
-                new SelectListItem {Text = @"停用中", Value = "1"},
-                new SelectListItem {Text = @"维修中", Value = "2"}
-            };
-
             ViewBag.CleanerType = new List<SelectListItem>
             {
                 new SelectListItem {Text = @"静电式", Value = "0"},

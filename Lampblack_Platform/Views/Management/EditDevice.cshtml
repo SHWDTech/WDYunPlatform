@@ -39,7 +39,7 @@
             </td>
             <td>@Html.LabelFor(m => m.ProductionDateTime)</td>
             <td>
-                @Html.TextBoxFor(m => m.ProductionDateTime, new {@class = "form-control", placeholder = "请输入出厂日期"})
+                @Html.TextBoxFor(m => m.ProductionDateTime, "{0:yyyy-MM-dd}", new {@class = "form-control", placeholder = "请输入出厂日期"})
                 @Html.ValidationMessageFor(m => m.ProductionDateTime, null, new {@class = "text-danger"})
             </td>
         </tr>
@@ -60,7 +60,7 @@
                     @Html.LabelFor(m => m.Status)
                 </td>
                 <td>
-                    @Html.DropDownListFor(m => m.Status, (List<SelectListItem>) ViewBag.Status, new {@class = "form-control"})
+                    @Html.EnumDropDownListFor(m => m.Status, null, new {@class = "form-control"})
                 </td>
                 <td>@Html.LabelFor(m => m.ChannelCount)</td>
                 <td>

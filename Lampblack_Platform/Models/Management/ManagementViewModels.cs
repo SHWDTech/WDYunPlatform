@@ -48,4 +48,11 @@ namespace Lampblack_Platform.Models.Management
 
         public override int PageIndex { get; set; } = 1;
     }
+
+    public class SelectItemWarpper
+    {
+        public string Text { get; set; }
+
+        public string Value { get; set; }
+    }
 }

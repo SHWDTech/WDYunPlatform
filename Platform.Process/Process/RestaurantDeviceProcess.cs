@@ -12,8 +12,6 @@ using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
-using SHWDTech.Platform.Utility.ExtensionMethod;
-using WebViewModels.Enums;
 using WebViewModels.ViewDataModel;
 using WebViewModels.ViewModel;
 
@@ -205,46 +203,7 @@ namespace Platform.Process.Process
         {
             if (current < 50) return "失效";
 
-            if (current > 50 && current < 500) return $"{Math.Round(20 + (current - 500) / 90, 3)}";
-
-            return $"{Math.Round(5 - (current - 500) / 167, 3)}";
-        }
-
-        /// <summary>
-        /// 获取设备最新数据
-        /// </summary>
-        /// <param name="dev"></param>
-        /// <returns></returns>
-        private List<MonitorData> GetLastMonitorData(RestaurantDevice dev)
-        {
-            var checkDate = DateTime.Now.Trim(TimeSpan.TicksPerSecond).AddMinutes(-2);
-
-            using (var dataRepo = Repo<MonitorDataRepository>())
-            {
-                var protocol =
-                    Repo<ProtocolDataRepository>().GetModels(obj => obj.DeviceIdentity == dev.Identity)
-                    .OrderByDescending(d => d.UpdateTime).FirstOrDefault();
-                if (protocol == null || protocol.UpdateTime < checkDate)
-                {
-                    return new List<MonitorData>();
-                }
-
-                var datas = dataRepo.GetModels(data => data.ProjectIdentity == dev.Project.Identity && data.ProtocolDataId == protocol.Id).ToList();
-
-                return datas;
-            }
-        }
-
-        /// <summary>
-        /// 获取指定数据名称的监测数据
-        /// </summary>
-        /// <param name="dataName"></param>
-        /// <param name="monitorDatas"></param>
-        /// <returns></returns>
-        private MonitorData GetMonitorDataValue(string dataName, List<MonitorData> monitorDatas)
-        {
-            var commandData = Repo<CommandDataRepository>().GetModel(d => d.DataName == dataName);
-            return monitorDatas.FirstOrDefault(obj => obj.CommandDataId == commandData.Id);
+            return $"{Math.Round(4 - current / 200, 3)}";
         }
 
         /// <summary>
@@ -262,67 +221,6 @@ namespace Platform.Process.Process
             var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{model.Id}").CacheItem;
 
             return Lampblack.GetCleanessRate(current, rater);
-        }
-
-        /// <summary>
-        /// 获取净化器运行时间
-        /// </summary>
-        /// <param name="dev"></param>
-        /// <returns></returns>
-        private string GetCleanerRunTimeString(RestaurantDevice dev)
-        {
-            using (var repo = Repo<MonitorDataRepository>())
-            {
-                var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
-                var ticks = repo.GetModels(r => r.ProjectIdentity == dev.Project.Identity
-                                                && r.DeviceIdentity == dev.Identity
-                                                && r.UpdateTime > today
-                                                && r.CommandDataId == CommandDataId.CleanerSwitch
-                                                && r.BooleanValue == true);
-                var first = ticks.OrderBy(t => t.UpdateTime).FirstOrDefault();
-                var last = ticks.OrderByDescending(t => t.UpdateTime).FirstOrDefault();
-                TimeSpan timeSpan;
-                if (first == null || last == null)
-                {
-                    timeSpan = TimeSpan.Zero;
-                }
-                else
-                {
-                    timeSpan = last.UpdateTime - first.UpdateTime;
-                }
-
-                return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
-            }
-        }
-
-        /// <summary>
-        /// 获取风扇运行时间
-        /// </summary>
-        /// <param name="dev"></param>
-        /// <returns></returns>
-        private string GetFanRunTimeString(RestaurantDevice dev)
-        {
-            using (var repo = Repo<MonitorDataRepository>())
-            {
-                var today = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}");
-                var ticks = repo.GetModels(r => r.ProjectIdentity == dev.Project.Identity
-                                                && r.DeviceIdentity == dev.Identity
-                                                && r.UpdateTime > today
-                                                && r.CommandDataId == CommandDataId.FanSwitch
-                                                && r.BooleanValue == true);
-                var first = ticks.OrderBy(t => t.UpdateTime).FirstOrDefault();
-                var last = ticks.OrderByDescending(t => t.UpdateTime).FirstOrDefault();
-                TimeSpan timeSpan;
-                if (first == null || last == null)
-                {
-                    timeSpan = TimeSpan.Zero;
-                }
-                else
-                {
-                    timeSpan = last.UpdateTime - first.UpdateTime;
-                }
-                return $"{timeSpan.Hours}小时{timeSpan.Minutes}分{timeSpan.Seconds}秒";
-            }
         }
 
         public IQueryable<RestaurantDevice> AllDevices() => Repo<RestaurantDeviceRepository>().GetAllModels();
