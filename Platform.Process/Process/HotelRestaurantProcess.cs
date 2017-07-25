@@ -178,35 +178,17 @@ namespace Platform.Process.Process
             return null;
         }
 
-        public Dictionary<string, object> GetHotelCurrentStatus(Guid hotelGuid)
+        public DeviceCurrentStatus GetHotelCurrentStatus(Guid hotelGuid)
         {
-            var retDictionary = new Dictionary<string, object>();
-            using (var repo = Repo<HotelRestaurantRepository>())
+            using (var repo = Repo<RestaurantDeviceRepository>())
             {
-                var hotel = repo.GetModelById(hotelGuid);
+                var device = repo.GetModels(d => d.ProjectId == hotelGuid).First();
+                var statusStr = RedisService.GetRedisDatabase().StringGet($"Device:DeviceCurrentStatus:{device.Id}");
+                var status = statusStr.HasValue ? JsonConvert.DeserializeObject<DeviceCurrentStatus>(statusStr.ToString()) : new DeviceCurrentStatus();
+                status.CleanRate = GetCleanRate(status.CleanerCurrent, device.Identity);
 
-                var recentDatas = GetLastMonitorData(hotel.Id);
-
-                retDictionary.Add("Current", GetMonitorDataValue(ProtocolDataName.CleanerCurrent, recentDatas)?.DoubleValue ?? 0.0);
-                retDictionary.Add("CleanerStatus", GetMonitorDataValue(ProtocolDataName.CleanerSwitch, recentDatas)?.BooleanValue ?? false);
-                retDictionary.Add("FanStatus", GetMonitorDataValue(ProtocolDataName.FanSwitch, recentDatas)?.BooleanValue ?? false);
-                retDictionary.Add("LampblackIn", GetMonitorDataValue(ProtocolDataName.LampblackInCon, recentDatas)?.DoubleValue ?? 0.0);
-                retDictionary.Add("LampblackOut", GetMonitorDataValue(ProtocolDataName.LampblackOutCon, recentDatas)?.DoubleValue ?? 0.0);
-
-                var cleanerCurrent = recentDatas.Where(data => data.CommandDataId == CommandDataId.CleanerCurrent)
-                .OrderByDescending(item => item.DoubleValue).FirstOrDefault();
-
-                retDictionary.Add("CleanRate",
-                    cleanerCurrent == null ? "无数据" : GetCleanRate(cleanerCurrent.DoubleValue, cleanerCurrent.DeviceIdentity));
-
-                retDictionary.Add("CleanerRunTime", GetCleanerRunTimeString(hotel.Id));
-                retDictionary.Add("FanRunTime", GetFanRunTimeString(hotel.Id));
-                var firstOrDefault = recentDatas.FirstOrDefault();
-                if (firstOrDefault != null)
-                    retDictionary.Add("UpdateTime", firstOrDefault.UpdateTime);
+                return status;
             }
-
-            return retDictionary;
         }
 
         public object GetMapHotelCurrentStatus(Guid hotelGuid)
@@ -424,7 +406,9 @@ namespace Platform.Process.Process
                 {
                     return new List<MonitorData>();
                 }
-                var datas = dataRepo.GetModels(data => data.ProjectIdentity == hotel.Identity && data.ProtocolDataId == lastProtocol.Id)
+                var datas = dataRepo.GetModels(data => data.ProjectIdentity == hotel.Identity
+                && data.DeviceIdentity == lastProtocol.DeviceIdentity
+                && data.ProtocolDataId == lastProtocol.Id)
                     .ToList();
 
                 return datas;
