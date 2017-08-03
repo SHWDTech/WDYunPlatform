@@ -10,10 +10,10 @@ namespace Lampblack_Platform.Controllers
     {
         public MonitorInfos Get()
         {
+            var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("徐汇区");
             var model = new MonitorInfos();
-
             var processer = ProcessInvoke<HotelRestaurantProcess>();
-            var hotels = processer.HotelsInDistrict(Guid.Parse("B20071A6-2015-B0B2-1902-F6D82F45B845"));
+            var hotels = processer.HotelsInDistrict(area.Id);
             foreach (var hotel in hotels)
             {
                 var status = processer.GetHotelCurrentStatus(hotel.Id);

@@ -14,10 +14,11 @@ namespace Lampblack_Platform.Controllers
         {
             try
             {
+                var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
                 var model = new EqupInfo();
                 var hotels =
                     ProcessInvoke<HotelRestaurantProcess>()
-                        .HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+                        .HotelsInDistrict(area.Id);
                 foreach (var hotel in hotels)
                 {
                     var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);

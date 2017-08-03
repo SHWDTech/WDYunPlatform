@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process.Process;
@@ -11,10 +10,11 @@ namespace Lampblack_Platform.Controllers
     {
         public EnterpriseInfo Get()
         {
+            var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
             var model = new EnterpriseInfo();
             var hotels =
                     ProcessInvoke<HotelRestaurantProcess>()
-                        .HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+                        .HotelsInDistrict(area.Id);
             foreach (var hotel in hotels)
             {
                 var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);

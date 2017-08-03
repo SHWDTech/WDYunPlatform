@@ -12,10 +12,11 @@ namespace Lampblack_Platform.Controllers
     {
         public IndexInfo Get()
         {
+            var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
             var model = new IndexInfo();
             var hotels =
                    ProcessInvoke<HotelRestaurantProcess>()
-                       .HotelsInDistrict(Guid.Parse("B20071A6-A30E-9FAD-4C7F-4C353641A645"));
+                       .HotelsInDistrict(area.Id);
             var checkDate = DateTime.Now.AddMinutes(-2);
 
             foreach (var hotel in hotels)
