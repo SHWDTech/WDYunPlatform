@@ -188,7 +188,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
                                 package = Decode();
                                 break;
                         }
-
+                        if (package == null || package.Status == PackageStatus.NoEnoughBuffer) return;
                         AsyncCleanBuffer(package);
                     }
                     catch (Exception ex)
@@ -282,11 +282,8 @@ namespace WdTech_Protocol_AdminTools.TcpCore
         /// <param name="package">当前处理中的协议包</param>
         private void AsyncCleanBuffer(IProtocolPackage package)
         {
-            if (package == null) return;
             switch (package.Status)
             {
-                case PackageStatus.NoEnoughBuffer:
-                    return;
                 case PackageStatus.InvalidHead:
                     _processBuffer.RemoveAt(0);
                     return;
