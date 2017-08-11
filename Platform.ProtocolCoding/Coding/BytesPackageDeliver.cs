@@ -103,7 +103,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                         DomainId = package.Device.DomainId,
                         ProtocolDataId = package.ProtocolData.Id,
                         UpdateTime = DateTime.Now,
-                        CommandDataId = new Guid("15802959-D25B-42AD-BE50-5B48DCE4039A"),
+                        CommandDataId = dataComponent.Value.CommandData.Id,
                         DeviceIdentity = package.Device.Identity,
                         ProjectIdentity = package.Device.Project.Identity,
                         DataIsValid = true,

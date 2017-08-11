@@ -218,5 +218,13 @@ namespace Platform.Process.Process
                 return repo.GetModelById(districtGuid);
             }
         }
+
+        public UserDictionary GetAreaByName(string name)
+        {
+            using (var repo = Repo<UserDictionaryRepository>())
+            {
+                return repo.GetModel(d => d.ItemName == "Area" && d.ItemValue == name);
+            }
+        }
     }
 }

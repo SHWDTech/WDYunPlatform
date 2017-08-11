@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 using StackExchange.Redis;
@@ -14,7 +15,7 @@ namespace SHWDTech.Platform.Utility
 
         static RedisService()
         {
-            var multiplexerLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect("localhost"));
+            var multiplexerLazy = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(ConfigurationManager.AppSettings["redisServer"]));
             RedisDatabase = multiplexerLazy.Value.GetDatabase();
             Task.Factory.StartNew(ProcessQueue);
         }

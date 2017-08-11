@@ -87,7 +87,6 @@ namespace MvcWebComponents.Controllers
             var modules = PlatformCaches.GetCachesByType("Modules");
 
             Modules = modules.Select(obj => (Module)obj.CacheItem)
-                    .Where(item => item.DomainId == Domain.Id)
                     .OrderBy(obj => obj.ModuleIndex)
                     .ToList();
 

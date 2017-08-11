@@ -10,26 +10,28 @@ namespace Lampblack_Platform.Controllers
     {
         public MonitorInfos Get()
         {
+            var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("徐汇区");
             var model = new MonitorInfos();
-
-            var hotels = ProcessInvoke<HotelRestaurantProcess>().HotelsInDistrict(Guid.Parse("B20071A6-2015-B0B2-1902-F6D82F45B845"));
+            var processer = ProcessInvoke<HotelRestaurantProcess>();
+            var hotels = processer.HotelsInDistrict(area.Id);
             foreach (var hotel in hotels)
             {
-                var status = ProcessInvoke<HotelRestaurantProcess>().GetHotelCurrentStatus(hotel.Id);
+                var status = processer.GetHotelCurrentStatus(hotel.Id);
                 var data = new MonitorInfo
                 {
                     entp_id = hotel.ProjectCode,
                     entp_nam = hotel.ProjectName,
-                    entp_ndr = Math.Round((double)status["LampblackIn"], 3),
-                    entp_ndc = Math.Round((double)status["LampblackOut"], 3),
-                    entp_qjl = TransferRate(status["CleanRate"].ToString()),
-                    entp_jhqkg = (bool)status["CleanerStatus"] ? 1 : 0,
-                    entp_fjkg = (bool)status["FanStatus"] ? 1 : 0,
+                    entp_ndr = Math.Round((double)status.LampblackIn, 3),
+                    entp_ndc = Math.Round((double)status.LampblackOut, 3),
+                    entp_qjl = TransferRate(status.CleanRate),
+                    entp_jhqkg = status.CleanerSwitch ? 1 : 0,
+                    entp_fjkg = status.FanSwitch ? 1 : 0,
                     entp_adr = hotel.AddressDetail
                 };
-                if (status.ContainsKey("UpdateTime"))
+                var updateTime = new DateTime(status.UpdateTime);
+                if (updateTime > DateTime.MinValue)
                 {
-                    data.entp_jcsj = ((DateTime) status["UpdateTime"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    data.entp_jcsj = $"{updateTime:yyyy-MM-dd HH:mm:ss}";
                 }
 
                 model.data.Add(data);

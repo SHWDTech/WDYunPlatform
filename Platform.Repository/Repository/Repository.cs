@@ -292,6 +292,7 @@ namespace SHWD.Platform.Repository.Repository
         private static bool IsPrimitive(Type type)
         {
             return type.IsPrimitive
+            || type.IsEnum
             || type == typeof(decimal)
             || type == typeof(string)
             || type == typeof(DateTime)

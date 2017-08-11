@@ -1,7 +1,7 @@
 ﻿$(function () {
     $('#ProductionDateTime').datetimepicker({
         locale: 'zh-cn',
-        format: 'L'
+        format: 'YYYY-MM-DD'
     });
 
     $('#reset').on('click', function () {
