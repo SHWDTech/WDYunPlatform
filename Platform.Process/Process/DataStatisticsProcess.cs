@@ -27,5 +27,15 @@ namespace Platform.Process.Process
                 return data?.UpdateTime ?? DateTime.MinValue;
             }
         }
+
+        public double GetDayAverage(Expression<Func<DataStatistics, bool>> exp)
+        {
+            using (var repo = Repo<DataStatisticsRepository>())
+            {
+                var data = repo.GetModels(exp).Average(d => d.DoubleValue);
+
+                return data.Value;
+            }
+        }
     }
 }

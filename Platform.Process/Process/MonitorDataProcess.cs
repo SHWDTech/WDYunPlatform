@@ -29,6 +29,16 @@ namespace Platform.Process.Process
             }
         }
 
+        public MonitorData GetHotelAverage(Expression<Func<MonitorData, bool>> exp, out double avg)
+        {
+            using (var repo = Repo<MonitorDataRepository>())
+            {
+                var ret = repo.GetModels(exp);
+                avg = !ret.Any() ? 0 : ret.Average(m => m.DoubleValue).Value;
+                return ret.OrderBy(item => item.DoubleValue).FirstOrDefault();
+            }
+        }
+
         public MonitorData GetMaxHotelMonitorData(Expression<Func<MonitorData, bool>> exp)
         {
             using (var repo = Repo<MonitorDataRepository>())

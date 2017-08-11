@@ -125,14 +125,19 @@ namespace AutoDataStaticService
 
                     startDate = startDate.GetCurrentHour();
 
+                    _produceEndDayHour = ProcessInvoke.Instance<MonitorDataProcess>()
+                        .GetLastUpdateDataDate(obj => obj.ProjectIdentity == hotelIdentity &&
+                                                      obj.DeviceIdentity == dev.Identity
+                                                      && obj.CommandDataId == data.Id && obj.DataChannel == 0 &&
+                                                      obj.DoubleValue != null);
                     while (startDate < _produceEndDayHour)
                     {
                         var endDate = startDate.AddHours(1);
                         var date = startDate;
                         var min = ProcessInvoke.Instance<MonitorDataProcess>()
-                            .GetMinHotelMonitorData(obj =>
+                            .GetHotelAverage(obj =>
                                 obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime > date && obj.UpdateTime < endDate
-                                && obj.CommandDataId == data.Id && obj.DataChannel == 0);
+                                && obj.CommandDataId == data.Id && obj.DataChannel == 0 && obj.DoubleValue != null, out double avg);
 
                         if (min == null)
                         {
@@ -140,7 +145,7 @@ namespace AutoDataStaticService
                             continue;
                         }
 
-                        StoreDataStatistic(min, endDate, StatisticsType.Hour);
+                        StoreDataStatistic(min, endDate, StatisticsType.Hour, avg);
 
                         startDate = startDate.AddHours(1);
                     }
@@ -179,13 +184,18 @@ namespace AutoDataStaticService
                                 obj.ProjectIdentity == hotelIdentity && obj.DeviceIdentity == dev.Identity && obj.UpdateTime > date && obj.UpdateTime < endDate
                                 && obj.CommandDataId == data.Id && obj.DataChannel == 0);
 
+                        var avg = ProcessInvoke.Instance<DataStatisticsProcess>().GetDayAverage(
+                            d => d.CommandDataId == data.Id && d.DataChannel == 0
+                                 && d.ProjectIdentity == hotelIdentity && d.DeviceIdentity == dev.Identity &&
+                                 d.UpdateTime > date && d.UpdateTime < endDate);
+
                         if (min == null)
                         {
                             startDate = startDate.AddDays(1);
                             continue;
                         }
 
-                        StoreDataStatistic(min, endDate, StatisticsType.Day);
+                        StoreDataStatistic(min, endDate, StatisticsType.Day, avg);
 
                         startDate = startDate.AddDays(1);
                     }
@@ -289,10 +299,10 @@ namespace AutoDataStaticService
             }
         }
 
-        private static void StoreDataStatistic(MonitorData data, DateTime endDate, StatisticsType type)
+        private static void StoreDataStatistic(MonitorData data, DateTime endDate, StatisticsType type, double avg)
         {
             var dataStatistic = new DataStatisticsRepository().CreateDefaultModel();
-            dataStatistic.DoubleValue = data.DoubleValue;
+            dataStatistic.DoubleValue = avg;
             dataStatistic.CommandDataId = data.CommandDataId;
             dataStatistic.DataChannel = data.DataChannel;
             dataStatistic.DeviceIdentity = data.DeviceIdentity;
