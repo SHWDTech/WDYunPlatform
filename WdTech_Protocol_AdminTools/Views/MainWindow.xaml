@@ -34,11 +34,12 @@
                         <Grid Row="0">
                             <Label Content="监听IP地址：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 10, 0, 0"></Label>
                             <TextBox x:Name="TxtServerIpAddress" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="120" 
-                                     Margin="90, 10, 0, 0" Padding="0, 3, 0, 0"></TextBox>
-                            <Label Content="监听端口：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="220, 10, 0, 0"></Label>
+                                     Margin="101,10,0,0" Padding="0, 3, 0, 0"></TextBox>
+                            <Label Content="监听端口：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="231,10,0,0"></Label>
                             <TextBox x:Name="TxtServerPort" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="90" 
-                                     Margin="300, 10, 0, 0" Padding="0, 3, 0, 0"></TextBox>
-                            
+                                     Margin="324,10,0,0" Padding="0, 3, 0, 0"></TextBox>
+                            <CheckBox Content="测试模式" Margin="450,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></CheckBox>
+
                             <!--按钮区放在右边-->
                             <Button x:Name="BtnStartServer" Content="启动服务" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="120"
                                     Margin="0, 10, 10, 0" Click="StartService"></Button>
@@ -60,7 +61,7 @@
                     </StatusBarItem>
                     <StatusBarItem Foreground="#0000CC">
                         <TextBlock Name="ServerIpAddress" FontSize="16"></TextBlock>
-                    </StatusBarItem> 
+                    </StatusBarItem>
                     <StatusBarItem>
                         <TextBlock FontSize="16">Start:</TextBlock>
                     </StatusBarItem>

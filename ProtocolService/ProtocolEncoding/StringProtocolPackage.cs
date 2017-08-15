@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
             foreach (var structure in Protocol.ProtocolStructures)
             {
-                var component = new PackageComponent<string>()
+                var component = new PackageComponent<string>
                 {
                     ComponentName = structure.StructureName,
                     DataType = structure.DataType,
@@ -35,7 +35,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
             foreach (var commandData in command.CommandDatas)
             {
-                var component = new PackageComponent<string>()
+                var component = new PackageComponent<string>
                 {
                     ComponentName = commandData.DataName,
                     DataType = commandData.DataConvertType,

@@ -10,7 +10,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
     /// <summary>
     /// 协议包
     /// </summary>
-    public sealed class BytesProtocolPackage : ProtocolPackage, IProtocolPackage<byte[]>
+    public class BytesProtocolPackage : ProtocolPackage, IProtocolPackage<byte[]>
     {
         public BytesProtocolPackage()
         {
@@ -25,7 +25,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             foreach (var structure in Protocol.ProtocolStructures)
             {
-                var component = new PackageComponent<byte[]>()
+                var component = new PackageComponent<byte[]>
                 {
                     ComponentName = structure.StructureName,
                     DataType = structure.DataType,
@@ -38,7 +38,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
             foreach (var commandData in command.CommandDatas)
             {
-                var component = new PackageComponent<byte[]>()
+                var component = new PackageComponent<byte[]>
                 {
                     ComponentName = commandData.DataName,
                     DataType = commandData.DataConvertType,

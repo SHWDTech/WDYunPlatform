@@ -20,9 +20,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
 
         public virtual ProtocolData ProtocolData { get; set; }
 
-        public virtual Protocol Protocol { get; set; }
+        public Protocol Protocol { get; set; }
 
-        public virtual IProtocolCommand Command { get; set; }
+        public IProtocolCommand Command { get; set; }
 
         public virtual int DataComponentCount { get; } = 0;
 

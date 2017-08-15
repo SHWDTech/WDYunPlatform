@@ -9,20 +9,15 @@ using SHWDTech.Platform.ProtocolCoding.Enums;
 using SHWDTech.Platform.ProtocolCoding.Generics;
 using SHWDTech.Platform.Utility;
 
-namespace SHWDTech.Platform.ClassicCommandCoding
+namespace SHWDTech.Platform.ChargingPileCommandCoder
 {
-    /// <summary>
-    /// 经典协议解析模块
-    /// </summary>
-    public class ClassicCommandCoder : ICommandCoder<byte[]>
+    public class ChargingPileCommandCoder : ICommandCoder<byte[]>
     {
         private readonly BytesPackageDeliver _deliver = new BytesPackageDeliver();
 
-        public IDataConverter<byte[]> DataConverter { get; set; } = new BytesDataConverter();
-
         public IProtocolPackage DecodeProtocol(byte[] bufferBytes, Protocol matchedProtocol)
         {
-            var package = new BytesProtocolPackage { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
+            var package = new ChargingPileProtocolPackage { Protocol = matchedProtocol, ReceiveDateTime = DateTime.Now };
 
             var structures = matchedProtocol.ProtocolStructures.ToList();
 
@@ -67,40 +62,6 @@ namespace SHWDTech.Platform.ClassicCommandCoding
             return package;
         }
 
-        public void DecodeCommand(IProtocolPackage<byte[]> package)
-        {
-            var currentIndex = 0;
-
-            var container = package[StructureNames.Data].ComponentContent;
-
-            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
-            {
-                var data = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
-
-                if (currentIndex + data.DataLength > container.Length)
-                {
-                    package.Status = PackageStatus.NoEnoughBuffer;
-                    return;
-                }
-
-                var component = new PackageComponent<byte[]>
-                {
-                    ComponentName = data.DataName,
-                    DataType = data.DataConvertType,
-                    ComponentIndex = data.DataIndex,
-                    ComponentContent = container.SubBytes(currentIndex, currentIndex + data.DataLength)
-                };
-
-                currentIndex += data.DataLength;
-
-                package.AppendData(component);
-            }
-
-            package.DeviceNodeId = (string) DataConverter.DecodeComponentData(package[StructureNames.NodeId]);
-
-            package.Finalization();
-        }
-
         public IProtocolPackage EncodeCommand(IProtocolCommand command, Dictionary<string, byte[]> paramBytes = null)
         {
             var package = new BytesProtocolPackage(command)
@@ -130,21 +91,57 @@ namespace SHWDTech.Platform.ClassicCommandCoding
             return package;
         }
 
+        public void DoDelive(IProtocolPackage package, IPackageSource source)
+        {
+            var bytesPackage = (IProtocolPackage<byte[]>)package;
+            if (bytesPackage == null) return;
+            _deliver.Delive(bytesPackage, source);
+        }
+
+        public IDataConverter<byte[]> DataConverter { get; set; } = new BytesDataConverter();
+
+        public void DecodeCommand(IProtocolPackage<byte[]> package)
+        {
+            var currentIndex = 0;
+
+            var container = package[StructureNames.Data].ComponentContent;
+
+            for (var i = 0; i < package.Command.CommandDatas.Count; i++)
+            {
+                var data = package.Command.CommandDatas.First(obj => obj.DataIndex == i);
+
+                if (currentIndex + data.DataLength > container.Length)
+                {
+                    package.Status = PackageStatus.NoEnoughBuffer;
+                    return;
+                }
+
+                var component = new PackageComponent<byte[]>
+                {
+                    ComponentName = data.DataName,
+                    DataType = data.DataConvertType,
+                    ComponentIndex = data.DataIndex,
+                    ComponentContent = container.SubBytes(currentIndex, currentIndex + data.DataLength)
+                };
+
+                currentIndex += data.DataLength;
+
+                package.AppendData(component);
+            }
+
+            package.DeviceNodeId = (string)DataConverter.DecodeComponentData(package[StructureNames.NodeId]);
+
+            package.Finalization();
+        }
+
         public void DetectCommand(IProtocolPackage<byte[]> package, IProtocol matchedProtocol)
         {
             foreach (var command in matchedProtocol.ProtocolCommands.Where(command =>
-            (package[StructureNames.CmdType].ComponentContent.SequenceEqual(command.CommandTypeCode))
-            && (package[StructureNames.CmdByte].ComponentContent.SequenceEqual(command.CommandCode))))
+                (package[StructureNames.CmdType].ComponentContent.SequenceEqual(command.CommandTypeCode))
+                && (package[StructureNames.CmdByte].ComponentContent.SequenceEqual(command.CommandCode))))
             {
                 package.Command = command;
             }
-        }
-
-        public void DoDelive(IProtocolPackage package, IPackageSource source)
-        {
-            var bytesPackage = (IProtocolPackage<byte[]>) package;
-            if (bytesPackage == null) return;
-            _deliver.Delive(bytesPackage, source);
         }
     }
 }
