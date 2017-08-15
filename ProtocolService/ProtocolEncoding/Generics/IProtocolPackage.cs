@@ -14,7 +14,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding.Generics
         /// <summary>
         /// 数据段协议包组件
         /// </summary>
-        IPackageComponent<string> DataComponent { get; }
+        IPackageComponent<T> DataComponent { get; }
 
         /// <summary>
         /// 协议数据组件字典
@@ -33,5 +33,11 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding.Generics
         /// <param name="dataValueName"></param>
         /// <returns></returns>
         string GetDataValueString(string dataValueName);
+
+        /// <summary>
+        /// 获取需要计算的CRC数据段
+        /// </summary>
+        /// <returns></returns>
+        byte[] GetCrcBytes();
     }
 }

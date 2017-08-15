@@ -148,5 +148,13 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
         public string GetDataValueString(string dataValueName)
             => !DataComponents.ContainsKey(dataValueName) ? string.Empty : DataComponents[dataValueName].ComponentValue;
+
+        public byte[] GetCrcBytes()
+        {
+            var allBytes = GetBytes();
+            var finalBytes = new byte[allBytes.Length - 6];
+            Array.Copy(allBytes, 6, finalBytes, 0, finalBytes.Length);
+            return finalBytes;
+        }
     }
 }

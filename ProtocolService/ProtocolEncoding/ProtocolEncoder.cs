@@ -4,7 +4,7 @@ using SHWDTech.Platform.ProtocolService.ProtocolEncoding.Generics;
 
 namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 {
-    public abstract class ProtocolEncoder : IProtocolEncoder
+    public abstract class ProtocolEncoder<T> : IProtocolEncoder
     {
         public IProtocol Protocol { get; set; }
 
@@ -22,7 +22,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// 将协议按照检测到的指令进行解码
         /// </summary>
         /// <param name="package"></param>
-        protected virtual void DecodeCommand(IProtocolPackage<string> package)
+        protected virtual void DecodeCommand(IProtocolPackage<T> package)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// </summary>
         /// <param name="package"></param>
         /// <param name="matchedProtocol"></param>
-        protected virtual void DetectCommand(IProtocolPackage<string> package, IProtocol matchedProtocol)
+        protected virtual void DetectCommand(IProtocolPackage<T> package, IProtocol matchedProtocol)
         {
             throw new NotImplementedException();
         }

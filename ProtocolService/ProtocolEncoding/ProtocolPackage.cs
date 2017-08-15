@@ -16,9 +16,9 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
         public virtual IProtocolData ProtocolData { get; set; }
 
-        public virtual IProtocol Protocol { get; set; }
+        public IProtocol Protocol { get; set; }
 
-        public virtual IProtocolCommand Command { get; set; }
+        public IProtocolCommand Command { get; set; }
 
         public virtual int DataComponentCount { get; } = 0;
 

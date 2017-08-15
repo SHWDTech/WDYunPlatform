@@ -90,6 +90,7 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="IClientSource.cs" />
     <Compile Include="ProtocolEncoding\AuthResult.cs" />
+    <Compile Include="ProtocolEncoding\BytesProtocolPackage.cs" />
     <Compile Include="ProtocolEncoding\EncodingManager.cs" />
     <Compile Include="ProtocolEncoding\Generics\IPackageComponent.cs" />
     <Compile Include="ProtocolEncoding\Generics\IProtocolPackage.cs" />

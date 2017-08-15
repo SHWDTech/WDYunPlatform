@@ -395,7 +395,7 @@ namespace SHWDTech.Platform.Utility
             return crc16;
         }
 
-        public static string GetCrcModBus(byte[] buffer)
+        public static ushort GetCrcModBus(byte[] buffer)
         {
             ushort regCrc = 0xffff;
 
@@ -415,7 +415,7 @@ namespace SHWDTech.Platform.Utility
             }
             var tempReg = (byte)(regCrc >> 8);
 
-            return $"{(ushort) (regCrc << 8 | tempReg):X04}";
+            return (ushort)(regCrc << 8 | tempReg);
         }
 
         /// <summary>
