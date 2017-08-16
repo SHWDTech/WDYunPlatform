@@ -88,6 +88,7 @@
     <Compile Include="DataBase\ProtocolData.cs" />
     <Compile Include="DataBase\ProtocolStructure.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="IClientSource.cs" />
     <Compile Include="ProtocolEncoding\AuthResult.cs" />
     <Compile Include="ProtocolEncoding\BytesProtocolPackage.cs" />
@@ -111,6 +112,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ProtocolEncoding\StructureNames.cs" />
+    <Compile Include="ProtocolExtensions.cs" />
     <Compile Include="ServiceHostStatus.cs" />
     <Compile Include="SocketActiveClient.cs" />
     <Compile Include="IActiveClient.cs" />

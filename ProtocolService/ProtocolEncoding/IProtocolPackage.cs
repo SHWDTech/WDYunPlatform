@@ -79,5 +79,10 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// 完成协议包的编解码
         /// </summary>
         void Finalization();
+
+        /// <summary>
+        /// 协议包分解信息
+        /// </summary>
+        string PackageComponentFactors { get; }
     }
 }

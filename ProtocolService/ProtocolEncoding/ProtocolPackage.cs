@@ -42,5 +42,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         {
             throw new NotImplementedException();
         }
+
+        public virtual string PackageComponentFactors => string.Empty;
     }
 }

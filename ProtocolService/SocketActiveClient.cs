@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
-using SHWDTech.Platform.ProtocolService.DataBase;
 using SHWDTech.Platform.ProtocolService.ProtocolEncoding;
 
 namespace SHWDTech.Platform.ProtocolService
@@ -54,11 +53,6 @@ namespace SHWDTech.Platform.ProtocolService
         public IClientSource ClientSource { get; set; }
 
         /// <summary>
-        /// 此客户端所属协议编解码器
-        /// </summary>
-        private IProtocolEncoder ProtocolEncoder => ClientSource.ProtocolEncoder;
-
-        /// <summary>
         /// 所属服务宿主
         /// </summary>
         private readonly TcpServiceHost _tcpServiceHost;
@@ -92,8 +86,7 @@ namespace SHWDTech.Platform.ProtocolService
                         return;
                     }
 
-                    if (AuthStatus == AuthenticationStatus.AuthFailed ||
-                        AuthStatus == AuthenticationStatus.ClientNotRegistered)
+                    if (AuthStatus == AuthenticationStatus.ClientNotRegistered)
                     {
                         return;
                     }
@@ -128,18 +121,24 @@ namespace SHWDTech.Platform.ProtocolService
                 {
                     try
                     {
+                        IProtocolPackage package = null;
                         switch (AuthStatus)
                         {
-                            case AuthenticationStatus.NotAuthed:
-                                Authentication();
+                            case AuthenticationStatus.ClientNotRegistered:
+                                Close();
                                 break;
                             case AuthenticationStatus.Authed:
-                                Decode();
+                                package = Decode();
                                 break;
                             default:
-                                _processBuffer.Clear();
-                                _isProcessing = false;
-                                return;
+                                package = Authentication();
+                                break;
+                        }
+                        AsyncCleanBuffer(package);
+                        if (package == null || package.Status == PackageStatus.NoEnoughBuffer)
+                        {
+                            _isProcessing = false;
+                            return;
                         }
                     }
                     catch (Exception ex)
@@ -154,38 +153,36 @@ namespace SHWDTech.Platform.ProtocolService
             }
         }
 
-        private void Authentication()
+        private IProtocolPackage Authentication()
         {
             var result = EncodingManager.Authentication(_processBuffer.ToArray());
-
-            AsyncCleanBuffer(result.Package);
-
-            if (result.ResultType != AuthenticationStatus.Authed)
+            AuthStatus = result.ResultType;
+            if (AuthStatus != AuthenticationStatus.Authed)
             {
-                AuthStatus = result.ResultType;
                 OnClientAuthenticaFailed();
-                return;
+                return result.Package;
             }
 
             ClientSource = result.AuthedClientSource;
-            AuthStatus = AuthenticationStatus.Authed;
-
             OnClientAuthentication();
+
+            return result.Package;
         }
 
         /// <summary>
         /// 解码缓存字节为协议包
         /// </summary>
-        private void Decode()
+        private IProtocolPackage Decode()
         {
-            var package = ProtocolEncoder.Decode(_processBuffer.ToArray());
-            AsyncCleanBuffer(package);
-            if (!package.Finalized) return;
-
+            var package = EncodingManager.Decode(_processBuffer.ToArray());
             package.ClientSource = ClientSource;
-            package.SetupProtocolData();
-            OnClientDecoded(package.ProtocolData);
-            EncodingManager.RunBuinessHandler(package);
+            OnClientDecoded(package);
+            if (package.Finalized)
+            {
+                EncodingManager.RunBuinessHandler(package);
+            }
+
+            return package;
         }
 
         /// <summary>
@@ -197,8 +194,6 @@ namespace SHWDTech.Platform.ProtocolService
             if (package == null) return;
             switch (package.Status)
             {
-                case PackageStatus.NoEnoughBuffer:
-                    return;
                 case PackageStatus.InvalidHead:
                     _processBuffer.RemoveAt(0);
                     return;
@@ -207,6 +202,9 @@ namespace SHWDTech.Platform.ProtocolService
                     return;
                 case PackageStatus.Finalized:
                     _processBuffer.RemoveRange(0, package.PackageLenth);
+                    return;
+                case PackageStatus.ValidationFailed:
+                    _processBuffer.RemoveAt(0);
                     return;
             }
 
@@ -269,9 +267,9 @@ namespace SHWDTech.Platform.ProtocolService
             ClientDecodeFalied?.Invoke(new ActiveClientEventArgs(this, ex, message));
         }
 
-        private void OnClientDecoded(IProtocolData protocolData)
+        private void OnClientDecoded(IProtocolPackage package)
         {
-            ClientDecoded?.Invoke(new ActiveClientEventArgs(this) { ProtocolData = protocolData });
+            ClientDecoded?.Invoke(new ActiveClientEventArgs(this) { Package = package });
         }
     }
 }

@@ -6,6 +6,11 @@
     public class StructureNames
     {
         /// <summary>
+        /// 帧头
+        /// </summary>
+        public const string Head = "Head";
+
+        /// <summary>
         /// 数据
         /// </summary>
         public const string Data = "Data";
@@ -24,5 +29,20 @@
         /// 指令编码
         /// </summary>
         public const string CmdByte = "CmdByte";
+
+        /// <summary>
+        /// 请求码
+        /// </summary>
+        public const string RequestCode = "RequestCode";
+
+        /// <summary>
+        /// CrcModBus
+        /// </summary>
+        public const string CrcModBus = "CrcModBus";
+
+        /// <summary>
+        /// 帧尾
+        /// </summary>
+        public const string Tail = "Tail";
     }
 }

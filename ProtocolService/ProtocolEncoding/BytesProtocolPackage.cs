@@ -47,7 +47,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
         public override bool Finalized { get; protected set; }
 
-        public override int PackageLenth => _structureComponents.Select(p => p.Value.ComponentContent.Length).Sum() + DataComponent.ComponentContent.Length;
+        public override int PackageLenth => StructureComponents.Select(p => p.Value.ComponentContent.Length).Sum() + DataComponent.ComponentContent.Length;
 
         /// <summary>
         /// 数据段索引
@@ -61,7 +61,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         /// <summary>
         /// 协议包组件字典
         /// </summary>
-        private readonly Dictionary<string, IPackageComponent<byte[]>> _structureComponents = new Dictionary<string, IPackageComponent<byte[]>>();
+        protected readonly Dictionary<string, IPackageComponent<byte[]>> StructureComponents = new Dictionary<string, IPackageComponent<byte[]>>();
 
         public IPackageComponent<byte[]> this[string name]
         {
@@ -69,7 +69,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
             {
                 if (name == "Data") return DataComponent;
 
-                if (_structureComponents.ContainsKey(name)) return _structureComponents[name];
+                if (StructureComponents.ContainsKey(name)) return StructureComponents[name];
 
                 return DataComponents.ContainsKey(name) ? DataComponents[name] : null;
             }
@@ -82,13 +82,13 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
                     return;
                 }
 
-                if (!_structureComponents.ContainsKey(name))
+                if (!StructureComponents.ContainsKey(name))
                 {
-                    _structureComponents.Add(name, value);
+                    StructureComponents.Add(name, value);
                 }
                 else
                 {
-                    _structureComponents[name] = value;
+                    StructureComponents[name] = value;
                 }
             }
         }
@@ -96,6 +96,21 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         public void AppendData(IPackageComponent<byte[]> component)
         {
             DataComponents.Add(component.ComponentName, component);
+        }
+
+        public override void SetupProtocolData()
+        {
+            if (ClientSource == null) return;
+            ProtocolData = new ProtocolData
+            {
+                Business = ClientSource.BusinessName,
+                DeviceNodeId = ClientSource.ClientNodeId,
+                ProtocolContent = GetBytes(),
+                ProtocolId = Guid.Parse(Protocol.GetIdString()),
+                PackageDateTime = DateTime.Now,
+            };
+            ProtocolData.Length = ProtocolData.ProtocolContent.Length;
+            ProtocolData.ProtocolString = ProtocolData.ProtocolContent.ToHexString();
         }
 
         public string GetDataValueString(string dataValueName)
@@ -115,11 +130,11 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         {
             var bytes = new List<byte>();
 
-            for (var i = 0; i <= _structureComponents.Count; i++)
+            for (var i = 0; i <= StructureComponents.Count; i++)
             {
                 var componentBytes = i == _dataIndex
                     ? DataComponent.ComponentContent
-                    : _structureComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentContent;
+                    : StructureComponents.First(obj => obj.Value.ComponentIndex == i).Value.ComponentContent;
 
                 bytes.AddRange(componentBytes);
             }
@@ -147,10 +162,14 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
         public override void Finalization()
         {
+            if (!ProtocolChecker.CheckProtocol(this))
+            {
+                Status = PackageStatus.ValidationFailed;
+                return;
+            }
             if (
                 //数据段单独存放，因此_componentData的长度为协议结构长度减一
-                (_structureComponents.Count + 1 != Protocol.ProtocolStructures.Count)
-                || !ProtocolChecker.CheckProtocol(this)
+                (StructureComponents.Count + 1 != Protocol.ProtocolStructures.Count)
                 || DataComponent == null
                 || (Command.DataOrderType == DataOrderType.Order && DataComponent.ComponentContent.Length != Command.ReceiveBytesLength)
             )

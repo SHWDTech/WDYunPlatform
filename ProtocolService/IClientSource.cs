@@ -1,6 +1,4 @@
-﻿using SHWDTech.Platform.ProtocolService.ProtocolEncoding;
-
-namespace SHWDTech.Platform.ProtocolService
+﻿namespace SHWDTech.Platform.ProtocolService
 {
     public interface IClientSource
     {
@@ -18,10 +16,5 @@ namespace SHWDTech.Platform.ProtocolService
         /// 数据源所属业务
         /// </summary>
         string BusinessName { get; }
-
-        /// <summary>
-        /// 数据源对应解码器
-        /// </summary>
-        IProtocolEncoder ProtocolEncoder { get; set; }
     }
 }

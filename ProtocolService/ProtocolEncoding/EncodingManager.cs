@@ -41,6 +41,10 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
             if (protocol == null)
             {
+                result.Package = new ProtocolPackage
+                {
+                    Status = PackageStatus.InvalidHead
+                };
                 return result;
             }
 
@@ -60,8 +64,23 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
             }
 
             result.ResultType = AuthenticationStatus.Authed;
-            package.ClientSource.ProtocolEncoder = encoder;
             return result;
+        }
+
+        public static IProtocolPackage Decode(byte[] protocolBytes)
+        {
+            var protocol = DetectProtocol(protocolBytes, AllProtocols);
+
+            if (protocol == null)
+            {
+                return new ProtocolPackage
+                {
+                    Status = PackageStatus.InvalidHead
+                };
+            }
+
+            var encoder = ProtocolEncoders[protocol.ProtocolModule];
+            return encoder.Decode(protocolBytes, protocol);
         }
 
         /// <summary>
