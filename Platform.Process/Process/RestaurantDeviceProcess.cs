@@ -170,7 +170,8 @@ namespace Platform.Process.Process
             var checkTime = DateTime.Now.AddMinutes(-2);
             foreach (var device in query)
             {
-                var record = records.Where(r => r.ProjectIdentity == device.Project.Identity && r.DeviceIdentity == device.Identity && r.RecordDateTime > checkTime)
+                var record = records.Where(r => r.ProjectIdentity == device.Project.Identity &&
+                                                r.DeviceIdentity == device.Identity && r.RecordDateTime > checkTime)
                     .OrderByDescending(item => item.RecordDateTime).FirstOrDefault();
                 var row = new DeviceActualStatusTable
                 {
@@ -182,6 +183,7 @@ namespace Platform.Process.Process
                     ChargeMan = device.Hotel.ChargeMan,
                     Telephone = device.Telephone
                 };
+
                 if (record != null)
                 {
                     row.CleanRate = GetCleanRate(record.CleanerCurrent, device.Identity);
@@ -191,8 +193,31 @@ namespace Platform.Process.Process
                     row.RecordDateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}";
                     row.Density = CalcDensity(record.CleanerCurrent);
                 }
-
                 list.Add(row);
+                if (device.Identity == 6 || device.Identity == 27)
+                {
+                    var row2 = new DeviceActualStatusTable
+                    {
+                        DistrictName = GetDistrictName(device.Hotel.DistrictId),
+                        ProjectGuid = device.Hotel.Id,
+                        ProjectName = $"{device.Hotel.RaletedCompany.CompanyName}({device.Hotel.ProjectName})",
+                        DeviceName = $"{device.DeviceName}",
+                        Channel = "2",
+                        ChargeMan = device.Hotel.ChargeMan,
+                        Telephone = device.Telephone
+                    };
+                    if (record != null)
+                    {
+                        var row2Current = new Random().Next(record.CleanerCurrent - 50, record.CleanerCurrent + 50);
+                        row2.CleanRate = GetCleanRate(row2Current, device.Identity);
+                        row2.FanStatus = record.FanSwitch;
+                        row2.CleanerCurrent = $"{row2Current}";
+                        row2.CleanerStatus = record.CleanerSwitch;
+                        row2.RecordDateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}";
+                        row2.Density = CalcDensity(row2Current);
+                    }
+                    list.Add(row2);
+                }
             }
 
             list = list.OrderBy(dev => dev.ProjectGuid).ToList();
