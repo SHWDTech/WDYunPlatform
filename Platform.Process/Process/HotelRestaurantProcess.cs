@@ -145,13 +145,14 @@ namespace Platform.Process.Process
             }
         }
 
-        public List<HotelCleaness> GetHotelCleanessList()
+        public List<HotelCleaness> GetHotelCleanessList(Guid domainId)
         {
             using (var context = new RepositoryDbContext())
             {
                 ((IObjectContextAdapter)context).ObjectContext.CommandTimeout = 180;
                 var modelId = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761");
                 var cleanNess = context.Set<HotelRestaurant>()
+                    .Where(ho => ho.DomainId == domainId)
                     .Select(h => new
                     {
                         h.Id,
@@ -235,13 +236,13 @@ namespace Platform.Process.Process
             }
         }
 
-        public List<HotelLocations> GetHotelLocations()
+        public List<HotelLocations> GetHotelLocations(Guid domainId)
         {
             var locations = new List<HotelLocations>();
             using (var repo = new RepositoryDbContext())
             {
                 repo.Database.CommandTimeout = int.MaxValue;
-                var hotels = repo.Set<HotelRestaurant>().ToList();
+                var hotels = repo.Set<HotelRestaurant>().Where(h => h.DomainId == domainId).ToList();
                 var modelId = Guid.Parse("5306DA86-7B7C-40CF-933C-642061C24761");
 
                 foreach (var hotel in hotels)

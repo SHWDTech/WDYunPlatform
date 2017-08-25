@@ -18,7 +18,7 @@ namespace Lampblack_Platform.Controllers
         {
             var model = new IndexViewModel();
 
-            var rates = ProcessInvoke<HotelRestaurantProcess>().GetHotelCleanessList();
+            var rates = ProcessInvoke<HotelRestaurantProcess>().GetHotelCleanessList(WdContext.Domain.Id);
             if (WdContext.UserDistricts != null)
             {
                 rates = rates.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();

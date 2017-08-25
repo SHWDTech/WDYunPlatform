@@ -53,7 +53,7 @@ namespace Platform.Process.IProcess
         /// 获取酒店清洁度情况列表
         /// </summary>
         /// <returns></returns>
-        List<HotelCleaness> GetHotelCleanessList();
+        List<HotelCleaness> GetHotelCleanessList(Guid domainId);
 
         /// <summary>
         /// 获取地图上的酒店清洁度列表
@@ -73,7 +73,7 @@ namespace Platform.Process.IProcess
         /// 获取酒店位置信息
         /// </summary>
         /// <returns></returns>
-        List<HotelLocations> GetHotelLocations();
+        List<HotelLocations> GetHotelLocations(Guid domainId);
 
         /// <summary>
         /// 获取所有酒店的ID列表

@@ -22,7 +22,7 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = "Map")]
         public ActionResult GetHotelInfo()
         {
-            var hotelLocation = ProcessInvoke<HotelRestaurantProcess>().GetHotelLocations();
+            var hotelLocation = ProcessInvoke<HotelRestaurantProcess>().GetHotelLocations(WdContext.Domain.Id);
             if (WdContext.UserDistricts != null)
             {
                 hotelLocation = hotelLocation.Where(obj => WdContext.UserDistricts.Contains(obj.DistrictGuid)).ToList();
