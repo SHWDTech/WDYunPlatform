@@ -122,7 +122,7 @@ namespace SHWD.Platform.Repository.Repository
         /// <param name="model"></param>
         protected void DoAddOrUpdate(T model)
         {
-            CheckModel(model);
+            //CheckModel(model);
 
             if (model.IsNew)
             {
@@ -141,7 +141,7 @@ namespace SHWD.Platform.Repository.Repository
         /// <param name="models"></param>
         protected void DoAddOrUpdate(IEnumerable<T> models)
         {
-            CheckModel(models);
+            //CheckModel(models);
 
             foreach (var model in models.Where(model => model.IsNew))
             {

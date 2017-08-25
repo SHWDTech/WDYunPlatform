@@ -54,7 +54,7 @@ namespace SHWDTech.Platform.ProtocolCoding
             var protocolBytes = realpackage.GetBytes();
             var calcCrc = Globals.GetCrcModBus(protocolBytes.SubBytes(6, protocolBytes.Length - 6));
 
-            var protocolCrc = realpackage[StructureNames.CrcModBus].ComponentContent;
+            var protocolCrc = ushort.Parse(realpackage[StructureNames.CrcModBus].ComponentContent);
 
             return calcCrc == protocolCrc;
         }
