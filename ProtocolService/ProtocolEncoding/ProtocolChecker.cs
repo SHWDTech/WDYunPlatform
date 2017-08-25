@@ -48,25 +48,25 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
 
         public static bool CrcModBusChecker<T>(IProtocolPackage<T> package)
         {
-            var calcCrc = Globals.GetCrcModBus(package.GetCrcBytes());
+            var calcCrc = Globals.GetCrcModBus(package.GetCrcBytes()).ToString("X4");
 
             var protocolCrc = GetProtocolCrc(package);
 
             return calcCrc == protocolCrc;
         }
 
-        private static ushort GetProtocolCrc(IProtocolPackage package)
+        private static string GetProtocolCrc(IProtocolPackage package)
         {
             if (package is IProtocolPackage<string> pkgStr)
             {
-                return ushort.Parse(pkgStr[Properties.Resource.CrcModBus].ComponentValue);
+                return pkgStr[Properties.Resource.CrcModBus].ComponentValue;
             }
             if (package is IProtocolPackage<byte[]> pkgByte)
             {
-                return Globals.BytesToUint16(pkgByte[Properties.Resource.CrcModBus].ComponentContent, 0, false);
+                return $"{Globals.BytesToUint16(pkgByte[Properties.Resource.CrcModBus].ComponentContent, 0, false)}";
             }
 
-            return 0;
+            return string.Empty;
         }
     }
 }

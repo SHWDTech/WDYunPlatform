@@ -152,7 +152,7 @@ namespace SHWDTech.Platform.ProtocolService.ProtocolEncoding
         public byte[] GetCrcBytes()
         {
             var allBytes = GetBytes();
-            var finalBytes = new byte[allBytes.Length - 6];
+            var finalBytes = new byte[allBytes.Length - 12];
             Array.Copy(allBytes, 6, finalBytes, 0, finalBytes.Length);
             return finalBytes;
         }
