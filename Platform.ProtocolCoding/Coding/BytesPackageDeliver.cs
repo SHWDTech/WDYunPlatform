@@ -145,6 +145,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackIn-{current}", package)),
                     LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOut-{current}", package)),
                     RecordDateTime = DateTime.Now,
+                    Channel = current + 1,
                     DomainId = package.Device.DomainId
                 };
                 if (package.Device.DomainId == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))

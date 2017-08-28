@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -115,18 +116,38 @@ namespace Lampblack_Platform.Controllers
             var devIdentity = records[0].DeviceIdentity;
             var dev = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().First(d => d.Identity == devIdentity);
             var districtName = ProcessBase.GetDistrictName(hotel.DistrictId);
-            var rows = (from record in records
-                        select new HistoryDataTableRows
-                        {
-                            DistrictName = districtName,
-                            HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
-                            DeviceName = dev.DeviceName,
-                            CleanerSwitch = record.CleanerSwitch,
-                            CleanerCurrent = record.CleanerCurrent,
-                            FanSwitch = record.FanSwitch,
-                            FanCurrent = record.FanCurrent,
-                            DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
-                        }).ToList();
+            List<HistoryDataTableRows> rows;
+            if (WdContext.Domain.Id == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
+            {
+                rows = (from record in records
+                    select new HistoryDataTableRows
+                    {
+                        DistrictName = districtName,
+                        HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                        DeviceName = dev.DeviceName,
+                        Channel = record.Channel,
+                        CleanerSwitch = record.CleanerSwitch,
+                        CleanerCurrent = record.CleanerCurrent,
+                        FanSwitch = record.FanSwitch,
+                        FanCurrent = record.FanCurrent,
+                        DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                    }).ToList();
+            }
+            else
+            {
+                rows = (from record in records
+                    select new HistoryDataTableRows
+                    {
+                        DistrictName = districtName,
+                        HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                        DeviceName = dev.DeviceName,
+                        CleanerSwitch = record.CleanerSwitch,
+                        CleanerCurrent = record.CleanerCurrent,
+                        FanSwitch = record.FanSwitch,
+                        FanCurrent = record.FanCurrent,
+                        DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                    }).ToList();
+            }
 
             return JsonTable(new
             {

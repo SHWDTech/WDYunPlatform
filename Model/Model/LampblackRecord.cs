@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SHWDTech.Platform.Model.ModelBase;
 
@@ -6,10 +7,15 @@ namespace SHWDTech.Platform.Model.Model
 {
     public class LampblackRecord : DataModelBase
     {
-        [Index("Ix_Project_Device_RecordDateTime", IsClustered = true, Order = 0)]
+        [Required]
+        [Index("Ix_Domain_Project_Device_RecordDateTime", IsClustered = true, Order = 0)]
+        [Display(Name = "所属域ID")]
+        public override Guid DomainId { get; set; }
+
+        [Index("Ix_Domain_Project_Device_RecordDateTime", IsClustered = true, Order = 1)]
         public long ProjectIdentity { get; set; }
 
-        [Index("Ix_Project_Device_RecordDateTime", IsClustered = true, Order = 1)]
+        [Index("Ix_Domain_Project_Device_RecordDateTime", IsClustered = true, Order = 2)]
         public long DeviceIdentity { get; set; }
 
         public long ProtocolId { get; set; }
@@ -26,7 +32,9 @@ namespace SHWDTech.Platform.Model.Model
 
         public int LampblackOut { get; set; } = 0;
 
-        [Index("Ix_Project_Device_RecordDateTime", IsClustered = true, Order = 2)]
+        public int Channel { get; set; }
+
+        [Index("Ix_Domain_Project_Device_RecordDateTime", IsClustered = true, Order = 3)]
         public DateTime RecordDateTime { get; set; }
     }
 }

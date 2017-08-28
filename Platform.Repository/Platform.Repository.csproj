@@ -122,6 +122,10 @@
     <Compile Include="Migrations\201706010557527_Initial.Designer.cs">
       <DependentUpon>201706010557527_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708281551404_ModifyLampblackRecord.cs" />
+    <Compile Include="Migrations\201708281551404_ModifyLampblackRecord.Designer.cs">
+      <DependentUpon>201708281551404_ModifyLampblackRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -186,6 +190,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201706010557527_Initial.resx">
       <DependentUpon>201706010557527_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708281551404_ModifyLampblackRecord.resx">
+      <DependentUpon>201708281551404_ModifyLampblackRecord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
