@@ -147,6 +147,15 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     RecordDateTime = DateTime.Now,
                     DomainId = package.Device.DomainId
                 };
+                if (package.Device.DomainId == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
+                {
+                    record.CleanerCurrent =
+                        Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package));
+                    record.CleanerSwitch =
+                        Convert.ToBoolean(DecodeComponentDataByName($"FanSwitch-{current}", package));
+                    record.FanCurrent =
+                        Convert.ToInt32(DecodeComponentDataByName($"CleanerCurrent-{current}", package));
+                }
                 record.CleanerSwitch = record.CleanerCurrent > 4;
                 current++;
                 records.Add(record);
