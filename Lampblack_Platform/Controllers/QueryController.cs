@@ -127,9 +127,10 @@ namespace Lampblack_Platform.Controllers
                         DeviceName = dev.DeviceName,
                         Channel = record.Channel,
                         CleanerSwitch = record.CleanerSwitch,
-                        CleanerCurrent = record.CleanerCurrent,
+                        CleanerCurrent = Math.Round(record.CleanerCurrent / 90.0f, 2),
                         FanSwitch = record.FanSwitch,
                         FanCurrent = record.FanCurrent,
+                        Density = GetDensity(record.CleanerCurrent),
                         DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
                     }).ToList();
             }
@@ -154,6 +155,13 @@ namespace Lampblack_Platform.Controllers
                 total,
                 rows
             });
+        }
+
+        private static double GetDensity(int currrent)
+        {
+            var calc = (currrent / 90.0f - 4) / 1.6;
+            if (calc < 0) return 0;
+            return Math.Round(calc, 2);
         }
 
         public ActionResult RunningTime() => View();

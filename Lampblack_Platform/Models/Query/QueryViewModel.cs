@@ -120,6 +120,8 @@ namespace Lampblack_Platform.Models.Query
 
         public double FanCurrent { get; set; }
 
+        public double Density { get; set; }
+
         public string DateTime { get; set; }
     }
 }
