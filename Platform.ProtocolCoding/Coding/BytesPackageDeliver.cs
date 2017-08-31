@@ -114,6 +114,34 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                         cleanerSwitch.BooleanValue = true;
                     }
                     monitorDataList.Add(cleanerSwitch);
+                    if (package.Device.DomainId == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
+                    {
+                        var fans = monitorDataList.Where(d => d.CommandDataId == Guid.Parse("01323F2C-70C9-4073-A58C-77F10C819F9C")).ToList();
+                        foreach (var fan in fans)
+                        {
+                            var current = monitorDataList.FirstOrDefault(d =>
+                                d.CommandDataId == Guid.Parse("EEE9EC55-7E84-4176-BB90-C13962352BC2") &&
+                                d.DataChannel == fan.DataChannel);
+                            if (current != null)
+                            {
+                                current.DoubleValue = fan.DoubleValue;
+                            }
+                            fan.DoubleValue = 0;
+                        }
+
+                        var switchs = monitorDataList.Where(d =>
+                            d.CommandDataId == Guid.Parse("15802959-D25B-42AD-BE50-5B48DCE4039A")).ToList();
+                        foreach (var @switch in switchs)
+                        {
+                            var current = monitorDataList.FirstOrDefault(d =>
+                                d.CommandDataId == Guid.Parse("EEE9EC55-7E84-4176-BB90-C13962352BC2") &&
+                                d.DataChannel == @switch.DataChannel);
+                            if (current != null)
+                            {
+                                @switch.BooleanValue = current.DoubleValue > 4;
+                            }
+                        }
+                    }
                 }
             }
 
