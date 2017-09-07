@@ -266,11 +266,27 @@ namespace Platform.Process.Process
                     };
                     if (repo.Set<Device>().Any(dev => dev.ProjectId == hotel.Id))
                     {
-                        var lastRecord = RedisService.GetRedisDatabase().StringGet($"Hotel:CleanerCurrent:{hotel.Id}");
-                        double? rate = null;
-                        if (lastRecord.HasValue)
+                        var key = $"Hotel:CleanerCurrent:{hotel.Id}";
+                        var value = string.Empty;
+                        var cache = PlatformCaches.GetCache(key);
+                        if (cache == null)
                         {
-                            rate = double.Parse(lastRecord.ToString());
+                            var lastRecord = RedisService.MakeSureStringGet(key);
+                            if (lastRecord.HasValue)
+                            {
+                                PlatformCaches.Add(key, lastRecord.ToString(), true,
+                                    expireTimeSpan: TimeSpan.FromMinutes(5));
+                                value = lastRecord.ToString();
+                            }
+                        }
+                        else
+                        {
+                            value = cache.CacheItem.ToString();
+                        }
+                        double? rate = null;
+                        if (!string.IsNullOrWhiteSpace(value))
+                        {
+                            rate = double.Parse(value);
                         }
 
                         locat.Status = GetCleanRateByDeviceModel(rate, modelId);
