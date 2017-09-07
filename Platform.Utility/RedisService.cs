@@ -38,9 +38,10 @@ namespace SHWDTech.Platform.Utility
 
         public static RedisValue MakeSureStringGet(RedisKey key)
         {
+            var count = 0;
             var geted = false;
-            RedisValue value = "";
-            while (!geted)
+            var value  = new RedisValue();
+            while (!geted && count < 10)
             {
                 try
                 {
@@ -52,6 +53,8 @@ namespace SHWDTech.Platform.Utility
                     //LogService.Instance.Error("Redis StringGet Error", ex);
                     continue;
                 }
+                Thread.Sleep(10);
+                count++;
             }
 
             return value;

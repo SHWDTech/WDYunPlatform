@@ -171,9 +171,15 @@ namespace Platform.Process.Process
 
         private static double? GetCleanerCurrentFromRedis(string key)
         {
-            var current = RedisService.GetRedisDatabase().StringGet(key);
+            var webCache = PlatformCaches.GetCache(key);
+            if (webCache != null)
+            {
+                return double.Parse(webCache.CacheItem.ToString());
+            }
+            var current = RedisService.MakeSureStringGet(key);
             if (current.HasValue)
             {
+                PlatformCaches.Add(key, current, true, expireTimeSpan:TimeSpan.FromMinutes(3));
                 return double.Parse(current.ToString());
             }
             return null;

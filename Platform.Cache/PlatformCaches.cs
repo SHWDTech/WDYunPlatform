@@ -27,18 +27,26 @@ namespace Platform.Cache
         /// <param name="cacheItem"></param>
         /// <param name="expires"></param>
         /// <param name="cacheType"></param>
-        public static void Add(string name, object cacheItem, bool expires = true, string cacheType = "default")
+        /// <param name="expireTimeSpan"></param>
+        public static void Add(string name, object cacheItem, bool expires = true, string cacheType = "default", TimeSpan? expireTimeSpan = null)
         {
             var cache = GetCache(name);
             if (cache == null)
             {
-                cache = new PlatformCache()
+                cache = new PlatformCache
                 {
                     CacheItem = cacheItem,
                     CacheAddDateTIme = DateTime.Now,
-                    CacheType = cacheType,
-                    CacheExpireInterval = expires ? CacheExpireInterval.DefaultInterval : CacheExpireInterval.NonExpire
+                    CacheType = cacheType
                 };
+                if (expires)
+                {
+                    cache.CacheExpireInterval = expireTimeSpan ?? CacheExpireInterval.DefaultInterval;
+                }
+                else
+                {
+                    cache.CacheExpireInterval = CacheExpireInterval.NonExpire;
+                }
                 Instance.Add(name, cache);
             }
             else
