@@ -32,15 +32,17 @@ namespace SHWDTech.Platform.Utility
                 When = when,
                 Flags = flags
             };
-
-            StringSetQueue.Enqueue(element);
+            lock (StringSetQueue)
+            {
+                StringSetQueue.Enqueue(element);
+            }
         }
 
         public static RedisValue MakeSureStringGet(RedisKey key)
         {
             var count = 0;
             var geted = false;
-            var value  = new RedisValue();
+            var value = new RedisValue();
             while (!geted && count < 10)
             {
                 try
@@ -78,7 +80,10 @@ namespace SHWDTech.Platform.Utility
                 catch (Exception)
                 {
                     //LogService.Instance.Error("Redis StringSet Error", ex);
-                    StringSetQueue.Enqueue(set);
+                    lock (StringSetQueue)
+                    {
+                        StringSetQueue.Enqueue(set);
+                    }
                 }
             }
         }
