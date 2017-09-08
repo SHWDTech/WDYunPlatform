@@ -16,7 +16,7 @@ namespace Lampblack_Platform.Common
             FirmwareSetGuid = (Guid) configs["firmwareSetGuid"];
             LoginName = ConfigurationManager.AppSettings["LoginName"];
             District = ConfigurationManager.AppSettings["District"];
-            RedisDbObject = ConnectionMultiplexer.Connect("localhost").GetDatabase();
+            RedisDbObject = ConnectionMultiplexer.Connect("139.224.105.103").GetDatabase();
         }
 
         /// <summary>
