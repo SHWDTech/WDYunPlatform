@@ -220,9 +220,9 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     UpdateTime = record.RecordDateTime.Ticks
                 };
                 RedisService.StringSetInQueue($"Device:DeviceCurrentStatus:{package.Device.Id}",
-                    JsonConvert.SerializeObject(deviceCurrentStatus), TimeSpan.FromMinutes(2));
+                    JsonConvert.SerializeObject(deviceCurrentStatus), TimeSpan.FromMinutes(4));
                 RedisService.StringSetInQueue($"Hotel:CleanerCurrent:{package.Device.ProjectId}",
-                    $"{record.CleanerCurrent}", TimeSpan.FromMinutes(2));
+                    $"{record.CleanerCurrent}", TimeSpan.FromMinutes(4));
             }
             catch (Exception ex)
             {
