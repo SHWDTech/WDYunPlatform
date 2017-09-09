@@ -155,7 +155,7 @@ namespace Platform.Process.Process
         public DeviceCurrentStatus GetDeviceCurrentStatus(Guid deviceGuid)
         {
             var devIdentity = Repo<RestaurantDeviceRepository>().GetModelById(deviceGuid).Identity;
-            var statusStr = RedisService.GetRedisDatabase().StringGet($"Device:DeviceCurrentStatus:{deviceGuid}");
+            var statusStr = RedisService.MakeSureStringGet($"Device:DeviceCurrentStatus:{deviceGuid}");
             var status = statusStr.HasValue ? JsonConvert.DeserializeObject<DeviceCurrentStatus>(statusStr.ToString()) : new DeviceCurrentStatus();
             status.CleanRate = GetCleanRate(status.CleanerCurrent, devIdentity);
 

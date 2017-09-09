@@ -44,17 +44,6 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
-        //[AjaxGet]
-        //public ActionResult HotelCurrentStatus(Guid hotelGuid)
-        //{
-        //    var currentStatus = new IndexHotelCurrentViewModel(ProcessInvoke<HotelRestaurantProcess>().GetHotelCurrentStatus(hotelGuid));
-
-        //    return Json(new JsonStruct
-        //    {
-        //        Result = currentStatus
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
-
         [AjaxGet]
         public ActionResult DeviceCurrentStatus(Guid hotelGuid)
         {
