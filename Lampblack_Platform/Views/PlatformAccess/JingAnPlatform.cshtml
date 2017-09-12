@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center text-main-reverse">静安区平台设备接入管理</h4>
+            </div>
+            <div class="panel-body">
+                <div class="control-layer horizontal-group">
+                    <span class="span80" style="margin-left: 10px;">设备名称：</span>
+                    <input type="text" class="form-control" name="queryName" id="queryName" value="" style="width: 180px;" />
+                    <input type="submit" class="btn btn-main" value="查询" id="jinganDevQuery" />
+                </div>
+                <div class="table-layer">
+                    @{
+                        var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+                        {
+                            id = "jingan_platform",
+                            data_page_size = 25,
+                            data_reset_offset = true
+                        });
+                        var builder = table.Column("所属区县", "DistrictName")
+                            .Column("酒店名称", "ProjectName")
+                            .Column("详细地址", "Address")
+                            .Column("经度", "Longitude")
+                            .Column("纬度", "Latitude")
+                            .Column("接入状态", "AccessStatus")
+                            .Column("操作", "Operate")
+                            .Apply(ColumnOption.width, "100")
+                            .Apply(ColumnOption.formatter, "jinganHotelOperateFormatter")
+                            .Apply(ColumnOption.events, "jinganHotelEvents");
+                    }
+                    @(builder)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    window.jinganHotelOperateFormatter = function() {
+        return [
+            '<a class="btn btn-main register" href="javascript:void(0)" title="编辑设备">注册</a>'
+        ].join('');
+    };
+
+    window.jinganHotelEvents = {
+        'click .register': function (e, value, row) {
+            base.AjaxGet("/PlatformAccess/JinganRegister", { id: row.Id }, function (obj) {
+                
+            });
+        }
+    };
+
+    $(function () {
+        var devqp = {
+            QueryName: $('#queryName').val()
+        }
+
+        $('#jingan_platform').bootstrapTable({
+            url: '/PlatformAccess/JinganAccessTable',
+            queryParams: function (params) {
+                params.QueryName = devqp.QueryName;
+                return params;
+            },
+            height: $('#jingan_platform').parents('.float-card').height() - 170
+        });
+
+        $('#jinganDevQuery').on('click', function () {
+            devqp = {
+                QueryName: $('#queryName').val()
+            }
+            $('#jingan_platform').bootstrapTable('refresh',
+                {
+                    url: '/PlatformAccess/JinganAccessTable'
+                });
+        });
+    });
+</script>

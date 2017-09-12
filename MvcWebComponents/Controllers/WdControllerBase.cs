@@ -76,7 +76,7 @@ namespace MvcWebComponents.Controllers
             }
         }
 
-        protected T ProcessInvoke<T>() where T : ProcessBase, new() => new T()
+        protected T ProcessInvoke<T>() where T : ProcessBase, new() => new T
         {
             RepositoryContext = new RepositoryContext
             {
@@ -94,7 +94,7 @@ namespace MvcWebComponents.Controllers
         {
             if (Request.IsAjaxRequest()) return PartialView();
 
-            var model = new ViewModelBase()
+            var model = new ViewModelBase
             {
                 Context = WdContext
             };
@@ -141,7 +141,7 @@ namespace MvcWebComponents.Controllers
         /// <returns></returns>
         protected JsonResult Json(string message, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
         {
-            var json = new JsonStruct()
+            var json = new JsonStruct
             {
                 Message = message,
             };
@@ -158,7 +158,7 @@ namespace MvcWebComponents.Controllers
         /// <returns></returns>
         protected JsonResult Json(string message, object data, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
         {
-            var json = new JsonStruct()
+            var json = new JsonStruct
             {
                 Message = message,
                 Result = data
@@ -175,7 +175,7 @@ namespace MvcWebComponents.Controllers
         /// <returns></returns>
         protected new JsonResult Json(object data, JsonRequestBehavior requestBehavior = JsonRequestBehavior.DenyGet)
         {
-            var json = new JsonStruct()
+            var json = new JsonStruct
             {
                 Result = data
             };

@@ -80,6 +80,7 @@
     <Compile Include="ViewDataModel\GeneralCompasion.cs" />
     <Compile Include="ViewDataModel\GeneralReport.cs" />
     <Compile Include="ViewDataModel\HotelCleaness.cs" />
+    <Compile Include="ViewDataModel\JinganPlatformInfo.cs" />
     <Compile Include="ViewModel\CleannessStatisticsViewModel.cs" />
     <Compile Include="ViewModel\DeviceActualStatusTable.cs" />
     <Compile Include="ViewModel\GeneralComparisonViewModel.cs" />

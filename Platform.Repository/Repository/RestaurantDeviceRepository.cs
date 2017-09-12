@@ -52,5 +52,28 @@ namespace SHWD.Platform.Repository.Repository
                 .Include("Project")
                 .Where(device => device.DeviceNodeId == nodeId)
                 .ToList();
+
+        public IQueryable<RestaurantDevice> GetRestaurantDeviceByArea(Guid district, Guid street, Guid address, List<Guid> userDistricts)
+        {
+            var query = GetAllModels().Include("Hotel").Include("Hotel.District");
+            if (userDistricts != null)
+            {
+                query = query.Where(d => userDistricts.Contains(d.Hotel.DistrictId));
+            }
+            if (district != Guid.Empty)
+            {
+                query = query.Where(d => d.Hotel.DistrictId == district);
+            }
+            if (street != Guid.Empty)
+            {
+                query = query.Where(d => d.Hotel.StreetId == street);
+            }
+            if (address != Guid.Empty)
+            {
+                query = query.Where(d => d.Hotel.AddressId == address);
+            }
+
+            return query;
+        }
     }
 }

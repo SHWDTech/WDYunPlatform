@@ -441,5 +441,10 @@ namespace SHWD.Platform.Repository.Entities
         /// 油烟监控记录
         /// </summary>
         public virtual DbSet<LampblackRecord> LampblackRecords { get; set; }
+
+        /// <summary>
+        /// 设备平台接入记录
+        /// </summary>
+        public virtual DbSet<PlatformAccess> PlatformAccesses { get; set; }
     }
 }

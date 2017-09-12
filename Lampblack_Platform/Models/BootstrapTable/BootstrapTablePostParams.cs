@@ -112,4 +112,9 @@ namespace Lampblack_Platform.Models.BootstrapTable
 
         public string QueryName { get; set; }
     }
+
+    public class JinganPlatfromDevice : BootstrapTablePostParams
+    {
+        public string QueryName { get; set; }
+    }
 }

@@ -52,8 +52,6 @@ namespace Lampblack_Platform.Controllers
 
             var queryName = Request["queryName"];
 
-            int count;
-
             var area = string.IsNullOrWhiteSpace(Request["AreaGuid"]) ? Guid.Empty : Guid.Parse(Request["AreaGuid"]);
 
             var street = string.IsNullOrWhiteSpace(Request["StreetGuid"]) ? Guid.Empty : Guid.Parse(Request["StreetGuid"]);
@@ -76,7 +74,7 @@ namespace Lampblack_Platform.Controllers
             }
 
             var hotelList = ProcessInvoke<HotelRestaurantProcess>()
-                .GetPagedHotelRestaurant(page, pageSize, queryName, out count, conditions);
+                .GetPagedHotelRestaurant(page, pageSize, queryName, out var count, conditions);
 
             var model = new MapHotelViewModel
             {

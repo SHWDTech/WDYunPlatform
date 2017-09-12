@@ -193,6 +193,7 @@
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\MonitorInfoListController.cs" />
+    <Compile Include="Controllers\PlatformAccessController.cs" />
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Models\Management\ManagementViewModels.cs" />
     <Compile Include="Models\MonitorInfo.cs" />
     <Compile Include="Models\Monitor\MonitorViewModels.cs" />
+    <Compile Include="Models\PlatfromAccess\JinganEnterBaseInfo.cs" />
     <Compile Include="Models\Query\QueryViewModel.cs" />
     <Compile Include="Models\System\SystemViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -557,6 +559,7 @@
     <Content Include="Views\Shared\_unComplete.cshtml" />
     <Content Include="Views\Management\EditDeviceMaintenance.cshtml" />
     <Content Include="Views\Management\ManualAlarm.cshtml" />
+    <Content Include="Views\PlatformAccess\JingAnPlatform.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -566,6 +569,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JingAnWebService\JingAnWebService.csproj">
+      <Project>{46b281fd-bdb0-4013-853a-0912e46afd1b}</Project>
+      <Name>JingAnWebService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Platform.Model.csproj">
       <Project>{e4e9c8a0-e605-484c-b14e-5f9302a71386}</Project>
       <Name>Platform.Model</Name>

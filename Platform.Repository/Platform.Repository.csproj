@@ -87,6 +87,7 @@
     <Compile Include="IRepository\IDeviceModelRepository.cs" />
     <Compile Include="IRepository\ILampblackDeviceModelRepository.cs" />
     <Compile Include="IRepository\ILampblackUserRepository.cs" />
+    <Compile Include="IRepository\IPlatfromAccessRepository.cs" />
     <Compile Include="IRepository\IProtocolCommandRepository.cs" />
     <Compile Include="IRepository\IProtocolRepository.cs" />
     <Compile Include="IRepository\IDeviceTypeRepository.cs" />
@@ -126,6 +127,14 @@
     <Compile Include="Migrations\201708281551404_ModifyLampblackRecord.Designer.cs">
       <DependentUpon>201708281551404_ModifyLampblackRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709120752254_AddPlatfromAccess.cs" />
+    <Compile Include="Migrations\201709120752254_AddPlatfromAccess.Designer.cs">
+      <DependentUpon>201709120752254_AddPlatfromAccess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709121135010_ModifyColumnNameOfPlatformAccess.cs" />
+    <Compile Include="Migrations\201709121135010_ModifyColumnNameOfPlatformAccess.Designer.cs">
+      <DependentUpon>201709121135010_ModifyColumnNameOfPlatformAccess.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -150,6 +159,7 @@
     <Compile Include="Repository\PermissionRepository.cs" />
     <Compile Include="Repository\PhotoRepository.cs" />
     <Compile Include="Repository\ParticulateMatterProjectRepository.cs" />
+    <Compile Include="Repository\PlatformRepository.cs" />
     <Compile Include="Repository\ProtocolCommandRepository.cs" />
     <Compile Include="Repository\ProtocolDataRepository.cs" />
     <Compile Include="Repository\ProtocolRepository.cs" />
@@ -193,6 +203,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708281551404_ModifyLampblackRecord.resx">
       <DependentUpon>201708281551404_ModifyLampblackRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709120752254_AddPlatfromAccess.resx">
+      <DependentUpon>201709120752254_AddPlatfromAccess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709121135010_ModifyColumnNameOfPlatformAccess.resx">
+      <DependentUpon>201709121135010_ModifyColumnNameOfPlatformAccess.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://standbaseinfo.web.ths.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="IInsertBaseInfoService" targetNamespace="http://standbaseinfo.web.ths.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://standbaseinfo.web.ths.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addEnterBaseInfo" type="tns:addEnterBaseInfo" />
+      <xs:element name="addEnterBaseInfoResponse" type="tns:addEnterBaseInfoResponse" />
+      <xs:complexType name="addEnterBaseInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="jsons" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addEnterBaseInfoResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="addEnterBaseInfoResponse">
+    <wsdl:part name="parameters" element="tns:addEnterBaseInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="addEnterBaseInfo">
+    <wsdl:part name="parameters" element="tns:addEnterBaseInfo" />
+  </wsdl:message>
+  <wsdl:portType name="IInsertBaseInfo">
+    <wsdl:operation name="addEnterBaseInfo">
+      <wsdl:input name="addEnterBaseInfo" message="tns:addEnterBaseInfo" />
+      <wsdl:output name="addEnterBaseInfoResponse" message="tns:addEnterBaseInfoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IInsertBaseInfoServiceSoapBinding" type="tns:IInsertBaseInfo">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="addEnterBaseInfo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addEnterBaseInfo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addEnterBaseInfoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IInsertBaseInfoService">
+    <wsdl:port name="IInsertBaseInfoPort" binding="tns:IInsertBaseInfoServiceSoapBinding">
+      <soap:address location="http://101.230.224.77:8075/webservice/services/addEnterBaseInfo" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
