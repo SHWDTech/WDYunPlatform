@@ -66,7 +66,7 @@ namespace Lampblack_Platform.Controllers
             {
                 new JinganEnterBaseInfo
                 {
-                    ENTER_ID = hotel.ProjectCode,
+                    ENTER_ID = hotel.Id.ToString().ToLower(),
                     ENTER_NAME = hotel.ProjectName,
                     ADDRESS = hotel.AddressDetail,
                     LONGITUDE = $"{hotel.Longitude}",

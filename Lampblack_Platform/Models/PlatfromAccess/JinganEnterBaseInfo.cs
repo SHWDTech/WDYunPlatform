@@ -37,4 +37,29 @@ namespace Lampblack_Platform.Models.PlatfromAccess
     {
         public string MESSAGE { get; set; }
     }
+
+    public class JinganDeviceBaseInfo
+    {
+        public string ENTER_ID { get; set; }
+
+        public string DEVICE_NAME { get; set; }
+
+        public string DEVICE_CODE { get; set; }
+
+        public string PRODUCTION_DATE { get; set; }
+
+        public string DEVICE_STATE { get; set; }
+
+        public string CHANNEL_NUM { get; set; }
+
+        public string CLEAN_LINESS { get; set; }
+
+        public string LAMPBLACK_VALUE { get; set; }
+
+        public string PURIFIER_STATE { get; set; }
+
+        public string FAN_STATE { get; set; }
+
+        public string MONITORTIME { get; set; }
+    }
 }

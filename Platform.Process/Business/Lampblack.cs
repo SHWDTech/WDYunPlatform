@@ -30,5 +30,22 @@ namespace Platform.Process.Business
             }
             return current < rate.Qualified ? CleanessRateResult.Qualified : CleanessRateResult.Good;
         }
+
+        public static int GetCleanessNumRate(double? current, CleanessRate rate)
+        {
+            if (current == null)
+            {
+                return 3;
+            }
+            if (current < rate.Fail)
+            {
+                return 2;
+            }
+            if (current < rate.Worse)
+            {
+                return 2;
+            }
+            return 1;
+        }
     }
 }

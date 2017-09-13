@@ -29,6 +29,7 @@ namespace Lampblack_Platform
 
             GlobalInitial();
             SetRepositoryFilter();
+            StartSchedu();
         }
 
         /// <summary>
@@ -80,6 +81,11 @@ namespace Lampblack_Platform
                                                       || (obj.ParentDictionary != null && obj.ParentDictionaryId == districtId)
                                                       || (obj.ParentDictionary != null && obj.ParentDictionary.ParentDictionary != null && obj.ParentDictionary.ParentDictionaryId == districtId));
             HotelRestaurantRepository.Filter = (obj => obj.DistrictId == districtId);
+        }
+
+        private void StartSchedu()
+        {
+            
         }
     }
 }
