@@ -7,9 +7,12 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lampblack_Platform.Common;
+using Lampblack_Platform.Schedule;
 using MvcWebComponents.Controllers;
 using Platform.Cache;
 using Platform.Process.Process;
+using Quartz;
+using Quartz.Impl;
 using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
@@ -83,9 +86,21 @@ namespace Lampblack_Platform
             HotelRestaurantRepository.Filter = (obj => obj.DistrictId == districtId);
         }
 
-        private void StartSchedu()
+        private static void StartSchedu()
         {
-            
+            var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+
+            scheduler.Start();
+
+            var job = JobBuilder.Create<JinganFifteenDataPostJob>()
+                .Build();
+
+            var trigger = TriggerBuilder.Create()
+                .StartNow()
+                .WithSimpleSchedule(x => x.WithIntervalInMinutes(15).RepeatForever())
+                .Build();
+
+            scheduler.ScheduleJob(job, trigger);
         }
     }
 }

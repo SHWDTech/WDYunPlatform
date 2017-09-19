@@ -10,7 +10,6 @@ using Platform.Process.Business;
 using Quartz;
 using SHWD.Platform.Repository.Entities;
 using SHWDTech.Platform.Model.Business;
-using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
 using WebViewModels.Enums;
 
@@ -52,26 +51,33 @@ namespace Lampblack_Platform.Schedule
                 {
                     var pData = ctx.ProtocolDatas.FirstOrDefault(p =>
                         p.DomainId == _domainId && p.DeviceIdentity == dev.Identity && p.UpdateTime > checkDate);
-                    MonitorData current = null;
+                    var post = new JinganDeviceBaseInfo();
                     if (pData != null)
                     {
-                        current = ctx.MonitorDatas.FirstOrDefault(d => d.DomainId == _domainId
-                                                                       && d.ProjectIdentity == dev.ProjectIdentity
-                                                                       && d.DeviceIdentity == dev.Identity
-                                                                       && d.ProtocolDataId == pData.Id
-                                                                       && d.CommandDataId ==
-                                                                       CommandDataId.CleanerCurrent);
+                        var current = ctx.MonitorDatas.FirstOrDefault(d => d.DomainId == _domainId
+                                                                                   && d.ProjectIdentity == dev.ProjectIdentity
+                                                                                   && d.DeviceIdentity == dev.Identity
+                                                                                   && d.ProtocolDataId == pData.Id
+                                                                                   && d.CommandDataId ==
+                                                                                   CommandDataId.CleanerCurrent);
+                        post.ENTER_ID = dev.ProjectId.ToString().ToLower();
+                        post.DEVICE_NAME = dev.DeviceCode;
+                        post.DEVICE_CODE = dev.DeviceNodeId;
+                        post.DEVICE_STATE = "1";
+                        post.CLEAN_LINESS = $"{GetCleanRate(current?.DoubleValue, dev.DeviceModelId)}";
+                        post.LAMPBLACK_VALUE = CalcDensity(current?.DoubleValue);
+                        post.MONITORTIME = $"{current?.UpdateTime:yyyy-MM-dd HH:mm:ss}";
                     }
-                    var post = new JinganDeviceBaseInfo
+                    else
                     {
-                        ENTER_ID = dev.ProjectId.ToString().ToLower(),
-                        DEVICE_NAME = dev.DeviceCode,
-                        DEVICE_CODE = dev.DeviceNodeId,
-                        DEVICE_STATE = "1",
-                        CLEAN_LINESS = $"{GetCleanRate(current?.DoubleValue, dev.DeviceModelId)}",
-                        LAMPBLACK_VALUE = CalcDensity(current?.DoubleValue),
-                        MONITORTIME = current == null ? "" : $"{current.UpdateTime:yyyy-MM-dd HH:mm:ss}"
-                    };
+                        post.ENTER_ID = dev.ProjectId.ToString().ToLower();
+                        post.DEVICE_NAME = dev.DeviceCode;
+                        post.DEVICE_CODE = dev.DeviceNodeId;
+                        post.DEVICE_STATE = "0";
+                        post.CLEAN_LINESS = "3";
+                        post.LAMPBLACK_VALUE = "-1";
+                        post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+                    }
                     dataList.Add(post);
                 }
             }
@@ -86,7 +92,7 @@ namespace Lampblack_Platform.Schedule
 
         private string CalcDensity(double? current)
         {
-            if (current == null) return "";
+            if (current == null || current < 0.001) return "0";
             return $"{Math.Round(4 - current.Value / 200, 3)}";
         }
 
