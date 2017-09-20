@@ -39,6 +39,7 @@ namespace Lampblack_Platform.Schedule
                     .Include("Project")
                     .Include("LampblackDeviceModel")
                     .Select(d => new {d.Id,
+                        d.DeviceName,
                         d.Identity,
                         d.ProjectId,
                         d.DeviceCode,
@@ -51,7 +52,12 @@ namespace Lampblack_Platform.Schedule
                 {
                     var pData = ctx.ProtocolDatas.FirstOrDefault(p =>
                         p.DomainId == _domainId && p.DeviceIdentity == dev.Identity && p.UpdateTime > checkDate);
-                    var post = new JinganDeviceBaseInfo();
+                    var post = new JinganDeviceBaseInfo
+                    {
+                        ENTER_ID = dev.ProjectId.ToString().ToLower(),
+                        DEVICE_NAME = dev.DeviceName,
+                        DEVICE_CODE = dev.DeviceNodeId
+                    };
                     if (pData != null)
                     {
                         var current = ctx.MonitorDatas.FirstOrDefault(d => d.DomainId == _domainId
@@ -60,9 +66,7 @@ namespace Lampblack_Platform.Schedule
                                                                                    && d.ProtocolDataId == pData.Id
                                                                                    && d.CommandDataId ==
                                                                                    CommandDataId.CleanerCurrent);
-                        post.ENTER_ID = dev.ProjectId.ToString().ToLower();
-                        post.DEVICE_NAME = dev.DeviceCode;
-                        post.DEVICE_CODE = dev.DeviceNodeId;
+                        
                         post.DEVICE_STATE = "1";
                         post.CLEAN_LINESS = $"{GetCleanRate(current?.DoubleValue, dev.DeviceModelId)}";
                         post.LAMPBLACK_VALUE = CalcDensity(current?.DoubleValue);
@@ -70,9 +74,6 @@ namespace Lampblack_Platform.Schedule
                     }
                     else
                     {
-                        post.ENTER_ID = dev.ProjectId.ToString().ToLower();
-                        post.DEVICE_NAME = dev.DeviceCode;
-                        post.DEVICE_CODE = dev.DeviceNodeId;
                         post.DEVICE_STATE = "0";
                         post.CLEAN_LINESS = "3";
                         post.LAMPBLACK_VALUE = "-1";
