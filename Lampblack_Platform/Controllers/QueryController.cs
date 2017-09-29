@@ -113,14 +113,14 @@ namespace Lampblack_Platform.Controllers
             var total = query.Count();
             if (total == 0) return null;
             var records = query.OrderByDescending(o => o.RecordDateTime).Skip(post.offset).Take(post.limit).ToList();
-            var devIdentity = records[0].DeviceIdentity;
-            var dev = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().First(d => d.Identity == devIdentity);
+            var devs = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().Where(d => d.ProjectId == post.Hotel).ToList();
             var districtName = ProcessBase.GetDistrictName(hotel.DistrictId);
             List<HistoryDataTableRows> rows;
             if (WdContext.Domain.Id == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
             {
                 rows = (from record in records
-                    select new HistoryDataTableRows
+                        let dev = devs.First(d => d.Identity == record.DeviceIdentity)
+                        select new HistoryDataTableRows
                     {
                         DistrictName = districtName,
                         HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
@@ -137,7 +137,8 @@ namespace Lampblack_Platform.Controllers
             else
             {
                 rows = (from record in records
-                    select new HistoryDataTableRows
+                    let dev = devs.First(d => d.Identity == record.DeviceIdentity)
+                        select new HistoryDataTableRows
                     {
                         DistrictName = districtName,
                         HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
