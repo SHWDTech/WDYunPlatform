@@ -26,7 +26,7 @@ namespace Lampblack_Platform.Controllers
                 {
                     var enterp = new Enterprise
                     {
-                        QYBM = $"QDHP{dev.Hotel.ProjectCode}{dev.Hotel.Identity:D4}{endfix:D2}",
+                        QYBM = $"QDHB{dev.Hotel.Identity:D4}{endfix:D2}",
                         QYMC = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
                         QYDZ = dev.Hotel.AddressDetail,
                         PER = dev.Hotel.ChargeMan,
@@ -34,7 +34,7 @@ namespace Lampblack_Platform.Controllers
                         QYSTREET = dev.Hotel.Street.ItemValue,
                         XPOS = dev.Hotel.Longitude.ToString(),
                         YPOS = dev.Hotel.Latitude.ToString(),
-                        CASE_ID = $"QDHP{dev.Identity:D6}",
+                        CASE_ID = $"QDHB{dev.Identity:D6}",
                         CASE_NAM = $"{(char)alpha}设备箱"
                     };
 

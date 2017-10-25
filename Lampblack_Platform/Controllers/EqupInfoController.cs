@@ -16,19 +16,21 @@ namespace Lampblack_Platform.Controllers
             {
                 var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
                 var model = new EqupInfo();
-                var devs = ProcessInvoke<RestaurantDeviceProcess>()
+                var devsGroup = ProcessInvoke<RestaurantDeviceProcess>()
                     .DevicesInDistrict(area.Id, device => device.Status == DeviceStatus.Enabled)
-                    .OrderBy(d=> d.Identity).ToList();
-                foreach (var dev in devs)
+                    .OrderBy(d=> d.Identity)
+                    .GroupBy(dev => dev.Hotel);
+                foreach (var group in devsGroup)
                 {
+                    var ordered = group.OrderBy(d => d.Identity);
                     var alpha = 65;
-                    foreach (var channel in dev.InUsingChannels)
+                    foreach (var dev in ordered)
                     {
                         var equpFan = new Equp
                         {
-                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}{channel}1",
+                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}1",
                             EQUP_NAM = $"风机{(char)alpha}",
-                            CASE_ID = $"QDHP{dev.Identity:D6}",
+                            CASE_ID = $"QDHB{dev.Identity:D6}",
                             EQUP_TYP = "风机",
                             EQUP_MOD = "",
                             EQUP_LIM = ""
@@ -37,9 +39,9 @@ namespace Lampblack_Platform.Controllers
 
                         var equpCleaner = new Equp
                         {
-                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}{channel}2",
+                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}2",
                             EQUP_NAM = $"净化器{(char)alpha}",
-                            CASE_ID = $"QDHP{dev.Identity:D6}",
+                            CASE_ID = $"QDHB{dev.Identity:D6}",
                             EQUP_TYP = "净化器",
                             EQUP_MOD = "",
                             EQUP_LIM = ""
@@ -48,9 +50,9 @@ namespace Lampblack_Platform.Controllers
 
                         var equpRate = new Equp
                         {
-                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}{channel}3",
+                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}3",
                             EQUP_NAM = $"清洁度{(char)alpha}",
-                            CASE_ID = $"QDHP{dev.Identity:D6}",
+                            CASE_ID = $"QDHB{dev.Identity:D6}",
                             EQUP_TYP = "清洁度",
                             EQUP_MOD = "0.001",
                             EQUP_LIM = "0.6||0.1"
