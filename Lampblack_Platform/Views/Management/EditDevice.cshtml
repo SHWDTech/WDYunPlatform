@@ -62,9 +62,10 @@
                 <td>
                     @Html.EnumDropDownListFor(m => m.Status, null, new {@class = "form-control"})
                 </td>
-                <td>@Html.LabelFor(m => m.ChannelCount)</td>
+                <td>@Html.LabelFor(m => m.InUsingChannelString)</td>
                 <td>
-                    @Html.TextBoxFor(m => m.ChannelCount, new { @class = "form-control", placeholder = "启用通道数" })
+                    @Html.TextBoxFor(m => m.InUsingChannelString, new { @class = "form-control", placeholder = "使用中的通道" })
+                    @Html.ValidationMessageFor(m => m.InUsingChannelString, null, new { @class = "text-danger" })
                 </td>
             </tr>
             <tr>

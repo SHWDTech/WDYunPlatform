@@ -354,6 +354,11 @@ namespace Lampblack_Platform.Controllers
         [NamedAuth(Modules = nameof(Device))]
         public ActionResult EditDevice(RestaurantDevice model)
         {
+            if (!DeviceValidCheck(model))
+            {
+                GetDeviceRelatedItems();
+                return View(model);
+            }
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
 
             if (model.Id == Guid.Empty)
@@ -371,6 +376,26 @@ namespace Lampblack_Platform.Controllers
 
             return RedirectToAction("SubmitSuccess", nameof(Common),
                 new { targetAction = nameof(EditDevice), targetcontroller = "Management", target = "slide-up-content", postform = "device" });
+        }
+
+        private bool DeviceValidCheck(RestaurantDevice model)
+        {
+            if (string.IsNullOrWhiteSpace(model.InUsingChannelString))
+            {
+                ModelState.AddModelError(nameof(model.InUsingChannelString), @"使用中的通道不能为空");
+                return false;
+            }
+            try
+            {
+                model.InUsingChannelString.Split(',').Select(int.Parse).ToArray();
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(nameof(model.InUsingChannelString), @"通道信息填写错误");
+                return false;
+            }
+
+            return true;
         }
 
         [NamedAuth(Modules = nameof(Device))]

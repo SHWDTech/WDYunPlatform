@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
 using Newtonsoft.Json;
 using PagedList;
 using Platform.Cache;
@@ -113,13 +114,16 @@ namespace Platform.Process.Process
             }
         }
 
-        public List<RestaurantDevice> DevicesInDistrict(Guid districtId)
+        public List<RestaurantDevice> DevicesInDistrict(Guid districtId, Expression<Func<RestaurantDevice, bool>> exp = null)
         {
             var district = Repo<UserDictionaryRepository>().GetModelById(districtId);
 
             using (var repo = Repo<RestaurantDeviceRepository>())
             {
-                return repo.GetModelsInclude(obj => obj.Hotel.DistrictId == district.Id, new List<string> {"Hotel", "Hotel.RaletedCompany" }).ToList();
+                var models = repo.GetAllModels();
+                models = models.Include("Hotel").Include("Hotel.RaletedCompany");
+                if (exp != null) models = models.Where(exp);
+                return models.Where(obj => obj.Hotel.DistrictId == district.Id).ToList();
             }
         }
 

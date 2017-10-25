@@ -12,29 +12,39 @@ namespace Lampblack_Platform.Controllers
         {
             var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
             var model = new EnterpriseInfo();
-            var hotels =
-                    ProcessInvoke<HotelRestaurantProcess>()
-                        .HotelsInDistrict(area.Id);
-            foreach (var hotel in hotels)
+            var devsGroup = ProcessInvoke<RestaurantDeviceProcess>()
+                .DevicesInDistrict(area.Id, device => device.Status == DeviceStatus.Enabled)
+                .OrderBy(d => d.Identity)
+                .GroupBy(dev => dev.Hotel);
+            foreach (var group in devsGroup)
             {
-                var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
-                if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
-                var enterp = new Enterprise
+                var ordered = group.OrderBy(d => d.Identity);
+                var alpha = 65;
+                int? endfix = null;
+                if (group.Count() > 1) endfix = 1;
+                foreach (var dev in ordered)
                 {
-                    QYBM = hotel.ProjectCode,
-                    QYMC = $"{hotel.RaletedCompany.CompanyName}({hotel.ProjectName})",
-                    QYDZ = hotel.AddressDetail,
-                    PER = hotel.ChargeMan,
-                    TEL = hotel.Telephone,
-                    QYSTREET = hotel.Street.ItemValue,
-                    XPOS = hotel.Longitude.ToString(),
-                    YPOS = hotel.Latitude.ToString()
-                };
-                var dev = devs.OrderBy(d => d.Identity).First();
-                enterp.CASE_ID = $"QDHP{hotel.Identity:D6}";
-                enterp.CASE_NAM = dev.DeviceName;
+                    var enterp = new Enterprise
+                    {
+                        QYBM = $"QDHP{dev.Hotel.ProjectCode}{dev.Hotel.Identity:D4}{endfix:D2}",
+                        QYMC = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                        QYDZ = dev.Hotel.AddressDetail,
+                        PER = dev.Hotel.ChargeMan,
+                        TEL = dev.Hotel.Telephone,
+                        QYSTREET = dev.Hotel.Street.ItemValue,
+                        XPOS = dev.Hotel.Longitude.ToString(),
+                        YPOS = dev.Hotel.Latitude.ToString(),
+                        CASE_ID = $"QDHP{dev.Identity:D6}",
+                        CASE_NAM = $"{(char)alpha}设备箱"
+                    };
 
-                model.data.Add(enterp);
+                    model.data.Add(enterp);
+                    alpha++;
+                    if (endfix != null)
+                    {
+                        endfix++;
+                    }
+                }
             }
 
             model.result = "success";

@@ -160,7 +160,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             var records = new List<LampblackRecord>();
             var current = 0;
 
-            while (current <= dev.ChannelCount - 1)
+            while (dev.InUsingChannels.Contains(current + 1) && current < dev.ChannelCount)
             {
                 var record = new LampblackRecord
                 {

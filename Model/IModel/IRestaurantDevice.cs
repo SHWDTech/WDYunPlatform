@@ -137,6 +137,6 @@ namespace SHWDTech.Platform.Model.IModel
         /// <summary>
         /// 启用通道数
         /// </summary>
-        int ChannelCount { get; set; }
-}
+        int ChannelCount { get; }
+    }
 }

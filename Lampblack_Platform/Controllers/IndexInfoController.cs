@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Lampblack_Platform.Models;
 using MvcWebComponents.Controllers;
 using Platform.Process.Process;
@@ -14,44 +13,43 @@ namespace Lampblack_Platform.Controllers
         {
             var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
             var model = new IndexInfo();
-            var hotels =
-                   ProcessInvoke<HotelRestaurantProcess>()
-                       .HotelsInDistrict(area.Id);
+            var devs = ProcessInvoke<RestaurantDeviceProcess>()
+                .DevicesInDistrict(area.Id, device => device.Status == DeviceStatus.Enabled);
             var checkDate = DateTime.Now.AddMinutes(-2);
 
-            foreach (var hotel in hotels)
+            foreach (var dev in devs)
             {
                 try
                 {
-                    var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
-                    if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
-                    var device = devs.OrderBy(d => d.Identity).First(obj => obj.Status == DeviceStatus.Enabled);
-                    var monitorDatas = ProcessInvoke<MonitorDataProcess>()
-                        .GetDeviceCleanerCurrent(device, checkDate);
-                    if (monitorDatas?.DoubleValue == null) continue;
-                    var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                    var fan = new Index
+                    foreach (var channel in dev.InUsingChannels)
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}_01001",
-                        RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
-                    };
-                    model.data.Add(fan);
-                    var cleaner = new Index
-                    {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}_01002",
-                        RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
-                    };
-                    model.data.Add(cleaner);
+                        var monitorDatas = ProcessInvoke<MonitorDataProcess>()
+                            .GetDeviceCleanerCurrent(dev, checkDate, channel - 1);
+                        if (monitorDatas?.DoubleValue == null) continue;
+                        var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                        var fan = new Index
+                        {
+                            EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}{channel}1",
+                            RMON_TIM = time,
+                            EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
+                        };
+                        model.data.Add(fan);
+                        var cleaner = new Index
+                        {
+                            EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}{channel}2",
+                            RMON_TIM = time,
+                            EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
+                        };
+                        model.data.Add(cleaner);
 
-                    var current = new Index
-                    {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(device.DeviceNodeId, 16)):D6}_01003",
-                        RMON_TIM = time,
-                        EQUP_VAL = monitorDatas.DoubleValue.Value.ToString("F4")
-                    };
-                    model.data.Add(current);
+                        var current = new Index
+                        {
+                            EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}{channel}3",
+                            RMON_TIM = time,
+                            EQUP_VAL = $"{monitorDatas.DoubleValue.Value/1000:F4}"
+                        };
+                        model.data.Add(current);
+                    }
                 }
                 catch (Exception ex)
                 {

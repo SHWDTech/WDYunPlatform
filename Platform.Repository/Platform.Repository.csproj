@@ -135,6 +135,10 @@
     <Compile Include="Migrations\201709121135010_ModifyColumnNameOfPlatformAccess.Designer.cs">
       <DependentUpon>201709121135010_ModifyColumnNameOfPlatformAccess.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710240145463_addInUsingChannel.cs" />
+    <Compile Include="Migrations\201710240145463_addInUsingChannel.Designer.cs">
+      <DependentUpon>201710240145463_addInUsingChannel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -209,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709121135010_ModifyColumnNameOfPlatformAccess.resx">
       <DependentUpon>201709121135010_ModifyColumnNameOfPlatformAccess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240145463_addInUsingChannel.resx">
+      <DependentUpon>201710240145463_addInUsingChannel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

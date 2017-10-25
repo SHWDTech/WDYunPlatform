@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.IModel;
 
@@ -34,7 +35,7 @@ namespace SHWDTech.Platform.Model.Model
         [MaxLength(50)]
         public virtual string CleanerName { get; set; }
 
-        [Display(Name ="净化器类型")]
+        [Display(Name = "净化器类型")]
         public virtual ClearnerType CleanerType { get; set; }
 
         [Display(Name = "净化器型号")]
@@ -66,7 +67,7 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "风机额定电压")]
         public virtual double FanRatedVoltage { get; set; }
 
-        [Display(Name ="风机最大电流")]
+        [Display(Name = "风机最大电流")]
         public virtual double FanMaxCurrent { get; set; }
 
         [Display(Name = "风机额定电流")]
@@ -116,7 +117,31 @@ namespace SHWDTech.Platform.Model.Model
         [Display(Name = "设备型号ID")]
         public virtual Guid? DeviceModelId { get; set; }
 
+        [NotMapped]
         [Display(Name = "启用通道数")]
-        public virtual int ChannelCount { get; set; } = 1;
+        public virtual int ChannelCount => InUsingChannels.Length;
+
+        [Display(Name = "使用中的通道")]
+        public virtual string InUsingChannelString { get; set; } = "1";
+
+        private int[] _inUsingChannels;
+
+        [NotMapped]
+        public virtual int[] InUsingChannels
+        {
+            get
+            {
+                if (_inUsingChannels != null) return _inUsingChannels;
+                try
+                {
+                    _inUsingChannels = InUsingChannelString.Split(',').Select(int.Parse).ToArray();
+                }
+                catch (Exception)
+                {
+                    _inUsingChannels = new int[0];
+                }
+                return _inUsingChannels;
+            }
+        }
     }
 }

@@ -16,46 +16,48 @@ namespace Lampblack_Platform.Controllers
             {
                 var area = ProcessInvoke<UserDictionaryProcess>().GetAreaByName("黄浦区");
                 var model = new EqupInfo();
-                var hotels =
-                    ProcessInvoke<HotelRestaurantProcess>()
-                        .HotelsInDistrict(area.Id);
-                foreach (var hotel in hotels)
+                var devs = ProcessInvoke<RestaurantDeviceProcess>()
+                    .DevicesInDistrict(area.Id, device => device.Status == DeviceStatus.Enabled)
+                    .OrderBy(d=> d.Identity).ToList();
+                foreach (var dev in devs)
                 {
-                    var devs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id);
-                    if (devs.Count(d => d.Status == DeviceStatus.Enabled) <= 0) continue;
-                    var device = devs.OrderBy(d => d.Identity).First(obj => obj.Status == DeviceStatus.Enabled);
-                    var equpFan = new Equp
+                    var alpha = 65;
+                    foreach (var channel in dev.InUsingChannels)
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01001",
-                        EQUP_NAM = "风机",
-                        CASE_ID = $"QDHP{device.Project.Identity:D6}",
-                        EQUP_TYP = "风机",
-                        EQUP_MOD = "",
-                        EQUP_LIM = ""
-                    };
-                    model.data.Add(equpFan);
+                        var equpFan = new Equp
+                        {
+                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}{channel}1",
+                            EQUP_NAM = $"风机{(char)alpha}",
+                            CASE_ID = $"QDHP{dev.Identity:D6}",
+                            EQUP_TYP = "风机",
+                            EQUP_MOD = "",
+                            EQUP_LIM = ""
+                        };
+                        model.data.Add(equpFan);
 
-                    var equpCleaner = new Equp
-                    {
-                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01002",
-                        EQUP_NAM = "净化器",
-                        CASE_ID = $"QDHP{device.Project.Identity:D6}",
-                        EQUP_TYP = "净化器",
-                        EQUP_MOD = "",
-                        EQUP_LIM = ""
-                    };
-                    model.data.Add(equpCleaner);
+                        var equpCleaner = new Equp
+                        {
+                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}{channel}2",
+                            EQUP_NAM = $"净化器{(char)alpha}",
+                            CASE_ID = $"QDHP{dev.Identity:D6}",
+                            EQUP_TYP = "净化器",
+                            EQUP_MOD = "",
+                            EQUP_LIM = ""
+                        };
+                        model.data.Add(equpCleaner);
 
-                    var equpRate = new Equp
-                    {
-                        EQUP_ID = $"{Convert.ToUInt32(device.DeviceNodeId, 16):D6}_01003",
-                        EQUP_NAM = "清洁度",
-                        CASE_ID = $"QDHP{device.Project.Identity:D6}",
-                        EQUP_TYP = "清洁度",
-                        EQUP_MOD = "0.001",
-                        EQUP_LIM = "0.6||0.1"
-                    };
-                    model.data.Add(equpRate);
+                        var equpRate = new Equp
+                        {
+                            EQUP_ID = $"{Convert.ToUInt32(dev.DeviceNodeId, 16):D6}{channel}3",
+                            EQUP_NAM = $"清洁度{(char)alpha}",
+                            CASE_ID = $"QDHP{dev.Identity:D6}",
+                            EQUP_TYP = "清洁度",
+                            EQUP_MOD = "0.001",
+                            EQUP_LIM = "0.6||0.1"
+                        };
+                        model.data.Add(equpRate);
+                        alpha++;
+                    }
                 }
 
                 model.result = "success";

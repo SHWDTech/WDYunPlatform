@@ -90,7 +90,7 @@ namespace Platform.Process.Process
             }
         }
 
-        public MonitorData GetDeviceCleanerCurrent(RestaurantDevice device, DateTime checkDateTime)
+        public MonitorData GetDeviceCleanerCurrent(RestaurantDevice device, DateTime checkDateTime, int channel)
         {
             using (var repo = Repo<MonitorDataRepository>())
             {
@@ -104,6 +104,7 @@ namespace Platform.Process.Process
                     return repo.GetModels(data => data.ProjectIdentity == device.Project.Identity
                                                   && data.DeviceIdentity == device.Identity
                                                   && data.ProtocolDataId == pData.Id
+                                                  && data.DataChannel == channel
                                                   && data.CommandDataId == CommandDataId.CleanerCurrent).FirstOrDefault();
                 }
             }

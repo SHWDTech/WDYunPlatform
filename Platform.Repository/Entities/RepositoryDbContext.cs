@@ -135,7 +135,7 @@ namespace SHWD.Platform.Repository.Entities
                         p.FanMinCurrent,
                         p.Comment,
                         p.DeviceModelId,
-                        p.ChannelCount
+                        p.InUsingChannelString
                     });
                     m.ToTable("RestaurantDevice");
                 });
