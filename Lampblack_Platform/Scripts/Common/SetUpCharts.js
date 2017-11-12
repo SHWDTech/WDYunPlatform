@@ -111,7 +111,15 @@ Echart_Tools.getOption = function () {
         title: {
             text: ''
         },
-        tooltip: {},
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                return params[0].name + ' - ' + params[0].data;
+            },
+            axisPointer: {
+                animation: false
+            }
+        },
         legend: {
             data: ['']
         },
@@ -120,24 +128,6 @@ Echart_Tools.getOption = function () {
         },
         yAxis: {},
         toolbox: {
-            show: true,
-            feature: {
-                saveAsImage: {
-                    type: 'png',
-                    backgroundColor: 'auto',
-                    excludeComponents: ['toolbox'],
-                    show: true,
-                    title: '保存为图片'
-                },
-                magicType: {
-                    show: true,
-                    type: ['line', 'bar'],
-                    title: {
-                        line: '切换为折线图',
-                        bar: '切换为柱状图'
-                    }
-                }
-            }
         },
         series: [
             {

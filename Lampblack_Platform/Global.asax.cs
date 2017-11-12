@@ -32,7 +32,7 @@ namespace Lampblack_Platform
 
             GlobalInitial();
             SetRepositoryFilter();
-            StartSchedu();
+            //StartSchedu();
         }
 
         /// <summary>
@@ -80,9 +80,9 @@ namespace Lampblack_Platform
         {
             if (string.IsNullOrWhiteSpace(LampblackConfig.District)) return;
             var districtId = Guid.Parse(LampblackConfig.District);
-            UserDictionaryRepository.Filter = (obj => obj.Id == districtId
-                                                      || (obj.ParentDictionary != null && obj.ParentDictionaryId == districtId)
-                                                      || (obj.ParentDictionary != null && obj.ParentDictionary.ParentDictionary != null && obj.ParentDictionary.ParentDictionaryId == districtId));
+            UserDictionaryRepository.Filter = obj => obj.Id == districtId
+                                                     || obj.ParentDictionary != null && obj.ParentDictionaryId == districtId
+                                                     || obj.ParentDictionary != null && obj.ParentDictionary.ParentDictionary != null && obj.ParentDictionary.ParentDictionaryId == districtId;
             HotelRestaurantRepository.Filter = (obj => obj.DistrictId == districtId);
         }
 
@@ -96,7 +96,7 @@ namespace Lampblack_Platform
                 .Build();
 
             var trigger = TriggerBuilder.Create()
-                .StartNow()
+                .StartAt(DateTime.Now.AddMinutes(15 - DateTime.Now.Minute % 15))
                 .WithSimpleSchedule(x => x.WithIntervalInMinutes(15).RepeatForever())
                 .Build();
 

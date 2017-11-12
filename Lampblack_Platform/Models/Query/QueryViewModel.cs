@@ -124,4 +124,13 @@ namespace Lampblack_Platform.Models.Query
 
         public string DateTime { get; set; }
     }
+
+    public class HistoryChartOption
+    {
+        public Guid Hotel { get; set; }
+
+        public int DataType { get; set; }
+
+        public DateTime EndDate { get; set; }
+    }
 }

@@ -2,6 +2,26 @@
     Layout = null;
 }
 
+<div id="historyChartsTool" class="form-inline">
+    <input id="btnHourLine" type="button" class="btn btn-default" value="小时数据" />
+    <input id="btnDayLine"type="button" class="btn btn-default" value="每日数据" />
+    <input id="btnMonthLine" type="button" class="btn btn-default" value="每月数据" />
+</div>
+
+<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="chartModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="chartModallabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div id="historyBar" style="width: 840px; height: 320px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="single-content">
     <div class="float-card float-card-default float-card-single scroll-y">
         <div class="panel">
@@ -10,9 +30,9 @@
                     <span class="glyphicon glyphicon-bell" style="font-size: 20px;"></span>
                     <span style="margin-left: 10px;" class="span100">历史数据查询：</span>
                     @Html.Label("开始时间：", new { @class = "lbl80" })
-                    <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" class="form-control control140" />
+                    <input type="text" id="StartDateTime" name="StartDateTime" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd HH:MM")" class="form-control control140" />
                     @Html.Label("结束时间：", new { @class = "lbl80" })
-                    <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control control140" />
+                    <input type="text" id="EndDateTime" name="EndDateTime" value="@DateTime.Now.ToString("yyyy-MM-dd HH:MM")" class="form-control control140" />
                     <span class="span60">区县：</span>
                     <select class="form-control" id="AreaGuid" style="width: 120px;"></select>
                     <span class="span60" style="margin-left: 10px;">酒店：</span>
@@ -25,6 +45,7 @@
                        {
                            id = "history_data",
                            data_page_size = 50,
+                           data_toolbar = "#historyChartsTool",
                            data_reset_offset = true
                        });
                         var builder = table.Column("所属区县", "DistrictName")
@@ -48,3 +69,4 @@
 </div>
 
 <script src="/Scripts/Page/HistoryData.js"></script>
+<script src="/Scripts/Utility/echarts.min.js"></script>

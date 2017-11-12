@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿var mainChart = null;
+
+$(function () {
     window.statusFormatter = function (value) {
         if (value) {
             return '<img src="/Resources/Images/Site/CleanRate/RUN.png" />';
@@ -7,14 +9,16 @@
         }
     }
 
+    mainChart = echarts.init(document.getElementById('historyBar'));
+
     $('#StartDateTime').datetimepicker({
         locale: 'zh-cn',
-        format: 'YYYY-MM-DD'
+        format: 'YYYY-MM-DD HH:mm'
     });
 
     $('#EndDateTime').datetimepicker({
         locale: 'zh-cn',
-        format: 'YYYY-MM-DD'
+        format: 'YYYY-MM-DD HH:mm'
     });
 
     var hdqp = {
@@ -73,5 +77,54 @@
         });
     });
 
+    $('#btnHourLine').on('click', function() {
+        $.get('/Query/HistoryLineChart',
+            { Hotel: $('#DistrictHotels').val(), DataType: 0, EndDate: $('#EndDateTime').val() },
+            function (ret) {
+                mainChart.clear();
+                var option = Echart_Tools.getOption();
+                option.series = [];
+                option.legend.data = ['油烟浓度'];
+                option.yAxis = [{ type: 'value', name: 'mg/m³', axisLabel: { formatter: '{value}' } }];
+                option.xAxis.data = ret.Result.UpdateTimes;
+                var series = Echart_Tools.getSeries('油烟浓度', 'line', null, ret.Result.Values);
+                option.series.push(series);
+                mainChart.setOption(option);
+                $('#chartModal').modal();
+            });
+    });
 
+    $('#btnDayLine').on('click', function () {
+        $.get('/Query/HistoryLineChart',
+            { Hotel: $('#DistrictHotels').val(), DataType: 1, EndDate: $('#EndDateTime').val() },
+            function (ret) {
+                mainChart.clear();
+                var option = Echart_Tools.getOption();
+                option.series = [];
+                option.legend.data = ['油烟浓度'];
+                option.yAxis = [{ type: 'value', name: 'mg/m³', axisLabel: { formatter: '{value}' } }];
+                option.xAxis.data = ret.Result.UpdateTimes;
+                var series = Echart_Tools.getSeries('油烟浓度', 'line', null, ret.Result.Values);
+                option.series.push(series);
+                mainChart.setOption(option);
+                $('#chartModal').modal();
+            });
+    });
+
+    $('#btnMonthLine').on('click', function () {
+        $.get('/Query/HistoryLineChart',
+            { Hotel: $('#DistrictHotels').val(), DataType: 2, EndDate: $('#EndDateTime').val() },
+            function (ret) {
+                mainChart.clear();
+                var option = Echart_Tools.getOption();
+                option.series = [];
+                option.legend.data = ['油烟浓度'];
+                option.yAxis = [{ type: 'value', name: 'mg/m³', axisLabel: { formatter: '{value}' } }];
+                option.xAxis.data = ret.Result.UpdateTimes;
+                var series = Echart_Tools.getSeries('油烟浓度', 'line', null, ret.Result.Values);
+                option.series.push(series);
+                mainChart.setOption(option);
+                $('#chartModal').modal();
+            });
+    });
 });

@@ -37,5 +37,10 @@ namespace Platform.Process.Process
                 return data.Value;
             }
         }
+
+        public IQueryable<DataStatistics> GetDataStaitsticsRepo()
+        {
+            return Repo<DataStatisticsRepository>().GetAllModels();
+        }
     }
 }

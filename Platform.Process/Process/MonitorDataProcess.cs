@@ -68,6 +68,9 @@ namespace Platform.Process.Process
             }
         }
 
+        public IQueryable<MonitorData> Where(Expression<Func<MonitorData, bool>> exp) =>
+            Repo<MonitorDataRepository>().GetModels(exp);
+
         public MonitorData GetFirst(Expression<Func<MonitorData, bool>> exp)
         {
             using (var repo = Repo<MonitorDataRepository>())

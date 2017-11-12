@@ -9,6 +9,8 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using Platform.Process.Process;
+using SHWDTech.Platform.Model.Enums;
+using WebViewModels.Enums;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -28,10 +30,10 @@ namespace Lampblack_Platform.Controllers
             }
             var total = query.Count();
             var devs = query.Include("Hotel").Include("LampblackDeviceModel").OrderBy(d => new
-                {
-                    d.ProjectId,
-                    d.Identity
-                }).Skip(post.offset)
+            {
+                d.ProjectId,
+                d.Identity
+            }).Skip(post.offset)
                 .Take(post.limit).ToList();
             var merge = devs.GroupBy(d => d.Hotel.Id).Where(e => e.Count() > 1)
                 .Select(v => new
@@ -63,10 +65,10 @@ namespace Lampblack_Platform.Controllers
             }
             var total = query.Count();
             var devs = query.Include("Hotel").OrderBy(d => new
-                {
-                    d.ProjectId,
-                    d.Identity
-                }).Skip(post.offset)
+            {
+                d.ProjectId,
+                d.Identity
+            }).Skip(post.offset)
                 .Take(post.limit).ToList();
             var merge = devs.GroupBy(d => d.Hotel.Id).Where(e => e.Count() > 1)
                 .Select(v => new
@@ -121,34 +123,34 @@ namespace Lampblack_Platform.Controllers
                 rows = (from record in records
                         let dev = devs.First(d => d.Identity == record.DeviceIdentity)
                         select new HistoryDataTableRows
-                    {
-                        DistrictName = districtName,
-                        HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
-                        DeviceName = dev.DeviceName,
-                        Channel = record.Channel,
-                        CleanerSwitch = record.CleanerSwitch,
-                        CleanerCurrent = Math.Round(record.CleanerCurrent / 90.0f, 2),
-                        FanSwitch = record.FanSwitch,
-                        FanCurrent = record.FanCurrent,
-                        Density = GetDensity(record.CleanerCurrent),
-                        DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
-                    }).ToList();
+                        {
+                            DistrictName = districtName,
+                            HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                            DeviceName = dev.DeviceName,
+                            Channel = record.Channel,
+                            CleanerSwitch = record.CleanerSwitch,
+                            CleanerCurrent = Math.Round(record.CleanerCurrent / 90.0f, 2),
+                            FanSwitch = record.FanSwitch,
+                            FanCurrent = record.FanCurrent,
+                            Density = GetDensity(record.CleanerCurrent),
+                            DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                        }).ToList();
             }
             else
             {
                 rows = (from record in records
-                    let dev = devs.First(d => d.Identity == record.DeviceIdentity)
+                        let dev = devs.First(d => d.Identity == record.DeviceIdentity)
                         select new HistoryDataTableRows
-                    {
-                        DistrictName = districtName,
-                        HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
-                        DeviceName = dev.DeviceName,
-                        CleanerSwitch = record.CleanerSwitch,
-                        CleanerCurrent = record.CleanerCurrent,
-                        FanSwitch = record.FanSwitch,
-                        FanCurrent = record.FanCurrent,
-                        DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
-                    }).ToList();
+                        {
+                            DistrictName = districtName,
+                            HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                            DeviceName = dev.DeviceName,
+                            CleanerSwitch = record.CleanerSwitch,
+                            CleanerCurrent = record.CleanerCurrent,
+                            FanSwitch = record.FanSwitch,
+                            FanCurrent = record.FanCurrent,
+                            DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                        }).ToList();
             }
 
             return JsonTable(new
@@ -177,10 +179,10 @@ namespace Lampblack_Platform.Controllers
             }
             var total = query.Count();
             var devs = query.Include("Hotel").OrderBy(d => new
-                {
-                    d.ProjectId,
-                    d.Identity
-                }).Skip(post.offset)
+            {
+                d.ProjectId,
+                d.Identity
+            }).Skip(post.offset)
                 .Take(post.limit).ToList();
             var merge = devs.GroupBy(d => d.Hotel.Id).Where(e => e.Count() > 1)
                 .Select(v => new
@@ -197,6 +199,107 @@ namespace Lampblack_Platform.Controllers
                 rows,
                 merge
             });
+        }
+
+        [NamedAuth(Modules = "RunningTime", Required = true)]
+        public ActionResult HistoryLineChart(HistoryChartOption option)
+        {
+            if (option.Hotel == Guid.Empty) return null;
+            if (option.DataType == 0)
+            {
+                return HourLineChart(option);
+            }
+
+            if (option.DataType == 1)
+            {
+                return DayLineChart(option);
+            }
+
+            if (option.DataType == 2)
+            {
+                return MonthLineChart(option);
+            }
+
+            return null;
+        }
+
+        public ActionResult HourLineChart(HistoryChartOption option)
+        {
+            var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(option.Hotel);
+            var dev = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(option.Hotel).First();
+            var query = ProcessInvoke<LampblackRecordProcess>().GetRecordRepo();
+            var startDate = option.EndDate.AddHours(-1);
+            query = query.Where(q => q.ProjectIdentity == hotel.Identity 
+            && q.DeviceIdentity == dev.Identity 
+            && q.Channel == 1 
+            && q.RecordDateTime < option.EndDate 
+            && q.RecordDateTime > startDate);
+
+            var ret = query.Select(q => new
+            {
+                value = q.CleanerCurrent,
+                UpdateTime = q.RecordDateTime
+            }).ToList();
+
+            return Json(new
+            {
+                Values = ret.Select(q => q.value).ToList(),
+                UpdateTimes = ret.Select(q => q.UpdateTime.ToString("HH:mm:ss")).ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DayLineChart(HistoryChartOption option)
+        {
+            var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(option.Hotel);
+            var dev = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(option.Hotel).First();
+            var query = ProcessInvoke<DataStatisticsProcess>().GetDataStaitsticsRepo();
+            var startDate = option.EndDate.AddDays(-1);
+            query = query.Where(q => q.Type == StatisticsType.Hour
+                                     && q.ProjectIdentity == hotel.Identity
+                                     && q.DeviceIdentity == dev.Identity
+                                     && q.DataChannel == 0
+                                     && q.UpdateTime > startDate
+                                     && q.UpdateTime < option.EndDate
+                                     && q.CommandDataId == CommandDataId.CleanerCurrent);
+
+            var ret = query.Select(q => new
+            {
+                value = q.DoubleValue,
+                q.UpdateTime
+            }).ToList();
+
+            return Json(new
+            {
+                Values = ret.Select(q => q.value).ToList(),
+                UpdateTimes = ret.Select(q => q.UpdateTime.ToString("yyyy-MM-dd HH:mm")).ToList()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MonthLineChart(HistoryChartOption option)
+        {
+            var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(option.Hotel);
+            var dev = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(option.Hotel).First();
+            var query = ProcessInvoke<DataStatisticsProcess>().GetDataStaitsticsRepo();
+            var startDate = option.EndDate.AddMonths(-1);
+            query = query.Where(q => q.Type == StatisticsType.Day
+                                     && q.ProjectIdentity == hotel.Identity
+                                     && q.DeviceIdentity == dev.Identity
+                                     && q.DataChannel == 0
+                                     && q.UpdateTime > startDate
+                                     && q.UpdateTime < option.EndDate
+                                     && q.CommandDataId == CommandDataId.CleanerCurrent);
+
+            var ret = query.Select(q => new
+            {
+                value = q.DoubleValue,
+                q.UpdateTime
+            }).ToList();
+
+            return Json(new
+            {
+                Values = ret.Select(q => q.value).ToList(),
+                UpdateTimes = ret.Select(q => q.UpdateTime.ToString("yyyy-MM-dd")).ToList()
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }
