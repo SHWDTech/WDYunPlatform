@@ -17,6 +17,7 @@ using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
+using SHWDTech.Platform.Utility.ExtensionMethod;
 using WebViewModels.Enums;
 
 namespace Lampblack_Platform
@@ -113,8 +114,7 @@ namespace Lampblack_Platform
             };
             hourStatisJob.JobDataMap.Add("commandDatas", commandDatas);
             var hourStatisTrigger = TriggerBuilder.Create()
-                //.StartAt(DateTime.Now.GetCurrentHour().AddHours(1).AddMinutes(2))
-                .StartAt(DateTime.Now.AddSeconds(30))
+                .StartAt(DateTime.Now.GetCurrentHour().AddHours(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
 
@@ -122,8 +122,7 @@ namespace Lampblack_Platform
             var dayStatisJob = JobBuilder.Create<DayStatisticsJob>().Build();
             dayStatisJob.JobDataMap.Add("commandDatas", commandDatas);
             var dayStatisTrigger = TriggerBuilder.Create()
-                //.StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
-                .StartAt(DateTime.Now.AddSeconds(30))
+                .StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
 
@@ -132,8 +131,7 @@ namespace Lampblack_Platform
             var runStatisJob = JobBuilder.Create<DayStatisticsJob>().Build();
             runStatisJob.JobDataMap.Add("commandDatas", commandDatas);
             var runStatisTrigger = TriggerBuilder.Create()
-                //.StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
-                .StartAt(DateTime.Now.AddSeconds(30))
+                .StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
 
