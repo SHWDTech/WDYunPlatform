@@ -17,6 +17,7 @@ using SHWD.Platform.Repository;
 using SHWD.Platform.Repository.Repository;
 using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Model;
+using WebViewModels.Enums;
 
 namespace Lampblack_Platform
 {
@@ -32,7 +33,7 @@ namespace Lampblack_Platform
 
             GlobalInitial();
             SetRepositoryFilter();
-            //StartSchedu();
+            StartSchedu();
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Lampblack_Platform
             WdControllerBase.LoginName = LampblackConfig.LoginName;
         }
 
-        private void SetRepositoryFilter()
+        private static void SetRepositoryFilter()
         {
             if (string.IsNullOrWhiteSpace(LampblackConfig.District)) return;
             var districtId = Guid.Parse(LampblackConfig.District);
@@ -101,6 +102,42 @@ namespace Lampblack_Platform
                 .Build();
 
             scheduler.ScheduleJob(job, trigger);
+
+            var hourStatisJob = JobBuilder.Create<HourStatisticsJob>().Build();
+            var commandDatas = new List<Guid>
+            {
+                CommandDataId.CleanerCurrent,
+                CommandDataId.FanCurrent,
+                CommandDataId.LampblackInCon,
+                CommandDataId.LampblackOutCon
+            };
+            hourStatisJob.JobDataMap.Add("commandDatas", commandDatas);
+            var hourStatisTrigger = TriggerBuilder.Create()
+                //.StartAt(DateTime.Now.GetCurrentHour().AddHours(1).AddMinutes(2))
+                .StartAt(DateTime.Now.AddSeconds(30))
+                .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
+                .Build();
+
+            scheduler.ScheduleJob(hourStatisJob, hourStatisTrigger);
+            var dayStatisJob = JobBuilder.Create<DayStatisticsJob>().Build();
+            dayStatisJob.JobDataMap.Add("commandDatas", commandDatas);
+            var dayStatisTrigger = TriggerBuilder.Create()
+                //.StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
+                .StartAt(DateTime.Now.AddSeconds(30))
+                .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
+                .Build();
+
+            scheduler.ScheduleJob(dayStatisJob, dayStatisTrigger);
+            
+            var runStatisJob = JobBuilder.Create<DayStatisticsJob>().Build();
+            runStatisJob.JobDataMap.Add("commandDatas", commandDatas);
+            var runStatisTrigger = TriggerBuilder.Create()
+                //.StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
+                .StartAt(DateTime.Now.AddSeconds(30))
+                .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
+                .Build();
+
+            scheduler.ScheduleJob(runStatisJob, runStatisTrigger);
         }
     }
 }

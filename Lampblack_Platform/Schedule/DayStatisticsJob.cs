@@ -10,13 +10,13 @@ using SHWDTech.Platform.Utility.ExtensionMethod;
 
 namespace Lampblack_Platform.Schedule
 {
-    public class HourStatisticsJob : IJob
+    public class DayStatisticsJob : IJob
     {
         public void Execute(IJobExecutionContext context)
         {
             var commandDatas = (List<Guid>)context.JobDetail.JobDataMap.Get("commandDatas");
             var endTime = DateTime.Now.GetCurrentHour();
-            var startTime = endTime.AddHours(-1);
+            var startTime = endTime.AddDays(-1);
             using (var ctx = new RepositoryDbContext())
             {
                 foreach (var commandData in commandDatas)
@@ -27,14 +27,15 @@ namespace Lampblack_Platform.Schedule
                         {
                             try
                             {
-                                var query = ctx.MonitorDatas.Where(m => m.ProjectIdentity == project.Identity
+                                var query = ctx.DataStatisticses.Where(m => m.Type == StatisticsType.Hour
+                                                                        && m.ProjectIdentity == project.Identity
                                                                         && m.DeviceIdentity == device.Identity
-                                                                        && m.UpdateTime >= startTime
-                                                                        && m.UpdateTime <= endTime
+                                                                        && m.UpdateTime > startTime
+                                                                        && m.UpdateTime < endTime
                                                                         && m.CommandDataId == commandData
                                                                         && m.DoubleValue != null);
                                 var count = query.Count();
-                                StoreDataStatistics(endTime, StatisticsType.Hour,
+                                StoreDataStatistics(endTime, StatisticsType.Day,
                                     count <= 0 ? 0 : query.Average(q => q.DoubleValue.Value), commandData, device,
                                     project.Identity);
                             }

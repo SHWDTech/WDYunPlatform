@@ -222,8 +222,10 @@
     <Compile Include="Models\Query\QueryViewModel.cs" />
     <Compile Include="Models\System\SystemViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedule\DayStatisticsJob.cs" />
     <Compile Include="Schedule\HourStatisticsJob.cs" />
     <Compile Include="Schedule\JinganFifteenDataPostJob.cs" />
+    <Compile Include="Schedule\RunningTimeJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Base\Login.css" />
