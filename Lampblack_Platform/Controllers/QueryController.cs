@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Lampblack_Platform.Models.BootstrapTable;
@@ -11,6 +10,11 @@ using MvcWebComponents.Filters;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Enums;
 using WebViewModels.Enums;
+using System.Data.Entity;
+using System.Drawing;
+using Lampblack_Platform.Common;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -117,41 +121,35 @@ namespace Lampblack_Platform.Controllers
             var records = query.OrderByDescending(o => o.RecordDateTime).Skip(post.offset).Take(post.limit).ToList();
             var devs = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().Where(d => d.ProjectId == post.Hotel).ToList();
             var districtName = ProcessBase.GetDistrictName(hotel.DistrictId);
-            List<HistoryDataTableRows> rows;
-            if (WdContext.Domain.Id == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
-            {
-                rows = (from record in records
-                        let dev = devs.First(d => d.Identity == record.DeviceIdentity)
-                        select new HistoryDataTableRows
-                        {
-                            DistrictName = districtName,
-                            HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
-                            DeviceName = dev.DeviceName,
-                            Channel = record.Channel,
-                            CleanerSwitch = record.CleanerSwitch,
-                            CleanerCurrent = Math.Round(record.CleanerCurrent / 90.0f, 2),
-                            FanSwitch = record.FanSwitch,
-                            FanCurrent = record.FanCurrent,
-                            Density = GetDensity(record.CleanerCurrent),
-                            DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
-                        }).ToList();
-            }
-            else
-            {
-                rows = (from record in records
-                        let dev = devs.First(d => d.Identity == record.DeviceIdentity)
-                        select new HistoryDataTableRows
-                        {
-                            DistrictName = districtName,
-                            HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
-                            DeviceName = dev.DeviceName,
-                            CleanerSwitch = record.CleanerSwitch,
-                            CleanerCurrent = record.CleanerCurrent,
-                            FanSwitch = record.FanSwitch,
-                            FanCurrent = record.FanCurrent,
-                            DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
-                        }).ToList();
-            }
+            var rows = WdContext.Domain.Id == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496") 
+                ? (from record in records
+                let dev = devs.First(d => d.Identity == record.DeviceIdentity)
+                select new HistoryDataTableRows
+                {
+                    DistrictName = districtName,
+                    HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                    DeviceName = dev.DeviceName,
+                    Channel = record.Channel,
+                    CleanerSwitch = record.CleanerSwitch,
+                    CleanerCurrent = record.CleanerCurrent,
+                    FanSwitch = record.FanSwitch,
+                    FanCurrent = record.FanCurrent,
+                    Density = GetDensity(record.CleanerCurrent),
+                    DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                }).ToList()
+                : (from record in records
+                let dev = devs.First(d => d.Identity == record.DeviceIdentity)
+                select new HistoryDataTableRows
+                {
+                    DistrictName = districtName,
+                    HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                    DeviceName = dev.DeviceName,
+                    CleanerSwitch = record.CleanerSwitch,
+                    CleanerCurrent = record.CleanerCurrent,
+                    FanSwitch = record.FanSwitch,
+                    FanCurrent = record.FanCurrent,
+                    DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                }).ToList();
 
             return JsonTable(new
             {
@@ -160,7 +158,7 @@ namespace Lampblack_Platform.Controllers
             });
         }
 
-        private static double GetDensity(int currrent)
+        private static double GetDensity(double currrent)
         {
             var calc = (currrent / 90.0f - 4) / 1.6;
             if (calc < 0) return 0;
@@ -300,6 +298,116 @@ namespace Lampblack_Platform.Controllers
                 Values = ret.Select(q => q.value).ToList(),
                 UpdateTimes = ret.Select(q => q.UpdateTime.ToString("yyyy-MM-dd")).ToList()
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        [NamedAuth(Modules = "HistoryData", Required = true)]
+        [NotAjaxGetAttribute]
+        public ActionResult HistoryQeryExport(HistoryQueryExportModel model)
+        {
+            var dataSource = new List<WorkSheet>();
+            var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(model.Hotel);
+            var query = ProcessInvoke<LampblackRecordProcess>().GetRecordRepo();
+            model.EndDate = model.EndDate.AddDays(1);
+            var records = query.Where(obj => obj.ProjectIdentity == hotel.Identity && obj.RecordDateTime > model.StartDate && obj.RecordDateTime < model.EndDate)
+                .ToList();
+            var districtName = ProcessBase.GetDistrictName(hotel.DistrictId);
+            var dev = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().First(d => d.ProjectId == model.Hotel);
+            var rows = WdContext.Domain.Id == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496")
+                ? (from record in records
+                   select new HistoryDataTableRows
+                    {
+                        DistrictName = districtName,
+                        HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                        DeviceName = dev.DeviceName,
+                        Channel = record.Channel,
+                        CleanerSwitch = record.CleanerSwitch,
+                        CleanerCurrent = record.CleanerCurrent,
+                        FanSwitch = record.FanSwitch,
+                        FanCurrent = record.FanCurrent,
+                        Density = GetDensity(record.CleanerCurrent),
+                        DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                    }).ToList()
+                : (from record in records
+                   select new HistoryDataTableRows
+                    {
+                        DistrictName = districtName,
+                        HotelName = $"{dev.Hotel.RaletedCompany.CompanyName}({dev.Hotel.ProjectName})",
+                        DeviceName = dev.DeviceName,
+                        CleanerSwitch = record.CleanerSwitch,
+                        CleanerCurrent = record.CleanerCurrent,
+                        FanSwitch = record.FanSwitch,
+                        FanCurrent = record.FanCurrent,
+                        DateTime = $"{record.RecordDateTime:yyyy-MM-dd HH:mm:ss}"
+                    }).ToList();
+            var sheet = new WorkSheet();
+            foreach (var recordRow in rows)
+            {
+                var row = sheet.WorkSheetDatas.NewRow();
+                row["设备名称"] = recordRow.DeviceName;
+                row["通道号"] = recordRow.Channel;
+                row["净化器开关"] = recordRow.CleanerSwitch ? "开" : "关";
+                row["净化器电流"] = recordRow.CleanerCurrent;
+                row["风机开关"] = recordRow.FanSwitch ? "开" : "关";
+                row["风机电流"] = recordRow.FanCurrent;
+                row["油烟浓度"] = recordRow.Density;
+                row["数据时间"] = recordRow.DateTime;
+                sheet.WorkSheetDatas.Rows.Add(row);
+            }
+
+            sheet.Title = $"{districtName} - {hotel.ProjectName}";
+            dataSource.Add(sheet);
+
+            var package = new ExcelPackage();
+            foreach (var workSheet in dataSource)
+            {
+                var currentSheet = package.Workbook.Worksheets.Add(workSheet.Title);
+                currentSheet.Column(1).Width = 35.0;
+                currentSheet.Column(1).Style.Numberformat.Format = "yyyy-MM-dd hh:mm:ss";
+                currentSheet.Column(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                currentSheet.Column(1).Style.Font.Size = 14;
+                currentSheet.Column(2).Width = 30.0;
+                currentSheet.Column(2).Style.Font.Size = 14;
+                currentSheet.Column(2).Style.Numberformat.Format = "0.00";
+                currentSheet.Column(3).Width = 24.0;
+                currentSheet.Column(3).Style.Font.Size = 14;
+                currentSheet.Column(3).Style.Numberformat.Format = "0.00";
+                currentSheet.Column(4).Width = 24.0;
+                currentSheet.Column(4).Style.Font.Size = 14;
+                currentSheet.Column(4).Style.Numberformat.Format = "0.00";
+                currentSheet.Column(5).Width = 24.0;
+                currentSheet.Column(5).Style.Font.Size = 14;
+                currentSheet.Column(5).Style.Numberformat.Format = "0.00";
+                currentSheet.Column(6).Width = 24.0;
+                currentSheet.Column(6).Style.Font.Size = 14;
+                currentSheet.Column(6).Style.Numberformat.Format = "0.00";
+                currentSheet.Column(7).Width = 24.0;
+                currentSheet.Column(7).Style.Font.Size = 14;
+                currentSheet.Column(7).Style.Numberformat.Format = "0.00";
+                currentSheet.Column(8).Width = 24.0;
+                currentSheet.Column(8).Style.Font.Size = 14;
+                currentSheet.Column(8).Style.Numberformat.Format = "0.00";
+
+                using (var range = currentSheet.Cells["A1:H1"])
+                {
+                    range.Merge = true;
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    range.Value = workSheet.Title;
+                    range.Style.Font.Size = 24;
+                }
+
+                using (var range = currentSheet.Cells["A2:H2"])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(26, 188, 156));
+                    range.Style.Font.Color.SetColor(Color.White);
+                }
+
+                currentSheet.View.FreezePanes(3, 9);
+                currentSheet.Cells["A2"].LoadFromDataTable(workSheet.WorkSheetDatas, true);
+            }
+
+            return new ExcelResult(package, $"餐饮油烟历史数据-{DateTime.Now.ToLongDateString()}.xlsx");
         }
     }
 }

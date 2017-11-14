@@ -38,7 +38,7 @@
                     <span class="span60" style="margin-left: 10px;">酒店：</span>
                     <select class="form-control" id="DistrictHotels" style="width: 210px;"></select>
                     <input type="button" class="btn btn-main" value="查询" id="query" style="margin-left: 10px;"/>
-                    <input type="button" class="btn btn-main" value="导出" id="export" />
+                    <a class="btn btn-main" id="export" target="_blank" href="" download>导出</a>
                 </div>
                 <div class="table-layer">
                     @{ var table = Html.BootstrapTable(null, TablePaginationOption.server, new

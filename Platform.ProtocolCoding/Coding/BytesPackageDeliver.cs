@@ -124,7 +124,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                                 d.DataChannel == fan.DataChannel);
                             if (current != null)
                             {
-                                current.DoubleValue = fan.DoubleValue;
+                                current.DoubleValue = Math.Round(fan.DoubleValue / 90.0f ?? 0, 2);
                             }
                             fan.DoubleValue = 0;
                         }
@@ -179,7 +179,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 if (package.Device.DomainId == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
                 {
                     record.CleanerCurrent =
-                        Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package));
+                        Math.Round(Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)) / 90.0f, 2);
                     record.CleanerSwitch =
                         Convert.ToBoolean(DecodeComponentDataByName($"FanSwitch-{current}", package));
                     record.FanCurrent =

@@ -39,6 +39,7 @@ $(function () {
             {
                 url: '/Query/HistoryDataTable'
             });
+        $('#export').attr('href', '/Query/HistoryQeryExport?StartDate=' + $('#StartDateTime').val() + '&EndDate=' + $('#EndDateTime').val() + '&Hotel=' + $('#DistrictHotels').val());
     });
 
     $('#history_data').bootstrapTable({

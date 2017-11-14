@@ -139,6 +139,10 @@
     <Compile Include="Migrations\201710240145463_addInUsingChannel.Designer.cs">
       <DependentUpon>201710240145463_addInUsingChannel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711140504236_AlterLampblackRecord.cs" />
+    <Compile Include="Migrations\201711140504236_AlterLampblackRecord.Designer.cs">
+      <DependentUpon>201711140504236_AlterLampblackRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\AlarmRepository.cs" />
     <Compile Include="Repository\CameraRepository.cs" />
@@ -216,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710240145463_addInUsingChannel.resx">
       <DependentUpon>201710240145463_addInUsingChannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711140504236_AlterLampblackRecord.resx">
+      <DependentUpon>201711140504236_AlterLampblackRecord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

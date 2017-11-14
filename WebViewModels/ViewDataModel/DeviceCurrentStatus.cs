@@ -4,9 +4,9 @@ namespace WebViewModels.ViewDataModel
 {
     public class DeviceCurrentStatus
     {
-        public int FanCurrent { get; set; }
+        public double FanCurrent { get; set; }
 
-        public int CleanerCurrent { get; set; }
+        public double CleanerCurrent { get; set; }
 
         public string CleanerStatus => CleanerSwitch ? "开启" : "关闭";
 
@@ -16,9 +16,9 @@ namespace WebViewModels.ViewDataModel
 
         public bool FanSwitch { get; set; }
 
-        public int LampblackIn { get; set; }
+        public double LampblackIn { get; set; }
 
-        public int LampblackOut { get; set; }
+        public double LampblackOut { get; set; }
 
         public string CleanRate { get; set; }
 

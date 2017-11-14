@@ -193,7 +193,7 @@ namespace Platform.Process.Process
                     };
                     if (record != null)
                     {
-                        var row2Current = new Random().Next(record.CleanerCurrent - 50, record.CleanerCurrent + 50);
+                        var row2Current = new Random().Next((int)record.CleanerCurrent - 50, (int)record.CleanerCurrent + 50);
                         row2.CleanRate = GetCleanRate(row2Current, device.Identity);
                         row2.FanStatus = record.FanSwitch;
                         row2.CleanerCurrent = $"{row2Current}";

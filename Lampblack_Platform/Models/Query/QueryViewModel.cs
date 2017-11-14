@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using MvcWebComponents.Model;
 using PagedList;
 using Platform.Process.Business;
@@ -132,5 +133,39 @@ namespace Lampblack_Platform.Models.Query
         public int DataType { get; set; }
 
         public DateTime EndDate { get; set; }
+    }
+
+    public class HistoryQueryExportModel
+    {
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public Guid Hotel { get; set; }
+    }
+
+    public class WorkSheet
+    {
+        public WorkSheet()
+        {
+            WorkSheetDatas.Columns.Add("设备名称", typeof(string));
+            WorkSheetDatas.Columns.Add("通道号", typeof(int));
+            WorkSheetDatas.Columns.Add("净化器开关", typeof(string));
+            WorkSheetDatas.Columns.Add("净化器电流", typeof(double));
+            WorkSheetDatas.Columns.Add("风机开关", typeof(string));
+            WorkSheetDatas.Columns.Add("风机电流", typeof(double));
+            WorkSheetDatas.Columns.Add("油烟浓度", typeof(double));
+            WorkSheetDatas.Columns.Add("数据时间", typeof(string));
+        }
+
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// 工作表数据
+        /// </summary>
+        public DataTable WorkSheetDatas { get; set; } = new DataTable();
     }
 }

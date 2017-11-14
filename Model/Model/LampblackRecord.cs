@@ -22,15 +22,15 @@ namespace SHWDTech.Platform.Model.Model
 
         public bool CleanerSwitch { get; set; } = false;
 
-        public int CleanerCurrent { get; set; } = 0;
+        public double CleanerCurrent { get; set; } = 0;
 
         public bool FanSwitch { get; set; } = false;
 
-        public int FanCurrent { get; set; } = 0;
+        public double FanCurrent { get; set; } = 0;
 
-        public int LampblackIn { get; set; } = 0;
+        public double LampblackIn { get; set; } = 0;
 
-        public int LampblackOut { get; set; } = 0;
+        public double LampblackOut { get; set; } = 0;
 
         public int Channel { get; set; }
 

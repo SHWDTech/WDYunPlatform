@@ -19,10 +19,19 @@ namespace MvcWebComponents.Filters
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            if(filterContext.ActionDescriptor.IsDefined(typeof(NotAjaxGetAttribute), true)) return;
             if (!filterContext.IsChildAction && !filterContext.HttpContext.Request.IsAjaxRequest())
             {
                 filterContext.Result = new RedirectResult("/");
             }
+        }
+    }
+
+    public class NotAjaxGetAttribute : ActionFilterAttribute
+    {
+        public NotAjaxGetAttribute()
+        {
+
         }
     }
 }
