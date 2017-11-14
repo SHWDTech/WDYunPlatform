@@ -160,7 +160,7 @@ namespace Lampblack_Platform.Controllers
 
         private static double GetDensity(double currrent)
         {
-            var calc = (currrent / 90.0f - 4) / 1.6;
+            var calc = currrent / 1.6;
             if (calc < 0) return 0;
             return Math.Round(calc, 2);
         }
@@ -235,7 +235,7 @@ namespace Lampblack_Platform.Controllers
 
             var ret = query.Select(q => new
             {
-                value = q.CleanerCurrent,
+                value = q.CleanerCurrent / 1.6,
                 UpdateTime = q.RecordDateTime
             }).ToList();
 
@@ -262,7 +262,7 @@ namespace Lampblack_Platform.Controllers
 
             var ret = query.Select(q => new
             {
-                value = q.DoubleValue,
+                value = q.DoubleValue / 1.6,
                 q.UpdateTime
             }).ToList();
 
@@ -289,7 +289,7 @@ namespace Lampblack_Platform.Controllers
 
             var ret = query.Select(q => new
             {
-                value = q.DoubleValue,
+                value = q.DoubleValue / 1.6,
                 q.UpdateTime
             }).ToList();
 
