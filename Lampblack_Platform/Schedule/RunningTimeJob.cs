@@ -21,31 +21,24 @@ namespace Lampblack_Platform.Schedule
             var date = DateTime.Now.GetToday();
             using (var ctx = new RepositoryDbContext())
             {
-                foreach (var project in ctx.Projects)
+                foreach (var project in ctx.Projects.Select(p => new { p.Id, p.Identity }).ToList())
                 {
-                    foreach (var device in ctx.Devices.Where(d => d.ProjectId == project.Id))
+                    foreach (var device in ctx.Devices.Where(d => d.ProjectId == project.Id).Select(d => new { d.DomainId, d.Identity }).ToList())
                     {
                         foreach (var commandData in commandDatas)
                         {
-                            try
+                            var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
+                                .GetDeviceRunTime(project.Identity, device.Identity, date);
+                            var runningTime = new RunningTime
                             {
-                                var runTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
-                                    .GetDeviceRunTime(project.Identity, device.Identity, date);
-                                var runningTime = new RunningTime
-                                {
-                                    DomainId = device.DomainId,
-                                    UpdateTime = date,
-                                    ProjectIdentity = project.Identity,
-                                    RunningTimeSpan = runTime,
-                                    DeviceIdentity = device.Identity,
-                                    Type = GetRunningType(commandData)
-                                };
-                                ProcessInvoke.Instance<RunningTimeProcess>().StoreRunningTime(runningTime);
-                            }
-                            catch (Exception ex)
-                            {
-                                LogService.Instance.Error("Add HourStatistics Exception", ex);
-                            }
+                                DomainId = device.DomainId,
+                                UpdateTime = date,
+                                ProjectIdentity = project.Identity,
+                                RunningTimeSpan = runTime,
+                                DeviceIdentity = device.Identity,
+                                Type = GetRunningType(commandData)
+                            };
+                            ctx.RunningTimes.Add(runningTime);
                         }
                         var devRunTime = ProcessInvoke.Instance<HotelRestaurantProcess>()
                             .GetDeviceRunTime(project.Identity, device.Identity, date);
@@ -58,8 +51,16 @@ namespace Lampblack_Platform.Schedule
                             DeviceIdentity = device.Identity,
                             Type = RunningTimeType.Device
                         };
-                        ProcessInvoke.Instance<RunningTimeProcess>().StoreRunningTime(devRunningTime);
+                        ctx.RunningTimes.Add(devRunningTime);
                     }
+                }
+                try
+                {
+                    ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("Add RunningTime Exception", ex);
                 }
             }
         }

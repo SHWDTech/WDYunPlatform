@@ -91,18 +91,15 @@ namespace Lampblack_Platform
         private static void StartSchedu()
         {
             var scheduler = StdSchedulerFactory.GetDefaultScheduler();
-
             scheduler.Start();
 
-            var job = JobBuilder.Create<JinganFifteenDataPostJob>()
-                .Build();
-
-            var trigger = TriggerBuilder.Create()
-                .StartAt(DateTime.Now.AddMinutes(15 - DateTime.Now.Minute % 15))
-                .WithSimpleSchedule(x => x.WithIntervalInMinutes(15).RepeatForever())
-                .Build();
-
-            scheduler.ScheduleJob(job, trigger);
+            //var job = JobBuilder.Create<JinganFifteenDataPostJob>()
+            //    .Build();
+            //var trigger = TriggerBuilder.Create()
+            //    .StartAt(DateTime.Now.AddMinutes(15 - DateTime.Now.Minute % 15))
+            //    .WithSimpleSchedule(x => x.WithIntervalInMinutes(15).RepeatForever())
+            //    .Build();
+            //scheduler.ScheduleJob(job, trigger);
 
             var hourStatisJob = JobBuilder.Create<HourStatisticsJob>().Build();
             var commandDatas = new List<Guid>
@@ -114,18 +111,18 @@ namespace Lampblack_Platform
             };
             hourStatisJob.JobDataMap.Add("commandDatas", commandDatas);
             var hourStatisTrigger = TriggerBuilder.Create()
-                .StartAt(DateTime.Now.GetCurrentHour().AddHours(1).AddMinutes(2))
+                .StartAt(DateTime.Now.AddSeconds(30))
+                //.StartAt(DateTime.Now.GetCurrentHour().AddHours(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
-
             scheduler.ScheduleJob(hourStatisJob, hourStatisTrigger);
+
             var dayStatisJob = JobBuilder.Create<DayStatisticsJob>().Build();
             dayStatisJob.JobDataMap.Add("commandDatas", commandDatas);
             var dayStatisTrigger = TriggerBuilder.Create()
                 .StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
-
             scheduler.ScheduleJob(dayStatisJob, dayStatisTrigger);
             
             var runStatisJob = JobBuilder.Create<DayStatisticsJob>().Build();
@@ -134,7 +131,6 @@ namespace Lampblack_Platform
                 .StartAt(DateTime.Now.GetToday().AddDays(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
-
             scheduler.ScheduleJob(runStatisJob, runStatisTrigger);
         }
     }

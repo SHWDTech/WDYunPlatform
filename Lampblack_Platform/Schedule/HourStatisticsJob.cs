@@ -21,50 +21,41 @@ namespace Lampblack_Platform.Schedule
             {
                 foreach (var commandData in commandDatas)
                 {
-                    foreach (var project in ctx.Projects)
+                    foreach (var project in ctx.Projects.Select(p => new { p.Id, p.Identity }).ToList())
                     {
-                        foreach (var device in ctx.Devices.Where(d => d.ProjectId == project.Id))
+                        foreach (var device in ctx.Devices.Where(d => d.ProjectId == project.Id).Select(d => new { d.DomainId, d.Identity }).ToList())
                         {
-                            try
+                            var query = ctx.MonitorDatas.Where(m => m.ProjectIdentity == project.Identity
+                                                                    && m.DeviceIdentity == device.Identity
+                                                                    && m.UpdateTime >= startTime
+                                                                    && m.UpdateTime <= endTime
+                                                                    && m.CommandDataId == commandData
+                                                                    && m.DoubleValue != null);
+                            var count = query.Count();
+                            var dataStatistic = new DataStatistics
                             {
-                                var query = ctx.MonitorDatas.Where(m => m.ProjectIdentity == project.Identity
-                                                                        && m.DeviceIdentity == device.Identity
-                                                                        && m.UpdateTime >= startTime
-                                                                        && m.UpdateTime <= endTime
-                                                                        && m.CommandDataId == commandData
-                                                                        && m.DoubleValue != null);
-                                var count = query.Count();
-                                StoreDataStatistics(endTime, StatisticsType.Hour,
-                                    count <= 0 ? 0 : query.Average(q => q.DoubleValue.Value), commandData, device,
-                                    project.Identity);
-                            }
-                            catch (Exception ex)
-                            {
-                                LogService.Instance.Error("Add HourStatistics Exception", ex);
-                            }
+                                DomainId = device.DomainId,
+                                DoubleValue = count <= 0 ? 0 : query.Average(q => q.DoubleValue.Value),
+                                CommandDataId = commandData,
+                                DataChannel = 0,
+                                ProjectIdentity = project.Identity,
+                                DeviceIdentity = device.Identity,
+                                Type = StatisticsType.Hour,
+                                UpdateTime = endTime
+                            };
+                            ctx.Set<DataStatistics>().Add(dataStatistic);
                         }
                     }
                 }
+                try
+                {
+                    ctx.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("Add HourStatistics Exception", ex);
+                }
             }
-        }
-
-        private static void StoreDataStatistics(DateTime endDate, StatisticsType type, double avg, Guid commandDataId, Device device, long projectIdentity)
-        {
-            var dataStatistic = new DataStatistics
-            {
-                DomainId = device.DomainId,
-                DoubleValue = avg,
-                CommandDataId = commandDataId,
-                DataChannel = 0,
-                DeviceIdentity = projectIdentity,
-                ProjectIdentity = device.Identity,
-                Type = type,
-                UpdateTime = endDate
-            };
-
-            var ctx = new RepositoryDbContext();
-            ctx.DataStatisticses.Add(dataStatistic);
-            ctx.SaveChanges();
         }
     }
 }
