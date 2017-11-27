@@ -93,13 +93,13 @@ namespace Lampblack_Platform
             var scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 
-            //var job = JobBuilder.Create<JinganFifteenDataPostJob>()
-            //    .Build();
-            //var trigger = TriggerBuilder.Create()
-            //    .StartAt(DateTime.Now.AddMinutes(15 - DateTime.Now.Minute % 15))
-            //    .WithSimpleSchedule(x => x.WithIntervalInMinutes(15).RepeatForever())
-            //    .Build();
-            //scheduler.ScheduleJob(job, trigger);
+            var job = JobBuilder.Create<JinganFifteenDataPostJob>()
+                .Build();
+            var trigger = TriggerBuilder.Create()
+                .StartAt(DateTime.Now.AddMinutes(15 - DateTime.Now.Minute % 15))
+                .WithSimpleSchedule(x => x.WithIntervalInMinutes(15).RepeatForever())
+                .Build();
+            scheduler.ScheduleJob(job, trigger);
 
             var hourStatisJob = JobBuilder.Create<HourStatisticsJob>().Build();
             var commandDatas = new List<Guid>
@@ -112,7 +112,6 @@ namespace Lampblack_Platform
             hourStatisJob.JobDataMap.Add("commandDatas", commandDatas);
             var hourStatisTrigger = TriggerBuilder.Create()
                 .StartAt(DateTime.Now.AddSeconds(30))
-                //.StartAt(DateTime.Now.GetCurrentHour().AddHours(1).AddMinutes(2))
                 .WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever())
                 .Build();
             scheduler.ScheduleJob(hourStatisJob, hourStatisTrigger);
