@@ -84,7 +84,7 @@ namespace MvcWebComponents.Controllers
         /// </summary>
         public List<Module> GetAuthorizedModules()
         {
-            var modules = PlatformCaches.GetCachesByType("Modules");
+            var modules = PlatformCaches.GetCachesByType(nameof(Modules));
 
             Modules = modules.Select(obj => (Module)obj.CacheItem)
                     .OrderBy(obj => obj.ModuleIndex)

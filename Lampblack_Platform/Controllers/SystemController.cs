@@ -25,16 +25,14 @@ namespace Lampblack_Platform.Controllers
 
             var queryName = Request["queryName"];
 
-            int count;
-
-            var userList = ProcessInvoke<LampblackUserProcess>().GetPagedLampblackUsers(page, pageSize, queryName, out count);
+            var userList = ProcessInvoke<LampblackUserProcess>().GetPagedLampblackUsers(page, pageSize, queryName, out var count);
 
             var model = new UserViewModel
             {
                 Count = count,
                 PageSize = pageSize,
                 QueryName = queryName,
-                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
+                PageCount = count % pageSize > 0 ? count / pageSize + 1 : count / pageSize,
                 PageIndex = page,
                 LampblackUsers = userList
             };
@@ -43,7 +41,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "UsersManage")]
+        [NamedAuth(Modules = nameof(UsersManage))]
         public ActionResult EditUser(string guid)
         {
             GetUserRelatedItems();
@@ -58,7 +56,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "UsersManage")]
+        [NamedAuth(Modules = nameof(UsersManage))]
         public ActionResult EditUser(LampblackUser model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id").ToList();
@@ -74,7 +72,7 @@ namespace Lampblack_Platform.Controllers
 
             if (ProcessInvoke<LampblackUserProcess>().HasLoginName(model))
             {
-                ModelState.AddModelError("LoginName", "登录名已经存在！");
+                ModelState.AddModelError(nameof(LoginName), @"登录名已经存在！");
                 return View(model);
             }
 
@@ -85,12 +83,12 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditUser", targetcontroller = "System", target = "slide-up-content", postform = "user" });
+            return RedirectToAction("SubmitSuccess", nameof(Common),
+                new { targetAction = nameof(EditUser), targetcontroller = "System", target = "slide-up-content", postform = "user" });
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "UsersManage")]
+        [NamedAuth(Modules = nameof(UsersManage))]
         public ActionResult DeleteUser(Guid guid)
         {
             var success = ProcessInvoke<LampblackUserProcess>().DeleteLampblackUser(guid);
@@ -112,16 +110,14 @@ namespace Lampblack_Platform.Controllers
 
             var queryName = Request["queryName"];
 
-            int count;
-
-            var departmentList = ProcessInvoke<DepartmentProcess>().GetPagedDepartments(page, pageSize, queryName, out count);
+            var departmentList = ProcessInvoke<DepartmentProcess>().GetPagedDepartments(page, pageSize, queryName, out var count);
 
             var model = new DepartmentViewModel
             {
                 Count = count,
                 PageSize = pageSize,
                 QueryName = queryName,
-                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
+                PageCount = count % pageSize > 0 ? count / pageSize + 1 : count / pageSize,
                 PageIndex = page,
                 Departments = departmentList
             };
@@ -130,7 +126,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "DepartmentManage")]
+        [NamedAuth(Modules = nameof(DepartmentManage))]
         public ActionResult EditDepartment(string guid)
         {
             GetDepartmentRelatedItems();
@@ -145,7 +141,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "DepartmentManage")]
+        [NamedAuth(Modules = nameof(DepartmentManage))]
         public ActionResult EditDepartment(Department model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -159,12 +155,12 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditDepartment", targetcontroller = "System", target = "slide-up-content", postform = "department" });
+            return RedirectToAction("SubmitSuccess", nameof(Common),
+                new { targetAction = nameof(EditDepartment), targetcontroller = "System", target = "slide-up-content", postform = "department" });
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "DepartmentManage")]
+        [NamedAuth(Modules = nameof(DepartmentManage))]
         public ActionResult DeleteDepartment(Guid guid)
         {
             var sqlResult = ProcessInvoke<DepartmentProcess>().DeleteDepartment(guid);
@@ -190,16 +186,14 @@ namespace Lampblack_Platform.Controllers
 
             var queryName = Request["queryName"];
 
-            int count;
-
-            var roleList = ProcessInvoke<WdRoleProcess>().GetPagedRoles(page, pageSize, queryName, out count);
+            var roleList = ProcessInvoke<WdRoleProcess>().GetPagedRoles(page, pageSize, queryName, out var count);
 
             var model = new RoleViewModel
             {
                 Count = count,
                 PageSize = pageSize,
                 QueryName = queryName,
-                PageCount = (count % pageSize) > 0 ? (count / pageSize) + 1 : (count / pageSize),
+                PageCount = count % pageSize > 0 ? count / pageSize + 1 : count / pageSize,
                 PageIndex = page,
                 Roles = roleList
             };
@@ -208,7 +202,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "RoleManage")]
+        [NamedAuth(Modules = nameof(RoleManage))]
         public ActionResult EditRole(string guid)
         {
             GetRoleRelatedItems();
@@ -223,7 +217,7 @@ namespace Lampblack_Platform.Controllers
         }
 
         [HttpPost]
-        [NamedAuth(Modules = "RoleManage")]
+        [NamedAuth(Modules = nameof(RoleManage))]
         public ActionResult EditRole(WdRole model)
         {
             var propertyNames = Request.Form.AllKeys.Where(field => field != "Id" && field != "X-Requested-With").ToList();
@@ -237,12 +231,12 @@ namespace Lampblack_Platform.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("SubmitSuccess", "Common",
-                new { targetAction = "EditRole", targetcontroller = "System", target = "slide-up-content", postform = "role" });
+            return RedirectToAction("SubmitSuccess", nameof(Common),
+                new { targetAction = nameof(EditRole), targetcontroller = "System", target = "slide-up-content", postform = "role" });
         }
 
         [HttpGet]
-        [NamedAuth(Modules = "RoleManage")]
+        [NamedAuth(Modules = nameof(RoleManage))]
         public ActionResult DeleteRole(Guid guid)
         {
             var sqlResult = ProcessInvoke<WdRoleProcess>().DeleteRole(guid);
@@ -254,7 +248,7 @@ namespace Lampblack_Platform.Controllers
             var json = new JsonStruct
             {
                 Message = sqlResult.Message,
-                PostForm = sqlResult.Success ? "role" : ""
+                PostForm = sqlResult.Success ? "role" : string.Empty
             };
 
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -288,15 +282,15 @@ namespace Lampblack_Platform.Controllers
 
             ProcessInvoke<WdRoleProcess>().UpdatePermissions(roleId, permissions);
 
-            return RedirectToAction("RoleManage");
+            return RedirectToAction(nameof(RoleManage));
         }
 
         private void GetDepartmentRelatedItems()
         {
             ViewBag.Enable = new List<SelectListItem>
             {
-                new SelectListItem {Text = "启用", Value = "true"},
-                new SelectListItem {Text = "停用", Value = "false"}
+                new SelectListItem {Text = @"启用", Value = "true"},
+                new SelectListItem {Text = @"停用", Value = "false"}
             };
         }
 
@@ -304,8 +298,8 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.Enable = new List<SelectListItem>
             {
-                new SelectListItem {Text = "启用", Value = "true"},
-                new SelectListItem {Text = "停用", Value = "false"}
+                new SelectListItem {Text = @"启用", Value = "true"},
+                new SelectListItem {Text = @"停用", Value = "false"}
             };
 
             var cateringCompany = new List<SelectListItem>
@@ -337,8 +331,8 @@ namespace Lampblack_Platform.Controllers
         {
             ViewBag.Enable = new List<SelectListItem>
             {
-                new SelectListItem {Text = "启用", Value = "true"},
-                new SelectListItem {Text = "停用", Value = "false"}
+                new SelectListItem {Text = @"启用", Value = "true"},
+                new SelectListItem {Text = @"停用", Value = "false"}
             };
         }
     }

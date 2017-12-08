@@ -22,7 +22,7 @@ namespace MvcWebComponents.Filters
                 return;
             }
 
-            WdContext = (WdContext)filterContext.HttpContext.Items["WdContext"];
+            WdContext = (WdContext)filterContext.HttpContext.Items[nameof(WdContext)];
             if (WdContext.WdUser.IsInRole("Root")
                 || WdContext.WdUser.IsInRole("SuperAdmin"))
             {
@@ -33,7 +33,7 @@ namespace MvcWebComponents.Filters
 
             if (!(executer.ActionRequired && executer.ControllerRequired)
                 || executer.ActionModule == "Ignore"
-                || (executer.ActionModule == string.Empty && executer.ControllerModule == "Ignore")) return;
+                || executer.ActionModule == string.Empty && executer.ControllerModule == "Ignore") return;
 
             executer.AdjustModule(filterContext);
 
@@ -41,7 +41,7 @@ namespace MvcWebComponents.Filters
             var controllerPermission =
                 WdContext.Permissions.FirstOrDefault(obj => obj.PermissionName == executer.ControllerModule);
 
-            if (actionPermission == null || (actionPermission.ParentPermissionId != null && controllerPermission == null))
+            if (actionPermission == null || actionPermission.ParentPermissionId != null && controllerPermission == null)
             {
                 filterContext.Result = new RedirectResult("/Error/UnAuthorized");
             }
