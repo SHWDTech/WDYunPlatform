@@ -9,8 +9,10 @@ using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
+using Platform.Cache;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Entities;
+using SHWDTech.Platform.Model.Business;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
@@ -352,6 +354,12 @@ namespace Lampblack_Platform.Controllers
                         };
                         ctx.LampblackDeviceModels.Add(newModel);
                         ctx.SaveChanges();
+                        var deviceModels = GeneralProcess.GetDeviceModels();
+                        foreach (var devModel in deviceModels)
+                        {
+                            var rate = new CleanessRate(devModel);
+                            PlatformCaches.Add($"CleanessRate-{devModel.Id}", rate, false, "deviceModels");
+                        }
                     }
                 }
                 catch (Exception ex)
