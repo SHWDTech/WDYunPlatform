@@ -34,7 +34,7 @@ namespace Lampblack_Platform
 
             GlobalInitial();
             SetRepositoryFilter();
-            StartSchedu();
+            //StartSchedu();
         }
 
         /// <summary>

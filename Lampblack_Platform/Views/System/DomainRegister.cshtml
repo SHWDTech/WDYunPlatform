@@ -1,0 +1,70 @@
+﻿@using MvcWebComponents.Extensions
+@model Lampblack_Platform.Models.Management.DomainRegisterModel
+
+@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default float-card-single scroll-y">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center text-main-reverse">油烟平台用户域注册</h4>
+            </div>
+            <div class="panel-body">
+                @using (Ajax.BeginForm("DomainRegister", null, new AjaxOptions
+                {
+                    UpdateTargetId = "slide-up-content",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                    OnBegin = "EncrypPassword"
+                }.GeneralOptions(), new { id = "domainRegister" }))
+                {
+                    <table class="table table-bordered table-striped text-right">
+                        <colgroup style="width: 15%; line-height: 35px;"></colgroup>
+                        <colgroup style="width: 85%"></colgroup>
+                        <tbody>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.DomainName)</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.DomainName, new { @class = "form-control", placeholder = "请输入域名" })
+                                    @Html.ValidationMessageFor(m => m.DomainName, null, new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.ManagerName)</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.ManagerName, new { @class = "form-control", placeholder = "请输入管理员名字" })
+                                    @Html.ValidationMessageFor(m => m.ManagerName, null, new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.LoginName)</td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control", placeholder = "请输入账户登录名" })
+                                    @Html.ValidationMessageFor(m => m.LoginName, null, new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@Html.LabelFor(m => m.ManagerPassword)</td>
+                                <td>
+                                    @Html.PasswordFor(m => m.ManagerPassword, new { @class = "form-control", placeholder = "请输入账户登录密码" })
+                                    @Html.ValidationMessageFor(m => m.ManagerPassword, null, new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td colspan="2">
+                                    <input type="submit" class="btn btn-main" value="提交" style="margin: auto;"/>
+                                    <input type="button" class="btn btn-main" value="重置" style="margin: auto;" id="reset" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Scripts/Utility/sha.js"></script>
+<script type="text/javascript" src="/Scripts/Page/DomainRegister.js"></script>

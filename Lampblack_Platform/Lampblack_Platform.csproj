@@ -117,6 +117,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -323,6 +324,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\Page\DomainRegister.js" />
     <Content Include="Scripts\Utility\select2.js" />
     <Content Include="Scripts\Utility\select2.min.js" />
     <Content Include="Scripts\Utility\bootstrap-datetimepicker.js" />
@@ -584,6 +586,7 @@
     <Content Include="Views\Management\EditDeviceMaintenance.cshtml" />
     <Content Include="Views\Management\ManualAlarm.cshtml" />
     <Content Include="Views\PlatformAccess\JingAnPlatform.cshtml" />
+    <Content Include="Views\System\DomainRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

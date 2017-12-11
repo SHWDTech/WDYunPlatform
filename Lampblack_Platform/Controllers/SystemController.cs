@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using System.Web.Mvc;
+using Lampblack_Platform.Models.Management;
 using Lampblack_Platform.Models.System;
 using MvcWebComponents.Attributes;
 using MvcWebComponents.Controllers;
 using MvcWebComponents.Filters;
 using MvcWebComponents.Model;
 using Platform.Process.Process;
+using SHWD.Platform.Repository.Entities;
+using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
 using SHWDTech.Platform.Utility;
 
@@ -283,6 +287,85 @@ namespace Lampblack_Platform.Controllers
             ProcessInvoke<WdRoleProcess>().UpdatePermissions(roleId, permissions);
 
             return RedirectToAction(nameof(RoleManage));
+        }
+
+        [HttpGet]
+        public ActionResult DomainRegister() =>
+            !WdContext.WdUser.IsInRole("Root")
+            ? Redirect("/Error/UnAuthorized")
+            : View();
+
+        [HttpPost]
+        public ActionResult DomainRegister(DomainRegisterModel model)
+        {
+            if (ProcessInvoke<LampblackUserProcess>().HasLoginName(model.LoginName))
+            {
+                ModelState.AddModelError(nameof(LoginName), @"登录名已经存在！");
+                return View(model);
+            }
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    using (var ctx = new RepositoryDbContext())
+                    {
+                        var domain = new Domain
+                        {
+                            DomainName = model.DomainName,
+                            DomianType = "UserDomain",
+                            DomainStatus = DomainStatus.Enabled,
+                            CreateDateTime = DateTime.Now,
+                            CreateUserId = WdContext.WdUser.Id,
+                            IsEnabled = true,
+                            IsDeleted = false
+                        };
+                        ctx.SysDomains.Add(domain);
+                        var sysManagerRole = ctx.Roles.First(r => r.RoleName == "系统管理员");
+                        var user = new LampblackUser
+                        {
+                            UserName = model.LoginName,
+                            LoginName = model.LoginName,
+                            UserIdentityName = model.ManagerName,
+                            Password = Globals.GetMd5(model.ManagerPassword),
+                            Status = UserStatus.Enabled,
+                            Domain = domain,
+                            CreateUserId = WdContext.WdUser.Id,
+                            CreateDateTime = DateTime.Now,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        };
+                        user.Roles.Add(sysManagerRole);
+                        ctx.LampblackUsers.Add(user);
+                        var rootDeviceModel = ctx.LampblackDeviceModels.First(m => m.DomainId == WdContext.WdUser.DomainId);
+                        var newModel = new LampblackDeviceModel
+                        {
+                            Name = rootDeviceModel.Name,
+                            Fail = rootDeviceModel.Fail,
+                            Worse = rootDeviceModel.Worse,
+                            Qualified = rootDeviceModel.Qualified,
+                            Good = rootDeviceModel.Good,
+                            Domain = domain,
+                            CreateUserId = WdContext.WdUser.Id,
+                            CreateDateTime = DateTime.Now,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        };
+                        ctx.LampblackDeviceModels.Add(newModel);
+                        ctx.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogService.Instance.Error("新增用户域失败。", ex);
+                    ModelState.AddModelError("DomainName", @"新增用户域失败！");
+                    return View(model);
+                }
+
+                scope.Complete();
+            }
+
+            ModelState.AddModelError("DomainName", @"新增用户域成功！");
+            return View(model);
         }
 
         private void GetDepartmentRelatedItems()
