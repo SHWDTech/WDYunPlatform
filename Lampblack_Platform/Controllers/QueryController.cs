@@ -118,7 +118,8 @@ namespace Lampblack_Platform.Controllers
             query = query.Where(obj => obj.ProjectIdentity == hotel.Identity && obj.RecordDateTime > post.StartDate && obj.RecordDateTime < post.EndDate);
             var total = query.Count();
             if (total == 0) return null;
-            var records = query.OrderByDescending(o => o.RecordDateTime).Skip(post.offset).Take(post.limit).ToList();
+            var inUsingDevs = ProcessInvoke<RestaurantDeviceProcess>().GetDevicesByRestaurant(hotel.Id).Select(d => d.Identity).ToList();
+            var records = query.Where(q => inUsingDevs.Contains(q.DeviceIdentity)).OrderByDescending(o => o.RecordDateTime).Skip(post.offset).Take(post.limit).ToList();
             var devs = ProcessInvoke<RestaurantDeviceProcess>().AllDevices().Where(d => d.ProjectId == post.Hotel).ToList();
             var districtName = ProcessBase.GetDistrictName(hotel.DistrictId);
             var rows = WdContext.Domain.Id == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496") 
