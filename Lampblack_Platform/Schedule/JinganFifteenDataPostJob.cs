@@ -15,6 +15,7 @@ using WebViewModels.Enums;
 
 namespace Lampblack_Platform.Schedule
 {
+    //静安区环保局油烟数据接口，本接口主动向静安区平台发送油烟实时数据，每15分钟发送一次。
     public class JinganFifteenDataPostJob : IJob
     {
         private readonly JingAnLampblackService _service;

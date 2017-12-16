@@ -6,6 +6,7 @@ using SHWDTech.Platform.Model.Enums;
 
 namespace Lampblack_Platform.Controllers
 {
+    //黄浦区环保局油烟数据接口，本接口提供酒店相关信息。
     public class EnterpriseInfoController : WdApiControllerBase
     {
         public EnterpriseInfo Get()

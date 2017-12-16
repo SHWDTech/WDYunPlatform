@@ -8,6 +8,7 @@ using SHWDTech.Platform.Utility;
 
 namespace Lampblack_Platform.Controllers
 {
+    //黄浦区环保局油烟数据接口，本接口提供设备相关信息。
     public class EqupInfoController : WdApiControllerBase
     {
         public EqupInfo Get()
