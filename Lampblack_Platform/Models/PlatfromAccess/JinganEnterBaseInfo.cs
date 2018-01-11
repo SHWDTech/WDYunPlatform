@@ -4,9 +4,6 @@ namespace Lampblack_Platform.Models.PlatfromAccess
 {
     public class JinganEnterBaseInfo
     {
-        //不同的客户，这里的名字，必须不一样。
-        private const string DataSource = "上海乾铎环境科技发展有限公司";
-
         private const string RegionName = "静安区";
 
         public string ENTER_ID { get; set; }
@@ -31,7 +28,7 @@ namespace Lampblack_Platform.Models.PlatfromAccess
 
         public string LATITUDE { get; set; }
 
-        public string DATASOURCE { get; set; } = DataSource;
+        public string DATASOURCE { get; set; }
     }
 
     public class JinganApiResult
