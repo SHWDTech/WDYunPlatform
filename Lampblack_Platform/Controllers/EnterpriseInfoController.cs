@@ -65,8 +65,8 @@ namespace Lampblack_Platform.Controllers
             catch (Exception ex)
             {
                 LogService.Instance.Error("EnterpriseInfoError", ex);
+                throw ex;
             }
-            return null;
         }
     }
 }
