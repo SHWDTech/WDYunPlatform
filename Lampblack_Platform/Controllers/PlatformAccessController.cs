@@ -10,6 +10,7 @@ using WebViewModels.ViewDataModel;
 using JingAnWebService;
 using Lampblack_Platform.Models.PlatfromAccess;
 using Newtonsoft.Json;
+using SHWD.Platform.Repository.Entities;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -62,6 +63,9 @@ namespace Lampblack_Platform.Controllers
             var hotel = ProcessInvoke<HotelRestaurantProcess>().GetHotelById(id);
             if (hotel == null) return Json("未找到指定酒店！", JsonRequestBehavior.AllowGet);
             var service = new JingAnLampblackService();
+            var ctx = new RepositoryDbContext();
+            var dataSource =
+                ctx.UserDictionaries.First(d => d.ItemName == PlatformName && d.ItemKey == "DataSource" && d.DomainId == WdContext.WdUser.DomainId);
             var postList = new List<JinganEnterBaseInfo>
             {
                 new JinganEnterBaseInfo
@@ -70,7 +74,8 @@ namespace Lampblack_Platform.Controllers
                     ENTER_NAME = hotel.ProjectName,
                     ADDRESS = hotel.AddressDetail,
                     LONGITUDE = $"{hotel.Longitude}",
-                    LATITUDE = $"{hotel.Latitude}"
+                    LATITUDE = $"{hotel.Latitude}",
+                    DATASOURCE = dataSource.ItemValue
                 }
             };
             var response = service.InsertBaseInfo(JsonConvert.SerializeObject(postList));
