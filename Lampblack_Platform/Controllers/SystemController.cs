@@ -396,7 +396,7 @@ namespace Lampblack_Platform.Controllers
                 var configs = ctx.SysDictionaries.Where(d => d.ItemName == "HuangpuPlatform").ToList();
                 foreach (var domain in domains)
                 {
-                    var shortCodeItem = configs.FirstOrDefault(c => c.ItemValue == domain.Id.ToString());
+                    var shortCodeItem = configs.FirstOrDefault(c => c.ItemValue == domain.Id.ToString().ToUpper());
                     var model = new HuangpuPlatformConfigViewModel
                     {
                         DomainId = domain.Id,
@@ -430,7 +430,7 @@ namespace Lampblack_Platform.Controllers
                         {
                             ItemName = "HuangpuPlatform",
                             ItemKey = $"{model.ShortCode}DomainId",
-                            ItemValue = model.DomainId.ToString(),
+                            ItemValue = model.DomainId.ToString().ToUpper(),
                             CreateDateTime = DateTime.Now,
                             CreateUserId = WdContext.WdUser.Id
                         };
