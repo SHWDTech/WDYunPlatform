@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
+using Lampblack_Platform.Models.BootstrapTable;
 using Lampblack_Platform.Models.Management;
 using Lampblack_Platform.Models.System;
 using MvcWebComponents.Attributes;
@@ -374,6 +376,120 @@ namespace Lampblack_Platform.Controllers
 
             ModelState.AddModelError("DomainName", @"新增用户域成功！");
             return View(model);
+        }
+
+        public ActionResult PlatformConfig() => View();
+
+        public ActionResult HuangpuPlatfromConfig() => View();
+
+        public ActionResult HuangpuPlatformTable(BootstrapTablePostParams post)
+        {
+            using (var ctx = new RepositoryDbContext())
+            {
+                var rows = new List<HuangpuPlatformConfigViewModel>();
+                var total = ctx.SysDomains.Count();
+                var domains = ctx.SysDomains.Where(d => d.DomianType == "UserDomain")
+                    .OrderBy(d => d.Id)
+                    .Skip(post.offset)
+                    .Take(post.limit)
+                    .ToList();
+                var configs = ctx.SysDictionaries.Where(d => d.ItemName == "HuangpuPlatform").ToList();
+                foreach (var domain in domains)
+                {
+                    var shortCodeItem = configs.FirstOrDefault(c => c.ItemValue == domain.Id.ToString());
+                    var model = new HuangpuPlatformConfigViewModel
+                    {
+                        DomainId = domain.Id,
+                        DomainName = domain.DomainName,
+                        ShortCode = shortCodeItem?.ItemKey.Replace("DomainId", string.Empty) ?? "",
+                    };
+                    rows.Add(model);
+                }
+
+                return JsonTable(new
+                {
+                    total,
+                    rows
+                });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditHuangpuPlatfrom(HuangputPlatfromEditViewModel model)
+        {
+            try
+            {
+                using (var ctx = new RepositoryDbContext())
+                {
+                    SysDictionary prefix;
+                    var orignal = ctx.SysDictionaries.FirstOrDefault(s =>
+                        s.ItemName == "HuangpuPlatform" && s.ItemValue == model.DomainId.ToString());
+                    if (orignal == null)
+                    {
+                        orignal = new SysDictionary
+                        {
+                            ItemName = "HuangpuPlatform",
+                            ItemKey = $"{model.ShortCode}DomainId",
+                            ItemValue = model.DomainId.ToString(),
+                            CreateDateTime = DateTime.Now,
+                            CreateUserId = WdContext.WdUser.Id
+                        };
+                        prefix = new SysDictionary
+                        {
+                            ItemName = "HuangpuPlatform",
+                            ItemKey = $"{model.ShortCode}Prefix",
+                            ItemValue = model.ShortCode.ToUpper(),
+                            CreateDateTime = DateTime.Now,
+                            CreateUserId = WdContext.WdUser.Id
+                        };
+                    }
+                    else
+                    {
+                        var findPrefix = orignal.ItemKey.Replace("DomainId", "Prefix");
+                        prefix = ctx.SysDictionaries.First(s =>
+                            s.ItemName == "HuangpuPlatform" &&
+                            s.ItemKey == findPrefix);
+                        orignal.ItemKey = $"{model.ShortCode}DomainId";
+                        prefix.ItemKey = $"{model.ShortCode}Prefix";
+                        prefix.ItemValue = model.ShortCode.ToUpper();
+                    }
+
+                    ctx.SysDictionaries.AddOrUpdate(orignal);
+                    ctx.SysDictionaries.AddOrUpdate(prefix);
+                    ctx.SaveChanges();
+                    return RedirectToAction("SubmitSuccess", nameof(Common), null);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.Error("编辑黄浦区平台信息失败", ex);
+                ModelState.AddModelError("", "编辑失败，请联系管理员");
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditHuangpuPlatfrom(Guid domainId)
+        {
+            using (var ctx = new RepositoryDbContext())
+            {
+                var model = new HuangputPlatfromEditViewModel
+                {
+                    DomainId = domainId
+                };
+                var orignal = ctx.SysDictionaries.FirstOrDefault(s =>
+                    s.ItemName == "HuangpuPlatform" && s.ItemValue == model.DomainId.ToString());
+                if (orignal != null)
+                {
+                    model.ShortCode = orignal.ItemKey.Replace("DomainId", string.Empty);
+                }
+                return View();
+            }
+        }
+
+        public ActionResult JinganPlatfromConfig()
+        {
+            return null;
         }
 
         private void GetDepartmentRelatedItems()

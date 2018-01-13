@@ -9,12 +9,17 @@
 <div class="actbar">
     @Html.Hidden("postform", (string)ViewBag.PostForm)
     <a href="#" id="closesubmit">关闭</a>
-    @Ajax.ActionLink("继续添加", (string) ViewBag.TargetAction, (string) ViewBag.TargetController, null, new AjaxOptions
-    {
-        UpdateTargetId = ViewBag.Target,
-        InsertionMode = InsertionMode.Replace,
-        HttpMethod = "GET"
-    })
+    @{
+        if (ViewBag.TargetAction != null)
+        {
+            @Ajax.ActionLink("继续添加", (string) ViewBag.TargetAction, (string) ViewBag.TargetController, null, new AjaxOptions
+            {
+                UpdateTargetId = ViewBag.Target,
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "GET"
+            })
+        }
+    }
 </div>
 
 <script type="text/javascript">

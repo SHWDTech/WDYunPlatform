@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MvcWebComponents.Model;
 using PagedList;
 using SHWDTech.Platform.Model.Model;
@@ -53,5 +54,22 @@ namespace Lampblack_Platform.Models.System
         /// 权限集合
         /// </summary>
         public List<Permission> Permissions { get; set; }
+    }
+
+    public class HuangpuPlatformConfigViewModel
+    {
+        public Guid DomainId { get; set; }
+
+        public string DomainName { get; set; }
+
+        public string ShortCode { get; set; }
+    }
+
+    public class HuangputPlatfromEditViewModel
+    {
+        public Guid DomainId { get; set; }
+
+        [Display(Name = "企业黄浦区简码")]
+        public string ShortCode { get; set; }
     }
 }

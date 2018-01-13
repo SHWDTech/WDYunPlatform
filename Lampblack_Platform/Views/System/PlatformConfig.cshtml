@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="single-content">
+    <div class="float-card float-card-default" style="width: 100%;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center text-main-reverse">政府环保平台对接配置</h4>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs" id="tab-nav">
+                    <li role="presentation" data-target = "huangpuConfig">
+                        @Ajax.ActionLink("黄浦区平台", "HuangpuPlatfromConfig", "System", null, new AjaxOptions
+                   {
+                       UpdateTargetId = "huangpuConfig",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, new { data_target = "huangpuConfig" })
+                    </li>
+                    <li role="presentation" data-target = "JinganConfig">
+                        @Ajax.ActionLink("静安区平台", "JinganPlatfromConfig", "System", null, new AjaxOptions
+                        {
+                            UpdateTargetId = "JinganConfig",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "GET"
+                        }, new { data_target = "JinganConfig" })
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <ul class="platfromConfig" style="margin-bottom: 0; display: none" id="huangpuConfig"></ul>
+                <ul class="platfromConfig" style="margin-bottom: 0; display: none" id="JinganConfig"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#tab-nav a').on('click', function () {
+
+        $('.platfromConfig').hide();
+        $('#tab-nav li').removeClass('active');
+        $('#' + $(this).attr('data-target')).show();
+        $(this).parent().addClass('active');
+    });
+</script>

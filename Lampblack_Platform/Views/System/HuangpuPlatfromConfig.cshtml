@@ -1,0 +1,43 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="table-layer">
+    @{
+        var table = Html.BootstrapTable(null, TablePaginationOption.server, new
+        {
+            id = "huangpuPlatfrom_table",
+            data_page_size = 25,
+            data_reset_offset = true
+        });
+        var builder = table.Column("公司名称", "DomainName")
+            .Column("平台简码", "ShortCode")
+            .Column("操作", "Operate")
+            .Apply(ColumnOption.formatter, "huangpuPlatformOperateFormatter")
+            .Apply(ColumnOption.events, "huangpuPlatformEvents");
+    }
+    @(builder)
+</div>
+
+@Html.Partial("SlideUp")
+
+<script>
+    window.huangpuPlatformOperateFormatter = function () {
+        return '<a class="edit" href="javascript:void(0)" title="编辑">编辑</a>';
+    }
+
+    window.huangpuPlatformEvents = {
+        'click .edit': function (e, value, row) {
+            base.AjaxGet("/System/EditHuangpuPlatfrom", { domainId: row.DomainId }, function (ret) {
+                slideUp.append(ret);
+                slideUp.show();
+            });
+        }
+    };
+
+    $('#huangpuPlatfrom_table').bootstrapTable({
+        url: '/System/HuangpuPlatformTable',
+        height: $('#huangpuPlatfrom_table').parents('.float-card').height() - 150
+    });
+</script>
