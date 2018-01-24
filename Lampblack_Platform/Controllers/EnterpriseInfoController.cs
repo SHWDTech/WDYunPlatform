@@ -45,7 +45,7 @@ namespace Lampblack_Platform.Controllers
                             QYSTREET = dev.Hotel.Street.ItemValue,
                             XPOS = dev.Hotel.Longitude.ToString(),
                             YPOS = dev.Hotel.Latitude.ToString(),
-                            CASE_ID = $"{prefix}{dev.Identity:D4}",
+                            CASE_ID = $"{prefix}{dev.Identity:D5}",
                             CASE_NAM = $"{(char)alpha}设备箱"
                         };
 

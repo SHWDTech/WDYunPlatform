@@ -6,6 +6,7 @@ using MvcWebComponents.Controllers;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Entities;
 using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Utility;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -22,7 +23,8 @@ namespace Lampblack_Platform.Controllers
             var devsGroup = ProcessInvoke<RestaurantDeviceProcess>()
                 .DevicesInDistrict(area.Id, device => device.DomainId == domainId && device.Status == DeviceStatus.Enabled)
                 .OrderBy(d => d.Identity)
-                .GroupBy(dev => dev.Hotel);
+                .GroupBy(dev => dev.Hotel)
+                .ToList();
             var checkDate = DateTime.Now.AddMinutes(-2);
             foreach (var group in devsGroup)
             {

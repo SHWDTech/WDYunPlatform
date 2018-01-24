@@ -100,7 +100,7 @@ namespace Platform.Process.Process
                 using (var pRepo = Repo<ProtocolDataRepository>())
                 {
                     var pData = pRepo
-                        .GetModels(p => p.DeviceIdentity == device.Identity && p.UpdateTime > checkDateTime)
+                        .GetModels(p => p.DeviceIdentity == device.Identity && p.UpdateTime > checkDateTime && p.Length == 94)
                         .FirstOrDefault();
                     if (pData == null) return null;
 
@@ -108,7 +108,7 @@ namespace Platform.Process.Process
                                                   && data.DeviceIdentity == device.Identity
                                                   && data.ProtocolDataId == pData.Id
                                                   && data.DataChannel == channel
-                                                  && data.CommandDataId == CommandDataId.CleanerCurrent).FirstOrDefault();
+                                                  && data.CommandDataId == CommandDataId.CleanerCurrent).FirstOrDefault(d => d.DoubleValue != null);
                 }
             }
         }
