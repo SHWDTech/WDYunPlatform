@@ -31,7 +31,6 @@ namespace Lampblack_Platform.Schedule
 
         public void Execute(IJobExecutionContext context)
         {
-            var dataList = new List<JinganDeviceBaseInfo>();
             using (var ctx = new RepositoryDbContext())
             {
                 var regitedHotel = ctx.PlatformAccesses.Where(p => p.PlatformName == PlatformName)
@@ -80,15 +79,16 @@ namespace Lampblack_Platform.Schedule
                         post.LAMPBLACK_VALUE = "-1";
                         post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
                     }
-                    dataList.Add(post);
+                    var list = new List<JinganDeviceBaseInfo>();
+                    list.Add(post);
+                    var postJsonStr = JsonConvert.SerializeObject(list);
+                    var response = _service.InsertDeviceBaseInfo(postJsonStr);
+                    var msgs = JsonConvert.DeserializeObject<List<JinganApiResult>>(response);
+                    if (!(msgs.Count > 0 && msgs[0].MESSAGE == "SUCCESS"))
+                    {
+                        LogService.Instance.Error(string.Join("\r\n", msgs.Select(m => m.MESSAGE)));
+                    }
                 }
-            }
-            var postJsonStr = JsonConvert.SerializeObject(dataList);
-            var response = _service.InsertDeviceBaseInfo(postJsonStr);
-            var msgs = JsonConvert.DeserializeObject<List<JinganApiResult>>(response);
-            if (!(msgs.Count > 0 && msgs[0].MESSAGE == "SUCCESS"))
-            {
-                LogService.Instance.Info(string.Join("\r\n", msgs.Select(m => m.MESSAGE)));
             }
         }
 
