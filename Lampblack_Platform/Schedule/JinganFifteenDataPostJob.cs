@@ -84,13 +84,13 @@ namespace Lampblack_Platform.Schedule
                             post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
                         }
                         dataList.Add(post);
-                    }
-                    var postJsonStr = JsonConvert.SerializeObject(dataList);
-                    var response = _service.InsertDeviceBaseInfo(postJsonStr);
-                    var msgs = JsonConvert.DeserializeObject<List<JinganApiResult>>(response);
-                    if (!(msgs.Count > 0 && msgs[0].MESSAGE == "SUCCESS"))
-                    {
-                        LogService.Instance.Info(string.Join("\r\n", msgs.Select(m => m.MESSAGE)));
+                        var postJsonStr = JsonConvert.SerializeObject(dataList);
+                        var response = _service.InsertDeviceBaseInfo(postJsonStr);
+                        var msgs = JsonConvert.DeserializeObject<List<JinganApiResult>>(response);
+                        if (!(msgs.Count > 0 && msgs[0].MESSAGE == "SUCCESS"))
+                        {
+                            LogService.Instance.Info(string.Join("\r\n", msgs.Select(m => m.MESSAGE)));
+                        }
                     }
                 }
             }
