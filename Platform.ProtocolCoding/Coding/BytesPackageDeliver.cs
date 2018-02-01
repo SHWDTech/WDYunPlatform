@@ -60,6 +60,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             OnMonitorDataReceived();
         }
 
+        //解析完成后，把协议内的数据转换成数据库表记录。旧数据表，有部分业务用到。
         public void Lampblack(IProtocolPackage<byte[]> package, IPackageSource source)
         {
             var monitorDataList = new List<MonitorData>();
@@ -154,6 +155,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             OnMonitorDataReceived();
         }
 
+        //解析完成后，把协议内的数据转换成数据库表记录。新数据表，主要用这个表的数据。
         private void LampblackRecord(IProtocolPackage<byte[]> package)
         {
             var dev = (RestaurantDevice)package.Device;
@@ -170,8 +172,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     CleanerCurrent = Convert.ToInt32(DecodeComponentDataByName($"CleanerCurrent-{current}", package)),
                     FanSwitch = Convert.ToBoolean(DecodeComponentDataByName($"FanSwitch-{current}", package)),
                     FanCurrent = Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)),
-                    LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackIn-{current}", package)),
-                    LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOut-{current}", package)),
+                    LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackInCon-{current}", package)),
+                    LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOutCon-{current}", package)),
                     RecordDateTime = DateTime.Now,
                     Channel = current + 1,
                     DomainId = package.Device.DomainId
@@ -193,6 +195,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
             ProcessInvoke.Instance<ProtocolPackageProcess>().AddOrUpdateLampblackRecord(records);
         }
 
+        //设置缓存数据，主页上取数据是从缓存里取的
         private static void SetStatusCache(IProtocolPackage<byte[]> package, LampblackRecord record)
         {
             try

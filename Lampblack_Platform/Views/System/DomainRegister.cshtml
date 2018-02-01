@@ -14,7 +14,7 @@
             <div class="panel-body">
                 @using (Ajax.BeginForm("DomainRegister", null, new AjaxOptions
                 {
-                    UpdateTargetId = "slide-up-content",
+                    UpdateTargetId = "body-content",
                     InsertionMode = InsertionMode.Replace,
                     HttpMethod = "POST",
                     OnBegin = "EncrypPassword"
@@ -28,28 +28,29 @@
                                 <td>@Html.LabelFor(m => m.DomainName)</td>
                                 <td>
                                     @Html.TextBoxFor(m => m.DomainName, new { @class = "form-control", placeholder = "请输入域名" })
-                                    @Html.ValidationMessageFor(m => m.DomainName, null, new { @class = "text-danger" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>@Html.LabelFor(m => m.ManagerName)</td>
                                 <td>
                                     @Html.TextBoxFor(m => m.ManagerName, new { @class = "form-control", placeholder = "请输入管理员名字" })
-                                    @Html.ValidationMessageFor(m => m.ManagerName, null, new { @class = "text-danger" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>@Html.LabelFor(m => m.LoginName)</td>
                                 <td>
                                     @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control", placeholder = "请输入账户登录名" })
-                                    @Html.ValidationMessageFor(m => m.LoginName, null, new { @class = "text-danger" })
                                 </td>
                             </tr>
                             <tr>
                                 <td>@Html.LabelFor(m => m.ManagerPassword)</td>
                                 <td>
                                     @Html.PasswordFor(m => m.ManagerPassword, new { @class = "form-control", placeholder = "请输入账户登录密码" })
-                                    @Html.ValidationMessageFor(m => m.ManagerPassword, null, new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @Html.ValidationSummary()
                                 </td>
                             </tr>
                             <tr class="text-center">

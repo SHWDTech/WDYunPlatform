@@ -44,6 +44,7 @@ namespace Lampblack_Platform.Controllers
             return View(model);
         }
 
+        //首页点击设备从这里取展示数据
         [AjaxGet]
         public ActionResult DeviceCurrentStatus(Guid hotelGuid)
         {
