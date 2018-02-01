@@ -587,6 +587,9 @@
     <Content Include="Views\Management\ManualAlarm.cshtml" />
     <Content Include="Views\PlatformAccess\JingAnPlatform.cshtml" />
     <Content Include="Views\System\DomainRegister.cshtml" />
+    <Content Include="Views\System\PlatformConfig.cshtml" />
+    <Content Include="Views\System\HuangpuPlatfromConfig.cshtml" />
+    <Content Include="Views\System\EditHuangpuPlatfrom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -659,7 +662,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>6799</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

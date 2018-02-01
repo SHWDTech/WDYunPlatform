@@ -6,6 +6,7 @@ using MvcWebComponents.Controllers;
 using Platform.Process.Process;
 using SHWD.Platform.Repository.Entities;
 using SHWDTech.Platform.Model.Enums;
+using SHWDTech.Platform.Utility;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -22,7 +23,8 @@ namespace Lampblack_Platform.Controllers
             var devsGroup = ProcessInvoke<RestaurantDeviceProcess>()
                 .DevicesInDistrict(area.Id, device => device.DomainId == domainId && device.Status == DeviceStatus.Enabled)
                 .OrderBy(d => d.Identity)
-                .GroupBy(dev => dev.Hotel);
+                .GroupBy(dev => dev.Hotel)
+                .ToList();
             var checkDate = DateTime.Now.AddMinutes(-2);
             foreach (var group in devsGroup)
             {
@@ -35,14 +37,14 @@ namespace Lampblack_Platform.Controllers
                     var time = monitorDatas.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss");
                     var fan = new Index
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}1",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D4}1",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
                     model.data.Add(fan);
                     var cleaner = new Index
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}2",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D4}2",
                         RMON_TIM = time,
                         EQUP_VAL = monitorDatas.DoubleValue > 0 ? "1" : "0"
                     };
@@ -50,7 +52,7 @@ namespace Lampblack_Platform.Controllers
 
                     var current = new Index
                     {
-                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D6}3",
+                        EQUP_ID = $"{Convert.ToUInt32(Convert.ToUInt32(dev.DeviceNodeId, 16)):D4}3",
                         RMON_TIM = time,
                         EQUP_VAL = $"{monitorDatas.DoubleValue.Value / 1000:F4}"
                     };
