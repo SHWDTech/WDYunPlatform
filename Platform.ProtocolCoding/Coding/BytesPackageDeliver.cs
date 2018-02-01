@@ -170,8 +170,8 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                     CleanerCurrent = Convert.ToInt32(DecodeComponentDataByName($"CleanerCurrent-{current}", package)),
                     FanSwitch = Convert.ToBoolean(DecodeComponentDataByName($"FanSwitch-{current}", package)),
                     FanCurrent = Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)),
-                    LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackIn-{current}", package)),
-                    LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOut-{current}", package)),
+                    LampblackIn = Convert.ToInt32(DecodeComponentDataByName($"LampblackInCon-{current}", package)) / 1000f,
+                    LampblackOut = Convert.ToInt32(DecodeComponentDataByName($"LampblackOutCon-{current}", package)) / 1000f,
                     RecordDateTime = DateTime.Now,
                     Channel = current + 1,
                     DomainId = package.Device.DomainId
