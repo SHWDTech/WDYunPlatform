@@ -79,14 +79,18 @@ namespace Lampblack_Platform.Schedule
                         post.LAMPBLACK_VALUE = "-1";
                         post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
                     }
-                    var list = new List<JinganDeviceBaseInfo>();
-                    list.Add(post);
+
+                    var list = new List<JinganDeviceBaseInfo> {post};
                     var postJsonStr = JsonConvert.SerializeObject(list);
                     var response = _service.InsertDeviceBaseInfo(postJsonStr);
                     var msgs = JsonConvert.DeserializeObject<List<JinganApiResult>>(response);
                     if (!(msgs.Count > 0 && msgs[0].MESSAGE == "SUCCESS"))
                     {
                         LogService.Instance.Error(string.Join("\r\n", msgs.Select(m => m.MESSAGE)));
+                    }
+                    else
+                    {
+                        LogService.Instance.Error($"静安区数据发送结果，设备名称：{dev.DeviceName}，{string.Join("\r\n", msgs.Select(m => m.MESSAGE))}");
                     }
                 }
             }
