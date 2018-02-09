@@ -88,10 +88,6 @@ namespace Lampblack_Platform.Schedule
                     {
                         LogService.Instance.Error(string.Join("\r\n", msgs.Select(m => m.MESSAGE)));
                     }
-                    else
-                    {
-                        LogService.Instance.Error($"静安区数据发送结果，设备名称：{dev.DeviceName}，{string.Join("\r\n", msgs.Select(m => m.MESSAGE))}");
-                    }
                 }
             }
         }
