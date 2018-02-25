@@ -75,7 +75,7 @@ namespace Lampblack_Platform.Schedule
                     else
                     {
                         post.DEVICE_STATE = "0";
-                        post.CLEAN_LINESS = "3";
+                        post.CLEAN_LINESS = "无数据";
                         post.LAMPBLACK_VALUE = "-1";
                         post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
                     }
@@ -104,11 +104,18 @@ namespace Lampblack_Platform.Schedule
         /// <param name="current"></param>
         /// <param name="modelId"></param>
         /// <returns></returns>
-        private int GetCleanRate(double? current, Guid modelId)
+        private string GetCleanRate(double? current, Guid modelId)
         {
             var rater = (CleanessRate)PlatformCaches.GetCache($"CleanessRate-{modelId}").CacheItem;
 
-            return Lampblack.GetCleanessNumRate(current, rater);
+            var rate = Lampblack.GetCleanessNumRate(current, rater);
+            switch (rate)
+            {
+                case 1: return "合格";
+                case 2: return "不合格";
+            }
+
+            return "无数据";
         }
     }
 }
