@@ -20,11 +20,11 @@ namespace Platform.Process.Business
             {
                 return CleanessRateResult.NoData;
             }
-            if (rate.Worse < current && current < rate.Fail)
+            if (current < rate.Fail)
             {
                 return CleanessRateResult.Fail;
             }
-            if (rate.Qualified < current && current < rate.Worse)
+            if (current < rate.Worse)
             {
                 return CleanessRateResult.Worse;
             }
@@ -37,11 +37,11 @@ namespace Platform.Process.Business
             {
                 return 3;
             }
-            if (rate.Worse < current && current < rate.Fail)
+            if (current < rate.Fail)
             {
                 return 2;
             }
-            if (rate.Qualified < current && current < rate.Worse)
+            if (current < rate.Worse)
             {
                 return 2;
             }
