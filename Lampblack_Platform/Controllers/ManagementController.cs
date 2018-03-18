@@ -13,6 +13,7 @@ using MvcWebComponents.Model;
 using Platform.Process.Process;
 using SHWDTech.Platform.Model.Enums;
 using SHWDTech.Platform.Model.Model;
+using Lampblack_Platform.Extensions;
 
 namespace Lampblack_Platform.Controllers
 {
@@ -293,8 +294,17 @@ namespace Lampblack_Platform.Controllers
                 devs = devs.Where(d => d.DeviceName.Contains(post.QueryName) || d.Hotel.ProjectName.Contains(post.QueryName));
             }
             var total = devs.Count();
-            var rows = devs.OrderBy(d => d.Id)
-                .Skip(post.offset)
+            if (!string.IsNullOrWhiteSpace(post.sort))
+            {
+                devs = post.order == "asc" 
+                    ? devs.OrderBy(post.sort) 
+                    : devs.OrderByDescending(post.sort);
+            }
+            else
+            {
+                devs = devs.OrderBy(d => d.Id);
+            }
+            var rows = devs.Skip(post.offset)
                 .Take(post.limit)
                 .ToList()
                 .Select(r => new

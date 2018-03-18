@@ -211,6 +211,7 @@
     <Compile Include="Controllers\QueryController.cs" />
     <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

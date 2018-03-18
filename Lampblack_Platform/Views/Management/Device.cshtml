@@ -29,12 +29,15 @@
                         {
                             id = "device_table",
                             data_page_size = 25,
-                            data_reset_offset = true
+                            data_reset_offset = true,
+                            data_sort_name = "DeviceCode",
+                            data_sort_order = "asc"
                         });
                         var builder = table.Column("所属区县", "DistrictName")
                             .Column("所属酒店", "ProjectName")
                             .Column("设备名称", "DeviceName")
                             .Column("设备编号", "DeviceCode")
+                            .Apply(ColumnOption.sortable)
                             .Column("手机号", "Telephone")
                             .Column("出厂日期", "ProductionDateTime")
                             .Column("设备状态", "Status")
