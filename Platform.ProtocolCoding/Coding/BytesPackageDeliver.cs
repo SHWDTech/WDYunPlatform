@@ -181,7 +181,7 @@ namespace SHWDTech.Platform.ProtocolCoding.Coding
                 if (package.Device.DomainId == Guid.Parse("C11B87A8-F4D7-4850-8000-C850953B2496"))
                 {
                     record.CleanerCurrent =
-                        Math.Round(Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)) / 90.0f, 2);
+                        Math.Round(Convert.ToInt32(DecodeComponentDataByName($"FanCurrent-{current}", package)) * 1.6f + 4, 2);
                     record.CleanerSwitch =
                         Convert.ToBoolean(DecodeComponentDataByName($"FanSwitch-{current}", package));
                     record.FanCurrent =

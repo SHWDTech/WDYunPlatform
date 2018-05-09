@@ -95,6 +95,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargingPileCommandCoder", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JingAnWebService", "JingAnWebService\JingAnWebService.csproj", "{46B281FD-BDB0-4013-853A-0912E46AFD1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WdTech_Protocol_Api", "WdTech_Protocol_Api\WdTech_Protocol_Api.csproj", "{24212C50-5ACF-4A53-9713-567D11599E25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtocolServiceAbstraction", "ProtocolServiceAbstraction\ProtocolServiceAbstraction.csproj", "{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +225,14 @@ Global
 		{46B281FD-BDB0-4013-853A-0912E46AFD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46B281FD-BDB0-4013-853A-0912E46AFD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46B281FD-BDB0-4013-853A-0912E46AFD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24212C50-5ACF-4A53-9713-567D11599E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24212C50-5ACF-4A53-9713-567D11599E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24212C50-5ACF-4A53-9713-567D11599E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24212C50-5ACF-4A53-9713-567D11599E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -259,6 +271,8 @@ Global
 		{CFFD96FF-629E-4E23-903D-80B0082B591A} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 		{6B3823B8-0540-43AF-9F41-498287D2DD4E} = {3CD04302-1950-4823-A5C9-9C2E30F3065C}
 		{63B95196-0344-4EF0-B149-A688C6AE53CC} = {9A830392-AC75-4AF0-80C8-ABE30CF0649B}
+		{24212C50-5ACF-4A53-9713-567D11599E25} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
+		{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0} = {73B9A9F2-36E5-4376-8C32-9CA64CBB910B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87B67E13-5C2B-4A88-B591-27562F74D95F}

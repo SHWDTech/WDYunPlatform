@@ -113,7 +113,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.SelfHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.SelfHost.5.2.3\lib\net45\System.Web.Http.SelfHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -143,6 +152,8 @@
     <Compile Include="Common\AppConfig.cs" />
     <Compile Include="Enums\DateTimeViewFormat.cs" />
     <Compile Include="Enums\OutPutDataColor.cs" />
+    <Compile Include="HostApi.cs" />
+    <Compile Include="SelfHostAssemblyResolver.cs" />
     <Compile Include="Services\AdminDelegate.cs" />
     <Compile Include="Services\AdminReportService.cs" />
     <Compile Include="TcpCore\ActiveClientManager.cs" />
@@ -235,6 +246,10 @@
     <ProjectReference Include="..\ProjectDataInitializer\ProjectDataInitializer.csproj">
       <Project>{d79f8c47-22e3-4b7d-b5f2-8d3ed747fd10}</Project>
       <Name>ProjectDataInitializer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProtocolServiceAbstraction\ProtocolServiceAbstraction.csproj">
+      <Project>{CDAD2AFA-77FF-411D-AB99-9971CDB6EFE0}</Project>
+      <Name>ProtocolServiceAbstraction</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

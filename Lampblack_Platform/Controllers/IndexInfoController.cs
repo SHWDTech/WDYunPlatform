@@ -18,7 +18,7 @@ namespace Lampblack_Platform.Controllers
                 .DevicesInDistrict(area.Id, device => device.Status == DeviceStatus.Enabled)
                 .OrderBy(d => d.Identity)
                 .GroupBy(dev => dev.Hotel);
-            var checkDate = DateTime.Now.AddMinutes(-2);
+            var checkDate = DateTime.Now.AddMinutes(-5);
             foreach (var group in devsGroup)
             {
                 var ordered = group.OrderBy(d => d.Identity);

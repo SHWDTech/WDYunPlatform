@@ -34,6 +34,8 @@ namespace WdTech_Protocol_AdminTools
 
             ActiveClientManager.Init(AppConfig.DeviceConnectionChevkInterval, AppConfig.DeviceDisconnectInterval);
 
+            //HostApi.StartHost();
+
             base.OnStartup(e);
         }
 

@@ -181,6 +181,17 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             device.Send(command, message.Params);
         }
 
+        public void SendDatas(byte[] datas, Guid deviceId)
+        {
+            TcpClientManager device;
+            lock (_clientSockets)
+            {
+                device = _clientSockets.FirstOrDefault(client => client.DeviceGuid == deviceId);
+            }
+
+            device?.Send(datas);
+        }
+
         private void ConnectionCheck(object sender, ElapsedEventArgs e)
         {
             var checkTime = DateTime.Now;

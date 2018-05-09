@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using ProtocolServiceAbstraction;
 using SHWDTech.Platform.ProtocolCoding;
 using SHWDTech.Platform.Utility;
 using WdTech_Protocol_AdminTools.Services;
@@ -11,7 +12,7 @@ namespace WdTech_Protocol_AdminTools.TcpCore
     /// <summary>
     /// 通信服务
     /// </summary>
-    public class CommunicationServices
+    public class CommunicationServices : IProtocolService
     {
         /// <summary>
         /// 服务启动时间
@@ -155,6 +156,11 @@ namespace WdTech_Protocol_AdminTools.TcpCore
             server.BeginAccept(AcceptClient, server);
 
             AllDone.Set();
+        }
+
+        public void Send(byte[] data, Guid device)
+        {
+            Manager.SendDatas(data, device);
         }
     }
 }
