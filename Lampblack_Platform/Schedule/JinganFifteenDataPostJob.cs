@@ -54,6 +54,7 @@ namespace Lampblack_Platform.Schedule
                     var checkDate = DateTime.Now.AddMinutes(-15);
                     foreach (var dev in devs)
                     {
+                        dataList.Clear();
                         var pData = ctx.ProtocolDatas.FirstOrDefault(p =>
                             p.DomainId == domainId && p.DeviceIdentity == dev.Identity && p.UpdateTime > checkDate);
                         var post = new JinganDeviceBaseInfo
@@ -81,6 +82,8 @@ namespace Lampblack_Platform.Schedule
                             post.DEVICE_STATE = "0";
                             post.CLEAN_LINESS = "无数据";
                             post.LAMPBLACK_VALUE = "-1";
+                            post.PURIFIER_STATE = "开";
+                            post.FAN_STATE = "开";
                             post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
                         }
                         dataList.Add(post);
