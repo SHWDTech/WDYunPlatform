@@ -72,9 +72,12 @@ namespace Lampblack_Platform.Schedule
                                                                                        && d.CommandDataId ==
                                                                                        CommandDataId.CleanerCurrent);
 
+
                             post.DEVICE_STATE = "1";
                             post.CLEAN_LINESS = $"{GetCleanRate(current?.DoubleValue, dev.DeviceModelId)}";
                             post.LAMPBLACK_VALUE = CalcDensity(current?.DoubleValue);
+                            post.PURIFIER_STATE = "开";
+                            post.FAN_STATE = "开";
                             post.MONITORTIME = $"{current?.UpdateTime:yyyy-MM-dd HH:mm:ss}";
                         }
                         else
@@ -82,8 +85,6 @@ namespace Lampblack_Platform.Schedule
                             post.DEVICE_STATE = "0";
                             post.CLEAN_LINESS = "无数据";
                             post.LAMPBLACK_VALUE = "-1";
-                            post.PURIFIER_STATE = "开";
-                            post.FAN_STATE = "开";
                             post.MONITORTIME = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
                         }
                         dataList.Add(post);
